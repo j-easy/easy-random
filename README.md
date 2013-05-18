@@ -11,7 +11,7 @@ If you want to populate a `Person` bean "by hand", you would write the following
 ```java
 Street street = new Street(12, (byte) 1, "Oxford street");
 Address address = new Address(street, "123456", "London", "United Kingdom");
-Person person = new Person("Foo", "Bar", "foo.bar@gmail.com" ,Gender.MALE, address);
+Person person = new Person("Foo", "Bar", "foo.bar@gmail.com", Gender.MALE, address);
 ```
 
 If these classes do not provide constructors with parameters (may be some legacy beans you don't have the control over), you would write:
@@ -105,7 +105,7 @@ Let's continue with the previous example. The following is a custom randomizer i
 ```java
 public class FirstNameRandomizer implements Randomizer<String> {
 
-    Random random;
+    private Random random;
 
     /**
      * First names array from which the random value should be generated.
@@ -133,7 +133,7 @@ Populator populator = new PopulatorBuilder()
                         .build();
 ```
 
-This tells jPopulator to generate random value for the `String` field named `firstName` declared in the `Person` class using the `FirstNameRandomizer`.
+This tells jPopulator to generate random values for the `String` field named `firstName` declared in the `Person` class using the `FirstNameRandomizer`.
 
 jPopulator comes with several built-in randomizers for commom attribures such as first name, last name, email, city, country, etc.
 These randomizers can be found in the `net.benas.jpopulator.randomizers` package.
@@ -149,7 +149,7 @@ This means you can simply put a `data_xx_YY.properties` with your locale in the 
 ### Java types
 By default, jPopulator can generate random values for all Java built-in types (primitive and boxed) : int, long, String, Boolean, etc
 
-Support for third party types (Joda time, Apache common, etc) is planned for a future release. Any contribution is welcome!
+Support for third party types (Joda time, Apache commons, etc) is planned for a future release. Any contribution is welcome!
 
 ### Enumeration types
 
