@@ -93,7 +93,7 @@ public class PopulatorImpl implements Populator {
             /*
              * Retrieve declared fields
              */
-            List<Field> declaredFields = Arrays.asList(type.getDeclaredFields());
+            List<Field> declaredFields = new ArrayList<Field>(Arrays.asList(result.getClass().getDeclaredFields()));
 
             /*
              * Retrieve inherited fields for all type hierarchy
