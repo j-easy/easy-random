@@ -30,7 +30,7 @@ import java.util.Random;
 import java.util.ResourceBundle;
 
 /**
- * A custom String randomizer that generates random values emails.
+ * A custom String randomizer that generates random values for emails.
  *
  * @author benas (md.benhassine@gmail.com)
  */

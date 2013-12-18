@@ -37,6 +37,6 @@ public interface Randomizer<T> {
      *
      * @return a random value for the given type
      */
-    public T getRandomValue();
+    T getRandomValue();
 
 }

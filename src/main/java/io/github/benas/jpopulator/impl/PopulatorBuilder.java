@@ -48,6 +48,9 @@ public class PopulatorBuilder {
     private final Map<RandomizerDefinition, Randomizer> randomizers;
 
 
+    /**
+     * Public constructor.
+     */
     public PopulatorBuilder() {
         populator = new PopulatorImpl();
         randomizers = new HashMap<RandomizerDefinition, Randomizer>();
@@ -62,7 +65,7 @@ public class PopulatorBuilder {
      * @param randomizer the custom randomizer to use
      * @return a pre configured populator builder instance
      */
-    public PopulatorBuilder registerRandomizer(Class type, Class fieldType, String fieldName, Randomizer randomizer) {
+    public PopulatorBuilder registerRandomizer(final Class type, final Class fieldType, final String fieldName, final Randomizer randomizer) {
         randomizers.put(new RandomizerDefinition(type, fieldType, fieldName), randomizer);
         return this;
     }

@@ -46,6 +46,12 @@ final class RandomizerDefinition {
      */
     private String fieldName;
 
+    /**
+     * Public constructor.
+     * @param type The class type for which the randomizer will be used.
+     * @param fieldType The field type within the class for which the randomizer will be used.
+     * @param fieldName The field name within the class for which the randomizer will be used.
+     */
     public RandomizerDefinition(Class type, Class fieldType, String fieldName) {
         this.type = type;
         this.fieldType = fieldType;

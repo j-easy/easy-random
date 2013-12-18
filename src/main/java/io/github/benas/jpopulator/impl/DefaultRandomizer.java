@@ -40,7 +40,12 @@ import java.util.concurrent.atomic.AtomicLong;
  */
 final class DefaultRandomizer {
 
-    private static final Random random = new Random();
+    private DefaultRandomizer() { }
+
+    /**
+     * The Random object to use.
+     */
+    private static final Random RANDOM = new Random();
 
     /**
      * Generate a random value for the given type.
@@ -48,7 +53,7 @@ final class DefaultRandomizer {
      * @param type the type for which a random value will be generated
      * @return a random value for the given type or null if the type is not supported
      */
-    public static Object getRandomValue(Class type) {
+    public static Object getRandomValue(final Class type) {
 
         /*
          * String and Character types
@@ -64,57 +69,57 @@ final class DefaultRandomizer {
          * Boolean type
          */
         if (type.equals(Boolean.TYPE) || type.equals(Boolean.class)) {
-            return random.nextBoolean();
+            return RANDOM.nextBoolean();
         }
 
         /*
          * Numeric types
          */
         if (type.equals(Byte.TYPE) || type.equals(Byte.class)) {
-            return (byte) (random.nextInt());
+            return (byte) (RANDOM.nextInt());
         }
         if (type.equals(Short.TYPE) || type.equals(Short.class)) {
-            return (short) (random.nextInt());
+            return (short) (RANDOM.nextInt());
         }
         if (type.equals(Integer.TYPE) || type.equals(Integer.class)) {
-            return random.nextInt();
+            return RANDOM.nextInt();
         }
         if (type.equals(Long.TYPE) || type.equals(Long.class)) {
-            return random.nextLong();
+            return RANDOM.nextLong();
         }
         if (type.equals(Double.TYPE) || type.equals(Double.class)) {
-            return random.nextDouble();
+            return RANDOM.nextDouble();
         }
         if (type.equals(Float.TYPE) || type.equals(Float.class)) {
-            return random.nextFloat();
+            return RANDOM.nextFloat();
         }
         if (type.equals(BigInteger.class)) {
-            return new BigInteger(Math.abs(random.nextInt()), random);
+            return new BigInteger(Math.abs(RANDOM.nextInt()), RANDOM);
         }
         if (type.equals(BigDecimal.class)) {
-            return new BigDecimal(random.nextDouble());
+            return new BigDecimal(RANDOM.nextDouble());
         }
         if (type.equals(AtomicLong.class)) {
-            return new AtomicLong(random.nextLong());
+            return new AtomicLong(RANDOM.nextLong());
         }
         if (type.equals(AtomicInteger.class)) {
-            return new AtomicInteger(random.nextInt());
+            return new AtomicInteger(RANDOM.nextInt());
         }
 
         /*
          * Date and time types
          */
         if (type.equals(java.util.Date.class)) {
-            return new java.util.Date(random.nextLong());
+            return new java.util.Date(RANDOM.nextLong());
         }
         if (type.equals(java.sql.Date.class)) {
-            return new java.sql.Date(random.nextLong());
+            return new java.sql.Date(RANDOM.nextLong());
         }
         if (type.equals(java.sql.Time.class)) {
-            return new java.sql.Time(random.nextLong());
+            return new java.sql.Time(RANDOM.nextLong());
         }
         if (type.equals(java.sql.Timestamp.class)) {
-            return new java.sql.Timestamp(random.nextLong());
+            return new java.sql.Timestamp(RANDOM.nextLong());
         }
         if (type.equals(Calendar.class)) {
             return Calendar.getInstance();
@@ -125,7 +130,7 @@ final class DefaultRandomizer {
          */
         if (type.isEnum() && type.getEnumConstants().length > 0) {
             Object[] enumConstants = type.getEnumConstants();
-            return enumConstants[random.nextInt(enumConstants.length)];
+            return enumConstants[RANDOM.nextInt(enumConstants.length)];
         }
 
         /*

@@ -29,7 +29,7 @@ import io.github.benas.jpopulator.api.Randomizer;
 import java.util.Random;
 
 /**
- * A generic randomizer that generate String values from a list of words
+ * A generic randomizer that generate String values from a list of words.
  *
  * @author benas (md.benhassine@gmail.com)
  */
@@ -42,7 +42,11 @@ public class GenericStringRandomizer implements Randomizer<String> {
      */
     private final String[] words;
 
-    public GenericStringRandomizer(String[] words) {
+    /**
+     * Public constructor.
+     * @param words the words array from which generate a random String.
+     */
+    public GenericStringRandomizer(final String[] words) {
         this.words = words;
     }
 

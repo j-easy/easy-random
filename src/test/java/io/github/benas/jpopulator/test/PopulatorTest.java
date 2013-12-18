@@ -27,7 +27,6 @@ package io.github.benas.jpopulator.test;
 import io.github.benas.jpopulator.api.Populator;
 import io.github.benas.jpopulator.beans.*;
 import io.github.benas.jpopulator.impl.PopulatorBuilder;
-import io.github.benas.jpopulator.impl.PopulatorImpl;
 import io.github.benas.jpopulator.randomizers.*;
 import org.junit.After;
 import org.junit.Assert;
@@ -47,7 +46,7 @@ public class PopulatorTest {
 
     @Before
     public void setUp() throws Exception {
-        populator = new PopulatorImpl();
+        populator = new PopulatorBuilder().build();
     }
 
     @After

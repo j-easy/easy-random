@@ -48,7 +48,12 @@ public class DateRangeRandomizer implements Randomizer<Date> {
      */
     private final Date maxDate;
 
-    public DateRangeRandomizer(Date minDate, Date maxDate) {
+    /**
+     * Public constructor.
+     * @param minDate the minimum date.
+     * @param maxDate the maximum date.
+     */
+    public DateRangeRandomizer(final Date minDate, final Date maxDate) {
         this.minDate = minDate;
         this.maxDate = maxDate;
     }

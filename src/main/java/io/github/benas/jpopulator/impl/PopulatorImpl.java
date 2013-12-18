@@ -42,7 +42,7 @@ import java.util.logging.Logger;
  *
  * @author benas (md.benhassine@gmail.com)
  */
-public class PopulatorImpl implements Populator {
+final class PopulatorImpl implements Populator {
 
     private final Logger logger = Logger.getLogger(this.getClass().getName());
 
@@ -56,6 +56,9 @@ public class PopulatorImpl implements Populator {
      */
     private final List<Class> javaTypesList;
 
+    /**
+     * Public constructor.
+     */
     public PopulatorImpl() {
 
         randomizers = new HashMap<RandomizerDefinition, Randomizer>();
@@ -73,7 +76,7 @@ public class PopulatorImpl implements Populator {
     }
 
     @Override
-    public Object populateBean(Class type) {
+    public Object populateBean(final Class type) {
 
         Object result;
         try {
@@ -111,7 +114,7 @@ public class PopulatorImpl implements Populator {
             for (Field field : declaredFields) {
                 //do not populate static nor final fields
                 int fieldModifiers = field.getModifiers();
-                if ( Modifier.isStatic(fieldModifiers) || Modifier.isFinal(fieldModifiers) ) {
+                if (Modifier.isStatic(fieldModifiers) || Modifier.isFinal(fieldModifiers)) {
                     continue;
                 }
                 if (isCollectionType(field.getType())) {
@@ -129,13 +132,13 @@ public class PopulatorImpl implements Populator {
     }
 
     @Override
-    public List<Object> populateBeans(Class type) {
+    public List<Object> populateBeans(final Class type) {
         byte size = (byte) Math.abs((Byte) DefaultRandomizer.getRandomValue(Byte.TYPE));
         return populateBeans(type, size);
     }
 
     @Override
-    public List<Object> populateBeans(Class type, int size) {
+    public List<Object> populateBeans(final Class type, final int size) {
         Object[] beans = new Object[size];
         for (int i = 0; i < size; i++) {
             Object bean = populateBeans(type);
@@ -170,18 +173,6 @@ public class PopulatorImpl implements Populator {
     }
 
     /**
-     * This methods checks if the user has registered a custom randomizer for the given type and field.
-     *
-     * @param type      The class type for which the method should check if a custom randomizer is registered
-     * @param fieldType the field type within the class for which the method should check if a custom randomizer is registered
-     * @param fieldName the field name within the class for which the method should check if a custom randomizer is registered
-     * @return True if a custom randomizer is registered for the given type and field, false else
-     */
-    private boolean customRandomizer(Class<?> type, Class<?> fieldType, String fieldName) {
-        return randomizers.get(new RandomizerDefinition(type, fieldType, fieldName)) != null;
-    }
-
-    /**
      * Method to populate a collection type which can be a array or a {@link Collection}.
      *
      * @param result The result object on which the generated value will be set
@@ -213,23 +204,35 @@ public class PopulatorImpl implements Populator {
     }
 
     /**
-     * This method checks if the given type is a java built-in (primitive/boxed) type (ie, int, long, etc)
+     * This method checks if the given type is a java built-in (primitive/boxed) type (ie, int, long, etc).
      *
      * @param type the type that the method should check
      * @return true if the given type is a java built-in type
      */
-    private boolean isJavaType(Class<?> type) {
+    private boolean isJavaType(final Class<?> type) {
         return javaTypesList.contains(type);
     }
 
     /**
-     * This method checks if the given type is a java built-in collection type (ie, array, List, Set, Map, etc)
+     * This method checks if the given type is a java built-in collection type (ie, array, List, Set, Map, etc).
      *
      * @param type the type that the method should check
      * @return true if the given type is a java built-in collection type
      */
-    private boolean isCollectionType(Class<?> type) {
+    private boolean isCollectionType(final Class<?> type) {
         return type.isArray() || Map.class.isAssignableFrom(type) || Collection.class.isAssignableFrom(type);
+    }
+
+    /**
+     * This methods checks if the user has registered a custom randomizer for the given type and field.
+     *
+     * @param type      The class type for which the method should check if a custom randomizer is registered
+     * @param fieldType the field type within the class for which the method should check if a custom randomizer is registered
+     * @param fieldName the field name within the class for which the method should check if a custom randomizer is registered
+     * @return True if a custom randomizer is registered for the given type and field, false else
+     */
+    private boolean customRandomizer(final Class<?> type, final Class<?> fieldType, final String fieldName) {
+        return randomizers.get(new RandomizerDefinition(type, fieldType, fieldName)) != null;
     }
 
     /**
@@ -237,7 +240,7 @@ public class PopulatorImpl implements Populator {
      *
      * @param randomizers the custom randomizers to use.
      */
-    public void setRandomizers(Map<RandomizerDefinition, Randomizer> randomizers) {
+    public void setRandomizers(final Map<RandomizerDefinition, Randomizer> randomizers) {
         this.randomizers = randomizers;
     }
 }

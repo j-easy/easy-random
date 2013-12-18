@@ -33,6 +33,9 @@ import java.util.ResourceBundle;
  */
 public class CountryRandomizer extends GenericStringRandomizer {
 
+    /**
+     * Public constructor.
+     */
     public CountryRandomizer() {
         super(ResourceBundle.getBundle("io/github/benas/jpopulator/data/data").getString("countries").split(","));
     }
