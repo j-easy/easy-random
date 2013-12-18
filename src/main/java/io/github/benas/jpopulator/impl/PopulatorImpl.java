@@ -109,6 +109,11 @@ public class PopulatorImpl implements Populator {
              * Generate random data for each field
              */
             for (Field field : declaredFields) {
+                //do not populate static nor final fields
+                int fieldModifiers = field.getModifiers();
+                if ( Modifier.isStatic(fieldModifiers) || Modifier.isFinal(fieldModifiers) ) {
+                    continue;
+                }
                 if (isCollectionType(field.getType())) {
                     populateCollectionType(result, field);
                 } else {
