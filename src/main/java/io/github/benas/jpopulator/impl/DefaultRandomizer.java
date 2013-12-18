@@ -94,7 +94,7 @@ final class DefaultRandomizer {
             return RANDOM.nextFloat();
         }
         if (type.equals(BigInteger.class)) {
-            return new BigInteger(Math.abs(RANDOM.nextInt()), RANDOM);
+            return new BigInteger(Math.abs(RANDOM.nextInt(100)), RANDOM);
         }
         if (type.equals(BigDecimal.class)) {
             return new BigDecimal(RANDOM.nextDouble());
