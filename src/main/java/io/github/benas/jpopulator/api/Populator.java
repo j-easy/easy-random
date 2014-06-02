@@ -39,7 +39,7 @@ public interface Populator {
      * @param type the type for which a java bean instance will be populated
      * @return a populated instance of the given type
      */
-    Object populateBean(Class type);
+    <T> T populateBean(final Class<T> type);
 
     /**
      * Populate a random number of java bean instances for the given type.
@@ -47,7 +47,7 @@ public interface Populator {
      * @param type the type for which java bean instances will be populated
      * @return a list of populated instances of the given type
      */
-    List<Object> populateBeans(Class type);
+    <T> List<T> populateBeans(final Class<T> type);
 
     /**
      * Populate a fixed number of java bean instances for the given type.
@@ -56,6 +56,6 @@ public interface Populator {
      * @param size the number of instances to populate
      * @return a list of populated instances of the given type
      */
-    List<Object> populateBeans(Class type, int size);
+    <T> List<T> populateBeans(final Class<T> type, int size);
 
 }

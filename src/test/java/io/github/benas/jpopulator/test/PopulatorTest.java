@@ -32,6 +32,8 @@ import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
 
+import java.util.List;
+
 /**
  * Test class for the {@link Populator} implementation.
  *
@@ -58,14 +60,33 @@ public class PopulatorTest {
     @org.junit.Test
     public void testGenerateFooBean() throws Exception {
 
-        Foo foo = (Foo) populator.populateBean(Foo.class);
+        Foo foo = populator.populateBean(Foo.class);
 
-        Assert.assertNotNull(foo);
-        Assert.assertNotNull(foo.getName());
-        Assert.assertNotNull(foo.getBar());
-        Assert.assertNotNull(foo.getBar().getId());
-        Assert.assertNotNull(foo.getBar().getNames());
-        Assert.assertEquals(0, foo.getBar().getNames().size());
+        assertFoo(foo);
+
+    }
+
+    @org.junit.Test
+    public void testGenerateFooBeanList() throws Exception {
+
+        List<Foo> foos = populator.populateBeans(Foo.class);
+
+        Assert.assertNotNull(foos);
+        Assert.assertNotEquals(0, foos.size());
+        Foo foo = foos.get(0);
+        assertFoo(foo);
+
+    }
+
+    @org.junit.Test
+    public void testGenerateFooBeanListWith2Items() throws Exception {
+
+        List<Foo> foos = populator.populateBeans(Foo.class, 2);
+
+        Assert.assertNotNull(foos);
+        Assert.assertEquals(2, foos.size());
+        Foo foo = foos.get(0);
+        assertFoo(foo);
 
     }
 
@@ -81,7 +102,7 @@ public class PopulatorTest {
                 .registerRandomizer(Street.class, String.class, "name", new StreetRandomizer())
                 .build();
 
-        Person person = (Person) populator.populateBean(Person.class);
+        Person person = populator.populateBean(Person.class);
 
         Assert.assertNotNull(person);
         Assert.assertNotNull(person.getFirstName());
@@ -97,6 +118,15 @@ public class PopulatorTest {
         Assert.assertNotNull(person.getAddress().getStreet().getType());
         Assert.assertNotNull(person.getAddress().getStreet().getName());
 
+    }
+
+    private void assertFoo(Foo foo) {
+        Assert.assertNotNull(foo);
+        Assert.assertNotNull(foo.getName());
+        Assert.assertNotNull(foo.getBar());
+        Assert.assertNotNull(foo.getBar().getId());
+        Assert.assertNotNull(foo.getBar().getNames());
+        Assert.assertEquals(0, foo.getBar().getNames().size());
     }
 
 }
