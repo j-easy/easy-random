@@ -76,16 +76,17 @@ final class PopulatorImpl implements Populator {
     }
 
     @Override
-    public Object populateBean(final Class type) {
+    public <T> T populateBean(final Class<T> type) {
 
-        Object result;
+        T result;
         try {
 
             /*
              * For enum types, no instantiation needed (else java.lang.InstantiationException)
              */
             if (type.isEnum()) {
-                return DefaultRandomizer.getRandomValue(type);
+                //noinspection unchecked
+                return (T)DefaultRandomizer.getRandomValue(type);
             }
 
             /*
@@ -132,19 +133,20 @@ final class PopulatorImpl implements Populator {
     }
 
     @Override
-    public List<Object> populateBeans(final Class type) {
+    public <T> List<T> populateBeans(final Class<T> type) {
         byte size = (byte) Math.abs((Byte) DefaultRandomizer.getRandomValue(Byte.TYPE));
         return populateBeans(type, size);
     }
 
     @Override
-    public List<Object> populateBeans(final Class type, final int size) {
+    public <T> List<T> populateBeans(final Class<T> type, final int size) {
         Object[] beans = new Object[size];
         for (int i = 0; i < size; i++) {
-            Object bean = populateBeans(type);
+            Object bean = populateBean(type);
             beans[i] = bean;
         }
-        return Arrays.asList(beans);
+        //noinspection unchecked
+        return (List<T>)Arrays.asList(beans);
     }
 
     /**
