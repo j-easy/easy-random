@@ -1,0 +1,17 @@
+JPOPULATOR CHANGELOG
+===================================
+https://github.com/benas/jPopulator
+
+Changes in version 1.0.1 (2014-06-09)
+-------------------------------------
+
+* Improved API using generics (merged pull request #2)
+* Fixed issue #1 : unable to populate a Serializable class
+* Fixed issue #2 : java.lang.StackOverflowError in PopulatorImpl.populateBeans
+* Updated documentation and Javadoc
+
+Changes in version 1.0.0 (2013-12-23)
+-------------------------------------
+
+* Initial core API and Implementation
+* Common randomizers
