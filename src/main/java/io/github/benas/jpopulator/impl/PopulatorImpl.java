@@ -86,7 +86,7 @@ final class PopulatorImpl implements Populator {
              */
             if (type.isEnum()) {
                 //noinspection unchecked
-                return (T)DefaultRandomizer.getRandomValue(type);
+                return (T) DefaultRandomizer.getRandomValue(type);
             }
 
             /*
@@ -146,7 +146,7 @@ final class PopulatorImpl implements Populator {
             beans[i] = bean;
         }
         //noinspection unchecked
-        return (List<T>)Arrays.asList(beans);
+        return (List<T>) Arrays.asList(beans);
     }
 
     /**
