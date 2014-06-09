@@ -27,7 +27,7 @@ package io.github.benas.jpopulator.beans;
 /**
  * A java bean for the Foo type.
  *
- * @author benas (md.benhassine@gmail.com)
+ * @author Mahmoud Ben Hassine (md.benhassine@gmail.com)
  */
 public class Foo {
 

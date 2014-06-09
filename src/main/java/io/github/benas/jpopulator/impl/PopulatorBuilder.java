@@ -33,7 +33,7 @@ import java.util.Map;
 /**
  * A builder to create {@link Populator} instances.
  *
- * @author benas (md.benhassine@gmail.com)
+ * @author Mahmoud Ben Hassine (md.benhassine@gmail.com)
  */
 public class PopulatorBuilder {
 

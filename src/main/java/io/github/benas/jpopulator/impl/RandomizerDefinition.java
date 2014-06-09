@@ -27,7 +27,7 @@ package io.github.benas.jpopulator.impl;
 /**
  * This class defines the type and field for which a custom randomizer should be used.
  *
- * @author benas (md.benhassine@gmail.com)
+ * @author Mahmoud Ben Hassine (md.benhassine@gmail.com)
  */
 final class RandomizerDefinition {
 

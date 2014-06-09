@@ -32,7 +32,7 @@ import java.util.Random;
 /**
  * A custom date randomizer that generates random dates in a range of date values.
  *
- * @author benas (md.benhassine@gmail.com)
+ * @author Mahmoud Ben Hassine (md.benhassine@gmail.com)
  */
 public class DateRangeRandomizer implements Randomizer<Date> {
 

@@ -29,7 +29,7 @@ import java.util.ResourceBundle;
 /**
  * A custom String randomizer that generates random values for first names.
  *
- * @author benas (md.benhassine@gmail.com)
+ * @author Mahmoud Ben Hassine (md.benhassine@gmail.com)
  */
 public class FirstNameRandomizer extends GenericStringRandomizer {
 

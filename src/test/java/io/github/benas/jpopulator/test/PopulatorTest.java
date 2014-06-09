@@ -37,7 +37,7 @@ import java.util.List;
 /**
  * Test class for the {@link Populator} implementation.
  *
- * @author benas (md.benhassine@gmail.com)
+ * @author Mahmoud Ben Hassine (md.benhassine@gmail.com)
  */
 public class PopulatorTest {
 

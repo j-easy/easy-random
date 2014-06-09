@@ -31,7 +31,7 @@ import java.util.Random;
 /**
  * A generic randomizer that generate String values from a list of words.
  *
- * @author benas (md.benhassine@gmail.com)
+ * @author Mahmoud Ben Hassine (md.benhassine@gmail.com)
  */
 public class GenericStringRandomizer implements Randomizer<String> {
 

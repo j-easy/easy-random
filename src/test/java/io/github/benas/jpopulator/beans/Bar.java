@@ -29,7 +29,7 @@ import java.util.List;
 /**
  * A java bean for the Bar type.
  *
- * @author benas (md.benhassine@gmail.com)
+ * @author Mahmoud Ben Hassine (md.benhassine@gmail.com)
  */
 public class Bar {
 

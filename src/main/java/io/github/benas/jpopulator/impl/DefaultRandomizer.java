@@ -36,7 +36,7 @@ import java.util.concurrent.atomic.AtomicLong;
 /**
  * This class is used to generate random value for java built-in types.
  *
- * @author benas (md.benhassine@gmail.com)
+ * @author Mahmoud Ben Hassine (md.benhassine@gmail.com)
  */
 final class DefaultRandomizer {
 

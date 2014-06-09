@@ -24,5 +24,7 @@
 
 /**
  * This package contains jPopulator built-in randomizers.
+ *
+ * @author Mahmoud Ben Hassine (md.benhassine@gmail.com)
  */
 package io.github.benas.jpopulator.randomizers;

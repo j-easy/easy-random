@@ -29,7 +29,7 @@ import java.util.ResourceBundle;
 /**
  * A custom String randomizer that generates random values for street names.
  *
- * @author benas (md.benhassine@gmail.com)
+ * @author Mahmoud Ben Hassine (md.benhassine@gmail.com)
  */
 public class StreetRandomizer extends GenericStringRandomizer {
 

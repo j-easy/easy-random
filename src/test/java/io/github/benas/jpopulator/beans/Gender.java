@@ -27,7 +27,7 @@ package io.github.benas.jpopulator.beans;
 /**
  * Enumeration for the Gender type.
  *
- * @author benas (md.benhassine@gmail.com)
+ * @author Mahmoud Ben Hassine (md.benhassine@gmail.com)
  */
 public enum Gender {
     MALE, FEMALE
