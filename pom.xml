@@ -10,7 +10,7 @@
 
     <groupId>io.github.benas</groupId>
     <artifactId>jpopulator</artifactId>
-    <version>1.0.1-SNAPSHOT</version>
+    <version>1.0.1</version>
     <packaging>jar</packaging>
 
     <name>jPopulator</name>
@@ -25,7 +25,7 @@
         <url>git@github.com:benas/jPopulator.git</url>
         <connection>scm:git:git@github.com:benas/jPopulator.git</connection>
         <developerConnection>scm:git:git@github.com:benas/jPopulator.git</developerConnection>
-        <tag>HEAD</tag>
+        <tag>jpopulator-1.0.1</tag>
     </scm>
 
     <developers>
