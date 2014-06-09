@@ -6,6 +6,11 @@ jPopulator is a java tool that allows you to populate java beans with random dat
 
 jPopulator documentation can be found here : [http://benas.github.io/jPopulator/][]
 
+## Awesome contributors
+
+* [Alberto Lagna](https://github.com/alagna)
+* [Adriano Machado](https://github.com/ammachado)
+
 ## License
 jPopulator is released under the [MIT License][].
 
