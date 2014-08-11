@@ -28,6 +28,7 @@ import io.github.benas.jpopulator.api.Populator;
 import io.github.benas.jpopulator.beans.*;
 import io.github.benas.jpopulator.impl.PopulatorBuilder;
 import io.github.benas.jpopulator.randomizers.*;
+
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
@@ -120,6 +121,19 @@ public class PopulatorTest {
 
     }
 
+    @org.junit.Test
+    public void testList() throws Exception {
+        populator = new PopulatorBuilder()
+        .registerRandomizer(Person.class, List.class, "nicknames", new ListRandomizer<String>(new FirstNameRandomizer(), 3))
+        .build();
+
+		Person person = populator.populateBean(Person.class);
+		
+		Assert.assertNotNull(person);
+		Assert.assertNotNull(person.getNicknames());
+		Assert.assertEquals(3, person.getNicknames().size());
+    }
+    
     private void assertFoo(Foo foo) {
         Assert.assertNotNull(foo);
         Assert.assertNotNull(foo.getName());

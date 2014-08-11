@@ -24,6 +24,8 @@
 
 package io.github.benas.jpopulator.beans;
 
+import java.util.List;
+
 /**
  * A java bean for the Person type.
  *
@@ -31,7 +33,7 @@ package io.github.benas.jpopulator.beans;
  */
 public class Person {
 
-    private String firstName;
+	private String firstName;
 
     private String lastName;
 
@@ -41,6 +43,8 @@ public class Person {
 
     private Address address;
 
+    private List<String> nicknames;
+    
     public Person() {
     }
 
@@ -92,6 +96,14 @@ public class Person {
         this.address = address;
     }
 
+    public List<String> getNicknames() {
+		return nicknames;
+	}
+
+	public void setNicknames(List<String> nicknames) {
+		this.nicknames = nicknames;
+	}
+    
     @Override
     public String toString() {
         final StringBuilder sb = new StringBuilder("Person{");
