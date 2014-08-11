@@ -170,7 +170,10 @@ final class PopulatorImpl implements Populator {
         } else { // Custom type (recursion needed to populate nested custom types if any)
             object = populateBean(fieldType);
         }
-        PropertyUtils.setProperty(result, fieldName, object);
+        // Issue #5: set the field only if the value is not null
+        if (object != null) {
+        	PropertyUtils.setProperty(result, fieldName, object);
+        }
 
     }
 
