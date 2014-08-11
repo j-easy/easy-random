@@ -36,7 +36,7 @@ public class ListRandomizer<T> implements Randomizer<Collection<T>> {
 	 * @param nb The number of elements in the list to generate
 	 */
 	public ListRandomizer(Randomizer<T> elementRandomizer, int nb) {
-		this(elementRandomizer, 0, nb);
+		this(elementRandomizer, nb, nb);
 	}
 	
 	/**
@@ -48,13 +48,14 @@ public class ListRandomizer<T> implements Randomizer<Collection<T>> {
 	public ListRandomizer(Randomizer<T> elementRandomizer, int min, int max) {
 		this.elementRandomizer = elementRandomizer;
 		this.min = min;
-		this.max = max;
+		assert max >= min : "The maximum number of occurences should be higher or equal to the minimum number of occurrences.";
+		this.max = max + 1;
 	}
 	
 	@Override
 	public Collection<T> getRandomValue() {
 		List<T> result = new ArrayList<T>();
-		int nb = RANDOM.nextInt(max-min > 0 ? max-min : 1) + min;
+		int nb = RANDOM.nextInt(max-min) + min;
 		for(int i = 0; i < nb; i++) {
 			result.add(elementRandomizer.getRandomValue());
 		}
