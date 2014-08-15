@@ -119,7 +119,7 @@ final class PopulatorImpl implements Populator {
                     continue;
                 }
                 if (isCollectionType(field.getType())) {
-                    populateCollectionType(result, field);
+               		populateCollectionType(result, field);
                 } else {
                     populateSimpleType(result, field);
                 }
@@ -186,23 +186,28 @@ final class PopulatorImpl implements Populator {
         Class<?> fieldType = field.getType();
         String fieldName = field.getName();
 
-        //Array type
-        if (fieldType.isArray()) {
-            PropertyUtils.setProperty(result, fieldName, Array.newInstance(fieldType.getComponentType(), 0));
-            return;
-        }
-
-        //Collection type
-        Object collection = null;
-        if (List.class.isAssignableFrom(fieldType)) { // List, ArrayList, LinkedList, etc
-            collection = Collections.emptyList();
-        } else if (Set.class.isAssignableFrom(fieldType)) { // Set, HashSet, TreeSet, LinkedHashSet, etc
-            collection = Collections.emptySet();
-        } else if (Map.class.isAssignableFrom(fieldType)) { // Map, HashMap, Dictionary, Properties, etc
-            collection = Collections.emptyMap();
-        }
-        PropertyUtils.setProperty(result, fieldName, collection);
-
+        // If the field has a custom randomizer then populate it as a simple type
+    	if (customRandomizer(result.getClass(), fieldType, fieldName)) {
+    		 populateSimpleType(result, field);
+    	}
+    	else {
+	        //Array type
+	        if (fieldType.isArray()) {
+	            PropertyUtils.setProperty(result, fieldName, Array.newInstance(fieldType.getComponentType(), 0));
+	            return;
+	        }
+	
+	        //Collection type
+	        Object collection = null;
+	        if (List.class.isAssignableFrom(fieldType)) { // List, ArrayList, LinkedList, etc
+	            collection = Collections.emptyList();
+	        } else if (Set.class.isAssignableFrom(fieldType)) { // Set, HashSet, TreeSet, LinkedHashSet, etc
+	            collection = Collections.emptySet();
+	        } else if (Map.class.isAssignableFrom(fieldType)) { // Map, HashMap, Dictionary, Properties, etc
+	            collection = Collections.emptyMap();
+	        }
+	        PropertyUtils.setProperty(result, fieldName, collection);
+    	}
     }
 
     /**
