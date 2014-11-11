@@ -143,4 +143,22 @@ public class PopulatorTest {
         Assert.assertEquals(0, foo.getBar().getNames().size());
     }
 
+    @org.junit.Test
+    public void testExcludes() throws Exception {
+    	populator = new PopulatorBuilder().build();
+    	Person person = populator.populateBeanWithExcludeFields(Person.class, "firstName", "nicknames");
+    	
+    	Assert.assertNotNull(person);
+    	Assert.assertNotNull(person.getEmail());
+    	
+    	Assert.assertNull(person.getFirstName());
+    	Assert.assertNull(person.getNicknames());
+    	
+    	person = populator.populateBeanWithExcludeFields(Person.class, null);
+    	
+    	Assert.assertNotNull(person);
+    	Assert.assertNotNull(person.getEmail());
+    	Assert.assertNotNull(person.getFirstName());
+    	Assert.assertNotNull(person.getNicknames());
+    }
 }
