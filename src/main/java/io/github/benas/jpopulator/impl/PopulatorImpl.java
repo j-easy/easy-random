@@ -77,7 +77,7 @@ final class PopulatorImpl implements Populator {
 
     @Override
     public <T> T populateBean(final Class<T> type) {
-    	return populateBeanWithExcludeFields(type, null);
+    	return populateBeanWithExcludeFields(type);
     }
 
     @Override
