@@ -154,7 +154,7 @@ public class PopulatorTest {
     	Assert.assertNull(person.getFirstName());
     	Assert.assertNull(person.getNicknames());
     	
-    	person = populator.populateBeanWithExcludeFields(Person.class, null);
+    	person = populator.populateBeanWithExcludeFields(Person.class);
     	
     	Assert.assertNotNull(person);
     	Assert.assertNotNull(person.getEmail());
