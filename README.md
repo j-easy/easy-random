@@ -4,7 +4,7 @@ jPopulator is a java tool that allows you to populate java beans with random dat
 
 ## Documentation
 
-jPopulator documentation can be found here : [http://benas.github.io/jPopulator/][]
+jPopulator documentation can be found here : [https://github.com/benas/jPopulator/wiki][]
 
 ## Awesome contributors
 
@@ -14,5 +14,5 @@ jPopulator documentation can be found here : [http://benas.github.io/jPopulator/
 ## License
 jPopulator is released under the [MIT License][].
 
-[http://benas.github.io/jPopulator/]: http://benas.github.io/jPopulator/
+[https://github.com/benas/jPopulator/wiki]: https://github.com/benas/jPopulator/wiki
 [MIT License]: http://opensource.org/licenses/mit-license.php/
