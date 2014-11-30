@@ -77,7 +77,7 @@ final class PopulatorImpl implements Populator {
 
     @Override
     public <T> T populateBean(final Class<T> type) {
-    	return populateBeanWithExcludeFields(type);
+        return populateBeanWithExcludeFields(type);
     }
 
     @Override
@@ -120,7 +120,7 @@ final class PopulatorImpl implements Populator {
         }
         // Issue #5: set the field only if the value is not null
         if (object != null) {
-        	PropertyUtils.setProperty(result, fieldName, object);
+            PropertyUtils.setProperty(result, fieldName, object);
         }
 
     }
@@ -138,27 +138,26 @@ final class PopulatorImpl implements Populator {
         String fieldName = field.getName();
 
         // If the field has a custom randomizer then populate it as a simple type
-    	if (customRandomizer(result.getClass(), fieldType, fieldName)) {
-    		 populateSimpleType(result, field);
-    	}
-    	else {
-	        //Array type
-	        if (fieldType.isArray()) {
-	            PropertyUtils.setProperty(result, fieldName, Array.newInstance(fieldType.getComponentType(), 0));
-	            return;
-	        }
-	
-	        //Collection type
-	        Object collection = null;
-	        if (List.class.isAssignableFrom(fieldType)) { // List, ArrayList, LinkedList, etc
-	            collection = Collections.emptyList();
-	        } else if (Set.class.isAssignableFrom(fieldType)) { // Set, HashSet, TreeSet, LinkedHashSet, etc
-	            collection = Collections.emptySet();
-	        } else if (Map.class.isAssignableFrom(fieldType)) { // Map, HashMap, Dictionary, Properties, etc
-	            collection = Collections.emptyMap();
-	        }
-	        PropertyUtils.setProperty(result, fieldName, collection);
-    	}
+        if (customRandomizer(result.getClass(), fieldType, fieldName)) {
+            populateSimpleType(result, field);
+        } else {
+            //Array type
+            if (fieldType.isArray()) {
+                PropertyUtils.setProperty(result, fieldName, Array.newInstance(fieldType.getComponentType(), 0));
+                return;
+            }
+
+            //Collection type
+            Object collection = null;
+            if (List.class.isAssignableFrom(fieldType)) { // List, ArrayList, LinkedList, etc
+                collection = Collections.emptyList();
+            } else if (Set.class.isAssignableFrom(fieldType)) { // Set, HashSet, TreeSet, LinkedHashSet, etc
+                collection = Collections.emptySet();
+            } else if (Map.class.isAssignableFrom(fieldType)) { // Map, HashMap, Dictionary, Properties, etc
+                collection = Collections.emptyMap();
+            }
+            PropertyUtils.setProperty(result, fieldName, collection);
+        }
     }
 
     /**
@@ -202,9 +201,8 @@ final class PopulatorImpl implements Populator {
         this.randomizers = randomizers;
     }
 
-	@Override
-	public <T> T populateBeanWithExcludeFields(Class<T> type,
-			String... excludeFieldsName) {
+    @Override
+    public <T> T populateBeanWithExcludeFields(Class<T> type, String... excludeFieldsName) {
 
         T result;
         try {
@@ -241,16 +239,16 @@ final class PopulatorImpl implements Populator {
              * Generate random data for each field
              */
             for (Field field : declaredFields) {
-            	if(checkIfExcludeField(field, excludeFieldsName)){
-					continue;
-				}
+                if (checkIfExcludeField(field, excludeFieldsName)) {
+                    continue;
+                }
                 //do not populate static nor final fields
                 int fieldModifiers = field.getModifiers();
                 if (Modifier.isStatic(fieldModifiers) || Modifier.isFinal(fieldModifiers)) {
                     continue;
                 }
                 if (isCollectionType(field.getType())) {
-               		populateCollectionType(result, field);
+                    populateCollectionType(result, field);
                 } else {
                     populateSimpleType(result, field);
                 }
@@ -261,20 +259,20 @@ final class PopulatorImpl implements Populator {
         }
 
         return result;
-	}
-	
-	private boolean checkIfExcludeField(Field field, String... excludeFieldsName) {
-		if(excludeFieldsName == null) return false;
-		boolean exclude = false;
-		String fieldName = field.getName().toLowerCase();
-		for(String excludeFieldName: excludeFieldsName) {
-			if(fieldName.equals(excludeFieldName.toLowerCase())) {
-				exclude = true;
-				break;
-			}
-		}
-		
-		return exclude;
-	}
-	
+    }
+
+    private boolean checkIfExcludeField(Field field, String... excludeFieldsName) {
+        if (excludeFieldsName == null) return false;
+        boolean exclude = false;
+        String fieldName = field.getName().toLowerCase();
+        for (String excludeFieldName : excludeFieldsName) {
+            if (fieldName.equals(excludeFieldName.toLowerCase())) {
+                exclude = true;
+                break;
+            }
+        }
+
+        return exclude;
+    }
+
 }
