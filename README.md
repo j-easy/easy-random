@@ -10,6 +10,7 @@ jPopulator documentation can be found here : [https://github.com/benas/jPopulato
 
 * [Alberto Lagna](https://github.com/alagna)
 * [Adriano Machado](https://github.com/ammachado)
+* [Jose Manuel Prieto](https://github.com/prietopa)
 
 ## License
 jPopulator is released under the [MIT License][].
