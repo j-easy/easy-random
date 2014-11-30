@@ -24,7 +24,7 @@
 
 package io.github.benas.jpopulator.impl;
 
-import org.apache.commons.lang.RandomStringUtils;
+import org.apache.commons.lang3.RandomStringUtils;
 
 import java.math.BigDecimal;
 import java.math.BigInteger;
