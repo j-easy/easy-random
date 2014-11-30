@@ -127,11 +127,11 @@ public class PopulatorTest {
         .registerRandomizer(Person.class, List.class, "nicknames", new ListRandomizer<String>(new FirstNameRandomizer(), 3))
         .build();
 
-		Person person = populator.populateBean(Person.class);
-		
-		Assert.assertNotNull(person);
-		Assert.assertNotNull(person.getNicknames());
-		Assert.assertEquals(3, person.getNicknames().size());
+        Person person = populator.populateBean(Person.class);
+
+        Assert.assertNotNull(person);
+        Assert.assertNotNull(person.getNicknames());
+        Assert.assertEquals(3, person.getNicknames().size());
     }
     
     private void assertFoo(Foo foo) {
@@ -145,20 +145,20 @@ public class PopulatorTest {
 
     @org.junit.Test
     public void testExcludes() throws Exception {
-    	populator = new PopulatorBuilder().build();
-    	Person person = populator.populateBeanWithExcludeFields(Person.class, "firstName", "nicknames");
-    	
-    	Assert.assertNotNull(person);
-    	Assert.assertNotNull(person.getEmail());
-    	
-    	Assert.assertNull(person.getFirstName());
-    	Assert.assertNull(person.getNicknames());
-    	
-    	person = populator.populateBeanWithExcludeFields(Person.class);
-    	
-    	Assert.assertNotNull(person);
-    	Assert.assertNotNull(person.getEmail());
-    	Assert.assertNotNull(person.getFirstName());
-    	Assert.assertNotNull(person.getNicknames());
+        populator = new PopulatorBuilder().build();
+        Person person = populator.populateBean(Person.class, "firstName", "nicknames");
+
+        Assert.assertNotNull(person);
+        Assert.assertNotNull(person.getEmail());
+
+        Assert.assertNull(person.getFirstName());
+        Assert.assertNull(person.getNicknames());
+
+        person = populator.populateBean(Person.class);
+
+        Assert.assertNotNull(person);
+        Assert.assertNotNull(person.getEmail());
+        Assert.assertNotNull(person.getFirstName());
+        Assert.assertNotNull(person.getNicknames());
     }
 }

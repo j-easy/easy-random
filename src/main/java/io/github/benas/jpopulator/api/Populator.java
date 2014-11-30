@@ -37,20 +37,11 @@ public interface Populator {
      * Populate a java bean instance for the given type.
      *
      * @param type the type for which a java bean instance will be populated
-     * @param <T> the actual type of the target java bean
-     * @return a populated instance of the given type
-     */
-    <T> T populateBean(final Class<T> type);
-
-    /**
-     * Populate a java bean instance for the given type with the possibility of exclude some fields.
-     *
-     * @param type the type for which a java bean instance will be populated
      * @param excludeFieldsName the name of fields to exclude
      * @param <T> the actual type of the target java bean
      * @return a populated instance of the given type
      */
-    <T> T populateBeanWithExcludeFields(final Class<T> type, final String... excludeFieldsName);
+    <T> T populateBean(final Class<T> type, final String... excludeFieldsName);
 
     /**
      * Populate a random number of java bean instances for the given type.

@@ -76,8 +76,63 @@ final class PopulatorImpl implements Populator {
     }
 
     @Override
-    public <T> T populateBean(final Class<T> type) {
-        return populateBeanWithExcludeFields(type);
+    public <T> T populateBean(Class<T> type, String... excludeFieldsName) {
+
+        T result;
+        try {
+
+            /*
+             * For enum types, no instantiation needed (else java.lang.InstantiationException)
+             */
+            if (type.isEnum()) {
+                //noinspection unchecked
+                return (T) DefaultRandomizer.getRandomValue(type);
+            }
+
+            /*
+             * Create an instance of the type
+             */
+            result = type.newInstance();
+
+            /*
+             * Retrieve declared fields
+             */
+            List<Field> declaredFields = new ArrayList<Field>(Arrays.asList(result.getClass().getDeclaredFields()));
+
+            /*
+             * Retrieve inherited fields for all type hierarchy
+             */
+            Class clazz = type;
+            while (clazz.getSuperclass() != null) {
+                Class superclass = clazz.getSuperclass();
+                declaredFields.addAll(Arrays.asList(superclass.getDeclaredFields()));
+                clazz = superclass;
+            }
+
+            /*
+             * Generate random data for each field
+             */
+            for (Field field : declaredFields) {
+                if (checkIfExcludeField(field, excludeFieldsName)) {
+                    continue;
+                }
+                //do not populate static nor final fields
+                int fieldModifiers = field.getModifiers();
+                if (Modifier.isStatic(fieldModifiers) || Modifier.isFinal(fieldModifiers)) {
+                    continue;
+                }
+                if (isCollectionType(field.getType())) {
+                    populateCollectionType(result, field);
+                } else {
+                    populateSimpleType(result, field);
+                }
+            }
+        } catch (Exception e) {
+            logger.log(Level.SEVERE, "Unable to populate an instance of type " + type, e);
+            return null;
+        }
+
+        return result;
     }
 
     @Override
@@ -201,68 +256,15 @@ final class PopulatorImpl implements Populator {
         this.randomizers = randomizers;
     }
 
-    @Override
-    public <T> T populateBeanWithExcludeFields(Class<T> type, String... excludeFieldsName) {
-
-        T result;
-        try {
-
-            /*
-             * For enum types, no instantiation needed (else java.lang.InstantiationException)
-             */
-            if (type.isEnum()) {
-                //noinspection unchecked
-                return (T) DefaultRandomizer.getRandomValue(type);
-            }
-
-            /*
-             * Create an instance of the type
-             */
-            result = type.newInstance();
-
-            /*
-             * Retrieve declared fields
-             */
-            List<Field> declaredFields = new ArrayList<Field>(Arrays.asList(result.getClass().getDeclaredFields()));
-
-            /*
-             * Retrieve inherited fields for all type hierarchy
-             */
-            Class clazz = type;
-            while (clazz.getSuperclass() != null) {
-                Class superclass = clazz.getSuperclass();
-                declaredFields.addAll(Arrays.asList(superclass.getDeclaredFields()));
-                clazz = superclass;
-            }
-
-            /*
-             * Generate random data for each field
-             */
-            for (Field field : declaredFields) {
-                if (checkIfExcludeField(field, excludeFieldsName)) {
-                    continue;
-                }
-                //do not populate static nor final fields
-                int fieldModifiers = field.getModifiers();
-                if (Modifier.isStatic(fieldModifiers) || Modifier.isFinal(fieldModifiers)) {
-                    continue;
-                }
-                if (isCollectionType(field.getType())) {
-                    populateCollectionType(result, field);
-                } else {
-                    populateSimpleType(result, field);
-                }
-            }
-        } catch (Exception e) {
-            logger.log(Level.SEVERE, "Unable to populate an instance of type " + type, e);
-            return null;
-        }
-
-        return result;
-    }
-
+    /**
+     * Utility method that checks if a field should be excluded from being populated.
+     *
+     * @param field the field to check
+     * @param excludeFieldsName the list of field names to be excluded
+     * @return true if the field should be excluded, false otherwise
+     */
     private boolean checkIfExcludeField(Field field, String... excludeFieldsName) {
-        if (excludeFieldsName == null) return false;
+        if (excludeFieldsName == null || excludeFieldsName.length == 0) return false;
         boolean exclude = false;
         String fieldName = field.getName().toLowerCase();
         for (String excludeFieldName : excludeFieldsName) {
