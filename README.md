@@ -10,6 +10,7 @@ jPopulator documentation can be found here : [https://github.com/benas/jPopulato
 
 * [Alberto Lagna](https://github.com/alagna)
 * [Adriano Machado](https://github.com/ammachado)
+* [Eric Taix](https://github.com/eric-taix)
 * [Jose Manuel Prieto](https://github.com/prietopa)
 
 ## License
