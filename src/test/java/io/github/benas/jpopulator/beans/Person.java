@@ -24,6 +24,7 @@
 
 package io.github.benas.jpopulator.beans;
 
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -42,6 +43,8 @@ public class Person {
     private Gender gender;
 
     private Address address;
+    
+    private Date birthDate;
 
     private List<String> nicknames;
     
@@ -103,8 +106,16 @@ public class Person {
 	public void setNicknames(List<String> nicknames) {
 		this.nicknames = nicknames;
 	}
-    
-    @Override
+	
+    public Date getBirthDate() {
+		return birthDate;
+	}
+
+	public void setBirthDate(Date birthdate) {
+		this.birthDate = birthdate;
+	}
+
+	@Override
     public String toString() {
         final StringBuilder sb = new StringBuilder("Person{");
         sb.append("firstName='").append(firstName).append('\'');

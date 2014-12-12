@@ -29,10 +29,13 @@ import io.github.benas.jpopulator.beans.*;
 import io.github.benas.jpopulator.impl.PopulatorBuilder;
 import io.github.benas.jpopulator.randomizers.*;
 
+import org.joda.time.LocalDate;
+import org.joda.time.LocalDateTime;
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
 
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -110,6 +113,7 @@ public class PopulatorTest {
         Assert.assertNotNull(person.getLastName());
         Assert.assertNotNull(person.getEmail());
         Assert.assertNotNull(person.getGender());
+        Assert.assertNotNull(person.getBirthDate());
         Assert.assertNotNull(person.getAddress());
         Assert.assertNotNull(person.getAddress().getZipCode());
         Assert.assertNotNull(person.getAddress().getCity());
@@ -160,5 +164,17 @@ public class PopulatorTest {
         Assert.assertNotNull(person.getEmail());
         Assert.assertNotNull(person.getFirstName());
         Assert.assertNotNull(person.getNicknames());
+    }
+    
+    @org.junit.Test
+    public void dateShouldBeWithinSpecifiedRange() {
+    	LocalDateTime today = LocalDateTime.now();
+    	LocalDateTime tomorrow = LocalDateTime.now().plusDays(1);
+    	populator = new PopulatorBuilder()
+    	.registerRandomizer(Person.class, Date.class, "birthDate", new DateRangeRandomizer(today.toDate(), tomorrow.toDate()))
+    	.build();
+        Person person = populator.populateBean(Person.class);
+        Assert.assertTrue(today.isBefore(new LocalDateTime(person.getBirthDate())) && tomorrow.isAfter(new LocalDateTime(person.getBirthDate())));
+        
     }
 }

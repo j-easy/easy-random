@@ -27,7 +27,6 @@ package io.github.benas.jpopulator.randomizers;
 import io.github.benas.jpopulator.api.Randomizer;
 
 import java.util.Date;
-import java.util.Random;
 
 /**
  * A custom date randomizer that generates random dates in a range of date values.
@@ -35,8 +34,6 @@ import java.util.Random;
  * @author Mahmoud Ben Hassine (md.benhassine@gmail.com)
  */
 public class DateRangeRandomizer implements Randomizer<Date> {
-
-    private final Random random = new Random();
 
     /**
      * The minimum date value.
@@ -62,10 +59,8 @@ public class DateRangeRandomizer implements Randomizer<Date> {
     public Date getRandomValue() {
         long minDateTime = minDate.getTime();
         long maxDateTime = maxDate.getTime();
-        long randomDateTime = random.nextLong();
-        while (randomDateTime < minDateTime && randomDateTime > maxDateTime) {
-            randomDateTime = random.nextLong();
-        }
+        long diff = maxDateTime - minDateTime + 1;
+        long randomDateTime = minDateTime + (long) (Math.random() * diff);
         return new Date(randomDateTime);
     }
 
