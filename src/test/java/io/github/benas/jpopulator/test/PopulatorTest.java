@@ -25,18 +25,27 @@
 package io.github.benas.jpopulator.test;
 
 import io.github.benas.jpopulator.api.Populator;
-import io.github.benas.jpopulator.beans.*;
+import io.github.benas.jpopulator.beans.Address;
+import io.github.benas.jpopulator.beans.Foo;
+import io.github.benas.jpopulator.beans.Person;
+import io.github.benas.jpopulator.beans.Street;
 import io.github.benas.jpopulator.impl.PopulatorBuilder;
-import io.github.benas.jpopulator.randomizers.*;
+import io.github.benas.jpopulator.randomizers.CityRandomizer;
+import io.github.benas.jpopulator.randomizers.CountryRandomizer;
+import io.github.benas.jpopulator.randomizers.DateRangeRandomizer;
+import io.github.benas.jpopulator.randomizers.EmailRandomizer;
+import io.github.benas.jpopulator.randomizers.FirstNameRandomizer;
+import io.github.benas.jpopulator.randomizers.LastNameRandomizer;
+import io.github.benas.jpopulator.randomizers.ListRandomizer;
+import io.github.benas.jpopulator.randomizers.StreetRandomizer;
 
-import org.joda.time.LocalDate;
+import java.util.Date;
+import java.util.List;
+
 import org.joda.time.LocalDateTime;
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
-
-import java.util.Date;
-import java.util.List;
 
 /**
  * Test class for the {@link Populator} implementation.
