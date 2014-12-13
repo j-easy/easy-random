@@ -6,7 +6,7 @@ import java.math.BigDecimal;
 import java.math.BigInteger;
 
 /**
- * A randomizer that generate random values less then or equal to a maximum value.
+ * A randomizer that generate random values less than or equal to a maximum value.
  *
  * This is used for fields annotated with {@link javax.validation.constraints.Max}.
  *
@@ -22,7 +22,8 @@ public class MaxValueRandomizer {
      * Generate a random value for the given type.
      *
      * @param type the type for which a random value will be generated
-     * @return a random value for the given type or null if the type is not supported
+     * @param maxValue the maximum threshold for the generated value
+     * @return a random value (lower than maxValue) for the given type or null if the type is not supported
      */
     public static Object getRandomValue(final Class type, final long maxValue) {
 
