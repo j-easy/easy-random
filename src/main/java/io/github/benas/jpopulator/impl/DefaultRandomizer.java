@@ -24,15 +24,15 @@
 
 package io.github.benas.jpopulator.impl;
 
-import org.apache.commons.lang3.RandomStringUtils;
-import org.apache.commons.math3.random.RandomDataGenerator;
-
 import java.math.BigDecimal;
 import java.math.BigInteger;
 import java.util.Calendar;
 import java.util.Random;
 import java.util.concurrent.atomic.AtomicInteger;
 import java.util.concurrent.atomic.AtomicLong;
+
+import org.apache.commons.lang3.RandomStringUtils;
+import org.apache.commons.math3.random.RandomDataGenerator;
 
 /**
  * This class is used to generate random value for java built-in types.
