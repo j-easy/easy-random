@@ -39,10 +39,10 @@ import io.github.benas.jpopulator.randomizers.LastNameRandomizer;
 import io.github.benas.jpopulator.randomizers.ListRandomizer;
 import io.github.benas.jpopulator.randomizers.StreetRandomizer;
 
+import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
-import org.joda.time.LocalDateTime;
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
@@ -177,13 +177,15 @@ public class PopulatorTest {
     
     @org.junit.Test
     public void dateShouldBeWithinSpecifiedRange() {
-    	LocalDateTime today = LocalDateTime.now();
-    	LocalDateTime tomorrow = LocalDateTime.now().plusDays(1);
+    	Date today = new Date();
+        Calendar calendar = Calendar.getInstance();
+        calendar.add(Calendar.DATE, 1);
+        Date tomorrow = calendar.getTime();
     	populator = new PopulatorBuilder()
-    	.registerRandomizer(Person.class, Date.class, "birthDate", new DateRangeRandomizer(today.toDate(), tomorrow.toDate()))
+    	.registerRandomizer(Person.class, Date.class, "birthDate", new DateRangeRandomizer(today, tomorrow))
     	.build();
         Person person = populator.populateBean(Person.class);
-        Assert.assertTrue(today.isBefore(new LocalDateTime(person.getBirthDate())) && tomorrow.isAfter(new LocalDateTime(person.getBirthDate())));
-        
+
+        Assert.assertTrue(today.before(person.getBirthDate()) && tomorrow.after(person.getBirthDate()));
     }
 }
