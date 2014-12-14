@@ -33,11 +33,15 @@ import java.util.concurrent.atomic.AtomicLong;
 
 import org.apache.commons.lang3.RandomStringUtils;
 import org.apache.commons.math3.random.RandomDataGenerator;
+import org.joda.time.DateTime;
+import org.joda.time.LocalDate;
+import org.joda.time.LocalTime;
 
 /**
  * This class is used to generate random value for java built-in types.
  *
  * @author Mahmoud Ben Hassine (md.benhassine@gmail.com)
+ * @author Nikola Milivojevic (0dziga0@gmail.com)
  */
 final class DefaultRandomizer {
 
@@ -129,6 +133,15 @@ final class DefaultRandomizer {
         }
         if (type.equals(Calendar.class)) {
             return Calendar.getInstance();
+        }
+        if (type.equals(DateTime.class)) {
+        	return new DateTime(getRandomDate(DATE_INTERVAL));
+        }
+        if (type.equals(LocalDate.class)) {
+        	return new LocalDate(getRandomDate(DATE_INTERVAL));
+        }
+        if (type.equals(LocalTime.class)) {
+        	return new LocalTime(getRandomDate(DATE_INTERVAL));
         }
 
         /*
