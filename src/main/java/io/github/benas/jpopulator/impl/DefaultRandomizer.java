@@ -35,6 +35,7 @@ import org.apache.commons.lang3.RandomStringUtils;
 import org.apache.commons.math3.random.RandomDataGenerator;
 import org.joda.time.DateTime;
 import org.joda.time.LocalDate;
+import org.joda.time.LocalDateTime;
 import org.joda.time.LocalTime;
 
 /**
@@ -142,6 +143,9 @@ final class DefaultRandomizer {
         }
         if (type.equals(LocalTime.class)) {
         	return new LocalTime(getRandomDate(DATE_INTERVAL));
+        }
+        if (type.equals(LocalDateTime.class)) {
+        	return new LocalDateTime(getRandomDate(DATE_INTERVAL));
         }
 
         /*

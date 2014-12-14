@@ -1,5 +1,6 @@
 package io.github.benas.jpopulator.randomizers;
 
+import org.joda.time.LocalDate;
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
@@ -33,7 +34,7 @@ public class DateRangeRandomizerTest {
         Assert.assertNotNull(randomDate);
         Assert.assertTrue(today.before(randomDate) && tomorrow.after(randomDate));
     }
-
+    
     @After
     public void tearDown() throws Exception {
         dateRangeRandomizer = null;
