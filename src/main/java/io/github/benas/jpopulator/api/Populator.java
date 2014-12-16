@@ -34,7 +34,8 @@ import java.util.List;
 public interface Populator {
 
     /**
-     * Populate a java bean instance for the given type.
+     * Populate a java bean instance for the given type.<br/>
+     * It is possible to exclude some fields from being populated using the excludeFieldsName param.
      *
      * @param type the type for which a java bean instance will be populated
      * @param excludeFieldsName the name of fields to exclude

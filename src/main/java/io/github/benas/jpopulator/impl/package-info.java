@@ -23,7 +23,7 @@
  */
 
 /**
- * This package contains core jPopulator implementation.
+ * This package contains jPopulator core implementation.
  *
  * @author Mahmoud Ben Hassine (md.benhassine@gmail.com)
  */

@@ -23,7 +23,7 @@
  */
 
 /**
- * This package contains main jPopulator public API.
+ * This package contains jPopulator public API.
  *
  * @author Mahmoud Ben Hassine (md.benhassine@gmail.com)
  */
