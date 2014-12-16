@@ -26,7 +26,7 @@ public class CountryRandomizerTest {
     }
 
     @Test
-    public void generatedCityShouldBeInThePredefinedCitiesList() throws Exception {
+    public void generatedCountryShouldBeInThePredefinedCountriesList() throws Exception {
         String randomValue = countryRandomizer.getRandomValue();
         Assert.assertNotNull(randomValue);
         Assert.assertTrue(countries.contains(randomValue));
