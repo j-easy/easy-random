@@ -63,7 +63,7 @@ public class OptionalRandomizer<T> implements Randomizer<T> {
      *
      * @param delegate        the delegate randomizer to use
      * @param optionalPercent the optional percent threshold
-     * @return
+     * @return optional randomizer
      */
     public static <T> Randomizer<T> option(Randomizer<T> delegate, int optionalPercent) {
         return new OptionalRandomizer<T>(delegate, optionalPercent);
