@@ -33,6 +33,11 @@
         <url>https://buildhive.cloudbees.com/job/benas/job/jPopulator/</url>
     </ciManagement>
 
+    <issueManagement>
+        <system>GitHub</system>
+        <url>https://github.com/benas/jPopulator/issues</url>
+    </issueManagement>
+
     <developers>
         <developer>
             <id>benas</id>
