@@ -24,6 +24,8 @@
 
 package io.github.benas.jpopulator.impl;
 
+import io.github.benas.jpopulator.utils.DateUtils;
+
 import java.math.BigDecimal;
 import java.math.BigInteger;
 import java.util.Calendar;
@@ -116,16 +118,16 @@ final class DefaultRandomizer {
          * Date and time types
          */
         if (type.equals(java.util.Date.class)) {
-            return new java.util.Date(getRandomDate(DATE_INTERVAL));
+            return new java.util.Date(DateUtils.getRandomDate(DATE_INTERVAL));
         }
         if (type.equals(java.sql.Date.class)) {
-            return new java.sql.Date(getRandomDate(DATE_INTERVAL));
+            return new java.sql.Date(DateUtils.getRandomDate(DATE_INTERVAL));
         }
         if (type.equals(java.sql.Time.class)) {
             return new java.sql.Time(RANDOM.nextLong());
         }
         if (type.equals(java.sql.Timestamp.class)) {
-            return new java.sql.Timestamp(getRandomDate(DATE_INTERVAL));
+            return new java.sql.Timestamp(DateUtils.getRandomDate(DATE_INTERVAL));
         }
         if (type.equals(Calendar.class)) {
             return Calendar.getInstance();
@@ -144,25 +146,6 @@ final class DefaultRandomizer {
          */
         return null;
 
-    }
-
-    /**
-     * Utility method that generates a random long corresponding to a date between [now - x years, now + x years].
-     * @return a random long corresponding to a date between [now - x years, now + x years]
-     */
-    private static long getRandomDate(int interval) {
-
-        // lower bound: x years ago
-        Calendar c = Calendar.getInstance();
-        c.add(Calendar.YEAR, -interval);
-        long xYearsAgo = c.getTime().getTime();
-
-        // upper bound: in x years
-        c = Calendar.getInstance();
-        c.add(Calendar.YEAR, interval);
-        long inXyears = c.getTime().getTime();
-
-        return new RandomDataGenerator().nextLong(xYearsAgo, inXyears);
     }
 
 }
