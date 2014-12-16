@@ -27,12 +27,13 @@ package io.github.benas.jpopulator.impl;
 import java.math.BigDecimal;
 import java.math.BigInteger;
 import java.util.Calendar;
+import java.util.Date;
 import java.util.Random;
 import java.util.concurrent.atomic.AtomicInteger;
 import java.util.concurrent.atomic.AtomicLong;
 
+import io.github.benas.jpopulator.randomizers.DateRangeRandomizer;
 import org.apache.commons.lang3.RandomStringUtils;
-import org.apache.commons.math3.random.RandomDataGenerator;
 
 /**
  * This class is used to generate random value for java built-in types.
@@ -46,12 +47,26 @@ final class DefaultRandomizer {
     /**
      * The Random object to use.
      */
-    private static final Random RANDOM = new Random();
+    private static final Random RANDOM;
 
     /**
-     * Interval in which dates will be generated: [now - 10 years, now + 10 years]
+     * The random date randomizer used to populate date types.
      */
-    public static final int DATE_INTERVAL = 10;
+    private static final DateRangeRandomizer dateRangeRandomizer;
+
+    static {
+        RANDOM = new Random();
+
+        //initialise date randomizer to generate dates in [now - 10 years, now + 10 years]
+        Calendar calendar = Calendar.getInstance();
+        calendar.add(Calendar.YEAR, 10);
+        Date inTenYears = calendar.getTime();
+        calendar = Calendar.getInstance();
+        calendar.add(Calendar.YEAR, -10);
+        Date tenYearsAgo = calendar.getTime();
+        dateRangeRandomizer = new DateRangeRandomizer(tenYearsAgo, inTenYears);
+
+    }
 
     /**
      * Generate a random value for the given type.
@@ -116,16 +131,16 @@ final class DefaultRandomizer {
          * Date and time types
          */
         if (type.equals(java.util.Date.class)) {
-            return new java.util.Date(getRandomDate(DATE_INTERVAL));
+            return new java.util.Date(dateRangeRandomizer.getRandomValue().getTime());
         }
         if (type.equals(java.sql.Date.class)) {
-            return new java.sql.Date(getRandomDate(DATE_INTERVAL));
+            return new java.sql.Date(dateRangeRandomizer.getRandomValue().getTime());
         }
         if (type.equals(java.sql.Time.class)) {
             return new java.sql.Time(RANDOM.nextLong());
         }
         if (type.equals(java.sql.Timestamp.class)) {
-            return new java.sql.Timestamp(getRandomDate(DATE_INTERVAL));
+            return new java.sql.Timestamp(dateRangeRandomizer.getRandomValue().getTime());
         }
         if (type.equals(Calendar.class)) {
             return Calendar.getInstance();
@@ -144,25 +159,6 @@ final class DefaultRandomizer {
          */
         return null;
 
-    }
-
-    /**
-     * Utility method that generates a random long corresponding to a date between [now - x years, now + x years].
-     * @return a random long corresponding to a date between [now - x years, now + x years]
-     */
-    private static long getRandomDate(int interval) {
-
-        // lower bound: x years ago
-        Calendar c = Calendar.getInstance();
-        c.add(Calendar.YEAR, -interval);
-        long xYearsAgo = c.getTime().getTime();
-
-        // upper bound: in x years
-        c = Calendar.getInstance();
-        c.add(Calendar.YEAR, interval);
-        long inXyears = c.getTime().getTime();
-
-        return new RandomDataGenerator().nextLong(xYearsAgo, inXyears);
     }
 
 }
