@@ -186,7 +186,7 @@ final class PopulatorImpl implements Populator {
     }
 
     /*
-     * Utility method that generate a random value for java built-in types.
+     * Utility method that generates a random value for java built-in types.
      * Checks if the field is annotated with a bean validation annotation and generates a random value according to the validation constraint
      */
     private Object getRandomValue(final Field field, final Class<?> fieldType) {
@@ -245,7 +245,7 @@ final class PopulatorImpl implements Populator {
     }
 
     /**
-     * Method to populate a collection type which can be a array or a {@link Collection}.
+     * Method to populate a collection type which can be an array or a {@link Collection}.
      *
      * @param result The result object on which the generated value will be set
      * @param field  The field in which the generated value will be set
