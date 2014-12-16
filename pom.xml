@@ -28,6 +28,11 @@
         <tag>HEAD</tag>
     </scm>
 
+    <ciManagement>
+        <system>Jenkins</system>
+        <url>https://buildhive.cloudbees.com/job/benas/job/jPopulator/</url>
+    </ciManagement>
+
     <developers>
         <developer>
             <id>benas</id>
