@@ -37,6 +37,7 @@ import io.github.benas.jpopulator.randomizers.EmailRandomizer;
 import io.github.benas.jpopulator.randomizers.FirstNameRandomizer;
 import io.github.benas.jpopulator.randomizers.LastNameRandomizer;
 import io.github.benas.jpopulator.randomizers.ListRandomizer;
+import io.github.benas.jpopulator.randomizers.NumericStringRandomizer;
 import io.github.benas.jpopulator.randomizers.StreetRandomizer;
 
 import java.util.Calendar;
@@ -113,6 +114,7 @@ public class PopulatorTest {
                 .registerRandomizer(Address.class, String.class, "city", new CityRandomizer())
                 .registerRandomizer(Address.class, String.class, "country", new CountryRandomizer())
                 .registerRandomizer(Street.class, String.class, "name", new StreetRandomizer())
+                .registerRandomizer(Street.class, String.class, "phoneNumber", new NumericStringRandomizer())
                 .build();
 
         Person person = populator.populateBean(Person.class);
@@ -123,6 +125,7 @@ public class PopulatorTest {
         Assert.assertNotNull(person.getEmail());
         Assert.assertNotNull(person.getGender());
         Assert.assertNotNull(person.getBirthDate());
+        Assert.assertNotNull(person.getPhoneNumber());
         Assert.assertNotNull(person.getAddress());
         Assert.assertNotNull(person.getAddress().getZipCode());
         Assert.assertNotNull(person.getAddress().getCity());

@@ -45,6 +45,8 @@ public class Person {
     private Address address;
     
     private Date birthDate;
+    
+    private String phoneNumber;
 
     private List<String> nicknames;
     
@@ -113,6 +115,14 @@ public class Person {
 
 	public void setBirthDate(Date birthdate) {
 		this.birthDate = birthdate;
+	}
+	
+	public String getPhoneNumber() {
+		return phoneNumber;
+	}
+
+	public void setPhoneNumber(String phoneNumber) {
+		this.phoneNumber = phoneNumber;
 	}
 
 	@Override
