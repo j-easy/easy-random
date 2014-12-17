@@ -46,7 +46,11 @@ public class NumericStringRandomizer extends GenericStringRandomizer {
     private static String[] addNumbersToWords(Integer minNumericValue, Integer maxNumericValue) {
         Integer randomNum;
         if (maxNumericValue != null && minNumericValue != null) {
-            randomNum = random.nextInt((maxNumericValue - minNumericValue) + 1) + minNumericValue;
+            if (minNumericValue > maxNumericValue) {
+                throw new IllegalArgumentException("min value must be lower than max value");
+            } else {
+                randomNum = random.nextInt((maxNumericValue - minNumericValue) + 1) + minNumericValue;
+            }
         } else {
             randomNum = random.nextInt();
         }
