@@ -24,7 +24,7 @@
 
 package io.github.benas.jpopulator.impl;
 
-import io.github.benas.jpopulator.utils.DateUtils;
+import io.github.benas.jpopulator.randomizers.DateRangeRandomizer;
 
 import java.math.BigDecimal;
 import java.math.BigInteger;
@@ -34,7 +34,6 @@ import java.util.Random;
 import java.util.concurrent.atomic.AtomicInteger;
 import java.util.concurrent.atomic.AtomicLong;
 
-import io.github.benas.jpopulator.randomizers.DateRangeRandomizer;
 import org.apache.commons.lang3.RandomStringUtils;
 
 /**

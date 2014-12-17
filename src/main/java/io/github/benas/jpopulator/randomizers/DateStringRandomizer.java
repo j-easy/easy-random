@@ -1,21 +1,30 @@
 package io.github.benas.jpopulator.randomizers;
 
 import io.github.benas.jpopulator.api.Randomizer;
-import io.github.benas.jpopulator.utils.DateUtils;
 
 import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.Date;
 
 
 public class DateStringRandomizer implements Randomizer<String> {
 	
 	private static final String DEFAULT_DATE_FORMAT = "E M dd hh:mm:ss a zzz";
-	private static final int DATE_INTERVAL = 10;
 	private SimpleDateFormat simpleDateFormat = new SimpleDateFormat(DEFAULT_DATE_FORMAT);
-	private DateRangeRandomizer dateRangeRandomizer;
+	private static DateRangeRandomizer dateRangeRandomizer;
+	
+	static {
+		Calendar calendar = Calendar.getInstance();
+        calendar.add(Calendar.YEAR, 10);
+        Date inTenYears = calendar.getTime();
+        calendar = Calendar.getInstance();
+        calendar.add(Calendar.YEAR, -10);
+        Date tenYearsAgo = calendar.getTime();
+        dateRangeRandomizer = new DateRangeRandomizer(tenYearsAgo, inTenYears);
+	}
 	
 	public DateStringRandomizer() {
-		new Date(DateUtils.getRandomDate(DATE_INTERVAL));
+		new Date(dateRangeRandomizer.getRandomValue().getTime());
 	}
 	
 	public DateStringRandomizer(final Date minDate, final Date maxDate) {
@@ -23,7 +32,7 @@ public class DateStringRandomizer implements Randomizer<String> {
 	}
 	
 	public DateStringRandomizer(final String format) {
-		new Date(DateUtils.getRandomDate(DATE_INTERVAL));
+		new Date(dateRangeRandomizer.getRandomValue().getTime());
 		simpleDateFormat = new SimpleDateFormat(format);
 	}
 	
