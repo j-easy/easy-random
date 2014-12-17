@@ -26,23 +26,42 @@ package io.github.benas.jpopulator.randomizers;
 import java.util.Random;
 
 /**
- * A randomizer that generates numeric strings.
+ * A randomizer that generates numbers in string representation.
  *
  * @author Nikola Milivojevic (0dziga0@gmail.com)
  */
 public class NumericStringRandomizer extends GenericStringRandomizer {
 
+    /** The words. */
     private static String[] words = new String[1];
+    
+    /** The random. */
     private static Random random = new Random();
 
+    /**
+     * Instantiates a new numeric string randomizer.
+     */
     public NumericStringRandomizer() {
         super(addNumbersToWords(null, null));
     }
 
+    /**
+     * Instantiates a new numeric string randomizer.
+     *
+     * @param minNumericValue the min numeric value
+     * @param maxNumericValue the max numeric value
+     */
     public NumericStringRandomizer(Integer minNumericValue, Integer maxNumericValue) {
         super(addNumbersToWords(minNumericValue, maxNumericValue));
     }
 
+    /**
+     * Adds the numbers to words.
+     *
+     * @param minNumericValue the min numeric value
+     * @param maxNumericValue the max numeric value
+     * @return the string[]
+     */
     private static String[] addNumbersToWords(Integer minNumericValue, Integer maxNumericValue) {
         Integer randomNum;
         if (maxNumericValue != null && minNumericValue != null) {
