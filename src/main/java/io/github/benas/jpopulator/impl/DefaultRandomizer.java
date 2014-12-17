@@ -25,7 +25,6 @@
 package io.github.benas.jpopulator.impl;
 
 import io.github.benas.jpopulator.randomizers.DateRangeRandomizer;
-
 import java.math.BigDecimal;
 import java.math.BigInteger;
 import java.util.Calendar;

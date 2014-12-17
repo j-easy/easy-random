@@ -6,7 +6,6 @@ import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
 
-
 public class DateStringRandomizer implements Randomizer<String> {
 	
 	private static final String DEFAULT_DATE_FORMAT = "E M dd hh:mm:ss a zzz";
