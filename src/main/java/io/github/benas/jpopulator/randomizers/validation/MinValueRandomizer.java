@@ -6,7 +6,7 @@ import java.math.BigDecimal;
 import java.math.BigInteger;
 
 /**
- * A randomizer that generate random values greater than or equal to a minimum value.
+ * A randomizer that generates random values greater than or equal to a minimum value.
  *
  * This is used for fields annotated with {@link javax.validation.constraints.Min}.
  *

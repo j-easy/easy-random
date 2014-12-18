@@ -37,7 +37,7 @@ public class LastNameRandomizer extends GenericStringRandomizer {
      * Public constructor.
      */
     public LastNameRandomizer() {
-        super(ResourceBundle.getBundle("io/github/benas/jpopulator/data/data").getString("firstNames").split(","));
+        super(ResourceBundle.getBundle("io/github/benas/jpopulator/data/data").getString("lastNames").split(","));
     }
 
 }

@@ -28,6 +28,16 @@
         <tag>HEAD</tag>
     </scm>
 
+    <ciManagement>
+        <system>Jenkins</system>
+        <url>https://buildhive.cloudbees.com/job/benas/job/jPopulator/</url>
+    </ciManagement>
+
+    <issueManagement>
+        <system>GitHub</system>
+        <url>https://github.com/benas/jPopulator/issues</url>
+    </issueManagement>
+
     <developers>
         <developer>
             <id>benas</id>
@@ -96,7 +106,7 @@
         <dependency>
             <groupId>junit</groupId>
             <artifactId>junit</artifactId>
-            <version>4.11</version>
+            <version>4.12</version>
             <scope>test</scope>
         </dependency>
         <dependency>
@@ -195,7 +205,7 @@
             <plugin>
                 <groupId>org.codehaus.mojo</groupId>
                 <artifactId>findbugs-maven-plugin</artifactId>
-                <version>2.5.5</version>
+                <version>3.0.0</version>
             </plugin>
 
 
