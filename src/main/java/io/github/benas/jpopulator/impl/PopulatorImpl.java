@@ -141,16 +141,16 @@ final class PopulatorImpl implements Populator {
     }
 
     @Override
-    public <T> List<T> populateBeans(final Class<T> type) {
+    public <T> List<T> populateBeans(final Class<T> type, final String... excludeFieldsName) {
         byte size = (byte) Math.abs((Byte) DefaultRandomizer.getRandomValue(Byte.TYPE));
-        return populateBeans(type, size);
+        return populateBeans(type, size, excludeFieldsName);
     }
 
     @Override
-    public <T> List<T> populateBeans(final Class<T> type, final int size) {
+    public <T> List<T> populateBeans(final Class<T> type, final int size, final String... excludeFieldsName) {
         Object[] beans = new Object[size];
         for (int i = 0; i < size; i++) {
-            Object bean = populateBean(type);
+            Object bean = populateBean(type, excludeFieldsName);
             beans[i] = bean;
         }
         //noinspection unchecked
