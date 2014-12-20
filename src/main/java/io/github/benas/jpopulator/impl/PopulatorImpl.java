@@ -29,6 +29,7 @@ import io.github.benas.jpopulator.api.Populator;
 import io.github.benas.jpopulator.randomizers.DateRangeRandomizer;
 import io.github.benas.jpopulator.randomizers.validation.MaxValueRandomizer;
 import io.github.benas.jpopulator.randomizers.validation.MinValueRandomizer;
+import io.github.benas.jpopulator.util.ConstantsUtil;
 import org.apache.commons.beanutils.PropertyUtils;
 import org.apache.commons.lang3.RandomStringUtils;
 import org.apache.commons.math3.random.RandomDataGenerator;
@@ -61,11 +62,6 @@ import java.util.logging.Logger;
 final class PopulatorImpl implements Populator {
 
     private final Logger logger = Logger.getLogger(this.getClass().getName());
-
-    /**
-     * Default date range in which dates will be generated [now - 10 years, now + 10 years].
-     */
-    private static final int DEFAULT_DATE_RANGE = 10;
 
     /**
      * Custom randomizers map to use to generate random values.
@@ -226,12 +222,12 @@ final class PopulatorImpl implements Populator {
         }
         if (field.isAnnotationPresent(javax.validation.constraints.Future.class)) {
             Calendar calendar = Calendar.getInstance();
-            calendar.add(Calendar.YEAR, DEFAULT_DATE_RANGE);
+            calendar.add(Calendar.YEAR, ConstantsUtil.DEFAULT_DATE_RANGE);
             object = new DateRangeRandomizer(new Date(), calendar.getTime()).getRandomValue();
         }
         if (field.isAnnotationPresent(javax.validation.constraints.Past.class)) {
             Calendar calendar = Calendar.getInstance();
-            calendar.add(Calendar.YEAR, -DEFAULT_DATE_RANGE);
+            calendar.add(Calendar.YEAR, -ConstantsUtil.DEFAULT_DATE_RANGE);
             object = new DateRangeRandomizer(calendar.getTime(), new Date()).getRandomValue();
         }
         if (field.isAnnotationPresent(javax.validation.constraints.Max.class)) {

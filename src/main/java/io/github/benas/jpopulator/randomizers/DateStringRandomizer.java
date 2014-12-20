@@ -24,9 +24,9 @@
 package io.github.benas.jpopulator.randomizers;
 
 import io.github.benas.jpopulator.api.Randomizer;
+import io.github.benas.jpopulator.util.ConstantsUtil;
 
 import java.text.SimpleDateFormat;
-import java.util.Calendar;
 import java.util.Date;
 
 /**
@@ -37,34 +37,14 @@ import java.util.Date;
 public class DateStringRandomizer implements Randomizer<String> {
 
     /**
-     * Default date range in which dates will be generated [now - 10 years, now + 10 years].
-     */
-    private static final int DEFAULT_DATE_RANGE = 10;
-
-    /**
-     * The Constant DEFAULT_DATE_FORMAT.
-     */
-    private static final String DEFAULT_DATE_FORMAT = "E M dd hh:mm:ss a zzz";
-
-    /**
      * The simple date format.
      */
-    private SimpleDateFormat simpleDateFormat = new SimpleDateFormat(DEFAULT_DATE_FORMAT);
+    private SimpleDateFormat simpleDateFormat = new SimpleDateFormat(ConstantsUtil.DEFAULT_DATE_FORMAT);
 
     /**
      * The date range randomizer.
      */
-    private static DateRangeRandomizer dateRangeRandomizer;
-
-    static {
-        Calendar calendar = Calendar.getInstance();
-        calendar.add(Calendar.YEAR, DEFAULT_DATE_RANGE);
-        Date inTenYears = calendar.getTime();
-        calendar = Calendar.getInstance();
-        calendar.add(Calendar.YEAR, -DEFAULT_DATE_RANGE);
-        Date tenYearsAgo = calendar.getTime();
-        dateRangeRandomizer = new DateRangeRandomizer(tenYearsAgo, inTenYears);
-    }
+    private static DateRangeRandomizer dateRangeRandomizer = ConstantsUtil.DATE_RANGE_RANDOMIZER;
 
     /**
      * Instantiates a new date string randomizer.

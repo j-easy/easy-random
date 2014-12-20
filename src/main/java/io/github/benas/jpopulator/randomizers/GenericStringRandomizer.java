@@ -25,6 +25,7 @@
 package io.github.benas.jpopulator.randomizers;
 
 import io.github.benas.jpopulator.api.Randomizer;
+import io.github.benas.jpopulator.util.ConstantsUtil;
 
 import java.util.Random;
 
@@ -34,8 +35,6 @@ import java.util.Random;
  * @author Mahmoud Ben Hassine (mahmoud@benhassine.fr)
  */
 public class GenericStringRandomizer implements Randomizer<String> {
-
-    private final Random random = new Random();
 
     /**
      * Words array from which the random value should be chosen randomly.
@@ -52,7 +51,7 @@ public class GenericStringRandomizer implements Randomizer<String> {
 
     @Override
     public String getRandomValue() {
-        return words[random.nextInt(words.length)];
+        return words[ConstantsUtil.RANDOM.nextInt(words.length)];
     }
 
 }

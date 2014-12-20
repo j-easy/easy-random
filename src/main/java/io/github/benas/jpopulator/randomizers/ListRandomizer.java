@@ -24,11 +24,11 @@
 package io.github.benas.jpopulator.randomizers;
 
 import io.github.benas.jpopulator.api.Randomizer;
+import io.github.benas.jpopulator.util.ConstantsUtil;
 
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
-import java.util.Random;
 
 /**
  * A custom randomizer that generates a list of random values from another {@link Randomizer}.
@@ -38,8 +38,6 @@ import java.util.Random;
  * @author Eric Taix (eric.taix@gmail.com)
  */
 public class ListRandomizer<T> implements Randomizer<Collection<T>> {
-
-    private static final Random RANDOM = new Random();
 
     private Randomizer<T> elementRandomizer;
     private int min;
@@ -52,7 +50,7 @@ public class ListRandomizer<T> implements Randomizer<Collection<T>> {
      * @param elementRandomizer the randomizer to use to generate elements of the list
      */
     public ListRandomizer(final Randomizer<T> elementRandomizer) {
-        this(elementRandomizer, 0, (byte) Math.abs((byte) (RANDOM.nextInt())));
+        this(elementRandomizer, 0, (byte) Math.abs((byte) (ConstantsUtil.RANDOM.nextInt())));
     }
 
     /**
@@ -84,7 +82,7 @@ public class ListRandomizer<T> implements Randomizer<Collection<T>> {
     @Override
     public Collection<T> getRandomValue() {
         List<T> result = new ArrayList<T>();
-        int nb = RANDOM.nextInt(max - min) + min;
+        int nb = ConstantsUtil.RANDOM.nextInt(max - min) + min;
         for (int i = 0; i < nb; i++) {
             result.add(elementRandomizer.getRandomValue());
         }

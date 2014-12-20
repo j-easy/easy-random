@@ -24,16 +24,14 @@
 
 package io.github.benas.jpopulator.impl;
 
-import io.github.benas.jpopulator.randomizers.DateRangeRandomizer;
+import io.github.benas.jpopulator.util.ConstantsUtil;
+import org.apache.commons.lang3.RandomStringUtils;
+
 import java.math.BigDecimal;
 import java.math.BigInteger;
 import java.util.Calendar;
-import java.util.Date;
-import java.util.Random;
 import java.util.concurrent.atomic.AtomicInteger;
 import java.util.concurrent.atomic.AtomicLong;
-
-import org.apache.commons.lang3.RandomStringUtils;
 
 /**
  * This class is used to generate random value for java built-in types.
@@ -41,45 +39,6 @@ import org.apache.commons.lang3.RandomStringUtils;
  * @author Mahmoud Ben Hassine (mahmoud@benhassine.fr)
  */
 final class DefaultRandomizer {
-
-    /**
-     * Default date range in which dates will be generated [now - 10 years, now + 10 years].
-     */
-    private static final int DEFAULT_DATE_RANGE = 10;
-
-    /**
-     * Default generated strings length.
-     */
-    private static final int DEFAULT_STRING_LENGTH = 10;
-
-    /**
-     * Default threshold of generated big integers numBits.
-     */
-    private static final int DEFAULT_BIG_INTEGER_NUMBITS_LENGTH = 100;
-
-    /**
-     * The Random object to use.
-     */
-    private static final Random RANDOM;
-
-    /**
-     * The random date randomizer used to populate date types.
-     */
-    private static final DateRangeRandomizer DATE_RANGE_RANDOMIZER;
-
-    static {
-        RANDOM = new Random();
-
-        //initialise date randomizer to generate dates in [now - 10 years, now + 10 years]
-        Calendar calendar = Calendar.getInstance();
-        calendar.add(Calendar.YEAR, DEFAULT_DATE_RANGE);
-        Date inTenYears = calendar.getTime();
-        calendar = Calendar.getInstance();
-        calendar.add(Calendar.YEAR, -DEFAULT_DATE_RANGE);
-        Date tenYearsAgo = calendar.getTime();
-        DATE_RANGE_RANDOMIZER = new DateRangeRandomizer(tenYearsAgo, inTenYears);
-
-    }
 
     private DefaultRandomizer() { }
 
@@ -95,7 +54,7 @@ final class DefaultRandomizer {
          * String and Character types
          */
         if (type.equals(String.class)) {
-            return RandomStringUtils.randomAlphabetic(DEFAULT_STRING_LENGTH);
+            return RandomStringUtils.randomAlphabetic(ConstantsUtil.DEFAULT_STRING_LENGTH);
         }
         if (type.equals(Character.TYPE) || type.equals(Character.class)) {
             return RandomStringUtils.randomAlphabetic(1).charAt(0);
@@ -105,57 +64,57 @@ final class DefaultRandomizer {
          * Boolean type
          */
         if (type.equals(Boolean.TYPE) || type.equals(Boolean.class)) {
-            return RANDOM.nextBoolean();
+            return ConstantsUtil.RANDOM.nextBoolean();
         }
 
         /*
          * Numeric types
          */
         if (type.equals(Byte.TYPE) || type.equals(Byte.class)) {
-            return (byte) (RANDOM.nextInt());
+            return (byte) (ConstantsUtil.RANDOM.nextInt());
         }
         if (type.equals(Short.TYPE) || type.equals(Short.class)) {
-            return (short) (RANDOM.nextInt());
+            return (short) (ConstantsUtil.RANDOM.nextInt());
         }
         if (type.equals(Integer.TYPE) || type.equals(Integer.class)) {
-            return RANDOM.nextInt();
+            return ConstantsUtil.RANDOM.nextInt();
         }
         if (type.equals(Long.TYPE) || type.equals(Long.class)) {
-            return RANDOM.nextLong();
+            return ConstantsUtil.RANDOM.nextLong();
         }
         if (type.equals(Double.TYPE) || type.equals(Double.class)) {
-            return RANDOM.nextDouble();
+            return ConstantsUtil.RANDOM.nextDouble();
         }
         if (type.equals(Float.TYPE) || type.equals(Float.class)) {
-            return RANDOM.nextFloat();
+            return ConstantsUtil.RANDOM.nextFloat();
         }
         if (type.equals(BigInteger.class)) {
-            return new BigInteger(Math.abs(RANDOM.nextInt(DEFAULT_BIG_INTEGER_NUMBITS_LENGTH)), RANDOM);
+            return new BigInteger(Math.abs(ConstantsUtil.RANDOM.nextInt(ConstantsUtil.DEFAULT_BIG_INTEGER_NUM_BITS_LENGTH)), ConstantsUtil.RANDOM);
         }
         if (type.equals(BigDecimal.class)) {
-            return new BigDecimal(RANDOM.nextDouble());
+            return new BigDecimal(ConstantsUtil.RANDOM.nextDouble());
         }
         if (type.equals(AtomicLong.class)) {
-            return new AtomicLong(RANDOM.nextLong());
+            return new AtomicLong(ConstantsUtil.RANDOM.nextLong());
         }
         if (type.equals(AtomicInteger.class)) {
-            return new AtomicInteger(RANDOM.nextInt());
+            return new AtomicInteger(ConstantsUtil.RANDOM.nextInt());
         }
 
         /*
          * Date and time types
          */
         if (type.equals(java.util.Date.class)) {
-            return new java.util.Date(DATE_RANGE_RANDOMIZER.getRandomValue().getTime());
+            return new java.util.Date(ConstantsUtil.DATE_RANGE_RANDOMIZER.getRandomValue().getTime());
         }
         if (type.equals(java.sql.Date.class)) {
-            return new java.sql.Date(DATE_RANGE_RANDOMIZER.getRandomValue().getTime());
+            return new java.sql.Date(ConstantsUtil.DATE_RANGE_RANDOMIZER.getRandomValue().getTime());
         }
         if (type.equals(java.sql.Time.class)) {
-            return new java.sql.Time(RANDOM.nextLong());
+            return new java.sql.Time(ConstantsUtil.RANDOM.nextLong());
         }
         if (type.equals(java.sql.Timestamp.class)) {
-            return new java.sql.Timestamp(DATE_RANGE_RANDOMIZER.getRandomValue().getTime());
+            return new java.sql.Timestamp(ConstantsUtil.DATE_RANGE_RANDOMIZER.getRandomValue().getTime());
         }
         if (type.equals(Calendar.class)) {
             return Calendar.getInstance();
@@ -166,7 +125,7 @@ final class DefaultRandomizer {
          */
         if (type.isEnum() && type.getEnumConstants().length > 0) {
             Object[] enumConstants = type.getEnumConstants();
-            return enumConstants[RANDOM.nextInt(enumConstants.length)];
+            return enumConstants[ConstantsUtil.RANDOM.nextInt(enumConstants.length)];
         }
 
         /*

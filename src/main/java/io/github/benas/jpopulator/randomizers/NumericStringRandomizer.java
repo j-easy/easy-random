@@ -23,7 +23,7 @@
  */
 package io.github.benas.jpopulator.randomizers;
 
-import java.util.Random;
+import io.github.benas.jpopulator.util.ConstantsUtil;
 
 /**
  * A randomizer that generates numbers in string representation.
@@ -34,9 +34,6 @@ public class NumericStringRandomizer extends GenericStringRandomizer {
 
     /** The words. */
     private static String[] words = new String[1];
-
-    /** The random. */
-    private static Random random = new Random();
 
     /**
      * Instantiates a new numeric string randomizer.
@@ -68,10 +65,10 @@ public class NumericStringRandomizer extends GenericStringRandomizer {
             if (minNumericValue > maxNumericValue) {
                 throw new IllegalArgumentException("min value must be lower than max value");
             } else {
-                randomNum = random.nextInt(maxNumericValue - minNumericValue + 1) + minNumericValue;
+                randomNum = ConstantsUtil.RANDOM.nextInt(maxNumericValue - minNumericValue + 1) + minNumericValue;
             }
         } else {
-            randomNum = random.nextInt();
+            randomNum = ConstantsUtil.RANDOM.nextInt();
         }
         words[0] = randomNum.toString();
         return words;
