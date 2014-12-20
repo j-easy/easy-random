@@ -22,13 +22,12 @@
  *   THE SOFTWARE.
  */
 
-package io.github.benas.jpopulator.test;
+package io.github.benas.jpopulator.impl;
 
 import io.github.benas.jpopulator.api.Populator;
 import io.github.benas.jpopulator.beans.Address;
 import io.github.benas.jpopulator.beans.Gender;
 import io.github.benas.jpopulator.beans.Person;
-import io.github.benas.jpopulator.impl.PopulatorBuilder;
 import io.github.benas.jpopulator.randomizers.CityRandomizer;
 import io.github.benas.jpopulator.randomizers.FirstNameRandomizer;
 import org.junit.After;
