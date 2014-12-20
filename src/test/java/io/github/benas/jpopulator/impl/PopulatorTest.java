@@ -115,6 +115,11 @@ public class PopulatorTest {
         }
     }
 
+    @org.junit.Test(expected = IllegalArgumentException.class)
+    public void whenThenSpecifiedNumberOfBeansToGenerateIsNegativeThenShouldThrowAnIllegalArgumentException() throws Exception {
+        populator.populateBeans(Person.class, -2);
+    }
+
     @org.junit.Test
     public void generatedBeansWithCustomRandomizersShouldBeCorrectlyPopulated() {
         populator = new PopulatorBuilder()

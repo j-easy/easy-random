@@ -148,6 +148,9 @@ final class PopulatorImpl implements Populator {
 
     @Override
     public <T> List<T> populateBeans(final Class<T> type, final int size, final String... excludeFieldsName) {
+        if (size < 0) {
+            throw new IllegalArgumentException("The number of bean to populate must be positive.");
+        }
         Object[] beans = new Object[size];
         for (int i = 0; i < size; i++) {
             Object bean = populateBean(type, excludeFieldsName);
