@@ -52,7 +52,7 @@ public class DateRangeRandomizerTest {
     }
 
     @org.junit.Test
-    public void testGenerateDateInRange() throws Exception {
+    public void generatedDateShouldBeWithinSpecifiedRange() throws Exception {
         Date randomDate = dateRangeRandomizer.getRandomValue();
         Assert.assertNotNull(randomDate);
         Assert.assertTrue(today.before(randomDate) && tomorrow.after(randomDate));
