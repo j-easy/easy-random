@@ -33,10 +33,21 @@ import org.apache.commons.beanutils.PropertyUtils;
 import org.apache.commons.lang3.RandomStringUtils;
 import org.apache.commons.math3.random.RandomDataGenerator;
 
-import java.lang.reflect.*;
+import java.lang.reflect.Array;
+import java.lang.reflect.Field;
+import java.lang.reflect.Modifier;
 import java.math.BigDecimal;
 import java.math.BigInteger;
-import java.util.*;
+import java.util.Map;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Set;
+import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
+import java.util.Arrays;
+import java.util.Collection;
+import java.util.Collections;
 import java.util.concurrent.atomic.AtomicInteger;
 import java.util.concurrent.atomic.AtomicLong;
 import java.util.logging.Level;
@@ -50,6 +61,11 @@ import java.util.logging.Logger;
 final class PopulatorImpl implements Populator {
 
     private final Logger logger = Logger.getLogger(this.getClass().getName());
+
+    /**
+     * Default date range in which dates will be generated [now - 10 years, now + 10 years].
+     */
+    private static final int DEFAULT_DATE_RANGE = 10;
 
     /**
      * Custom randomizers map to use to generate random values.
@@ -81,7 +97,7 @@ final class PopulatorImpl implements Populator {
     }
 
     @Override
-    public <T> T populateBean(Class<T> type, String... excludedFields) {
+    public <T> T populateBean(final Class<T> type, final String... excludedFields) {
 
         T result;
         try {
@@ -167,7 +183,7 @@ final class PopulatorImpl implements Populator {
      * @param field  The field in which the generated value will be set
      * @throws Exception Thrown when the generated value cannot be set to the given field
      */
-    private void populateSimpleType(Object result, Field field) throws Exception {
+    private void populateSimpleType(Object result, final Field field) throws Exception {
 
         Class<?> fieldType = field.getType();
         String fieldName = field.getName();
@@ -199,46 +215,46 @@ final class PopulatorImpl implements Populator {
         /*
          * If the field is annotated with a bean validation annotation, generate a random value according to the validation constraint
          */
-        if(field.isAnnotationPresent(javax.validation.constraints.AssertFalse.class)) {
+        if (field.isAnnotationPresent(javax.validation.constraints.AssertFalse.class)) {
             object = false;
         }
-        if(field.isAnnotationPresent(javax.validation.constraints.AssertTrue.class)) {
+        if (field.isAnnotationPresent(javax.validation.constraints.AssertTrue.class)) {
             object = true;
         }
-        if(field.isAnnotationPresent(javax.validation.constraints.Null.class)) {
+        if (field.isAnnotationPresent(javax.validation.constraints.Null.class)) {
             object = null;
         }
-        if(field.isAnnotationPresent(javax.validation.constraints.Future.class)) {
+        if (field.isAnnotationPresent(javax.validation.constraints.Future.class)) {
             Calendar calendar = Calendar.getInstance();
-            calendar.add(Calendar.YEAR, 100);
+            calendar.add(Calendar.YEAR, DEFAULT_DATE_RANGE);
             object = new DateRangeRandomizer(new Date(), calendar.getTime()).getRandomValue();
         }
-        if(field.isAnnotationPresent(javax.validation.constraints.Past.class)) {
+        if (field.isAnnotationPresent(javax.validation.constraints.Past.class)) {
             Calendar calendar = Calendar.getInstance();
-            calendar.add(Calendar.YEAR, -100);
+            calendar.add(Calendar.YEAR, -DEFAULT_DATE_RANGE);
             object = new DateRangeRandomizer(calendar.getTime(), new Date()).getRandomValue();
         }
-        if(field.isAnnotationPresent(javax.validation.constraints.Max.class)) {
+        if (field.isAnnotationPresent(javax.validation.constraints.Max.class)) {
             javax.validation.constraints.Max maxAnnotation = field.getAnnotation(javax.validation.constraints.Max.class);
             long maxValue = maxAnnotation.value();
             object = MaxValueRandomizer.getRandomValue(fieldType, maxValue);
         }
-        if(field.isAnnotationPresent(javax.validation.constraints.DecimalMax.class)) {
+        if (field.isAnnotationPresent(javax.validation.constraints.DecimalMax.class)) {
             javax.validation.constraints.DecimalMax decimalMaxAnnotation = field.getAnnotation(javax.validation.constraints.DecimalMax.class);
             BigDecimal decimalMaxValue = new BigDecimal(decimalMaxAnnotation.value());
             object = MaxValueRandomizer.getRandomValue(fieldType, decimalMaxValue.longValue());
         }
-        if(field.isAnnotationPresent(javax.validation.constraints.Min.class)) {
+        if (field.isAnnotationPresent(javax.validation.constraints.Min.class)) {
             javax.validation.constraints.Min minAnnotation = field.getAnnotation(javax.validation.constraints.Min.class);
             long minValue = minAnnotation.value();
             object = MinValueRandomizer.getRandomValue(fieldType, minValue);
         }
-        if(field.isAnnotationPresent(javax.validation.constraints.DecimalMin.class)) {
+        if (field.isAnnotationPresent(javax.validation.constraints.DecimalMin.class)) {
             javax.validation.constraints.DecimalMin decimalMinAnnotation = field.getAnnotation(javax.validation.constraints.DecimalMin.class);
             BigDecimal decimalMinValue = new BigDecimal(decimalMinAnnotation.value());
             object = MinValueRandomizer.getRandomValue(fieldType, decimalMinValue.longValue());
         }
-        if(field.isAnnotationPresent(javax.validation.constraints.Size.class)) {
+        if (field.isAnnotationPresent(javax.validation.constraints.Size.class)) {
             javax.validation.constraints.Size sizeAnnotation = field.getAnnotation(javax.validation.constraints.Size.class);
             int minSize = sizeAnnotation.min();
             int maxSize = sizeAnnotation.max();
@@ -254,7 +270,7 @@ final class PopulatorImpl implements Populator {
      * @param field  The field in which the generated value will be set
      * @throws Exception Thrown when the generated value cannot be set to the given field
      */
-    private void populateCollectionType(Object result, Field field) throws Exception {
+    private void populateCollectionType(Object result, final Field field) throws Exception {
 
         Class<?> fieldType = field.getType();
         String fieldName = field.getName();
@@ -330,7 +346,7 @@ final class PopulatorImpl implements Populator {
      * @param excludedFields the list of field names to be excluded
      * @return true if the field should be excluded, false otherwise
      */
-    private boolean shouldExcludeField(Field field, String... excludedFields) {
+    private boolean shouldExcludeField(final Field field, final String... excludedFields) {
         if (excludedFields == null || excludedFields.length == 0) {
             return false;
         }
