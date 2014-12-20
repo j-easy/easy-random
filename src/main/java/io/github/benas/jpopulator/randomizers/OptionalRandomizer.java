@@ -47,7 +47,7 @@ public class OptionalRandomizer<T> implements Randomizer<T> {
      */
     public OptionalRandomizer(Randomizer<T> delegate, int optionalPercent) {
         this.delegate = delegate;
-        this.optionalPercent = optionalPercent > 100 ? 100 : (optionalPercent < 0 ? 0 : optionalPercent);
+        this.optionalPercent = optionalPercent > 100 ? 100 : optionalPercent < 0 ? 0 : optionalPercent;
     }
 
     @Override

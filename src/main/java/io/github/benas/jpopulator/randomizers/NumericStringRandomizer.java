@@ -68,7 +68,7 @@ public class NumericStringRandomizer extends GenericStringRandomizer {
             if (minNumericValue > maxNumericValue) {
                 throw new IllegalArgumentException("min value must be lower than max value");
             } else {
-                randomNum = random.nextInt((maxNumericValue - minNumericValue) + 1) + minNumericValue;
+                randomNum = random.nextInt(maxNumericValue - minNumericValue + 1) + minNumericValue;
             }
         } else {
             randomNum = random.nextInt();
