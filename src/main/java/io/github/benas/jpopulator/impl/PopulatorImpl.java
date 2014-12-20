@@ -81,7 +81,7 @@ final class PopulatorImpl implements Populator {
     }
 
     @Override
-    public <T> T populateBean(Class<T> type, String... excludeFieldsName) {
+    public <T> T populateBean(Class<T> type, String... excludedFields) {
 
         T result;
         try {
@@ -118,7 +118,7 @@ final class PopulatorImpl implements Populator {
              * Generate random data for each field
              */
             for (Field field : declaredFields) {
-                if (checkIfExcludeField(field, excludeFieldsName)) {
+                if (shouldExcludeField(field, excludedFields)) {
                     continue;
                 }
                 //do not populate static nor final fields
@@ -141,19 +141,19 @@ final class PopulatorImpl implements Populator {
     }
 
     @Override
-    public <T> List<T> populateBeans(final Class<T> type, final String... excludeFieldsName) {
+    public <T> List<T> populateBeans(final Class<T> type, final String... excludedFields) {
         int size = new RandomDataGenerator().nextInt(1, Short.MAX_VALUE);
-        return populateBeans(type, size, excludeFieldsName);
+        return populateBeans(type, size, excludedFields);
     }
 
     @Override
-    public <T> List<T> populateBeans(final Class<T> type, final int size, final String... excludeFieldsName) {
+    public <T> List<T> populateBeans(final Class<T> type, final int size, final String... excludedFields) {
         if (size < 0) {
             throw new IllegalArgumentException("The number of bean to populate must be positive.");
         }
         Object[] beans = new Object[size];
         for (int i = 0; i < size; i++) {
-            Object bean = populateBean(type, excludeFieldsName);
+            Object bean = populateBean(type, excludedFields);
             beans[i] = bean;
         }
         //noinspection unchecked
@@ -327,14 +327,14 @@ final class PopulatorImpl implements Populator {
      * Utility method that checks if a field should be excluded from being populated.
      *
      * @param field the field to check
-     * @param excludeFieldsName the list of field names to be excluded
+     * @param excludedFields the list of field names to be excluded
      * @return true if the field should be excluded, false otherwise
      */
-    private boolean checkIfExcludeField(Field field, String... excludeFieldsName) {
-        if (excludeFieldsName == null || excludeFieldsName.length == 0) return false;
+    private boolean shouldExcludeField(Field field, String... excludedFields) {
+        if (excludedFields == null || excludedFields.length == 0) return false;
         boolean exclude = false;
         String fieldName = field.getName().toLowerCase();
-        for (String excludeFieldName : excludeFieldsName) {
+        for (String excludeFieldName : excludedFields) {
             if (fieldName.equals(excludeFieldName.toLowerCase())) {
                 exclude = true;
                 break;
