@@ -42,7 +42,20 @@ import org.apache.commons.lang3.RandomStringUtils;
  */
 final class DefaultRandomizer {
 
-    private DefaultRandomizer() { }
+    /**
+     * Default date range in which dates will be generated [now - 10 years, now + 10 years].
+     */
+    private static final int DEFAULT_DATE_RANGE = 10;
+
+    /**
+     * Default generated strings length.
+     */
+    private static final int DEFAULT_STRING_LENGTH = 10;
+
+    /**
+     * Default threshold of generated big integers numBits.
+     */
+    private static final int DEFAULT_BIG_INTEGER_NUMBITS_LENGTH = 100;
 
     /**
      * The Random object to use.
@@ -52,21 +65,23 @@ final class DefaultRandomizer {
     /**
      * The random date randomizer used to populate date types.
      */
-    private static final DateRangeRandomizer dateRangeRandomizer;
+    private static final DateRangeRandomizer DATE_RANGE_RANDOMIZER;
 
     static {
         RANDOM = new Random();
 
         //initialise date randomizer to generate dates in [now - 10 years, now + 10 years]
         Calendar calendar = Calendar.getInstance();
-        calendar.add(Calendar.YEAR, 10);
+        calendar.add(Calendar.YEAR, DEFAULT_DATE_RANGE);
         Date inTenYears = calendar.getTime();
         calendar = Calendar.getInstance();
-        calendar.add(Calendar.YEAR, -10);
+        calendar.add(Calendar.YEAR, -DEFAULT_DATE_RANGE);
         Date tenYearsAgo = calendar.getTime();
-        dateRangeRandomizer = new DateRangeRandomizer(tenYearsAgo, inTenYears);
+        DATE_RANGE_RANDOMIZER = new DateRangeRandomizer(tenYearsAgo, inTenYears);
 
     }
+
+    private DefaultRandomizer() { }
 
     /**
      * Generate a random value for the given type.
@@ -80,7 +95,7 @@ final class DefaultRandomizer {
          * String and Character types
          */
         if (type.equals(String.class)) {
-            return RandomStringUtils.randomAlphabetic(10);
+            return RandomStringUtils.randomAlphabetic(DEFAULT_STRING_LENGTH);
         }
         if (type.equals(Character.TYPE) || type.equals(Character.class)) {
             return RandomStringUtils.randomAlphabetic(1).charAt(0);
@@ -115,7 +130,7 @@ final class DefaultRandomizer {
             return RANDOM.nextFloat();
         }
         if (type.equals(BigInteger.class)) {
-            return new BigInteger(Math.abs(RANDOM.nextInt(100)), RANDOM);
+            return new BigInteger(Math.abs(RANDOM.nextInt(DEFAULT_BIG_INTEGER_NUMBITS_LENGTH)), RANDOM);
         }
         if (type.equals(BigDecimal.class)) {
             return new BigDecimal(RANDOM.nextDouble());
@@ -131,16 +146,16 @@ final class DefaultRandomizer {
          * Date and time types
          */
         if (type.equals(java.util.Date.class)) {
-            return new java.util.Date(dateRangeRandomizer.getRandomValue().getTime());
+            return new java.util.Date(DATE_RANGE_RANDOMIZER.getRandomValue().getTime());
         }
         if (type.equals(java.sql.Date.class)) {
-            return new java.sql.Date(dateRangeRandomizer.getRandomValue().getTime());
+            return new java.sql.Date(DATE_RANGE_RANDOMIZER.getRandomValue().getTime());
         }
         if (type.equals(java.sql.Time.class)) {
             return new java.sql.Time(RANDOM.nextLong());
         }
         if (type.equals(java.sql.Timestamp.class)) {
-            return new java.sql.Timestamp(dateRangeRandomizer.getRandomValue().getTime());
+            return new java.sql.Timestamp(DATE_RANGE_RANDOMIZER.getRandomValue().getTime());
         }
         if (type.equals(Calendar.class)) {
             return Calendar.getInstance();
