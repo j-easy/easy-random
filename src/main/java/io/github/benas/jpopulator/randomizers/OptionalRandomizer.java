@@ -40,7 +40,7 @@ public class OptionalRandomizer<T> implements Randomizer<T> {
     private int optionalPercent;
 
     /**
-     * A contructor with a delegate randomizer and an optional percent threshold.
+     * A constructor with a delegate randomizer and an optional percent threshold.
      *
      * @param delegate        The delegate to use to retrieve a random value
      * @param optionalPercent The percent of randomized value to return (between 0 and 100)
