@@ -34,7 +34,7 @@ public class NumericStringRandomizer extends GenericStringRandomizer {
 
     /** The words. */
     private static String[] words = new String[1];
-    
+
     /** The random. */
     private static Random random = new Random();
 
@@ -51,7 +51,7 @@ public class NumericStringRandomizer extends GenericStringRandomizer {
      * @param minNumericValue the min numeric value
      * @param maxNumericValue the max numeric value
      */
-    public NumericStringRandomizer(Integer minNumericValue, Integer maxNumericValue) {
+    public NumericStringRandomizer(final Integer minNumericValue, final Integer maxNumericValue) {
         super(addNumbersToWords(minNumericValue, maxNumericValue));
     }
 
@@ -62,7 +62,7 @@ public class NumericStringRandomizer extends GenericStringRandomizer {
      * @param maxNumericValue the max numeric value
      * @return the string[]
      */
-    private static String[] addNumbersToWords(Integer minNumericValue, Integer maxNumericValue) {
+    private static String[] addNumbersToWords(final Integer minNumericValue, final Integer maxNumericValue) {
         Integer randomNum;
         if (maxNumericValue != null && minNumericValue != null) {
             if (minNumericValue > maxNumericValue) {
