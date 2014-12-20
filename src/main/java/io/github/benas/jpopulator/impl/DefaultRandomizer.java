@@ -105,7 +105,7 @@ final class DefaultRandomizer {
          * Date and time types
          */
         if (type.equals(java.util.Date.class)) {
-            return new java.util.Date(ConstantsUtil.DATE_RANGE_RANDOMIZER.getRandomValue().getTime());
+            return ConstantsUtil.DATE_RANGE_RANDOMIZER.getRandomValue();
         }
         if (type.equals(java.sql.Date.class)) {
             return new java.sql.Date(ConstantsUtil.DATE_RANGE_RANDOMIZER.getRandomValue().getTime());
