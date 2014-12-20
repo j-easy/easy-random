@@ -48,7 +48,7 @@ public class SetRandomizerTest {
         Collection<String> names = setRandomizer.getRandomValue();
 
         Assert.assertNotNull(names);
-        Assert.assertEquals(3, names.size());
+        Assert.assertTrue(names.size() <= 3);// duplicate random values are not inserted in the set
     }
 
 }
