@@ -28,17 +28,11 @@ import java.util.Date;
 import java.util.List;
 
 /**
- * A java bean for the Person type.
+ * A java bean for Person type.
  *
  * @author Mahmoud Ben Hassine (mahmoud@benhassine.fr)
  */
-public class Person {
-
-    private final Long id = null; //deliberately set to null to test that final fields should not be populated
-
-    private String firstName;
-
-    private String lastName;
+public class Person extends Human {
 
     private String email;
 
@@ -55,32 +49,11 @@ public class Person {
     public Person() {
     }
 
-    public Person(String firstName, String lastName, String email, Gender gender, Address address) {
-        this.firstName = firstName;
-        this.lastName = lastName;
+    public Person(String name, String email, Gender gender, Address address) {
+        super(name);
         this.email = email;
         this.gender = gender;
         this.address = address;
-    }
-
-    public Long getId() {
-        return id;
-    }
-
-    public String getFirstName() {
-        return firstName;
-    }
-
-    public void setFirstName(String firstName) {
-        this.firstName = firstName;
-    }
-
-    public String getLastName() {
-        return lastName;
-    }
-
-    public void setLastName(String lastName) {
-        this.lastName = lastName;
     }
 
     public String getEmail() {
@@ -135,8 +108,7 @@ public class Person {
     public String toString() {
         final StringBuilder sb = new StringBuilder("Person{");
         sb.append("id=").append(id);
-        sb.append(", firstName='").append(firstName).append('\'');
-        sb.append(", lastName='").append(lastName).append('\'');
+        sb.append(", name='").append(name).append('\'');
         sb.append(", email='").append(email).append('\'');
         sb.append(", gender=").append(gender);
         sb.append(", address=").append(address);

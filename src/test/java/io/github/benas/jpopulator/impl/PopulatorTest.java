@@ -29,7 +29,7 @@ import io.github.benas.jpopulator.beans.Address;
 import io.github.benas.jpopulator.beans.Gender;
 import io.github.benas.jpopulator.beans.Person;
 import io.github.benas.jpopulator.randomizers.CityRandomizer;
-import io.github.benas.jpopulator.randomizers.FirstNameRandomizer;
+import io.github.benas.jpopulator.randomizers.EmailRandomizer;
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
@@ -68,11 +68,10 @@ public class PopulatorTest {
     @org.junit.Test
     public void excludedFieldsShouldNotBePopulated() throws Exception {
         populator = new PopulatorBuilder().build();
-        Person person = populator.populateBean(Person.class, "firstName", "lastName");
+        Person person = populator.populateBean(Person.class, "name");
 
-        Assert.assertNull(person.getFirstName());
-        Assert.assertNull(person.getLastName());
-
+        Assert.assertNotNull(person);
+        Assert.assertNull(person.getName());
     }
 
     @org.junit.Test
@@ -99,11 +98,10 @@ public class PopulatorTest {
 
     @org.junit.Test
     public void excludedFieldsOfGeneratedBeansShouldNotBePopulated() throws Exception {
-        List<Person> persons = populator.populateBeans(Person.class, "firstName", "lastName");
+        List<Person> persons = populator.populateBeans(Person.class, "name");
         for (Person person : persons) {
             Assert.assertNotNull(person);
-            Assert.assertNull(person.getFirstName());
-            Assert.assertNull(person.getLastName());
+            Assert.assertNull(person.getName());
         }
     }
 
@@ -120,7 +118,7 @@ public class PopulatorTest {
     @org.junit.Test
     public void generatedBeansWithCustomRandomizersShouldBeCorrectlyPopulated() {
         populator = new PopulatorBuilder()
-                .registerRandomizer(Person.class, String.class, "firstName", new FirstNameRandomizer())
+                .registerRandomizer(Person.class, String.class, "email", new EmailRandomizer())
                 .registerRandomizer(Address.class, String.class, "city", new CityRandomizer())
                 .build();
 
@@ -128,8 +126,8 @@ public class PopulatorTest {
 
         Assert.assertNotNull(person);
 
-        Assert.assertNotNull(person.getFirstName());
-        Assert.assertFalse(person.getFirstName().isEmpty());
+        Assert.assertNotNull(person.getEmail());
+        Assert.assertFalse(person.getEmail().isEmpty());
 
         Assert.assertNotNull(person.getAddress());
         Assert.assertNotNull(person.getAddress().getCity());
@@ -137,27 +135,22 @@ public class PopulatorTest {
     }
 
     /*
-     * Asserts that a person is correctly populated
+     * Assert that a person is correctly populated
      */
     private void assertPerson(Person person) {
         Assert.assertNotNull(person);
         assertDeclaredFields(person);
+        assertInheritedFields(person);
         assertNestedTypes(person);
     }
 
     /*
-     * Asserts that declared fields are correctly populated
+     * Assert that declared fields are populated
      */
     private void assertDeclaredFields(Person person) {
 
-        Assert.assertNotNull(person.getFirstName());
-        Assert.assertFalse(person.getFirstName().isEmpty());
-
-        Assert.assertNotNull(person.getLastName());
-        Assert.assertFalse(person.getFirstName().isEmpty());
-
         Assert.assertNotNull(person.getEmail());
-        Assert.assertFalse(person.getFirstName().isEmpty());
+        Assert.assertFalse(person.getEmail().isEmpty());
 
         Assert.assertNotNull(person.getGender());
         Assert.assertTrue(Gender.MALE.equals(person.getGender()) || Gender.FEMALE.equals(person.getGender()));
@@ -165,14 +158,22 @@ public class PopulatorTest {
         Assert.assertNotNull(person.getBirthDate());
 
         Assert.assertNotNull(person.getPhoneNumber());
-        Assert.assertFalse(person.getFirstName().isEmpty());
+        Assert.assertFalse(person.getPhoneNumber().isEmpty());
 
         Assert.assertNotNull(person.getNicknames());
         Assert.assertEquals(0, person.getNicknames().size());
     }
 
     /*
-     * Asserts that fields of complex types are recursively populated
+     * Assert that inherited fields are populated
+     */
+    private void assertInheritedFields(Person person) {
+        Assert.assertNotNull(person.getName());
+        Assert.assertFalse(person.getName().isEmpty());
+    }
+
+    /*
+     * Assert that fields of complex types are recursively populated (deep population)
      */
     private void assertNestedTypes(Person person) {
 
