@@ -87,7 +87,7 @@ final class PopulatorImpl implements Populator {
                 Byte.TYPE, Byte.class, Short.TYPE, Short.class, Integer.TYPE, Integer.class, Long.TYPE, Long.class,
                 Double.TYPE, Double.class, Float.TYPE, Float.class, BigInteger.class, BigDecimal.class,
                 AtomicLong.class, AtomicInteger.class,
-                java.util.Date.class, java.sql.Date.class, java.sql.Time.class, java.sql.Timestamp.class, Calendar.class};
+                Date.class, java.sql.Date.class, java.sql.Time.class, java.sql.Timestamp.class, Calendar.class};
         javaTypesList.addAll(Arrays.asList(javaTypes));
 
     }
