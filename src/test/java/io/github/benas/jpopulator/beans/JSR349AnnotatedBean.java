@@ -7,7 +7,7 @@ import java.util.Date;
 /**
  * A bean annotated with <a href="http://beanvalidation.org/">JSR 349</a> constraints used to test generated values validity.
  *
- * @author Mahmoud Ben Hassine (md.benhassine@gmail.com)
+ * @author Mahmoud Ben Hassine (mahmoud@benhassine.fr)
  */
 public class JSR349AnnotatedBean {
 

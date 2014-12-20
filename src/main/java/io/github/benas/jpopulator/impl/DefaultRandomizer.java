@@ -1,7 +1,7 @@
 /*
  * The MIT License
  *
- *   Copyright (c) 2014, Mahmoud Ben Hassine (md.benhassine@gmail.com)
+ *   Copyright (c) 2015, Mahmoud Ben Hassine (mahmoud@benhassine.fr)
  *
  *   Permission is hereby granted, free of charge, to any person obtaining a copy
  *   of this software and associated documentation files (the "Software"), to deal
@@ -38,7 +38,7 @@ import org.apache.commons.lang3.RandomStringUtils;
 /**
  * This class is used to generate random value for java built-in types.
  *
- * @author Mahmoud Ben Hassine (md.benhassine@gmail.com)
+ * @author Mahmoud Ben Hassine (mahmoud@benhassine.fr)
  */
 final class DefaultRandomizer {
 

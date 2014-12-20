@@ -1,7 +1,7 @@
 /*
  * The MIT License
  *
- *   Copyright (c) 2014, Mahmoud Ben Hassine (md.benhassine@gmail.com)
+ *   Copyright (c) 2015, Mahmoud Ben Hassine (mahmoud@benhassine.fr)
  *
  *   Permission is hereby granted, free of charge, to any person obtaining a copy
  *   of this software and associated documentation files (the "Software"), to deal
@@ -51,7 +51,7 @@ import org.junit.Before;
 /**
  * Test class for the {@link Populator} implementation.
  *
- * @author Mahmoud Ben Hassine (md.benhassine@gmail.com)
+ * @author Mahmoud Ben Hassine (mahmoud@benhassine.fr)
  */
 public class PopulatorTest {
 
@@ -140,8 +140,8 @@ public class PopulatorTest {
     @org.junit.Test
     public void testList() throws Exception {
         populator = new PopulatorBuilder()
-        .registerRandomizer(Person.class, List.class, "nicknames", new ListRandomizer<String>(new FirstNameRandomizer(), 3))
-        .build();
+                .registerRandomizer(Person.class, List.class, "nicknames", new ListRandomizer<String>(new FirstNameRandomizer(), 3))
+                .build();
 
         Person person = populator.populateBean(Person.class);
 
@@ -149,7 +149,7 @@ public class PopulatorTest {
         Assert.assertNotNull(person.getNicknames());
         Assert.assertEquals(3, person.getNicknames().size());
     }
-    
+
     private void assertFoo(Foo foo) {
         Assert.assertNotNull(foo);
         Assert.assertNotNull(foo.getName());
@@ -177,16 +177,16 @@ public class PopulatorTest {
         Assert.assertNotNull(person.getFirstName());
         Assert.assertNotNull(person.getNicknames());
     }
-    
+
     @org.junit.Test
     public void dateShouldBeWithinSpecifiedRange() {
-    	Date today = new Date();
+        Date today = new Date();
         Calendar calendar = Calendar.getInstance();
         calendar.add(Calendar.DATE, 1);
         Date tomorrow = calendar.getTime();
-    	populator = new PopulatorBuilder()
-    	.registerRandomizer(Person.class, Date.class, "birthDate", new DateRangeRandomizer(today, tomorrow))
-    	.build();
+        populator = new PopulatorBuilder()
+                .registerRandomizer(Person.class, Date.class, "birthDate", new DateRangeRandomizer(today, tomorrow))
+                .build();
         Person person = populator.populateBean(Person.class);
 
         Assert.assertTrue(today.before(person.getBirthDate()) && tomorrow.after(person.getBirthDate()));
