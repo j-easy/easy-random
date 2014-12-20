@@ -58,6 +58,21 @@ public class DateRangeRandomizerTest {
         Assert.assertTrue(today.before(randomDate) && tomorrow.after(randomDate));
     }
 
+    @org.junit.Test(expected = IllegalArgumentException.class)
+    public void whenSpecifiedMinDateIsAfterMaxDateThenThrowIllegalArgumentException() throws Exception {
+        dateRangeRandomizer = new DateRangeRandomizer(tomorrow, today);
+    }
+
+    @org.junit.Test(expected = IllegalArgumentException.class)
+    public void whenSpecifiedMinDateIsNullThenThrowIllegalArgumentException() throws Exception {
+        dateRangeRandomizer = new DateRangeRandomizer(null, tomorrow);
+    }
+
+    @org.junit.Test(expected = IllegalArgumentException.class)
+    public void whenSpecifiedMaxDateIsNullThenThrowIllegalArgumentException() throws Exception {
+        dateRangeRandomizer = new DateRangeRandomizer(today, null);
+    }
+
     @After
     public void tearDown() throws Exception {
         dateRangeRandomizer = null;

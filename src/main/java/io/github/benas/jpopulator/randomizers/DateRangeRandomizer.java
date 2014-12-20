@@ -53,6 +53,15 @@ public class DateRangeRandomizer implements Randomizer<Date> {
      * @param maxDate the maximum date.
      */
     public DateRangeRandomizer(final Date minDate, final Date maxDate) {
+        if (minDate == null) {
+            throw new IllegalArgumentException("minDate must not be null");
+        }
+        if (maxDate == null) {
+            throw new IllegalArgumentException("maxDate must not be null");
+        }
+        if (minDate.after(maxDate)) {
+            throw new IllegalArgumentException("minDate must be before maxDate");
+        }
         this.minDate = minDate;
         this.maxDate = maxDate;
     }
