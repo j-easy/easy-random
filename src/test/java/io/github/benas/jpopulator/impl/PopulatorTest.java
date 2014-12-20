@@ -85,7 +85,7 @@ public class PopulatorTest {
     public void generatedBeansListShouldNotBeEmpty() throws Exception {
         List<Person> persons = populator.populateBeans(Person.class);
         Assert.assertNotNull(persons);
-        Assert.assertNotEquals(0, persons.size()); // FixMe: may fail if the random number generated is 0 ..
+        Assert.assertFalse(persons.isEmpty());
     }
 
     @org.junit.Test

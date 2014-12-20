@@ -142,7 +142,7 @@ final class PopulatorImpl implements Populator {
 
     @Override
     public <T> List<T> populateBeans(final Class<T> type, final String... excludeFieldsName) {
-        byte size = (byte) Math.abs((Byte) DefaultRandomizer.getRandomValue(Byte.TYPE));
+        int size = new RandomDataGenerator().nextInt(1, Short.MAX_VALUE);
         return populateBeans(type, size, excludeFieldsName);
     }
 
