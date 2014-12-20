@@ -50,7 +50,7 @@ public class ListRandomizer<T> implements Randomizer<Collection<T>> {
      * @param elementRandomizer the randomizer to use to generate elements of the list
      */
     public ListRandomizer(Randomizer<T> elementRandomizer) {
-        this(elementRandomizer, 0, (byte) Math.abs((Byte) (byte) (RANDOM.nextInt())));
+        this(elementRandomizer, 0, (byte) Math.abs((byte) (RANDOM.nextInt())));
     }
 
     /**
