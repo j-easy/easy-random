@@ -25,7 +25,7 @@
 package io.github.benas.jpopulator.impl;
 
 import io.github.benas.jpopulator.api.Populator;
-import io.github.benas.jpopulator.beans.JSR349AnnotatedBean;
+import io.github.benas.jpopulator.beans.BeanValidationAnnotatedBean;
 import org.junit.Assert;
 import org.junit.Before;
 
@@ -51,7 +51,7 @@ public class BeanValidationTest {
 
     @org.junit.Test
     public void generatedValuesShouldBeValidAccordingToValidationConstraints() throws Exception {
-        JSR349AnnotatedBean bean = populator.populateBean(JSR349AnnotatedBean.class);
+        BeanValidationAnnotatedBean bean = populator.populateBean(BeanValidationAnnotatedBean.class);
         Assert.assertNotNull(bean);
         Assert.assertFalse(bean.isUnsupported());// @AssertFalse boolean unsupported;
         Assert.assertTrue(bean.isActive());// @AssertFalse boolean active;
