@@ -26,27 +26,16 @@ package io.github.benas.jpopulator.test;
 
 import io.github.benas.jpopulator.api.Populator;
 import io.github.benas.jpopulator.beans.Address;
-import io.github.benas.jpopulator.beans.Foo;
+import io.github.benas.jpopulator.beans.Gender;
 import io.github.benas.jpopulator.beans.Person;
-import io.github.benas.jpopulator.beans.Street;
 import io.github.benas.jpopulator.impl.PopulatorBuilder;
 import io.github.benas.jpopulator.randomizers.CityRandomizer;
-import io.github.benas.jpopulator.randomizers.CountryRandomizer;
-import io.github.benas.jpopulator.randomizers.DateRangeRandomizer;
-import io.github.benas.jpopulator.randomizers.EmailRandomizer;
 import io.github.benas.jpopulator.randomizers.FirstNameRandomizer;
-import io.github.benas.jpopulator.randomizers.LastNameRandomizer;
-import io.github.benas.jpopulator.randomizers.ListRandomizer;
-import io.github.benas.jpopulator.randomizers.NumericStringRandomizer;
-import io.github.benas.jpopulator.randomizers.StreetRandomizer;
-
-import java.util.Calendar;
-import java.util.Date;
-import java.util.List;
-
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
+
+import java.util.List;
 
 /**
  * Test class for the {@link Populator} implementation.
@@ -72,124 +61,19 @@ public class PopulatorTest {
     }
 
     @org.junit.Test
-    public void testGenerateFooBean() throws Exception {
-
-        Foo foo = populator.populateBean(Foo.class);
-
-        assertFoo(foo);
-
-    }
-
-    @org.junit.Test
-    public void testGenerateFooBeanList() throws Exception {
-
-        List<Foo> foos = populator.populateBeans(Foo.class);
-
-        Assert.assertNotNull(foos);
-        Assert.assertNotEquals(0, foos.size());
-        Foo foo = foos.get(0);
-        assertFoo(foo);
-
-    }
-
-    @org.junit.Test
-    public void testGenerateFooBeanListWith2Items() throws Exception {
-
-        List<Foo> foos = populator.populateBeans(Foo.class, 2);
-
-        Assert.assertNotNull(foos);
-        Assert.assertEquals(2, foos.size());
-        Foo foo = foos.get(0);
-        assertFoo(foo);
-
-    }
-
-    @org.junit.Test
-    public void testGeneratePersonBean() throws Exception {
-
-        populator = new PopulatorBuilder()
-                .registerRandomizer(Person.class, String.class, "firstName", new FirstNameRandomizer())
-                .registerRandomizer(Person.class, String.class, "lastName", new LastNameRandomizer())
-                .registerRandomizer(Person.class, String.class, "email", new EmailRandomizer())
-                .registerRandomizer(Address.class, String.class, "city", new CityRandomizer())
-                .registerRandomizer(Address.class, String.class, "country", new CountryRandomizer())
-                .registerRandomizer(Street.class, String.class, "name", new StreetRandomizer())
-                .registerRandomizer(Street.class, String.class, "phoneNumber", new NumericStringRandomizer())
-                .build();
-
+    public void generatedBeanShouldBeCorrectlyPopulated() throws Exception {
         Person person = populator.populateBean(Person.class);
-
-        Assert.assertNotNull(person);
-        Assert.assertNotNull(person.getFirstName());
-        Assert.assertNotNull(person.getLastName());
-        Assert.assertNotNull(person.getEmail());
-        Assert.assertNotNull(person.getGender());
-        Assert.assertNotNull(person.getBirthDate());
-        Assert.assertNotNull(person.getPhoneNumber());
-        Assert.assertNotNull(person.getAddress());
-        Assert.assertNotNull(person.getAddress().getZipCode());
-        Assert.assertNotNull(person.getAddress().getCity());
-        Assert.assertNotNull(person.getAddress().getCountry());
-        Assert.assertNotNull(person.getAddress().getStreet());
-        Assert.assertNotNull(person.getAddress().getStreet().getNumber());
-        Assert.assertNotNull(person.getAddress().getStreet().getType());
-        Assert.assertNotNull(person.getAddress().getStreet().getName());
-
+        assertPerson(person);
     }
 
     @org.junit.Test
-    public void testList() throws Exception {
-        populator = new PopulatorBuilder()
-                .registerRandomizer(Person.class, List.class, "nicknames", new ListRandomizer<String>(new FirstNameRandomizer(), 3))
-                .build();
-
-        Person person = populator.populateBean(Person.class);
-
-        Assert.assertNotNull(person);
-        Assert.assertNotNull(person.getNicknames());
-        Assert.assertEquals(3, person.getNicknames().size());
-    }
-
-    private void assertFoo(Foo foo) {
-        Assert.assertNotNull(foo);
-        Assert.assertNotNull(foo.getName());
-        Assert.assertNotNull(foo.getBar());
-        Assert.assertNotNull(foo.getBar().getId());
-        Assert.assertNotNull(foo.getBar().getNames());
-        Assert.assertEquals(0, foo.getBar().getNames().size());
-    }
-
-    @org.junit.Test
-    public void testExcludes() throws Exception {
+    public void excludedFieldsShouldNotBePopulated() throws Exception {
         populator = new PopulatorBuilder().build();
-        Person person = populator.populateBean(Person.class, "firstName", "nicknames");
-
-        Assert.assertNotNull(person);
-        Assert.assertNotNull(person.getEmail());
+        Person person = populator.populateBean(Person.class, "firstName", "lastName");
 
         Assert.assertNull(person.getFirstName());
-        Assert.assertNull(person.getNicknames());
+        Assert.assertNull(person.getLastName());
 
-        person = populator.populateBean(Person.class);
-
-        Assert.assertNotNull(person);
-        Assert.assertNotNull(person.getEmail());
-        Assert.assertNotNull(person.getFirstName());
-        Assert.assertNotNull(person.getNicknames());
-    }
-
-    @org.junit.Test
-    public void dateShouldBeWithinSpecifiedRange() {
-        Date today = new Date();
-        Calendar calendar = Calendar.getInstance();
-        calendar.add(Calendar.DATE, 1);
-        Date tomorrow = calendar.getTime();
-        populator = new PopulatorBuilder()
-                .registerRandomizer(Person.class, Date.class, "birthDate", new DateRangeRandomizer(today, tomorrow))
-                .build();
-        Person person = populator.populateBean(Person.class);
-
-        Assert.assertTrue(today.before(person.getBirthDate()) && tomorrow.after(person.getBirthDate()));
     }
 
     @org.junit.Test
@@ -197,6 +81,118 @@ public class PopulatorTest {
         Person person = populator.populateBean(Person.class);
         Assert.assertNotNull(person);
         Assert.assertNull(person.getId());
+    }
+
+    @org.junit.Test
+    public void generatedBeansListShouldNotBeEmpty() throws Exception {
+        List<Person> persons = populator.populateBeans(Person.class);
+        Assert.assertNotNull(persons);
+        Assert.assertNotEquals(0, persons.size()); // FixMe: may fail if the random number generated is 0 ..
+    }
+
+    @org.junit.Test
+    public void generatedBeansShouldBeCorrectlyPopulated() throws Exception {
+        List<Person> persons = populator.populateBeans(Person.class);
+        for (Person person : persons) {
+            assertPerson(person);
+        }
+    }
+
+    @org.junit.Test
+    public void excludedFieldsOfGeneratedBeansShouldNotBePopulated() throws Exception {
+        List<Person> persons = populator.populateBeans(Person.class, "firstName", "lastName");
+        for (Person person : persons) {
+            Assert.assertNotNull(person);
+            Assert.assertNull(person.getFirstName());
+            Assert.assertNull(person.getLastName());
+        }
+    }
+
+    @org.junit.Test
+    public void generatedBeansNumberShouldBeEqualToSpecifiedNumber() throws Exception {
+        List<Person> persons = populator.populateBeans(Person.class, 2);
+        Assert.assertNotNull(persons);
+        Assert.assertEquals(2, persons.size());
+        for (Person person : persons) {
+            assertPerson(person);
+        }
+    }
+
+    @org.junit.Test
+    public void generatedBeansWithCustomRandomizersShouldBeCorrectlyPopulated() {
+        populator = new PopulatorBuilder()
+                .registerRandomizer(Person.class, String.class, "firstName", new FirstNameRandomizer())
+                .registerRandomizer(Address.class, String.class, "city", new CityRandomizer())
+                .build();
+
+        Person person = populator.populateBean(Person.class);
+
+        Assert.assertNotNull(person);
+
+        Assert.assertNotNull(person.getFirstName());
+        Assert.assertFalse(person.getFirstName().isEmpty());
+
+        Assert.assertNotNull(person.getAddress());
+        Assert.assertNotNull(person.getAddress().getCity());
+        Assert.assertFalse(person.getAddress().getCity().isEmpty());
+    }
+
+    /*
+     * Asserts that a person is correctly populated
+     */
+    private void assertPerson(Person person) {
+        Assert.assertNotNull(person);
+        assertDeclaredFields(person);
+        assertNestedTypes(person);
+    }
+
+    /*
+     * Asserts that declared fields are correctly populated
+     */
+    private void assertDeclaredFields(Person person) {
+
+        Assert.assertNotNull(person.getFirstName());
+        Assert.assertFalse(person.getFirstName().isEmpty());
+
+        Assert.assertNotNull(person.getLastName());
+        Assert.assertFalse(person.getFirstName().isEmpty());
+
+        Assert.assertNotNull(person.getEmail());
+        Assert.assertFalse(person.getFirstName().isEmpty());
+
+        Assert.assertNotNull(person.getGender());
+        Assert.assertTrue(Gender.MALE.equals(person.getGender()) || Gender.FEMALE.equals(person.getGender()));
+
+        Assert.assertNotNull(person.getBirthDate());
+
+        Assert.assertNotNull(person.getPhoneNumber());
+        Assert.assertFalse(person.getFirstName().isEmpty());
+
+        Assert.assertNotNull(person.getNicknames());
+        Assert.assertEquals(0, person.getNicknames().size());
+    }
+
+    /*
+     * Asserts that fields of complex types are recursively populated
+     */
+    private void assertNestedTypes(Person person) {
+
+        Assert.assertNotNull(person.getAddress());
+
+        Assert.assertNotNull(person.getAddress().getCity());
+        Assert.assertFalse(person.getAddress().getCity().isEmpty());
+
+        Assert.assertNotNull(person.getAddress().getCountry());
+        Assert.assertFalse(person.getAddress().getCountry().isEmpty());
+
+        Assert.assertNotNull(person.getAddress().getStreet());
+        Assert.assertNotNull(person.getAddress().getStreet().getName());
+        Assert.assertNotNull(person.getAddress().getStreet().getNumber());
+        Assert.assertNotNull(person.getAddress().getStreet().getType());
+        Assert.assertFalse(person.getAddress().getStreet().getName().isEmpty());
+
+        Assert.assertNotNull(person.getAddress().getZipCode());
+        Assert.assertFalse(person.getAddress().getZipCode().isEmpty());
     }
 
 }
