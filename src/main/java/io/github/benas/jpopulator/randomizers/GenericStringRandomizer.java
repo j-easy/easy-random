@@ -27,8 +27,6 @@ package io.github.benas.jpopulator.randomizers;
 import io.github.benas.jpopulator.api.Randomizer;
 import io.github.benas.jpopulator.util.ConstantsUtil;
 
-import java.util.Random;
-
 /**
  * A generic randomizer that generate String values from a list of words.
  *
