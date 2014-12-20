@@ -191,4 +191,12 @@ public class PopulatorTest {
 
         Assert.assertTrue(today.before(person.getBirthDate()) && tomorrow.after(person.getBirthDate()));
     }
+
+    @org.junit.Test
+    public void finalFieldsShouldNotBePopulated() throws Exception {
+        Person person = populator.populateBean(Person.class);
+        Assert.assertNotNull(person);
+        Assert.assertNull(person.getId());
+    }
+
 }

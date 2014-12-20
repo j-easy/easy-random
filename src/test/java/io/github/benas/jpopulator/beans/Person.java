@@ -34,7 +34,9 @@ import java.util.List;
  */
 public class Person {
 
-	private String firstName;
+    private final Long id = null; //deliberately set to null to test that final fields should not be populated
+
+    private String firstName;
 
     private String lastName;
 
@@ -43,13 +45,13 @@ public class Person {
     private Gender gender;
 
     private Address address;
-    
+
     private Date birthDate;
-    
+
     private String phoneNumber;
 
     private List<String> nicknames;
-    
+
     public Person() {
     }
 
@@ -59,6 +61,10 @@ public class Person {
         this.email = email;
         this.gender = gender;
         this.address = address;
+    }
+
+    public Long getId() {
+        return id;
     }
 
     public String getFirstName() {
@@ -102,37 +108,41 @@ public class Person {
     }
 
     public List<String> getNicknames() {
-		return nicknames;
-	}
+        return nicknames;
+    }
 
-	public void setNicknames(List<String> nicknames) {
-		this.nicknames = nicknames;
-	}
-	
+    public void setNicknames(List<String> nicknames) {
+        this.nicknames = nicknames;
+    }
+
     public Date getBirthDate() {
-		return birthDate;
-	}
+        return birthDate;
+    }
 
-	public void setBirthDate(Date birthdate) {
-		this.birthDate = birthdate;
-	}
-	
-	public String getPhoneNumber() {
-		return phoneNumber;
-	}
+    public void setBirthDate(Date birthdate) {
+        this.birthDate = birthdate;
+    }
 
-	public void setPhoneNumber(String phoneNumber) {
-		this.phoneNumber = phoneNumber;
-	}
+    public String getPhoneNumber() {
+        return phoneNumber;
+    }
 
-	@Override
+    public void setPhoneNumber(String phoneNumber) {
+        this.phoneNumber = phoneNumber;
+    }
+
+    @Override
     public String toString() {
         final StringBuilder sb = new StringBuilder("Person{");
-        sb.append("firstName='").append(firstName).append('\'');
+        sb.append("id=").append(id);
+        sb.append(", firstName='").append(firstName).append('\'');
         sb.append(", lastName='").append(lastName).append('\'');
         sb.append(", email='").append(email).append('\'');
         sb.append(", gender=").append(gender);
         sb.append(", address=").append(address);
+        sb.append(", birthDate=").append(birthDate);
+        sb.append(", phoneNumber='").append(phoneNumber).append('\'');
+        sb.append(", nicknames=").append(nicknames);
         sb.append('}');
         return sb.toString();
     }
