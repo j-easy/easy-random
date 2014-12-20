@@ -24,14 +24,9 @@
 
 package io.github.benas.jpopulator.impl;
 
-import io.github.benas.jpopulator.api.Randomizer;
 import io.github.benas.jpopulator.api.Populator;
-import io.github.benas.jpopulator.randomizers.DateRangeRandomizer;
-import io.github.benas.jpopulator.randomizers.validation.MaxValueRandomizer;
-import io.github.benas.jpopulator.randomizers.validation.MinValueRandomizer;
-import io.github.benas.jpopulator.util.ConstantsUtil;
+import io.github.benas.jpopulator.api.Randomizer;
 import org.apache.commons.beanutils.PropertyUtils;
-import org.apache.commons.lang3.RandomStringUtils;
 import org.apache.commons.math3.random.RandomDataGenerator;
 
 import java.lang.reflect.Array;
@@ -189,7 +184,11 @@ final class PopulatorImpl implements Populator {
         if (customRandomizer(resultClass, fieldType, fieldName)) { // use custom randomizer if any
             object = randomizers.get(new RandomizerDefinition(resultClass, fieldType, fieldName)).getRandomValue();
         } else if (isJavaType(fieldType)) { //Java type (no need for recursion)
-            object = getRandomValue(field, fieldType);
+            if (isBeanValidationAnnotationPresent(field)) {
+                object = BeanValidationRandomizer.getRandomValue(field);
+            } else { // no validation constraint annotations, use default randomizer
+                object = DefaultRandomizer.getRandomValue(fieldType);
+            }
         } else { // Custom type (recursion needed to populate nested custom types if any)
             object = populateBean(fieldType);
         }
@@ -198,65 +197,6 @@ final class PopulatorImpl implements Populator {
             PropertyUtils.setProperty(result, fieldName, object);
         }
 
-    }
-
-    /*
-     * Utility method that generates a random value for java built-in types.
-     * Checks if the field is annotated with a bean validation annotation and generates a random value according to the validation constraint
-     */
-    private Object getRandomValue(final Field field, final Class<?> fieldType) {
-
-        Object object = DefaultRandomizer.getRandomValue(fieldType);
-
-        /*
-         * If the field is annotated with a bean validation annotation, generate a random value according to the validation constraint
-         */
-        if (field.isAnnotationPresent(javax.validation.constraints.AssertFalse.class)) {
-            object = false;
-        }
-        if (field.isAnnotationPresent(javax.validation.constraints.AssertTrue.class)) {
-            object = true;
-        }
-        if (field.isAnnotationPresent(javax.validation.constraints.Null.class)) {
-            object = null;
-        }
-        if (field.isAnnotationPresent(javax.validation.constraints.Future.class)) {
-            Calendar calendar = Calendar.getInstance();
-            calendar.add(Calendar.YEAR, ConstantsUtil.DEFAULT_DATE_RANGE);
-            object = new DateRangeRandomizer(new Date(), calendar.getTime()).getRandomValue();
-        }
-        if (field.isAnnotationPresent(javax.validation.constraints.Past.class)) {
-            Calendar calendar = Calendar.getInstance();
-            calendar.add(Calendar.YEAR, -ConstantsUtil.DEFAULT_DATE_RANGE);
-            object = new DateRangeRandomizer(calendar.getTime(), new Date()).getRandomValue();
-        }
-        if (field.isAnnotationPresent(javax.validation.constraints.Max.class)) {
-            javax.validation.constraints.Max maxAnnotation = field.getAnnotation(javax.validation.constraints.Max.class);
-            long maxValue = maxAnnotation.value();
-            object = MaxValueRandomizer.getRandomValue(fieldType, maxValue);
-        }
-        if (field.isAnnotationPresent(javax.validation.constraints.DecimalMax.class)) {
-            javax.validation.constraints.DecimalMax decimalMaxAnnotation = field.getAnnotation(javax.validation.constraints.DecimalMax.class);
-            BigDecimal decimalMaxValue = new BigDecimal(decimalMaxAnnotation.value());
-            object = MaxValueRandomizer.getRandomValue(fieldType, decimalMaxValue.longValue());
-        }
-        if (field.isAnnotationPresent(javax.validation.constraints.Min.class)) {
-            javax.validation.constraints.Min minAnnotation = field.getAnnotation(javax.validation.constraints.Min.class);
-            long minValue = minAnnotation.value();
-            object = MinValueRandomizer.getRandomValue(fieldType, minValue);
-        }
-        if (field.isAnnotationPresent(javax.validation.constraints.DecimalMin.class)) {
-            javax.validation.constraints.DecimalMin decimalMinAnnotation = field.getAnnotation(javax.validation.constraints.DecimalMin.class);
-            BigDecimal decimalMinValue = new BigDecimal(decimalMinAnnotation.value());
-            object = MinValueRandomizer.getRandomValue(fieldType, decimalMinValue.longValue());
-        }
-        if (field.isAnnotationPresent(javax.validation.constraints.Size.class)) {
-            javax.validation.constraints.Size sizeAnnotation = field.getAnnotation(javax.validation.constraints.Size.class);
-            int minSize = sizeAnnotation.min();
-            int maxSize = sizeAnnotation.max();
-            object = RandomStringUtils.randomAlphabetic(new RandomDataGenerator().nextInt(minSize, maxSize));
-        }
-        return object;
     }
 
     /**
@@ -354,6 +294,22 @@ final class PopulatorImpl implements Populator {
         }
 
         return false;
+    }
+
+    /*
+     * Utility method that checks if the field is annotated with a bean validation annotation.
+     */
+    private boolean isBeanValidationAnnotationPresent(final Field field) {
+        return field.isAnnotationPresent(javax.validation.constraints.AssertFalse.class) ||
+               field.isAnnotationPresent(javax.validation.constraints.AssertTrue.class) ||
+               field.isAnnotationPresent(javax.validation.constraints.Null.class) ||
+               field.isAnnotationPresent(javax.validation.constraints.Future.class) ||
+               field.isAnnotationPresent(javax.validation.constraints.Past.class) ||
+               field.isAnnotationPresent(javax.validation.constraints.Max.class) ||
+               field.isAnnotationPresent(javax.validation.constraints.Min.class) ||
+               field.isAnnotationPresent(javax.validation.constraints.DecimalMax.class) ||
+               field.isAnnotationPresent(javax.validation.constraints.DecimalMin.class) ||
+               field.isAnnotationPresent(javax.validation.constraints.Size.class);
     }
 
 }
