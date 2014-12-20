@@ -331,17 +331,17 @@ final class PopulatorImpl implements Populator {
      * @return true if the field should be excluded, false otherwise
      */
     private boolean shouldExcludeField(Field field, String... excludedFields) {
-        if (excludedFields == null || excludedFields.length == 0) return false;
-        boolean exclude = false;
+        if (excludedFields == null || excludedFields.length == 0) {
+            return false;
+        }
         String fieldName = field.getName().toLowerCase();
-        for (String excludeFieldName : excludedFields) {
-            if (fieldName.equals(excludeFieldName.toLowerCase())) {
-                exclude = true;
-                break;
+        for (String excludedFieldName : excludedFields) {
+            if (fieldName.equals(excludedFieldName.toLowerCase())) {
+                return true;
             }
         }
 
-        return exclude;
+        return false;
     }
 
 }
