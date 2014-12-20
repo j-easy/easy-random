@@ -37,6 +37,11 @@ import java.util.Date;
 public class DateStringRandomizer implements Randomizer<String> {
 
     /**
+     * Default date range in which dates will be generated [now - 10 years, now + 10 years].
+     */
+    private static final int DEFAULT_DATE_RANGE = 10;
+
+    /**
      * The Constant DEFAULT_DATE_FORMAT.
      */
     private static final String DEFAULT_DATE_FORMAT = "E M dd hh:mm:ss a zzz";
@@ -53,10 +58,10 @@ public class DateStringRandomizer implements Randomizer<String> {
 
     static {
         Calendar calendar = Calendar.getInstance();
-        calendar.add(Calendar.YEAR, 10);
+        calendar.add(Calendar.YEAR, DEFAULT_DATE_RANGE);
         Date inTenYears = calendar.getTime();
         calendar = Calendar.getInstance();
-        calendar.add(Calendar.YEAR, -10);
+        calendar.add(Calendar.YEAR, -DEFAULT_DATE_RANGE);
         Date tenYearsAgo = calendar.getTime();
         dateRangeRandomizer = new DateRangeRandomizer(tenYearsAgo, inTenYears);
     }
@@ -64,9 +69,7 @@ public class DateStringRandomizer implements Randomizer<String> {
     /**
      * Instantiates a new date string randomizer.
      */
-    public DateStringRandomizer() {
-        new Date(dateRangeRandomizer.getRandomValue().getTime());
-    }
+    public DateStringRandomizer() { }
 
     /**
      * Instantiates a new date string randomizer.
@@ -84,7 +87,6 @@ public class DateStringRandomizer implements Randomizer<String> {
      * @param format the format
      */
     public DateStringRandomizer(final String format) {
-        new Date(dateRangeRandomizer.getRandomValue().getTime());
         simpleDateFormat = new SimpleDateFormat(format);
     }
 
