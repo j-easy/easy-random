@@ -40,7 +40,7 @@ import java.util.Date;
  */
 public class DateStringRandomizerTest {
 
-    private static final String DATE_FORMAT = "YYYY-MM-dd";
+    private static final String DATE_FORMAT = "yyyy-MM-dd";
     private static final String DEFAULT_DATE_FORMAT = "E M dd hh:mm:ss a zzz";
 
     private DateStringRandomizer dateStringRandomizer;
