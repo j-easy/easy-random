@@ -14,7 +14,7 @@
     <packaging>jar</packaging>
 
     <name>jPopulator</name>
-    <description>jPopulator is a java tool that allows to populate java beans easily with random data</description>
+    <description>jPopulator is a java library that allows you to populate java beans with random data</description>
     <url>https://github.com/benas/jPopulator</url>
 
     <properties>
