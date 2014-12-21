@@ -73,7 +73,7 @@ public class BeanValidationTest {
     }
 
     @org.junit.Test
-    public void generatedBeanShouldBeValidUsingBeanValidationValidationAPI() throws Exception {
+    public void generatedBeanShouldBeValidUsingBeanValidationAPI() throws Exception {
         BeanValidationAnnotatedBean bean = populator.populateBean(BeanValidationAnnotatedBean.class);
 
         ValidatorFactory validatorFactory = Validation.buildDefaultValidatorFactory();
