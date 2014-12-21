@@ -29,8 +29,13 @@ import io.github.benas.jpopulator.beans.BeanValidationAnnotatedBean;
 import org.junit.Assert;
 import org.junit.Before;
 
+import javax.validation.ConstraintViolation;
+import javax.validation.Validation;
+import javax.validation.Validator;
+import javax.validation.ValidatorFactory;
 import java.math.BigDecimal;
 import java.util.Date;
+import java.util.Set;
 
 /**
  * Class to test validity of values generated for bean validation annotated fields.
@@ -65,6 +70,16 @@ public class BeanValidationTest {
         Assert.assertTrue(bean.getMinDiscount().compareTo(new BigDecimal("5.00")) >= 0);// @DecimalMin("5.00") BigDecimal minDiscount;;
         Assert.assertTrue(bean.getMinQuantity() >= 5);// @Min(5) int minQuantity;
         Assert.assertTrue(bean.getBriefMessage().length() >= 2 && bean.getBriefMessage().length() <= 10);// @Size(min=2, max=10) String briefMessage;
+    }
+
+    @org.junit.Test
+    public void generatedBeanShouldBeValidUsingBeanValidationValidationAPI() throws Exception {
+        BeanValidationAnnotatedBean bean = populator.populateBean(BeanValidationAnnotatedBean.class);
+
+        ValidatorFactory validatorFactory = Validation.buildDefaultValidatorFactory();
+        Validator validator = validatorFactory.getValidator();
+        Set<ConstraintViolation<BeanValidationAnnotatedBean>> violations = validator.validate(bean);
+        Assert.assertTrue(violations.isEmpty());
     }
 
 }

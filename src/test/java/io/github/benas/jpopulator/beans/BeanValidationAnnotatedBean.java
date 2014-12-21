@@ -47,9 +47,6 @@ public class BeanValidationAnnotatedBean {
     @DecimalMin("5.00")
     BigDecimal minDiscount;
 
-    @Digits(integer=6, fraction=2)
-    BigDecimal price;
-
     @Future
     Date eventDate;
 
@@ -67,9 +64,6 @@ public class BeanValidationAnnotatedBean {
 
     @Null
     String unusedString;
-
-    @Pattern(regexp="\\(\\d{3}\\)\\d{3}-\\d{4}")
-    String phoneNumber;
 
     @Size(min=2, max=10)
     String briefMessage;
@@ -107,14 +101,6 @@ public class BeanValidationAnnotatedBean {
 
     public void setMinDiscount(BigDecimal minDiscount) {
         this.minDiscount = minDiscount;
-    }
-
-    public BigDecimal getPrice() {
-        return price;
-    }
-
-    public void setPrice(BigDecimal price) {
-        this.price = price;
     }
 
     public Date getEventDate() {
@@ -165,14 +151,6 @@ public class BeanValidationAnnotatedBean {
         this.unusedString = unusedString;
     }
 
-    public String getPhoneNumber() {
-        return phoneNumber;
-    }
-
-    public void setPhoneNumber(String phoneNumber) {
-        this.phoneNumber = phoneNumber;
-    }
-
     public String getBriefMessage() {
         return briefMessage;
     }
@@ -189,14 +167,12 @@ public class BeanValidationAnnotatedBean {
         sb.append(", active=").append(active);
         sb.append(", maxDiscount=").append(maxDiscount);
         sb.append(", minDiscount=").append(minDiscount);
-        sb.append(", price=").append(price);
         sb.append(", eventDate=").append(eventDate);
         sb.append(", birthday=").append(birthday);
         sb.append(", maxQuantity=").append(maxQuantity);
         sb.append(", minQuantity=").append(minQuantity);
         sb.append(", username='").append(username).append('\'');
         sb.append(", unusedString='").append(unusedString).append('\'');
-        sb.append(", phoneNumber='").append(phoneNumber).append('\'');
         sb.append(", briefMessage='").append(briefMessage).append('\'');
         sb.append('}');
         return sb.toString();
