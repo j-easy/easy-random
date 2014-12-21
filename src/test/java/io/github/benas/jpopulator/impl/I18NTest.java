@@ -4,10 +4,7 @@ import io.github.benas.jpopulator.api.Populator;
 import io.github.benas.jpopulator.beans.Address;
 import io.github.benas.jpopulator.beans.Person;
 import io.github.benas.jpopulator.randomizers.CountryRandomizer;
-import org.junit.After;
-import org.junit.Assert;
-import org.junit.Before;
-import org.junit.BeforeClass;
+import org.junit.*;
 
 import java.util.Locale;
 
@@ -55,6 +52,11 @@ public class I18NTest {
     public void tearDown() throws Exception {
         populator = null;
         System.gc();
+    }
+
+    @AfterClass
+    public static void resetLocale() {
+        Locale.setDefault(Locale.getDefault());
     }
 
 }
