@@ -2,6 +2,21 @@ JPOPULATOR CHANGELOG
 ===================================
 https://github.com/benas/jPopulator
 
+Changes in version 1.1.0 (2014-12-21)
+-------------------------------------
+
+* Fixed issue #3: add a randomizer to populate a list of elements
+* Fixed issue #5: add an optional randomizer
+* Fixed issue #7: generate data according to bean validation api annotations
+* Fixed issue #9: add the ability to exclude some fields
+* Fixed issue #11: jPopulator generates strange java.util.Date values. Dates are now generated in last/next 10 years
+* Fixed issue #12: DataRangeRandomizer does not generate date within specified range
+* Fixed issue #15: add randomizer for numeric strings
+* Fixed issue #16: add randomizer of date with string representation and possible formatting
+* Refactored tests and improved test coverage
+* Improved documentation
+* Updated Javadoc
+
 Changes in version 1.0.1 (2014-06-09)
 -------------------------------------
 
