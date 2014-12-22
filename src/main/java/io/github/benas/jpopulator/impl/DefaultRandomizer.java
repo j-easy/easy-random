@@ -35,10 +35,6 @@ import java.util.concurrent.atomic.AtomicInteger;
 import java.util.concurrent.atomic.AtomicLong;
 
 import org.apache.commons.lang3.RandomStringUtils;
-import org.joda.time.DateTime;
-import org.joda.time.LocalDate;
-import org.joda.time.LocalDateTime;
-import org.joda.time.LocalTime;
 
 /**
  * This class is used to generate random value for java built-in types.
@@ -151,17 +147,28 @@ final class DefaultRandomizer {
         if (type.equals(Calendar.class)) {
             return Calendar.getInstance();
         }
-        if (type.equals(DateTime.class)) {
-        	return new DateTime(dateRangeRandomizer.getRandomValue().getTime());
+        if (type.equals(org.joda.time.DateTime.class)) {
+        	return new org.joda.time.DateTime(dateRangeRandomizer.getRandomValue().getTime());
         }
-        if (type.equals(LocalDate.class)) {
-        	return new LocalDate(dateRangeRandomizer.getRandomValue().getTime());
+        if (type.equals(org.joda.time.LocalDate.class)) {
+        	return new org.joda.time.LocalDate(dateRangeRandomizer.getRandomValue().getTime());
         }
-        if (type.equals(LocalTime.class)) {
-        	return new LocalTime(dateRangeRandomizer.getRandomValue().getTime());
+        if (type.equals(org.joda.time.LocalTime.class)) {
+        	return new org.joda.time.LocalTime(dateRangeRandomizer.getRandomValue().getTime());
         }
-        if (type.equals(LocalDateTime.class)) {
-        	return new LocalDateTime(dateRangeRandomizer.getRandomValue().getTime());
+        if (type.equals(org.joda.time.LocalDateTime.class)) {
+        	return new org.joda.time.LocalDateTime(dateRangeRandomizer.getRandomValue().getTime());
+        }
+        if (type.equals(org.joda.time.Duration.class)) {
+        	return new org.joda.time.Duration(Math.abs(RANDOM.nextLong()));
+        }
+        if (type.equals(org.joda.time.Period.class)) {
+        	return new org.joda.time.Period(Math.abs(RANDOM.nextInt()));
+        }
+        if (type.equals(org.joda.time.Interval.class)) {
+        	long startDate = Math.abs(RANDOM.nextInt());
+        	long endDate = startDate + Math.abs(RANDOM.nextInt());
+    		return new org.joda.time.Interval(startDate, endDate);
         }
 
         /*
