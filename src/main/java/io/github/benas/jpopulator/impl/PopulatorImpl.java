@@ -184,7 +184,7 @@ final class PopulatorImpl implements Populator {
         Object object;
         if (customRandomizer(resultClass, fieldType, fieldName)) { // use custom randomizer if any
             object = randomizers.get(new RandomizerDefinition(resultClass, fieldType, fieldName)).getRandomValue();
-        } else if (isSupportedType(fieldType)) { //Java type (no need for recursion)
+        } else if (isSupportedType(fieldType)) { //A supported type (no need for recursion)
             if (isBeanValidationAnnotationPresent(field)) {
                 object = BeanValidationRandomizer.getRandomValue(field);
             } else { // no validation constraint annotations, use default randomizer
