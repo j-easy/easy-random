@@ -1,7 +1,7 @@
 /*
  * The MIT License
  *
- *   Copyright (c) 2014, Mahmoud Ben Hassine (md.benhassine@gmail.com)
+ *   Copyright (c) 2015, Mahmoud Ben Hassine (mahmoud@benhassine.fr)
  *
  *   Permission is hereby granted, free of charge, to any person obtaining a copy
  *   of this software and associated documentation files (the "Software"), to deal
@@ -22,33 +22,33 @@
  *   THE SOFTWARE.
  */
 
-package io.github.benas.jpopulator.beans;
+package io.github.benas.jpopulator.randomizers;
+
+import org.junit.Assert;
+import org.junit.Before;
+
+import java.util.Collection;
 
 /**
- * A java bean for the Foo type.
+ * Test class for {@link io.github.benas.jpopulator.randomizers.SetRandomizer}.
  *
- * @author Mahmoud Ben Hassine (md.benhassine@gmail.com)
+ * @author Mahmoud Ben Hassine (mahmoud@benhassine.fr)
  */
-public class Foo {
+public class SetRandomizerTest {
 
-    private String name;
+    private SetRandomizer<String> setRandomizer;
 
-    private Bar bar;
-
-    public String getName() {
-        return name;
+    @Before
+    public void setUp() throws Exception {
+        setRandomizer = new SetRandomizer<String>(new FirstNameRandomizer(), 3);
     }
 
-    public void setName(String name) {
-        this.name = name;
-    }
+    @org.junit.Test
+    public void generatedSetShouldNotBeEmpty() throws Exception {
+        Collection<String> names = setRandomizer.getRandomValue();
 
-    public Bar getBar() {
-        return bar;
-    }
-
-    public void setBar(Bar bar) {
-        this.bar = bar;
+        Assert.assertNotNull(names);
+        Assert.assertTrue(names.size() <= 3);// duplicate random values are not inserted in the set
     }
 
 }

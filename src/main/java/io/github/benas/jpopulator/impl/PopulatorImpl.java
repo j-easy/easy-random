@@ -1,7 +1,7 @@
 /*
  * The MIT License
  *
- *   Copyright (c) 2014, Mahmoud Ben Hassine (md.benhassine@gmail.com)
+ *   Copyright (c) 2015, Mahmoud Ben Hassine (mahmoud@benhassine.fr)
  *
  *   Permission is hereby granted, free of charge, to any person obtaining a copy
  *   of this software and associated documentation files (the "Software"), to deal
@@ -24,19 +24,26 @@
 
 package io.github.benas.jpopulator.impl;
 
-import io.github.benas.jpopulator.api.Randomizer;
 import io.github.benas.jpopulator.api.Populator;
-import io.github.benas.jpopulator.randomizers.DateRangeRandomizer;
-import io.github.benas.jpopulator.randomizers.validation.MaxValueRandomizer;
-import io.github.benas.jpopulator.randomizers.validation.MinValueRandomizer;
+import io.github.benas.jpopulator.api.Randomizer;
 import org.apache.commons.beanutils.PropertyUtils;
-import org.apache.commons.lang3.RandomStringUtils;
 import org.apache.commons.math3.random.RandomDataGenerator;
 
-import java.lang.reflect.*;
+import java.lang.reflect.Array;
+import java.lang.reflect.Field;
+import java.lang.reflect.Modifier;
 import java.math.BigDecimal;
 import java.math.BigInteger;
-import java.util.*;
+import java.util.Map;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Set;
+import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
+import java.util.Arrays;
+import java.util.Collection;
+import java.util.Collections;
 import java.util.concurrent.atomic.AtomicInteger;
 import java.util.concurrent.atomic.AtomicLong;
 import java.util.logging.Level;
@@ -45,7 +52,7 @@ import java.util.logging.Logger;
 /**
  * The core implementation of the {@link Populator} interface.
  *
- * @author Mahmoud Ben Hassine (md.benhassine@gmail.com)
+ * @author Mahmoud Ben Hassine (mahmoud@benhassine.fr)
  */
 final class PopulatorImpl implements Populator {
 
@@ -82,7 +89,7 @@ final class PopulatorImpl implements Populator {
     }
 
     @Override
-    public <T> T populateBean(Class<T> type, String... excludeFieldsName) {
+    public <T> T populateBean(final Class<T> type, final String... excludedFields) {
 
         T result;
         try {
@@ -119,7 +126,7 @@ final class PopulatorImpl implements Populator {
              * Generate random data for each field
              */
             for (Field field : declaredFields) {
-                if (checkIfExcludeField(field, excludeFieldsName)) {
+                if (shouldExcludeField(field, excludedFields)) {
                     continue;
                 }
                 //do not populate static nor final fields
@@ -142,16 +149,19 @@ final class PopulatorImpl implements Populator {
     }
 
     @Override
-    public <T> List<T> populateBeans(final Class<T> type) {
-        byte size = (byte) Math.abs((Byte) DefaultRandomizer.getRandomValue(Byte.TYPE));
-        return populateBeans(type, size);
+    public <T> List<T> populateBeans(final Class<T> type, final String... excludedFields) {
+        int size = new RandomDataGenerator().nextInt(1, Short.MAX_VALUE);
+        return populateBeans(type, size, excludedFields);
     }
 
     @Override
-    public <T> List<T> populateBeans(final Class<T> type, final int size) {
+    public <T> List<T> populateBeans(final Class<T> type, final int size, final String... excludedFields) {
+        if (size < 0) {
+            throw new IllegalArgumentException("The number of beans to populate must be positive.");
+        }
         Object[] beans = new Object[size];
         for (int i = 0; i < size; i++) {
-            Object bean = populateBean(type);
+            Object bean = populateBean(type, excludedFields);
             beans[i] = bean;
         }
         //noinspection unchecked
@@ -165,7 +175,7 @@ final class PopulatorImpl implements Populator {
      * @param field  The field in which the generated value will be set
      * @throws Exception Thrown when the generated value cannot be set to the given field
      */
-    private void populateSimpleType(Object result, Field field) throws Exception {
+    private void populateSimpleType(Object result, final Field field) throws Exception {
 
         Class<?> fieldType = field.getType();
         String fieldName = field.getName();
@@ -174,8 +184,12 @@ final class PopulatorImpl implements Populator {
         Object object;
         if (customRandomizer(resultClass, fieldType, fieldName)) { // use custom randomizer if any
             object = randomizers.get(new RandomizerDefinition(resultClass, fieldType, fieldName)).getRandomValue();
-        } else if (isSupportedType(fieldType)) { //A supported type (no need for recursion)
-            object = getRandomValue(field, fieldType);
+        } else if (isSupportedType(fieldType)) { //Java type (no need for recursion)
+            if (isBeanValidationAnnotationPresent(field)) {
+                object = BeanValidationRandomizer.getRandomValue(field);
+            } else { // no validation constraint annotations, use default randomizer
+                object = DefaultRandomizer.getRandomValue(fieldType);
+            }
         } else { // Custom type (recursion needed to populate nested custom types if any)
             object = populateBean(fieldType);
         }
@@ -186,65 +200,6 @@ final class PopulatorImpl implements Populator {
 
     }
 
-    /*
-     * Utility method that generates a random value for java built-in types.
-     * Checks if the field is annotated with a bean validation annotation and generates a random value according to the validation constraint
-     */
-    private Object getRandomValue(final Field field, final Class<?> fieldType) {
-
-        Object object = DefaultRandomizer.getRandomValue(fieldType);
-
-        /*
-         * If the field is annotated with a bean validation annotation, generate a random value according to the validation constraint
-         */
-        if(field.isAnnotationPresent(javax.validation.constraints.AssertFalse.class)) {
-            object = false;
-        }
-        if(field.isAnnotationPresent(javax.validation.constraints.AssertTrue.class)) {
-            object = true;
-        }
-        if(field.isAnnotationPresent(javax.validation.constraints.Null.class)) {
-            object = null;
-        }
-        if(field.isAnnotationPresent(javax.validation.constraints.Future.class)) {
-            Calendar calendar = Calendar.getInstance();
-            calendar.add(Calendar.YEAR, 100);
-            object = new DateRangeRandomizer(new Date(), calendar.getTime()).getRandomValue();
-        }
-        if(field.isAnnotationPresent(javax.validation.constraints.Past.class)) {
-            Calendar calendar = Calendar.getInstance();
-            calendar.add(Calendar.YEAR, -100);
-            object = new DateRangeRandomizer(calendar.getTime(), new Date()).getRandomValue();
-        }
-        if(field.isAnnotationPresent(javax.validation.constraints.Max.class)) {
-            javax.validation.constraints.Max maxAnnotation = field.getAnnotation(javax.validation.constraints.Max.class);
-            long maxValue = maxAnnotation.value();
-            object = MaxValueRandomizer.getRandomValue(fieldType, maxValue);
-        }
-        if(field.isAnnotationPresent(javax.validation.constraints.DecimalMax.class)) {
-            javax.validation.constraints.DecimalMax decimalMaxAnnotation = field.getAnnotation(javax.validation.constraints.DecimalMax.class);
-            BigDecimal decimalMaxValue = new BigDecimal(decimalMaxAnnotation.value());
-            object = MaxValueRandomizer.getRandomValue(fieldType, decimalMaxValue.longValue());
-        }
-        if(field.isAnnotationPresent(javax.validation.constraints.Min.class)) {
-            javax.validation.constraints.Min minAnnotation = field.getAnnotation(javax.validation.constraints.Min.class);
-            long minValue = minAnnotation.value();
-            object = MinValueRandomizer.getRandomValue(fieldType, minValue);
-        }
-        if(field.isAnnotationPresent(javax.validation.constraints.DecimalMin.class)) {
-            javax.validation.constraints.DecimalMin decimalMinAnnotation = field.getAnnotation(javax.validation.constraints.DecimalMin.class);
-            BigDecimal decimalMinValue = new BigDecimal(decimalMinAnnotation.value());
-            object = MinValueRandomizer.getRandomValue(fieldType, decimalMinValue.longValue());
-        }
-        if(field.isAnnotationPresent(javax.validation.constraints.Size.class)) {
-            javax.validation.constraints.Size sizeAnnotation = field.getAnnotation(javax.validation.constraints.Size.class);
-            int minSize = sizeAnnotation.min();
-            int maxSize = sizeAnnotation.max();
-            object = RandomStringUtils.randomAlphabetic(new RandomDataGenerator().nextInt(minSize, maxSize));
-        }
-        return object;
-    }
-
     /**
      * Method to populate a collection type which can be an array or a {@link Collection}.
      *
@@ -252,7 +207,7 @@ final class PopulatorImpl implements Populator {
      * @param field  The field in which the generated value will be set
      * @throws Exception Thrown when the generated value cannot be set to the given field
      */
-    private void populateCollectionType(Object result, Field field) throws Exception {
+    private void populateCollectionType(Object result, final Field field) throws Exception {
 
         Class<?> fieldType = field.getType();
         String fieldName = field.getName();
@@ -325,21 +280,37 @@ final class PopulatorImpl implements Populator {
      * Utility method that checks if a field should be excluded from being populated.
      *
      * @param field the field to check
-     * @param excludeFieldsName the list of field names to be excluded
+     * @param excludedFields the list of field names to be excluded
      * @return true if the field should be excluded, false otherwise
      */
-    private boolean checkIfExcludeField(Field field, String... excludeFieldsName) {
-        if (excludeFieldsName == null || excludeFieldsName.length == 0) return false;
-        boolean exclude = false;
+    private boolean shouldExcludeField(final Field field, final String... excludedFields) {
+        if (excludedFields == null || excludedFields.length == 0) {
+            return false;
+        }
         String fieldName = field.getName().toLowerCase();
-        for (String excludeFieldName : excludeFieldsName) {
-            if (fieldName.equals(excludeFieldName.toLowerCase())) {
-                exclude = true;
-                break;
+        for (String excludedFieldName : excludedFields) {
+            if (fieldName.equals(excludedFieldName.toLowerCase())) {
+                return true;
             }
         }
 
-        return exclude;
+        return false;
+    }
+
+    /*
+     * Utility method that checks if the field is annotated with a bean validation annotation.
+     */
+    private boolean isBeanValidationAnnotationPresent(final Field field) {
+        return field.isAnnotationPresent(javax.validation.constraints.AssertFalse.class) ||
+               field.isAnnotationPresent(javax.validation.constraints.AssertTrue.class) ||
+               field.isAnnotationPresent(javax.validation.constraints.Null.class) ||
+               field.isAnnotationPresent(javax.validation.constraints.Future.class) ||
+               field.isAnnotationPresent(javax.validation.constraints.Past.class) ||
+               field.isAnnotationPresent(javax.validation.constraints.Max.class) ||
+               field.isAnnotationPresent(javax.validation.constraints.Min.class) ||
+               field.isAnnotationPresent(javax.validation.constraints.DecimalMax.class) ||
+               field.isAnnotationPresent(javax.validation.constraints.DecimalMin.class) ||
+               field.isAnnotationPresent(javax.validation.constraints.Size.class);
     }
 
 }

@@ -1,7 +1,7 @@
 /*
  * The MIT License
  *
- *   Copyright (c) 2014, Mahmoud Ben Hassine (md.benhassine@gmail.com)
+ *   Copyright (c) 2015, Mahmoud Ben Hassine (mahmoud@benhassine.fr)
  *
  *   Permission is hereby granted, free of charge, to any person obtaining a copy
  *   of this software and associated documentation files (the "Software"), to deal
@@ -22,35 +22,33 @@
  *   THE SOFTWARE.
  */
 
-package io.github.benas.jpopulator.beans;
+package io.github.benas.jpopulator.randomizers;
 
-import java.util.List;
+import org.junit.Assert;
+import org.junit.Before;
+
+import java.util.Collection;
 
 /**
- * A java bean for the Bar type.
+ * Test class for {@link ListRandomizer}.
  *
- * @author Mahmoud Ben Hassine (md.benhassine@gmail.com)
+ * @author Mahmoud Ben Hassine (mahmoud@benhassine.fr)
  */
-public class Bar {
+public class ListRandomizerTest {
 
-    private int id;
+    private ListRandomizer<String> listRandomizer;
 
-    private List<String> names;
-
-    public int getId() {
-        return id;
+    @Before
+    public void setUp() throws Exception {
+        listRandomizer = new ListRandomizer<String>(new FirstNameRandomizer(), 3);
     }
 
-    public void setId(int id) {
-        this.id = id;
-    }
+    @org.junit.Test
+    public void generatedListShouldNotBeEmpty() throws Exception {
+        Collection<String> names = listRandomizer.getRandomValue();
 
-    public List<String> getNames() {
-        return names;
-    }
-
-    public void setNames(List<String> names) {
-        this.names = names;
+        Assert.assertNotNull(names);
+        Assert.assertEquals(3, names.size());
     }
 
 }

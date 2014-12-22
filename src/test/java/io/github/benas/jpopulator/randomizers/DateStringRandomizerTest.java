@@ -1,3 +1,27 @@
+/*
+ * The MIT License
+ *
+ *   Copyright (c) 2015, Mahmoud Ben Hassine (mahmoud@benhassine.fr)
+ *
+ *   Permission is hereby granted, free of charge, to any person obtaining a copy
+ *   of this software and associated documentation files (the "Software"), to deal
+ *   in the Software without restriction, including without limitation the rights
+ *   to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+ *   copies of the Software, and to permit persons to whom the Software is
+ *   furnished to do so, subject to the following conditions:
+ *
+ *   The above copyright notice and this permission notice shall be included in
+ *   all copies or substantial portions of the Software.
+ *
+ *   THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+ *   IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+ *   FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+ *   AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+ *   LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+ *   OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
+ *   THE SOFTWARE.
+ */
+
 package io.github.benas.jpopulator.randomizers;
 
 import org.junit.After;
@@ -16,10 +40,10 @@ import java.util.Date;
  */
 public class DateStringRandomizerTest {
 
-    private static final String DATE_FORMAT = "YYYY-MM-dd";
+    private static final String DATE_FORMAT = "yyyy-MM-dd";
     private static final String DEFAULT_DATE_FORMAT = "E M dd hh:mm:ss a zzz";
-    
-	private DateStringRandomizer dateStringRandomizer;
+
+    private DateStringRandomizer dateStringRandomizer;
 
     private Date today, tomorrow;
 
@@ -37,12 +61,12 @@ public class DateStringRandomizerTest {
         String randomDate = dateStringRandomizer.getRandomValue();
         Assert.assertNotNull(randomDate);
         try {
-			convertToDate(randomDate, DEFAULT_DATE_FORMAT);
-		} catch (ParseException e) {
-			Assert.fail("Returned date doesn't have a proper format " + randomDate);
-		}
+            convertToDate(randomDate, DEFAULT_DATE_FORMAT);
+        } catch (ParseException e) {
+            Assert.fail("Returned date doesn't have a proper format " + randomDate);
+        }
     }
-    
+
     @org.junit.Test
     public void returnedStringDateShouldBeInRange() throws ParseException {
         dateStringRandomizer = new DateStringRandomizer(today, tomorrow);
@@ -53,10 +77,9 @@ public class DateStringRandomizerTest {
 
     @org.junit.Test
     public void returnedStringDateShouldHaveSpecifiedFormat() throws Exception {
-    	dateStringRandomizer = new DateStringRandomizer(DATE_FORMAT, today, tomorrow);
+        dateStringRandomizer = new DateStringRandomizer(DATE_FORMAT, today, tomorrow);
         String randomDate = dateStringRandomizer.getRandomValue();
         Assert.assertNotNull(randomDate);
-        System.out.println(randomDate);
         Assert.assertTrue(randomDate.matches("\\d{4}-\\d{2}-\\d{2}"));
     }
 
@@ -65,15 +88,10 @@ public class DateStringRandomizerTest {
         dateStringRandomizer = null;
         System.gc();
     }
-    
+
     private Date convertToDate(String date, String format) throws ParseException {
-    	SimpleDateFormat simpleDateFormat = new SimpleDateFormat(format);
+        SimpleDateFormat simpleDateFormat = new SimpleDateFormat(format);
         return simpleDateFormat.parse(date);
-    }
-    
-    private String convertToString (Date date, String format) {
-    	SimpleDateFormat simpleDateFormat = new SimpleDateFormat(format);
-        return simpleDateFormat.format(date);
     }
 
 }

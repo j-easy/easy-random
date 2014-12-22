@@ -1,3 +1,27 @@
+/*
+ * The MIT License
+ *
+ *   Copyright (c) 2015, Mahmoud Ben Hassine (mahmoud@benhassine.fr)
+ *
+ *   Permission is hereby granted, free of charge, to any person obtaining a copy
+ *   of this software and associated documentation files (the "Software"), to deal
+ *   in the Software without restriction, including without limitation the rights
+ *   to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+ *   copies of the Software, and to permit persons to whom the Software is
+ *   furnished to do so, subject to the following conditions:
+ *
+ *   The above copyright notice and this permission notice shall be included in
+ *   all copies or substantial portions of the Software.
+ *
+ *   THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+ *   IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+ *   FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+ *   AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+ *   LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+ *   OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
+ *   THE SOFTWARE.
+ */
+
 package io.github.benas.jpopulator.beans;
 
 import javax.validation.constraints.*;
@@ -7,9 +31,9 @@ import java.util.Date;
 /**
  * A bean annotated with <a href="http://beanvalidation.org/">JSR 349</a> constraints used to test generated values validity.
  *
- * @author Mahmoud Ben Hassine (md.benhassine@gmail.com)
+ * @author Mahmoud Ben Hassine (mahmoud@benhassine.fr)
  */
-public class JSR349AnnotatedBean {
+public class BeanValidationAnnotatedBean {
 
     @AssertFalse
     boolean unsupported;
@@ -22,9 +46,6 @@ public class JSR349AnnotatedBean {
 
     @DecimalMin("5.00")
     BigDecimal minDiscount;
-
-    @Digits(integer=6, fraction=2)
-    BigDecimal price;
 
     @Future
     Date eventDate;
@@ -44,13 +65,10 @@ public class JSR349AnnotatedBean {
     @Null
     String unusedString;
 
-    @Pattern(regexp="\\(\\d{3}\\)\\d{3}-\\d{4}")
-    String phoneNumber;
-
     @Size(min=2, max=10)
     String briefMessage;
 
-    public JSR349AnnotatedBean() {
+    public BeanValidationAnnotatedBean() {
     }
 
     public boolean isUnsupported() {
@@ -83,14 +101,6 @@ public class JSR349AnnotatedBean {
 
     public void setMinDiscount(BigDecimal minDiscount) {
         this.minDiscount = minDiscount;
-    }
-
-    public BigDecimal getPrice() {
-        return price;
-    }
-
-    public void setPrice(BigDecimal price) {
-        this.price = price;
     }
 
     public Date getEventDate() {
@@ -141,14 +151,6 @@ public class JSR349AnnotatedBean {
         this.unusedString = unusedString;
     }
 
-    public String getPhoneNumber() {
-        return phoneNumber;
-    }
-
-    public void setPhoneNumber(String phoneNumber) {
-        this.phoneNumber = phoneNumber;
-    }
-
     public String getBriefMessage() {
         return briefMessage;
     }
@@ -160,19 +162,17 @@ public class JSR349AnnotatedBean {
 
     @Override
     public String toString() {
-        final StringBuilder sb = new StringBuilder("JSR349AnnotatedBean{");
+        final StringBuilder sb = new StringBuilder("BeanValidationAnnotatedBean{");
         sb.append("unsupported=").append(unsupported);
         sb.append(", active=").append(active);
         sb.append(", maxDiscount=").append(maxDiscount);
         sb.append(", minDiscount=").append(minDiscount);
-        sb.append(", price=").append(price);
         sb.append(", eventDate=").append(eventDate);
         sb.append(", birthday=").append(birthday);
         sb.append(", maxQuantity=").append(maxQuantity);
         sb.append(", minQuantity=").append(minQuantity);
         sb.append(", username='").append(username).append('\'');
         sb.append(", unusedString='").append(unusedString).append('\'');
-        sb.append(", phoneNumber='").append(phoneNumber).append('\'');
         sb.append(", briefMessage='").append(briefMessage).append('\'');
         sb.append('}');
         return sb.toString();

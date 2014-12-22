@@ -1,7 +1,7 @@
 /*
  * The MIT License
  *
- *   Copyright (c) 2014, Mahmoud Ben Hassine (md.benhassine@gmail.com)
+ *   Copyright (c) 2015, Mahmoud Ben Hassine (mahmoud@benhassine.fr)
  *
  *   Permission is hereby granted, free of charge, to any person obtaining a copy
  *   of this software and associated documentation files (the "Software"), to deal
@@ -25,16 +25,14 @@
 package io.github.benas.jpopulator.impl;
 
 import io.github.benas.jpopulator.randomizers.DateRangeRandomizer;
+import io.github.benas.jpopulator.util.ConstantsUtil;
+import org.apache.commons.lang3.RandomStringUtils;
 
 import java.math.BigDecimal;
 import java.math.BigInteger;
 import java.util.Calendar;
-import java.util.Date;
-import java.util.Random;
 import java.util.concurrent.atomic.AtomicInteger;
 import java.util.concurrent.atomic.AtomicLong;
-
-import org.apache.commons.lang3.RandomStringUtils;
 
 /**
  * This class is used to generate random value for java built-in types.
@@ -45,30 +43,6 @@ import org.apache.commons.lang3.RandomStringUtils;
 final class DefaultRandomizer {
 
     private DefaultRandomizer() { }
-
-    /**
-     * The Random object to use.
-     */
-    private static final Random RANDOM;
-
-    /**
-     * The random date randomizer used to populate date types.
-     */
-    private static final DateRangeRandomizer dateRangeRandomizer;
-
-    static {
-        RANDOM = new Random();
-
-        //initialise date randomizer to generate dates in [now - 10 years, now + 10 years]
-        Calendar calendar = Calendar.getInstance();
-        calendar.add(Calendar.YEAR, 10);
-        Date inTenYears = calendar.getTime();
-        calendar = Calendar.getInstance();
-        calendar.add(Calendar.YEAR, -10);
-        Date tenYearsAgo = calendar.getTime();
-        dateRangeRandomizer = new DateRangeRandomizer(tenYearsAgo, inTenYears);
-
-    }
 
     /**
      * Generate a random value for the given type.
@@ -82,7 +56,7 @@ final class DefaultRandomizer {
          * String and Character types
          */
         if (type.equals(String.class)) {
-            return RandomStringUtils.randomAlphabetic(10);
+            return RandomStringUtils.randomAlphabetic(ConstantsUtil.DEFAULT_STRING_LENGTH);
         }
         if (type.equals(Character.TYPE) || type.equals(Character.class)) {
             return RandomStringUtils.randomAlphabetic(1).charAt(0);
@@ -92,82 +66,82 @@ final class DefaultRandomizer {
          * Boolean type
          */
         if (type.equals(Boolean.TYPE) || type.equals(Boolean.class)) {
-            return RANDOM.nextBoolean();
+            return ConstantsUtil.RANDOM.nextBoolean();
         }
 
         /*
          * Numeric types
          */
         if (type.equals(Byte.TYPE) || type.equals(Byte.class)) {
-            return (byte) (RANDOM.nextInt());
+            return (byte) (ConstantsUtil.RANDOM.nextInt());
         }
         if (type.equals(Short.TYPE) || type.equals(Short.class)) {
-            return (short) (RANDOM.nextInt());
+            return (short) (ConstantsUtil.RANDOM.nextInt());
         }
         if (type.equals(Integer.TYPE) || type.equals(Integer.class)) {
-            return RANDOM.nextInt();
+            return ConstantsUtil.RANDOM.nextInt();
         }
         if (type.equals(Long.TYPE) || type.equals(Long.class)) {
-            return RANDOM.nextLong();
+            return ConstantsUtil.RANDOM.nextLong();
         }
         if (type.equals(Double.TYPE) || type.equals(Double.class)) {
-            return RANDOM.nextDouble();
+            return ConstantsUtil.RANDOM.nextDouble();
         }
         if (type.equals(Float.TYPE) || type.equals(Float.class)) {
-            return RANDOM.nextFloat();
+            return ConstantsUtil.RANDOM.nextFloat();
         }
         if (type.equals(BigInteger.class)) {
-            return new BigInteger(Math.abs(RANDOM.nextInt(100)), RANDOM);
+            return new BigInteger(Math.abs(ConstantsUtil.RANDOM.nextInt(ConstantsUtil.DEFAULT_BIG_INTEGER_NUM_BITS_LENGTH)), ConstantsUtil.RANDOM);
         }
         if (type.equals(BigDecimal.class)) {
-            return new BigDecimal(RANDOM.nextDouble());
+            return new BigDecimal(ConstantsUtil.RANDOM.nextDouble());
         }
         if (type.equals(AtomicLong.class)) {
-            return new AtomicLong(RANDOM.nextLong());
+            return new AtomicLong(ConstantsUtil.RANDOM.nextLong());
         }
         if (type.equals(AtomicInteger.class)) {
-            return new AtomicInteger(RANDOM.nextInt());
+            return new AtomicInteger(ConstantsUtil.RANDOM.nextInt());
         }
 
         /*
          * Date and time types
          */
         if (type.equals(java.util.Date.class)) {
-            return new java.util.Date(dateRangeRandomizer.getRandomValue().getTime());
+            return ConstantsUtil.DATE_RANGE_RANDOMIZER.getRandomValue();
         }
         if (type.equals(java.sql.Date.class)) {
-            return new java.sql.Date(dateRangeRandomizer.getRandomValue().getTime());
+            return new java.sql.Date(ConstantsUtil.DATE_RANGE_RANDOMIZER.getRandomValue().getTime());
         }
         if (type.equals(java.sql.Time.class)) {
-            return new java.sql.Time(RANDOM.nextLong());
+            return new java.sql.Time(ConstantsUtil.RANDOM.nextLong());
         }
         if (type.equals(java.sql.Timestamp.class)) {
-            return new java.sql.Timestamp(dateRangeRandomizer.getRandomValue().getTime());
+            return new java.sql.Timestamp(ConstantsUtil.DATE_RANGE_RANDOMIZER.getRandomValue().getTime());
         }
         if (type.equals(Calendar.class)) {
             return Calendar.getInstance();
         }
         if (type.equals(org.joda.time.DateTime.class)) {
-        	return new org.joda.time.DateTime(dateRangeRandomizer.getRandomValue().getTime());
+        	return new org.joda.time.DateTime(ConstantsUtil.DATE_RANGE_RANDOMIZER.getRandomValue().getTime());
         }
         if (type.equals(org.joda.time.LocalDate.class)) {
-        	return new org.joda.time.LocalDate(dateRangeRandomizer.getRandomValue().getTime());
+        	return new org.joda.time.LocalDate(ConstantsUtil.DATE_RANGE_RANDOMIZER.getRandomValue().getTime());
         }
         if (type.equals(org.joda.time.LocalTime.class)) {
-        	return new org.joda.time.LocalTime(dateRangeRandomizer.getRandomValue().getTime());
+        	return new org.joda.time.LocalTime(ConstantsUtil.DATE_RANGE_RANDOMIZER.getRandomValue().getTime());
         }
         if (type.equals(org.joda.time.LocalDateTime.class)) {
-        	return new org.joda.time.LocalDateTime(dateRangeRandomizer.getRandomValue().getTime());
+        	return new org.joda.time.LocalDateTime(ConstantsUtil.DATE_RANGE_RANDOMIZER.getRandomValue().getTime());
         }
         if (type.equals(org.joda.time.Duration.class)) {
-        	return new org.joda.time.Duration(Math.abs(RANDOM.nextLong()));
+        	return new org.joda.time.Duration(Math.abs(ConstantsUtil.RANDOM.nextLong()));
         }
         if (type.equals(org.joda.time.Period.class)) {
-        	return new org.joda.time.Period(Math.abs(RANDOM.nextInt()));
+        	return new org.joda.time.Period(Math.abs(ConstantsUtil.RANDOM.nextInt()));
         }
         if (type.equals(org.joda.time.Interval.class)) {
-        	long startDate = Math.abs(RANDOM.nextInt());
-        	long endDate = startDate + Math.abs(RANDOM.nextInt());
+        	long startDate = Math.abs(ConstantsUtil.RANDOM.nextInt());
+        	long endDate = startDate + Math.abs(ConstantsUtil.RANDOM.nextInt());
     		return new org.joda.time.Interval(startDate, endDate);
         }
 
@@ -176,7 +150,7 @@ final class DefaultRandomizer {
          */
         if (type.isEnum() && type.getEnumConstants().length > 0) {
             Object[] enumConstants = type.getEnumConstants();
-            return enumConstants[RANDOM.nextInt(enumConstants.length)];
+            return enumConstants[ConstantsUtil.RANDOM.nextInt(enumConstants.length)];
         }
 
         /*

@@ -1,7 +1,7 @@
 /*
  * The MIT License
  *
- *   Copyright (c) 2014, Mahmoud Ben Hassine (md.benhassine@gmail.com)
+ *   Copyright (c) 2015, Mahmoud Ben Hassine (mahmoud@benhassine.fr)
  *
  *   Permission is hereby granted, free of charge, to any person obtaining a copy
  *   of this software and associated documentation files (the "Software"), to deal
@@ -25,17 +25,14 @@
 package io.github.benas.jpopulator.randomizers;
 
 import io.github.benas.jpopulator.api.Randomizer;
-
-import java.util.Random;
+import io.github.benas.jpopulator.util.ConstantsUtil;
 
 /**
  * A generic randomizer that generate String values from a list of words.
  *
- * @author Mahmoud Ben Hassine (md.benhassine@gmail.com)
+ * @author Mahmoud Ben Hassine (mahmoud@benhassine.fr)
  */
 public class GenericStringRandomizer implements Randomizer<String> {
-
-    private final Random random = new Random();
 
     /**
      * Words array from which the random value should be chosen randomly.
@@ -52,7 +49,7 @@ public class GenericStringRandomizer implements Randomizer<String> {
 
     @Override
     public String getRandomValue() {
-        return words[random.nextInt(words.length)];
+        return words[ConstantsUtil.RANDOM.nextInt(words.length)];
     }
 
 }

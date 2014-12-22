@@ -1,7 +1,7 @@
 /*
  * The MIT License
  *
- *   Copyright (c) 2014, Mahmoud Ben Hassine (md.benhassine@gmail.com)
+ *   Copyright (c) 2015, Mahmoud Ben Hassine (mahmoud@benhassine.fr)
  *
  *   Permission is hereby granted, free of charge, to any person obtaining a copy
  *   of this software and associated documentation files (the "Software"), to deal
@@ -23,7 +23,7 @@
  */
 package io.github.benas.jpopulator.randomizers;
 
-import java.util.Random;
+import io.github.benas.jpopulator.util.ConstantsUtil;
 
 /**
  * A randomizer that generates numbers in string representation.
@@ -34,9 +34,6 @@ public class NumericStringRandomizer extends GenericStringRandomizer {
 
     /** The words. */
     private static String[] words = new String[1];
-    
-    /** The random. */
-    private static Random random = new Random();
 
     /**
      * Instantiates a new numeric string randomizer.
@@ -51,7 +48,7 @@ public class NumericStringRandomizer extends GenericStringRandomizer {
      * @param minNumericValue the min numeric value
      * @param maxNumericValue the max numeric value
      */
-    public NumericStringRandomizer(Integer minNumericValue, Integer maxNumericValue) {
+    public NumericStringRandomizer(final Integer minNumericValue, final Integer maxNumericValue) {
         super(addNumbersToWords(minNumericValue, maxNumericValue));
     }
 
@@ -62,16 +59,16 @@ public class NumericStringRandomizer extends GenericStringRandomizer {
      * @param maxNumericValue the max numeric value
      * @return the string[]
      */
-    private static String[] addNumbersToWords(Integer minNumericValue, Integer maxNumericValue) {
+    private static String[] addNumbersToWords(final Integer minNumericValue, final Integer maxNumericValue) {
         Integer randomNum;
         if (maxNumericValue != null && minNumericValue != null) {
             if (minNumericValue > maxNumericValue) {
                 throw new IllegalArgumentException("min value must be lower than max value");
             } else {
-                randomNum = random.nextInt((maxNumericValue - minNumericValue) + 1) + minNumericValue;
+                randomNum = ConstantsUtil.RANDOM.nextInt(maxNumericValue - minNumericValue + 1) + minNumericValue;
             }
         } else {
-            randomNum = random.nextInt();
+            randomNum = ConstantsUtil.RANDOM.nextInt();
         }
         words[0] = randomNum.toString();
         return words;

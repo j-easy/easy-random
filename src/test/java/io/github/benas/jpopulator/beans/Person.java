@@ -1,7 +1,7 @@
 /*
  * The MIT License
  *
- *   Copyright (c) 2014, Mahmoud Ben Hassine (md.benhassine@gmail.com)
+ *   Copyright (c) 2015, Mahmoud Ben Hassine (mahmoud@benhassine.fr)
  *
  *   Permission is hereby granted, free of charge, to any person obtaining a copy
  *   of this software and associated documentation files (the "Software"), to deal
@@ -28,53 +28,32 @@ import java.util.Date;
 import java.util.List;
 
 /**
- * A java bean for the Person type.
+ * A java bean for Person type.
  *
- * @author Mahmoud Ben Hassine (md.benhassine@gmail.com)
+ * @author Mahmoud Ben Hassine (mahmoud@benhassine.fr)
  */
-public class Person {
-
-	private String firstName;
-
-    private String lastName;
+public class Person extends Human {
 
     private String email;
 
     private Gender gender;
 
     private Address address;
-    
+
     private Date birthDate;
-    
+
     private String phoneNumber;
 
     private List<String> nicknames;
-    
+
     public Person() {
     }
 
-    public Person(String firstName, String lastName, String email, Gender gender, Address address) {
-        this.firstName = firstName;
-        this.lastName = lastName;
+    public Person(String name, String email, Gender gender, Address address) {
+        super(name);
         this.email = email;
         this.gender = gender;
         this.address = address;
-    }
-
-    public String getFirstName() {
-        return firstName;
-    }
-
-    public void setFirstName(String firstName) {
-        this.firstName = firstName;
-    }
-
-    public String getLastName() {
-        return lastName;
-    }
-
-    public void setLastName(String lastName) {
-        this.lastName = lastName;
     }
 
     public String getEmail() {
@@ -102,37 +81,40 @@ public class Person {
     }
 
     public List<String> getNicknames() {
-		return nicknames;
-	}
+        return nicknames;
+    }
 
-	public void setNicknames(List<String> nicknames) {
-		this.nicknames = nicknames;
-	}
-	
+    public void setNicknames(List<String> nicknames) {
+        this.nicknames = nicknames;
+    }
+
     public Date getBirthDate() {
-		return birthDate;
-	}
+        return birthDate;
+    }
 
-	public void setBirthDate(Date birthdate) {
-		this.birthDate = birthdate;
-	}
-	
-	public String getPhoneNumber() {
-		return phoneNumber;
-	}
+    public void setBirthDate(Date birthdate) {
+        this.birthDate = birthdate;
+    }
 
-	public void setPhoneNumber(String phoneNumber) {
-		this.phoneNumber = phoneNumber;
-	}
+    public String getPhoneNumber() {
+        return phoneNumber;
+    }
 
-	@Override
+    public void setPhoneNumber(String phoneNumber) {
+        this.phoneNumber = phoneNumber;
+    }
+
+    @Override
     public String toString() {
         final StringBuilder sb = new StringBuilder("Person{");
-        sb.append("firstName='").append(firstName).append('\'');
-        sb.append(", lastName='").append(lastName).append('\'');
+        sb.append("id=").append(id);
+        sb.append(", name='").append(name).append('\'');
         sb.append(", email='").append(email).append('\'');
         sb.append(", gender=").append(gender);
         sb.append(", address=").append(address);
+        sb.append(", birthDate=").append(birthDate);
+        sb.append(", phoneNumber='").append(phoneNumber).append('\'');
+        sb.append(", nicknames=").append(nicknames);
         sb.append('}');
         return sb.toString();
     }

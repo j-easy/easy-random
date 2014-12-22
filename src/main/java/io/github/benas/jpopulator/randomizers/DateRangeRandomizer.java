@@ -1,7 +1,7 @@
 /*
  * The MIT License
  *
- *   Copyright (c) 2014, Mahmoud Ben Hassine (md.benhassine@gmail.com)
+ *   Copyright (c) 2015, Mahmoud Ben Hassine (mahmoud@benhassine.fr)
  *
  *   Permission is hereby granted, free of charge, to any person obtaining a copy
  *   of this software and associated documentation files (the "Software"), to deal
@@ -33,7 +33,7 @@ import org.apache.commons.math3.random.RandomDataGenerator;
 /**
  * A custom date randomizer that generates random dates in a range of date values.
  *
- * @author Mahmoud Ben Hassine (md.benhassine@gmail.com)
+ * @author Mahmoud Ben Hassine (mahmoud@benhassine.fr)
  */
 public class DateRangeRandomizer implements Randomizer<Date> {
 
@@ -53,6 +53,15 @@ public class DateRangeRandomizer implements Randomizer<Date> {
      * @param maxDate the maximum date.
      */
     public DateRangeRandomizer(final Date minDate, final Date maxDate) {
+        if (minDate == null) {
+            throw new IllegalArgumentException("minDate must not be null");
+        }
+        if (maxDate == null) {
+            throw new IllegalArgumentException("maxDate must not be null");
+        }
+        if (minDate.after(maxDate)) {
+            throw new IllegalArgumentException("minDate must be before maxDate");
+        }
         this.minDate = minDate;
         this.maxDate = maxDate;
     }
