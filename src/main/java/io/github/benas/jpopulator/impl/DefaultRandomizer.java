@@ -36,7 +36,8 @@ import java.util.concurrent.atomic.AtomicLong;
 /**
  * This class is used to generate random value for java built-in types.
  *
- * @author Mahmoud Ben Hassine (mahmoud@benhassine.fr)
+ * @author Mahmoud Ben Hassine (md.benhassine@gmail.com)
+ * @author Nikola Milivojevic (0dziga0@gmail.com)
  */
 final class DefaultRandomizer {
 
@@ -118,6 +119,29 @@ final class DefaultRandomizer {
         }
         if (type.equals(Calendar.class)) {
             return Calendar.getInstance();
+        }
+        if (type.equals(org.joda.time.DateTime.class)) {
+        	return new org.joda.time.DateTime(ConstantsUtil.DATE_RANGE_RANDOMIZER.getRandomValue().getTime());
+        }
+        if (type.equals(org.joda.time.LocalDate.class)) {
+        	return new org.joda.time.LocalDate(ConstantsUtil.DATE_RANGE_RANDOMIZER.getRandomValue().getTime());
+        }
+        if (type.equals(org.joda.time.LocalTime.class)) {
+        	return new org.joda.time.LocalTime(ConstantsUtil.DATE_RANGE_RANDOMIZER.getRandomValue().getTime());
+        }
+        if (type.equals(org.joda.time.LocalDateTime.class)) {
+        	return new org.joda.time.LocalDateTime(ConstantsUtil.DATE_RANGE_RANDOMIZER.getRandomValue().getTime());
+        }
+        if (type.equals(org.joda.time.Duration.class)) {
+        	return new org.joda.time.Duration(Math.abs(ConstantsUtil.RANDOM.nextLong()));
+        }
+        if (type.equals(org.joda.time.Period.class)) {
+        	return new org.joda.time.Period(Math.abs(ConstantsUtil.RANDOM.nextInt()));
+        }
+        if (type.equals(org.joda.time.Interval.class)) {
+        	long startDate = Math.abs(ConstantsUtil.RANDOM.nextInt());
+        	long endDate = startDate + Math.abs(ConstantsUtil.RANDOM.nextInt());
+    		return new org.joda.time.Interval(startDate, endDate);
         }
 
         /*

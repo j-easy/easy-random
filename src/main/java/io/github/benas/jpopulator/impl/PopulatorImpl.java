@@ -26,28 +26,28 @@ package io.github.benas.jpopulator.impl;
 
 import io.github.benas.jpopulator.api.Populator;
 import io.github.benas.jpopulator.api.Randomizer;
-import org.apache.commons.beanutils.PropertyUtils;
-import org.apache.commons.math3.random.RandomDataGenerator;
 
 import java.lang.reflect.Array;
 import java.lang.reflect.Field;
 import java.lang.reflect.Modifier;
 import java.math.BigDecimal;
 import java.math.BigInteger;
-import java.util.Map;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Set;
 import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.Date;
 import java.util.Arrays;
+import java.util.Calendar;
 import java.util.Collection;
 import java.util.Collections;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.Set;
 import java.util.concurrent.atomic.AtomicInteger;
 import java.util.concurrent.atomic.AtomicLong;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+
+import org.apache.commons.beanutils.PropertyUtils;
+import org.apache.commons.math3.random.RandomDataGenerator;
 
 /**
  * The core implementation of the {@link Populator} interface.
@@ -64,27 +64,28 @@ final class PopulatorImpl implements Populator {
     private Map<RandomizerDefinition, Randomizer> randomizers;
 
     /**
-     * The supported java types list.
+     * The supported types list.
      */
-    private final List<Class> javaTypesList;
-
+    private final List<Class> supportedTypesList;
+    
     /**
      * Public constructor.
      */
     public PopulatorImpl() {
 
         randomizers = new HashMap<RandomizerDefinition, Randomizer>();
-        javaTypesList = new ArrayList<Class>();
+        supportedTypesList = new ArrayList<Class>();
 
         //initialize supported java types
-        Class[] javaTypes = {String.class, Character.TYPE, Character.class,
+        Class[] supportedTypes = {String.class, Character.TYPE, Character.class,
                 Boolean.TYPE, Boolean.class,
                 Byte.TYPE, Byte.class, Short.TYPE, Short.class, Integer.TYPE, Integer.class, Long.TYPE, Long.class,
                 Double.TYPE, Double.class, Float.TYPE, Float.class, BigInteger.class, BigDecimal.class,
                 AtomicLong.class, AtomicInteger.class,
-                Date.class, java.sql.Date.class, java.sql.Time.class, java.sql.Timestamp.class, Calendar.class};
-        javaTypesList.addAll(Arrays.asList(javaTypes));
-
+                java.util.Date.class, java.sql.Date.class, java.sql.Time.class, java.sql.Timestamp.class, Calendar.class, 
+                org.joda.time.DateTime.class, org.joda.time.LocalDate.class, org.joda.time.LocalTime.class, org.joda.time.LocalDateTime.class,
+                org.joda.time.Duration.class, org.joda.time.Period.class, org.joda.time.Interval.class};
+        supportedTypesList.addAll(Arrays.asList(supportedTypes));
     }
 
     @Override
@@ -183,7 +184,7 @@ final class PopulatorImpl implements Populator {
         Object object;
         if (customRandomizer(resultClass, fieldType, fieldName)) { // use custom randomizer if any
             object = randomizers.get(new RandomizerDefinition(resultClass, fieldType, fieldName)).getRandomValue();
-        } else if (isJavaType(fieldType)) { //Java type (no need for recursion)
+        } else if (isSupportedType(fieldType)) { //A supported type (no need for recursion)
             if (isBeanValidationAnnotationPresent(field)) {
                 object = BeanValidationRandomizer.getRandomValue(field);
             } else { // no validation constraint annotations, use default randomizer
@@ -240,8 +241,8 @@ final class PopulatorImpl implements Populator {
      * @param type the type that the method should check
      * @return true if the given type is a java built-in type
      */
-    private boolean isJavaType(final Class<?> type) {
-        return javaTypesList.contains(type);
+    private boolean isSupportedType(final Class<?> type) {
+        return supportedTypesList.contains(type);
     }
 
     /**
