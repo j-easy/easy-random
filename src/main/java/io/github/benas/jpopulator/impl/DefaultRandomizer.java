@@ -24,7 +24,6 @@
 
 package io.github.benas.jpopulator.impl;
 
-import io.github.benas.jpopulator.randomizers.DateRangeRandomizer;
 import io.github.benas.jpopulator.util.ConstantsUtil;
 import org.apache.commons.lang3.RandomStringUtils;
 

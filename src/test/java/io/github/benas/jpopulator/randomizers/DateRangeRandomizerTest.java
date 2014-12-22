@@ -24,13 +24,12 @@
 
 package io.github.benas.jpopulator.randomizers;
 
-import org.joda.time.LocalDate;
+import java.util.Calendar;
+import java.util.Date;
+
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
-
-import java.util.Calendar;
-import java.util.Date;
 
 /**
  * Test class for {@link io.github.benas.jpopulator.randomizers.DateRangeRandomizer}.

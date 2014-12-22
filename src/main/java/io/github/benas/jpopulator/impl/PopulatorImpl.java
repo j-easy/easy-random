@@ -26,28 +26,28 @@ package io.github.benas.jpopulator.impl;
 
 import io.github.benas.jpopulator.api.Populator;
 import io.github.benas.jpopulator.api.Randomizer;
-import org.apache.commons.beanutils.PropertyUtils;
-import org.apache.commons.math3.random.RandomDataGenerator;
 
 import java.lang.reflect.Array;
 import java.lang.reflect.Field;
 import java.lang.reflect.Modifier;
 import java.math.BigDecimal;
 import java.math.BigInteger;
-import java.util.Map;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Set;
 import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.Date;
 import java.util.Arrays;
+import java.util.Calendar;
 import java.util.Collection;
 import java.util.Collections;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.Set;
 import java.util.concurrent.atomic.AtomicInteger;
 import java.util.concurrent.atomic.AtomicLong;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+
+import org.apache.commons.beanutils.PropertyUtils;
+import org.apache.commons.math3.random.RandomDataGenerator;
 
 /**
  * The core implementation of the {@link Populator} interface.
