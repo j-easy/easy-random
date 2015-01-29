@@ -34,17 +34,17 @@ import java.util.List;
  */
 public class Person extends Human {
 
-    private String email;
+    protected String email;
 
-    private Gender gender;
+    protected Gender gender;
 
-    private Address address;
+    protected Address address;
 
-    private Date birthDate;
+    protected Date birthDate;
 
-    private String phoneNumber;
+    protected String phoneNumber;
 
-    private List<String> nicknames;
+    protected List<String> nicknames;
 
     public Person() {
     }
