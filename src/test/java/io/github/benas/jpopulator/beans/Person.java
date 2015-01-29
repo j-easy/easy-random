@@ -24,6 +24,8 @@
 
 package io.github.benas.jpopulator.beans;
 
+import io.github.benas.jpopulator.api.Exclude;
+
 import java.util.Date;
 import java.util.List;
 
@@ -45,6 +47,9 @@ public class Person extends Human {
     protected String phoneNumber;
 
     protected List<String> nicknames;
+
+    @Exclude
+    protected String excluded;
 
     public Person() {
     }
@@ -102,6 +107,14 @@ public class Person extends Human {
 
     public void setPhoneNumber(String phoneNumber) {
         this.phoneNumber = phoneNumber;
+    }
+
+    public String getExcluded() {
+        return excluded;
+    }
+
+    public void setExcluded(String excluded) {
+        this.excluded = excluded;
     }
 
     @Override

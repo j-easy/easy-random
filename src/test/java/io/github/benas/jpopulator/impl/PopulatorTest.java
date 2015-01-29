@@ -144,6 +144,13 @@ public class PopulatorTest {
         Assert.assertFalse(person.getAddress().getCity().isEmpty());
     }
 
+    @Test
+    public void testExclusionViaAnnotation() {
+        Person person = populator.populateBean(Person.class);
+        Assert.assertNotNull(person);
+        Assert.assertNull(person.getExcluded());
+    }
+
     /*
      * Assert that a person is correctly populated
      */

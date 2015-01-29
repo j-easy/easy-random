@@ -24,6 +24,7 @@
 
 package io.github.benas.jpopulator.impl;
 
+import io.github.benas.jpopulator.api.Exclude;
 import io.github.benas.jpopulator.api.Populator;
 import io.github.benas.jpopulator.api.Randomizer;
 
@@ -284,6 +285,9 @@ final class PopulatorImpl implements Populator {
      * @return true if the field should be excluded, false otherwise
      */
     private boolean shouldExcludeField(final Field field, final String... excludedFields) {
+        if (field.isAnnotationPresent(Exclude.class)) {
+            return true;
+        }
         if (excludedFields == null || excludedFields.length == 0) {
             return false;
         }
