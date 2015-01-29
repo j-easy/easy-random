@@ -10,7 +10,7 @@ import io.github.benas.jpopulator.api.Populator;
 import io.github.benas.jpopulator.beans.Organizer;
 import io.github.benas.jpopulator.impl.PopulatorBuilder;
 
-public class JodaTimePopulatorTest {
+public class JodaTimeSupportTest {
 	private Populator populator;
 	
 	@Before

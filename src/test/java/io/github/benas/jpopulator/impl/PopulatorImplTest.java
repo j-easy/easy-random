@@ -46,7 +46,7 @@ import java.util.List;
  *
  * @author Mahmoud Ben Hassine (mahmoud@benhassine.fr)
  */
-public class PopulatorTest {
+public class PopulatorImplTest {
 
     /**
      * The populator to test.
