@@ -1,4 +1,4 @@
-package io.github.benas.jpopulator.test;
+package io.github.benas.jpopulator.impl;
 
 
 import org.junit.After;
