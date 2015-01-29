@@ -55,7 +55,7 @@ import org.apache.commons.math3.random.RandomDataGenerator;
  *
  * @author Mahmoud Ben Hassine (mahmoud@benhassine.fr)
  */
-final class PopulatorImpl implements Populator {
+public final class PopulatorImpl implements Populator {
 
     private final Logger logger = Logger.getLogger(this.getClass().getName());
 
