@@ -25,10 +25,7 @@
 package io.github.benas.jpopulator.impl;
 
 import io.github.benas.jpopulator.api.Populator;
-import io.github.benas.jpopulator.beans.Address;
-import io.github.benas.jpopulator.beans.Gender;
-import io.github.benas.jpopulator.beans.Person;
-import io.github.benas.jpopulator.beans.SocialPerson;
+import io.github.benas.jpopulator.beans.*;
 import io.github.benas.jpopulator.randomizers.CityRandomizer;
 import io.github.benas.jpopulator.randomizers.EmailRandomizer;
 import org.junit.After;
@@ -254,4 +251,15 @@ public class PopulatorImplTest {
         Assert.assertEquals(actualTypeArgument, Person.class);
     }
 
+    @Test
+    public void testJavaNetTypesPopulation() throws Exception {
+
+        Website website = populator.populateBean(Website.class);
+
+        Assert.assertNotNull(website);
+        Assert.assertNotNull(website.getName());
+        Assert.assertNull(website.getUri()); // should be not null when issue #22 will be implemented
+        Assert.assertNull(website.getUrl()); // should be not null when issue #22 will be implemented
+
+    }
 }
