@@ -85,7 +85,8 @@ public final class PopulatorImpl implements Populator {
                 AtomicLong.class, AtomicInteger.class,
                 java.util.Date.class, java.sql.Date.class, java.sql.Time.class, java.sql.Timestamp.class, Calendar.class, 
                 org.joda.time.DateTime.class, org.joda.time.LocalDate.class, org.joda.time.LocalTime.class, org.joda.time.LocalDateTime.class,
-                org.joda.time.Duration.class, org.joda.time.Period.class, org.joda.time.Interval.class};
+                org.joda.time.Duration.class, org.joda.time.Period.class, org.joda.time.Interval.class,
+                java.net.URL.class, java.net.URI.class };
         supportedTypesList.addAll(Arrays.asList(supportedTypes));
     }
 

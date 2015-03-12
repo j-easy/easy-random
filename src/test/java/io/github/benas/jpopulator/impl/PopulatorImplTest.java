@@ -258,8 +258,8 @@ public class PopulatorImplTest {
 
         Assert.assertNotNull(website);
         Assert.assertNotNull(website.getName());
-        Assert.assertNull(website.getUri()); // should be not null when issue #22 will be implemented
-        Assert.assertNull(website.getUrl()); // should be not null when issue #22 will be implemented
+        Assert.assertNotNull(website.getUri());
+        Assert.assertNotNull(website.getUrl());
 
     }
 }

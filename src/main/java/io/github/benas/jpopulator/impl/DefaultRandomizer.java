@@ -24,11 +24,15 @@
 
 package io.github.benas.jpopulator.impl;
 
+import io.github.benas.jpopulator.randomizers.UriRandomizer;
+import io.github.benas.jpopulator.randomizers.UrlRandomizer;
 import io.github.benas.jpopulator.util.ConstantsUtil;
 import org.apache.commons.lang3.RandomStringUtils;
 
 import java.math.BigDecimal;
 import java.math.BigInteger;
+import java.net.MalformedURLException;
+import java.net.URISyntaxException;
 import java.util.Calendar;
 import java.util.concurrent.atomic.AtomicInteger;
 import java.util.concurrent.atomic.AtomicLong;
@@ -40,6 +44,15 @@ import java.util.concurrent.atomic.AtomicLong;
  * @author Nikola Milivojevic (0dziga0@gmail.com)
  */
 final class DefaultRandomizer {
+
+    private static UrlRandomizer urlRandomizer;
+
+    private static UriRandomizer uriRandomizer;
+
+    static {
+        urlRandomizer = new UrlRandomizer();
+        uriRandomizer = new UriRandomizer();
+    }
 
     private DefaultRandomizer() { }
 
@@ -142,6 +155,25 @@ final class DefaultRandomizer {
         	long startDate = Math.abs(ConstantsUtil.RANDOM.nextInt());
         	long endDate = startDate + Math.abs(ConstantsUtil.RANDOM.nextInt());
     		return new org.joda.time.Interval(startDate, endDate);
+        }
+
+        /*
+         * java.net types
+         */
+        if (type.equals(java.net.URL.class)) {
+            try {
+                return new java.net.URL(urlRandomizer.getRandomValue());
+            } catch (MalformedURLException e) {
+                return null;
+            }
+        }
+
+        if (type.equals(java.net.URI.class)) {
+            try {
+                return new java.net.URI(uriRandomizer.getRandomValue());
+            } catch (URISyntaxException e) {
+                return null;
+            }
         }
 
         /*
