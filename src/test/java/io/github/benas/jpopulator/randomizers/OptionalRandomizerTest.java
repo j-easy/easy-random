@@ -1,6 +1,6 @@
 package io.github.benas.jpopulator.randomizers;
 
-import org.junit.Assert;
+import static org.assertj.core.api.Assertions.assertThat;
 
 /**
  * Test class for {@link OptionalRandomizer}.
@@ -14,14 +14,14 @@ public class OptionalRandomizerTest {
     @org.junit.Test
     public void whenOptionalPercentIsZeroThenShouldGenerateNullValue() throws Exception {
         optionalRandomizer = new OptionalRandomizer<String>(new FirstNameRandomizer(), 0);
-        Assert.assertNull(optionalRandomizer.getRandomValue());
+        assertThat(optionalRandomizer.getRandomValue()).isNull();
     }
 
     @org.junit.Test
-    public void whenOptionalPercentIsOnHundredThenShouldGenerateNotNullValue() throws Exception {
+    public void whenOptionalPercentIsOneHundredThenShouldGenerateNotNullValue() throws Exception {
         optionalRandomizer = new OptionalRandomizer<String>(new FirstNameRandomizer(), 100);
-        Assert.assertNotNull(optionalRandomizer.getRandomValue());
-        Assert.assertFalse(optionalRandomizer.getRandomValue().isEmpty());
+
+        assertThat(optionalRandomizer.getRandomValue()).isNotNull().isNotEmpty();
     }
 
 }

@@ -1,38 +1,38 @@
 package io.github.benas.jpopulator.impl;
 
 
-import org.junit.After;
-import org.junit.Assert;
+import io.github.benas.jpopulator.api.Populator;
+import io.github.benas.jpopulator.beans.Organizer;
 import org.junit.Before;
 import org.junit.Test;
 
-import io.github.benas.jpopulator.api.Populator;
-import io.github.benas.jpopulator.beans.Organizer;
-import io.github.benas.jpopulator.impl.PopulatorBuilder;
+import static org.assertj.core.api.Assertions.assertThat;
 
+/**
+ * Test class for Joda Time support.
+ *
+ * @author Nikola Milivojevic (0dziga0@gmail.com)
+ */
 public class JodaTimeSupportTest {
+
 	private Populator populator;
 	
 	@Before
     public void setUp() throws Exception {
         populator = new PopulatorBuilder().build();
     }
-
-    @After
-    public void tearDown() throws Exception {
-        populator = null;
-        System.gc();
-    }
     
     @Test
     public void jodaTimeBeansShouldBeFilledIn() {
-    	Organizer organizer = populator.populateBean(Organizer.class);
-    	
-    	Assert.assertNotNull(organizer.getAnniversary());
-    	Assert.assertNotNull(organizer.getBirthday());
-    	Assert.assertNotNull(organizer.getHiking());
-    	Assert.assertNotNull(organizer.getClasses());
-    	Assert.assertNotNull(organizer.getTraining());
-    	Assert.assertNotNull(organizer.getWorkDuration());
+
+        Organizer organizer = populator.populateBean(Organizer.class);
+
+        assertThat(organizer).isNotNull();
+        assertThat(organizer.getAnniversary()).isNotNull();
+    	assertThat(organizer.getBirthday()).isNotNull();
+    	assertThat(organizer.getHiking()).isNotNull();
+    	assertThat(organizer.getClasses()).isNotNull();
+    	assertThat(organizer.getTraining()).isNotNull();
+    	assertThat(organizer.getWorkDuration()).isNotNull();
     }
 }

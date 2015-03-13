@@ -1,12 +1,13 @@
 package io.github.benas.jpopulator.randomizers;
 
-import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 
 import java.util.Arrays;
 import java.util.List;
 import java.util.ResourceBundle;
+
+import static org.assertj.core.api.Assertions.assertThat;
 
 /**
  * Test class for {@link UrlRandomizer}.
@@ -29,8 +30,9 @@ public class UrlRandomizerTest {
     @Test
     public void testGetRandomValue() throws Exception {
         String randomUrl = urlRandomizer.getRandomValue();
-        Assert.assertNotNull(randomUrl);
-        Assert.assertTrue(urls.contains(randomUrl));
+
+        assertThat(randomUrl).isNotNull().isNotEmpty();
+        assertThat(urls).contains(randomUrl);
     }
 
 }

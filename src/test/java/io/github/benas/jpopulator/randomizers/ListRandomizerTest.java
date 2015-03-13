@@ -24,10 +24,12 @@
 
 package io.github.benas.jpopulator.randomizers;
 
-import org.junit.Assert;
 import org.junit.Before;
+import org.junit.Test;
 
 import java.util.Collection;
+
+import static org.assertj.core.api.Assertions.assertThat;
 
 /**
  * Test class for {@link ListRandomizer}.
@@ -43,12 +45,11 @@ public class ListRandomizerTest {
         listRandomizer = new ListRandomizer<String>(new FirstNameRandomizer(), 3);
     }
 
-    @org.junit.Test
+    @Test
     public void generatedListShouldNotBeEmpty() throws Exception {
         Collection<String> names = listRandomizer.getRandomValue();
 
-        Assert.assertNotNull(names);
-        Assert.assertEquals(3, names.size());
+        assertThat(names).isNotNull().hasSize(3);
     }
 
 }

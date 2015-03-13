@@ -4,12 +4,15 @@ import io.github.benas.jpopulator.api.Populator;
 import io.github.benas.jpopulator.beans.Address;
 import io.github.benas.jpopulator.beans.Person;
 import io.github.benas.jpopulator.randomizers.CountryRandomizer;
-import org.junit.*;
+import org.junit.AfterClass;
+import org.junit.Before;
+import org.junit.BeforeClass;
+import org.junit.Test;
 
+import java.util.Arrays;
 import java.util.Locale;
 
-import static org.hamcrest.CoreMatchers.anyOf;
-import static org.hamcrest.CoreMatchers.equalTo;
+import static org.assertj.core.api.Assertions.assertThat;
 
 /**
  * Test class for I18n support.
@@ -35,23 +38,12 @@ public class I18NTest {
                 .build();
     }
 
-    @org.junit.Test
+    @Test
     public void generatedValueShouldBeInternationalized() throws Exception {
         Person person = populator.populateBean(Person.class);
-        Assert.assertThat(person.getAddress().getCountry(),
-                anyOf(equalTo("Etats Unis"),
-                      equalTo("Chine"),
-                      equalTo("Allemagne"),
-                      equalTo("France"),
-                      equalTo("Italie"),
-                      equalTo("Espagne")
-                ));
-    }
 
-    @After
-    public void tearDown() throws Exception {
-        populator = null;
-        System.gc();
+        assertThat(person.getAddress().getCountry())
+                .isIn(Arrays.asList("Etats Unis", "Chine", "Allemagne", "France", "Italie", "Espagne"));
     }
 
     @AfterClass

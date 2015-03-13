@@ -24,10 +24,12 @@
 
 package io.github.benas.jpopulator.randomizers.validation;
 
-import org.junit.Assert;
+import org.junit.Test;
 
 import java.math.BigDecimal;
 import java.math.BigInteger;
+
+import static org.assertj.core.api.Assertions.assertThat;
 
 /**
  * Test class for {@link MinValueRandomizer}.
@@ -38,74 +40,74 @@ public class MinValueRandomizerTest {
 
     public static final long MIN_VALUE = 50;
 
-    @org.junit.Test
+    @Test
     public void testGenerateByteType() throws Exception {
         byte aPrimitiveByte = (Byte) MinValueRandomizer.getRandomValue(Byte.TYPE, MIN_VALUE);
-        Assert.assertNotNull(aPrimitiveByte);
-        Assert.assertTrue(aPrimitiveByte >= MIN_VALUE);
+        assertThat(aPrimitiveByte).isNotNull();
+        assertThat(aPrimitiveByte).isGreaterThanOrEqualTo((byte) MIN_VALUE);
 
         Byte aWrappedByte = (Byte) MinValueRandomizer.getRandomValue(Byte.class, MIN_VALUE);
-        Assert.assertNotNull(aWrappedByte);
-        Assert.assertTrue(aWrappedByte >= MIN_VALUE);
+        assertThat(aWrappedByte).isNotNull();
+        assertThat(aWrappedByte).isGreaterThanOrEqualTo((byte) MIN_VALUE);
     }
 
-    @org.junit.Test
+    @Test
     public void testGenerateShortType() throws Exception {
         short aPrimitiveShort = (Short) MinValueRandomizer.getRandomValue(Short.TYPE, MIN_VALUE);
-        Assert.assertNotNull(aPrimitiveShort);
-        Assert.assertTrue(aPrimitiveShort >= MIN_VALUE);
+        assertThat(aPrimitiveShort).isNotNull();
+        assertThat(aPrimitiveShort).isGreaterThanOrEqualTo((short) MIN_VALUE);
 
         Short aWrappedShort = (Short) MinValueRandomizer.getRandomValue(Short.class, MIN_VALUE);
-        Assert.assertNotNull(aWrappedShort);
-        Assert.assertTrue(aWrappedShort >= MIN_VALUE);
+        assertThat(aWrappedShort).isNotNull();
+        assertThat(aWrappedShort).isGreaterThanOrEqualTo((short) MIN_VALUE);
     }
 
-    @org.junit.Test
+    @Test
     public void testGenerateIntegerType() throws Exception {
         int aPrimitiveInteger = (Integer) MinValueRandomizer.getRandomValue(Integer.TYPE, MIN_VALUE);
-        Assert.assertNotNull(aPrimitiveInteger);
-        Assert.assertTrue(aPrimitiveInteger >= MIN_VALUE);
+        assertThat(aPrimitiveInteger).isNotNull();
+        assertThat(aPrimitiveInteger).isGreaterThanOrEqualTo((int) MIN_VALUE);
 
         Integer aWrappedInteger = (Integer) MinValueRandomizer.getRandomValue(Integer.class, MIN_VALUE);
-        Assert.assertNotNull(aWrappedInteger);
-        Assert.assertTrue(aWrappedInteger >= MIN_VALUE);
+        assertThat(aWrappedInteger).isNotNull();
+        assertThat(aWrappedInteger).isGreaterThanOrEqualTo((int) MIN_VALUE);
     }
 
-    @org.junit.Test
+    @Test
     public void testGenerateLongType() throws Exception {
         long aPrimitiveLong = (Long) MinValueRandomizer.getRandomValue(Long.TYPE, MIN_VALUE);
-        Assert.assertNotNull(aPrimitiveLong);
-        Assert.assertTrue(aPrimitiveLong >= MIN_VALUE);
+        assertThat(aPrimitiveLong).isNotNull();
+        assertThat(aPrimitiveLong).isGreaterThanOrEqualTo(MIN_VALUE);
 
         Long aWrappedLong = (Long) MinValueRandomizer.getRandomValue(Long.class, MIN_VALUE);
-        Assert.assertNotNull(aWrappedLong);
-        Assert.assertTrue(aWrappedLong >= MIN_VALUE);
+        assertThat(aWrappedLong).isNotNull();
+        assertThat(aWrappedLong).isGreaterThanOrEqualTo(MIN_VALUE);
     }
 
-    @org.junit.Test
+    @Test
     public void testGenerateBigIntegerType() throws Exception {
         BigInteger aBigInteger = (BigInteger) MinValueRandomizer.getRandomValue(BigInteger.class, MIN_VALUE);
-        Assert.assertNotNull(aBigInteger);
-        Assert.assertTrue(aBigInteger.compareTo(new BigInteger(String.valueOf(MIN_VALUE))) > 0);
+        assertThat(aBigInteger).isNotNull();
+        assertThat(aBigInteger.compareTo(new BigInteger(String.valueOf(MIN_VALUE)))).isPositive();
     }
 
-    @org.junit.Test
+    @Test
     public void testGenerateBigDecimalType() throws Exception {
         BigDecimal aBigDecimal = (BigDecimal) MinValueRandomizer.getRandomValue(BigDecimal.class, MIN_VALUE);
-        Assert.assertNotNull(aBigDecimal);
-        Assert.assertTrue(aBigDecimal.compareTo(new BigDecimal(String.valueOf(MIN_VALUE))) > 0);
+        assertThat(aBigDecimal).isNotNull();
+        assertThat(aBigDecimal.compareTo(new BigDecimal(String.valueOf(MIN_VALUE)))).isPositive();
     }
 
-    @org.junit.Test
+    @Test
     public void testGenerateDoubleType() throws Exception {
         Double aDouble = (Double) MinValueRandomizer.getRandomValue(Double.class, MIN_VALUE);
-        Assert.assertNull(aDouble); // double not supported (see javax.validation.constraints.Min javadoc)
+        assertThat(aDouble).isNull(); // double not supported (see javax.validation.constraints.Max javadoc)
     }
 
-    @org.junit.Test
+    @Test
     public void testGenerateFloatType() throws Exception {
         Float aFloat = (Float) MinValueRandomizer.getRandomValue(Float.class, MIN_VALUE);
-        Assert.assertNull(aFloat); // float not supported (see javax.validation.constraints.Min javadoc)
+        assertThat(aFloat).isNull(); // float not supported (see javax.validation.constraints.Max javadoc)
     }
 
 }

@@ -24,13 +24,14 @@
 
 package io.github.benas.jpopulator.randomizers;
 
-import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 
 import java.util.Arrays;
 import java.util.List;
 import java.util.ResourceBundle;
+
+import static org.assertj.core.api.Assertions.assertThat;
 
 /**
  * Test class for {@link LastNameRandomizer}.
@@ -52,8 +53,9 @@ public class LastNameRandomizerTest {
     @Test
     public void generatedLastNameShouldBeInThePredefinedLastNamesList() throws Exception {
         String randomValue = lastNameRandomizer.getRandomValue();
-        Assert.assertNotNull(randomValue);
-        Assert.assertTrue(lastNames.contains(randomValue));
+
+        assertThat(randomValue).isNotNull().isNotEmpty();
+        assertThat(lastNames).contains(randomValue);
     }
 
 }

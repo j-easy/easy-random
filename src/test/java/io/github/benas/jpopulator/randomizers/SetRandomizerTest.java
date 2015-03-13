@@ -24,10 +24,11 @@
 
 package io.github.benas.jpopulator.randomizers;
 
-import org.junit.Assert;
 import org.junit.Before;
 
 import java.util.Collection;
+
+import static org.assertj.core.api.Assertions.assertThat;
 
 /**
  * Test class for {@link io.github.benas.jpopulator.randomizers.SetRandomizer}.
@@ -47,8 +48,8 @@ public class SetRandomizerTest {
     public void generatedSetShouldNotBeEmpty() throws Exception {
         Collection<String> names = setRandomizer.getRandomValue();
 
-        Assert.assertNotNull(names);
-        Assert.assertTrue(names.size() <= 3);// duplicate random values are not inserted in the set
+        assertThat(names).isNotNull();
+        assertThat(names.size()).isLessThanOrEqualTo(3);// duplicate random values are not inserted in the set
     }
 
 }

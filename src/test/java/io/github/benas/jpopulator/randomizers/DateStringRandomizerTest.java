@@ -24,7 +24,6 @@
 
 package io.github.benas.jpopulator.randomizers;
 
-import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
 
@@ -32,6 +31,8 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
+
+import static org.assertj.core.api.Assertions.assertThat;
 
 /**
  * Test class for {@link io.github.benas.jpopulator.randomizers.DateStringRandomizer}.
@@ -59,7 +60,7 @@ public class DateStringRandomizerTest {
     public void returnedStringShouldBeDate() {
         dateStringRandomizer = new DateStringRandomizer();
         String randomDate = dateStringRandomizer.getRandomValue();
-        Assert.assertNotNull(randomDate);
+        assertThat(randomDate).isNotNull();
         try {
             convertToDate(randomDate, DEFAULT_DATE_FORMAT);
         } catch (ParseException e) {
@@ -71,22 +72,16 @@ public class DateStringRandomizerTest {
     public void returnedStringDateShouldBeInRange() throws ParseException {
         dateStringRandomizer = new DateStringRandomizer(today, tomorrow);
         Date actual = convertToDate(dateStringRandomizer.getRandomValue(), DEFAULT_DATE_FORMAT);
-        Assert.assertNotNull(actual);
-        Assert.assertTrue(today.compareTo(actual) * tomorrow.compareTo(actual) > 0);
+        assertThat(actual).isNotNull();
+        assertThat(today.compareTo(actual) * tomorrow.compareTo(actual)).isGreaterThan(0);
     }
 
     @org.junit.Test
     public void returnedStringDateShouldHaveSpecifiedFormat() throws Exception {
         dateStringRandomizer = new DateStringRandomizer(DATE_FORMAT, today, tomorrow);
         String randomDate = dateStringRandomizer.getRandomValue();
-        Assert.assertNotNull(randomDate);
-        Assert.assertTrue(randomDate.matches("\\d{4}-\\d{2}-\\d{2}"));
-    }
-
-    @After
-    public void tearDown() throws Exception {
-        dateStringRandomizer = null;
-        System.gc();
+        assertThat(randomDate).isNotNull();
+        assertThat(randomDate).matches("\\d{4}-\\d{2}-\\d{2}");
     }
 
     private Date convertToDate(String date, String format) throws ParseException {

@@ -24,13 +24,14 @@
 
 package io.github.benas.jpopulator.randomizers;
 
-import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 
 import java.util.Arrays;
 import java.util.List;
 import java.util.ResourceBundle;
+
+import static org.assertj.core.api.Assertions.assertThat;
 
 /**
  * Test class for {@link io.github.benas.jpopulator.randomizers.CountryRandomizer}.
@@ -52,8 +53,9 @@ public class CountryRandomizerTest {
     @Test
     public void generatedCountryShouldBeInThePredefinedCountriesList() throws Exception {
         String randomValue = countryRandomizer.getRandomValue();
-        Assert.assertNotNull(randomValue);
-        Assert.assertTrue(countries.contains(randomValue));
+
+        assertThat(randomValue).isNotNull().isNotEmpty();
+        assertThat(countries).contains(randomValue);
     }
 
 }

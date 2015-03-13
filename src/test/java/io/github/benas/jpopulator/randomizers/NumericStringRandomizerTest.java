@@ -24,9 +24,13 @@
 
 package io.github.benas.jpopulator.randomizers;
 
-import org.junit.After;
-import org.junit.Assert;
 import org.junit.Before;
+import org.junit.Test;
+
+import java.util.Arrays;
+
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.fail;
 
 /**
  * Test class for {@link NumericStringRandomizer}.
@@ -42,30 +46,24 @@ public class NumericStringRandomizerTest {
         numericStringRandomizer = new NumericStringRandomizer(1, 3);
     }
 
-    @org.junit.Test
+    @Test
     public void generatedStringShouldBeNumber() throws Exception {
         try {
             Integer.parseInt(numericStringRandomizer.getRandomValue());
         } catch (NumberFormatException e) {
-            Assert.fail("Numeric string randomizer should generate number");
+            fail("Numeric string randomizer should generate number");
         }
     }
 
-    @org.junit.Test
+    @Test
     public void generatedNumericStringShouldWithinRange() throws Exception {
         String generatedNumericString = numericStringRandomizer.getRandomValue();
-        Assert.assertTrue(generatedNumericString.equals("1") || generatedNumericString.equals("2") || generatedNumericString.equals("3"));
+        assertThat(generatedNumericString).isIn(Arrays.asList("1", "2", "3"));
     }
 
-    @org.junit.Test(expected = IllegalArgumentException.class)
+    @Test(expected = IllegalArgumentException.class)
     public void shouldThrowIllegalArgumentExceptionIfMinValueIsGreaterThanMaxValue() throws Exception {
         numericStringRandomizer = new NumericStringRandomizer(3, 1);
-    }
-
-    @After
-    public void tearDown() throws Exception {
-        numericStringRandomizer = null;
-        System.gc();
     }
 
 }

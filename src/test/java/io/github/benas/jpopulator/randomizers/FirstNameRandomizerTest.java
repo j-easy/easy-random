@@ -24,13 +24,14 @@
 
 package io.github.benas.jpopulator.randomizers;
 
-import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 
 import java.util.Arrays;
 import java.util.List;
 import java.util.ResourceBundle;
+
+import static org.assertj.core.api.Assertions.assertThat;
 
 /**
  * Test class for {@link io.github.benas.jpopulator.randomizers.FirstNameRandomizer}.
@@ -52,8 +53,9 @@ public class FirstNameRandomizerTest {
     @Test
     public void generatedFirstNameShouldBeInThePredefinedFirstNamesList() throws Exception {
         String randomValue = firstNameRandomizer.getRandomValue();
-        Assert.assertNotNull(randomValue);
-        Assert.assertTrue(firstNames.contains(randomValue));
+
+        assertThat(randomValue).isNotNull().isNotEmpty();
+        assertThat(firstNames).contains(randomValue);
     }
 
 }

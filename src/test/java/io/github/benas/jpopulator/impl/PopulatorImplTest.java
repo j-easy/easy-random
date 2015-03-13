@@ -28,15 +28,17 @@ import io.github.benas.jpopulator.api.Populator;
 import io.github.benas.jpopulator.beans.*;
 import io.github.benas.jpopulator.randomizers.CityRandomizer;
 import io.github.benas.jpopulator.randomizers.EmailRandomizer;
-import org.junit.After;
-import org.junit.Assert;
 import org.junit.Before;
+import org.junit.Ignore;
 import org.junit.Test;
 
 import java.lang.reflect.Field;
 import java.lang.reflect.ParameterizedType;
 import java.lang.reflect.Type;
+import java.util.Arrays;
 import java.util.List;
+
+import static org.assertj.core.api.Assertions.assertThat;
 
 /**
  * Test class for the {@link Populator} implementation.
@@ -55,42 +57,37 @@ public class PopulatorImplTest {
         populator = new PopulatorBuilder().build();
     }
 
-    @After
-    public void tearDown() throws Exception {
-        populator = null;
-        System.gc();
-    }
-
-    @org.junit.Test
+    @Test
     public void generatedBeanShouldBeCorrectlyPopulated() throws Exception {
         Person person = populator.populateBean(Person.class);
+
         assertPerson(person);
     }
 
-    @org.junit.Test
+    @Test
     public void excludedFieldsShouldNotBePopulated() throws Exception {
-        populator = new PopulatorBuilder().build();
         Person person = populator.populateBean(Person.class, "name");
 
-        Assert.assertNotNull(person);
-        Assert.assertNull(person.getName());
+        assertThat(person).isNotNull();
+        assertThat(person.getName()).isNull();
     }
 
-    @org.junit.Test
+    @Test
     public void finalFieldsShouldNotBePopulated() throws Exception {
         Person person = populator.populateBean(Person.class);
-        Assert.assertNotNull(person);
-        Assert.assertNull(person.getId());
+
+        assertThat(person).isNotNull();
+        assertThat(person.getId()).isNull();
     }
 
-    @org.junit.Test
+    @Test
     public void generatedBeansListShouldNotBeEmpty() throws Exception {
         List<Person> persons = populator.populateBeans(Person.class);
-        Assert.assertNotNull(persons);
-        Assert.assertFalse(persons.isEmpty());
+
+        assertThat(persons).isNotNull().isNotEmpty();
     }
 
-    @org.junit.Test
+    @Test
     public void generatedBeansShouldBeCorrectlyPopulated() throws Exception {
         List<Person> persons = populator.populateBeans(Person.class);
         for (Person person : persons) {
@@ -98,31 +95,30 @@ public class PopulatorImplTest {
         }
     }
 
-    @org.junit.Test
+    @Test
     public void excludedFieldsOfGeneratedBeansShouldNotBePopulated() throws Exception {
         List<Person> persons = populator.populateBeans(Person.class, "name");
         for (Person person : persons) {
-            Assert.assertNotNull(person);
-            Assert.assertNull(person.getName());
+            assertThat(person).isNotNull();
+            assertThat(person.getName()).isNull();
         }
     }
 
-    @org.junit.Test
+    @Test
     public void generatedBeansNumberShouldBeEqualToSpecifiedNumber() throws Exception {
         List<Person> persons = populator.populateBeans(Person.class, 2);
-        Assert.assertNotNull(persons);
-        Assert.assertEquals(2, persons.size());
+        assertThat(persons).isNotNull().hasSize(2);
         for (Person person : persons) {
             assertPerson(person);
         }
     }
 
-    @org.junit.Test(expected = IllegalArgumentException.class)
+    @Test(expected = IllegalArgumentException.class)
     public void whenThenSpecifiedNumberOfBeansToGenerateIsNegativeThenShouldThrowAnIllegalArgumentException() throws Exception {
         populator.populateBeans(Person.class, -2);
     }
 
-    @org.junit.Test
+    @Test
     public void generatedBeansWithCustomRandomizersShouldBeCorrectlyPopulated() {
         populator = new PopulatorBuilder()
                 .registerRandomizer(Person.class, String.class, "email", new EmailRandomizer())
@@ -131,28 +127,40 @@ public class PopulatorImplTest {
 
         Person person = populator.populateBean(Person.class);
 
-        Assert.assertNotNull(person);
+        assertThat(person).isNotNull();
 
-        Assert.assertNotNull(person.getEmail());
-        Assert.assertFalse(person.getEmail().isEmpty());
+        assertThat(person.getEmail()).isNotNull().isNotEmpty();
 
-        Assert.assertNotNull(person.getAddress());
-        Assert.assertNotNull(person.getAddress().getCity());
-        Assert.assertFalse(person.getAddress().getCity().isEmpty());
+        final Address address = person.getAddress();
+        assertThat(address).isNotNull();
+        assertThat(address.getCity()).isNotNull().isNotEmpty();
     }
 
     @Test
     public void testExclusionViaAnnotation() {
         Person person = populator.populateBean(Person.class);
-        Assert.assertNotNull(person);
-        Assert.assertNull(person.getExcluded());
+
+        assertThat(person).isNotNull();
+        assertThat(person.getExcluded()).isNull();
+    }
+
+    @Test
+    public void testJavaNetTypesPopulation() throws Exception {
+
+        Website website = populator.populateBean(Website.class);
+
+        assertThat(website).isNotNull();
+        assertThat(website.getName()).isNotNull();
+        assertThat(website.getUri()).isNotNull();
+        assertThat(website.getUrl()).isNotNull();
+
     }
 
     /*
      * Assert that a person is correctly populated
      */
     private void assertPerson(Person person) {
-        Assert.assertNotNull(person);
+        assertThat(person).isNotNull();
         assertDeclaredFields(person);
         assertInheritedFields(person);
         assertNestedTypes(person);
@@ -163,27 +171,22 @@ public class PopulatorImplTest {
      */
     private void assertDeclaredFields(Person person) {
 
-        Assert.assertNotNull(person.getEmail());
-        Assert.assertFalse(person.getEmail().isEmpty());
+        assertThat(person.getEmail()).isNotNull().isNotEmpty();
 
-        Assert.assertNotNull(person.getGender());
-        Assert.assertTrue(Gender.MALE.equals(person.getGender()) || Gender.FEMALE.equals(person.getGender()));
+        assertThat(person.getGender()).isNotNull().isIn(Arrays.asList(Gender.MALE, Gender.FEMALE));
 
-        Assert.assertNotNull(person.getBirthDate());
+        assertThat(person.getBirthDate()).isNotNull();
 
-        Assert.assertNotNull(person.getPhoneNumber());
-        Assert.assertFalse(person.getPhoneNumber().isEmpty());
+        assertThat(person.getPhoneNumber()).isNotNull().isNotEmpty();
 
-        Assert.assertNotNull(person.getNicknames());
-        Assert.assertEquals(0, person.getNicknames().size());
+        assertThat(person.getNicknames()).isNotNull().isEmpty();
     }
 
     /*
      * Assert that inherited fields are populated
      */
     private void assertInheritedFields(Person person) {
-        Assert.assertNotNull(person.getName());
-        Assert.assertFalse(person.getName().isEmpty());
+        assertThat(person.getName()).isNotNull().isNotEmpty();
     }
 
     /*
@@ -191,24 +194,21 @@ public class PopulatorImplTest {
      */
     private void assertNestedTypes(Person person) {
 
-        Assert.assertNotNull(person.getAddress());
+        final Address address = person.getAddress();
+        assertThat(address).isNotNull();
+        assertThat(address.getCity()).isNotNull().isNotEmpty();
+        assertThat(address.getCountry()).isNotNull().isNotEmpty();
+        assertThat(address.getZipCode()).isNotNull().isNotEmpty();
 
-        Assert.assertNotNull(person.getAddress().getCity());
-        Assert.assertFalse(person.getAddress().getCity().isEmpty());
+        final Street street = address.getStreet();
+        assertThat(street).isNotNull();
+        assertThat(street.getName()).isNotNull().isNotEmpty();
+        assertThat(street.getNumber()).isNotNull();
+        assertThat(street.getType()).isNotNull();
 
-        Assert.assertNotNull(person.getAddress().getCountry());
-        Assert.assertFalse(person.getAddress().getCountry().isEmpty());
-
-        Assert.assertNotNull(person.getAddress().getStreet());
-        Assert.assertNotNull(person.getAddress().getStreet().getName());
-        Assert.assertNotNull(person.getAddress().getStreet().getNumber());
-        Assert.assertNotNull(person.getAddress().getStreet().getType());
-        Assert.assertFalse(person.getAddress().getStreet().getName().isEmpty());
-
-        Assert.assertNotNull(person.getAddress().getZipCode());
-        Assert.assertFalse(person.getAddress().getZipCode().isEmpty());
     }
 
+    @Ignore("This test is just a show case for issue #19")
     @Test
     public void testParametrizedCollectionTypeInference() {
         // Note: error handling will be added when the feature is implemented
@@ -248,18 +248,7 @@ public class PopulatorImplTest {
         Type actualTypeArgument = actualTypeArguments[0];// Person.class
         System.out.println("actualTypeArgument = " + actualTypeArgument);
 
-        Assert.assertEquals(actualTypeArgument, Person.class);
+        assertThat(actualTypeArgument).isEqualTo(Person.class);
     }
 
-    @Test
-    public void testJavaNetTypesPopulation() throws Exception {
-
-        Website website = populator.populateBean(Website.class);
-
-        Assert.assertNotNull(website);
-        Assert.assertNotNull(website.getName());
-        Assert.assertNotNull(website.getUri());
-        Assert.assertNotNull(website.getUrl());
-
-    }
 }
