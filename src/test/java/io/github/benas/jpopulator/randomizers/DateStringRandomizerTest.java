@@ -26,6 +26,7 @@ package io.github.benas.jpopulator.randomizers;
 
 import org.junit.Assert;
 import org.junit.Before;
+import org.junit.Test;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -56,7 +57,7 @@ public class DateStringRandomizerTest {
         tomorrow = calendar.getTime();
     }
 
-    @org.junit.Test
+    @Test
     public void returnedStringShouldBeDate() {
         dateStringRandomizer = new DateStringRandomizer();
         String randomDate = dateStringRandomizer.getRandomValue();
@@ -68,7 +69,7 @@ public class DateStringRandomizerTest {
         }
     }
 
-    @org.junit.Test
+    @Test
     public void returnedStringDateShouldBeInRange() throws ParseException {
         dateStringRandomizer = new DateStringRandomizer(today, tomorrow);
         Date actual = convertToDate(dateStringRandomizer.getRandomValue(), DEFAULT_DATE_FORMAT);
@@ -76,7 +77,7 @@ public class DateStringRandomizerTest {
         assertThat(today.compareTo(actual) * tomorrow.compareTo(actual)).isGreaterThan(0);
     }
 
-    @org.junit.Test
+    @Test
     public void returnedStringDateShouldHaveSpecifiedFormat() throws Exception {
         dateStringRandomizer = new DateStringRandomizer(DATE_FORMAT, today, tomorrow);
         String randomDate = dateStringRandomizer.getRandomValue();

@@ -25,6 +25,7 @@
 package io.github.benas.jpopulator.randomizers;
 
 import org.junit.Before;
+import org.junit.Test;
 
 import java.util.Collection;
 
@@ -44,7 +45,7 @@ public class SetRandomizerTest {
         setRandomizer = new SetRandomizer<String>(new FirstNameRandomizer(), 3);
     }
 
-    @org.junit.Test
+    @Test
     public void generatedSetShouldNotBeEmpty() throws Exception {
         Collection<String> names = setRandomizer.getRandomValue();
 

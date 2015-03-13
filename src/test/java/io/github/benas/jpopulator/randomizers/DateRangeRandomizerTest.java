@@ -25,6 +25,7 @@
 package io.github.benas.jpopulator.randomizers;
 
 import org.junit.Before;
+import org.junit.Test;
 
 import java.util.Calendar;
 import java.util.Date;
@@ -51,7 +52,7 @@ public class DateRangeRandomizerTest {
         dateRangeRandomizer = new DateRangeRandomizer(today, tomorrow);
     }
 
-    @org.junit.Test
+    @Test
     public void generatedDateShouldBeWithinSpecifiedRange() throws Exception {
         Date randomDate = dateRangeRandomizer.getRandomValue();
         assertThat(randomDate)
@@ -60,17 +61,17 @@ public class DateRangeRandomizerTest {
                 .isBefore(tomorrow);
     }
 
-    @org.junit.Test(expected = IllegalArgumentException.class)
+    @Test(expected = IllegalArgumentException.class)
     public void whenSpecifiedMinDateIsAfterMaxDateThenThrowIllegalArgumentException() throws Exception {
         dateRangeRandomizer = new DateRangeRandomizer(tomorrow, today);
     }
 
-    @org.junit.Test(expected = IllegalArgumentException.class)
+    @Test(expected = IllegalArgumentException.class)
     public void whenSpecifiedMinDateIsNullThenThrowIllegalArgumentException() throws Exception {
         dateRangeRandomizer = new DateRangeRandomizer(null, tomorrow);
     }
 
-    @org.junit.Test(expected = IllegalArgumentException.class)
+    @Test(expected = IllegalArgumentException.class)
     public void whenSpecifiedMaxDateIsNullThenThrowIllegalArgumentException() throws Exception {
         dateRangeRandomizer = new DateRangeRandomizer(today, null);
     }
