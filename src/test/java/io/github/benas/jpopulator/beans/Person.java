@@ -128,6 +128,7 @@ public class Person extends Human {
         sb.append(", birthDate=").append(birthDate);
         sb.append(", phoneNumber='").append(phoneNumber).append('\'');
         sb.append(", nicknames=").append(nicknames);
+        sb.append(", excluded='").append(excluded).append('\'');
         sb.append('}');
         return sb.toString();
     }
