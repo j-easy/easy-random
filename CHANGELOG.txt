@@ -2,6 +2,16 @@ JPOPULATOR CHANGELOG
 ===================================
 https://github.com/benas/jPopulator
 
+Changes in version 1.2.0 (2015-03-15)
+-------------------------------------
+
+* Merged PR #18: add support for populating Joda time types
+?? * Fixed issue #19: add support for populating collections
+* Fixed issue #20: add @Exclude annotation to exclude fields from being populated
+* Fixed issue #21: add support for using jPopulator as a Spring bean
+* Implemented feature #22: add support for populating java.net.URI and java.net.URL types
+* Refactored tests to use fluent assertions with assertj
+
 Changes in version 1.1.0 (2014-12-21)
 -------------------------------------
 
