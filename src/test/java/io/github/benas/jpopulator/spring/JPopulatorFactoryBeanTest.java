@@ -40,10 +40,9 @@ import static org.assertj.core.api.Assertions.assertThat;
 public class JPopulatorFactoryBeanTest {
 
     @Test
-    public void testJPopulatorFactoryBean() {
+    public void testJPopulatorFactoryBeanWithDefaultRandomizers() {
 
-        ApplicationContext applicationContext = new ClassPathXmlApplicationContext("/application-context.xml");
-        Populator populator = (Populator) applicationContext.getBean("populator");
+        Populator populator = getPopulatorFromSpringContext("/application-context.xml");
 
         // the populator managed by spring should be correctly configured
         assertThat(populator).isNotNull();
@@ -57,10 +56,7 @@ public class JPopulatorFactoryBeanTest {
     @Test
     public void testJPopulatorFactoryBeanWithCustomRandomizers() {
 
-        ApplicationContext applicationContext =
-                new ClassPathXmlApplicationContext("/application-context-with-custom-randomizers.xml");
-
-        Populator populator = (Populator) applicationContext.getBean("populator");
+        Populator populator = getPopulatorFromSpringContext("/application-context-with-custom-randomizers.xml");
 
         // the populator managed by spring should be correctly configured
         assertThat(populator).isNotNull();
@@ -69,11 +65,18 @@ public class JPopulatorFactoryBeanTest {
         Person person = populator.populateBean(Person.class);
 
         assertPerson(person);
-        System.out.println("person.getEmail() = " + person.getEmail());
+
         assertThat(person.getEmail())
                 .isNotNull()
                 .isNotEmpty()
-                .contains("@");
+                .matches(".*@.*\\..*");
+    }
+
+    private Populator getPopulatorFromSpringContext(String contextFileName) {
+
+        ApplicationContext applicationContext = new ClassPathXmlApplicationContext(contextFileName);
+
+        return (Populator) applicationContext.getBean("populator");
     }
 
     private void assertPerson(Person person) {
