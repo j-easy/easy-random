@@ -24,48 +24,55 @@
 
 package io.github.benas.jpopulator.spring;
 
-import io.github.benas.jpopulator.impl.PopulatorBuilder;
-import io.github.benas.jpopulator.impl.PopulatorImpl;
-import org.springframework.beans.factory.FactoryBean;
-
-import java.util.ArrayList;
-import java.util.List;
+import io.github.benas.jpopulator.api.Randomizer;
 
 /**
- * Spring Factory Bean that creates jPopulator instances.
+ * A bean used to register custom randomizers with the {@link JPopulatorFactoryBean}.
  *
  * @author Mahmoud Ben Hassine (mahmoud@benhassine.fr)
  */
-public class JPopulatorFactoryBean implements FactoryBean {
+public class RandomizerBean {
 
-    private List<RandomizerBean> randomizers = new ArrayList<RandomizerBean>();
+    /**
+     * The class type for which the randomizer will be used.
+     */
+    private Class type;
 
-    @Override
-    public Object getObject() throws Exception {
-        PopulatorBuilder populatorBuilder = new PopulatorBuilder();
-        for (RandomizerBean randomizerBean : randomizers) {
-            populatorBuilder.registerRandomizer(
-                    randomizerBean.getType(),
-                    randomizerBean.getFieldType(),
-                    randomizerBean.getFieldName(),
-                    randomizerBean.getRandomizer());
-        }
+    /**
+     * The field type within the class for which the randomizer will be used.
+     */
+    private Class fieldType;
 
-        return populatorBuilder.build();
+    /**
+     * The field name within the class for which the randomizer will be used.
+     */
+    private String fieldName;
+
+    /**
+     * The randomizer to register.
+     */
+    private Randomizer randomizer;
+
+    public RandomizerBean(Class type, Class fieldType, String fieldName, Randomizer randomizer) {
+        this.type = type;
+        this.fieldType = fieldType;
+        this.fieldName = fieldName;
+        this.randomizer = randomizer;
     }
 
-    @Override
-    public Class<?> getObjectType() {
-        return PopulatorImpl.class;
+    public Class getType() {
+        return type;
     }
 
-    @Override
-    public boolean isSingleton() {
-        return true;
+    public Class getFieldType() {
+        return fieldType;
     }
 
-    public void setRandomizers(List<RandomizerBean> randomizers) {
-        this.randomizers = randomizers;
+    public String getFieldName() {
+        return fieldName;
     }
 
+    public Randomizer getRandomizer() {
+        return randomizer;
+    }
 }

@@ -22,7 +22,7 @@
  *   THE SOFTWARE.
  */
 
-package io.github.benas.jpopulator.impl;
+package io.github.benas.jpopulator.spring;
 
 import io.github.benas.jpopulator.api.Populator;
 import io.github.benas.jpopulator.beans.Address;
@@ -37,10 +37,10 @@ import java.util.Arrays;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-public class SpringSupportTest {
+public class JPopulatorFactoryBeanTest {
 
     @Test
-    public void testJPopulatorSpringFactoryBean() {
+    public void testJPopulatorFactoryBean() {
 
         ApplicationContext applicationContext = new ClassPathXmlApplicationContext("/application-context.xml");
         Populator populator = (Populator) applicationContext.getBean("populator");
@@ -51,6 +51,32 @@ public class SpringSupportTest {
         // the populator should populate valid instances
         Person person = populator.populateBean(Person.class);
 
+        assertPerson(person);
+    }
+
+    @Test
+    public void testJPopulatorFactoryBeanWithCustomRandomizers() {
+
+        ApplicationContext applicationContext =
+                new ClassPathXmlApplicationContext("/application-context-with-custom-randomizers.xml");
+
+        Populator populator = (Populator) applicationContext.getBean("populator");
+
+        // the populator managed by spring should be correctly configured
+        assertThat(populator).isNotNull();
+
+        // the populator should populate valid instances
+        Person person = populator.populateBean(Person.class);
+
+        assertPerson(person);
+        System.out.println("person.getEmail() = " + person.getEmail());
+        assertThat(person.getEmail())
+                .isNotNull()
+                .isNotEmpty()
+                .contains("@");
+    }
+
+    private void assertPerson(Person person) {
         assertThat(person).isNotNull();
         assertThat(person.getName()).isNotNull().isNotEmpty();
         assertThat(person.getEmail()).isNotNull().isNotEmpty();
@@ -73,4 +99,5 @@ public class SpringSupportTest {
         assertThat(address.getZipCode()).isNotNull().isNotEmpty();
         assertThat(person.getExcluded()).isNull();
     }
+
 }
