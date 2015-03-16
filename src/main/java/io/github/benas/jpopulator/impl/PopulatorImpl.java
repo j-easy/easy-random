@@ -292,7 +292,7 @@ public final class PopulatorImpl implements Populator {
         }
         String fieldName = field.getName().toLowerCase();
         for (String excludedFieldName : excludedFields) {
-            if (fieldName.equals(excludedFieldName.toLowerCase())) {
+            if (fieldName.equalsIgnoreCase(excludedFieldName)) {
                 return true;
             }
         }
