@@ -36,6 +36,8 @@ import java.net.URISyntaxException;
 import java.util.Calendar;
 import java.util.concurrent.atomic.AtomicInteger;
 import java.util.concurrent.atomic.AtomicLong;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  * This class is used to generate random value for java built-in types.
@@ -44,6 +46,8 @@ import java.util.concurrent.atomic.AtomicLong;
  * @author Nikola Milivojevic (0dziga0@gmail.com)
  */
 final class DefaultRandomizer {
+
+    private static final Logger LOGGER = Logger.getLogger(DefaultRandomizer.class.getName());
 
     private static UrlRandomizer urlRandomizer;
 
@@ -166,6 +170,7 @@ final class DefaultRandomizer {
             try {
                 return new java.net.URL(urlRandomizer.getRandomValue());
             } catch (MalformedURLException e) {
+                LOGGER.log(Level.WARNING, "The generated URL is malformed, the field will be set to null", e);
                 return null;
             }
         }
@@ -174,6 +179,7 @@ final class DefaultRandomizer {
             try {
                 return new java.net.URI(uriRandomizer.getRandomValue());
             } catch (URISyntaxException e) {
+                LOGGER.log(Level.WARNING, "The generated URI is malformed, the field will be set to null", e);
                 return null;
             }
         }
