@@ -32,6 +32,7 @@ import org.apache.commons.math3.random.RandomDataGenerator;
 
 import java.lang.reflect.Array;
 import java.lang.reflect.Field;
+import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Modifier;
 import java.math.BigDecimal;
 import java.math.BigInteger;
@@ -161,9 +162,12 @@ public final class PopulatorImpl implements Populator {
      *
      * @param result The result object on which the generated value will be set
      * @param field  The field in which the generated value will be set
-     * @throws Exception Thrown when the generated value cannot be set to the given field
+     * @throws IllegalAccessException Thrown when the generated value cannot be set to the given field
+     * @throws NoSuchMethodException Thrown when there is no setter for the given field
+     * @throws InvocationTargetException Thrown when the setter of the given field can not be invoked
      */
-    private void populateSimpleType(Object result, final Field field) throws Exception {
+    private void populateSimpleType(Object result, final Field field)
+            throws IllegalAccessException, NoSuchMethodException, InvocationTargetException {
 
         Class<?> fieldType = field.getType();
         String fieldName = field.getName();
@@ -197,9 +201,12 @@ public final class PopulatorImpl implements Populator {
      *
      * @param result The result object on which the generated value will be set
      * @param field  The field in which the generated value will be set
-     * @throws Exception Thrown when the generated value cannot be set to the given field
+     * @throws IllegalAccessException Thrown when the generated value cannot be set to the given field
+     * @throws NoSuchMethodException Thrown when there is no setter for the given field
+     * @throws InvocationTargetException Thrown when the setter of the given field can not be invoked
      */
-    private void populateCollectionType(Object result, final Field field) throws Exception {
+    private void populateCollectionType(Object result, final Field field)
+            throws IllegalAccessException, NoSuchMethodException, InvocationTargetException {
 
         Class<?> fieldType = field.getType();
         String fieldName = field.getName();
