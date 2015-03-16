@@ -54,7 +54,9 @@ final class DefaultRandomizer {
         uriRandomizer = new UriRandomizer();
     }
 
-    private DefaultRandomizer() { }
+    private DefaultRandomizer() {
+
+    }
 
     /**
      * Generate a random value for the given type.

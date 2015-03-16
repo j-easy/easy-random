@@ -49,7 +49,9 @@ public class DateStringRandomizer implements Randomizer<String> {
     /**
      * Instantiates a new date string randomizer.
      */
-    public DateStringRandomizer() { }
+    public DateStringRandomizer() {
+
+    }
 
     /**
      * Instantiates a new date string randomizer.

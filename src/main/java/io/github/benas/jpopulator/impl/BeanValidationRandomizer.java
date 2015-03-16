@@ -44,7 +44,9 @@ import java.util.Date;
  */
 final class BeanValidationRandomizer {
 
-    private BeanValidationRandomizer() { }
+    private BeanValidationRandomizer() {
+
+    }
 
     /**
      * Generate a random value according to the validation constraint present on a field.

@@ -81,6 +81,8 @@ public final class ConstantsUtil {
 
     }
 
-    private ConstantsUtil() { }
+    private ConstantsUtil() {
+
+    }
 
 }

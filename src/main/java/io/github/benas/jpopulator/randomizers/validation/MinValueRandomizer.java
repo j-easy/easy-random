@@ -40,7 +40,9 @@ public class MinValueRandomizer {
 
     private static RandomDataGenerator randomDataGenerator = new RandomDataGenerator();
 
-    private MinValueRandomizer() { }
+    private MinValueRandomizer() {
+
+    }
 
     /**
      * Generate a random value for the given type.

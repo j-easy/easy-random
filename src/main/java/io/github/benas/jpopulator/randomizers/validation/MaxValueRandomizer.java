@@ -40,7 +40,9 @@ public class MaxValueRandomizer {
 
     private static RandomDataGenerator randomDataGenerator = new RandomDataGenerator();
 
-    private MaxValueRandomizer() { }
+    private MaxValueRandomizer() {
+
+    }
 
     /**
      * Generate a random value for the given type.
