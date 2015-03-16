@@ -27,7 +27,7 @@ package io.github.benas.jpopulator.randomizers;
 import org.junit.Before;
 import org.junit.Test;
 
-import java.util.Collection;
+import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
@@ -47,9 +47,24 @@ public class ListRandomizerTest {
 
     @Test
     public void generatedListShouldNotBeEmpty() throws Exception {
-        Collection<String> names = listRandomizer.getRandomValue();
+        List<String> names = listRandomizer.getRandomValue();
 
         assertThat(names).isNotNull().hasSize(3);
+    }
+
+    @Test(expected = IllegalArgumentException.class)
+    public void minElementsShouldBePositive() throws Exception {
+        listRandomizer = new ListRandomizer<String>(new FirstNameRandomizer(), -3);
+    }
+
+    @Test(expected = IllegalArgumentException.class)
+    public void maxElementsShouldBeGreaterThanOrEqualToOne() throws Exception {
+        listRandomizer = new ListRandomizer<String>(new FirstNameRandomizer(), 0, 0);
+    }
+
+    @Test(expected = IllegalArgumentException.class)
+    public void maxElementsShouldBeGreaterThanOrEqualToMinElements() throws Exception {
+        listRandomizer = new ListRandomizer<String>(new FirstNameRandomizer(), 2, 1);
     }
 
 }

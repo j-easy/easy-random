@@ -53,4 +53,19 @@ public class SetRandomizerTest {
         assertThat(names.size()).isLessThanOrEqualTo(3);// duplicate random values are not inserted in the set
     }
 
+    @Test(expected = IllegalArgumentException.class)
+    public void minElementsShouldBePositive() throws Exception {
+        setRandomizer = new SetRandomizer<String>(new FirstNameRandomizer(), -3);
+    }
+
+    @Test(expected = IllegalArgumentException.class)
+    public void maxElementsShouldBeGreaterThanOrEqualToOne() throws Exception {
+        setRandomizer = new SetRandomizer<String>(new FirstNameRandomizer(), 0, 0);
+    }
+
+    @Test(expected = IllegalArgumentException.class)
+    public void maxElementsShouldBeGreaterThanOrEqualToMinElements() throws Exception {
+        setRandomizer = new SetRandomizer<String>(new FirstNameRandomizer(), 2, 1);
+    }
+
 }
