@@ -46,7 +46,7 @@ public class QueueRandomizerTest {
     }
 
     @Test
-    public void generatedListShouldNotBeEmpty() throws Exception {
+    public void generatedQueueShouldNotBeEmpty() throws Exception {
         Queue<String> names = queueRandomizer.getRandomValue();
 
         assertThat(names).isNotNull().hasSize(3);
