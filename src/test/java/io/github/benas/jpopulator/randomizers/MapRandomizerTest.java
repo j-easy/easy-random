@@ -24,10 +24,12 @@
 
 package io.github.benas.jpopulator.randomizers;
 
+import io.github.benas.jpopulator.api.Randomizer;
 import org.junit.Before;
 import org.junit.Test;
 
 import java.util.Map;
+import java.util.Random;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
@@ -38,33 +40,41 @@ import static org.assertj.core.api.Assertions.assertThat;
  */
 public class MapRandomizerTest {
 
-    private MapRandomizer<String, String> mapRandomizer;
+    private Randomizer<Integer> randomizer = new Randomizer<Integer>() {
+        private Random random = new Random();
+        @Override
+        public Integer getRandomValue() {
+            return random.nextInt(100000);
+        }
+    };
+    
+    private MapRandomizer<Integer, Integer> mapRandomizer;
 
     @Before
     public void setUp() throws Exception {
-        mapRandomizer = new MapRandomizer<String, String>(new FirstNameRandomizer(), new LastNameRandomizer(), 3);
+        mapRandomizer = new MapRandomizer<Integer, Integer>(randomizer, randomizer, 3);
     }
 
     @Test
     public void generatedMapShouldNotBeEmpty() throws Exception {
-        Map<String, String> names = mapRandomizer.getRandomValue();
+        Map<Integer, Integer> names = mapRandomizer.getRandomValue();
 
         assertThat(names).isNotNull().hasSize(3);
     }
 
     @Test(expected = IllegalArgumentException.class)
     public void minElementsShouldBePositive() throws Exception {
-        mapRandomizer = new MapRandomizer<String, String>(new FirstNameRandomizer(), new LastNameRandomizer(), -3);
+        mapRandomizer = new MapRandomizer<Integer, Integer>(randomizer, randomizer, -3);
     }
 
     @Test(expected = IllegalArgumentException.class)
     public void maxElementsShouldBeGreaterThanOrEqualToOne() throws Exception {
-        mapRandomizer = new MapRandomizer<String, String>(new FirstNameRandomizer(), new LastNameRandomizer(), 0, 0);
+        mapRandomizer = new MapRandomizer<Integer, Integer>(randomizer, randomizer, 0, 0);
     }
 
     @Test(expected = IllegalArgumentException.class)
     public void maxElementsShouldBeGreaterThanOrEqualToMinElements() throws Exception {
-        mapRandomizer = new MapRandomizer<String, String>(new FirstNameRandomizer(), new LastNameRandomizer(), 2, 1);
+        mapRandomizer = new MapRandomizer<Integer, Integer>(randomizer, randomizer, 2, 1);
     }
 
 }
