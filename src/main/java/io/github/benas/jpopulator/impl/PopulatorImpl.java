@@ -83,42 +83,24 @@ public final class PopulatorImpl implements Populator {
     }
 
     @Override
+    @SuppressWarnings("unchecked")
     public <T> T populateBean(final Class<T> type, final String... excludedFields) {
 
         T result;
         try {
 
-            /*
-             * For enum types, no instantiation needed (else java.lang.InstantiationException)
-             */
+            //No instantiation needed for enum types.
             if (type.isEnum()) {
-                //noinspection unchecked
                 return (T) DefaultRandomizer.getRandomValue(type);
             }
 
-            /*
-             * Create an instance of the type
-             */
             result = type.newInstance();
 
-            /*
-             * Retrieve declared fields
-             */
-            List<Field> declaredFields = new ArrayList<Field>(Arrays.asList(result.getClass().getDeclaredFields()));
+            List<Field> declaredFields = getDeclaredFields(result);
 
-            /*
-             * Retrieve inherited fields for all type hierarchy
-             */
-            Class clazz = type;
-            while (clazz.getSuperclass() != null) {
-                Class superclass = clazz.getSuperclass();
-                declaredFields.addAll(Arrays.asList(superclass.getDeclaredFields()));
-                clazz = superclass;
-            }
+            declaredFields.addAll(getInheritedFields(type));
 
-            /*
-             * Generate random data for each field
-             */
+            //Generate random data for each field
             for (Field field : declaredFields) {
                 if (shouldExcludeField(field, excludedFields) || isStaticOrFinal(field)) {
                     continue;
@@ -130,7 +112,7 @@ public final class PopulatorImpl implements Populator {
                 }
             }
         } catch (Exception e) {
-            LOGGER.log(Level.SEVERE, "Unable to populate an instance of type " + type, e);
+            LOGGER.log(Level.SEVERE, String.format("Unable to populate an instance of type %s", type), e);
             return null;
         }
 
@@ -144,17 +126,31 @@ public final class PopulatorImpl implements Populator {
     }
 
     @Override
+    @SuppressWarnings("unchecked")
     public <T> List<T> populateBeans(final Class<T> type, final int size, final String... excludedFields) {
         if (size < 0) {
             throw new IllegalArgumentException("The number of beans to populate must be positive.");
         }
-        Object[] beans = new Object[size];
+        List<Object> beans = new ArrayList<Object>();
         for (int i = 0; i < size; i++) {
             Object bean = populateBean(type, excludedFields);
-            beans[i] = bean;
+            beans.add(bean);
         }
-        //noinspection unchecked
-        return (List<T>) Arrays.asList(beans);
+        return (List<T>) beans;
+    }
+
+    private <T> ArrayList<Field> getDeclaredFields(T result) {
+        return new ArrayList<Field>(Arrays.asList(result.getClass().getDeclaredFields()));
+    }
+
+    private List<Field> getInheritedFields(Class clazz) {
+        List<Field> inheritedFields = new ArrayList<Field>();
+        while (clazz.getSuperclass() != null) {
+            Class superclass = clazz.getSuperclass();
+            inheritedFields.addAll(Arrays.asList(superclass.getDeclaredFields()));
+            clazz = superclass;
+        }
+        return inheritedFields;
     }
 
     /**
@@ -177,23 +173,29 @@ public final class PopulatorImpl implements Populator {
         // use custom randomizer if any
         if (customRandomizer(resultClass, fieldType, fieldName)) {
             object = randomizers.get(new RandomizerDefinition(resultClass, fieldType, fieldName)).getRandomValue();
-        //A supported type (no need for recursion)
+        // a supported type => no need for recursion
         } else if (isSupportedType(fieldType)) {
-            if (isBeanValidationAnnotationPresent(field)) {
-                object = BeanValidationRandomizer.getRandomValue(field);
-            // no validation constraint annotations, use default randomizer
-            } else {
-                object = DefaultRandomizer.getRandomValue(fieldType);
-            }
-        // Custom type (recursion needed to populate nested custom types if any)
+            object = populateSupportedType(field, fieldType);
+        // custom type (recursion needed to populate nested custom types if any)
         } else {
             object = populateBean(fieldType);
         }
-        // Issue #5: set the field only if the value is not null
+        // issue #5: set the field only if the value is not null
         if (object != null) {
             PropertyUtils.setProperty(result, fieldName, object);
         }
 
+    }
+
+    private Object populateSupportedType(Field field, Class<?> fieldType) {
+        Object object;
+        if (isBeanValidationAnnotationPresent(field)) {
+            object = BeanValidationRandomizer.getRandomValue(field);
+        // no validation constraint annotations, use default randomizer
+        } else {
+            object = DefaultRandomizer.getRandomValue(fieldType);
+        }
+        return object;
     }
 
     /**
