@@ -27,28 +27,19 @@ package io.github.benas.jpopulator.impl;
 import io.github.benas.jpopulator.api.Exclude;
 import io.github.benas.jpopulator.api.Populator;
 import io.github.benas.jpopulator.api.Randomizer;
+import org.apache.commons.beanutils.PropertyUtils;
+import org.apache.commons.math3.random.RandomDataGenerator;
 
 import java.lang.reflect.Array;
 import java.lang.reflect.Field;
 import java.lang.reflect.Modifier;
 import java.math.BigDecimal;
 import java.math.BigInteger;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Calendar;
-import java.util.Collection;
-import java.util.Collections;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.Set;
+import java.util.*;
 import java.util.concurrent.atomic.AtomicInteger;
 import java.util.concurrent.atomic.AtomicLong;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-
-import org.apache.commons.beanutils.PropertyUtils;
-import org.apache.commons.math3.random.RandomDataGenerator;
 
 /**
  * The core implementation of the {@link Populator} interface.
@@ -184,15 +175,19 @@ public final class PopulatorImpl implements Populator {
         Class<?> resultClass = result.getClass();
 
         Object object;
-        if (customRandomizer(resultClass, fieldType, fieldName)) { // use custom randomizer if any
+        // use custom randomizer if any
+        if (customRandomizer(resultClass, fieldType, fieldName)) {
             object = randomizers.get(new RandomizerDefinition(resultClass, fieldType, fieldName)).getRandomValue();
-        } else if (isSupportedType(fieldType)) { //A supported type (no need for recursion)
+        //A supported type (no need for recursion)
+        } else if (isSupportedType(fieldType)) {
             if (isBeanValidationAnnotationPresent(field)) {
                 object = BeanValidationRandomizer.getRandomValue(field);
-            } else { // no validation constraint annotations, use default randomizer
+            // no validation constraint annotations, use default randomizer
+            } else {
                 object = DefaultRandomizer.getRandomValue(fieldType);
             }
-        } else { // Custom type (recursion needed to populate nested custom types if any)
+        // Custom type (recursion needed to populate nested custom types if any)
+        } else {
             object = populateBean(fieldType);
         }
         // Issue #5: set the field only if the value is not null
@@ -226,11 +221,14 @@ public final class PopulatorImpl implements Populator {
 
             //Collection type
             Object collection = null;
-            if (List.class.isAssignableFrom(fieldType)) { // List, ArrayList, LinkedList, etc
+            // List, ArrayList, LinkedList, etc
+            if (List.class.isAssignableFrom(fieldType)) {
                 collection = Collections.emptyList();
-            } else if (Set.class.isAssignableFrom(fieldType)) { // Set, HashSet, TreeSet, LinkedHashSet, etc
+            // Set, HashSet, TreeSet, LinkedHashSet, etc
+            } else if (Set.class.isAssignableFrom(fieldType)) {
                 collection = Collections.emptySet();
-            } else if (Map.class.isAssignableFrom(fieldType)) { // Map, HashMap, Dictionary, Properties, etc
+            // Map, HashMap, Dictionary, Properties, etc
+            } else if (Map.class.isAssignableFrom(fieldType)) {
                 collection = Collections.emptyMap();
             }
             PropertyUtils.setProperty(result, fieldName, collection);
