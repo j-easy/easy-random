@@ -48,7 +48,7 @@ import java.util.logging.Logger;
  */
 public final class PopulatorImpl implements Populator {
 
-    private final Logger logger = Logger.getLogger(this.getClass().getName());
+    private static final Logger LOGGER = Logger.getLogger(PopulatorImpl.class.getName());
 
     /**
      * Custom randomizers map to use to generate random values.
@@ -134,7 +134,7 @@ public final class PopulatorImpl implements Populator {
                 }
             }
         } catch (Exception e) {
-            logger.log(Level.SEVERE, "Unable to populate an instance of type " + type, e);
+            LOGGER.log(Level.SEVERE, "Unable to populate an instance of type " + type, e);
             return null;
         }
 
