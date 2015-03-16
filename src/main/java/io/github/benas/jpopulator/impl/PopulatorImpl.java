@@ -119,12 +119,7 @@ public final class PopulatorImpl implements Populator {
              * Generate random data for each field
              */
             for (Field field : declaredFields) {
-                if (shouldExcludeField(field, excludedFields)) {
-                    continue;
-                }
-                //do not populate static nor final fields
-                int fieldModifiers = field.getModifiers();
-                if (Modifier.isStatic(fieldModifiers) || Modifier.isFinal(fieldModifiers)) {
+                if (shouldExcludeField(field, excludedFields) || isStaticOrFinal(field)) {
                     continue;
                 }
                 if (isCollectionType(field.getType())) {
@@ -314,6 +309,11 @@ public final class PopulatorImpl implements Populator {
                field.isAnnotationPresent(javax.validation.constraints.DecimalMax.class) ||
                field.isAnnotationPresent(javax.validation.constraints.DecimalMin.class) ||
                field.isAnnotationPresent(javax.validation.constraints.Size.class);
+    }
+
+    private boolean isStaticOrFinal(Field field) {
+        int fieldModifiers = field.getModifiers();
+        return Modifier.isStatic(fieldModifiers) || Modifier.isFinal(fieldModifiers);
     }
 
 }
