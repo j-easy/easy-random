@@ -225,17 +225,28 @@ public final class PopulatorImpl implements Populator {
 
             //Collection type
             Object collection = null;
-            // List, ArrayList, LinkedList, etc
             if (List.class.isAssignableFrom(fieldType)) {
                 collection = Collections.emptyList();
-            // Set, HashSet, TreeSet, LinkedHashSet, etc
+            } else if (NavigableSet.class.isAssignableFrom(fieldType)) {
+                collection = new TreeSet();
+            } else if (SortedSet.class.isAssignableFrom(fieldType)) {
+                collection = new TreeSet();
             } else if (Set.class.isAssignableFrom(fieldType)) {
                 collection = Collections.emptySet();
-            // Map, HashMap, Dictionary, Properties, etc
+            } else if (Deque.class.isAssignableFrom(fieldType)) {
+                collection = new ArrayDeque();
+            } else if (Queue.class.isAssignableFrom(fieldType)) {
+                collection = new ArrayDeque();
+            } else if (NavigableMap.class.isAssignableFrom(fieldType)) {
+                collection = new TreeMap();
+            } else if (SortedMap.class.isAssignableFrom(fieldType)) {
+                collection = new TreeMap();
             } else if (Map.class.isAssignableFrom(fieldType)) {
                 collection = Collections.emptyMap();
+            } else if (Collection.class.isAssignableFrom(fieldType)) {
+                collection = Collections.emptyList();
             }
-            PropertyUtils.setProperty(result, fieldName, collection);
+                PropertyUtils.setProperty(result, fieldName, collection);
         }
     }
 

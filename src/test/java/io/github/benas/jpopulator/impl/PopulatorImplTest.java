@@ -251,4 +251,40 @@ public class PopulatorImplTest {
         assertThat(actualTypeArgument).isEqualTo(Person.class);
     }
 
+    @Test
+    public void testCollectionsPopulation() throws Exception {
+        final CollectionsBean collectionsBean = populator.populateBean(CollectionsBean.class);
+
+        assertThat(collectionsBean).isNotNull();
+
+        assertThat(collectionsBean.getCollection()).isNotNull();
+        assertThat(collectionsBean.getCollection()).isEmpty();
+
+        assertThat(collectionsBean.getList()).isNotNull();
+        assertThat(collectionsBean.getList()).isEmpty();
+
+        assertThat(collectionsBean.getSet()).isNotNull();
+        assertThat(collectionsBean.getSet()).isEmpty();
+
+        assertThat(collectionsBean.getSortedSet()).isNotNull();
+        assertThat(collectionsBean.getSortedSet()).isEmpty();
+
+        assertThat(collectionsBean.getNavigableSet()).isNotNull();
+        assertThat(collectionsBean.getNavigableSet()).isEmpty();
+
+        assertThat(collectionsBean.getQueue()).isNotNull();
+        assertThat(collectionsBean.getQueue()).isEmpty();
+
+        assertThat(collectionsBean.getDeque()).isNotNull();
+        assertThat(collectionsBean.getDeque()).isEmpty();
+
+        assertThat(collectionsBean.getMap()).isNotNull();
+        assertThat(collectionsBean.getMap()).isEmpty();
+
+        assertThat(collectionsBean.getSortedMap()).isNotNull();
+        assertThat(collectionsBean.getSortedMap()).isEmpty();
+
+        assertThat(collectionsBean.getNavigableMap()).isNotNull();
+        assertThat(collectionsBean.getNavigableMap()).isEmpty();
+    }
 }
