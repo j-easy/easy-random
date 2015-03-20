@@ -1,5 +1,7 @@
 ## What is jPopulator ?
 
+[![Join the chat at https://gitter.im/benas/jPopulator](https://badges.gitter.im/Join%20Chat.svg)](https://gitter.im/benas/jPopulator?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
+
 jPopulator is a java library that allows you to populate java beans with random data.
 
 Populating a deep type hierarchy by hand is a tedious task and the goal of jPopulator is to make this task hassle-free.
