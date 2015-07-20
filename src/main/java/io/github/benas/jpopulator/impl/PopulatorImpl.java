@@ -27,8 +27,9 @@ package io.github.benas.jpopulator.impl;
 import io.github.benas.jpopulator.api.Exclude;
 import io.github.benas.jpopulator.api.Populator;
 import io.github.benas.jpopulator.api.Randomizer;
-import org.apache.commons.beanutils.PropertyUtils;
 import org.apache.commons.math3.random.RandomDataGenerator;
+import org.springframework.objenesis.Objenesis;
+import org.springframework.objenesis.ObjenesisStd;
 
 import java.lang.reflect.Array;
 import java.lang.reflect.Field;
@@ -94,7 +95,12 @@ public final class PopulatorImpl implements Populator {
                 return (T) DefaultRandomizer.getRandomValue(type);
             }
 
-            result = type.newInstance();
+            try {
+                result = type.newInstance();
+            } catch (ReflectiveOperationException ex) {
+                Objenesis objenesis = new ObjenesisStd();
+                result = objenesis.newInstance(type);
+            }
 
             List<Field> declaredFields = getDeclaredFields(result);
 
@@ -102,7 +108,7 @@ public final class PopulatorImpl implements Populator {
 
             //Generate random data for each field
             for (Field field : declaredFields) {
-                if (shouldExcludeField(field, excludedFields) || isStaticOrFinal(field)) {
+                if (shouldExcludeField(field, excludedFields) || isStatic(field)) {
                     continue;
                 }
                 if (isCollectionType(field.getType())) {
@@ -182,9 +188,16 @@ public final class PopulatorImpl implements Populator {
         }
         // issue #5: set the field only if the value is not null
         if (object != null) {
-            PropertyUtils.setProperty(result, fieldName, object);
+            setProperty(result, field, object);
         }
 
+    }
+
+    private void setProperty(final Object result, final Field field, final Object object) throws IllegalAccessException {
+        boolean access = field.isAccessible();
+        field.setAccessible(true);
+        field.set(result, object);
+        field.setAccessible(access);
     }
 
     private Object populateSupportedType(Field field, Class<?> fieldType) {
@@ -219,7 +232,7 @@ public final class PopulatorImpl implements Populator {
         } else {
             //Array type
             if (fieldType.isArray()) {
-                PropertyUtils.setProperty(result, fieldName, Array.newInstance(fieldType.getComponentType(), 0));
+                setProperty(result, field, Array.newInstance(fieldType.getComponentType(), 0));
                 return;
             }
 
@@ -246,7 +259,7 @@ public final class PopulatorImpl implements Populator {
             } else if (Collection.class.isAssignableFrom(fieldType)) {
                 collection = Collections.emptyList();
             }
-                PropertyUtils.setProperty(result, fieldName, collection);
+                setProperty(result, field, collection);
         }
     }
 
@@ -331,9 +344,9 @@ public final class PopulatorImpl implements Populator {
                field.isAnnotationPresent(javax.validation.constraints.Size.class);
     }
 
-    private boolean isStaticOrFinal(Field field) {
+    private boolean isStatic(Field field) {
         int fieldModifiers = field.getModifiers();
-        return Modifier.isStatic(fieldModifiers) || Modifier.isFinal(fieldModifiers);
+        return Modifier.isStatic(fieldModifiers) ;
     }
 
 }

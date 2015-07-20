@@ -73,11 +73,11 @@ public class PopulatorImplTest {
     }
 
     @Test
-    public void finalFieldsShouldNotBePopulated() throws Exception {
+    public void finalFieldsShouldBePopulated() throws Exception {
         Person person = populator.populateBean(Person.class);
 
         assertThat(person).isNotNull();
-        assertThat(person.getId()).isNull();
+        assertThat(person.getId()).isNotNull();
     }
 
     @Test
@@ -286,5 +286,13 @@ public class PopulatorImplTest {
 
         assertThat(collectionsBean.getNavigableMap()).isNotNull();
         assertThat(collectionsBean.getNavigableMap()).isEmpty();
+    }
+
+    @Test
+    public void testImmutableBeanPopulation() throws Exception {
+        final ImmutableBean immutableBean = populator.populateBean(ImmutableBean.class);
+        assertThat(immutableBean).isNotNull();
+        assertThat(immutableBean.getFinalValue()).isNotNull();
+        assertThat(immutableBean.getFinalCollection()).isNotNull();
     }
 }
