@@ -36,23 +36,23 @@ import java.util.Map;
  * @author Mahmoud Ben Hassine (mahmoud@benhassine.fr)
  */
 public class PopulatorBuilder {
-
-    /**
-     * The populator to build.
-     */
-    private final PopulatorImpl populator;
-
     /**
      * A map of custom randomizers to use to generate random values.
      */
-    private final Map<RandomizerDefinition, Randomizer> randomizers;
+    private Map<RandomizerDefinition, Randomizer> randomizers;
 
 
     /**
      * Public constructor.
      */
     public PopulatorBuilder() {
-        populator = new PopulatorImpl();
+        reset();
+    }
+
+    /**
+     * Reset the builder to its initial state.
+     */
+    private void reset() {
         randomizers = new HashMap<RandomizerDefinition, Randomizer>();
     }
 
@@ -71,12 +71,16 @@ public class PopulatorBuilder {
     }
 
     /**
-     * Build a populator instance.
+     * Build a populator instance and reset the builder to its initial state.
      *
      * @return a configured populator instance
      */
     public Populator build() {
+        PopulatorImpl populator = new PopulatorImpl();
+
         populator.setRandomizers(randomizers);
+
+        reset();
         return populator;
     }
 

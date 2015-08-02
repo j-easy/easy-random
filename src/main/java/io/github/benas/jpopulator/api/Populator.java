@@ -34,7 +34,7 @@ import java.util.List;
 public interface Populator {
 
     /**
-     * Populate a java bean instance for the given type.<br/>
+     * Populate a java bean instance for the given type.<br>
      * It is possible to exclude some fields from being populated using the excludeFieldsName param.
      *
      * @param type the type for which a java bean instance will be populated
@@ -45,7 +45,7 @@ public interface Populator {
     <T> T populateBean(final Class<T> type, final String... excludedFields);
 
     /**
-     * Populate a random number of java bean instances for the given type.<br/>
+     * Populate a random number of java bean instances for the given type.<br>
      * It is possible to exclude some fields from being populated using the excludeFieldsName param.
      *
      * @param type the type for which java bean instances will be populated
@@ -56,7 +56,7 @@ public interface Populator {
     <T> List<T> populateBeans(final Class<T> type, final String... excludedFields);
 
     /**
-     * Populate a fixed number of java bean instances for the given type.
+     * Populate a fixed number of java bean instances for the given type.<br>
      * It is possible to exclude some fields from being populated using the excludeFieldsName param.
      *
      * @param type the type for which java bean instances will be populated
