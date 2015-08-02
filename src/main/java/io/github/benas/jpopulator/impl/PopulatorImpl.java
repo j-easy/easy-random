@@ -28,8 +28,9 @@ import io.github.benas.jpopulator.api.Exclude;
 import io.github.benas.jpopulator.api.Populator;
 import io.github.benas.jpopulator.api.Randomizer;
 import org.apache.commons.math3.random.RandomDataGenerator;
-import org.springframework.objenesis.Objenesis;
-import org.springframework.objenesis.ObjenesisStd;
+import org.objenesis.Objenesis;
+import org.objenesis.ObjenesisStd;
+
 
 import java.lang.reflect.Array;
 import java.lang.reflect.Field;
