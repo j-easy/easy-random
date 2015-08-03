@@ -36,6 +36,7 @@ If you have any question, suggestion, or feedback, do not hesitate to use the [G
 * [Eric Taix](https://github.com/eric-taix)
 * [Jose Manuel Prieto](https://github.com/prietopa)
 * [Nikola Milivojevic](https://github.com/dziga)
+* [Rémi Alvergnat](http://www.pragmasphere.com)
 
 Thank you all for your contributions!
 
