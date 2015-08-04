@@ -89,6 +89,24 @@
         <dependencies>
 
             <dependency>
+                <groupId>io.github.benas</groupId>
+                <artifactId>jpopulator-core</artifactId>
+                <version>1.2.1-SNAPSHOT</version>
+            </dependency>
+
+            <dependency>
+                <groupId>io.github.benas</groupId>
+                <artifactId>jpopulator-test</artifactId>
+                <version>1.2.1-SNAPSHOT</version>
+            </dependency>
+
+            <dependency>
+                <groupId>io.github.benas</groupId>
+                <artifactId>jpopulator-api</artifactId>
+                <version>1.2.1-SNAPSHOT</version>
+            </dependency>
+
+            <dependency>
                 <groupId>commons-beanutils</groupId>
                 <artifactId>commons-beanutils</artifactId>
                 <version>1.9.2</version>
@@ -259,6 +277,11 @@
 
     <modules>
         <module>jpopulator-core</module>
+        <module>jpopulator-spring</module>
+        <module>jpopulator-test</module>
+        <module>jpopulator-validation</module>
+        <module>jpopulator-joda-time</module>
+        <module>jpopulator-api</module>
     </modules>
 
 </project>

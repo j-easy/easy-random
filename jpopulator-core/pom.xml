@@ -13,6 +13,11 @@
     <artifactId>jpopulator-core</artifactId>
 
     <dependencies>
+        <dependency>
+            <groupId>io.github.benas</groupId>
+            <artifactId>jpopulator-api</artifactId>
+            <version>1.2.1-SNAPSHOT</version>
+        </dependency>
 
         <dependency>
             <groupId>commons-beanutils</groupId>
@@ -40,39 +45,13 @@
         </dependency>
 
         <dependency>
-            <groupId>org.springframework</groupId>
-            <artifactId>spring-context</artifactId>
-        </dependency>
-
-        <dependency>
             <groupId>org.objenesis</groupId>
             <artifactId>objenesis</artifactId>
         </dependency>
 
-        <!--
-            Test dependencies
-         -->
         <dependency>
-            <groupId>org.hibernate</groupId>
-            <artifactId>hibernate-validator</artifactId>
-            <scope>test</scope>
-        </dependency>
-
-        <dependency>
-            <groupId>org.glassfish.web</groupId>
-            <artifactId>javax.el</artifactId>
-            <scope>test</scope>
-        </dependency>
-
-        <dependency>
-            <groupId>junit</groupId>
-            <artifactId>junit</artifactId>
-            <scope>test</scope>
-        </dependency>
-
-        <dependency>
-            <groupId>org.assertj</groupId>
-            <artifactId>assertj-core</artifactId>
+            <groupId>io.github.benas</groupId>
+            <artifactId>jpopulator-test</artifactId>
             <scope>test</scope>
         </dependency>
 
