@@ -26,9 +26,9 @@ package io.github.benas.jpopulator.impl;
 
 import io.github.benas.jpopulator.api.Randomizer;
 import io.github.benas.jpopulator.api.Populator;
+import io.github.benas.jpopulator.api.RandomizerRegistry;
 
-import java.util.HashMap;
-import java.util.Map;
+import java.util.*;
 
 /**
  * A builder to create {@link Populator} instances.
@@ -40,6 +40,16 @@ public class PopulatorBuilder {
      * A map of custom randomizers to use to generate random values.
      */
     private Map<RandomizerDefinition, Randomizer> randomizers;
+
+    /**
+     * Set of user defined randomizer registries.
+     */
+    private Set<RandomizerRegistry> userRegistries;
+
+    /**
+     * Disable default registries discovered with Java Service Provider API.
+     */
+    private boolean defaultRegistriesDisabled;
 
 
     /**
@@ -54,6 +64,8 @@ public class PopulatorBuilder {
      */
     private void reset() {
         randomizers = new HashMap<RandomizerDefinition, Randomizer>();
+        userRegistries = new LinkedHashSet<RandomizerRegistry>();
+        defaultRegistriesDisabled = false;
     }
 
     /**
@@ -71,17 +83,72 @@ public class PopulatorBuilder {
     }
 
     /**
+     * Register a Randomizer Registry
+     *
+     * @param registry the registry to register in populator
+     * @return a pre configured populator builder instance
+     */
+    public PopulatorBuilder registerRandomizerRegistry(RandomizerRegistry registry) {
+        userRegistries.add(registry);
+        return this;
+    };
+
+    /**
+     * Disable default randomizer registries declared through Java Service Provider API.
+     *
+     * @return a pre configured populator builder instance
+     */
+    public PopulatorBuilder disableDefaultRegistries() {
+        return disableDefaultRegistries(true);
+    }
+
+    /**
+     * Disable/Enable default randomizer registries declared through Java Service Provider API.
+     *
+     * @param disabled the disabled value of the property
+     * @return a pre configured populator builder instance
+     */
+    public PopulatorBuilder disableDefaultRegistries(boolean disabled) {
+        defaultRegistriesDisabled = disabled;
+        return this;
+    }
+
+    /**
      * Build a populator instance and reset the builder to its initial state.
      *
      * @return a configured populator instance
      */
     public Populator build() {
-        PopulatorImpl populator = new PopulatorImpl();
+        LinkedHashSet<RandomizerRegistry> registries = new LinkedHashSet<RandomizerRegistry>();
+        registries.addAll(userRegistries);
+        if (!defaultRegistriesDisabled) {
+            registries.addAll(loadDefaultRegistries());
+        }
+
+        PopulatorImpl populator = new PopulatorImpl(registries);
 
         populator.setRandomizers(randomizers);
 
         reset();
         return populator;
+    }
+
+    /**
+     * Retrieves a collection of Randomizer Registry from Java Service Provider API.
+     *
+     * @return a collection of randomizer registry objects discovered from Randomizer
+     */
+    private Collection<? extends RandomizerRegistry> loadDefaultRegistries() {
+        List<RandomizerRegistry> registries = new ArrayList<RandomizerRegistry>();
+        ServiceLoader<RandomizerRegistry> loader = ServiceLoader.load(RandomizerRegistry.class);
+
+        Iterator<RandomizerRegistry> iterator = loader.iterator();
+        while (iterator.hasNext()) {
+            RandomizerRegistry registry = iterator.next();
+            registries.add(registry);
+        }
+
+        return registries;
     }
 
 }

@@ -84,9 +84,8 @@ public final class PopulatorImpl implements Populator {
     /**
      * Public constructor.
      */
-    public PopulatorImpl() {
-        registries.add(new InternalRandomizerRegistry());
-        registries.add(new JodaRandomizerRegistry());
+    public PopulatorImpl(Set<RandomizerRegistry> registries) {
+        this.registries.addAll(registries);
 
         randomizers = new HashMap<RandomizerDefinition, Randomizer>();
 
@@ -100,7 +99,7 @@ public final class PopulatorImpl implements Populator {
                 Byte.TYPE, Byte.class, Short.TYPE, Short.class, Integer.TYPE, Integer.class, Long.TYPE, Long.class,
                 Double.TYPE, Double.class, Float.TYPE, Float.class, BigInteger.class, BigDecimal.class,
                 AtomicLong.class, AtomicInteger.class,
-                java.util.Date.class, java.sql.Date.class, java.sql.Time.class, java.sql.Timestamp.class, Calendar.class, 
+                java.util.Date.class, java.sql.Date.class, java.sql.Time.class, java.sql.Timestamp.class, Calendar.class,
                 org.joda.time.DateTime.class, org.joda.time.LocalDate.class, org.joda.time.LocalTime.class, org.joda.time.LocalDateTime.class,
                 org.joda.time.Duration.class, org.joda.time.Period.class, org.joda.time.Interval.class,
                 java.net.URL.class, java.net.URI.class };
