@@ -24,9 +24,14 @@
 
 package io.github.benas.jpopulator.impl;
 
+import io.github.benas.jpopulator.api.EnumRandomizer;
 import io.github.benas.jpopulator.api.Exclude;
 import io.github.benas.jpopulator.api.Populator;
 import io.github.benas.jpopulator.api.Randomizer;
+import io.github.benas.jpopulator.randomizers.UriRandomizer;
+import io.github.benas.jpopulator.randomizers.UrlRandomizer;
+import io.github.benas.jpopulator.randomizers.internal.*;
+import io.github.benas.jpopulator.randomizers.internal.joda.*;
 import org.apache.commons.math3.random.RandomDataGenerator;
 import org.objenesis.Objenesis;
 import org.objenesis.ObjenesisStd;
@@ -38,6 +43,8 @@ import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Modifier;
 import java.math.BigDecimal;
 import java.math.BigInteger;
+import java.net.URI;
+import java.net.URL;
 import java.util.*;
 import java.util.concurrent.atomic.AtomicInteger;
 import java.util.concurrent.atomic.AtomicLong;
@@ -59,8 +66,21 @@ public final class PopulatorImpl implements Populator {
     private Map<RandomizerDefinition, Randomizer> randomizers;
 
     /**
-     * The supported types list.
+     * Default randomizers map to use to generate random values.
      */
+    private Map<Class, Randomizer> defaultRandomizers;
+
+    /**
+     * Randomizer use to generate enum values.
+     */
+    private EnumRandomizer enumRandomizer;
+
+    /**
+     * The supported types list.
+     *
+     * Use default randomizers instead.
+     */
+    @Deprecated
     private final List<Class> supportedTypesList;
     
     /**
@@ -69,6 +89,47 @@ public final class PopulatorImpl implements Populator {
     public PopulatorImpl() {
 
         randomizers = new HashMap<RandomizerDefinition, Randomizer>();
+        defaultRandomizers = new HashMap<Class, Randomizer>();
+
+        defaultRandomizers.put(String.class, new DefaultStringRandomizer());
+        defaultRandomizers.put(Character.class, new DefaultCharacterRandomizer());
+        defaultRandomizers.put(char.class, new DefaultCharacterRandomizer());
+        defaultRandomizers.put(Boolean.class, new DefaultBooleanRandomizer());
+        defaultRandomizers.put(boolean.class, new DefaultBooleanRandomizer());
+        defaultRandomizers.put(Byte.class, new DefaultByteRandomizer());
+        defaultRandomizers.put(byte.class, new DefaultByteRandomizer());
+        defaultRandomizers.put(Short.class, new DefaultShortRandomizer());
+        defaultRandomizers.put(short.class, new DefaultShortRandomizer());
+        defaultRandomizers.put(Integer.class, new DefaultIntegerRandomizer());
+        defaultRandomizers.put(int.class, new DefaultIntegerRandomizer());
+        defaultRandomizers.put(Long.class, new DefaultLongRandomizer());
+        defaultRandomizers.put(long.class, new DefaultLongRandomizer());
+        defaultRandomizers.put(Double.class, new DefaultDoubleRandomizer());
+        defaultRandomizers.put(double.class, new DefaultDoubleRandomizer());
+        defaultRandomizers.put(Float.class, new DefaultFloatRandomizer());
+        defaultRandomizers.put(float.class, new DefaultFloatRandomizer());
+        defaultRandomizers.put(BigInteger.class, new DefaultBigIntegerRandomizer());
+        defaultRandomizers.put(BigDecimal.class, new DefaultBigDecimalRandomizer());
+        defaultRandomizers.put(AtomicLong.class, new DefaultAtomicLongRandomizer());
+        defaultRandomizers.put(AtomicInteger.class, new DefaultAtomicIntegerRandomizer());
+        defaultRandomizers.put(Date.class, new DefaultDateRandomizer());
+        defaultRandomizers.put(java.sql.Date.class, new DefaultSqlDateRandomizer());
+        defaultRandomizers.put(java.sql.Time.class, new DefaultSqlTimeRandomizer());
+        defaultRandomizers.put(java.sql.Timestamp.class, new DefaultSqlTimestampRandomizer());
+        defaultRandomizers.put(Calendar.class, new DefaultCalendarRandomizer());
+        defaultRandomizers.put(URL.class, new DefaultUrlRandomizer());
+        defaultRandomizers.put(URI.class, new DefaultUriRandomizer());
+
+        defaultRandomizers.put(org.joda.time.DateTime.class, new DefaultJodaDateTimeRandomizer());
+        defaultRandomizers.put(org.joda.time.LocalDate.class, new DefaultJodaLocalDateRandomizer());
+        defaultRandomizers.put(org.joda.time.LocalTime.class, new DefaultJodaLocalTimeRandomizer());
+        defaultRandomizers.put(org.joda.time.LocalDateTime.class, new DefaultJodaLocalDateTimeRandomizer());
+        defaultRandomizers.put(org.joda.time.Duration.class, new DefaultJodaDurationRandomizer());
+        defaultRandomizers.put(org.joda.time.Period.class, new DefaultJodaPeriodRandomizer());
+        defaultRandomizers.put(org.joda.time.Interval.class, new DefaultJodaIntervalRandomizer());
+
+        enumRandomizer = new DefaultEnumRandomizer();
+
         supportedTypesList = new ArrayList<Class>();
 
         //initialize supported java types
@@ -93,7 +154,7 @@ public final class PopulatorImpl implements Populator {
 
             //No instantiation needed for enum types.
             if (type.isEnum()) {
-                return (T) DefaultRandomizer.getRandomValue(type);
+                return (T)enumRandomizer.<Enum>getRandomEnumValue((Class<Enum>) type);
             }
 
             try {
@@ -177,13 +238,17 @@ public final class PopulatorImpl implements Populator {
         Class<?> resultClass = result.getClass();
 
         Object object;
-        // use custom randomizer if any
-        if (customRandomizer(resultClass, fieldType, fieldName)) {
+
+        if (fieldType.isEnum()) {
+            object = enumRandomizer.<Enum>getRandomEnumValue((Class<Enum>) fieldType);
+        } else if (customRandomizer(resultClass, fieldType, fieldName)) {
+            // use custom randomizer if any
             object = randomizers.get(new RandomizerDefinition(resultClass, fieldType, fieldName)).getRandomValue();
+        } else if (isBeanValidationAnnotationPresent(field)) {
+            object = BeanValidationRandomizer.getRandomValue(field);
+        } else if (defaultRandomizer(fieldType)) {
+            object = defaultRandomizers.get(fieldType).getRandomValue();
         // a supported type => no need for recursion
-        } else if (isSupportedType(fieldType)) {
-            object = populateSupportedType(field, fieldType);
-        // custom type (recursion needed to populate nested custom types if any)
         } else {
             object = populateBean(fieldType);
         }
@@ -199,17 +264,6 @@ public final class PopulatorImpl implements Populator {
         field.setAccessible(true);
         field.set(result, object);
         field.setAccessible(access);
-    }
-
-    private Object populateSupportedType(Field field, Class<?> fieldType) {
-        Object object;
-        if (isBeanValidationAnnotationPresent(field)) {
-            object = BeanValidationRandomizer.getRandomValue(field);
-        // no validation constraint annotations, use default randomizer
-        } else {
-            object = DefaultRandomizer.getRandomValue(fieldType);
-        }
-        return object;
     }
 
     /**
@@ -294,6 +348,16 @@ public final class PopulatorImpl implements Populator {
      */
     private boolean customRandomizer(final Class<?> type, final Class<?> fieldType, final String fieldName) {
         return randomizers.get(new RandomizerDefinition(type, fieldType, fieldName)) != null;
+    }
+
+    /**
+     * This methods checks if a default randomizer is registered for the given type.
+     *
+     * @param type      The class type for which the method should check if a default randomizer is registered
+     * @return True if a default randomizer is registered for the given type, false else
+     */
+    private boolean defaultRandomizer(final Class<?> type) {
+        return defaultRandomizers.get(type) != null;
     }
 
     /**
