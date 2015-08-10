@@ -22,16 +22,15 @@
  *   THE SOFTWARE.
  */
 
-package io.github.benas.jpopulator.randomizers.internal.joda;
+package io.github.benas.jpopulator.randomizers.joda;
 
 import io.github.benas.jpopulator.api.Randomizer;
 import io.github.benas.jpopulator.util.ConstantsUtil;
-import org.joda.time.LocalDate;
+import org.joda.time.LocalTime;
 
-
-public class DefaultJodaLocalDateRandomizer implements Randomizer<LocalDate> {
+public class DefaultJodaLocalTimeRandomizer implements Randomizer<LocalTime> {
     @Override
-    public LocalDate getRandomValue() {
-        return new LocalDate(ConstantsUtil.DATE_RANGE_RANDOMIZER.getRandomValue().getTime());
+    public LocalTime getRandomValue() {
+        return new LocalTime(ConstantsUtil.DATE_RANGE_RANDOMIZER.getRandomValue().getTime());
     }
 }

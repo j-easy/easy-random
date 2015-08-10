@@ -22,15 +22,17 @@
  *   THE SOFTWARE.
  */
 
-package io.github.benas.jpopulator.randomizers.internal.joda;
+package io.github.benas.jpopulator.randomizers.joda;
 
 import io.github.benas.jpopulator.api.Randomizer;
 import io.github.benas.jpopulator.util.ConstantsUtil;
-import org.joda.time.Period;
+import org.joda.time.Interval;
 
-public class DefaultJodaPeriodRandomizer implements Randomizer<Period> {
+public class DefaultJodaIntervalRandomizer implements Randomizer<Interval> {
     @Override
-    public Period getRandomValue() {
-        return new Period(Math.abs(ConstantsUtil.RANDOM.nextInt()));
+    public Interval getRandomValue() {
+        long startDate = Math.abs(ConstantsUtil.RANDOM.nextInt());
+        long endDate = startDate + Math.abs(ConstantsUtil.RANDOM.nextInt());
+        return new Interval(startDate, endDate);
     }
 }

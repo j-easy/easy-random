@@ -2,7 +2,7 @@ package io.github.benas.jpopulator.randomizers.registry;
 
 import io.github.benas.jpopulator.api.Randomizer;
 import io.github.benas.jpopulator.api.RandomizerRegistry;
-import io.github.benas.jpopulator.randomizers.internal.joda.*;
+import io.github.benas.jpopulator.randomizers.joda.*;
 
 import java.util.HashMap;
 import java.util.Map;

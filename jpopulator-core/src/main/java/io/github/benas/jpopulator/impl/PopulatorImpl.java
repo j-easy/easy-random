@@ -25,17 +25,11 @@
 package io.github.benas.jpopulator.impl;
 
 import io.github.benas.jpopulator.api.*;
-import io.github.benas.jpopulator.randomizers.UriRandomizer;
-import io.github.benas.jpopulator.randomizers.UrlRandomizer;
-import io.github.benas.jpopulator.randomizers.internal.*;
-import io.github.benas.jpopulator.randomizers.internal.joda.*;
+import io.github.benas.jpopulator.randomizers.internal.DefaultEnumRandomizer;
 import io.github.benas.jpopulator.randomizers.registry.CustomRandomizerRegistry;
-import io.github.benas.jpopulator.randomizers.registry.InternalRandomizerRegistry;
-import io.github.benas.jpopulator.randomizers.registry.JodaRandomizerRegistry;
 import org.apache.commons.math3.random.RandomDataGenerator;
 import org.objenesis.Objenesis;
 import org.objenesis.ObjenesisStd;
-
 
 import java.lang.reflect.Array;
 import java.lang.reflect.Field;
@@ -43,8 +37,6 @@ import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Modifier;
 import java.math.BigDecimal;
 import java.math.BigInteger;
-import java.net.URI;
-import java.net.URL;
 import java.util.*;
 import java.util.concurrent.atomic.AtomicInteger;
 import java.util.concurrent.atomic.AtomicLong;
@@ -75,12 +67,12 @@ public final class PopulatorImpl implements Populator {
 
     /**
      * The supported types list.
-     *
+     * <p/>
      * Use default randomizers instead.
      */
     @Deprecated
     private final List<Class> supportedTypesList;
-    
+
     /**
      * Public constructor.
      */
@@ -100,9 +92,7 @@ public final class PopulatorImpl implements Populator {
                 Double.TYPE, Double.class, Float.TYPE, Float.class, BigInteger.class, BigDecimal.class,
                 AtomicLong.class, AtomicInteger.class,
                 java.util.Date.class, java.sql.Date.class, java.sql.Time.class, java.sql.Timestamp.class, Calendar.class,
-                org.joda.time.DateTime.class, org.joda.time.LocalDate.class, org.joda.time.LocalTime.class, org.joda.time.LocalDateTime.class,
-                org.joda.time.Duration.class, org.joda.time.Period.class, org.joda.time.Interval.class,
-                java.net.URL.class, java.net.URI.class };
+                java.net.URL.class, java.net.URI.class};
         supportedTypesList.addAll(Arrays.asList(supportedTypes));
     }
 
@@ -115,7 +105,7 @@ public final class PopulatorImpl implements Populator {
 
             //No instantiation needed for enum types.
             if (type.isEnum()) {
-                return (T)enumRandomizer.<Enum>getRandomEnumValue((Class<Enum>) type);
+                return (T) enumRandomizer.<Enum>getRandomEnumValue((Class<Enum>) type);
             }
 
             try {
@@ -187,8 +177,8 @@ public final class PopulatorImpl implements Populator {
      *
      * @param result The result object on which the generated value will be set
      * @param field  The field in which the generated value will be set
-     * @throws IllegalAccessException Thrown when the generated value cannot be set to the given field
-     * @throws NoSuchMethodException Thrown when there is no setter for the given field
+     * @throws IllegalAccessException    Thrown when the generated value cannot be set to the given field
+     * @throws NoSuchMethodException     Thrown when there is no setter for the given field
      * @throws InvocationTargetException Thrown when the setter of the given field can not be invoked
      */
     private void populateSimpleType(Object result, final Field field)
@@ -252,8 +242,8 @@ public final class PopulatorImpl implements Populator {
      *
      * @param result The result object on which the generated value will be set
      * @param field  The field in which the generated value will be set
-     * @throws IllegalAccessException Thrown when the generated value cannot be set to the given field
-     * @throws NoSuchMethodException Thrown when there is no setter for the given field
+     * @throws IllegalAccessException    Thrown when the generated value cannot be set to the given field
+     * @throws NoSuchMethodException     Thrown when there is no setter for the given field
      * @throws InvocationTargetException Thrown when the setter of the given field can not be invoked
      */
     private void populateCollectionType(Object result, final Field field)
@@ -295,7 +285,7 @@ public final class PopulatorImpl implements Populator {
             } else if (Collection.class.isAssignableFrom(fieldType)) {
                 collection = Collections.emptyList();
             }
-                setProperty(result, field, collection);
+            setProperty(result, field, collection);
         }
     }
 
@@ -343,7 +333,7 @@ public final class PopulatorImpl implements Populator {
     /**
      * Utility method that checks if a field should be excluded from being populated.
      *
-     * @param field the field to check
+     * @param field          the field to check
      * @param excludedFields the list of field names to be excluded
      * @return true if the field should be excluded, false otherwise
      */
@@ -369,20 +359,20 @@ public final class PopulatorImpl implements Populator {
      */
     private boolean isBeanValidationAnnotationPresent(final Field field) {
         return field.isAnnotationPresent(javax.validation.constraints.AssertFalse.class) ||
-               field.isAnnotationPresent(javax.validation.constraints.AssertTrue.class) ||
-               field.isAnnotationPresent(javax.validation.constraints.Null.class) ||
-               field.isAnnotationPresent(javax.validation.constraints.Future.class) ||
-               field.isAnnotationPresent(javax.validation.constraints.Past.class) ||
-               field.isAnnotationPresent(javax.validation.constraints.Max.class) ||
-               field.isAnnotationPresent(javax.validation.constraints.Min.class) ||
-               field.isAnnotationPresent(javax.validation.constraints.DecimalMax.class) ||
-               field.isAnnotationPresent(javax.validation.constraints.DecimalMin.class) ||
-               field.isAnnotationPresent(javax.validation.constraints.Size.class);
+                field.isAnnotationPresent(javax.validation.constraints.AssertTrue.class) ||
+                field.isAnnotationPresent(javax.validation.constraints.Null.class) ||
+                field.isAnnotationPresent(javax.validation.constraints.Future.class) ||
+                field.isAnnotationPresent(javax.validation.constraints.Past.class) ||
+                field.isAnnotationPresent(javax.validation.constraints.Max.class) ||
+                field.isAnnotationPresent(javax.validation.constraints.Min.class) ||
+                field.isAnnotationPresent(javax.validation.constraints.DecimalMax.class) ||
+                field.isAnnotationPresent(javax.validation.constraints.DecimalMin.class) ||
+                field.isAnnotationPresent(javax.validation.constraints.Size.class);
     }
 
     private boolean isStatic(Field field) {
         int fieldModifiers = field.getModifiers();
-        return Modifier.isStatic(fieldModifiers) ;
+        return Modifier.isStatic(fieldModifiers);
     }
 
 }
