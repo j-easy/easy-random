@@ -35,11 +35,7 @@ import java.lang.reflect.Array;
 import java.lang.reflect.Field;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Modifier;
-import java.math.BigDecimal;
-import java.math.BigInteger;
 import java.util.*;
-import java.util.concurrent.atomic.AtomicInteger;
-import java.util.concurrent.atomic.AtomicLong;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -62,19 +58,21 @@ public final class PopulatorImpl implements Populator {
      */
     private EnumRandomizer enumRandomizer;
 
+    /**
+     * Custom randomizer registry to provide user randomizer implementations.
+     */
     private CustomRandomizerRegistry userRegistry = new CustomRandomizerRegistry();
+
+    /**
+     * Default set of randomizer registry implementations.
+     */
     private Set<RandomizerRegistry> registries = new LinkedHashSet<RandomizerRegistry>();
 
-    /**
-     * The supported types list.
-     * <p/>
-     * Use default randomizers instead.
-     */
-    @Deprecated
-    private final List<Class> supportedTypesList;
 
     /**
-     * Public constructor.
+     * Constructor of PopulatorImpl
+     *
+     * @param registries randomizer registries used for this populator
      */
     public PopulatorImpl(Set<RandomizerRegistry> registries) {
         this.registries.addAll(registries);
@@ -82,18 +80,6 @@ public final class PopulatorImpl implements Populator {
         randomizers = new HashMap<RandomizerDefinition, Randomizer>();
 
         enumRandomizer = new DefaultEnumRandomizer();
-
-        supportedTypesList = new ArrayList<Class>();
-
-        //initialize supported java types
-        Class[] supportedTypes = {String.class, Character.TYPE, Character.class,
-                Boolean.TYPE, Boolean.class,
-                Byte.TYPE, Byte.class, Short.TYPE, Short.class, Integer.TYPE, Integer.class, Long.TYPE, Long.class,
-                Double.TYPE, Double.class, Float.TYPE, Float.class, BigInteger.class, BigDecimal.class,
-                AtomicLong.class, AtomicInteger.class,
-                java.util.Date.class, java.sql.Date.class, java.sql.Time.class, java.sql.Timestamp.class, Calendar.class,
-                java.net.URL.class, java.net.URI.class};
-        supportedTypesList.addAll(Arrays.asList(supportedTypes));
     }
 
     @Override
@@ -287,16 +273,6 @@ public final class PopulatorImpl implements Populator {
             }
             setProperty(result, field, collection);
         }
-    }
-
-    /**
-     * This method checks if the given type is a java built-in (primitive/boxed) type (ie, int, long, etc).
-     *
-     * @param type the type that the method should check
-     * @return true if the given type is a java built-in type
-     */
-    private boolean isSupportedType(final Class<?> type) {
-        return supportedTypesList.contains(type);
     }
 
     /**
