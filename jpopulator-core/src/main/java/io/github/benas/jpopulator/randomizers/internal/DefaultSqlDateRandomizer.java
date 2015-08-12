@@ -30,7 +30,7 @@ import java.sql.Date;
 
 
 public class DefaultSqlDateRandomizer implements Randomizer<Date> {
-    private Randomizer<java.util.Date> delegate = new DefaultDateRandomizer();
+    private DefaultDateRandomizer delegate = new DefaultDateRandomizer();
 
     @Override
     public Date getRandomValue() {

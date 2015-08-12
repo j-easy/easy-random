@@ -1,12 +1,15 @@
 package io.github.benas.jpopulator.randomizers.registry;
 
+import io.github.benas.jpopulator.api.Priority;
 import io.github.benas.jpopulator.api.Randomizer;
 import io.github.benas.jpopulator.api.RandomizerRegistry;
 import io.github.benas.jpopulator.randomizers.joda.*;
 
+import java.lang.reflect.Field;
 import java.util.HashMap;
 import java.util.Map;
 
+@Priority(-255)
 public class JodaRandomizerRegistry implements RandomizerRegistry {
     private Map<Class<?>, Randomizer<?>> randomizers = new HashMap<Class<?>, Randomizer<?>>();
 
@@ -21,7 +24,7 @@ public class JodaRandomizerRegistry implements RandomizerRegistry {
     }
 
     @Override
-    public <T> Randomizer<? extends T> getRandomizer(Class<T> type) {
-        return (Randomizer<? extends T>) randomizers.get(type);
+    public Randomizer<?> getRandomizer(Field field) {
+        return randomizers.get(field.getType());
     }
 }

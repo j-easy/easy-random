@@ -24,6 +24,7 @@
 
 package io.github.benas.jpopulator.randomizers;
 
+import io.github.benas.jpopulator.randomizers.range.DateRangeRandomizer;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -33,7 +34,7 @@ import java.util.Date;
 import static org.assertj.core.api.Assertions.assertThat;
 
 /**
- * Test class for {@link io.github.benas.jpopulator.randomizers.DateRangeRandomizer}.
+ * Test class for {@link DateRangeRandomizer}.
  *
  * @author Mahmoud Ben Hassine (mahmoud@benhassine.fr)
  */
@@ -63,17 +64,24 @@ public class DateRangeRandomizerTest {
 
     @Test(expected = IllegalArgumentException.class)
     public void whenSpecifiedMinDateIsAfterMaxDateThenThrowIllegalArgumentException() throws Exception {
-        dateRangeRandomizer = new DateRangeRandomizer(tomorrow, today);
+        new DateRangeRandomizer(tomorrow, today);
     }
 
-    @Test(expected = IllegalArgumentException.class)
+
     public void whenSpecifiedMinDateIsNullThenThrowIllegalArgumentException() throws Exception {
-        dateRangeRandomizer = new DateRangeRandomizer(null, tomorrow);
+        DateRangeRandomizer nullStartRandomizer = new DateRangeRandomizer(null, tomorrow);
+        Date randomDate = nullStartRandomizer.getRandomValue();
+        assertThat(randomDate)
+                .isNotNull()
+                .isBefore(tomorrow);
     }
 
-    @Test(expected = IllegalArgumentException.class)
     public void whenSpecifiedMaxDateIsNullThenThrowIllegalArgumentException() throws Exception {
-        dateRangeRandomizer = new DateRangeRandomizer(today, null);
+        DateRangeRandomizer nullEndRandomizer = new DateRangeRandomizer(today, null);
+        Date randomDate = nullEndRandomizer.getRandomValue();
+        assertThat(randomDate)
+                .isNotNull()
+                .isAfter(today);
     }
 
 }

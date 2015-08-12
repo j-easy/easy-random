@@ -24,6 +24,7 @@
 package io.github.benas.jpopulator.randomizers;
 
 import io.github.benas.jpopulator.api.Randomizer;
+import io.github.benas.jpopulator.api.RandomizerSkipException;
 
 import java.util.LinkedList;
 import java.util.Queue;
@@ -79,7 +80,10 @@ public class QueueRandomizer<T> extends CollectionRandomizer<T> {
     public Queue<T> getRandomValue() {
         Queue<T> result = new LinkedList<T>();
         for (int i = 0; i < nbElements; i++) {
-            result.add(getRandomElement());
+            try {
+                result.add(getRandomElement());
+            } catch (RandomizerSkipException e) {
+            }
         }
         return result;
     }

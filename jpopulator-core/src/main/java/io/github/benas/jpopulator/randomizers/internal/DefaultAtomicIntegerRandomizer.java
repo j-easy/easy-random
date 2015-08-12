@@ -29,7 +29,7 @@ import io.github.benas.jpopulator.api.Randomizer;
 import java.util.concurrent.atomic.AtomicInteger;
 
 public class DefaultAtomicIntegerRandomizer implements Randomizer<AtomicInteger> {
-    Randomizer<Integer> delegate = new DefaultIntegerRandomizer();
+    DefaultIntegerRandomizer delegate = new DefaultIntegerRandomizer();
 
     @Override
     public AtomicInteger getRandomValue() {

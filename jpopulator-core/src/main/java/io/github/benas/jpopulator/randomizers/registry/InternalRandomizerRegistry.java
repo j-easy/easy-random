@@ -1,9 +1,11 @@
 package io.github.benas.jpopulator.randomizers.registry;
 
+import io.github.benas.jpopulator.api.Priority;
 import io.github.benas.jpopulator.api.Randomizer;
 import io.github.benas.jpopulator.api.RandomizerRegistry;
 import io.github.benas.jpopulator.randomizers.internal.*;
 
+import java.lang.reflect.Field;
 import java.math.BigDecimal;
 import java.math.BigInteger;
 import java.net.URI;
@@ -15,6 +17,7 @@ import java.util.Map;
 import java.util.concurrent.atomic.AtomicInteger;
 import java.util.concurrent.atomic.AtomicLong;
 
+@Priority(-255)
 public class InternalRandomizerRegistry implements RandomizerRegistry {
     private Map<Class<?>, Randomizer<?>> randomizers = new HashMap<Class<?>, Randomizer<?>>();
 
@@ -50,7 +53,7 @@ public class InternalRandomizerRegistry implements RandomizerRegistry {
     }
 
     @Override
-    public <T> Randomizer<? extends T> getRandomizer(Class<T> type) {
-        return (Randomizer<? extends T>) randomizers.get(type);
+    public Randomizer<?> getRandomizer(Field field) {
+        return randomizers.get(field.getType());
     }
 }

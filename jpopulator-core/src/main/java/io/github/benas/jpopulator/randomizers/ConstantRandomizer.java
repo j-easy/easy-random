@@ -26,52 +26,20 @@ package io.github.benas.jpopulator.randomizers;
 
 import io.github.benas.jpopulator.api.Randomizer;
 
-import java.util.Date;
-
-import org.apache.commons.math3.random.RandomDataGenerator;
-
 /**
- * A custom date randomizer that generates random dates in a range of date values.
+ * Generates a constant value.
  *
- * @author Mahmoud Ben Hassine (mahmoud@benhassine.fr)
+ * @param <T>
  */
-public class DateRangeRandomizer implements Randomizer<Date> {
+public class ConstantRandomizer<T> implements Randomizer<T> {
+    private final T value;
 
-    /**
-     * The minimum date value.
-     */
-    private final Date minDate;
-
-    /**
-     * The maximum date value.
-     */
-    private final Date maxDate;
-
-    /**
-     * Public constructor.
-     * @param minDate the minimum date.
-     * @param maxDate the maximum date.
-     */
-    public DateRangeRandomizer(final Date minDate, final Date maxDate) {
-        if (minDate == null) {
-            throw new IllegalArgumentException("minDate must not be null");
-        }
-        if (maxDate == null) {
-            throw new IllegalArgumentException("maxDate must not be null");
-        }
-        if (minDate.after(maxDate)) {
-            throw new IllegalArgumentException("minDate must be before maxDate");
-        }
-        this.minDate = minDate;
-        this.maxDate = maxDate;
+    public ConstantRandomizer(T value) {
+        this.value = value;
     }
 
     @Override
-    public Date getRandomValue() {
-        long minDateTime = minDate.getTime();
-        long maxDateTime = maxDate.getTime();
-        long randomDateTime = new RandomDataGenerator().nextLong(minDateTime, maxDateTime);
-        return new Date(randomDateTime);
+    public T getRandomValue() {
+        return value;
     }
-
 }

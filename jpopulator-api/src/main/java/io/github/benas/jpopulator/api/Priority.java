@@ -22,31 +22,20 @@
  *   THE SOFTWARE.
  */
 
-package io.github.benas.jpopulator.randomizers.internal;
+package io.github.benas.jpopulator.api;
 
-import io.github.benas.jpopulator.api.Randomizer;
-import io.github.benas.jpopulator.randomizers.UriRandomizer;
-import io.github.benas.jpopulator.randomizers.UrlRandomizer;
+import java.lang.annotation.ElementType;
+import java.lang.annotation.Retention;
+import java.lang.annotation.RetentionPolicy;
+import java.lang.annotation.Target;
 
-import java.net.MalformedURLException;
-import java.net.URI;
-import java.net.URISyntaxException;
-import java.net.URL;
-import java.util.logging.Level;
-import java.util.logging.Logger;
-
-public class DefaultUriRandomizer implements Randomizer<URI> {
-    private static final Logger LOGGER = Logger.getLogger(DefaultUriRandomizer.class.getName());
-
-    private UriRandomizer delegate = new UriRandomizer();
-
-    @Override
-    public URI getRandomValue() {
-        try {
-            return new URI(delegate.getRandomValue());
-        } catch (URISyntaxException e) {
-            LOGGER.log(Level.WARNING, "The generated URI is malformed, the field will be set to null", e);
-            return null;
-        }
-    }
+/**
+ * Define the priority of a Randomizer Registry
+ *
+ * @author Rémi Alvergnat (toilal.dev@gmail.com)
+ */
+@Retention(RetentionPolicy.RUNTIME)
+@Target(ElementType.TYPE)
+public @interface Priority {
+    int value();
 }

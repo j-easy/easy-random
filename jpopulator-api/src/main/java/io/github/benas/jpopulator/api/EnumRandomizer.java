@@ -34,6 +34,8 @@ public interface EnumRandomizer {
      * Generate a random value for the given enum.
      *
      * @return a random value for the given enum
+     *
+     * @throws RandomizerSkipException when this randomizer should skip the property setting.
      */
-    <E extends Enum<E>> E getRandomEnumValue(Class<E> enumClass);
+    <E extends Enum<E>> E getRandomEnumValue(Class<E> enumClass) throws RandomizerSkipException;
 }

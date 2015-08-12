@@ -30,7 +30,7 @@ import java.util.Calendar;
 import java.util.Date;
 
 public class DefaultCalendarRandomizer implements Randomizer<Calendar> {
-    private Randomizer<Date> delegate = new DefaultDateRandomizer();
+    private DefaultDateRandomizer delegate = new DefaultDateRandomizer();
 
     @Override
     public Calendar getRandomValue() {

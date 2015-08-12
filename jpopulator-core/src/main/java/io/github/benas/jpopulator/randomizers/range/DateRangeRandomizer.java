@@ -22,31 +22,47 @@
  *   THE SOFTWARE.
  */
 
-package io.github.benas.jpopulator.randomizers.internal;
+package io.github.benas.jpopulator.randomizers.range;
 
-import io.github.benas.jpopulator.api.Randomizer;
-import io.github.benas.jpopulator.randomizers.UriRandomizer;
-import io.github.benas.jpopulator.randomizers.UrlRandomizer;
+import java.util.Date;
 
-import java.net.MalformedURLException;
-import java.net.URI;
-import java.net.URISyntaxException;
-import java.net.URL;
-import java.util.logging.Level;
-import java.util.logging.Logger;
-
-public class DefaultUriRandomizer implements Randomizer<URI> {
-    private static final Logger LOGGER = Logger.getLogger(DefaultUriRandomizer.class.getName());
-
-    private UriRandomizer delegate = new UriRandomizer();
+/**
+ * A custom date randomizer that generates random dates in a range of date values.
+ *
+ * @author Mahmoud Ben Hassine (mahmoud@benhassine.fr)
+ */
+public class DateRangeRandomizer extends AbstractRangeRandomizer<Date> {
+    /**
+     * Public constructor.
+     *
+     * @param min the minimum date.
+     * @param max the maximum date.
+     */
+    public DateRangeRandomizer(final Date min, final Date max) {
+        super(min, max);
+    }
 
     @Override
-    public URI getRandomValue() {
-        try {
-            return new URI(delegate.getRandomValue());
-        } catch (URISyntaxException e) {
-            LOGGER.log(Level.WARNING, "The generated URI is malformed, the field will be set to null", e);
-            return null;
-        }
+    protected void checkValues() {
+        if (min.after(max)) throw new IllegalArgumentException("max must be after min");
     }
+
+    @Override
+    protected Date getDefaultMinValue() {
+        return new Date(Long.MIN_VALUE);
+    }
+
+    @Override
+    protected Date getDefaultMaxValue() {
+        return new Date(Long.MAX_VALUE);
+    }
+
+    @Override
+    public Date getRandomValue() {
+        long minDateTime = min.getTime();
+        long maxDateTime = max.getTime();
+        long randomDateTime = randomDataGenerator.nextLong(minDateTime, maxDateTime);
+        return new Date(randomDateTime);
+    }
+
 }

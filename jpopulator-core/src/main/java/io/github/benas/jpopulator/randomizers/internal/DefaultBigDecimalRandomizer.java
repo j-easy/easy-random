@@ -29,7 +29,7 @@ import io.github.benas.jpopulator.api.Randomizer;
 import java.math.BigDecimal;
 
 public class DefaultBigDecimalRandomizer implements Randomizer<BigDecimal> {
-    Randomizer<Double> delegate = new DefaultDoubleRandomizer();
+    DefaultDoubleRandomizer delegate = new DefaultDoubleRandomizer();
 
     @Override
     public BigDecimal getRandomValue() {

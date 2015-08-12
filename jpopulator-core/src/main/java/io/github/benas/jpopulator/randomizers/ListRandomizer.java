@@ -24,6 +24,7 @@
 package io.github.benas.jpopulator.randomizers;
 
 import io.github.benas.jpopulator.api.Randomizer;
+import io.github.benas.jpopulator.api.RandomizerSkipException;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -74,7 +75,10 @@ public class ListRandomizer<T> extends CollectionRandomizer<T> {
     public List<T> getRandomValue() {
         List<T> result = new ArrayList<T>();
         for (int i = 0; i < nbElements; i++) {
-            result.add(getRandomElement());
+            try {
+                result.add(getRandomElement());
+            } catch (RandomizerSkipException e) {
+            }
         }
         return result;
     }

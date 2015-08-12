@@ -22,31 +22,33 @@
  *   THE SOFTWARE.
  */
 
-package io.github.benas.jpopulator.randomizers.internal;
+package io.github.benas.jpopulator.impl;
 
-import io.github.benas.jpopulator.api.Randomizer;
-import io.github.benas.jpopulator.randomizers.UriRandomizer;
-import io.github.benas.jpopulator.randomizers.UrlRandomizer;
+import io.github.benas.jpopulator.api.Priority;
 
-import java.net.MalformedURLException;
-import java.net.URI;
-import java.net.URISyntaxException;
-import java.net.URL;
-import java.util.logging.Level;
-import java.util.logging.Logger;
+import java.util.Comparator;
 
-public class DefaultUriRandomizer implements Randomizer<URI> {
-    private static final Logger LOGGER = Logger.getLogger(DefaultUriRandomizer.class.getName());
-
-    private UriRandomizer delegate = new UriRandomizer();
-
+/**
+ * Compare using Priority annotation.
+ *
+ * @author Rémi Alvergnat (toilal.dev@gmail.com)
+ */
+public class PriorityComparator implements Comparator<Object> {
     @Override
-    public URI getRandomValue() {
-        try {
-            return new URI(delegate.getRandomValue());
-        } catch (URISyntaxException e) {
-            LOGGER.log(Level.WARNING, "The generated URI is malformed, the field will be set to null", e);
-            return null;
+    public int compare(Object o1, Object o2) {
+        int o1Priority = getPriority(o1);
+        int o2Priority = getPriority(o2);
+
+        return o2Priority - o1Priority;
+    }
+
+    protected int getPriority(Object o1) {
+        if (o1 != null) {
+            Priority annotation = o1.getClass().getAnnotation(Priority.class);
+            if (annotation != null) {
+                return annotation.value();
+            }
         }
+        return 0;
     }
 }

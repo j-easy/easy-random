@@ -25,6 +25,7 @@
 package io.github.benas.jpopulator.randomizers;
 
 import io.github.benas.jpopulator.api.Randomizer;
+import io.github.benas.jpopulator.api.RandomizerSkipException;
 import io.github.benas.jpopulator.util.ConstantsUtil;
 
 import java.util.HashMap;
@@ -104,7 +105,10 @@ public class MapRandomizer<K,V> implements Randomizer<Map<K,V>> {
     public Map<K, V> getRandomValue() {
         Map<K, V> result = new HashMap<K, V>();
         for (int i = 0; i < nbElements; i++) {
-            result.put(keyRandomizer.getRandomValue(), valueRandomizer.getRandomValue());
+            try {
+                result.put(keyRandomizer.getRandomValue(), valueRandomizer.getRandomValue());
+            } catch (RandomizerSkipException e) {
+            }
         }
         return result;
     }

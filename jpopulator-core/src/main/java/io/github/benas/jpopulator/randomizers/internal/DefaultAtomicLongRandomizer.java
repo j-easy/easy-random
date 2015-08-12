@@ -29,7 +29,7 @@ import io.github.benas.jpopulator.api.Randomizer;
 import java.util.concurrent.atomic.AtomicLong;
 
 public class DefaultAtomicLongRandomizer implements Randomizer<AtomicLong> {
-    Randomizer<Long> delegate = new DefaultLongRandomizer();
+    DefaultLongRandomizer delegate = new DefaultLongRandomizer();
 
     @Override
     public AtomicLong getRandomValue() {

@@ -30,7 +30,7 @@ import io.github.benas.jpopulator.util.ConstantsUtil;
 import java.math.BigInteger;
 
 public class DefaultBigIntegerRandomizer implements Randomizer<BigInteger> {
-    Randomizer<Integer> delegate = new DefaultIntegerRandomizer();
+    DefaultIntegerRandomizer delegate = new DefaultIntegerRandomizer();
 
     @Override
     public BigInteger getRandomValue() {

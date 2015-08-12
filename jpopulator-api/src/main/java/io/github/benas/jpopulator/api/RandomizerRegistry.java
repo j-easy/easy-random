@@ -24,6 +24,19 @@
 
 package io.github.benas.jpopulator.api;
 
+import java.lang.reflect.Field;
+
+/**
+ * An interface for a registry of Randomizer.
+ *
+ * @author Rémi Alvergnat (toilal.dev@gmail.com)
+ */
 public interface RandomizerRegistry {
-    <T> Randomizer<? extends T> getRandomizer(Class<T> type);
+    /**
+     * Retrieves a randomizer for given field.
+     *
+     * @param field
+     * @return
+     */
+    Randomizer<?> getRandomizer(Field field);
 }

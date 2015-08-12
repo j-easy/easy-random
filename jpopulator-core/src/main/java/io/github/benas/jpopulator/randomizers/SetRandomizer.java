@@ -24,6 +24,7 @@
 package io.github.benas.jpopulator.randomizers;
 
 import io.github.benas.jpopulator.api.Randomizer;
+import io.github.benas.jpopulator.api.RandomizerSkipException;
 
 import java.util.HashSet;
 import java.util.Set;
@@ -74,7 +75,10 @@ public class SetRandomizer<T> extends CollectionRandomizer<T> {
     public Set<T> getRandomValue() {
         Set<T> result = new HashSet<T>();
         for (int i = 0; i < nbElements; i++) {
-            result.add(getRandomElement());
+            try {
+                result.add(getRandomElement());
+            } catch (RandomizerSkipException e) {
+            }
         }
         return result;
     }

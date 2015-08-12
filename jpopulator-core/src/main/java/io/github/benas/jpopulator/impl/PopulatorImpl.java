@@ -59,14 +59,14 @@ public final class PopulatorImpl implements Populator {
     private EnumRandomizer enumRandomizer;
 
     /**
-     * Custom randomizer registry to provide user randomizer implementations.
-     */
-    private CustomRandomizerRegistry userRegistry = new CustomRandomizerRegistry();
-
-    /**
      * Default set of randomizer registry implementations.
      */
-    private Set<RandomizerRegistry> registries = new LinkedHashSet<RandomizerRegistry>();
+    private List<RandomizerRegistry> registries = new ArrayList<RandomizerRegistry>();
+
+    /**
+     * The priority comparator
+     */
+    private Comparator<Object> priorityComparator = new PriorityComparator();
 
 
     /**
@@ -76,6 +76,7 @@ public final class PopulatorImpl implements Populator {
      */
     public PopulatorImpl(Set<RandomizerRegistry> registries) {
         this.registries.addAll(registries);
+        Collections.sort(this.registries, priorityComparator);
 
         randomizers = new HashMap<RandomizerDefinition, Randomizer>();
 
@@ -110,11 +111,7 @@ public final class PopulatorImpl implements Populator {
                 if (shouldExcludeField(field, excludedFields) || isStatic(field)) {
                     continue;
                 }
-                if (isCollectionType(field.getType())) {
-                    populateCollectionType(result, field);
-                } else {
-                    populateSimpleType(result, field);
-                }
+                populateField(result, field);
             }
         } catch (Exception e) {
             LOGGER.log(Level.SEVERE, String.format("Unable to populate an instance of type %s", type), e);
@@ -167,112 +164,134 @@ public final class PopulatorImpl implements Populator {
      * @throws NoSuchMethodException     Thrown when there is no setter for the given field
      * @throws InvocationTargetException Thrown when the setter of the given field can not be invoked
      */
-    private void populateSimpleType(Object result, final Field field)
+    private void populateField(Object result, final Field field)
             throws IllegalAccessException, NoSuchMethodException, InvocationTargetException {
 
         Class<?> fieldType = field.getType();
-        String fieldName = field.getName();
         Class<?> resultClass = result.getClass();
 
-        Object object = null;
+        try {
+            Object object = null;
+            Randomizer<?> randomizer = getRandomizer(resultClass, field);
 
-        if (fieldType.isEnum()) {
-            object = enumRandomizer.<Enum>getRandomEnumValue((Class<Enum>) fieldType);
-        } else if (customRandomizer(resultClass, fieldType, fieldName)) {
-            // use custom randomizer if any
-            object = randomizers.get(new RandomizerDefinition(resultClass, fieldType, fieldName)).getRandomValue();
-        } else if (isBeanValidationAnnotationPresent(field)) {
-            object = BeanValidationRandomizer.getRandomValue(field);
-        } else {
-            if (object == null) {
-                Randomizer<?> customRandomizer = userRegistry.getRandomizer(fieldType);
-                if (customRandomizer != null) {
-                    object = customRandomizer.getRandomValue();
+            if (randomizer != null) {
+                // A randomizer was found, so use this one.
+                object = randomizer.getRandomValue();
+            } else {
+                // No randomizer was found.
+                if (fieldType.isEnum()) {
+                    // This is a enum, so use the enumRandomizer.
+                    object = enumRandomizer.<Enum>getRandomEnumValue((Class<Enum>) fieldType);
+                } else if (isCollectionType(fieldType)) {
+                    // This is a collection, so use getRandomCollection method.
+                    object = getRandomCollection(field);
+                } else {
+                    // Consider the class as a child bean.
+                    object = populateBean(fieldType);
                 }
             }
 
-            if (object == null) {
-                for (RandomizerRegistry registry : registries) {
-                    Randomizer<?> randomizer = registry.getRandomizer(fieldType);
-                    if (randomizer != null) {
-                        object = randomizer.getRandomValue();
-                        if (object != null) {
-                            break;
-                        }
-                    }
-                }
-            }
-
-            if (object == null) {
-                object = populateBean(fieldType);
-            }
-        }
-
-
-        // issue #5: set the field only if the value is not null
-        if (object != null) {
             setProperty(result, field, object);
+        } catch (RandomizerSkipException e) {
+            LOGGER.log(Level.FINE, String.format("Randomizer has skipped property %s", field));
         }
 
     }
 
-    private void setProperty(final Object result, final Field field, final Object object) throws IllegalAccessException {
+    /**
+     * Retrieves the randomizer to use, either one defined by user for a specific field or a default one provided by registries.
+     *
+     * @param resultClass class on which field will operator
+     * @param field       field for which the randomizer should generate values
+     * @return a randomizer for this field, or null if none is found.
+     */
+    private Randomizer<?> getRandomizer(Class<?> resultClass, Field field) {
+        Randomizer<?> customRandomizer = randomizers.get(new RandomizerDefinition(resultClass, field.getType(), field.getName()));
+        if (customRandomizer != null) {
+            return customRandomizer;
+        }
+        return getDefaultRandomizer(field);
+    }
+
+    /**
+     * Retrieves the default randomizer to use, by using user registry and default registries.
+     *
+     * @param field field for which the randomizer should generate values
+     * @return a randomizer for this field, or null if none is found.
+     */
+    private Randomizer<?> getDefaultRandomizer(Field field) {
+        ArrayList<Randomizer<?>> randomizers = new ArrayList<Randomizer<?>>();
+        for (RandomizerRegistry registry : registries) {
+            Randomizer<?> randomizer = registry.getRandomizer(field);
+            if (randomizer != null) {
+                randomizers.add(randomizer);
+            }
+        }
+        Collections.sort(randomizers, priorityComparator);
+        if (randomizers.size() > 0) {
+            return randomizers.get(0);
+        }
+
+        return null;
+    }
+
+    /**
+     * Define a property (accessible or not accessible)
+     *
+     * @param obj   instance to set the property on
+     * @param field field to set the property on
+     * @param value value to set
+     * @throws IllegalAccessException
+     */
+    private void setProperty(final Object obj, final Field field, final Object value) throws IllegalAccessException {
         boolean access = field.isAccessible();
         field.setAccessible(true);
-        field.set(result, object);
+        field.set(obj, value);
         field.setAccessible(access);
     }
 
     /**
      * Method to populate a collection type which can be an array or a {@link Collection}.
      *
-     * @param result The result object on which the generated value will be set
-     * @param field  The field in which the generated value will be set
+     * @param field The field in which the generated value will be set
+     * @return an random collection matching type of field.
      * @throws IllegalAccessException    Thrown when the generated value cannot be set to the given field
      * @throws NoSuchMethodException     Thrown when there is no setter for the given field
      * @throws InvocationTargetException Thrown when the setter of the given field can not be invoked
      */
-    private void populateCollectionType(Object result, final Field field)
-            throws IllegalAccessException, NoSuchMethodException, InvocationTargetException {
-
+    private Object getRandomCollection(final Field field) throws IllegalAccessException, NoSuchMethodException, InvocationTargetException {
         Class<?> fieldType = field.getType();
-        String fieldName = field.getName();
 
-        // If the field has a custom randomizer then populate it as a simple type
-        if (customRandomizer(result.getClass(), fieldType, fieldName)) {
-            populateSimpleType(result, field);
-        } else {
-            //Array type
-            if (fieldType.isArray()) {
-                setProperty(result, field, Array.newInstance(fieldType.getComponentType(), 0));
-                return;
-            }
-
-            //Collection type
-            Object collection = null;
-            if (List.class.isAssignableFrom(fieldType)) {
-                collection = Collections.emptyList();
-            } else if (NavigableSet.class.isAssignableFrom(fieldType)) {
-                collection = new TreeSet();
-            } else if (SortedSet.class.isAssignableFrom(fieldType)) {
-                collection = new TreeSet();
-            } else if (Set.class.isAssignableFrom(fieldType)) {
-                collection = Collections.emptySet();
-            } else if (Deque.class.isAssignableFrom(fieldType)) {
-                collection = new ArrayDeque();
-            } else if (Queue.class.isAssignableFrom(fieldType)) {
-                collection = new ArrayDeque();
-            } else if (NavigableMap.class.isAssignableFrom(fieldType)) {
-                collection = new TreeMap();
-            } else if (SortedMap.class.isAssignableFrom(fieldType)) {
-                collection = new TreeMap();
-            } else if (Map.class.isAssignableFrom(fieldType)) {
-                collection = Collections.emptyMap();
-            } else if (Collection.class.isAssignableFrom(fieldType)) {
-                collection = Collections.emptyList();
-            }
-            setProperty(result, field, collection);
+        //Array type
+        if (fieldType.isArray()) {
+            return Array.newInstance(fieldType.getComponentType(), 0);
         }
+
+        //Collection type
+        Object collection = null;
+        if (List.class.isAssignableFrom(fieldType)) {
+            collection = Collections.emptyList();
+        } else if (NavigableSet.class.isAssignableFrom(fieldType)) {
+            collection = new TreeSet();
+        } else if (SortedSet.class.isAssignableFrom(fieldType)) {
+            collection = new TreeSet();
+        } else if (Set.class.isAssignableFrom(fieldType)) {
+            collection = Collections.emptySet();
+        } else if (Deque.class.isAssignableFrom(fieldType)) {
+            collection = new ArrayDeque();
+        } else if (Queue.class.isAssignableFrom(fieldType)) {
+            collection = new ArrayDeque();
+        } else if (NavigableMap.class.isAssignableFrom(fieldType)) {
+            collection = new TreeMap();
+        } else if (SortedMap.class.isAssignableFrom(fieldType)) {
+            collection = new TreeMap();
+        } else if (Map.class.isAssignableFrom(fieldType)) {
+            collection = Collections.emptyMap();
+        } else if (Collection.class.isAssignableFrom(fieldType)) {
+            collection = Collections.emptyList();
+        }
+
+        return collection;
     }
 
     /**
@@ -328,22 +347,6 @@ public final class PopulatorImpl implements Populator {
         }
 
         return false;
-    }
-
-    /*
-     * Utility method that checks if the field is annotated with a bean validation annotation.
-     */
-    private boolean isBeanValidationAnnotationPresent(final Field field) {
-        return field.isAnnotationPresent(javax.validation.constraints.AssertFalse.class) ||
-                field.isAnnotationPresent(javax.validation.constraints.AssertTrue.class) ||
-                field.isAnnotationPresent(javax.validation.constraints.Null.class) ||
-                field.isAnnotationPresent(javax.validation.constraints.Future.class) ||
-                field.isAnnotationPresent(javax.validation.constraints.Past.class) ||
-                field.isAnnotationPresent(javax.validation.constraints.Max.class) ||
-                field.isAnnotationPresent(javax.validation.constraints.Min.class) ||
-                field.isAnnotationPresent(javax.validation.constraints.DecimalMax.class) ||
-                field.isAnnotationPresent(javax.validation.constraints.DecimalMin.class) ||
-                field.isAnnotationPresent(javax.validation.constraints.Size.class);
     }
 
     private boolean isStatic(Field field) {

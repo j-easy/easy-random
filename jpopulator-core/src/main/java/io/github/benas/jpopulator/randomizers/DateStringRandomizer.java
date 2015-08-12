@@ -24,6 +24,7 @@
 package io.github.benas.jpopulator.randomizers;
 
 import io.github.benas.jpopulator.api.Randomizer;
+import io.github.benas.jpopulator.randomizers.range.DateRangeRandomizer;
 import io.github.benas.jpopulator.util.ConstantsUtil;
 
 import java.text.SimpleDateFormat;

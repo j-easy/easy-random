@@ -3,6 +3,7 @@ package io.github.benas.jpopulator.randomizers.registry;
 import io.github.benas.jpopulator.api.Randomizer;
 import io.github.benas.jpopulator.api.RandomizerRegistry;
 
+import java.lang.reflect.Field;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -11,8 +12,8 @@ public class CustomRandomizerRegistry implements RandomizerRegistry {
 
 
     @Override
-    public <T> Randomizer<? extends T> getRandomizer(Class<T> type) {
-        return (Randomizer<? extends T>) randomizers.get(type);
+    public Randomizer<?> getRandomizer(Field field) {
+        return randomizers.get(field.getType());
     }
 
     public <T> void registerRandomizer(Randomizer<T> randomizer, Class<? extends T> type) {
