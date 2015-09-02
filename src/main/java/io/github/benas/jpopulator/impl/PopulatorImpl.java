@@ -33,6 +33,7 @@ import org.objenesis.ObjenesisStd;
 
 
 import java.lang.reflect.Array;
+import java.lang.reflect.Constructor;
 import java.lang.reflect.Field;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Modifier;
@@ -97,7 +98,11 @@ public final class PopulatorImpl implements Populator {
             }
 
             try {
+                Constructor<T> defaultConstructor = type.getDeclaredConstructor(new Class<?>[0]);
+                boolean isAccessible = defaultConstructor.isAccessible();
+                defaultConstructor.setAccessible(true);
                 result = type.newInstance();
+                defaultConstructor.setAccessible(isAccessible);
             } catch (ReflectiveOperationException ex) {
                 Objenesis objenesis = new ObjenesisStd();
                 result = objenesis.newInstance(type);
