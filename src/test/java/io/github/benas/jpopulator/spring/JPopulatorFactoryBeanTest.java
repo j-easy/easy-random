@@ -86,7 +86,7 @@ public class JPopulatorFactoryBeanTest {
         assertThat(person.getGender()).isNotNull().isIn(Arrays.asList(Gender.MALE, Gender.FEMALE));
         assertThat(person.getBirthDate()).isNotNull();
         assertThat(person.getPhoneNumber()).isNotNull().isNotEmpty();
-        assertThat(person.getNicknames()).isNotNull().isEmpty();
+        assertThat(person.getNicknames()).isNotNull().isNotEmpty();
 
         final Address address = person.getAddress();
         assertThat(address).isNotNull();

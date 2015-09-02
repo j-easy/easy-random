@@ -37,6 +37,8 @@ import java.lang.reflect.Constructor;
 import java.lang.reflect.Field;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Modifier;
+import java.lang.reflect.ParameterizedType;
+import java.lang.reflect.Type;
 import java.math.BigDecimal;
 import java.math.BigInteger;
 import java.util.*;
@@ -119,6 +121,8 @@ public final class PopulatorImpl implements Populator {
                 }
                 if (isCollectionType(field.getType())) {
                     populateCollectionType(result, field);
+                } else if (isMapType(field.getType())) {
+                    populateMapType(result, field);
                 } else {
                     populateSimpleType(result, field);
                 }
@@ -133,7 +137,7 @@ public final class PopulatorImpl implements Populator {
 
     @Override
     public <T> List<T> populateBeans(final Class<T> type, final String... excludedFields) {
-        int size = new RandomDataGenerator().nextInt(1, Short.MAX_VALUE);
+        int size = new RandomDataGenerator().nextInt(1, 100); // Short.MAX_VALUE);
         return populateBeans(type, size, excludedFields);
     }
 
@@ -242,30 +246,99 @@ public final class PopulatorImpl implements Populator {
                 return;
             }
 
-            //Collection type
-            Object collection = null;
+            // Collection type
+            Collection collection = null;
             if (List.class.isAssignableFrom(fieldType)) {
-                collection = Collections.emptyList();
+                collection = new ArrayList(); // Collections.emptyList();
             } else if (NavigableSet.class.isAssignableFrom(fieldType)) {
                 collection = new TreeSet();
             } else if (SortedSet.class.isAssignableFrom(fieldType)) {
                 collection = new TreeSet();
             } else if (Set.class.isAssignableFrom(fieldType)) {
-                collection = Collections.emptySet();
+                collection = new HashSet(); // Collections.emptySet();
             } else if (Deque.class.isAssignableFrom(fieldType)) {
                 collection = new ArrayDeque();
             } else if (Queue.class.isAssignableFrom(fieldType)) {
                 collection = new ArrayDeque();
-            } else if (NavigableMap.class.isAssignableFrom(fieldType)) {
-                collection = new TreeMap();
-            } else if (SortedMap.class.isAssignableFrom(fieldType)) {
-                collection = new TreeMap();
-            } else if (Map.class.isAssignableFrom(fieldType)) {
-                collection = Collections.emptyMap();
             } else if (Collection.class.isAssignableFrom(fieldType)) {
-                collection = Collections.emptyList();
+                collection = new HashSet(); // Collections.emptyList();
             }
-                setProperty(result, field, collection);
+            Type genericType = field.getGenericType();
+            // default to String rather than Object b/c (1) apparently it does not matter and some collections require
+            // comparable objects.
+            Type baseType = String.class;
+            if (genericType instanceof ParameterizedType) {
+                ParameterizedType parameterizedType = (ParameterizedType) genericType;
+                baseType = parameterizedType.getActualTypeArguments()[0];
+            }
+            Class baseTypeClass = (Class) baseType;
+            List items = populateBeans(baseTypeClass);
+            collection.addAll(items);
+            setProperty(result, field, collection);
+        }
+    }
+
+    /**
+     * Method to populate a Map type.
+     *
+     * @param result
+     *            The result object on which the generated value will be set
+     * @param field
+     *            The field in which the generated value will be set
+     * @throws IllegalAccessException
+     *             Thrown when the generated value cannot be set to the given field
+     * @throws NoSuchMethodException
+     *             Thrown when there is no setter for the given field
+     * @throws InvocationTargetException
+     *             Thrown when the setter of the given field can not be invoked
+     */
+    private void populateMapType(Object result, final Field field)
+            throws IllegalAccessException, NoSuchMethodException, InvocationTargetException {
+
+        Class<?> fieldType = field.getType();
+        String fieldName = field.getName();
+
+        // If the field has a custom randomizer then populate it as a simple type
+        if (customRandomizer(result.getClass(), fieldType, fieldName)) {
+            populateSimpleType(result, field);
+        } else {
+            // Collection type
+            Map map = null;
+            if (NavigableMap.class.isAssignableFrom(fieldType)) {
+                map = new TreeMap();
+            } else if (SortedMap.class.isAssignableFrom(fieldType)) {
+                map = new TreeMap();
+            } else {
+                map = new HashMap();
+            }
+
+            int size = new RandomDataGenerator().nextInt(1, 100);
+
+            Type genericKeyType = field.getGenericType();
+            // default to String rather than Object b/c (1) apparently it does not matter and some collections require
+            // comparable objects.
+            Type baseKeyType = String.class;
+            if (genericKeyType instanceof ParameterizedType) {
+                ParameterizedType parameterizedType = (ParameterizedType) genericKeyType;
+                baseKeyType = parameterizedType.getActualTypeArguments()[0];
+            }
+            Class baseKeyTypeClass = (Class) baseKeyType;
+            List keyItems = populateBeans(baseKeyTypeClass, size);
+
+            Type genericValueType = field.getGenericType();
+            Type baseValueType = String.class;
+            if (genericValueType instanceof ParameterizedType) {
+                ParameterizedType parameterizedValueType = (ParameterizedType) genericValueType;
+                baseValueType = parameterizedValueType.getActualTypeArguments()[0];
+            }
+            Class baseValueTypeClass = (Class) baseValueType;
+            List valueItems = populateBeans(baseValueTypeClass, size);
+
+            for (int index = 0; index < size; index++) {
+                map.put(keyItems.get(index), valueItems.get(index));
+            }
+
+            setProperty(result, field, map);
         }
     }
 
@@ -280,13 +353,24 @@ public final class PopulatorImpl implements Populator {
     }
 
     /**
-     * This method checks if the given type is a java built-in collection type (ie, array, List, Set, Map, etc).
+     * This method checks if the given type is a java built-in collection type (i.e., array, List, Set, etc).
      *
      * @param type the type that the method should check
      * @return true if the given type is a java built-in collection type
      */
     private boolean isCollectionType(final Class<?> type) {
-        return type.isArray() || Map.class.isAssignableFrom(type) || Collection.class.isAssignableFrom(type);
+        return type.isArray() || Collection.class.isAssignableFrom(type);
+    }
+
+    /**
+     * This method checks if the given type is a java built-in Map type.
+     *
+     * @param type
+     *            the type that the method should check
+     * @return true if the given type extends Map
+     */
+    private boolean isMapType(final Class<?> type) {
+        return Map.class.isAssignableFrom(type);
     }
 
     /**
