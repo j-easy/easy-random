@@ -179,7 +179,7 @@ public class PopulatorImplTest {
 
         assertThat(person.getPhoneNumber()).isNotNull().isNotEmpty();
 
-        assertThat(person.getNicknames()).isNotNull().isEmpty();
+        assertThat(person.getNicknames()).isNotNull().isNotEmpty();
     }
 
     /*
@@ -258,34 +258,34 @@ public class PopulatorImplTest {
         assertThat(collectionsBean).isNotNull();
 
         assertThat(collectionsBean.getCollection()).isNotNull();
-        assertThat(collectionsBean.getCollection()).isEmpty();
+        assertThat(collectionsBean.getCollection()).isNotEmpty();
 
         assertThat(collectionsBean.getList()).isNotNull();
-        assertThat(collectionsBean.getList()).isEmpty();
+        assertThat(collectionsBean.getList()).isNotEmpty();
 
         assertThat(collectionsBean.getSet()).isNotNull();
-        assertThat(collectionsBean.getSet()).isEmpty();
+        assertThat(collectionsBean.getSet()).isNotEmpty();
 
         assertThat(collectionsBean.getSortedSet()).isNotNull();
-        assertThat(collectionsBean.getSortedSet()).isEmpty();
+        assertThat(collectionsBean.getSortedSet()).isNotEmpty();
 
         assertThat(collectionsBean.getNavigableSet()).isNotNull();
-        assertThat(collectionsBean.getNavigableSet()).isEmpty();
+        assertThat(collectionsBean.getNavigableSet()).isNotEmpty();
 
         assertThat(collectionsBean.getQueue()).isNotNull();
-        assertThat(collectionsBean.getQueue()).isEmpty();
+        assertThat(collectionsBean.getQueue()).isNotEmpty();
 
         assertThat(collectionsBean.getDeque()).isNotNull();
-        assertThat(collectionsBean.getDeque()).isEmpty();
+        assertThat(collectionsBean.getDeque()).isNotEmpty();
 
         assertThat(collectionsBean.getMap()).isNotNull();
-        assertThat(collectionsBean.getMap()).isEmpty();
+        assertThat(collectionsBean.getMap()).isNotEmpty();
 
         assertThat(collectionsBean.getSortedMap()).isNotNull();
-        assertThat(collectionsBean.getSortedMap()).isEmpty();
+        assertThat(collectionsBean.getSortedMap()).isNotEmpty();
 
         assertThat(collectionsBean.getNavigableMap()).isNotNull();
-        assertThat(collectionsBean.getNavigableMap()).isEmpty();
+        assertThat(collectionsBean.getNavigableMap()).isNotEmpty();
     }
 
     @Test
