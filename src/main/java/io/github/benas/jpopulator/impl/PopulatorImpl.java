@@ -24,16 +24,7 @@
 
 package io.github.benas.jpopulator.impl;
 
-import io.github.benas.jpopulator.api.Exclude;
-import io.github.benas.jpopulator.api.Populator;
-import io.github.benas.jpopulator.api.Randomizer;
-import org.apache.commons.math3.random.RandomDataGenerator;
-import org.objenesis.Objenesis;
-import org.objenesis.ObjenesisStd;
-
-
 import java.lang.reflect.Array;
-import java.lang.reflect.Constructor;
 import java.lang.reflect.Field;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Modifier;
@@ -41,11 +32,36 @@ import java.lang.reflect.ParameterizedType;
 import java.lang.reflect.Type;
 import java.math.BigDecimal;
 import java.math.BigInteger;
-import java.util.*;
+import java.util.ArrayDeque;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Calendar;
+import java.util.Collection;
+import java.util.Deque;
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Map;
+import java.util.NavigableMap;
+import java.util.NavigableSet;
+import java.util.Queue;
+import java.util.Set;
+import java.util.SortedMap;
+import java.util.SortedSet;
+import java.util.TreeMap;
+import java.util.TreeSet;
 import java.util.concurrent.atomic.AtomicInteger;
 import java.util.concurrent.atomic.AtomicLong;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+
+import org.apache.commons.math3.random.RandomDataGenerator;
+import org.objenesis.Objenesis;
+import org.objenesis.ObjenesisStd;
+
+import io.github.benas.jpopulator.api.Exclude;
+import io.github.benas.jpopulator.api.Populator;
+import io.github.benas.jpopulator.api.Randomizer;
 
 /**
  * The core implementation of the {@link Populator} interface.
@@ -100,11 +116,7 @@ public final class PopulatorImpl implements Populator {
             }
 
             try {
-                Constructor<T> defaultConstructor = type.getDeclaredConstructor(new Class<?>[0]);
-                boolean isAccessible = defaultConstructor.isAccessible();
-                defaultConstructor.setAccessible(true);
                 result = type.newInstance();
-                defaultConstructor.setAccessible(isAccessible);
             } catch (ReflectiveOperationException ex) {
                 Objenesis objenesis = new ObjenesisStd();
                 result = objenesis.newInstance(type);
@@ -141,6 +153,10 @@ public final class PopulatorImpl implements Populator {
         return populateBeans(type, size, excludedFields);
     }
 
+    private static class BeanFieldHolder {
+        public Object field;
+    }
+
     @Override
     @SuppressWarnings("unchecked")
     public <T> List<T> populateBeans(final Class<T> type, final int size, final String... excludedFields) {
@@ -148,9 +164,24 @@ public final class PopulatorImpl implements Populator {
             throw new IllegalArgumentException("The number of beans to populate must be positive.");
         }
         List<Object> beans = new ArrayList<Object>();
-        for (int i = 0; i < size; i++) {
-            Object bean = populateBean(type, excludedFields);
-            beans.add(bean);
+        if (isSupportedType(type)) {
+            BeanFieldHolder beanFieldHolder = new BeanFieldHolder();
+            Field field = null;
+            try {
+                field = BeanFieldHolder.class.getField("field");
+            } catch (Exception e) {
+                // this should never happen
+                e.printStackTrace();
+            }
+            for (int i = 0; i < size; i++) {
+                Object bean = populateSupportedType(field, type);
+                beans.add(bean);
+            }
+        } else {
+            for (int i = 0; i < size; i++) {
+                Object bean = populateBean(type, excludedFields);
+                beans.add(bean);
+            }
         }
         return (List<T>) beans;
     }
@@ -246,9 +277,18 @@ public final class PopulatorImpl implements Populator {
                 return;
             }
 
-            // Collection type
+            //Collection type
             Collection collection = null;
-            if (List.class.isAssignableFrom(fieldType)) {
+            if (!fieldType.isInterface()) {
+                try {
+                    collection = (Collection) fieldType.newInstance();
+                } catch (InstantiationException e) {
+                    Objenesis objenesis = new ObjenesisStd();
+                    collection = (Collection) objenesis.newInstance(fieldType);
+                }
+            } else if (List.class.isAssignableFrom(fieldType)) {
+                collection = new ArrayList(); // Collections.emptyList();
+            } else if (List.class.isAssignableFrom(fieldType)) {
                 collection = new ArrayList(); // Collections.emptyList();
             } else if (NavigableSet.class.isAssignableFrom(fieldType)) {
                 collection = new TreeSet();
@@ -264,8 +304,8 @@ public final class PopulatorImpl implements Populator {
                 collection = new HashSet(); // Collections.emptyList();
             }
             Type genericType = field.getGenericType();
-            // default to String rather than Object b/c (1) apparently it does not matter and some collections require
-            // comparable objects.
+            // default to String rather than Object b/c (1) apparently it does not matter to the class's author
+            // and some collections require comparable objects.
             Type baseType = String.class;
             if (genericType instanceof ParameterizedType) {
                 ParameterizedType parameterizedType = (ParameterizedType) genericType;
@@ -277,7 +317,6 @@ public final class PopulatorImpl implements Populator {
             setProperty(result, field, collection);
         }
     }
-
     /**
      * Method to populate a Map type.
      *
@@ -304,7 +343,14 @@ public final class PopulatorImpl implements Populator {
         } else {
             // Collection type
             Map map = null;
-            if (NavigableMap.class.isAssignableFrom(fieldType)) {
+            if (!fieldType.isInterface()) {
+                try {
+                    map = (Map) fieldType.newInstance();
+                } catch (InstantiationException e) {
+                    Objenesis objenesis = new ObjenesisStd();
+                    map = (Map) objenesis.newInstance(fieldType);
+                }
+            } else if (NavigableMap.class.isAssignableFrom(fieldType)) {
                 map = new TreeMap();
             } else if (SortedMap.class.isAssignableFrom(fieldType)) {
                 map = new TreeMap();
@@ -315,22 +361,18 @@ public final class PopulatorImpl implements Populator {
             int size = new RandomDataGenerator().nextInt(1, 100);
 
             Type genericKeyType = field.getGenericType();
-            // default to String rather than Object b/c (1) apparently it does not matter and some collections require
-            // comparable objects.
+            // default to String rather than Object b/c (1) apparently it does not matter to the class's author
+            // and (2) some collections require comparable objects.
             Type baseKeyType = String.class;
+            Type baseValueType = String.class;
             if (genericKeyType instanceof ParameterizedType) {
                 ParameterizedType parameterizedType = (ParameterizedType) genericKeyType;
                 baseKeyType = parameterizedType.getActualTypeArguments()[0];
+                baseValueType = parameterizedType.getActualTypeArguments()[1];
             }
             Class baseKeyTypeClass = (Class) baseKeyType;
             List keyItems = populateBeans(baseKeyTypeClass, size);
 
-            Type genericValueType = field.getGenericType();
-            Type baseValueType = String.class;
-            if (genericValueType instanceof ParameterizedType) {
-                ParameterizedType parameterizedValueType = (ParameterizedType) genericValueType;
-                baseValueType = parameterizedValueType.getActualTypeArguments()[0];
-            }
             Class baseValueTypeClass = (Class) baseValueType;
             List valueItems = populateBeans(baseValueTypeClass, size);
 
