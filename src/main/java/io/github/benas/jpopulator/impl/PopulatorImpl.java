@@ -72,6 +72,10 @@ public final class PopulatorImpl implements Populator {
 
     private static final Logger LOGGER = Logger.getLogger(PopulatorImpl.class.getName());
 
+    // OBJECT_FIELD contains a java.lang.reflect.Field of type Object.
+    // It is not actually constant b/c a try/catch is required to set the value, but it only gets set once.
+    private static Field OBJECT_FIELD = null; //
+
     /**
      * Custom randomizers map to use to generate random values.
      */
@@ -101,6 +105,20 @@ public final class PopulatorImpl implements Populator {
                 org.joda.time.Duration.class, org.joda.time.Period.class, org.joda.time.Interval.class,
                 java.net.URL.class, java.net.URI.class };
         supportedTypesList.addAll(Arrays.asList(supportedTypes));
+        if (OBJECT_FIELD == null) {
+            try {
+                OBJECT_FIELD = ObjectFieldSupplier.class.getDeclaredField("field");
+            } catch (NoSuchFieldException e) {
+                // this cannot actually happen
+            }
+        }
+    }
+
+    /**
+     * Used as a means to access a java.lang.reflect.Field instance of type Object
+     */
+    private static class ObjectFieldSupplier {
+        public Object field;
     }
 
     @Override
@@ -153,10 +171,6 @@ public final class PopulatorImpl implements Populator {
         return populateBeans(type, size, excludedFields);
     }
 
-    private static class BeanFieldHolder {
-        public Object field;
-    }
-
     @Override
     @SuppressWarnings("unchecked")
     public <T> List<T> populateBeans(final Class<T> type, final int size, final String... excludedFields) {
@@ -165,16 +179,8 @@ public final class PopulatorImpl implements Populator {
         }
         List<Object> beans = new ArrayList<Object>();
         if (isSupportedType(type)) {
-            BeanFieldHolder beanFieldHolder = new BeanFieldHolder();
-            Field field = null;
-            try {
-                field = BeanFieldHolder.class.getField("field");
-            } catch (Exception e) {
-                // this should never happen
-                e.printStackTrace();
-            }
             for (int i = 0; i < size; i++) {
-                Object bean = populateSupportedType(field, type);
+                Object bean = populateSupportedType(OBJECT_FIELD, type);
                 beans.add(bean);
             }
         } else {
