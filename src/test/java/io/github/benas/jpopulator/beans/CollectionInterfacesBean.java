@@ -7,7 +7,7 @@ import java.util.*;
  *
  * @author Mahmoud Ben Hassine (mahmoud@benhassine.fr)
  */
-public class CollectionsBean {
+public class CollectionInterfacesBean {
 
     private Collection collection;
 
@@ -29,7 +29,7 @@ public class CollectionsBean {
 
     private NavigableMap navigableMap;
 
-    public CollectionsBean() {
+    public CollectionInterfacesBean() {
     }
 
     public Collection getCollection() {
