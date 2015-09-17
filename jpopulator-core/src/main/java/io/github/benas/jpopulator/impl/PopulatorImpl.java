@@ -26,7 +26,6 @@ package io.github.benas.jpopulator.impl;
 
 import io.github.benas.jpopulator.api.*;
 import io.github.benas.jpopulator.randomizers.internal.DefaultEnumRandomizer;
-import io.github.benas.jpopulator.randomizers.registry.CustomRandomizerRegistry;
 import org.apache.commons.math3.random.RandomDataGenerator;
 import org.objenesis.Objenesis;
 import org.objenesis.ObjenesisStd;
@@ -86,13 +85,22 @@ public final class PopulatorImpl implements Populator {
     @Override
     @SuppressWarnings("unchecked")
     public <T> T populateBean(final Class<T> type, final String... excludedFields) {
+        return populateBeanImpl(type, new PopulatorContext(excludedFields));
 
+    }
+
+    protected <T> T populateBeanImpl(final Class<T> type, PopulatorContext context) {
         T result;
         try {
 
             //No instantiation needed for enum types.
             if (type.isEnum()) {
                 return (T) enumRandomizer.<Enum>getRandomEnumValue((Class<Enum>) type);
+            }
+
+            if (context.hasPopulatedBean(type)) {
+                // The bean already exists in the context, reuse it to avoid recursion.
+                return context.getPopulatedBean(type);
             }
 
             try {
@@ -102,16 +110,17 @@ public final class PopulatorImpl implements Populator {
                 result = objenesis.newInstance(type);
             }
 
+            context.addPopulatedBean(type, result);
             List<Field> declaredFields = getDeclaredFields(result);
 
             declaredFields.addAll(getInheritedFields(type));
 
             //Generate random data for each field
             for (Field field : declaredFields) {
-                if (shouldExcludeField(field, excludedFields) || isStatic(field)) {
+                if (shouldExcludeField(field, context) || isStatic(field)) {
                     continue;
                 }
-                populateField(result, field);
+                populateField(result, field, context);
             }
         } catch (Exception e) {
             LOGGER.log(Level.SEVERE, String.format("Unable to populate an instance of type %s", type), e);
@@ -158,19 +167,22 @@ public final class PopulatorImpl implements Populator {
     /**
      * Method to populate a simple (ie non collection) type which can be a java built-in type or a user's custom type.
      *
-     * @param result The result object on which the generated value will be set
-     * @param field  The field in which the generated value will be set
+     * @param result  The result object on which the generated value will be set
+     * @param field   The field in which the generated value will be set
+     * @param context The context of this call
      * @throws IllegalAccessException    Thrown when the generated value cannot be set to the given field
      * @throws NoSuchMethodException     Thrown when there is no setter for the given field
      * @throws InvocationTargetException Thrown when the setter of the given field can not be invoked
      */
-    private void populateField(Object result, final Field field)
+    private void populateField(Object result, final Field field, PopulatorContext context)
             throws IllegalAccessException, NoSuchMethodException, InvocationTargetException {
 
         Class<?> fieldType = field.getType();
         Class<?> resultClass = result.getClass();
 
         try {
+            context.pushStackItem(new ContextStackItem(result, field));
+
             Object object = null;
             Randomizer<?> randomizer = getRandomizer(resultClass, field);
 
@@ -187,13 +199,15 @@ public final class PopulatorImpl implements Populator {
                     object = getRandomCollection(field);
                 } else {
                     // Consider the class as a child bean.
-                    object = populateBean(fieldType);
+                    object = populateBeanImpl(fieldType, context);
                 }
             }
 
             setProperty(result, field, object);
         } catch (RandomizerSkipException e) {
             LOGGER.log(Level.FINE, String.format("Randomizer has skipped property %s", field));
+        } finally {
+            context.popStackItem();
         }
 
     }
@@ -305,18 +319,6 @@ public final class PopulatorImpl implements Populator {
     }
 
     /**
-     * This methods checks if the user has registered a custom randomizer for the given type and field.
-     *
-     * @param type      The class type for which the method should check if a custom randomizer is registered
-     * @param fieldType the field type within the class for which the method should check if a custom randomizer is registered
-     * @param fieldName the field name within the class for which the method should check if a custom randomizer is registered
-     * @return True if a custom randomizer is registered for the given type and field, false else
-     */
-    private boolean customRandomizer(final Class<?> type, final Class<?> fieldType, final String fieldName) {
-        return randomizers.get(new RandomizerDefinition(type, fieldType, fieldName)) != null;
-    }
-
-    /**
      * Setter for the custom randomizers to use. Used to register custom randomizers by the {@link PopulatorBuilder}
      *
      * @param randomizers the custom randomizers to use.
@@ -328,20 +330,20 @@ public final class PopulatorImpl implements Populator {
     /**
      * Utility method that checks if a field should be excluded from being populated.
      *
-     * @param field          the field to check
-     * @param excludedFields the list of field names to be excluded
+     * @param field   the field to check
+     * @param context the populator context
      * @return true if the field should be excluded, false otherwise
      */
-    private boolean shouldExcludeField(final Field field, final String... excludedFields) {
+    private boolean shouldExcludeField(final Field field, final PopulatorContext context) {
         if (field.isAnnotationPresent(Exclude.class)) {
             return true;
         }
-        if (excludedFields == null || excludedFields.length == 0) {
+        if (context.getExcludedFields().length == 0) {
             return false;
         }
-        String fieldName = field.getName().toLowerCase();
-        for (String excludedFieldName : excludedFields) {
-            if (fieldName.equalsIgnoreCase(excludedFieldName)) {
+        String fieldFullName = context.getFieldFullName(field.getName());
+        for (String excludedFieldName : context.getExcludedFields()) {
+            if (fieldFullName.equalsIgnoreCase(excludedFieldName)) {
                 return true;
             }
         }
