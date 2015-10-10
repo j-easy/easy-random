@@ -30,7 +30,7 @@ import java.util.Stack;
 
 /**
  * Context object for a single call on {@link io.github.benas.jpopulator.api.Populator}.
- * <p/>
+ * <p>
  * It contains a map of populated beans to avoid infinite recursion, and a stack of {@link ContextStackItem}.
  *
  * @author Rémi Alvergnat (toilal.dev@gmail.com)
