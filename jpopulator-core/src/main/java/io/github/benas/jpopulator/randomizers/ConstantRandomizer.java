@@ -29,7 +29,7 @@ import io.github.benas.jpopulator.api.Randomizer;
 /**
  * Generates a constant value.
  *
- * @param <T>
+ * @param <T> the type of constant
  */
 public class ConstantRandomizer<T> implements Randomizer<T> {
     private final T value;

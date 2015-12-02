@@ -32,8 +32,6 @@ import java.math.BigInteger;
 /**
  * A randomizer that generates random values less than or equal to a maximum value.
  *
- * This is used for fields annotated with {@link javax.validation.constraints.Max}.
- *
  * @author Mahmoud Ben Hassine (mahmoud@benhassine.fr)
  */
 public class MaxValueRandomizer {

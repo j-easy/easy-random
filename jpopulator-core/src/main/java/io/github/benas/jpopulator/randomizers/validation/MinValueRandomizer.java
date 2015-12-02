@@ -32,8 +32,6 @@ import java.math.BigInteger;
 /**
  * A randomizer that generates random values greater than or equal to a minimum value.
  *
- * This is used for fields annotated with {@link javax.validation.constraints.Min}.
- *
  * @author Mahmoud Ben Hassine (mahmoud@benhassine.fr)
  */
 public class MinValueRandomizer {
