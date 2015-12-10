@@ -25,7 +25,7 @@
 package io.github.benas.jpopulator.impl;
 
 import io.github.benas.jpopulator.api.*;
-import io.github.benas.jpopulator.randomizers.internal.DefaultEnumRandomizer;
+import io.github.benas.jpopulator.randomizers.EnumRandomizer;
 import org.apache.commons.math3.random.RandomDataGenerator;
 import org.objenesis.Objenesis;
 import org.objenesis.ObjenesisStd;
@@ -53,11 +53,6 @@ public final class PopulatorImpl implements Populator {
     private Map<RandomizerDefinition, Randomizer> randomizers;
 
     /**
-     * Randomizer use to generate enum values.
-     */
-    private EnumRandomizer enumRandomizer;
-
-    /**
      * Default set of randomizer registry implementations.
      */
     private List<RandomizerRegistry> registries = new ArrayList<RandomizerRegistry>();
@@ -79,7 +74,6 @@ public final class PopulatorImpl implements Populator {
 
         randomizers = new HashMap<RandomizerDefinition, Randomizer>();
 
-        enumRandomizer = new DefaultEnumRandomizer();
     }
 
     @Override
@@ -95,7 +89,7 @@ public final class PopulatorImpl implements Populator {
 
             //No instantiation needed for enum types.
             if (type.isEnum()) {
-                return (T) enumRandomizer.<Enum>getRandomEnumValue((Class<Enum>) type);
+                return (T) new EnumRandomizer((Class<? extends Enum>) type).getRandomValue();
             }
 
             if (context.hasPopulatedBean(type)) {
@@ -193,7 +187,7 @@ public final class PopulatorImpl implements Populator {
                 // No randomizer was found.
                 if (fieldType.isEnum()) {
                     // This is a enum, so use the enumRandomizer.
-                    object = enumRandomizer.<Enum>getRandomEnumValue((Class<Enum>) fieldType);
+                    object = new EnumRandomizer((Class<? extends Enum>) fieldType).getRandomValue();
                 } else if (isCollectionType(fieldType)) {
                     // This is a collection, so use getRandomCollection method.
                     object = getRandomCollection(field);

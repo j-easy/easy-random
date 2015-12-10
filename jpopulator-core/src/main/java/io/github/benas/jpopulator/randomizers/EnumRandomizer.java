@@ -21,21 +21,32 @@
  *   OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  *   THE SOFTWARE.
  */
+package io.github.benas.jpopulator.randomizers;
 
-package io.github.benas.jpopulator.api;
+import io.github.benas.jpopulator.api.Randomizer;
+import io.github.benas.jpopulator.api.RandomizerSkipException;
+import io.github.benas.jpopulator.util.ConstantsUtil;
 
 /**
- * An interface for enum randomizer.
+ * A randomizer that return a random value from a given enumeration values.
  *
- * @author Rémi Alvergnat (toilal.dev@gmail.com)
+ * @author Mahmoud Ben Hassine (mahmoud.benhassine@icloud.com)
  */
-public interface EnumRandomizer {
+public class EnumRandomizer implements Randomizer<Enum> {
+
+    private Class<? extends Enum> enumeration;
+
     /**
-     * Generate a random value for the given enum.
-     *
-     * @return a random value for the given enum
-     *
-     * @throws RandomizerSkipException when this randomizer should skip the property setting.
+     * Construct an {@link EnumRandomizer}.
+     * @param enumeration the enumeration from which this randomizer will generate random values
      */
-    <E extends Enum<E>> E getRandomEnumValue(Class<E> enumClass) throws RandomizerSkipException;
+    public EnumRandomizer(Class<? extends Enum> enumeration) {
+        this.enumeration = enumeration;
+    }
+
+    @Override
+    public Enum getRandomValue() throws RandomizerSkipException {
+        Enum[] enumConstants = enumeration.getEnumConstants();
+        return enumConstants[ConstantsUtil.RANDOM.nextInt(enumConstants.length)];
+    }
 }
