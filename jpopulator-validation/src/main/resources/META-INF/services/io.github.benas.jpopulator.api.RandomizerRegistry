@@ -1,1 +1,1 @@
-io.github.benas.jpopulator.randomizers.registry.ValidationRandomizerRegistry
+io.github.benas.jpopulator.validation.BeanValidationRandomizerRegistry

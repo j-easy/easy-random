@@ -22,7 +22,7 @@
  *   THE SOFTWARE.
  */
 
-package io.github.benas.jpopulator.randomizers.registry;
+package io.github.benas.jpopulator.validation;
 
 import io.github.benas.jpopulator.api.Priority;
 import io.github.benas.jpopulator.api.Randomizer;
@@ -40,10 +40,12 @@ import java.util.Calendar;
 import java.util.Date;
 
 @Priority(-128)
-public class ValidationRandomizerRegistry implements RandomizerRegistry {
+public class BeanValidationRandomizerRegistry implements RandomizerRegistry {
+
     @Override
-    public Randomizer<?> getRandomizer(Field field) {
-        Class<?> fieldType = field.getType();
+    public Randomizer getRandomizer(final Field field) {
+
+        Class fieldType = field.getType();
         if (field.isAnnotationPresent(AssertFalse.class)) {
             return new ConstantRandomizer<Boolean>(false);
         }
