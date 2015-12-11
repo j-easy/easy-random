@@ -25,7 +25,6 @@
 package io.github.benas.jpopulator.randomizers;
 
 import io.github.benas.jpopulator.api.Randomizer;
-import io.github.benas.jpopulator.api.RandomizerSkipException;
 import io.github.benas.jpopulator.util.ConstantsUtil;
 
 import java.util.HashMap;
@@ -36,7 +35,7 @@ import java.util.Map;
  *
  * @author Mahmoud Ben Hassine (mahmoud@benhassine.fr)
  */
-public class MapRandomizer<K,V> implements Randomizer<Map<K,V>> {
+public class MapRandomizer<K, V> implements Randomizer<Map<K, V>> {
 
     /**
      * The minimum number of elements to generate.
@@ -66,7 +65,7 @@ public class MapRandomizer<K,V> implements Randomizer<Map<K,V>> {
     /**
      * Construct a map randomizer with a random number of entries.
      *
-     * @param keyRandomizer the randomizer for keys
+     * @param keyRandomizer   the randomizer for keys
      * @param valueRandomizer the randomizer for values
      */
     public MapRandomizer(Randomizer<K> keyRandomizer, Randomizer<V> valueRandomizer) {
@@ -76,9 +75,9 @@ public class MapRandomizer<K,V> implements Randomizer<Map<K,V>> {
     /**
      * Construct a map randomizer with a fixed number of entries.
      *
-     * @param keyRandomizer the randomizer for keys
+     * @param keyRandomizer   the randomizer for keys
      * @param valueRandomizer the randomizer for values
-     * @param nbElements the number of elements to generate
+     * @param nbElements      the number of elements to generate
      */
     public MapRandomizer(Randomizer<K> keyRandomizer, Randomizer<V> valueRandomizer, final int nbElements) {
         this(keyRandomizer, valueRandomizer, nbElements, nbElements);
@@ -87,10 +86,10 @@ public class MapRandomizer<K,V> implements Randomizer<Map<K,V>> {
     /**
      * Construct a map randomizer.
      *
-     * @param keyRandomizer the randomizer for keys
+     * @param keyRandomizer   the randomizer for keys
      * @param valueRandomizer the randomizer for values
-     * @param minElements the minimum number of elements to generate
-     * @param maxElements the maximum number of elements to generate
+     * @param minElements     the minimum number of elements to generate
+     * @param maxElements     the maximum number of elements to generate
      */
     public MapRandomizer(Randomizer<K> keyRandomizer, Randomizer<V> valueRandomizer, int minElements, int maxElements) {
         checkArguments(minElements, maxElements);
@@ -105,10 +104,7 @@ public class MapRandomizer<K,V> implements Randomizer<Map<K,V>> {
     public Map<K, V> getRandomValue() {
         Map<K, V> result = new HashMap<K, V>();
         for (int i = 0; i < nbElements; i++) {
-            try {
-                result.put(keyRandomizer.getRandomValue(), valueRandomizer.getRandomValue());
-            } catch (RandomizerSkipException e) {
-            }
+            result.put(keyRandomizer.getRandomValue(), valueRandomizer.getRandomValue());
         }
         return result;
     }

@@ -24,7 +24,6 @@
 
 package io.github.benas.jpopulator.randomizers;
 
-import io.github.benas.jpopulator.api.RandomizerSkipException;
 import org.junit.Test;
 
 import static org.assertj.core.api.Assertions.assertThat;
@@ -38,14 +37,14 @@ public class OptionalRandomizerTest {
 
     private OptionalRandomizer<String> optionalRandomizer;
 
-    @Test(expected = RandomizerSkipException.class)
-    public void whenOptionalPercentIsZeroThenShouldThrowSkipException() throws RandomizerSkipException {
+    @Test//(expected = RandomizerSkipException.class)
+    public void whenOptionalPercentIsZeroThenShouldThrowSkipException()  {
         optionalRandomizer = new OptionalRandomizer<String>(new FirstNameRandomizer(), 0);
         optionalRandomizer.getRandomValue();
     }
 
     @Test
-    public void whenOptionalPercentIsOneHundredThenShouldGenerateValue() throws RandomizerSkipException {
+    public void whenOptionalPercentIsOneHundredThenShouldGenerateValue()  {
         optionalRandomizer = new OptionalRandomizer<String>(new FirstNameRandomizer(), 100);
         assertThat(optionalRandomizer.getRandomValue()).isNotNull().isNotEmpty();
     }

@@ -1,7 +1,6 @@
 package io.github.benas.jpopulator.randomizers;
 
 import io.github.benas.jpopulator.api.Randomizer;
-import io.github.benas.jpopulator.api.RandomizerSkipException;
 import io.github.benas.jpopulator.util.ConstantsUtil;
 
 import java.util.Collection;
@@ -82,7 +81,7 @@ public abstract class CollectionRandomizer<T> implements Randomizer<Collection<T
         }
     }
 
-    protected T getRandomElement() throws RandomizerSkipException {
+    protected T getRandomElement() {
         return elementRandomizer.getRandomValue();
     }
 

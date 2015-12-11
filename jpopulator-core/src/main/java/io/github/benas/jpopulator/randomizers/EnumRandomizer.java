@@ -24,7 +24,6 @@
 package io.github.benas.jpopulator.randomizers;
 
 import io.github.benas.jpopulator.api.Randomizer;
-import io.github.benas.jpopulator.api.RandomizerSkipException;
 import io.github.benas.jpopulator.util.ConstantsUtil;
 
 /**
@@ -38,6 +37,7 @@ public class EnumRandomizer implements Randomizer<Enum> {
 
     /**
      * Construct an {@link EnumRandomizer}.
+     *
      * @param enumeration the enumeration from which this randomizer will generate random values
      */
     public EnumRandomizer(Class<? extends Enum> enumeration) {
@@ -45,7 +45,7 @@ public class EnumRandomizer implements Randomizer<Enum> {
     }
 
     @Override
-    public Enum getRandomValue() throws RandomizerSkipException {
+    public Enum getRandomValue() {
         Enum[] enumConstants = enumeration.getEnumConstants();
         return enumConstants[ConstantsUtil.RANDOM.nextInt(enumConstants.length)];
     }

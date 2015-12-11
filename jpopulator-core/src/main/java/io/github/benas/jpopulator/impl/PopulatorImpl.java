@@ -24,7 +24,10 @@
 
 package io.github.benas.jpopulator.impl;
 
-import io.github.benas.jpopulator.api.*;
+import io.github.benas.jpopulator.api.Exclude;
+import io.github.benas.jpopulator.api.Populator;
+import io.github.benas.jpopulator.api.Randomizer;
+import io.github.benas.jpopulator.api.RandomizerRegistry;
 import io.github.benas.jpopulator.randomizers.EnumRandomizer;
 import org.apache.commons.math3.random.RandomDataGenerator;
 import org.objenesis.Objenesis;
@@ -174,36 +177,28 @@ public final class PopulatorImpl implements Populator {
         Class<?> fieldType = field.getType();
         Class<?> resultClass = result.getClass();
 
-        try {
-            context.pushStackItem(new ContextStackItem(result, field));
+        context.pushStackItem(new ContextStackItem(result, field));
 
-            Object object = null;
-            Randomizer<?> randomizer = getRandomizer(resultClass, field);
-
-            if (randomizer != null) {
-                // A randomizer was found, so use this one.
-                object = randomizer.getRandomValue();
+        Object object;
+        Randomizer<?> randomizer = getRandomizer(resultClass, field);
+        if (randomizer != null) {
+            // A randomizer was found, so use this one.
+            object = randomizer.getRandomValue();
+        } else {
+            // No randomizer was found.
+            if (fieldType.isEnum()) {
+                // This is a enum, so use the enumRandomizer.
+                object = new EnumRandomizer((Class<? extends Enum>) fieldType).getRandomValue();
+            } else if (isCollectionType(fieldType)) {
+                // This is a collection, so use getRandomCollection method.
+                object = getRandomCollection(field);
             } else {
-                // No randomizer was found.
-                if (fieldType.isEnum()) {
-                    // This is a enum, so use the enumRandomizer.
-                    object = new EnumRandomizer((Class<? extends Enum>) fieldType).getRandomValue();
-                } else if (isCollectionType(fieldType)) {
-                    // This is a collection, so use getRandomCollection method.
-                    object = getRandomCollection(field);
-                } else {
-                    // Consider the class as a child bean.
-                    object = populateBeanImpl(fieldType, context);
-                }
+                // Consider the class as a child bean.
+                object = populateBeanImpl(fieldType, context);
             }
-
-            setProperty(result, field, object);
-        } catch (RandomizerSkipException e) {
-            LOGGER.log(Level.FINE, String.format("Randomizer has skipped property %s", field));
-        } finally {
-            context.popStackItem();
         }
-
+        setProperty(result, field, object);
+        context.popStackItem();
     }
 
     /**
