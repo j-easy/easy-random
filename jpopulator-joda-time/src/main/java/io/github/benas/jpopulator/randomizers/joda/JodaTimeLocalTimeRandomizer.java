@@ -26,13 +26,11 @@ package io.github.benas.jpopulator.randomizers.joda;
 
 import io.github.benas.jpopulator.api.Randomizer;
 import io.github.benas.jpopulator.util.ConstantsUtil;
-import org.joda.time.Interval;
+import org.joda.time.LocalTime;
 
-public class DefaultJodaIntervalRandomizer implements Randomizer<Interval> {
+public class JodaTimeLocalTimeRandomizer implements Randomizer<LocalTime> {
     @Override
-    public Interval getRandomValue() {
-        long startDate = Math.abs(ConstantsUtil.RANDOM.nextInt());
-        long endDate = startDate + Math.abs(ConstantsUtil.RANDOM.nextInt());
-        return new Interval(startDate, endDate);
+    public LocalTime getRandomValue() {
+        return new LocalTime(ConstantsUtil.DATE_RANGE_RANDOMIZER.getRandomValue().getTime());
     }
 }

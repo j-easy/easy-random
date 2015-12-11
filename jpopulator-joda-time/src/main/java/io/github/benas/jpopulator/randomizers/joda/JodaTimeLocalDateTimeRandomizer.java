@@ -29,7 +29,7 @@ import io.github.benas.jpopulator.util.ConstantsUtil;
 import org.joda.time.DateTime;
 import org.joda.time.LocalDateTime;
 
-public class DefaultJodaLocalDateTimeRandomizer implements Randomizer<LocalDateTime> {
+public class JodaTimeLocalDateTimeRandomizer implements Randomizer<LocalDateTime> {
     @Override
     public LocalDateTime getRandomValue() {
         return new LocalDateTime(ConstantsUtil.DATE_RANGE_RANDOMIZER.getRandomValue().getTime());

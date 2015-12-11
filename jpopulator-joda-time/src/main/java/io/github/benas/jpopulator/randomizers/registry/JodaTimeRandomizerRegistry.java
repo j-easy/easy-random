@@ -1,0 +1,31 @@
+package io.github.benas.jpopulator.randomizers.registry;
+
+import io.github.benas.jpopulator.api.Priority;
+import io.github.benas.jpopulator.api.Randomizer;
+import io.github.benas.jpopulator.api.RandomizerRegistry;
+import io.github.benas.jpopulator.randomizers.joda.*;
+
+import java.lang.reflect.Field;
+import java.util.HashMap;
+import java.util.Map;
+
+@Priority(-255)
+public class JodaTimeRandomizerRegistry implements RandomizerRegistry {
+
+    private Map<Class, Randomizer> randomizers = new HashMap<Class, Randomizer>();
+
+    public JodaTimeRandomizerRegistry() {
+        randomizers.put(org.joda.time.DateTime.class, new JodaTimeDateTimeRandomizer());
+        randomizers.put(org.joda.time.LocalDate.class, new JodaTimeLocalDateRandomizer());
+        randomizers.put(org.joda.time.LocalTime.class, new JodaTimeLocalTimeRandomizer());
+        randomizers.put(org.joda.time.LocalDateTime.class, new JodaTimeLocalDateTimeRandomizer());
+        randomizers.put(org.joda.time.Duration.class, new JodaTimeDurationRandomizer());
+        randomizers.put(org.joda.time.Period.class, new JodaTimePeriodRandomizer());
+        randomizers.put(org.joda.time.Interval.class, new JodaTimeIntervalRandomizer());
+    }
+
+    @Override
+    public Randomizer getRandomizer(final Field field) {
+        return randomizers.get(field.getType());
+    }
+}
