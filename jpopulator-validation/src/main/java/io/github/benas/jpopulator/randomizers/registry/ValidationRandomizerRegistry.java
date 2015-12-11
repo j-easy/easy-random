@@ -28,7 +28,7 @@ import io.github.benas.jpopulator.api.Priority;
 import io.github.benas.jpopulator.api.Randomizer;
 import io.github.benas.jpopulator.api.RandomizerRegistry;
 import io.github.benas.jpopulator.randomizers.ConstantRandomizer;
-import io.github.benas.jpopulator.randomizers.ToStringRandomizer;
+import io.github.benas.jpopulator.randomizers.StringDelegatingRandomizer;
 import io.github.benas.jpopulator.randomizers.range.*;
 import io.github.benas.jpopulator.util.ConstantsUtil;
 
@@ -177,7 +177,7 @@ public class ValidationRandomizerRegistry implements RandomizerRegistry {
                         minValue == null ? null : minValue.longValue(),
                         maxValue == null ? null : maxValue.longValue()
                 );
-                return new ToStringRandomizer(delegate);
+                return new StringDelegatingRandomizer(delegate);
             }
         }
 
