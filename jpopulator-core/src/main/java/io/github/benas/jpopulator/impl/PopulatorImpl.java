@@ -53,7 +53,7 @@ public final class PopulatorImpl implements Populator {
     /**
      * Custom randomizers map to use to generate random values.
      */
-    private Map<RandomizerDefinition, Randomizer> randomizers;
+    private Map<RandomizerDefinition, Randomizer> randomizers = new HashMap<RandomizerDefinition, Randomizer>();
 
     /**
      * Default set of randomizer registry implementations.
@@ -65,51 +65,50 @@ public final class PopulatorImpl implements Populator {
      */
     private Comparator<Object> priorityComparator = new PriorityComparator();
 
+    private Objenesis objenesis = new ObjenesisStd();
+
 
     /**
      * Constructor of PopulatorImpl
      *
-     * @param registries randomizer registries used for this populator
+     * @param registries  randomizer registries used by this populator
+     * @param randomizers the custom randomizers
      */
-    public PopulatorImpl(Set<RandomizerRegistry> registries) {
+    public PopulatorImpl(final Set<RandomizerRegistry> registries, final Map<RandomizerDefinition, Randomizer> randomizers) {
         this.registries.addAll(registries);
+        this.randomizers.putAll(randomizers);
         Collections.sort(this.registries, priorityComparator);
-
-        randomizers = new HashMap<RandomizerDefinition, Randomizer>();
-
     }
 
     @Override
     @SuppressWarnings("unchecked")
     public <T> T populateBean(final Class<T> type, final String... excludedFields) {
-        return populateBeanImpl(type, new PopulatorContext(excludedFields));
-
+        return doPopulateBean(type, new PopulatorContext(excludedFields));
     }
 
-    protected <T> T populateBeanImpl(final Class<T> type, PopulatorContext context) {
+    protected <T> T doPopulateBean(final Class<T> type, PopulatorContext context) {
         T result;
         try {
-
             //No instantiation needed for enum types.
             if (type.isEnum()) {
-                return (T) new EnumRandomizer((Class<? extends Enum>) type).getRandomValue();
+                return (T) getEnumRandomizer((Class<? extends Enum>) type).getRandomValue();
             }
 
+            // Check if the bean already exists in the context, reuse it to avoid recursion.
             if (context.hasPopulatedBean(type)) {
-                // The bean already exists in the context, reuse it to avoid recursion.
                 return context.getPopulatedBean(type);
             }
 
+            // create a new instance of the target type
             try {
                 result = type.newInstance();
             } catch (ReflectiveOperationException ex) {
-                Objenesis objenesis = new ObjenesisStd();
                 result = objenesis.newInstance(type);
             }
 
+            // retrieve declared and inherited fields
             context.addPopulatedBean(type, result);
             List<Field> declaredFields = getDeclaredFields(result);
-
             declaredFields.addAll(getInheritedFields(type));
 
             //Generate random data for each field
@@ -119,12 +118,11 @@ public final class PopulatorImpl implements Populator {
                 }
                 populateField(result, field, context);
             }
+            return result;
         } catch (Exception e) {
             LOGGER.log(Level.SEVERE, String.format("Unable to populate an instance of type %s", type), e);
             return null;
         }
-
-        return result;
     }
 
     @Override
@@ -164,52 +162,58 @@ public final class PopulatorImpl implements Populator {
     /**
      * Method to populate a simple (ie non collection) type which can be a java built-in type or a user's custom type.
      *
-     * @param result  The result object on which the generated value will be set
+     * @param target  The target object on which the generated value will be set
      * @param field   The field in which the generated value will be set
      * @param context The context of this call
      * @throws IllegalAccessException    Thrown when the generated value cannot be set to the given field
      * @throws NoSuchMethodException     Thrown when there is no setter for the given field
      * @throws InvocationTargetException Thrown when the setter of the given field can not be invoked
      */
-    private void populateField(Object result, final Field field, PopulatorContext context)
+    private void populateField(final Object target, final Field field, final PopulatorContext context)
             throws IllegalAccessException, NoSuchMethodException, InvocationTargetException {
 
-        Class<?> fieldType = field.getType();
-        Class<?> resultClass = result.getClass();
+        Class fieldType = field.getType();
+        Class targetClass = target.getClass();
 
-        context.pushStackItem(new ContextStackItem(result, field));
+        context.pushStackItem(new ContextStackItem(target, field));
 
         Object object;
-        Randomizer<?> randomizer = getRandomizer(resultClass, field);
+        Randomizer randomizer = getRandomizer(targetClass, field);
         if (randomizer != null) {
-            // A randomizer was found, so use this one.
             object = randomizer.getRandomValue();
         } else {
-            // No randomizer was found.
             if (fieldType.isEnum()) {
-                // This is a enum, so use the enumRandomizer.
-                object = new EnumRandomizer((Class<? extends Enum>) fieldType).getRandomValue();
+                object = getEnumRandomizer(fieldType).getRandomValue();
             } else if (isCollectionType(fieldType)) {
-                // This is a collection, so use getRandomCollection method.
                 object = getRandomCollection(field);
             } else {
                 // Consider the class as a child bean.
-                object = populateBeanImpl(fieldType, context);
+                object = doPopulateBean(fieldType, context);
             }
         }
-        setProperty(result, field, object);
+        setProperty(target, field, object);
         context.popStackItem();
     }
 
     /**
-     * Retrieves the randomizer to use, either one defined by user for a specific field or a default one provided by registries.
+     * Get an {@link EnumRandomizer} for the given enumeration type.
      *
-     * @param resultClass class on which field will operator
-     * @param field       field for which the randomizer should generate values
+     * @param enumeration the enumeration type
+     * @return an {@link EnumRandomizer} for the given enumeration.
+     */
+    private EnumRandomizer getEnumRandomizer(Class<? extends Enum> enumeration) {
+        return new EnumRandomizer(enumeration);
+    }
+
+    /**
+     * Retrieves the randomizer to use, either the one defined by user for a specific field or a default one provided by registries.
+     *
+     * @param targetClass the type of the target object
+     * @param field       the field for which the randomizer should generate values
      * @return a randomizer for this field, or null if none is found.
      */
-    private Randomizer<?> getRandomizer(Class<?> resultClass, Field field) {
-        Randomizer<?> customRandomizer = randomizers.get(new RandomizerDefinition(resultClass, field.getType(), field.getName()));
+    private Randomizer getRandomizer(final Class targetClass, final Field field) {
+        Randomizer customRandomizer = randomizers.get(new RandomizerDefinition(targetClass, field.getType(), field.getName()));
         if (customRandomizer != null) {
             return customRandomizer;
         }
@@ -222,10 +226,10 @@ public final class PopulatorImpl implements Populator {
      * @param field field for which the randomizer should generate values
      * @return a randomizer for this field, or null if none is found.
      */
-    private Randomizer<?> getDefaultRandomizer(Field field) {
-        ArrayList<Randomizer<?>> randomizers = new ArrayList<Randomizer<?>>();
+    private Randomizer getDefaultRandomizer(final Field field) {
+        ArrayList<Randomizer> randomizers = new ArrayList<Randomizer>();
         for (RandomizerRegistry registry : registries) {
-            Randomizer<?> randomizer = registry.getRandomizer(field);
+            Randomizer randomizer = registry.getRandomizer(field);
             if (randomizer != null) {
                 randomizers.add(randomizer);
             }
@@ -234,22 +238,21 @@ public final class PopulatorImpl implements Populator {
         if (randomizers.size() > 0) {
             return randomizers.get(0);
         }
-
         return null;
     }
 
     /**
-     * Define a property (accessible or not accessible)
+     * Set a property (accessible or not accessible)
      *
-     * @param obj   instance to set the property on
-     * @param field field to set the property on
-     * @param value value to set
-     * @throws IllegalAccessException
+     * @param object instance to set the property on
+     * @param field  field to set the property on
+     * @param value  value to set
+     * @throws IllegalAccessException if the property cannot be set
      */
-    private void setProperty(final Object obj, final Field field, final Object value) throws IllegalAccessException {
+    private void setProperty(final Object object, final Field field, final Object value) throws IllegalAccessException {
         boolean access = field.isAccessible();
         field.setAccessible(true);
-        field.set(obj, value);
+        field.set(object, value);
         field.setAccessible(access);
     }
 
@@ -263,7 +266,7 @@ public final class PopulatorImpl implements Populator {
      * @throws InvocationTargetException Thrown when the setter of the given field can not be invoked
      */
     private Object getRandomCollection(final Field field) throws IllegalAccessException, NoSuchMethodException, InvocationTargetException {
-        Class<?> fieldType = field.getType();
+        Class fieldType = field.getType();
 
         //Array type
         if (fieldType.isArray()) {
@@ -303,17 +306,8 @@ public final class PopulatorImpl implements Populator {
      * @param type the type that the method should check
      * @return true if the given type is a java built-in collection type
      */
-    private boolean isCollectionType(final Class<?> type) {
+    private boolean isCollectionType(final Class type) {
         return type.isArray() || Map.class.isAssignableFrom(type) || Collection.class.isAssignableFrom(type);
-    }
-
-    /**
-     * Setter for the custom randomizers to use. Used to register custom randomizers by the {@link PopulatorBuilder}
-     *
-     * @param randomizers the custom randomizers to use.
-     */
-    public void setRandomizers(final Map<RandomizerDefinition, Randomizer> randomizers) {
-        this.randomizers = randomizers;
     }
 
     /**
@@ -340,7 +334,7 @@ public final class PopulatorImpl implements Populator {
         return false;
     }
 
-    private boolean isStatic(Field field) {
+    private boolean isStatic(final Field field) {
         int fieldModifiers = field.getModifiers();
         return Modifier.isStatic(fieldModifiers);
     }

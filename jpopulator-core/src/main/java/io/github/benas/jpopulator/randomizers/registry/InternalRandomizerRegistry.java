@@ -19,7 +19,8 @@ import java.util.concurrent.atomic.AtomicLong;
 
 @Priority(-255)
 public class InternalRandomizerRegistry implements RandomizerRegistry {
-    private Map<Class<?>, Randomizer<?>> randomizers = new HashMap<Class<?>, Randomizer<?>>();
+
+    private Map<Class, Randomizer> randomizers = new HashMap<Class, Randomizer>();
 
     public InternalRandomizerRegistry() {
         randomizers.put(String.class, new DefaultStringRandomizer());
@@ -53,7 +54,7 @@ public class InternalRandomizerRegistry implements RandomizerRegistry {
     }
 
     @Override
-    public Randomizer<?> getRandomizer(Field field) {
+    public Randomizer getRandomizer(final Field field) {
         return randomizers.get(field.getType());
     }
 }

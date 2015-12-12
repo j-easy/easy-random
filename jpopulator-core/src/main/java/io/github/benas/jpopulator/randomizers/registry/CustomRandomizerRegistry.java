@@ -8,11 +8,11 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class CustomRandomizerRegistry implements RandomizerRegistry {
-    private Map<Class<?>, Randomizer<?>> randomizers = new HashMap<Class<?>, Randomizer<?>>();
 
+    private Map<Class, Randomizer> randomizers = new HashMap<Class, Randomizer>();
 
     @Override
-    public Randomizer<?> getRandomizer(Field field) {
+    public Randomizer getRandomizer(Field field) {
         return randomizers.get(field.getType());
     }
 

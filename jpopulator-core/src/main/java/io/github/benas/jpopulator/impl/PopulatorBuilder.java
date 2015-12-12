@@ -124,11 +124,7 @@ public class PopulatorBuilder {
         if (!defaultRegistriesDisabled) {
             registries.addAll(loadDefaultRegistries());
         }
-
-        PopulatorImpl populator = new PopulatorImpl(registries);
-
-        populator.setRandomizers(randomizers);
-
+        Populator populator = new PopulatorImpl(registries, randomizers);
         reset();
         return populator;
     }
@@ -141,13 +137,9 @@ public class PopulatorBuilder {
     private Collection<? extends RandomizerRegistry> loadDefaultRegistries() {
         List<RandomizerRegistry> registries = new ArrayList<RandomizerRegistry>();
         ServiceLoader<RandomizerRegistry> loader = ServiceLoader.load(RandomizerRegistry.class);
-
-        Iterator<RandomizerRegistry> iterator = loader.iterator();
-        while (iterator.hasNext()) {
-            RandomizerRegistry registry = iterator.next();
+        for (RandomizerRegistry registry : loader) {
             registries.add(registry);
         }
-
         return registries;
     }
 
