@@ -23,17 +23,15 @@
  *
  */
 
-package io.github.benas.jpopulator.randomizers.joda;
+package io.github.benas.jpopulator.randomizers.jodatime;
 
 import io.github.benas.jpopulator.api.Randomizer;
 import io.github.benas.jpopulator.util.ConstantsUtil;
-import org.joda.time.Interval;
+import org.joda.time.Duration;
 
-public class JodaTimeIntervalRandomizer implements Randomizer<Interval> {
+public class JodaTimeDurationRandomizer implements Randomizer<Duration> {
     @Override
-    public Interval getRandomValue() {
-        long startDate = Math.abs(ConstantsUtil.RANDOM.nextInt());
-        long endDate = startDate + Math.abs(ConstantsUtil.RANDOM.nextInt());
-        return new Interval(startDate, endDate);
+    public Duration getRandomValue() {
+        return new Duration(Math.abs(ConstantsUtil.RANDOM.nextLong()));
     }
 }

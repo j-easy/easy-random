@@ -23,15 +23,15 @@
  *
  */
 
-package io.github.benas.jpopulator.randomizers.joda;
+package io.github.benas.jpopulator.randomizers.jodatime;
 
 import io.github.benas.jpopulator.api.Randomizer;
 import io.github.benas.jpopulator.util.ConstantsUtil;
-import org.joda.time.Period;
+import org.joda.time.DateTime;
 
-public class JodaTimePeriodRandomizer implements Randomizer<Period> {
+public class JodaTimeDateTimeRandomizer implements Randomizer<DateTime> {
     @Override
-    public Period getRandomValue() {
-        return new Period(Math.abs(ConstantsUtil.RANDOM.nextInt()));
+    public DateTime getRandomValue() {
+        return new DateTime(ConstantsUtil.DATE_RANGE_RANDOMIZER.getRandomValue().getTime());
     }
 }

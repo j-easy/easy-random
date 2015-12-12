@@ -1,1 +1,1 @@
-io.github.benas.jpopulator.randomizers.registry.JodaTimeRandomizerRegistry
+io.github.benas.jpopulator.randomizers.jodatime.registry.JodaTimeRandomizerRegistry
