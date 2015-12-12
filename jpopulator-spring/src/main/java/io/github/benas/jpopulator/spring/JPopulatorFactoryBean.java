@@ -35,7 +35,7 @@ import java.util.List;
 /**
  * Spring Factory Bean that creates jPopulator instances.
  *
- * @author Mahmoud Ben Hassine (mahmoud@benhassine.fr)
+ * @author Mahmoud Ben Hassine (mahmoud.benhassine@icloud.com)
  */
 public class JPopulatorFactoryBean implements FactoryBean {
 

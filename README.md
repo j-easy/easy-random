@@ -46,7 +46,7 @@ jPopulator is released under the [MIT License](http://opensource.org/licenses/mi
 ```
 The MIT License
 
-Copyright (c) 2015, Mahmoud Ben Hassine (mahmoud@benhassine.fr)
+Copyright (c) 2015, Mahmoud Ben Hassine (mahmoud.benhassine@icloud.com)
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal

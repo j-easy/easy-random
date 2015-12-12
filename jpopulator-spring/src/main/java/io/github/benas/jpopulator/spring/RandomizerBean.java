@@ -30,7 +30,7 @@ import io.github.benas.jpopulator.api.Randomizer;
 /**
  * A bean used to register custom randomizers with the {@link JPopulatorFactoryBean}.
  *
- * @author Mahmoud Ben Hassine (mahmoud@benhassine.fr)
+ * @author Mahmoud Ben Hassine (mahmoud.benhassine@icloud.com)
  */
 public class RandomizerBean {
 

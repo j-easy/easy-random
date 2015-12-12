@@ -33,7 +33,7 @@ import java.util.List;
 /**
  * A java bean for Person type.
  *
- * @author Mahmoud Ben Hassine (mahmoud@benhassine.fr)
+ * @author Mahmoud Ben Hassine (mahmoud.benhassine@icloud.com)
  */
 public class Person extends Human {
 

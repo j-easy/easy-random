@@ -30,7 +30,7 @@ import java.util.List;
 /**
  * Interface for java bean populator.
  *
- * @author Mahmoud Ben Hassine (mahmoud@benhassine.fr)
+ * @author Mahmoud Ben Hassine (mahmoud.benhassine@icloud.com)
  */
 public interface Populator {
 

@@ -30,7 +30,7 @@ import java.util.*;
 /**
  * Java bean used to test collections "population".
  *
- * @author Mahmoud Ben Hassine (mahmoud@benhassine.fr)
+ * @author Mahmoud Ben Hassine (mahmoud.benhassine@icloud.com)
  */
 public class CollectionsBean {
 

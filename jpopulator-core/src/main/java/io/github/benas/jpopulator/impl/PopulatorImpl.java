@@ -45,7 +45,7 @@ import java.util.logging.Logger;
 /**
  * The core implementation of the {@link Populator} interface.
  *
- * @author Mahmoud Ben Hassine (mahmoud@benhassine.fr)
+ * @author Mahmoud Ben Hassine (mahmoud.benhassine@icloud.com)
  */
 public final class PopulatorImpl implements Populator {
 

@@ -33,7 +33,7 @@ import java.lang.annotation.Target;
 /**
  * Annotation to exclude a field from being populated.
  *
- * @author Mahmoud Ben Hassine (mahmoud@benhassine.fr)
+ * @author Mahmoud Ben Hassine (mahmoud.benhassine@icloud.com)
  */
 @Retention(RetentionPolicy.RUNTIME)
 @Target(ElementType.FIELD)

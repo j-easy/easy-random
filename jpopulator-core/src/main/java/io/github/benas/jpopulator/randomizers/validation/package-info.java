@@ -26,6 +26,6 @@
 /**
  * This package contains randomizers used to populate beans annotated with <a href="http://beanvalidation.org/">Bean Validation API</a> annotations.
  *
- * @author Mahmoud Ben Hassine (mahmoud@benhassine.fr)
+ * @author Mahmoud Ben Hassine (mahmoud.benhassine@icloud.com)
  */
 package io.github.benas.jpopulator.randomizers.validation;

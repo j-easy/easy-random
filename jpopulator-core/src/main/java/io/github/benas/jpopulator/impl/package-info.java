@@ -26,6 +26,6 @@
 /**
  * This package contains jPopulator core implementation.
  *
- * @author Mahmoud Ben Hassine (mahmoud@benhassine.fr)
+ * @author Mahmoud Ben Hassine (mahmoud.benhassine@icloud.com)
  */
 package io.github.benas.jpopulator.impl;

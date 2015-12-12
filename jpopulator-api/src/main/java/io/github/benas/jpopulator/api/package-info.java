@@ -26,6 +26,6 @@
 /**
  * This package contains jPopulator public API.
  *
- * @author Mahmoud Ben Hassine (mahmoud@benhassine.fr)
+ * @author Mahmoud Ben Hassine (mahmoud.benhassine@icloud.com)
  */
 package io.github.benas.jpopulator.api;

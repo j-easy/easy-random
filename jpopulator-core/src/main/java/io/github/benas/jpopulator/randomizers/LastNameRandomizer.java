@@ -30,7 +30,7 @@ import java.util.ResourceBundle;
 /**
  * A custom String randomizer that generates random values for last names.
  *
- * @author Mahmoud Ben Hassine (mahmoud@benhassine.fr)
+ * @author Mahmoud Ben Hassine (mahmoud.benhassine@icloud.com)
  */
 public class LastNameRandomizer extends GenericStringRandomizer {
 

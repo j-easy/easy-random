@@ -34,7 +34,7 @@ import java.util.Map;
 /**
  * A randomizer that generates a map with random entries.
  *
- * @author Mahmoud Ben Hassine (mahmoud@benhassine.fr)
+ * @author Mahmoud Ben Hassine (mahmoud.benhassine@icloud.com)
  */
 public class MapRandomizer<K, V> implements Randomizer<Map<K, V>> {
 

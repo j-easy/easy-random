@@ -28,7 +28,7 @@ package io.github.benas.jpopulator.beans;
 /**
  * Base class for persons. Used to test that inherited fields in {@link Person} class are correctly populated.
  *
- * @author Mahmoud Ben Hassine (mahmoud@benhassine.fr)
+ * @author Mahmoud Ben Hassine (mahmoud.benhassine@icloud.com)
  */
 public class Human {
 

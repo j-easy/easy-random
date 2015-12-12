@@ -33,7 +33,7 @@ import java.math.BigInteger;
 /**
  * A randomizer that generates random values greater than or equal to a minimum value.
  *
- * @author Mahmoud Ben Hassine (mahmoud@benhassine.fr)
+ * @author Mahmoud Ben Hassine (mahmoud.benhassine@icloud.com)
  */
 public class MinValueRandomizer {
 

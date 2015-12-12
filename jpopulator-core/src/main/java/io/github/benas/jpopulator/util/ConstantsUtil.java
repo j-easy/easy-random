@@ -34,7 +34,7 @@ import java.util.Random;
 /**
  * Constants utilities class.
  *
- * @author Mahmoud Ben Hassine (mahmoud@benhassine.fr)
+ * @author Mahmoud Ben Hassine (mahmoud.benhassine@icloud.com)
  */
 public final class ConstantsUtil {
 

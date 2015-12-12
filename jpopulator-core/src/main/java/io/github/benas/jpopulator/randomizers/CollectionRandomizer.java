@@ -33,7 +33,7 @@ import java.util.Collection;
 /**
  * A base class for collection randomizers.
  *
- * @author Mahmoud Ben Hassine (mahmoud@benhassine.fr)
+ * @author Mahmoud Ben Hassine (mahmoud.benhassine@icloud.com)
  */
 public abstract class CollectionRandomizer<T> implements Randomizer<Collection<T>> {
 
