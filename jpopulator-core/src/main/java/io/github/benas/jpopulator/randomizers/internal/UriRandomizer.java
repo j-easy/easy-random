@@ -26,24 +26,23 @@
 package io.github.benas.jpopulator.randomizers.internal;
 
 import io.github.benas.jpopulator.api.Randomizer;
+import io.github.benas.jpopulator.util.ConstantsUtil;
 
 import java.net.URI;
 import java.net.URISyntaxException;
-import java.util.logging.Level;
-import java.util.logging.Logger;
+
+import static java.util.ResourceBundle.getBundle;
 
 public class UriRandomizer implements Randomizer<URI> {
 
-    private static final Logger LOGGER = Logger.getLogger(UriRandomizer.class.getName());
-
-    private io.github.benas.jpopulator.randomizers.UriRandomizer delegate = new io.github.benas.jpopulator.randomizers.UriRandomizer();
+    private final String[] uris = getBundle("io/github/benas/jpopulator/data/data").getString("uris").split(",");
 
     @Override
     public URI getRandomValue() {
         try {
-            return new URI(delegate.getRandomValue());
+            return new URI(uris[ConstantsUtil.RANDOM.nextInt(uris.length)]);
         } catch (URISyntaxException e) {
-            LOGGER.log(Level.WARNING, "The generated URI is malformed, the field will be set to null", e);
+            // random URIs form the resource bundle are valid
             return null;
         }
     }

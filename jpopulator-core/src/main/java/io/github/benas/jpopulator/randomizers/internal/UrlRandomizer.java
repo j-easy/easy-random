@@ -26,24 +26,23 @@
 package io.github.benas.jpopulator.randomizers.internal;
 
 import io.github.benas.jpopulator.api.Randomizer;
+import io.github.benas.jpopulator.util.ConstantsUtil;
 
 import java.net.MalformedURLException;
 import java.net.URL;
-import java.util.logging.Level;
-import java.util.logging.Logger;
+
+import static java.util.ResourceBundle.getBundle;
 
 public class UrlRandomizer implements Randomizer<URL> {
 
-    private static final Logger LOGGER = Logger.getLogger(UrlRandomizer.class.getName());
-
-    private io.github.benas.jpopulator.randomizers.UrlRandomizer delegate = new io.github.benas.jpopulator.randomizers.UrlRandomizer();
+    private final String[] urls = getBundle("io/github/benas/jpopulator/data/data").getString("urls").split(",");
 
     @Override
     public URL getRandomValue() {
         try {
-            return new URL(delegate.getRandomValue());
+            return new URL(urls[ConstantsUtil.RANDOM.nextInt(urls.length)]);
         } catch (MalformedURLException e) {
-            LOGGER.log(Level.WARNING, "The generated URL is malformed, the field will be set to null", e);
+            // random URLs form the resource bundle are valid
             return null;
         }
     }
