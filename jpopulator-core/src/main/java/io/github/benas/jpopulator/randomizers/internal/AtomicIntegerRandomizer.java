@@ -26,15 +26,15 @@
 package io.github.benas.jpopulator.randomizers.internal;
 
 import io.github.benas.jpopulator.api.Randomizer;
-import io.github.benas.jpopulator.util.ConstantsUtil;
 
-import java.math.BigInteger;
+import java.util.concurrent.atomic.AtomicInteger;
 
-public class DefaultBigIntegerRandomizer implements Randomizer<BigInteger> {
-    DefaultIntegerRandomizer delegate = new DefaultIntegerRandomizer();
+public class AtomicIntegerRandomizer implements Randomizer<AtomicInteger> {
+
+    IntegerRandomizer delegate = new IntegerRandomizer();
 
     @Override
-    public BigInteger getRandomValue() {
-        return new BigInteger(delegate.getRandomValue(), ConstantsUtil.RANDOM);
+    public AtomicInteger getRandomValue() {
+        return new AtomicInteger(delegate.getRandomValue());
     }
 }

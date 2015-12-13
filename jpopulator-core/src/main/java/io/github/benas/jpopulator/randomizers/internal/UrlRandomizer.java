@@ -27,14 +27,24 @@ package io.github.benas.jpopulator.randomizers.internal;
 
 import io.github.benas.jpopulator.api.Randomizer;
 
-import java.sql.Date;
+import java.net.MalformedURLException;
+import java.net.URL;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
+public class UrlRandomizer implements Randomizer<URL> {
 
-public class DefaultSqlDateRandomizer implements Randomizer<Date> {
-    private DefaultDateRandomizer delegate = new DefaultDateRandomizer();
+    private static final Logger LOGGER = Logger.getLogger(UrlRandomizer.class.getName());
+
+    private io.github.benas.jpopulator.randomizers.UrlRandomizer delegate = new io.github.benas.jpopulator.randomizers.UrlRandomizer();
 
     @Override
-    public Date getRandomValue() {
-        return new Date(delegate.getRandomValue().getTime());
+    public URL getRandomValue() {
+        try {
+            return new URL(delegate.getRandomValue());
+        } catch (MalformedURLException e) {
+            LOGGER.log(Level.WARNING, "The generated URL is malformed, the field will be set to null", e);
+            return null;
+        }
     }
 }

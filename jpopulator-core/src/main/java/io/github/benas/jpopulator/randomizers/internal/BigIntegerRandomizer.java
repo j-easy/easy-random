@@ -27,11 +27,15 @@ package io.github.benas.jpopulator.randomizers.internal;
 
 import io.github.benas.jpopulator.api.Randomizer;
 import io.github.benas.jpopulator.util.ConstantsUtil;
-import org.apache.commons.lang3.RandomStringUtils;
 
-public class DefaultStringRandomizer implements Randomizer<String> {
+import java.math.BigInteger;
+
+public class BigIntegerRandomizer implements Randomizer<BigInteger> {
+
+    IntegerRandomizer delegate = new IntegerRandomizer();
+
     @Override
-    public String getRandomValue() {
-        return RandomStringUtils.randomAlphabetic(ConstantsUtil.DEFAULT_STRING_LENGTH);
+    public BigInteger getRandomValue() {
+        return new BigInteger(delegate.getRandomValue(), ConstantsUtil.RANDOM);
     }
 }

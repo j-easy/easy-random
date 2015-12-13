@@ -28,11 +28,10 @@ package io.github.benas.jpopulator.randomizers.internal;
 import io.github.benas.jpopulator.api.Randomizer;
 import io.github.benas.jpopulator.util.ConstantsUtil;
 
-import java.util.Date;
+public class FloatRandomizer implements Randomizer<Float> {
 
-public class DefaultDateRandomizer implements Randomizer<Date> {
     @Override
-    public Date getRandomValue() {
-        return ConstantsUtil.DATE_RANGE_RANDOMIZER.getRandomValue();
+    public Float getRandomValue() {
+        return ConstantsUtil.RANDOM.nextFloat();
     }
 }

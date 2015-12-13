@@ -26,15 +26,12 @@
 package io.github.benas.jpopulator.randomizers.internal;
 
 import io.github.benas.jpopulator.api.Randomizer;
+import io.github.benas.jpopulator.util.ConstantsUtil;
 
-import java.sql.Time;
-
-
-public class DefaultSqlTimeRandomizer implements Randomizer<Time> {
-    private DefaultDateRandomizer delegate = new DefaultDateRandomizer();
+public class DoubleRandomizer implements Randomizer<Double> {
 
     @Override
-    public Time getRandomValue() {
-        return new Time(delegate.getRandomValue().getTime());
+    public Double getRandomValue() {
+        return ConstantsUtil.RANDOM.nextDouble();
     }
 }

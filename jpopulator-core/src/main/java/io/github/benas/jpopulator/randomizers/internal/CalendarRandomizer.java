@@ -26,11 +26,17 @@
 package io.github.benas.jpopulator.randomizers.internal;
 
 import io.github.benas.jpopulator.api.Randomizer;
-import io.github.benas.jpopulator.util.ConstantsUtil;
 
-public class DefaultFloatRandomizer implements Randomizer<Float> {
+import java.util.Calendar;
+
+public class CalendarRandomizer implements Randomizer<Calendar> {
+
+    private DateRandomizer delegate = new DateRandomizer();
+
     @Override
-    public Float getRandomValue() {
-        return ConstantsUtil.RANDOM.nextFloat();
+    public Calendar getRandomValue() {
+        Calendar calendar = Calendar.getInstance();
+        calendar.setTime(delegate.getRandomValue());
+        return calendar;
     }
 }

@@ -27,10 +27,12 @@ package io.github.benas.jpopulator.randomizers.internal;
 
 import io.github.benas.jpopulator.api.Randomizer;
 import io.github.benas.jpopulator.util.ConstantsUtil;
+import org.apache.commons.lang3.RandomStringUtils;
 
-public class DefaultBooleanRandomizer implements Randomizer<Boolean> {
+public class StringRandomizer implements Randomizer<String> {
+
     @Override
-    public Boolean getRandomValue() {
-        return ConstantsUtil.RANDOM.nextBoolean();
+    public String getRandomValue() {
+        return RandomStringUtils.randomAlphabetic(ConstantsUtil.DEFAULT_STRING_LENGTH);
     }
 }

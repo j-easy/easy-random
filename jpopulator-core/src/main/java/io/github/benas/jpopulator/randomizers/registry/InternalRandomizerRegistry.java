@@ -48,34 +48,34 @@ public class InternalRandomizerRegistry implements RandomizerRegistry {
     private Map<Class, Randomizer> randomizers = new HashMap<Class, Randomizer>();
 
     public InternalRandomizerRegistry() {
-        randomizers.put(String.class, new DefaultStringRandomizer());
-        randomizers.put(Character.class, new DefaultCharacterRandomizer());
-        randomizers.put(char.class, new DefaultCharacterRandomizer());
-        randomizers.put(Boolean.class, new DefaultBooleanRandomizer());
-        randomizers.put(boolean.class, new DefaultBooleanRandomizer());
-        randomizers.put(Byte.class, new DefaultByteRandomizer());
-        randomizers.put(byte.class, new DefaultByteRandomizer());
-        randomizers.put(Short.class, new DefaultShortRandomizer());
-        randomizers.put(short.class, new DefaultShortRandomizer());
-        randomizers.put(Integer.class, new DefaultIntegerRandomizer());
-        randomizers.put(int.class, new DefaultIntegerRandomizer());
-        randomizers.put(Long.class, new DefaultLongRandomizer());
-        randomizers.put(long.class, new DefaultLongRandomizer());
-        randomizers.put(Double.class, new DefaultDoubleRandomizer());
-        randomizers.put(double.class, new DefaultDoubleRandomizer());
-        randomizers.put(Float.class, new DefaultFloatRandomizer());
-        randomizers.put(float.class, new DefaultFloatRandomizer());
-        randomizers.put(BigInteger.class, new DefaultBigIntegerRandomizer());
-        randomizers.put(BigDecimal.class, new DefaultBigDecimalRandomizer());
-        randomizers.put(AtomicLong.class, new DefaultAtomicLongRandomizer());
-        randomizers.put(AtomicInteger.class, new DefaultAtomicIntegerRandomizer());
-        randomizers.put(Date.class, new DefaultDateRandomizer());
-        randomizers.put(java.sql.Date.class, new DefaultSqlDateRandomizer());
-        randomizers.put(java.sql.Time.class, new DefaultSqlTimeRandomizer());
-        randomizers.put(java.sql.Timestamp.class, new DefaultSqlTimestampRandomizer());
-        randomizers.put(Calendar.class, new DefaultCalendarRandomizer());
-        randomizers.put(URL.class, new DefaultUrlRandomizer());
-        randomizers.put(URI.class, new DefaultUriRandomizer());
+        randomizers.put(String.class, new StringRandomizer());
+        randomizers.put(Character.class, new CharacterRandomizer());
+        randomizers.put(char.class, new CharacterRandomizer());
+        randomizers.put(Boolean.class, new BooleanRandomizer());
+        randomizers.put(boolean.class, new BooleanRandomizer());
+        randomizers.put(Byte.class, new ByteRandomizer());
+        randomizers.put(byte.class, new ByteRandomizer());
+        randomizers.put(Short.class, new ShortRandomizer());
+        randomizers.put(short.class, new ShortRandomizer());
+        randomizers.put(Integer.class, new IntegerRandomizer());
+        randomizers.put(int.class, new IntegerRandomizer());
+        randomizers.put(Long.class, new LongRandomizer());
+        randomizers.put(long.class, new LongRandomizer());
+        randomizers.put(Double.class, new DoubleRandomizer());
+        randomizers.put(double.class, new DoubleRandomizer());
+        randomizers.put(Float.class, new FloatRandomizer());
+        randomizers.put(float.class, new FloatRandomizer());
+        randomizers.put(BigInteger.class, new BigIntegerRandomizer());
+        randomizers.put(BigDecimal.class, new BigDecimalRandomizer());
+        randomizers.put(AtomicLong.class, new AtomicLongRandomizer());
+        randomizers.put(AtomicInteger.class, new AtomicIntegerRandomizer());
+        randomizers.put(Date.class, new DateRandomizer());
+        randomizers.put(java.sql.Date.class, new SqlDateRandomizer());
+        randomizers.put(java.sql.Time.class, new SqlTimeRandomizer());
+        randomizers.put(java.sql.Timestamp.class, new SqlTimestampRandomizer());
+        randomizers.put(Calendar.class, new CalendarRandomizer());
+        randomizers.put(URL.class, new UrlRandomizer());
+        randomizers.put(URI.class, new UriRandomizer());
     }
 
     @Override

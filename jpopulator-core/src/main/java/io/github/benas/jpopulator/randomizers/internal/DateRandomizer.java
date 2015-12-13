@@ -25,13 +25,15 @@
 
 package io.github.benas.jpopulator.randomizers.internal;
 
-
 import io.github.benas.jpopulator.api.Randomizer;
-import org.apache.commons.lang3.RandomStringUtils;
+import io.github.benas.jpopulator.util.ConstantsUtil;
 
-public class DefaultCharacterRandomizer implements Randomizer<Character> {
+import java.util.Date;
+
+public class DateRandomizer implements Randomizer<Date> {
+
     @Override
-    public Character getRandomValue() {
-        return RandomStringUtils.randomAlphabetic(1).charAt(0);
+    public Date getRandomValue() {
+        return ConstantsUtil.DATE_RANGE_RANDOMIZER.getRandomValue();
     }
 }

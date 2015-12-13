@@ -28,9 +28,10 @@ package io.github.benas.jpopulator.randomizers.internal;
 import io.github.benas.jpopulator.api.Randomizer;
 import io.github.benas.jpopulator.util.ConstantsUtil;
 
-public class DefaultLongRandomizer implements Randomizer<Long> {
+public class IntegerRandomizer implements Randomizer<Integer> {
+
     @Override
-    public Long getRandomValue() {
-        return ConstantsUtil.RANDOM.nextLong();
+    public Integer getRandomValue() {
+        return ConstantsUtil.RANDOM.nextInt();
     }
 }

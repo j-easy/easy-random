@@ -26,11 +26,15 @@
 package io.github.benas.jpopulator.randomizers.internal;
 
 import io.github.benas.jpopulator.api.Randomizer;
-import io.github.benas.jpopulator.util.ConstantsUtil;
 
-public class DefaultByteRandomizer implements Randomizer<Byte> {
+import java.sql.Timestamp;
+
+public class SqlTimestampRandomizer implements Randomizer<Timestamp> {
+
+    private DateRandomizer delegate = new DateRandomizer();
+
     @Override
-    public Byte getRandomValue() {
-        return (byte) ConstantsUtil.RANDOM.nextInt();
+    public Timestamp getRandomValue() {
+        return new Timestamp(delegate.getRandomValue().getTime());
     }
 }

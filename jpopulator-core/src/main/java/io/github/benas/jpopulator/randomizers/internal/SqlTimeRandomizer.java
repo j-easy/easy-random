@@ -27,13 +27,14 @@ package io.github.benas.jpopulator.randomizers.internal;
 
 import io.github.benas.jpopulator.api.Randomizer;
 
-import java.util.concurrent.atomic.AtomicLong;
+import java.sql.Time;
 
-public class DefaultAtomicLongRandomizer implements Randomizer<AtomicLong> {
-    DefaultLongRandomizer delegate = new DefaultLongRandomizer();
+public class SqlTimeRandomizer implements Randomizer<Time> {
+
+    private DateRandomizer delegate = new DateRandomizer();
 
     @Override
-    public AtomicLong getRandomValue() {
-        return new AtomicLong(delegate.getRandomValue());
+    public Time getRandomValue() {
+        return new Time(delegate.getRandomValue().getTime());
     }
 }

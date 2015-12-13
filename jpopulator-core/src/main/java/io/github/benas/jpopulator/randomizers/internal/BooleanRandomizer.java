@@ -26,14 +26,12 @@
 package io.github.benas.jpopulator.randomizers.internal;
 
 import io.github.benas.jpopulator.api.Randomizer;
+import io.github.benas.jpopulator.util.ConstantsUtil;
 
-import java.math.BigDecimal;
-
-public class DefaultBigDecimalRandomizer implements Randomizer<BigDecimal> {
-    DefaultDoubleRandomizer delegate = new DefaultDoubleRandomizer();
+public class BooleanRandomizer implements Randomizer<Boolean> {
 
     @Override
-    public BigDecimal getRandomValue() {
-        return new BigDecimal(delegate.getRandomValue());
+    public Boolean getRandomValue() {
+        return ConstantsUtil.RANDOM.nextBoolean();
     }
 }

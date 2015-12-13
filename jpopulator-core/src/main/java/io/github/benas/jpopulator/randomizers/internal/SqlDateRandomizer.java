@@ -27,16 +27,15 @@ package io.github.benas.jpopulator.randomizers.internal;
 
 import io.github.benas.jpopulator.api.Randomizer;
 
-import java.util.Calendar;
-import java.util.Date;
+import java.sql.Date;
 
-public class DefaultCalendarRandomizer implements Randomizer<Calendar> {
-    private DefaultDateRandomizer delegate = new DefaultDateRandomizer();
+public class SqlDateRandomizer implements Randomizer<Date> {
+
+    private DateRandomizer delegate = new DateRandomizer();
 
     @Override
-    public Calendar getRandomValue() {
-        Calendar calendar = Calendar.getInstance();
-        calendar.setTime(delegate.getRandomValue());
-        return calendar;
+    public Date getRandomValue() {
+        return new Date(delegate.getRandomValue().getTime());
     }
+
 }

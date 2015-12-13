@@ -26,11 +26,15 @@
 package io.github.benas.jpopulator.randomizers.internal;
 
 import io.github.benas.jpopulator.api.Randomizer;
-import io.github.benas.jpopulator.util.ConstantsUtil;
 
-public class DefaultShortRandomizer implements Randomizer<Short> {
+import java.math.BigDecimal;
+
+public class BigDecimalRandomizer implements Randomizer<BigDecimal> {
+
+    DoubleRandomizer delegate = new DoubleRandomizer();
+
     @Override
-    public Short getRandomValue() {
-        return (short) ConstantsUtil.RANDOM.nextInt();
+    public BigDecimal getRandomValue() {
+        return new BigDecimal(delegate.getRandomValue());
     }
 }

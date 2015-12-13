@@ -27,13 +27,14 @@ package io.github.benas.jpopulator.randomizers.internal;
 
 import io.github.benas.jpopulator.api.Randomizer;
 
-import java.util.concurrent.atomic.AtomicInteger;
+import java.util.concurrent.atomic.AtomicLong;
 
-public class DefaultAtomicIntegerRandomizer implements Randomizer<AtomicInteger> {
-    DefaultIntegerRandomizer delegate = new DefaultIntegerRandomizer();
+public class AtomicLongRandomizer implements Randomizer<AtomicLong> {
+
+    LongRandomizer delegate = new LongRandomizer();
 
     @Override
-    public AtomicInteger getRandomValue() {
-        return new AtomicInteger(delegate.getRandomValue());
+    public AtomicLong getRandomValue() {
+        return new AtomicLong(delegate.getRandomValue());
     }
 }
