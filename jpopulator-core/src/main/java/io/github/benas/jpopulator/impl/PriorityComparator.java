@@ -34,7 +34,7 @@ import java.util.Comparator;
  *
  * @author Rémi Alvergnat (toilal.dev@gmail.com)
  */
-public class PriorityComparator implements Comparator<Object> {
+class PriorityComparator implements Comparator<Object> {
     @Override
     public int compare(Object o1, Object o2) {
         int o1Priority = getPriority(o1);
