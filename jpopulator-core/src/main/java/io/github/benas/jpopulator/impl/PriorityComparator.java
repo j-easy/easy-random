@@ -25,7 +25,7 @@
 
 package io.github.benas.jpopulator.impl;
 
-import io.github.benas.jpopulator.api.Priority;
+import io.github.benas.jpopulator.annotation.Priority;
 
 import java.util.Comparator;
 

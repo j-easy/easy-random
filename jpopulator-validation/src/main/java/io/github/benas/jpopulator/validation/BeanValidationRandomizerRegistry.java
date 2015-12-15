@@ -25,7 +25,7 @@
 
 package io.github.benas.jpopulator.validation;
 
-import io.github.benas.jpopulator.api.Priority;
+import io.github.benas.jpopulator.annotation.Priority;
 import io.github.benas.jpopulator.api.Randomizer;
 import io.github.benas.jpopulator.api.RandomizerRegistry;
 import io.github.benas.jpopulator.randomizers.ConstantRandomizer;

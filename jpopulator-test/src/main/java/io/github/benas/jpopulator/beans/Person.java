@@ -25,7 +25,7 @@
 
 package io.github.benas.jpopulator.beans;
 
-import io.github.benas.jpopulator.api.Exclude;
+import io.github.benas.jpopulator.annotation.Exclude;
 
 import java.util.Date;
 import java.util.List;

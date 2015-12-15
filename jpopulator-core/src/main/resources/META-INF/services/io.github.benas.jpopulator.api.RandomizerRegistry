@@ -1,1 +1,2 @@
 io.github.benas.jpopulator.randomizers.registry.InternalRandomizerRegistry
+io.github.benas.jpopulator.randomizers.registry.AnnotationRandomizerRegistry

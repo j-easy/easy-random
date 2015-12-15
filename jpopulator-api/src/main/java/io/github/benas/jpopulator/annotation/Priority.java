@@ -23,7 +23,7 @@
  *
  */
 
-package io.github.benas.jpopulator.api;
+package io.github.benas.jpopulator.annotation;
 
 import java.lang.annotation.ElementType;
 import java.lang.annotation.Retention;
@@ -31,11 +31,12 @@ import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
 
 /**
- * Annotation to exclude a field from being populated.
+ * Define the priority of a Randomizer Registry
  *
- * @author Mahmoud Ben Hassine (mahmoud.benhassine@icloud.com)
+ * @author Rémi Alvergnat (toilal.dev@gmail.com)
  */
 @Retention(RetentionPolicy.RUNTIME)
-@Target(ElementType.FIELD)
-public @interface Exclude {
+@Target(ElementType.TYPE)
+public @interface Priority {
+    int value();
 }
