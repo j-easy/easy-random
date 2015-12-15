@@ -26,7 +26,7 @@
 package io.github.benas.jpopulator.randomizers.internal;
 
 import io.github.benas.jpopulator.api.Randomizer;
-import io.github.benas.jpopulator.util.ConstantsUtil;
+import io.github.benas.jpopulator.util.Constants;
 
 import java.math.BigInteger;
 
@@ -36,6 +36,6 @@ public class BigIntegerRandomizer implements Randomizer<BigInteger> {
 
     @Override
     public BigInteger getRandomValue() {
-        return new BigInteger(delegate.getRandomValue(), ConstantsUtil.RANDOM);
+        return new BigInteger(delegate.getRandomValue(), Constants.RANDOM);
     }
 }

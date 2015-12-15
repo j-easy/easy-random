@@ -26,7 +26,7 @@
 package io.github.benas.jpopulator.randomizers.internal;
 
 import io.github.benas.jpopulator.api.Randomizer;
-import io.github.benas.jpopulator.util.ConstantsUtil;
+import io.github.benas.jpopulator.util.Constants;
 
 import java.net.URI;
 import java.net.URISyntaxException;
@@ -40,7 +40,7 @@ public class UriRandomizer implements Randomizer<URI> {
     @Override
     public URI getRandomValue() {
         try {
-            return new URI(uris[ConstantsUtil.RANDOM.nextInt(uris.length)]);
+            return new URI(uris[Constants.RANDOM.nextInt(uris.length)]);
         } catch (URISyntaxException e) {
             // random URIs form the resource bundle are valid
             return null;

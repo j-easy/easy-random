@@ -36,7 +36,7 @@ import java.util.Random;
  *
  * @author Mahmoud Ben Hassine (mahmoud.benhassine@icloud.com)
  */
-public final class ConstantsUtil {
+public final class Constants {
 
     /**
      * Default date range in which dates will be generated: [now - 10 years, now + 10 years].
@@ -82,7 +82,7 @@ public final class ConstantsUtil {
 
     }
 
-    private ConstantsUtil() {
+    private Constants() {
 
     }
 

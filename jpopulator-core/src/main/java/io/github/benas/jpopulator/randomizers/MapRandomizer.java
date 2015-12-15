@@ -26,7 +26,7 @@
 package io.github.benas.jpopulator.randomizers;
 
 import io.github.benas.jpopulator.api.Randomizer;
-import io.github.benas.jpopulator.util.ConstantsUtil;
+import io.github.benas.jpopulator.util.Constants;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -70,7 +70,7 @@ public class MapRandomizer<K, V> implements Randomizer<Map<K, V>> {
      * @param valueRandomizer the randomizer for values
      */
     public MapRandomizer(Randomizer<K> keyRandomizer, Randomizer<V> valueRandomizer) {
-        this(keyRandomizer, valueRandomizer, 0, (byte) Math.abs((byte) (ConstantsUtil.RANDOM.nextInt())));
+        this(keyRandomizer, valueRandomizer, 0, (byte) Math.abs((byte) (Constants.RANDOM.nextInt())));
     }
 
     /**
@@ -98,7 +98,7 @@ public class MapRandomizer<K, V> implements Randomizer<Map<K, V>> {
         this.maxElements = maxElements + 1;
         this.keyRandomizer = keyRandomizer;
         this.valueRandomizer = valueRandomizer;
-        nbElements = ConstantsUtil.RANDOM.nextInt(this.maxElements - this.minElements) + this.minElements;
+        nbElements = Constants.RANDOM.nextInt(this.maxElements - this.minElements) + this.minElements;
     }
 
     @Override

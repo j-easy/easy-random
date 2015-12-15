@@ -26,7 +26,7 @@
 package io.github.benas.jpopulator.randomizers;
 
 import io.github.benas.jpopulator.api.Randomizer;
-import io.github.benas.jpopulator.util.ConstantsUtil;
+import io.github.benas.jpopulator.util.Constants;
 
 import java.util.Collection;
 
@@ -64,7 +64,7 @@ public abstract class CollectionRandomizer<T> implements Randomizer<Collection<T
      * @param elementRandomizer the randomizer to use to generate elements of the list
      */
     public CollectionRandomizer(final Randomizer<T> elementRandomizer) {
-        this(elementRandomizer, 0, (byte) Math.abs((byte) (ConstantsUtil.RANDOM.nextInt())));
+        this(elementRandomizer, 0, (byte) Math.abs((byte) (Constants.RANDOM.nextInt())));
     }
 
     /**
@@ -91,7 +91,7 @@ public abstract class CollectionRandomizer<T> implements Randomizer<Collection<T
         this.elementRandomizer = elementRandomizer;
         this.minElements = minElements;
         this.maxElements = maxElements + 1;
-        nbElements = ConstantsUtil.RANDOM.nextInt(this.maxElements - this.minElements) + this.minElements;
+        nbElements = Constants.RANDOM.nextInt(this.maxElements - this.minElements) + this.minElements;
     }
 
     protected void checkArguments(int minElements, int maxElements) {

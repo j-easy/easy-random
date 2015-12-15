@@ -26,7 +26,7 @@ package io.github.benas.jpopulator.randomizers;
 
 import io.github.benas.jpopulator.api.Randomizer;
 import io.github.benas.jpopulator.randomizers.range.DateRangeRandomizer;
-import io.github.benas.jpopulator.util.ConstantsUtil;
+import io.github.benas.jpopulator.util.Constants;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -41,12 +41,12 @@ public class DateStringRandomizer implements Randomizer<String> {
     /**
      * The simple date format.
      */
-    private SimpleDateFormat simpleDateFormat = new SimpleDateFormat(ConstantsUtil.DEFAULT_DATE_FORMAT);
+    private SimpleDateFormat simpleDateFormat = new SimpleDateFormat(Constants.DEFAULT_DATE_FORMAT);
 
     /**
      * The date range randomizer.
      */
-    private static DateRangeRandomizer dateRangeRandomizer = ConstantsUtil.DATE_RANGE_RANDOMIZER;
+    private static DateRangeRandomizer dateRangeRandomizer = Constants.DATE_RANGE_RANDOMIZER;
 
     /**
      * Instantiates a new date string randomizer.

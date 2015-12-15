@@ -31,7 +31,7 @@ import io.github.benas.jpopulator.api.RandomizerRegistry;
 import io.github.benas.jpopulator.randomizers.ConstantRandomizer;
 import io.github.benas.jpopulator.randomizers.StringDelegatingRandomizer;
 import io.github.benas.jpopulator.randomizers.range.*;
-import io.github.benas.jpopulator.util.ConstantsUtil;
+import io.github.benas.jpopulator.util.Constants;
 
 import javax.validation.constraints.*;
 import java.lang.reflect.Field;
@@ -61,13 +61,13 @@ public class BeanValidationRandomizerRegistry implements RandomizerRegistry {
 
         if (field.isAnnotationPresent(Future.class)) {
             Calendar calendar = Calendar.getInstance();
-            calendar.add(Calendar.YEAR, ConstantsUtil.DEFAULT_DATE_RANGE);
+            calendar.add(Calendar.YEAR, Constants.DEFAULT_DATE_RANGE);
             return new DateRangeRandomizer(new Date(), calendar.getTime());
         }
 
         if (field.isAnnotationPresent(Past.class)) {
             Calendar calendar = Calendar.getInstance();
-            calendar.add(Calendar.YEAR, -ConstantsUtil.DEFAULT_DATE_RANGE);
+            calendar.add(Calendar.YEAR, -Constants.DEFAULT_DATE_RANGE);
             return new DateRangeRandomizer(calendar.getTime(), new Date());
         }
 

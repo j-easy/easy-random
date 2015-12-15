@@ -26,7 +26,7 @@
 package io.github.benas.jpopulator.randomizers.internal;
 
 import io.github.benas.jpopulator.api.Randomizer;
-import io.github.benas.jpopulator.util.ConstantsUtil;
+import io.github.benas.jpopulator.util.Constants;
 
 import java.util.Date;
 
@@ -34,6 +34,6 @@ public class DateRandomizer implements Randomizer<Date> {
 
     @Override
     public Date getRandomValue() {
-        return ConstantsUtil.DATE_RANGE_RANDOMIZER.getRandomValue();
+        return Constants.DATE_RANGE_RANDOMIZER.getRandomValue();
     }
 }

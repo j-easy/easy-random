@@ -26,7 +26,7 @@
 package io.github.benas.jpopulator.randomizers;
 
 import io.github.benas.jpopulator.api.Randomizer;
-import io.github.benas.jpopulator.util.ConstantsUtil;
+import io.github.benas.jpopulator.util.Constants;
 
 /**
  * A generic randomizer that generate String values from a list of words.
@@ -50,7 +50,7 @@ public class GenericStringRandomizer implements Randomizer<String> {
 
     @Override
     public String getRandomValue() {
-        return words[ConstantsUtil.RANDOM.nextInt(words.length)];
+        return words[Constants.RANDOM.nextInt(words.length)];
     }
 
 }

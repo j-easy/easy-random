@@ -26,13 +26,13 @@
 package io.github.benas.jpopulator.randomizers.internal;
 
 import io.github.benas.jpopulator.api.Randomizer;
-import io.github.benas.jpopulator.util.ConstantsUtil;
+import io.github.benas.jpopulator.util.Constants;
 import org.apache.commons.lang3.RandomStringUtils;
 
 public class StringRandomizer implements Randomizer<String> {
 
     @Override
     public String getRandomValue() {
-        return RandomStringUtils.randomAlphabetic(ConstantsUtil.DEFAULT_STRING_LENGTH);
+        return RandomStringUtils.randomAlphabetic(Constants.DEFAULT_STRING_LENGTH);
     }
 }

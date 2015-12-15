@@ -26,12 +26,12 @@
 package io.github.benas.jpopulator.randomizers.jodatime;
 
 import io.github.benas.jpopulator.api.Randomizer;
-import io.github.benas.jpopulator.util.ConstantsUtil;
+import io.github.benas.jpopulator.util.Constants;
 import org.joda.time.Duration;
 
 public class JodaTimeDurationRandomizer implements Randomizer<Duration> {
     @Override
     public Duration getRandomValue() {
-        return new Duration(Math.abs(ConstantsUtil.RANDOM.nextLong()));
+        return new Duration(Math.abs(Constants.RANDOM.nextLong()));
     }
 }

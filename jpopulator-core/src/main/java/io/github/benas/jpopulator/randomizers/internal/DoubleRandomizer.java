@@ -26,12 +26,12 @@
 package io.github.benas.jpopulator.randomizers.internal;
 
 import io.github.benas.jpopulator.api.Randomizer;
-import io.github.benas.jpopulator.util.ConstantsUtil;
+import io.github.benas.jpopulator.util.Constants;
 
 public class DoubleRandomizer implements Randomizer<Double> {
 
     @Override
     public Double getRandomValue() {
-        return ConstantsUtil.RANDOM.nextDouble();
+        return Constants.RANDOM.nextDouble();
     }
 }

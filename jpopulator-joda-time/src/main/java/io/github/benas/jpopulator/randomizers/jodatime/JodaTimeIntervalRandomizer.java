@@ -26,14 +26,14 @@
 package io.github.benas.jpopulator.randomizers.jodatime;
 
 import io.github.benas.jpopulator.api.Randomizer;
-import io.github.benas.jpopulator.util.ConstantsUtil;
+import io.github.benas.jpopulator.util.Constants;
 import org.joda.time.Interval;
 
 public class JodaTimeIntervalRandomizer implements Randomizer<Interval> {
     @Override
     public Interval getRandomValue() {
-        long startDate = Math.abs(ConstantsUtil.RANDOM.nextInt());
-        long endDate = startDate + Math.abs(ConstantsUtil.RANDOM.nextInt());
+        long startDate = Math.abs(Constants.RANDOM.nextInt());
+        long endDate = startDate + Math.abs(Constants.RANDOM.nextInt());
         return new Interval(startDate, endDate);
     }
 }

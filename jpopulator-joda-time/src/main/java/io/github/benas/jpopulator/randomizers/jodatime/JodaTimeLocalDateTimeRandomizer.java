@@ -26,12 +26,12 @@
 package io.github.benas.jpopulator.randomizers.jodatime;
 
 import io.github.benas.jpopulator.api.Randomizer;
-import io.github.benas.jpopulator.util.ConstantsUtil;
+import io.github.benas.jpopulator.util.Constants;
 import org.joda.time.LocalDateTime;
 
 public class JodaTimeLocalDateTimeRandomizer implements Randomizer<LocalDateTime> {
     @Override
     public LocalDateTime getRandomValue() {
-        return new LocalDateTime(ConstantsUtil.DATE_RANGE_RANDOMIZER.getRandomValue().getTime());
+        return new LocalDateTime(Constants.DATE_RANGE_RANDOMIZER.getRandomValue().getTime());
     }
 }

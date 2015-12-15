@@ -25,7 +25,7 @@
 package io.github.benas.jpopulator.randomizers;
 
 import io.github.benas.jpopulator.api.Randomizer;
-import io.github.benas.jpopulator.util.ConstantsUtil;
+import io.github.benas.jpopulator.util.Constants;
 
 /**
  * A randomizer that return a random value from a given enumeration values.
@@ -48,6 +48,6 @@ public class EnumRandomizer implements Randomizer<Enum> {
     @Override
     public Enum getRandomValue() {
         Enum[] enumConstants = enumeration.getEnumConstants();
-        return enumConstants[ConstantsUtil.RANDOM.nextInt(enumConstants.length)];
+        return enumConstants[Constants.RANDOM.nextInt(enumConstants.length)];
     }
 }

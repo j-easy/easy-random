@@ -26,7 +26,7 @@
 package io.github.benas.jpopulator.randomizers.internal;
 
 import io.github.benas.jpopulator.api.Randomizer;
-import io.github.benas.jpopulator.util.ConstantsUtil;
+import io.github.benas.jpopulator.util.Constants;
 
 import java.net.MalformedURLException;
 import java.net.URL;
@@ -40,7 +40,7 @@ public class UrlRandomizer implements Randomizer<URL> {
     @Override
     public URL getRandomValue() {
         try {
-            return new URL(urls[ConstantsUtil.RANDOM.nextInt(urls.length)]);
+            return new URL(urls[Constants.RANDOM.nextInt(urls.length)]);
         } catch (MalformedURLException e) {
             // random URLs form the resource bundle are valid
             return null;

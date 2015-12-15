@@ -26,12 +26,12 @@
 package io.github.benas.jpopulator.randomizers.jodatime;
 
 import io.github.benas.jpopulator.api.Randomizer;
-import io.github.benas.jpopulator.util.ConstantsUtil;
+import io.github.benas.jpopulator.util.Constants;
 import org.joda.time.Period;
 
 public class JodaTimePeriodRandomizer implements Randomizer<Period> {
     @Override
     public Period getRandomValue() {
-        return new Period(Math.abs(ConstantsUtil.RANDOM.nextInt()));
+        return new Period(Math.abs(Constants.RANDOM.nextInt()));
     }
 }

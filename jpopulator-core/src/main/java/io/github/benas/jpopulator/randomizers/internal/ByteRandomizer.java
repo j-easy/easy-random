@@ -26,12 +26,12 @@
 package io.github.benas.jpopulator.randomizers.internal;
 
 import io.github.benas.jpopulator.api.Randomizer;
-import io.github.benas.jpopulator.util.ConstantsUtil;
+import io.github.benas.jpopulator.util.Constants;
 
 public class ByteRandomizer implements Randomizer<Byte> {
 
     @Override
     public Byte getRandomValue() {
-        return (byte) ConstantsUtil.RANDOM.nextInt();
+        return (byte) Constants.RANDOM.nextInt();
     }
 }
