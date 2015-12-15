@@ -2,13 +2,13 @@
 
 jPopulator is a java library that allows you to populate java beans with random data.
 
-Populating a deep type hierarchy by hand is a tedious task and the goal of jPopulator is to make this task hassle-free.
+Populating a deep type hierarchy by hand is a tedious task and the goal of jPopulator is to make this task easy.
 
 Let's see an example, suppose you have the following classes:
 
 ![](https://github.com/benas/jPopulator/raw/master/site/person.png)
 
-If you want to populate a `Person` bean with jPopulator, you write this:
+If you want to populate a `Person` bean with jPopulator, you write this snippet:
 
 ```java
 Populator populator = new PopulatorBuilder().build();
@@ -16,6 +16,38 @@ Person person = populator.populateBean(Person.class);
 ```
 
 And voila! jPopulator will introspect the `Person` type hierarchy, generate an instance for each nested bean and populate it with random data.
+
+**Without** jPopulator, you would write something like:
+ 
+ ```java
+ Street street = new Street(12, (byte) 1, "Oxford street");
+ Address address = new Address(street, "123456", "London", "United Kingdom");
+ Person person = new Person("Foo", "Bar", "foo.bar@gmail.com", Gender.MALE, address);
+ ```
+ 
+ And if these classes do not provide constructors with parameters (may be some legacy beans you don't have the control over), you would write:
+ 
+ ```java
+ Street street = new Street();
+ street.setNumber(12);
+ street.setType((byte) 1);
+ street.setName("Oxford street");
+ 
+ Address address = new Address();
+ address.setStreet(street);
+ address.setZipCode("123456");
+ address.setCity("London");
+ address.setCountry("United Kingdom");
+ 
+ Person person = new Person();
+ person.setFirstName("Foo");
+ person.setLastName("Bar");
+ person.setEmail("foo.bar@gmail.com");
+ person.setGender(Gender.MALE);
+ person.setAddress(address);
+ ```
+ 
+It's always tedious to generate test data by hand, and jPopulator makes this task easier.
 
 ## Documentation
 
@@ -46,7 +78,7 @@ jPopulator is released under the [MIT License](http://opensource.org/licenses/mi
 ```
 The MIT License
 
-Copyright (c) 2015, Mahmoud Ben Hassine (mahmoud.benhassine@icloud.com)
+Copyright (c) 2016, Mahmoud Ben Hassine (mahmoud.benhassine@icloud.com)
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal
