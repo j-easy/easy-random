@@ -11,36 +11,69 @@
 
     <name>jPopulator (Validation)</name>
     <artifactId>jpopulator-validation</artifactId>
+    <description>jPopulator module for Bean Validation API support</description>
+    <url>https://github.com/benas/jPopulator</url>
+
+    <scm>
+        <url>git@github.com:benas/jPopulator.git</url>
+        <connection>scm:git:git@github.com:benas/jPopulator.git</connection>
+        <developerConnection>scm:git:git@github.com:benas/jPopulator.git</developerConnection>
+        <tag>HEAD</tag>
+    </scm>
+
+    <ciManagement>
+        <system>Travis CI</system>
+        <url>https://travis-ci.org/benas/jPopulator</url>
+    </ciManagement>
+
+    <issueManagement>
+        <system>GitHub</system>
+        <url>https://github.com/benas/jPopulator/issues</url>
+    </issueManagement>
+
+    <licenses>
+        <license>
+            <name>MIT License</name>
+            <url>http://opensource.org/licenses/mit-license.php</url>
+        </license>
+    </licenses>
+
+    <developers>
+        <developer>
+            <id>benas</id>
+            <name>Mahmoud Ben Hassine</name>
+            <url>http://benas.github.io</url>
+            <email>mahmoud.benhassine@icloud.com</email>
+            <roles>
+                <role>Lead developer</role>
+            </roles>
+        </developer>
+    </developers>
 
     <dependencies>
         <dependency>
             <groupId>io.github.benas</groupId>
             <artifactId>jpopulator-core</artifactId>
         </dependency>
-
         <dependency>
             <groupId>javax.validation</groupId>
             <artifactId>validation-api</artifactId>
         </dependency>
-
         <dependency>
             <groupId>org.hibernate</groupId>
             <artifactId>hibernate-validator</artifactId>
             <scope>test</scope>
         </dependency>
-
         <dependency>
             <groupId>org.glassfish.web</groupId>
             <artifactId>javax.el</artifactId>
             <scope>test</scope>
         </dependency>
-
         <dependency>
             <groupId>io.github.benas</groupId>
             <artifactId>jpopulator-test</artifactId>
             <scope>test</scope>
         </dependency>
     </dependencies>
-
 
 </project>
