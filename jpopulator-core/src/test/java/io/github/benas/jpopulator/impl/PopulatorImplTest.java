@@ -73,17 +73,6 @@ public class PopulatorImplTest {
     }
 
     @Test
-    public void excludedDottedFieldsShouldNotBePopulated() throws Exception {
-        Person person = populator.populateBean(Person.class, "address.street.name");
-
-        assertThat(person).isNotNull();
-        assertThat(person.getAddress()).isNotNull();
-        assertThat(person.getAddress().getStreet()).isNotNull();
-
-        assertThat(person.getAddress().getStreet().getName()).isNull();
-    }
-
-    @Test
     public void finalFieldsShouldBePopulated() throws Exception {
         Person person = populator.populateBean(Person.class);
 
@@ -305,33 +294,5 @@ public class PopulatorImplTest {
         assertThat(immutableBean).isNotNull();
         assertThat(immutableBean.getFinalValue()).isNotNull();
         assertThat(immutableBean.getFinalCollection()).isNotNull();
-    }
-
-    @Test
-    public void testDirectRecursiveBeanPopulation() throws Exception {
-        final RecursiveBeanD beanD = populator.populateBean(RecursiveBeanD.class);
-        assertThat(beanD).isNotNull();
-        assertThat(beanD.getBeanD()).isSameAs(beanD);
-        assertThat(beanD.getStringProperty()).isNotNull().isNotEmpty();
-    }
-
-    @Test
-    public void testIndirectRecursiveBeanPopulation() throws Exception {
-        final RecursiveBeanA beanA = populator.populateBean(RecursiveBeanA.class);
-        RecursiveBeanB beanB = beanA.getBeanB();
-        RecursiveBeanC beanC = beanA.getBeanC();
-
-        assertThat(beanA).isNotNull();
-        assertThat(beanB).isNotNull();
-        assertThat(beanC).isNotNull();
-
-        assertThat(beanA.getBeanB()).isSameAs(beanB);
-        assertThat(beanC.getBeanB()).isSameAs(beanB);
-
-        assertThat(beanA.getBeanC()).isSameAs(beanC);
-        assertThat(beanB.getBeanC()).isSameAs(beanC);
-
-        assertThat(beanB.getBeanA()).isSameAs(beanA);
-        assertThat(beanC.getBeanA()).isSameAs(beanA);
     }
 }

@@ -84,20 +84,11 @@ public final class PopulatorImpl implements Populator {
     @Override
     @SuppressWarnings("unchecked")
     public <T> T populateBean(final Class<T> type, final String... excludedFields) {
-        return doPopulateBean(type, new PopulatorContext(excludedFields));
-    }
-
-    protected <T> T doPopulateBean(final Class<T> type, PopulatorContext context) {
         T result;
         try {
             //No instantiation needed for enum types.
             if (type.isEnum()) {
                 return (T) getEnumRandomizer((Class<? extends Enum>) type).getRandomValue();
-            }
-
-            // Check if the bean already exists in the context, reuse it to avoid recursion.
-            if (context.hasPopulatedBean(type)) {
-                return context.getPopulatedBean(type);
             }
 
             // create a new instance of the target type
@@ -108,16 +99,15 @@ public final class PopulatorImpl implements Populator {
             }
 
             // retrieve declared and inherited fields
-            context.addPopulatedBean(type, result);
             List<Field> declaredFields = getDeclaredFields(result);
             declaredFields.addAll(getInheritedFields(type));
 
             //Generate random data for each field
             for (Field field : declaredFields) {
-                if (shouldExcludeField(field, context) || isStatic(field)) {
+                if (shouldExcludeField(field, excludedFields) || isStatic(field)) {
                     continue;
                 }
-                populateField(result, field, context);
+                populateField(result, field);
             }
             return result;
         } catch (Exception e) {
@@ -165,35 +155,31 @@ public final class PopulatorImpl implements Populator {
      *
      * @param target  The target object on which the generated value will be set
      * @param field   The field in which the generated value will be set
-     * @param context The context of this call
      * @throws IllegalAccessException    Thrown when the generated value cannot be set to the given field
      * @throws NoSuchMethodException     Thrown when there is no setter for the given field
      * @throws InvocationTargetException Thrown when the setter of the given field can not be invoked
      */
-    private void populateField(final Object target, final Field field, final PopulatorContext context)
+    private void populateField(final Object target, final Field field)
             throws IllegalAccessException, NoSuchMethodException, InvocationTargetException {
 
         Class fieldType = field.getType();
         Class targetClass = target.getClass();
 
-        context.pushStackItem(new ContextStackItem(target, field));
-
-        Object object;
+        Object value;
         Randomizer randomizer = getRandomizer(targetClass, field);
         if (randomizer != null) {
-            object = randomizer.getRandomValue();
+            value = randomizer.getRandomValue();
         } else {
             if (fieldType.isEnum()) {
-                object = getEnumRandomizer(fieldType).getRandomValue();
+                value = getEnumRandomizer(fieldType).getRandomValue();
             } else if (isCollectionType(fieldType)) {
-                object = getRandomCollection(field);
+                value = getRandomCollection(field);
             } else {
                 // Consider the class as a child bean.
-                object = doPopulateBean(fieldType, context);
+                value = populateBean(fieldType);
             }
         }
-        setProperty(target, field, object);
-        context.popStackItem();
+        setProperty(target, field, value);
     }
 
     /**
@@ -228,7 +214,7 @@ public final class PopulatorImpl implements Populator {
      * @return a randomizer for this field, or null if none is found.
      */
     private Randomizer getDefaultRandomizer(final Field field) {
-        ArrayList<Randomizer> randomizers = new ArrayList<Randomizer>();
+        List<Randomizer> randomizers = new ArrayList<Randomizer>();
         for (RandomizerRegistry registry : registries) {
             Randomizer randomizer = registry.getRandomizer(field);
             if (randomizer != null) {
@@ -315,23 +301,17 @@ public final class PopulatorImpl implements Populator {
      * Utility method that checks if a field should be excluded from being populated.
      *
      * @param field   the field to check
-     * @param context the populator context
      * @return true if the field should be excluded, false otherwise
      */
-    private boolean shouldExcludeField(final Field field, final PopulatorContext context) {
+    private boolean shouldExcludeField(final Field field, String... excludedFields) {
         if (field.isAnnotationPresent(Exclude.class)) {
             return true;
         }
-        if (context.getExcludedFields().length == 0) {
-            return false;
-        }
-        String fieldFullName = context.getFieldFullName(field.getName());
-        for (String excludedFieldName : context.getExcludedFields()) {
-            if (fieldFullName.equalsIgnoreCase(excludedFieldName)) {
+        for (String excludedFieldName : excludedFields) {
+            if (field.getName().equalsIgnoreCase(excludedFieldName)) {
                 return true;
             }
         }
-
         return false;
     }
 
