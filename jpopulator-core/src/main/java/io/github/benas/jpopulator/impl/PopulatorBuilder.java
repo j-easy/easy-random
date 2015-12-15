@@ -48,12 +48,6 @@ public class PopulatorBuilder {
     private Set<RandomizerRegistry> userRegistries;
 
     /**
-     * Disable default registries discovered with Java Service Provider API.
-     */
-    private boolean defaultRegistriesDisabled;
-
-
-    /**
      * Public constructor.
      */
     public PopulatorBuilder() {
@@ -66,7 +60,6 @@ public class PopulatorBuilder {
     private void reset() {
         randomizers = new HashMap<RandomizerDefinition, Randomizer>();
         userRegistries = new LinkedHashSet<RandomizerRegistry>();
-        defaultRegistriesDisabled = false;
     }
 
     /**
@@ -84,33 +77,13 @@ public class PopulatorBuilder {
     }
 
     /**
-     * Register a Randomizer Registry
+     * Register a {@link RandomizerRegistry}
      *
-     * @param registry the registry to register in populator
+     * @param registry the {@link RandomizerRegistry} to register in the populator
      * @return a pre configured populator builder instance
      */
-    public PopulatorBuilder registerRandomizerRegistry(RandomizerRegistry registry) {
+    public PopulatorBuilder registerRandomizerRegistry(final RandomizerRegistry registry) {
         userRegistries.add(registry);
-        return this;
-    };
-
-    /**
-     * Disable default randomizer registries declared through Java Service Provider API.
-     *
-     * @return a pre configured populator builder instance
-     */
-    public PopulatorBuilder disableDefaultRegistries() {
-        return disableDefaultRegistries(true);
-    }
-
-    /**
-     * Disable/Enable default randomizer registries declared through Java Service Provider API.
-     *
-     * @param disabled the disabled value of the property
-     * @return a pre configured populator builder instance
-     */
-    public PopulatorBuilder disableDefaultRegistries(boolean disabled) {
-        defaultRegistriesDisabled = disabled;
         return this;
     }
 
@@ -121,21 +94,19 @@ public class PopulatorBuilder {
      */
     public Populator build() {
         LinkedHashSet<RandomizerRegistry> registries = new LinkedHashSet<RandomizerRegistry>();
-        registries.addAll(userRegistries);
-        if (!defaultRegistriesDisabled) {
-            registries.addAll(loadDefaultRegistries());
-        }
+        registries.addAll(userRegistries); // programatically registered registries
+        registries.addAll(loadRegistries()); // registries added to classpath through the SPI
         Populator populator = new PopulatorImpl(registries, randomizers);
         reset();
         return populator;
     }
 
     /**
-     * Retrieves a collection of Randomizer Registry from Java Service Provider API.
+     * Retrieves a collection of {@link RandomizerRegistry} from Java Service Provider API.
      *
-     * @return a collection of randomizer registry objects discovered from Randomizer
+     * @return a collection of {@link RandomizerRegistry} objects discovered from the classpath
      */
-    private Collection<? extends RandomizerRegistry> loadDefaultRegistries() {
+    private Collection<RandomizerRegistry> loadRegistries() {
         List<RandomizerRegistry> registries = new ArrayList<RandomizerRegistry>();
         ServiceLoader<RandomizerRegistry> loader = ServiceLoader.load(RandomizerRegistry.class);
         for (RandomizerRegistry registry : loader) {
