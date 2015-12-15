@@ -54,11 +54,6 @@ public final class Constants {
     public static final int DEFAULT_STRING_LENGTH = 10;
 
     /**
-     * Default threshold of generated big integers numBits.
-     */
-    public static final int DEFAULT_BIG_INTEGER_NUM_BITS_LENGTH = 100;
-
-    /**
      * The common random object used to generate random values.
      */
     public static final Random RANDOM;
