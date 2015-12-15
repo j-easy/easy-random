@@ -47,7 +47,7 @@ import java.util.logging.Logger;
  *
  * @author Mahmoud Ben Hassine (mahmoud.benhassine@icloud.com)
  */
-public final class PopulatorImpl implements Populator {
+final class PopulatorImpl implements Populator {
 
     private static final Logger LOGGER = Logger.getLogger(PopulatorImpl.class.getName());
 

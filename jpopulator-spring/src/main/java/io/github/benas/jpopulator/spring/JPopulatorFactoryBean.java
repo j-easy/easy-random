@@ -25,8 +25,8 @@
 
 package io.github.benas.jpopulator.spring;
 
+import io.github.benas.jpopulator.api.Populator;
 import io.github.benas.jpopulator.impl.PopulatorBuilder;
-import io.github.benas.jpopulator.impl.PopulatorImpl;
 import org.springframework.beans.factory.FactoryBean;
 
 import java.util.ArrayList;
@@ -57,7 +57,7 @@ public class JPopulatorFactoryBean implements FactoryBean {
 
     @Override
     public Class<?> getObjectType() {
-        return PopulatorImpl.class;
+        return Populator.class;
     }
 
     @Override
