@@ -28,6 +28,11 @@ package io.github.benas.jpopulator.randomizers.internal;
 import io.github.benas.jpopulator.api.Randomizer;
 import io.github.benas.jpopulator.util.Constants;
 
+/**
+ * Generate a random {@link Long}.
+ *
+ * @author Mahmoud Ben Hassine (mahmoud.benhassine@icloud.com)
+ */
 public class LongRandomizer implements Randomizer<Long> {
 
     @Override

@@ -29,6 +29,11 @@ import io.github.benas.jpopulator.api.Randomizer;
 
 import java.sql.Timestamp;
 
+/**
+ * Generate a random {@link Timestamp}.
+ *
+ * @author Mahmoud Ben Hassine (mahmoud.benhassine@icloud.com)
+ */
 public class SqlTimestampRandomizer implements Randomizer<Timestamp> {
 
     private DateRandomizer delegate = new DateRandomizer();

@@ -25,7 +25,13 @@
 
 package io.github.benas.jpopulator.randomizers.range;
 
+/**
+ * Generate a random {@link Integer} in the given range.
+ *
+ * @author Rémi Alvergnat (toilal.dev@gmail.com)
+ */
 public class IntegerRangeRandomizer extends AbstractRangeRandomizer<Integer> {
+
     public IntegerRangeRandomizer(Integer min, Integer max) {
         super(min, max);
     }

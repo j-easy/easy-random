@@ -31,7 +31,7 @@ import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
 
 /**
- * Annotation to mark a field to be set with a random value.
+ * Annotation to mark a field to be populated with a random value.
  *
  * @author Mahmoud Ben Hassine (mahmoud.benhassine@icloud.com)
  */
@@ -40,9 +40,10 @@ import java.lang.annotation.Target;
 public @interface Randomizer {
 
     /**
-     * The randomizer to use to generate the random value.
+     * The {@link io.github.benas.jpopulator.api.Randomizer} to use to generate the random value for this field.
+     * The implementation <strong>must</strong> provide a default constructor.
      *
-     * @return the randomizer class
+     * @return the randomizer's class
      */
     Class<? extends io.github.benas.jpopulator.api.Randomizer> value();
 }

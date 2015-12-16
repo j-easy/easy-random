@@ -28,7 +28,13 @@ package io.github.benas.jpopulator.randomizers.range;
 import io.github.benas.jpopulator.api.Randomizer;
 import org.apache.commons.lang3.RandomStringUtils;
 
+/**
+ * Generate a random {@link String} having a length in the given range.
+ *
+ * @author Rémi Alvergnat (toilal.dev@gmail.com)
+ */
 public class StringLengthRandomizer implements Randomizer<String> {
+
     private IntegerRangeRandomizer delegate;
 
     public StringLengthRandomizer(Integer min, Integer max) {

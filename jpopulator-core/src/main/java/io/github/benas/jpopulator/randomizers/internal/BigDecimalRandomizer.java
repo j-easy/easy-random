@@ -29,6 +29,11 @@ import io.github.benas.jpopulator.api.Randomizer;
 
 import java.math.BigDecimal;
 
+/**
+ * Generate a random {@link BigDecimal}.
+ *
+ * @author Mahmoud Ben Hassine (mahmoud.benhassine@icloud.com)
+ */
 public class BigDecimalRandomizer implements Randomizer<BigDecimal> {
 
     DoubleRandomizer delegate = new DoubleRandomizer();

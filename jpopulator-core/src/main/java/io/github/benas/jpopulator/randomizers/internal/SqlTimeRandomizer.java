@@ -29,6 +29,11 @@ import io.github.benas.jpopulator.api.Randomizer;
 
 import java.sql.Time;
 
+/**
+ * Generate a random {@link Time}.
+ *
+ * @author Mahmoud Ben Hassine (mahmoud.benhassine@icloud.com)
+ */
 public class SqlTimeRandomizer implements Randomizer<Time> {
 
     private DateRandomizer delegate = new DateRandomizer();

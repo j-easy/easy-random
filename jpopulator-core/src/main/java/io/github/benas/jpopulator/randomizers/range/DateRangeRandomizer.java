@@ -28,17 +28,12 @@ package io.github.benas.jpopulator.randomizers.range;
 import java.util.Date;
 
 /**
- * A custom date randomizer that generates random dates in a range of date values.
+ * Generate a random {@link Date} in the given range.
  *
- * @author Mahmoud Ben Hassine (mahmoud.benhassine@icloud.com)
+ * @author Rémi Alvergnat (toilal.dev@gmail.com)
  */
 public class DateRangeRandomizer extends AbstractRangeRandomizer<Date> {
-    /**
-     * Public constructor.
-     *
-     * @param min the minimum date.
-     * @param max the maximum date.
-     */
+
     public DateRangeRandomizer(final Date min, final Date max) {
         super(min, max);
     }

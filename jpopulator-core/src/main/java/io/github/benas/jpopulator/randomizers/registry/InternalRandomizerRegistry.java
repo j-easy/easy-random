@@ -42,6 +42,11 @@ import java.util.Map;
 import java.util.concurrent.atomic.AtomicInteger;
 import java.util.concurrent.atomic.AtomicLong;
 
+/**
+ * Registry for Java built-in types.
+ *
+ * @author Rémi Alvergnat (toilal.dev@gmail.com)
+ */
 @Priority(-255)
 public class InternalRandomizerRegistry implements RandomizerRegistry {
 

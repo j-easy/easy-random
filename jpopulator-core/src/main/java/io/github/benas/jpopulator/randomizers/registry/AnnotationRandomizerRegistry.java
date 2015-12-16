@@ -45,7 +45,6 @@ public class AnnotationRandomizerRegistry implements RandomizerRegistry {
 
     /**
      * Retrieves a randomizer for the given field.
-     * The {@link Randomizer} implementation must provide a default constructor.
      *
      * @param field the field for which a randomizer was registered
      * @return the randomizer registered for the given field

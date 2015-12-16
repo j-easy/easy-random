@@ -25,11 +25,6 @@
 
 package io.github.benas.jpopulator.beans;
 
-/**
- * A java bean for the Address type.
- *
- * @author Mahmoud Ben Hassine (mahmoud.benhassine@icloud.com)
- */
 public class Address {
 
     private Street street;

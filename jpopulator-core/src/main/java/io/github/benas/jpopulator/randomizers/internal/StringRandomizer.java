@@ -29,6 +29,11 @@ import io.github.benas.jpopulator.api.Randomizer;
 import io.github.benas.jpopulator.util.Constants;
 import org.apache.commons.lang3.RandomStringUtils;
 
+/**
+ * Generate a random {@link String}.
+ *
+ * @author Mahmoud Ben Hassine (mahmoud.benhassine@icloud.com)
+ */
 public class StringRandomizer implements Randomizer<String> {
 
     @Override

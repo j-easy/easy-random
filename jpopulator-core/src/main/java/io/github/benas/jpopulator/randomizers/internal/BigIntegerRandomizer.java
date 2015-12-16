@@ -30,6 +30,11 @@ import io.github.benas.jpopulator.util.Constants;
 
 import java.math.BigInteger;
 
+/**
+ * Generate a random {@link BigInteger}.
+ *
+ * @author Mahmoud Ben Hassine (mahmoud.benhassine@icloud.com)
+ */
 public class BigIntegerRandomizer implements Randomizer<BigInteger> {
 
     IntegerRandomizer delegate = new IntegerRandomizer();

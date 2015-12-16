@@ -34,6 +34,11 @@ import java.lang.reflect.Field;
 import java.util.HashMap;
 import java.util.Map;
 
+/**
+ * A registry of randomizers for Joda Time types.
+ *
+ * @author Rémi Alvergnat (toilal.dev@gmail.com)
+ */
 @Priority(-255)
 public class JodaTimeRandomizerRegistry implements RandomizerRegistry {
 

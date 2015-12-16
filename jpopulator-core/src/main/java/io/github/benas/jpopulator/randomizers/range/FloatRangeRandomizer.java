@@ -27,7 +27,13 @@ package io.github.benas.jpopulator.randomizers.range;
 
 import io.github.benas.jpopulator.api.Randomizer;
 
+/**
+ * Generate a random {@link Float} in the given range.
+ *
+ * @author Mahmoud Ben Hassine (mahmoud.benhassine@icloud.com)
+ */
 public class FloatRangeRandomizer implements Randomizer<Float> {
+
     private final LongRangeRandomizer delegate;
 
     public FloatRangeRandomizer(Float min, Float max) {

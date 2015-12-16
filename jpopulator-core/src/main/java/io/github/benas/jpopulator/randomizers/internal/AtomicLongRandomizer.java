@@ -29,6 +29,11 @@ import io.github.benas.jpopulator.api.Randomizer;
 
 import java.util.concurrent.atomic.AtomicLong;
 
+/**
+ * Generate a random {@link AtomicLong}.
+ *
+ * @author Mahmoud Ben Hassine (mahmoud.benhassine@icloud.com)
+ */
 public class AtomicLongRandomizer implements Randomizer<AtomicLong> {
 
     LongRandomizer delegate = new LongRandomizer();

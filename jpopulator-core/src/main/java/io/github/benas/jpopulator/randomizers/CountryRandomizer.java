@@ -25,10 +25,12 @@
 
 package io.github.benas.jpopulator.randomizers;
 
+import io.github.benas.jpopulator.api.Randomizer;
+
 import java.util.ResourceBundle;
 
 /**
- * A custom String randomizer that generates random values for country names.
+ * A {@link Randomizer} that generates random countries.
  *
  * @author Mahmoud Ben Hassine (mahmoud.benhassine@icloud.com)
  */

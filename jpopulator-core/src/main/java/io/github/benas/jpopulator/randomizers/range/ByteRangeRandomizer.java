@@ -25,7 +25,13 @@
 
 package io.github.benas.jpopulator.randomizers.range;
 
+/**
+ * Generate a random {@link Byte} in the given range.
+ *
+ * @author Rémi Alvergnat (toilal.dev@gmail.com)
+ */
 public class ByteRangeRandomizer extends AbstractRangeRandomizer<Byte> {
+
     public ByteRangeRandomizer(Byte min, Byte max) {
         super(min, max);
     }

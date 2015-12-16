@@ -27,11 +27,6 @@ package io.github.benas.jpopulator.beans;
 
 import java.util.*;
 
-/**
- * Java bean used to test collections "population".
- *
- * @author Mahmoud Ben Hassine (mahmoud.benhassine@icloud.com)
- */
 public class CollectionsBean {
 
     private Collection collection;

@@ -27,10 +27,8 @@ package io.github.benas.jpopulator.beans;
 
 import java.util.List;
 
-/**
- * @author Dominik Frankowski (frankowski_d@poczta.onet.pl)
- */
 public class ImmutableBean {
+
     private final String finalValue;
 
     private final List<String> finalCollection;

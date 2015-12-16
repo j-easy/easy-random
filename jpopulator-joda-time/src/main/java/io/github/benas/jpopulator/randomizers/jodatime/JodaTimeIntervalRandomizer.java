@@ -29,6 +29,11 @@ import io.github.benas.jpopulator.api.Randomizer;
 import io.github.benas.jpopulator.util.Constants;
 import org.joda.time.Interval;
 
+/**
+ * A {@link Randomizer} that generates random {@link Interval}.
+ *
+ * @author Nikola Milivojevic (0dziga0@gmail.com)
+ */
 public class JodaTimeIntervalRandomizer implements Randomizer<Interval> {
     @Override
     public Interval getRandomValue() {

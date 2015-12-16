@@ -25,11 +25,6 @@
 
 package io.github.benas.jpopulator.beans;
 
-/**
- * A java bean for the Street type.
- *
- * @author Mahmoud Ben Hassine (mahmoud.benhassine@icloud.com)
- */
 public class Street {
 
     private int number;

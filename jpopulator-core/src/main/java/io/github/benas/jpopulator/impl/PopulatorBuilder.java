@@ -25,8 +25,8 @@
 
 package io.github.benas.jpopulator.impl;
 
-import io.github.benas.jpopulator.api.Randomizer;
 import io.github.benas.jpopulator.api.Populator;
+import io.github.benas.jpopulator.api.Randomizer;
 import io.github.benas.jpopulator.api.RandomizerRegistry;
 
 import java.util.*;
@@ -37,39 +37,26 @@ import java.util.*;
  * @author Mahmoud Ben Hassine (mahmoud.benhassine@icloud.com)
  */
 public class PopulatorBuilder {
-    /**
-     * A map of custom randomizers to use to generate random values.
-     */
+
     private Map<RandomizerDefinition, Randomizer> randomizers;
 
-    /**
-     * Set of user defined randomizer registries.
-     */
     private Set<RandomizerRegistry> userRegistries;
 
     /**
-     * Public constructor.
+     * Create a {@link PopulatorBuilder} instance.
      */
     public PopulatorBuilder() {
         reset();
     }
 
     /**
-     * Reset the builder to its initial state.
-     */
-    private void reset() {
-        randomizers = new HashMap<RandomizerDefinition, Randomizer>();
-        userRegistries = new LinkedHashSet<RandomizerRegistry>();
-    }
-
-    /**
-     * Register a custom randomizer for a given type and field.
+     * Register a custom randomizer for a given field.
      *
-     * @param type       The class type for which the randomizer will be used
-     * @param fieldType  the field type within the class for which the randomizer will be used
-     * @param fieldName  the field name within the class for which the randomizer will be used
-     * @param randomizer the custom randomizer to use
-     * @return a pre configured populator builder instance
+     * @param type       the target object type
+     * @param fieldType  the field type within the target object
+     * @param fieldName  the field name within the target object
+     * @param randomizer the custom {@link Randomizer} to use
+     * @return a pre configured {@link PopulatorBuilder} instance
      */
     public PopulatorBuilder registerRandomizer(final Class type, final Class fieldType, final String fieldName, final Randomizer randomizer) {
         randomizers.put(new RandomizerDefinition(type, fieldType, fieldName), randomizer);
@@ -77,10 +64,10 @@ public class PopulatorBuilder {
     }
 
     /**
-     * Register a {@link RandomizerRegistry}
+     * Register a {@link RandomizerRegistry}.
      *
-     * @param registry the {@link RandomizerRegistry} to register in the populator
-     * @return a pre configured populator builder instance
+     * @param registry the {@link RandomizerRegistry} to register in the {@link Populator}
+     * @return a pre configured {@link PopulatorBuilder} instance
      */
     public PopulatorBuilder registerRandomizerRegistry(final RandomizerRegistry registry) {
         userRegistries.add(registry);
@@ -88,9 +75,9 @@ public class PopulatorBuilder {
     }
 
     /**
-     * Build a populator instance and reset the builder to its initial state.
+     * Build a {@link Populator} instance and reset the builder to its initial state.
      *
-     * @return a configured populator instance
+     * @return a configured {@link Populator} instance
      */
     public Populator build() {
         LinkedHashSet<RandomizerRegistry> registries = new LinkedHashSet<RandomizerRegistry>();
@@ -101,11 +88,11 @@ public class PopulatorBuilder {
         return populator;
     }
 
-    /**
-     * Retrieves a collection of {@link RandomizerRegistry} from Java Service Provider API.
-     *
-     * @return a collection of {@link RandomizerRegistry} objects discovered from the classpath
-     */
+    private void reset() {
+        randomizers = new HashMap<RandomizerDefinition, Randomizer>();
+        userRegistries = new LinkedHashSet<RandomizerRegistry>();
+    }
+
     private Collection<RandomizerRegistry> loadRegistries() {
         List<RandomizerRegistry> registries = new ArrayList<RandomizerRegistry>();
         ServiceLoader<RandomizerRegistry> loader = ServiceLoader.load(RandomizerRegistry.class);

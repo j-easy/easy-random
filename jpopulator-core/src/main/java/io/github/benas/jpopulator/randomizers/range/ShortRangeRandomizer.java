@@ -25,7 +25,13 @@
 
 package io.github.benas.jpopulator.randomizers.range;
 
+/**
+ * Generate a random {@link Short} in the given range.
+ *
+ * @author Rémi Alvergnat (toilal.dev@gmail.com)
+ */
 public class ShortRangeRandomizer extends AbstractRangeRandomizer<Short> {
+
     public ShortRangeRandomizer(Short min, Short max) {
         super(min, max);
     }

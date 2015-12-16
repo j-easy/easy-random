@@ -51,31 +51,15 @@ final class PopulatorImpl implements Populator {
 
     private static final Logger LOGGER = Logger.getLogger(PopulatorImpl.class.getName());
 
-    /**
-     * Custom randomizers map to use to generate random values.
-     */
     private Map<RandomizerDefinition, Randomizer> randomizers = new HashMap<RandomizerDefinition, Randomizer>();
 
-    /**
-     * Default set of randomizer registry implementations.
-     */
     private List<RandomizerRegistry> registries = new ArrayList<RandomizerRegistry>();
 
-    /**
-     * The priority comparator
-     */
     private Comparator<Object> priorityComparator = new PriorityComparator();
 
     private Objenesis objenesis = new ObjenesisStd();
 
-
-    /**
-     * Constructor of PopulatorImpl
-     *
-     * @param registries  randomizer registries used by this populator
-     * @param randomizers the custom randomizers
-     */
-    public PopulatorImpl(final Set<RandomizerRegistry> registries, final Map<RandomizerDefinition, Randomizer> randomizers) {
+    PopulatorImpl(final Set<RandomizerRegistry> registries, final Map<RandomizerDefinition, Randomizer> randomizers) {
         this.registries.addAll(registries);
         this.randomizers.putAll(randomizers);
         Collections.sort(this.registries, priorityComparator);
@@ -153,8 +137,8 @@ final class PopulatorImpl implements Populator {
     /**
      * Method to populate a simple (ie non collection) type which can be a java built-in type or a user's custom type.
      *
-     * @param target  The target object on which the generated value will be set
-     * @param field   The field in which the generated value will be set
+     * @param target The target object on which the generated value will be set
+     * @param field  The field in which the generated value will be set
      * @throws IllegalAccessException    Thrown when the generated value cannot be set to the given field
      * @throws NoSuchMethodException     Thrown when there is no setter for the given field
      * @throws InvocationTargetException Thrown when the setter of the given field can not be invoked
@@ -196,8 +180,8 @@ final class PopulatorImpl implements Populator {
      * Retrieves the randomizer to use, either the one defined by user for a specific field or a default one provided by registries.
      *
      * @param targetClass the type of the target object
-     * @param field       the field for which the randomizer should generate values
-     * @return a randomizer for this field, or null if none is found.
+     * @param field       the field for which the {@link Randomizer} should generate values
+     * @return a {@link Randomizer} for this field, or null if none is found.
      */
     private Randomizer getRandomizer(final Class targetClass, final Field field) {
         Randomizer customRandomizer = randomizers.get(new RandomizerDefinition(targetClass, field.getType(), field.getName()));
@@ -208,10 +192,10 @@ final class PopulatorImpl implements Populator {
     }
 
     /**
-     * Retrieves the default randomizer to use, by using user registry and default registries.
+     * Retrieves the default {@link Randomizer} to use, by using user registry first and default registries after.
      *
-     * @param field field for which the randomizer should generate values
-     * @return a randomizer for this field, or null if none is found.
+     * @param field field for which the {@link Randomizer} should generate values
+     * @return a {@link Randomizer} for this field, or null if none is found.
      */
     private Randomizer getDefaultRandomizer(final Field field) {
         List<Randomizer> randomizers = new ArrayList<Randomizer>();
@@ -229,7 +213,7 @@ final class PopulatorImpl implements Populator {
     }
 
     /**
-     * Set a property (accessible or not accessible)
+     * Set a value (accessible or not accessible) in a field of a target object.
      *
      * @param object instance to set the property on
      * @param field  field to set the property on
@@ -247,7 +231,7 @@ final class PopulatorImpl implements Populator {
      * Method to populate a collection type which can be an array or a {@link Collection}.
      *
      * @param field The field in which the generated value will be set
-     * @return an random collection matching type of field.
+     * @return a random collection matching the type of field
      * @throws IllegalAccessException    Thrown when the generated value cannot be set to the given field
      * @throws NoSuchMethodException     Thrown when there is no setter for the given field
      * @throws InvocationTargetException Thrown when the setter of the given field can not be invoked
@@ -287,22 +271,10 @@ final class PopulatorImpl implements Populator {
         return collection;
     }
 
-    /**
-     * This method checks if the given type is a java built-in collection type (ie, array, List, Set, Map, etc).
-     *
-     * @param type the type that the method should check
-     * @return true if the given type is a java built-in collection type
-     */
     private boolean isCollectionType(final Class type) {
         return type.isArray() || Map.class.isAssignableFrom(type) || Collection.class.isAssignableFrom(type);
     }
 
-    /**
-     * Utility method that checks if a field should be excluded from being populated.
-     *
-     * @param field   the field to check
-     * @return true if the field should be excluded, false otherwise
-     */
     private boolean shouldExcludeField(final Field field, String... excludedFields) {
         if (field.isAnnotationPresent(Exclude.class)) {
             return true;

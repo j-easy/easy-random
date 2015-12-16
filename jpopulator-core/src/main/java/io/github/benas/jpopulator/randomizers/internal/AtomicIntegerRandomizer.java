@@ -29,6 +29,11 @@ import io.github.benas.jpopulator.api.Randomizer;
 
 import java.util.concurrent.atomic.AtomicInteger;
 
+/**
+ * Generate a random {@link AtomicInteger}.
+ *
+ * @author Mahmoud Ben Hassine (mahmoud.benhassine@icloud.com)
+ */
 public class AtomicIntegerRandomizer implements Randomizer<AtomicInteger> {
 
     IntegerRandomizer delegate = new IntegerRandomizer();

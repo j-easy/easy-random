@@ -25,18 +25,25 @@
 
 package io.github.benas.jpopulator.annotation;
 
+import io.github.benas.jpopulator.api.RandomizerRegistry;
+
 import java.lang.annotation.ElementType;
 import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
 
 /**
- * Define the priority of a Randomizer Registry
+ * Define the priority of a {@link io.github.benas.jpopulator.api.Randomizer} or a {@link RandomizerRegistry}
  *
  * @author Rémi Alvergnat (toilal.dev@gmail.com)
  */
 @Retention(RetentionPolicy.RUNTIME)
 @Target(ElementType.TYPE)
 public @interface Priority {
+    /**
+     * The priority of the object.
+     *
+     * @return the priority of the object
+     */
     int value();
 }

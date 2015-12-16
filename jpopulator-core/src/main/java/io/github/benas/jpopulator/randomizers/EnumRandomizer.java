@@ -28,7 +28,7 @@ import io.github.benas.jpopulator.api.Randomizer;
 import io.github.benas.jpopulator.util.Constants;
 
 /**
- * A randomizer that return a random value from a given enumeration values.
+ * A {@link Randomizer} that generates a random value from a given enumeration values.
  *
  * @author Mahmoud Ben Hassine (mahmoud.benhassine@icloud.com)
  */
@@ -37,7 +37,7 @@ public class EnumRandomizer implements Randomizer<Enum> {
     private Class<? extends Enum> enumeration;
 
     /**
-     * Construct an {@link EnumRandomizer}.
+     * Create a new {@link EnumRandomizer}.
      *
      * @param enumeration the enumeration from which this randomizer will generate random values
      */

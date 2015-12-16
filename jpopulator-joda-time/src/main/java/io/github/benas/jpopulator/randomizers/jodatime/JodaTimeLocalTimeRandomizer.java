@@ -29,6 +29,11 @@ import io.github.benas.jpopulator.api.Randomizer;
 import io.github.benas.jpopulator.util.Constants;
 import org.joda.time.LocalTime;
 
+/**
+ * A {@link Randomizer} that generates random {@link LocalTime}.
+ *
+ * @author Nikola Milivojevic (0dziga0@gmail.com)
+ */
 public class JodaTimeLocalTimeRandomizer implements Randomizer<LocalTime> {
     @Override
     public LocalTime getRandomValue() {

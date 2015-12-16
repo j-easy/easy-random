@@ -29,19 +29,17 @@ import io.github.benas.jpopulator.api.Randomizer;
 import io.github.benas.jpopulator.util.Constants;
 
 /**
- * A generic randomizer that generate String values from a list of words.
+ * A generic {@link Randomizer} that generates String values from a list of words.
  *
  * @author Mahmoud Ben Hassine (mahmoud.benhassine@icloud.com)
  */
 public class GenericStringRandomizer implements Randomizer<String> {
 
-    /**
-     * Words array from which the random value should be chosen randomly.
-     */
     private final String[] words;
 
     /**
-     * Public constructor.
+     * Create a {@link GenericStringRandomizer}.
+     *
      * @param words the words array from which generate a random String.
      */
     public GenericStringRandomizer(final String[] words) {

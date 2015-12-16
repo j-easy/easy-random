@@ -33,6 +33,11 @@ import java.net.URISyntaxException;
 
 import static java.util.ResourceBundle.getBundle;
 
+/**
+ * Generate a random {@link URI}.
+ *
+ * @author Mahmoud Ben Hassine (mahmoud.benhassine@icloud.com)
+ */
 public class UriRandomizer implements Randomizer<URI> {
 
     private final String[] uris = getBundle("io/github/benas/jpopulator/data/data").getString("uris").split(",");

@@ -39,16 +39,8 @@ import java.util.Set;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-/**
- * Class to test validity of values generated for bean validation annotated fields.
- *
- * @author Mahmoud Ben Hassine (mahmoud.benhassine@icloud.com)
- */
 public class BeanValidationTest {
 
-    /**
-     * The populator to test.
-     */
     private Populator populator;
 
     @Before

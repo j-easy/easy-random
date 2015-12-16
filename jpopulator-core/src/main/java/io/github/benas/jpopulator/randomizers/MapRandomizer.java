@@ -34,37 +34,24 @@ import java.util.Map;
 /**
  * A randomizer that generates a map with random entries.
  *
+ * @param <K> the type of keys
+ * @param <V> the type of values
  * @author Mahmoud Ben Hassine (mahmoud.benhassine@icloud.com)
  */
 public class MapRandomizer<K, V> implements Randomizer<Map<K, V>> {
 
-    /**
-     * The minimum number of elements to generate.
-     */
     private int minElements;
 
-    /**
-     * The maximum number of elements to generate.
-     */
     private int maxElements;
 
-    /**
-     * The number of elements to generate.
-     */
     private int nbElements;
 
-    /**
-     * The randomizer of keys.
-     */
     private Randomizer<K> keyRandomizer;
 
-    /**
-     * The randomizer of values.
-     */
     private Randomizer<V> valueRandomizer;
 
     /**
-     * Construct a map randomizer with a random number of entries.
+     * Create a new {@link MapRandomizer} with a random number of entries.
      *
      * @param keyRandomizer   the randomizer for keys
      * @param valueRandomizer the randomizer for values
@@ -74,7 +61,7 @@ public class MapRandomizer<K, V> implements Randomizer<Map<K, V>> {
     }
 
     /**
-     * Construct a map randomizer with a fixed number of entries.
+     * Create a new {@link MapRandomizer} with a fixed number of entries.
      *
      * @param keyRandomizer   the randomizer for keys
      * @param valueRandomizer the randomizer for values
@@ -85,7 +72,7 @@ public class MapRandomizer<K, V> implements Randomizer<Map<K, V>> {
     }
 
     /**
-     * Construct a map randomizer.
+     * Create a new {@link MapRandomizer}.
      *
      * @param keyRandomizer   the randomizer for keys
      * @param valueRandomizer the randomizer for values

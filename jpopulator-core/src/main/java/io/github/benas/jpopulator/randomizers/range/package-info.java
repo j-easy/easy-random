@@ -23,20 +23,9 @@
  *
  */
 
-package io.github.benas.jpopulator.randomizers.jodatime;
-
-import io.github.benas.jpopulator.api.Randomizer;
-import io.github.benas.jpopulator.util.Constants;
-import org.joda.time.LocalDateTime;
-
 /**
- * A {@link Randomizer} that generates random {@link LocalDateTime}.
+ * This package contains built-in {@link io.github.benas.jpopulator.api.RandomizerRegistry} implementations.
  *
- * @author Nikola Milivojevic (0dziga0@gmail.com)
+ * @author Rémi Alvergnat (toilal.dev@gmail.com)
  */
-public class JodaTimeLocalDateTimeRandomizer implements Randomizer<LocalDateTime> {
-    @Override
-    public LocalDateTime getRandomValue() {
-        return new LocalDateTime(Constants.DATE_RANGE_RANDOMIZER.getRandomValue().getTime());
-    }
-}
+package io.github.benas.jpopulator.randomizers.range;

@@ -25,35 +25,22 @@
 
 package io.github.benas.jpopulator.impl;
 
+import io.github.benas.jpopulator.api.Randomizer;
+
 /**
- * This class defines the type and field for which a custom randomizer should be used.
+ * This class defines the target object type and the field (type and name) for which a custom {@link Randomizer} should be used.
  *
  * @author Mahmoud Ben Hassine (mahmoud.benhassine@icloud.com)
  */
 final class RandomizerDefinition {
 
-    /**
-     * The class type for which the randomizer will be used.
-     */
     private Class type;
 
-    /**
-     * The field type within the class for which the randomizer will be used.
-     */
     private Class fieldType;
 
-    /**
-     * The field name within the class for which the randomizer will be used.
-     */
     private String fieldName;
 
-    /**
-     * Public constructor.
-     * @param type The class type for which the randomizer will be used.
-     * @param fieldType The field type within the class for which the randomizer will be used.
-     * @param fieldName The field name within the class for which the randomizer will be used.
-     */
-    public RandomizerDefinition(Class type, Class fieldType, String fieldName) {
+    RandomizerDefinition(Class type, Class fieldType, String fieldName) {
         this.type = type;
         this.fieldType = fieldType;
         this.fieldName = fieldName;
@@ -88,7 +75,7 @@ final class RandomizerDefinition {
     }
 
     /*
-     * Randomizer definitions are unique according to class type, field type and name.
+     * Randomizer definitions are unique according to target class type, field type and name.
      */
 
     @Override

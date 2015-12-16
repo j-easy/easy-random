@@ -29,7 +29,13 @@ import io.github.benas.jpopulator.api.Randomizer;
 
 import java.math.BigDecimal;
 
+/**
+ * Generate a random {@link BigDecimal} in the given range.
+ *
+ * @author Rémi Alvergnat (toilal.dev@gmail.com)
+ */
 public class BigDecimalRangeRandomizer implements Randomizer<BigDecimal> {
+
     private final LongRangeRandomizer delegate;
 
     public BigDecimalRangeRandomizer(Long min, Long max) {

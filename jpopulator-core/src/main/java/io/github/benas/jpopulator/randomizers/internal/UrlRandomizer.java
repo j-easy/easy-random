@@ -33,6 +33,11 @@ import java.net.URL;
 
 import static java.util.ResourceBundle.getBundle;
 
+/**
+ * Generate a random {@link URL}.
+ *
+ * @author Mahmoud Ben Hassine (mahmoud.benhassine@icloud.com)
+ */
 public class UrlRandomizer implements Randomizer<URL> {
 
     private final String[] urls = getBundle("io/github/benas/jpopulator/data/data").getString("urls").split(",");

@@ -29,7 +29,13 @@ import io.github.benas.jpopulator.api.Randomizer;
 
 import java.math.BigInteger;
 
+/**
+ * Generate a random {@link BigInteger} in the given range.
+ *
+ * @author Rémi Alvergnat (toilal.dev@gmail.com)
+ */
 public class BigIntegerRangeRandomizer implements Randomizer<BigInteger> {
+
     private final LongRangeRandomizer delegate;
 
     public BigIntegerRangeRandomizer(Long min, Long max) {

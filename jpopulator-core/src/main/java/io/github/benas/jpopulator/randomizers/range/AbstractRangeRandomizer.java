@@ -28,7 +28,14 @@ package io.github.benas.jpopulator.randomizers.range;
 import io.github.benas.jpopulator.api.Randomizer;
 import org.apache.commons.math3.random.RandomDataGenerator;
 
+/**
+ * Abstract class for range randomizers.
+ *
+ * @param <T> the type of objects in the defined range.
+ * @author Rémi Alvergnat (toilal.dev@gmail.com)
+ */
 public abstract class AbstractRangeRandomizer<T> implements Randomizer<T> {
+
     protected RandomDataGenerator randomDataGenerator = new RandomDataGenerator();
 
     protected final T min;

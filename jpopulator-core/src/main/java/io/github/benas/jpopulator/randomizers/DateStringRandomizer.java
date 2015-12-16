@@ -32,31 +32,25 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 
 /**
- * A custom date randomizer that generates random dates in a range of date values in string representation.
+ * A {@link Randomizer} that generates random String dates in a range of date values.
  *
  * @author Nikola Milivojevic (0dziga0@gmail.com)
  */
 public class DateStringRandomizer implements Randomizer<String> {
 
-    /**
-     * The simple date format.
-     */
     private SimpleDateFormat simpleDateFormat = new SimpleDateFormat(Constants.DEFAULT_DATE_FORMAT);
 
-    /**
-     * The date range randomizer.
-     */
     private static DateRangeRandomizer dateRangeRandomizer = Constants.DATE_RANGE_RANDOMIZER;
 
     /**
-     * Instantiates a new date string randomizer.
+     * Create a new {@link DateStringRandomizer}.
      */
     public DateStringRandomizer() {
 
     }
 
     /**
-     * Instantiates a new date string randomizer.
+     * Create a new {@link DateStringRandomizer}.
      *
      * @param minDate the min date
      * @param maxDate the max date
@@ -66,16 +60,16 @@ public class DateStringRandomizer implements Randomizer<String> {
     }
 
     /**
-     * Instantiates a new date string randomizer.
+     * Create a new {@link DateStringRandomizer}.
      *
-     * @param format the format
+     * @param format the date format
      */
     public DateStringRandomizer(final String format) {
         simpleDateFormat = new SimpleDateFormat(format);
     }
 
     /**
-     * Instantiates a new date string randomizer.
+     * Create a new {@link DateStringRandomizer}.
      *
      * @param format  the format
      * @param minDate the min date
@@ -87,9 +81,6 @@ public class DateStringRandomizer implements Randomizer<String> {
 
     }
 
-    /* (non-Javadoc)
-     * @see io.github.benas.jpopulator.api.Randomizer#getRandomValue()
-     */
     @Override
     public String getRandomValue() {
         return simpleDateFormat.format(dateRangeRandomizer.getRandomValue());

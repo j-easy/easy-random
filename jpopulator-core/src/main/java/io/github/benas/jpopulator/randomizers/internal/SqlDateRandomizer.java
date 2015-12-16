@@ -29,6 +29,11 @@ import io.github.benas.jpopulator.api.Randomizer;
 
 import java.sql.Date;
 
+/**
+ * Generate a random {@link Date}.
+ *
+ * @author Mahmoud Ben Hassine (mahmoud.benhassine@icloud.com)
+ */
 public class SqlDateRandomizer implements Randomizer<Date> {
 
     private DateRandomizer delegate = new DateRandomizer();

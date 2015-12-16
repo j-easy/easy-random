@@ -30,11 +30,12 @@ import io.github.benas.jpopulator.annotation.Priority;
 import java.util.Comparator;
 
 /**
- * Compare using Priority annotation.
+ * Compare objects annotated with {@link Priority} annotation in the descending order.
  *
  * @author Rémi Alvergnat (toilal.dev@gmail.com)
  */
 class PriorityComparator implements Comparator<Object> {
+
     @Override
     public int compare(Object o1, Object o2) {
         int o1Priority = getPriority(o1);

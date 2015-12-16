@@ -25,17 +25,19 @@
 
 package io.github.benas.jpopulator.randomizers;
 
+import io.github.benas.jpopulator.api.Randomizer;
+
 import java.util.ResourceBundle;
 
 /**
- * A custom String randomizer that generates random values for last names.
+ * A {@link Randomizer} that generates random last names.
  *
  * @author Mahmoud Ben Hassine (mahmoud.benhassine@icloud.com)
  */
 public class LastNameRandomizer extends GenericStringRandomizer {
 
     /**
-     * Public constructor.
+     * Create a new {@link LastNameRandomizer}.
      */
     public LastNameRandomizer() {
         super(ResourceBundle.getBundle("io/github/benas/jpopulator/data/data").getString("lastNames").split(","));

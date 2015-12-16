@@ -28,11 +28,6 @@ import javax.validation.constraints.*;
 import java.math.BigDecimal;
 import java.util.Date;
 
-/**
- * A bean annotated with <a href="http://beanvalidation.org/">JSR 349</a> constraints used to test generated values validity.
- *
- * @author Mahmoud Ben Hassine (mahmoud.benhassine@icloud.com)
- */
 public class BeanValidationAnnotatedBean {
 
     @AssertFalse

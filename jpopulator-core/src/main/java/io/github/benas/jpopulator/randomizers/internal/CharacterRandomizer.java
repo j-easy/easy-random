@@ -28,6 +28,11 @@ package io.github.benas.jpopulator.randomizers.internal;
 import io.github.benas.jpopulator.api.Randomizer;
 import org.apache.commons.lang3.RandomStringUtils;
 
+/**
+ * Generate a random {@link Character}.
+ *
+ * @author Mahmoud Ben Hassine (mahmoud.benhassine@icloud.com)
+ */
 public class CharacterRandomizer implements Randomizer<Character> {
 
     @Override

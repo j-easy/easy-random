@@ -31,7 +31,7 @@ import java.util.Random;
 import java.util.ResourceBundle;
 
 /**
- * A custom String randomizer that generates random values for emails.
+ * A {@link Randomizer} that generates random emails.
  *
  * @author Mahmoud Ben Hassine (mahmoud.benhassine@icloud.com)
  */

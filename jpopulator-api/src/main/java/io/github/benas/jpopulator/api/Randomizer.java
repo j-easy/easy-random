@@ -33,7 +33,6 @@ package io.github.benas.jpopulator.api;
  */
 public interface Randomizer<T> {
 
-
     /**
      * Generate a random value for the given type.
      *

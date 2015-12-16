@@ -28,11 +28,12 @@ package io.github.benas.jpopulator.randomizers;
 import io.github.benas.jpopulator.api.Randomizer;
 
 /**
- * Generates a constant value.
+ * A {@link Randomizer} that generates constant values. Yeah.. That's not random :-)
  *
- * @param <T> the type of constant
+ * @author Mahmoud Ben Hassine (mahmoud.benhassine@icloud.com)
  */
 public class ConstantRandomizer<T> implements Randomizer<T> {
+
     private final T value;
 
     public ConstantRandomizer(T value) {

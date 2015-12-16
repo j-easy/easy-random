@@ -27,7 +27,13 @@ package io.github.benas.jpopulator.randomizers.range;
 
 import io.github.benas.jpopulator.api.Randomizer;
 
+/**
+ * Generate a random {@link Double} in the given range.
+ *
+ * @author Mahmoud Ben Hassine (mahmoud.benhassine@icloud.com)
+ */
 public class DoubleRangeRandomizer implements Randomizer<Double> {
+
     private final LongRangeRandomizer delegate;
 
     public DoubleRangeRandomizer(Double min, Double max) {

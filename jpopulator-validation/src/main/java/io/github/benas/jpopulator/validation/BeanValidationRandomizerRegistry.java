@@ -40,6 +40,11 @@ import java.math.BigInteger;
 import java.util.Calendar;
 import java.util.Date;
 
+/**
+ * A registry of randomizers to support fields annotated with the <a href="http://beanvalidation.org/">JSR 349</a> annotations.
+ *
+ * @author Rémi Alvergnat (toilal.dev@gmail.com)
+ */
 @Priority(-128)
 public class BeanValidationRandomizerRegistry implements RandomizerRegistry {
 

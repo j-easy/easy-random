@@ -30,6 +30,11 @@ import io.github.benas.jpopulator.util.Constants;
 
 import java.util.Date;
 
+/**
+ * Generate a random {@link Date}.
+ *
+ * @author Mahmoud Ben Hassine (mahmoud.benhassine@icloud.com)
+ */
 public class DateRandomizer implements Randomizer<Date> {
 
     @Override

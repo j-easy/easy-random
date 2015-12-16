@@ -33,7 +33,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * Spring Factory Bean that creates jPopulator instances.
+ * Spring Factory Bean that creates {@link Populator} instances.
  *
  * @author Mahmoud Ben Hassine (mahmoud.benhassine@icloud.com)
  */

@@ -33,28 +33,17 @@ import java.util.Collection;
 /**
  * A base class for collection randomizers.
  *
+ * @param <T> the type of elements in the collection
  * @author Mahmoud Ben Hassine (mahmoud.benhassine@icloud.com)
  */
 public abstract class CollectionRandomizer<T> implements Randomizer<Collection<T>> {
 
-    /**
-     * The minimum number of elements to generate.
-     */
     protected int minElements;
 
-    /**
-     * The maximum number of elements to generate.
-     */
     protected int maxElements;
 
-    /**
-     * The number of elements to generate.
-     */
     protected int nbElements;
 
-    /**
-     * The delegate randomizer used to generate elements.
-     */
     protected Randomizer<T> elementRandomizer;
 
     /**

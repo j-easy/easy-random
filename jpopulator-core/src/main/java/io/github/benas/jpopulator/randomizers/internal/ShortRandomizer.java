@@ -28,6 +28,11 @@ package io.github.benas.jpopulator.randomizers.internal;
 import io.github.benas.jpopulator.api.Randomizer;
 import io.github.benas.jpopulator.util.Constants;
 
+/**
+ * Generate a random {@link Short}.
+ *
+ * @author Mahmoud Ben Hassine (mahmoud.benhassine@icloud.com)
+ */
 public class ShortRandomizer implements Randomizer<Short> {
 
     @Override

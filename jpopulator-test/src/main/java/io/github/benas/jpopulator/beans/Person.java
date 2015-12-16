@@ -30,11 +30,6 @@ import io.github.benas.jpopulator.annotation.Exclude;
 import java.util.Date;
 import java.util.List;
 
-/**
- * A java bean for Person type.
- *
- * @author Mahmoud Ben Hassine (mahmoud.benhassine@icloud.com)
- */
 public class Person extends Human {
 
     protected String email;

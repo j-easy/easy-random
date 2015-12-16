@@ -29,6 +29,11 @@ import io.github.benas.jpopulator.api.Randomizer;
 
 import java.util.Calendar;
 
+/**
+ * Generate a random {@link Calendar}.
+ *
+ * @author Mahmoud Ben Hassine (mahmoud.benhassine@icloud.com)
+ */
 public class CalendarRandomizer implements Randomizer<Calendar> {
 
     private DateRandomizer delegate = new DateRandomizer();

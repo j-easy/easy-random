@@ -24,27 +24,27 @@
  */
 package io.github.benas.jpopulator.randomizers;
 
+import io.github.benas.jpopulator.api.Randomizer;
 import io.github.benas.jpopulator.util.Constants;
 
 /**
- * A randomizer that generates numbers in string representation.
+ * A {@link Randomizer} that generates numbers in string representation.
  *
  * @author Nikola Milivojevic (0dziga0@gmail.com)
  */
 public class NumericStringRandomizer extends GenericStringRandomizer {
 
-    /** The words. */
     private static String[] words = new String[1];
 
     /**
-     * Instantiates a new numeric string randomizer.
+     * Create a new {@link NumericStringRandomizer}.
      */
     public NumericStringRandomizer() {
         super(addNumbersToWords(null, null));
     }
 
     /**
-     * Instantiates a new numeric string randomizer.
+     * Create a new {@link NumericStringRandomizer}.
      *
      * @param minNumericValue the min numeric value
      * @param maxNumericValue the max numeric value
@@ -53,13 +53,6 @@ public class NumericStringRandomizer extends GenericStringRandomizer {
         super(addNumbersToWords(minNumericValue, maxNumericValue));
     }
 
-    /**
-     * Adds the numbers to words.
-     *
-     * @param minNumericValue the min numeric value
-     * @param maxNumericValue the max numeric value
-     * @return the string[]
-     */
     private static String[] addNumbersToWords(final Integer minNumericValue, final Integer maxNumericValue) {
         Integer randomNum;
         if (maxNumericValue != null && minNumericValue != null) {
