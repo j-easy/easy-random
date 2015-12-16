@@ -29,22 +29,18 @@ import io.github.benas.jpopulator.beans.Organizer;
 import org.junit.Before;
 import org.junit.Test;
 
+import static io.github.benas.jpopulator.impl.PopulatorBuilder.aNewPopulator;
 import static org.assertj.core.api.Assertions.assertThat;
 
-/**
- * Test class for Joda Time support.
- *
- * @author Nikola Milivojevic (0dziga0@gmail.com)
- */
 public class JodaTimeSupportTest {
 
-	private Populator populator;
-	
-	@Before
+    private Populator populator;
+
+    @Before
     public void setUp() throws Exception {
-        populator = new PopulatorBuilder().build();
+        populator = aNewPopulator().build();
     }
-    
+
     @Test
     public void jodaTimeBeansShouldBeFilledIn() {
 
@@ -52,10 +48,10 @@ public class JodaTimeSupportTest {
 
         assertThat(organizer).isNotNull();
         assertThat(organizer.getAnniversary()).isNotNull();
-    	assertThat(organizer.getBirthday()).isNotNull();
-    	assertThat(organizer.getHiking()).isNotNull();
-    	assertThat(organizer.getClasses()).isNotNull();
-    	assertThat(organizer.getTraining()).isNotNull();
-    	assertThat(organizer.getWorkDuration()).isNotNull();
+        assertThat(organizer.getBirthday()).isNotNull();
+        assertThat(organizer.getHiking()).isNotNull();
+        assertThat(organizer.getClasses()).isNotNull();
+        assertThat(organizer.getTraining()).isNotNull();
+        assertThat(organizer.getWorkDuration()).isNotNull();
     }
 }

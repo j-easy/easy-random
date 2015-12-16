@@ -32,6 +32,8 @@ import org.springframework.beans.factory.FactoryBean;
 import java.util.ArrayList;
 import java.util.List;
 
+import static io.github.benas.jpopulator.impl.PopulatorBuilder.aNewPopulator;
+
 /**
  * Spring Factory Bean that creates {@link Populator} instances.
  *
@@ -43,7 +45,7 @@ public class JPopulatorFactoryBean implements FactoryBean {
 
     @Override
     public Object getObject() throws Exception {
-        PopulatorBuilder populatorBuilder = new PopulatorBuilder();
+        PopulatorBuilder populatorBuilder = aNewPopulator();
         for (RandomizerBean randomizerBean : randomizers) {
             populatorBuilder.registerRandomizer(
                     randomizerBean.getType(),

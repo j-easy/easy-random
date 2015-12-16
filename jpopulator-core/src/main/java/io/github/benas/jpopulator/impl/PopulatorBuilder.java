@@ -42,11 +42,17 @@ public class PopulatorBuilder {
 
     private Set<RandomizerRegistry> userRegistries;
 
-    /**
-     * Create a {@link PopulatorBuilder} instance.
-     */
-    public PopulatorBuilder() {
+    private PopulatorBuilder() {
         reset();
+    }
+
+    /**
+     * Create a new {@link PopulatorBuilder}.
+     *
+     * @return a new {@link PopulatorBuilder}
+     */
+    public static PopulatorBuilder aNewPopulator() {
+        return new PopulatorBuilder();
     }
 
     /**

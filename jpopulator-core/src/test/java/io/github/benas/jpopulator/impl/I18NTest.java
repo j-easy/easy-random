@@ -36,6 +36,7 @@ import org.junit.Test;
 import java.util.Arrays;
 import java.util.Locale;
 
+import static io.github.benas.jpopulator.impl.PopulatorBuilder.aNewPopulator;
 import static org.assertj.core.api.Assertions.assertThat;
 
 /**
@@ -57,7 +58,7 @@ public class I18NTest {
 
     @Before
     public void setUp() throws Exception {
-        populator = new PopulatorBuilder()
+        populator = aNewPopulator()
                 .registerRandomizer(Address.class, String.class, "country", new CountryRandomizer())
                 .build();
     }

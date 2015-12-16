@@ -38,6 +38,7 @@ import java.lang.reflect.Type;
 import java.util.Arrays;
 import java.util.List;
 
+import static io.github.benas.jpopulator.impl.PopulatorBuilder.aNewPopulator;
 import static org.assertj.core.api.Assertions.assertThat;
 
 /**
@@ -54,7 +55,7 @@ public class PopulatorImplTest {
 
     @Before
     public void setUp() throws Exception {
-        populator = new PopulatorBuilder().build();
+        populator = aNewPopulator().build();
     }
 
     @Test
@@ -120,7 +121,7 @@ public class PopulatorImplTest {
 
     @Test
     public void generatedBeansWithCustomRandomizersShouldBeCorrectlyPopulated() {
-        populator = new PopulatorBuilder()
+        populator = aNewPopulator()
                 .registerRandomizer(Person.class, String.class, "email", new EmailRandomizer())
                 .registerRandomizer(Address.class, String.class, "city", new CityRandomizer())
                 .build();

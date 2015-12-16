@@ -3,15 +3,15 @@ package io.github.benas.jpopulator.impl;
 import io.github.benas.jpopulator.api.Populator;
 import io.github.benas.jpopulator.api.Randomizer;
 import io.github.benas.jpopulator.beans.Human;
-import org.assertj.core.api.Assertions;
 import org.junit.Test;
 
+import static io.github.benas.jpopulator.impl.PopulatorBuilder.aNewPopulator;
 import static org.assertj.core.api.Assertions.assertThat;
 
 public class PopulatorBuilderTest {
     @Test
     public void buildDistinctInstances() {
-        PopulatorBuilder builder = new PopulatorBuilder();
+        PopulatorBuilder builder = aNewPopulator();
 
         Populator populator1 = builder.build();
         Populator populator2 = builder.build();
@@ -21,7 +21,7 @@ public class PopulatorBuilderTest {
 
     @Test
     public void randomizerAreRegistered() {
-        PopulatorBuilder builder = new PopulatorBuilder();
+        PopulatorBuilder builder = aNewPopulator();
 
         builder.registerRandomizer(Human.class, String.class, "name", new Randomizer<String>() {
             @Override

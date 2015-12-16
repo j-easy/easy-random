@@ -28,13 +28,14 @@ package io.github.benas.jpopulator.impl;
 import io.github.benas.jpopulator.api.Populator;
 import org.junit.Test;
 
+import static io.github.benas.jpopulator.impl.PopulatorBuilder.aNewPopulator;
 import static org.assertj.core.api.Assertions.assertThat;
 
 public class RandomizerAnnotationTest {
 
     @Test
     public void testFieldPopulationWithCustomRandomizerDeclaredWithAnnotation() throws Exception {
-        Populator populator = new PopulatorBuilder().build();
+        Populator populator = aNewPopulator().build();
         Foo foo = populator.populateBean(Foo.class);
         assertThat(foo.getName()).isEqualTo("foo");
     }
