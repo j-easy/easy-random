@@ -40,10 +40,6 @@ import java.util.Map;
  */
 public class MapRandomizer<K, V> implements Randomizer<Map<K, V>> {
 
-    private int minElements;
-
-    private int maxElements;
-
     private int nbElements;
 
     private Randomizer<K> keyRandomizer;
@@ -81,11 +77,9 @@ public class MapRandomizer<K, V> implements Randomizer<Map<K, V>> {
      */
     public MapRandomizer(Randomizer<K> keyRandomizer, Randomizer<V> valueRandomizer, int minElements, int maxElements) {
         checkArguments(minElements, maxElements);
-        this.minElements = minElements;
-        this.maxElements = maxElements + 1;
         this.keyRandomizer = keyRandomizer;
         this.valueRandomizer = valueRandomizer;
-        nbElements = Constants.RANDOM.nextInt(this.maxElements - this.minElements) + this.minElements;
+        nbElements = Constants.RANDOM.nextInt(maxElements + 1 - minElements) + minElements;
     }
 
     @Override
