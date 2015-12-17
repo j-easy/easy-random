@@ -41,7 +41,7 @@ import static io.github.benas.jpopulator.impl.PopulatorBuilder.aNewPopulator;
  */
 public class JPopulatorFactoryBean implements FactoryBean {
 
-    private List<RandomizerBean> randomizers = new ArrayList<RandomizerBean>();
+    private List<RandomizerBean> randomizers = new ArrayList<>();
 
     @Override
     public Object getObject() throws Exception {

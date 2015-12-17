@@ -69,7 +69,7 @@ public class SetRandomizer<T> extends CollectionRandomizer<T> {
 
     @Override
     public Set<T> getRandomValue() {
-        Set<T> result = new HashSet<T>();
+        Set<T> result = new HashSet<>();
         for (int i = 0; i < nbElements; i++) {
             result.add(getRandomElement());
         }

@@ -90,7 +90,7 @@ public class MapRandomizer<K, V> implements Randomizer<Map<K, V>> {
 
     @Override
     public Map<K, V> getRandomValue() {
-        Map<K, V> result = new HashMap<K, V>();
+        Map<K, V> result = new HashMap<>();
         for (int i = 0; i < nbElements; i++) {
             result.put(keyRandomizer.getRandomValue(), valueRandomizer.getRandomValue());
         }
