@@ -26,13 +26,13 @@
 package io.github.benas.jpopulator.spring;
 
 import io.github.benas.jpopulator.api.Populator;
-import io.github.benas.jpopulator.impl.PopulatorBuilder;
+import io.github.benas.jpopulator.PopulatorBuilder;
 import org.springframework.beans.factory.FactoryBean;
 
 import java.util.ArrayList;
 import java.util.List;
 
-import static io.github.benas.jpopulator.impl.PopulatorBuilder.aNewPopulator;
+import static io.github.benas.jpopulator.PopulatorBuilder.aNewPopulator;
 
 /**
  * Spring Factory Bean that creates {@link Populator} instances.

@@ -1,7 +1,7 @@
 /*
  * The MIT License
  *
- *   Copyright (c) 2016, Mahmoud Ben Hassine (mahmoud.benhassine@icloud.com)
+ *   Copyright (c) 2015, Mahmoud Ben Hassine (mahmoud.benhassine@icloud.com)
  *
  *   Permission is hereby granted, free of charge, to any person obtaining a copy
  *   of this software and associated documentation files (the "Software"), to deal
@@ -20,12 +20,38 @@
  *   LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
  *   OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  *   THE SOFTWARE.
- *
  */
 
-/**
- * This package contains jPopulator core implementation.
- *
- * @author Mahmoud Ben Hassine (mahmoud.benhassine@icloud.com)
- */
-package io.github.benas.jpopulator.impl;
+package io.github.benas.jpopulator.randomizers.jodatime;
+
+import io.github.benas.jpopulator.api.Populator;
+import io.github.benas.jpopulator.beans.Organizer;
+import org.junit.Before;
+import org.junit.Test;
+
+import static io.github.benas.jpopulator.PopulatorBuilder.aNewPopulator;
+import static org.assertj.core.api.Assertions.assertThat;
+
+public class JodaTimeSupportTest {
+
+    private Populator populator;
+
+    @Before
+    public void setUp() throws Exception {
+        populator = aNewPopulator().build();
+    }
+
+    @Test
+    public void jodaTimeBeansShouldBeFilledIn() {
+
+        Organizer organizer = populator.populateBean(Organizer.class);
+
+        assertThat(organizer).isNotNull();
+        assertThat(organizer.getAnniversary()).isNotNull();
+        assertThat(organizer.getBirthday()).isNotNull();
+        assertThat(organizer.getHiking()).isNotNull();
+        assertThat(organizer.getClasses()).isNotNull();
+        assertThat(organizer.getTraining()).isNotNull();
+        assertThat(organizer.getWorkDuration()).isNotNull();
+    }
+}

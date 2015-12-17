@@ -22,7 +22,7 @@
  *   THE SOFTWARE.
  */
 
-package io.github.benas.jpopulator.impl;
+package io.github.benas.jpopulator;
 
 import io.github.benas.jpopulator.api.Populator;
 import io.github.benas.jpopulator.beans.*;
@@ -38,7 +38,7 @@ import java.lang.reflect.Type;
 import java.util.Arrays;
 import java.util.List;
 
-import static io.github.benas.jpopulator.impl.PopulatorBuilder.aNewPopulator;
+import static io.github.benas.jpopulator.PopulatorBuilder.aNewPopulator;
 import static org.assertj.core.api.Assertions.assertThat;
 
 /**

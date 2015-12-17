@@ -22,36 +22,58 @@
  *   THE SOFTWARE.
  */
 
-package io.github.benas.jpopulator.impl;
+package io.github.benas.jpopulator;
 
 import io.github.benas.jpopulator.api.Populator;
-import io.github.benas.jpopulator.beans.Organizer;
+import io.github.benas.jpopulator.beans.Address;
+import io.github.benas.jpopulator.beans.Person;
+import io.github.benas.jpopulator.randomizers.CountryRandomizer;
+import org.junit.AfterClass;
 import org.junit.Before;
+import org.junit.BeforeClass;
 import org.junit.Test;
 
-import static io.github.benas.jpopulator.impl.PopulatorBuilder.aNewPopulator;
+import java.util.Arrays;
+import java.util.Locale;
+
+import static io.github.benas.jpopulator.PopulatorBuilder.aNewPopulator;
 import static org.assertj.core.api.Assertions.assertThat;
 
-public class JodaTimeSupportTest {
+/**
+ * Test class for I18n support.
+ *
+ * @author Mahmoud Ben Hassine (mahmoud.benhassine@icloud.com)
+ */
+public class I18NTest {
 
+    /**
+     * The populator to test.
+     */
     private Populator populator;
+
+    @BeforeClass
+    public static void setupLocale() {
+        Locale.setDefault(new Locale("FR", "fr"));
+    }
 
     @Before
     public void setUp() throws Exception {
-        populator = aNewPopulator().build();
+        populator = aNewPopulator()
+                .registerRandomizer(Address.class, String.class, "country", new CountryRandomizer())
+                .build();
     }
 
     @Test
-    public void jodaTimeBeansShouldBeFilledIn() {
+    public void generatedValueShouldBeInternationalized() throws Exception {
+        Person person = populator.populateBean(Person.class);
 
-        Organizer organizer = populator.populateBean(Organizer.class);
-
-        assertThat(organizer).isNotNull();
-        assertThat(organizer.getAnniversary()).isNotNull();
-        assertThat(organizer.getBirthday()).isNotNull();
-        assertThat(organizer.getHiking()).isNotNull();
-        assertThat(organizer.getClasses()).isNotNull();
-        assertThat(organizer.getTraining()).isNotNull();
-        assertThat(organizer.getWorkDuration()).isNotNull();
+        assertThat(person.getAddress().getCountry())
+                .isIn(Arrays.asList("Etats Unis", "Chine", "Allemagne", "France", "Italie", "Espagne"));
     }
+
+    @AfterClass
+    public static void resetLocale() {
+        Locale.setDefault(Locale.getDefault());
+    }
+
 }

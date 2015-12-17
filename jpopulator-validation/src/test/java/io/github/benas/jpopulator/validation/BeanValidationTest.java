@@ -22,7 +22,7 @@
  *   THE SOFTWARE.
  */
 
-package io.github.benas.jpopulator.impl;
+package io.github.benas.jpopulator.validation;
 
 import io.github.benas.jpopulator.api.Populator;
 import io.github.benas.jpopulator.beans.BeanValidationAnnotatedBean;
@@ -37,7 +37,7 @@ import java.math.BigDecimal;
 import java.util.Date;
 import java.util.Set;
 
-import static io.github.benas.jpopulator.impl.PopulatorBuilder.aNewPopulator;
+import static io.github.benas.jpopulator.PopulatorBuilder.aNewPopulator;
 import static org.assertj.core.api.Assertions.assertThat;
 
 public class BeanValidationTest {

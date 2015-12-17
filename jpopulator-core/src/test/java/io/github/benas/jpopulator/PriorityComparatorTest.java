@@ -23,34 +23,53 @@
  *
  */
 
-package io.github.benas.jpopulator.impl;
+package io.github.benas.jpopulator;
 
 import io.github.benas.jpopulator.annotation.Priority;
+import org.junit.Before;
+import org.junit.Test;
 
-import java.util.Comparator;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
 
-/**
- * Compare objects annotated with {@link Priority} annotation in the descending order.
- *
- * @author Rémi Alvergnat (toilal.dev@gmail.com)
- */
-class PriorityComparator implements Comparator<Object> {
+import static org.assertj.core.api.Assertions.assertThat;
 
-    @Override
-    public int compare(Object o1, Object o2) {
-        int o1Priority = getPriority(o1);
-        int o2Priority = getPriority(o2);
+public class PriorityComparatorTest {
 
-        return o2Priority - o1Priority;
+    PriorityComparator priorityComparator;
+
+    Foo foo;
+
+    Bar bar;
+
+    @Before
+    public void setUp() throws Exception {
+        priorityComparator = new PriorityComparator();
+        foo = new Foo();
+        bar = new Bar();
     }
 
-    private int getPriority(Object o1) {
-        if (o1 != null) {
-            Priority annotation = o1.getClass().getAnnotation(Priority.class);
-            if (annotation != null) {
-                return annotation.value();
-            }
-        }
-        return 0;
+    @Test
+    public void testCompare() throws Exception {
+        assertThat(priorityComparator.compare(foo, bar)).isGreaterThan(0);
+
+        List objects = new ArrayList();
+        objects.add(foo);
+        objects.add(bar);
+        Collections.sort(objects, priorityComparator);
+        // objects must be sorted in decreasing priority order: 2 > 1 > -254 > -255
+        assertThat(objects.get(0)).isEqualTo(bar);
+        assertThat(objects.get(1)).isEqualTo(foo);
+    }
+
+    @Priority(1)
+    private class Foo {
+
+    }
+
+    @Priority(2)
+    private class Bar {
+
     }
 }

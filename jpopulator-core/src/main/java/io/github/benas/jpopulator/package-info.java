@@ -23,53 +23,9 @@
  *
  */
 
-package io.github.benas.jpopulator.impl;
-
-import io.github.benas.jpopulator.annotation.Priority;
-import org.junit.Before;
-import org.junit.Test;
-
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
-
-import static org.assertj.core.api.Assertions.assertThat;
-
-public class PriorityComparatorTest {
-
-    PriorityComparator priorityComparator;
-
-    Foo foo;
-
-    Bar bar;
-
-    @Before
-    public void setUp() throws Exception {
-        priorityComparator = new PriorityComparator();
-        foo = new Foo();
-        bar = new Bar();
-    }
-
-    @Test
-    public void testCompare() throws Exception {
-        assertThat(priorityComparator.compare(foo, bar)).isGreaterThan(0);
-
-        List objects = new ArrayList();
-        objects.add(foo);
-        objects.add(bar);
-        Collections.sort(objects, priorityComparator);
-        // objects must be sorted in decreasing priority order: 2 > 1 > -254 > -255
-        assertThat(objects.get(0)).isEqualTo(bar);
-        assertThat(objects.get(1)).isEqualTo(foo);
-    }
-
-    @Priority(1)
-    private class Foo {
-
-    }
-
-    @Priority(2)
-    private class Bar {
-
-    }
-}
+/**
+ * This package contains jPopulator core implementation.
+ *
+ * @author Mahmoud Ben Hassine (mahmoud.benhassine@icloud.com)
+ */
+package io.github.benas.jpopulator;

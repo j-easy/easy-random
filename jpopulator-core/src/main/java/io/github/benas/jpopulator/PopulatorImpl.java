@@ -23,7 +23,7 @@
  *
  */
 
-package io.github.benas.jpopulator.impl;
+package io.github.benas.jpopulator;
 
 import io.github.benas.jpopulator.annotation.Exclude;
 import io.github.benas.jpopulator.api.Populator;
