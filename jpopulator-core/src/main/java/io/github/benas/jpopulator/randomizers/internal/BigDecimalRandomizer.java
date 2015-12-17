@@ -36,7 +36,7 @@ import java.math.BigDecimal;
  */
 public class BigDecimalRandomizer implements Randomizer<BigDecimal> {
 
-    DoubleRandomizer delegate = new DoubleRandomizer();
+    private DoubleRandomizer delegate = new DoubleRandomizer();
 
     @Override
     public BigDecimal getRandomValue() {

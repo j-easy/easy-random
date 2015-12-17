@@ -37,7 +37,7 @@ import java.math.BigInteger;
  */
 public class BigIntegerRandomizer implements Randomizer<BigInteger> {
 
-    IntegerRandomizer delegate = new IntegerRandomizer();
+    private IntegerRandomizer delegate = new IntegerRandomizer();
 
     @Override
     public BigInteger getRandomValue() {

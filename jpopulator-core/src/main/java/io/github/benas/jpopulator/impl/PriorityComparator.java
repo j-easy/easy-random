@@ -44,7 +44,7 @@ class PriorityComparator implements Comparator<Object> {
         return o2Priority - o1Priority;
     }
 
-    protected int getPriority(Object o1) {
+    private int getPriority(Object o1) {
         if (o1 != null) {
             Priority annotation = o1.getClass().getAnnotation(Priority.class);
             if (annotation != null) {

@@ -36,7 +36,7 @@ import java.util.concurrent.atomic.AtomicInteger;
  */
 public class AtomicIntegerRandomizer implements Randomizer<AtomicInteger> {
 
-    IntegerRandomizer delegate = new IntegerRandomizer();
+    private IntegerRandomizer delegate = new IntegerRandomizer();
 
     @Override
     public AtomicInteger getRandomValue() {
