@@ -111,20 +111,20 @@ public class BeanValidationRandomizerRegistry implements RandomizerRegistry {
             }
             if (fieldType.equals(Long.TYPE) || fieldType.equals(Long.class)) {
                 return new LongRangeRandomizer(
-                        minValue == null ? null : minValue.longValue(),
-                        maxValue == null ? null : maxValue.longValue()
+                        minValue == null ? null : minValue,
+                        maxValue == null ? null : maxValue
                 );
             }
             if (fieldType.equals(BigInteger.class)) {
                 return new BigIntegerRangeRandomizer(
-                        minValue == null ? null : minValue.longValue(),
-                        maxValue == null ? null : maxValue.longValue()
+                        minValue == null ? null : minValue,
+                        maxValue == null ? null : maxValue
                 );
             }
             if (fieldType.equals(BigDecimal.class)) {
                 return new BigDecimalRangeRandomizer(
-                        minValue == null ? null : minValue.longValue(),
-                        maxValue == null ? null : maxValue.longValue()
+                        minValue == null ? null : minValue,
+                        maxValue == null ? null : maxValue
                 );
             }
         }
