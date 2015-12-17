@@ -92,11 +92,8 @@ public class MapRandomizer<K, V> implements Randomizer<Map<K, V>> {
     }
 
     private void checkArguments(int minElements, int maxElements) {
-        if (minElements < 0) {
-            throw new IllegalArgumentException("The minimum number of elements to generate must be positive");
-        }
         if (minElements < 1) {
-            throw new IllegalArgumentException("The maximum number of elements to generate must be greater than or equal to 1");
+            throw new IllegalArgumentException("The minimum number of elements to generate must be >= 1");
         }
         if (maxElements < minElements) {
             throw new IllegalArgumentException("The maximum number of elements should be greater than or equal to the minimum number of elements.");
