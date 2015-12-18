@@ -197,7 +197,7 @@ public final class PopulatorImpl implements Populator {
      * @throws InvocationTargetException Thrown when the setter of the given
      *                                   field can not be invoked
      */
-    @SuppressWarnings("rawtypes")
+    @SuppressWarnings({ "rawtypes", "unchecked" })
     private void populateSimpleType(final Object result, final Field field)
         throws IllegalAccessException, NoSuchMethodException, InvocationTargetException {
         final Class<?> fieldType = field.getType();
@@ -207,13 +207,12 @@ public final class PopulatorImpl implements Populator {
         final Randomizer randomizer = randomizers.get(
                 new RandomizerDefinition(resultClass, fieldType, fieldName));
 
-        Object object;
+        final Object object;
 
-        final BackreferenceRandomizer backreferenceRandomizer =
-            (randomizer instanceof BackreferenceRandomizer) ? (BackreferenceRandomizer) randomizer
-                                                            : null;
+        if (randomizer instanceof BackreferenceRandomizer) {
+            final BackreferenceRandomizer backreferenceRandomizer =
+                (BackreferenceRandomizer) randomizer;
 
-        if (backreferenceRandomizer != null) {
             if (backreferenceRandomizer.hasInnerRandomizer()) {
                 object = backreferenceRandomizer.getRandomValue();
             } else {
@@ -221,9 +220,7 @@ public final class PopulatorImpl implements Populator {
                         backreferenceRandomizer.getBackreferenceFieldName());
             }
 
-            PropertyUtils.setProperty(object,
-                backreferenceRandomizer.getBackreferenceFieldName(),
-                result);
+            backreferenceRandomizer.setBackreference(object, result);
         } else {
             // use custom randomizer if any
             if (randomizer != null) {

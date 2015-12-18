@@ -2,6 +2,10 @@ package io.github.benas.jpopulator.randomizers;
 
 import io.github.benas.jpopulator.api.Randomizer;
 
+import org.apache.commons.beanutils.PropertyUtils;
+
+import java.lang.reflect.InvocationTargetException;
+
 
 /**
  * Randomizer for Backreferences to resolve (simple) circle relations.
@@ -31,11 +35,6 @@ public class BackreferenceRandomizerImpl<T> implements BackreferenceRandomizer<T
     }
 
     @Override
-    public Randomizer<T> getInnerRandomizer() {
-        return this.innerRandomizer;
-    }
-
-    @Override
     public String getBackreferenceFieldName() {
         return backreferenceFieldName;
     }
@@ -43,5 +42,11 @@ public class BackreferenceRandomizerImpl<T> implements BackreferenceRandomizer<T
     @Override
     public boolean hasInnerRandomizer() {
         return innerRandomizer != null;
+    }
+
+    @Override
+    public void setBackreference(final T object, final Object backreference)
+        throws IllegalAccessException, InvocationTargetException, NoSuchMethodException {
+        PropertyUtils.setProperty(object, getBackreferenceFieldName(), backreference);
     }
 }
