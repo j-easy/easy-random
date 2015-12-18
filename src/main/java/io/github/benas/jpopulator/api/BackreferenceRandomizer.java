@@ -1,6 +1,4 @@
-package io.github.benas.jpopulator.randomizers;
-
-import io.github.benas.jpopulator.api.Randomizer;
+package io.github.benas.jpopulator.api;
 
 import java.lang.reflect.InvocationTargetException;
 

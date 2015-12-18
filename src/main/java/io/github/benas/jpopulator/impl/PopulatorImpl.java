@@ -24,10 +24,10 @@
 
 package io.github.benas.jpopulator.impl;
 
+import io.github.benas.jpopulator.api.BackreferenceRandomizer;
 import io.github.benas.jpopulator.api.Exclude;
 import io.github.benas.jpopulator.api.Populator;
 import io.github.benas.jpopulator.api.Randomizer;
-import io.github.benas.jpopulator.randomizers.BackreferenceRandomizer;
 
 import org.apache.commons.beanutils.PropertyUtils;
 import org.apache.commons.math3.random.RandomDataGenerator;

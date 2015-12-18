@@ -37,10 +37,10 @@ import io.github.benas.jpopulator.beans.SocialPerson;
 import io.github.benas.jpopulator.beans.Street;
 import io.github.benas.jpopulator.beans.Website;
 import io.github.benas.jpopulator.beans.Wife;
-import io.github.benas.jpopulator.randomizers.BackreferenceRandomizerImpl;
 import io.github.benas.jpopulator.randomizers.CityRandomizer;
 import io.github.benas.jpopulator.randomizers.EmailRandomizer;
 import io.github.benas.jpopulator.randomizers.ListRandomizer;
+import io.github.benas.jpopulator.randomizers.withbackreferences.BackreferenceRandomizerImpl;
 
 import static org.assertj.core.api.Assertions.assertThat;
 

@@ -1,5 +1,6 @@
-package io.github.benas.jpopulator.randomizers;
+package io.github.benas.jpopulator.randomizers.withbackreferences;
 
+import io.github.benas.jpopulator.api.BackreferenceRandomizer;
 import io.github.benas.jpopulator.api.Randomizer;
 
 import org.apache.commons.beanutils.PropertyUtils;
