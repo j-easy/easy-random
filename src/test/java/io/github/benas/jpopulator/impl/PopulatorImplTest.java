@@ -40,7 +40,8 @@ import io.github.benas.jpopulator.beans.Wife;
 import io.github.benas.jpopulator.randomizers.CityRandomizer;
 import io.github.benas.jpopulator.randomizers.EmailRandomizer;
 import io.github.benas.jpopulator.randomizers.ListRandomizer;
-import io.github.benas.jpopulator.randomizers.withbackreferences.BackreferenceRandomizerImpl;
+import io.github.benas.jpopulator.randomizers.withbackreferences.BackreferenceCollectionRandomizer;
+import io.github.benas.jpopulator.randomizers.withbackreferences.BackreferenceSimpleRandomizer;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
@@ -88,7 +89,7 @@ public class PopulatorImplTest {
         builder.registerRandomizer(Husband.class,
             Wife.class,
             "wife",
-            new BackreferenceRandomizerImpl("husband"));
+            new BackreferenceSimpleRandomizer("husband"));
 
         // execution
         final Husband husband = populator.populateBean(Husband.class);
@@ -105,7 +106,7 @@ public class PopulatorImplTest {
         builder.registerRandomizer(Husband.class,
             Wife.class,
             "wife",
-            new BackreferenceRandomizerImpl("husband", new Randomizer<Wife>() {
+            new BackreferenceSimpleRandomizer("husband", new Randomizer<Wife>() {
                     @Override
                     public Wife getRandomValue() {
                         final Wife wife = new Wife();
@@ -325,8 +326,8 @@ public class PopulatorImplTest {
         builder.registerRandomizer(PetOwner.class,
             List.class,
             "pets",
-            new ListRandomizer<Pet>(
-                new BackreferenceRandomizerImpl<Pet>("owner", new Randomizer<Pet>() {
+            new BackreferenceCollectionRandomizer<Pet>(
+                new ListRandomizer<Pet>(new Randomizer<Pet>() {
                         private int i = 0;
 
                         @Override
@@ -336,18 +337,19 @@ public class PopulatorImplTest {
 
                             return pet;
                         }
-                    }),
-                2));
+                    }, 2),
+                "owner"));
 
         // execution
         final PetOwner petOwner = populator.populateBean(PetOwner.class);
 
         // assertion
         assertPerson(petOwner);
-        assertSame(petOwner, petOwner.getPets().get(0));
-        assertSame(petOwner, petOwner.getPets().get(1));
+        assertSame(petOwner, petOwner.getPets().get(0).getOwner());
+        assertSame(petOwner, petOwner.getPets().get(1).getOwner());
     }
 
+    @Ignore("Ill be here soon") // TODO implement me!
     @Test
     public void testCollectionPopulationWithBackReferenceManyToOne() throws Exception {
         // preparation

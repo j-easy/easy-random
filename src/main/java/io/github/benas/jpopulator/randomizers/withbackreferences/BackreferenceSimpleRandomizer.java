@@ -16,15 +16,15 @@ import java.lang.reflect.InvocationTargetException;
  * @author mertinat
  * @since  17.12.2015
  */
-public class BackreferenceRandomizerImpl<T> implements BackreferenceRandomizer<T> {
+public class BackreferenceSimpleRandomizer<T> implements BackreferenceRandomizer<T> {
     private Randomizer<T> innerRandomizer;
     private String backreferenceFieldName;
 
-    public BackreferenceRandomizerImpl(final String backreferenceFieldName) {
+    public BackreferenceSimpleRandomizer(final String backreferenceFieldName) {
         this(backreferenceFieldName, null);
     }
 
-    public BackreferenceRandomizerImpl(final String backreferenceFieldName,
+    public BackreferenceSimpleRandomizer(final String backreferenceFieldName,
         final Randomizer<T> innerRandomizer) {
         this.backreferenceFieldName = backreferenceFieldName;
         this.innerRandomizer = innerRandomizer;
