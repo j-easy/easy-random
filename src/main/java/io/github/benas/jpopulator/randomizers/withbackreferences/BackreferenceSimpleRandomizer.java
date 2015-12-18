@@ -48,6 +48,10 @@ public class BackreferenceSimpleRandomizer<T> implements BackreferenceRandomizer
     @Override
     public void setBackreference(final T object, final Object backreference)
         throws IllegalAccessException, InvocationTargetException, NoSuchMethodException {
-        PropertyUtils.setProperty(object, getBackreferenceFieldName(), backreference);
+        if (innerRandomizer instanceof BackreferenceRandomizer) {
+            ((BackreferenceRandomizer) innerRandomizer).setBackreference(object, backreference);
+        } else {
+            PropertyUtils.setProperty(object, getBackreferenceFieldName(), backreference);
+        }
     }
 }

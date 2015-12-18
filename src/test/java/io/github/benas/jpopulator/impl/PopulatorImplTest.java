@@ -24,6 +24,7 @@
 
 package io.github.benas.jpopulator.impl;
 
+import io.github.benas.jpopulator.api.BackreferenceRandomizer;
 import io.github.benas.jpopulator.api.Populator;
 import io.github.benas.jpopulator.api.Randomizer;
 import io.github.benas.jpopulator.beans.Address;
@@ -43,21 +44,24 @@ import io.github.benas.jpopulator.randomizers.ListRandomizer;
 import io.github.benas.jpopulator.randomizers.withbackreferences.BackreferenceCollectionRandomizer;
 import io.github.benas.jpopulator.randomizers.withbackreferences.BackreferenceSimpleRandomizer;
 
+import org.apache.commons.beanutils.PropertyUtils;
+
 import static org.assertj.core.api.Assertions.assertThat;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertSame;
-import static org.junit.Assert.fail;
 
 import org.junit.Before;
 import org.junit.Ignore;
 import org.junit.Test;
 
 import java.lang.reflect.Field;
+import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.ParameterizedType;
 import java.lang.reflect.Type;
 
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 
 
@@ -349,15 +353,53 @@ public class PopulatorImplTest {
         assertSame(petOwner, petOwner.getPets().get(1).getOwner());
     }
 
-    @Ignore("Ill be here soon") // TODO implement me!
     @Test
     public void testCollectionPopulationWithBackReferenceManyToOne() throws Exception {
         // preparation
+        final String expectedOwnerName = "ownername";
+
+        final BackreferenceRandomizer<PetOwner> listRandomizer =
+            new BackreferenceRandomizer<PetOwner>() {
+                @Override
+                public PetOwner getRandomValue() {
+                    final PetOwner petOwner = new PetOwner(); // todo das kann nen normaler
+                                                              // Randomizer lösen
+                    petOwner.setName(expectedOwnerName);
+
+                    return petOwner;
+                }
+
+                @Override
+                public void setBackreference(final PetOwner object, final Object backreference)
+                    throws IllegalAccessException, InvocationTargetException,
+                        NoSuchMethodException {
+                    PropertyUtils.setProperty(object,
+                        getBackreferenceFieldName(),
+                        Collections.singletonList(backreference));
+                }
+
+                @Override
+                public boolean hasInnerRandomizer() {
+                    return false;
+                }
+
+                @Override
+                public String getBackreferenceFieldName() {
+                    return "pets";
+                }
+            };
+
+        builder.registerRandomizer(Pet.class,
+            PetOwner.class,
+            "owner",
+            new BackreferenceSimpleRandomizer<PetOwner>("pets", listRandomizer));
+
         // execution
-        populator.populateBean(Pet.class);
+        final Pet pet = populator.populateBean(Pet.class);
 
         // assertion
-        fail("not implemented yet"); // TODO implement me
+        assertSame(pet, pet.getOwner().getPets().get(0));
+        assertEquals(expectedOwnerName, pet.getOwner().getName());
     }
 
     @Test
