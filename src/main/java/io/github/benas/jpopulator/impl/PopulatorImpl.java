@@ -303,14 +303,14 @@ public final class PopulatorImpl implements Populator {
                 collection = new ArrayDeque();
             } else if (Queue.class.isAssignableFrom(fieldType)) {
                 collection = new ArrayDeque();
+            } else if (Collection.class.isAssignableFrom(fieldType)) {
+                collection = Collections.emptyList();
             } else if (NavigableMap.class.isAssignableFrom(fieldType)) {
                 collection = new TreeMap();
             } else if (SortedMap.class.isAssignableFrom(fieldType)) {
                 collection = new TreeMap();
             } else if (Map.class.isAssignableFrom(fieldType)) {
                 collection = Collections.emptyMap();
-            } else if (Collection.class.isAssignableFrom(fieldType)) {
-                collection = Collections.emptyList();
             }
 
             PropertyUtils.setProperty(result, fieldName, collection);

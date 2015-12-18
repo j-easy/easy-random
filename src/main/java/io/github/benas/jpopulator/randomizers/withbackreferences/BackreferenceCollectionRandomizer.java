@@ -10,11 +10,25 @@ import java.lang.reflect.InvocationTargetException;
 import java.util.Collection;
 
 
+/**
+ * Transformer used for One to Many Relationsships with backreferences.
+ *
+ * @param  <T> Type with the backreference.
+ *
+ * @author mertinat
+ * @since  18.12.2015
+ */
 public class BackreferenceCollectionRandomizer<T>
     implements BackreferenceRandomizer<Collection<T>> {
     private CollectionRandomizer<T> collectionRandomizer;
     private String backreferenceFieldName;
 
+    /**
+     * @param collectionRandomizer   A configured {@link CollectionRandomizer}
+     *                               like when you don't have any
+     *                               backreferences.
+     * @param backreferenceFieldName the field Name with the backreference.
+     */
     public BackreferenceCollectionRandomizer(final CollectionRandomizer<T> collectionRandomizer,
         final String backreferenceFieldName) {
         this.collectionRandomizer = collectionRandomizer;

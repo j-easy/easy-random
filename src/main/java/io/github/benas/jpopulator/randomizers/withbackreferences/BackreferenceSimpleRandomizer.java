@@ -20,10 +20,25 @@ public class BackreferenceSimpleRandomizer<T> implements BackreferenceRandomizer
     private Randomizer<T> innerRandomizer;
     private String backreferenceFieldName;
 
+    /**
+     * Use this constructor if you want to let jPopulator handle the the
+     * population by self.
+     *
+     * @param backreferenceFieldName Name of the backreference field.
+     */
     public BackreferenceSimpleRandomizer(final String backreferenceFieldName) {
         this(backreferenceFieldName, null);
     }
 
+    /**
+     * Use this constructor if you want to get more control about the object
+     * creation. The backreference field is set (or overridden) afterwards by
+     * jPopulator.
+     *
+     * @param backreferenceFieldName Name of the backreference field.
+     * @param innerRandomizer        Randomizer to manually handle the object
+     *                               creation.
+     */
     public BackreferenceSimpleRandomizer(final String backreferenceFieldName,
         final Randomizer<T> innerRandomizer) {
         this.backreferenceFieldName = backreferenceFieldName;
