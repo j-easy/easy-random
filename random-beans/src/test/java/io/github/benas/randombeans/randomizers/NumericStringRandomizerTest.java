@@ -1,7 +1,7 @@
 /*
  * The MIT License
  *
- *   Copyright (c) 2015, Mahmoud Ben Hassine (mahmoud.benhassine@icloud.com)
+ *   Copyright (c) 2016, Mahmoud Ben Hassine (mahmoud.benhassine@icloud.com)
  *
  *   Permission is hereby granted, free of charge, to any person obtaining a copy
  *   of this software and associated documentation files (the "Software"), to deal
@@ -32,11 +32,6 @@ import java.util.Arrays;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.fail;
 
-/**
- * Test class for {@link NumericStringRandomizer}.
- *
- * @author Nikola Milivojevic (0dziga0@gmail.com)
- */
 public class NumericStringRandomizerTest {
 
     private NumericStringRandomizer numericStringRandomizer;

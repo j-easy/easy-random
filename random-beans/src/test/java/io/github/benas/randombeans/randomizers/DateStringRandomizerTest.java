@@ -1,7 +1,7 @@
 /*
  * The MIT License
  *
- *   Copyright (c) 2015, Mahmoud Ben Hassine (mahmoud.benhassine@icloud.com)
+ *   Copyright (c) 2016, Mahmoud Ben Hassine (mahmoud.benhassine@icloud.com)
  *
  *   Permission is hereby granted, free of charge, to any person obtaining a copy
  *   of this software and associated documentation files (the "Software"), to deal
@@ -35,11 +35,6 @@ import java.util.Date;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-/**
- * Test class for {@link io.github.benas.randombeans.randomizers.DateStringRandomizer}.
- *
- * @author Nikola Milivojevic (0dziga0@gmail.com)
- */
 public class DateStringRandomizerTest {
 
     private static final String DATE_FORMAT = "yyyy-MM-dd";

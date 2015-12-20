@@ -1,7 +1,7 @@
 /*
  * The MIT License
  *
- *   Copyright (c) 2014, Mahmoud Ben Hassine (md.benhassine@gmail.com)
+ *   Copyright (c) 2016, Mahmoud Ben Hassine (md.benhassine@gmail.com)
  *
  *   Permission is hereby granted, free of charge, to any person obtaining a copy
  *   of this software and associated documentation files (the "Software"), to deal
@@ -24,145 +24,68 @@
 
 package io.github.benas.randombeans.randomizers.jodatime;
 
-import org.joda.time.DateTime;
-import org.joda.time.Duration;
-import org.joda.time.Interval;
-import org.joda.time.LocalDateTime;
-import org.joda.time.LocalTime;
-import org.joda.time.Period;
-
-/**
- * A java bean for testing joda time types.
- *
- * @author Nikola Milivojevic (0dziga0@gmail.com)
- */
+import org.joda.time.*;
 
 public class Organizer {
-	
-	/** The anniversary. */
-	private DateTime anniversary;
-	
-	/** The birthday. */
-	private LocalTime birthday;
-	
-	/** The training. */
-	private LocalDateTime training;
-	
-	/** The hiking. */
-	private Duration hiking;
-	
-	/** The classes. */
-	private Period classes;
-	
-	/** The work duration. */
-	private Interval workDuration;
 
-	/**
-	 * Gets the anniversary.
-	 *
-	 * @return the anniversary
-	 */
-	public DateTime getAnniversary() {
-		return anniversary;
-	}
+    private DateTime anniversary;
 
-	/**
-	 * Sets the anniversary.
-	 *
-	 * @param anniversary the new anniversary
-	 */
-	public void setAnniversary(DateTime anniversary) {
-		this.anniversary = anniversary;
-	}
+    private LocalTime birthday;
 
-	/**
-	 * Gets the birthday.
-	 *
-	 * @return the birthday
-	 */
-	public LocalTime getBirthday() {
-		return birthday;
-	}
+    private LocalDateTime training;
 
-	/**
-	 * Sets the birthday.
-	 *
-	 * @param birthday the new birthday
-	 */
-	public void setBirthday(LocalTime birthday) {
-		this.birthday = birthday;
-	}
+    private Duration hiking;
 
-	/**
-	 * Gets the training.
-	 *
-	 * @return the training
-	 */
-	public LocalDateTime getTraining() {
-		return training;
-	}
+    private Period classes;
 
-	/**
-	 * Sets the training.
-	 *
-	 * @param training the new training
-	 */
-	public void setTraining(LocalDateTime training) {
-		this.training = training;
-	}
+    private Interval workDuration;
 
-	/**
-	 * Gets the hicking.
-	 *
-	 * @return the hicking
-	 */
-	public Duration getHiking() {
-		return hiking;
-	}
+    public DateTime getAnniversary() {
+        return anniversary;
+    }
 
-	/**
-	 * Sets the hiking.
-	 *
-	 * @param hicking the new hiking
-	 */
-	public void setHiking(Duration hiking) {
-		this.hiking = hiking;
-	}
+    public void setAnniversary(DateTime anniversary) {
+        this.anniversary = anniversary;
+    }
 
-	/**
-	 * Gets the classes.
-	 *
-	 * @return the classes
-	 */
-	public Period getClasses() {
-		return classes;
-	}
+    public LocalTime getBirthday() {
+        return birthday;
+    }
 
-	/**
-	 * Sets the classes.
-	 *
-	 * @param classes the new classes
-	 */
-	public void setClasses(Period classes) {
-		this.classes = classes;
-	}
+    public void setBirthday(LocalTime birthday) {
+        this.birthday = birthday;
+    }
 
-	/**
-	 * Gets the work duration.
-	 *
-	 * @return the work duration
-	 */
-	public Interval getWorkDuration() {
-		return workDuration;
-	}
+    public LocalDateTime getTraining() {
+        return training;
+    }
 
-	/**
-	 * Sets the work duration.
-	 *
-	 * @param workDuration the new work duration
-	 */
-	public void setWorkDuration(Interval workDuration) {
-		this.workDuration = workDuration;
-	}
-	
+    public void setTraining(LocalDateTime training) {
+        this.training = training;
+    }
+
+    public Duration getHiking() {
+        return hiking;
+    }
+
+    public void setHiking(Duration hiking) {
+        this.hiking = hiking;
+    }
+
+    public Period getClasses() {
+        return classes;
+    }
+
+    public void setClasses(Period classes) {
+        this.classes = classes;
+    }
+
+    public Interval getWorkDuration() {
+        return workDuration;
+    }
+
+    public void setWorkDuration(Interval workDuration) {
+        this.workDuration = workDuration;
+    }
+
 }
