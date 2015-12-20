@@ -1,65 +1,71 @@
-## What is jPopulator ?
+# What is Random Beans ?
 
-jPopulator is a java library that allows you to populate java beans with random data.
+Random Beans (formerly jPopulator) is a library that generates random Java beans.
+Generating random data is a common requirement in software testing, and this task can quickly become tedious when the domain model
+involves many related classes. Random Beans tries to make this task easier.
 
-Populating a deep type hierarchy by hand is a tedious task and the goal of jPopulator is to make this task easy.
+# How to use it?
 
-Let's see an example, suppose you have the following classes:
-
-![](https://github.com/benas/jPopulator/raw/master/site/person.png)
-
-If you want to populate a `Person` bean with jPopulator, you write this snippet:
+Random Beans provides the `Populator` API that is able to generate a random instance of given type:
 
 ```java
 Populator populator = new PopulatorBuilder().build();
 Person person = populator.populateBean(Person.class);
 ```
 
-And voila! jPopulator will introspect the `Person` type hierarchy, generate an instance for each nested bean and populate it with random data.
+This snippet will generate a random instance of the `Person` type.
 
-**Without** jPopulator, you would write something like:
- 
- ```java
- Street street = new Street(12, (byte) 1, "Oxford street");
- Address address = new Address(street, "123456", "London", "United Kingdom");
- Person person = new Person("Foo", "Bar", "foo.bar@gmail.com", Gender.MALE, address);
- ```
- 
- And if these classes do not provide constructors with parameters (may be some legacy beans you don't have the control over), you would write:
- 
- ```java
- Street street = new Street();
- street.setNumber(12);
- street.setType((byte) 1);
- street.setName("Oxford street");
- 
- Address address = new Address();
- address.setStreet(street);
- address.setZipCode("123456");
- address.setCity("London");
- address.setCountry("United Kingdom");
- 
- Person person = new Person();
- person.setFirstName("Foo");
- person.setLastName("Bar");
- person.setEmail("foo.bar@gmail.com");
- person.setGender(Gender.MALE);
- person.setAddress(address);
- ```
- 
-It's always tedious to generate test data by hand, and jPopulator makes this task easier.
+# Why Random Beans?
+
+Populating a Java object with random data can look easy at first glance, unless your domain model involves many related classes.
+Let's see a quick example, suppose you have the following classes:
+
+![](https://github.com/benas/random-beans/raw/master/site/person.png)
+
+With Random Beans, generating a random `Person` object is done with the previous snippet. The library will **recursively** populate
+all the object graph. Without Random Beans, you would write something like:
+
+```java
+Street street = new Street(12, (byte) 1, "Oxford street");
+Address address = new Address(street, "123456", "London", "United Kingdom");
+Person person = new Person("Foo", "Bar", "foo.bar@gmail.com", Gender.MALE, address);
+```
+
+And if these classes do not provide constructors with parameters (may be some legacy beans you don't have the control over), you would write:
+
+```java
+Street street = new Street();
+street.setNumber(12);
+street.setType((byte) 1);
+street.setName("Oxford street");
+
+Address address = new Address();
+address.setStreet(street);
+address.setZipCode("123456");
+address.setCity("London");
+address.setCountry("United Kingdom");
+
+Person person = new Person();
+person.setFirstName("Foo");
+person.setLastName("Bar");
+person.setEmail("foo.bar@gmail.com");
+person.setGender(Gender.MALE);
+person.setAddress(address);
+```
+
+As you can see, Random Beans can tremendously reduce the code of generating random test data than doing it by hand.
 
 ## Documentation
 
-jPopulator documentation can be found in the project's wiki:  [https://github.com/benas/jPopulator/wiki](https://github.com/benas/jPopulator/wiki)
+Random Beans documentation can be found in the project's wiki: [https://github.com/benas/random-beans/wiki](https://github.com/benas/random-beans/wiki)
 
 ## Contribution
 
 You are welcome to contribute to the project with pull requests on GitHub.
 
-If you believe you found a bug, please use the [issue tracker](https://github.com/benas/jPopulator/issues).
+If you believe you found a bug, please use the [issue tracker](https://github.com/benas/random-beans/issues).
 
-If you have any question, suggestion, or feedback, do not hesitate to use the [Gitter channel](https://gitter.im/benas/jPopulator) of the project.
+If you have any question, suggestion, or feedback, do not hesitate to use the [Gitter channel](https://gitter.im/benas/random-beans) of the project.
 
 ## Awesome contributors
 
@@ -73,7 +79,8 @@ If you have any question, suggestion, or feedback, do not hesitate to use the [G
 Thank you all for your contributions!
 
 ## License
-jPopulator is released under the [MIT License](http://opensource.org/licenses/mit-license.php/):
+
+Random Beans is released under the [MIT License](http://opensource.org/licenses/mit-license.php/):
 
 ```
 The MIT License
