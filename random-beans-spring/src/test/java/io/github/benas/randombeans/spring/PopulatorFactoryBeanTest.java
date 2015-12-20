@@ -31,7 +31,7 @@ import org.springframework.context.support.ClassPathXmlApplicationContext;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-public class JPopulatorFactoryBeanTest {
+public class PopulatorFactoryBeanTest {
 
     @Test
     public void testJPopulatorFactoryBeanWithDefaultRandomizers() {

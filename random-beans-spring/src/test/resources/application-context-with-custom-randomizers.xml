@@ -4,7 +4,7 @@
        xsi:schemaLocation="http://www.springframework.org/schema/beans
        http://www.springframework.org/schema/beans/spring-beans.xsd">
 
-    <bean id="populator" class="io.github.benas.randombeans.spring.JPopulatorFactoryBean">
+    <bean id="populator" class="io.github.benas.randombeans.spring.PopulatorFactoryBean">
         <property name="randomizers">
             <list value-type="java.util.ArrayList">
                 <ref bean="nameRandomizer"/>

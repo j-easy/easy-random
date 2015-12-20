@@ -27,7 +27,6 @@ package io.github.benas.randombeans.spring;
 
 import io.github.benas.randombeans.PopulatorBuilder;
 import io.github.benas.randombeans.api.Populator;
-import io.github.benas.randombeans.PopulatorBuilder;
 import org.springframework.beans.factory.FactoryBean;
 
 import java.util.ArrayList;
@@ -40,7 +39,7 @@ import static io.github.benas.randombeans.PopulatorBuilder.aNewPopulator;
  *
  * @author Mahmoud Ben Hassine (mahmoud.benhassine@icloud.com)
  */
-public class JPopulatorFactoryBean implements FactoryBean {
+public class PopulatorFactoryBean implements FactoryBean {
 
     private List<RandomizerBean> randomizers = new ArrayList<>();
 
