@@ -29,6 +29,7 @@ import io.github.benas.randombeans.annotation.Priority;
 import io.github.benas.randombeans.api.Randomizer;
 import io.github.benas.randombeans.api.RandomizerRegistry;
 import io.github.benas.randombeans.randomizers.ConstantRandomizer;
+import io.github.benas.randombeans.randomizers.NullRandomizer;
 import io.github.benas.randombeans.randomizers.StringDelegatingRandomizer;
 import io.github.benas.randombeans.randomizers.range.*;
 import io.github.benas.randombeans.util.Constants;
@@ -61,7 +62,7 @@ public class BeanValidationRandomizerRegistry implements RandomizerRegistry {
         }
 
         if (field.isAnnotationPresent(Null.class)) {
-            return new ConstantRandomizer<Void>(null); // TODO replace with NullRandomizer (revert commit 5cbfbec696c6743b254db534e6905ad4ce70f9c1)
+            return new NullRandomizer();
         }
 
         if (field.isAnnotationPresent(Future.class)) {
