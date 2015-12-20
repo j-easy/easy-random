@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <parent>
+        <artifactId>random-beans-parent</artifactId>
+        <groupId>io.github.benas</groupId>
+        <version>2.0.0-SNAPSHOT</version>
+    </parent>
+    <modelVersion>4.0.0</modelVersion>
+
+    <name>Random Beans Joda Time</name>
+    <artifactId>random-beans-jodatime</artifactId>
+    <description>Random Beans module for Joda Time types support</description>
+    <url>https://github.com/benas/random-beans</url>
+
+    <scm>
+        <url>git@github.com:benas/random-beans.git</url>
+        <connection>scm:git:git@github.com:benas/random-beans.git</connection>
+        <developerConnection>scm:git:git@github.com:benas/random-beans.git</developerConnection>
+        <tag>HEAD</tag>
+    </scm>
+
+    <ciManagement>
+        <system>Travis CI</system>
+        <url>https://travis-ci.org/benas/random-beans</url>
+    </ciManagement>
+
+    <issueManagement>
+        <system>GitHub</system>
+        <url>https://github.com/benas/random-beans/issues</url>
+    </issueManagement>
+
+    <licenses>
+        <license>
+            <name>MIT License</name>
+            <url>http://opensource.org/licenses/mit-license.php</url>
+        </license>
+    </licenses>
+
+    <developers>
+        <developer>
+            <id>benas</id>
+            <name>Mahmoud Ben Hassine</name>
+            <url>http://benas.github.io</url>
+            <email>mahmoud.benhassine@icloud.com</email>
+            <roles>
+                <role>Lead developer</role>
+            </roles>
+        </developer>
+    </developers>
+
+    <dependencies>
+        <dependency>
+            <groupId>io.github.benas</groupId>
+            <artifactId>random-beans</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>joda-time</groupId>
+            <artifactId>joda-time</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>junit</groupId>
+            <artifactId>junit</artifactId>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.assertj</groupId>
+            <artifactId>assertj-core</artifactId>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.mockito</groupId>
+            <artifactId>mockito-core</artifactId>
+            <scope>test</scope>
+        </dependency>
+    </dependencies>
+
+</project>

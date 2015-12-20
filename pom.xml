@@ -9,13 +9,13 @@
     </parent>
 
     <groupId>io.github.benas</groupId>
-    <artifactId>jpopulator-parent</artifactId>
-    <version>1.3.0-SNAPSHOT</version>
+    <artifactId>random-beans-parent</artifactId>
+    <version>2.0.0-SNAPSHOT</version>
     <packaging>pom</packaging>
 
-    <name>jPopulator</name>
-    <description>jPopulator is a java library to populate java beans with random data</description>
-    <url>https://github.com/benas/jPopulator</url>
+    <name>Random Beans</name>
+    <description>Random Beans is a library to generate random Java beans</description>
+    <url>https://github.com/benas/random-beans</url>
 
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
@@ -41,29 +41,27 @@
     </properties>
 
     <modules>
-        <module>jpopulator-core</module>
-        <module>jpopulator-spring</module>
-        <module>jpopulator-test</module>
-        <module>jpopulator-validation</module>
-        <module>jpopulator-joda-time</module>
-        <module>jpopulator-api</module>
+        <module>random-beans</module>
+        <module>random-beans-spring</module>
+        <module>random-beans-validation</module>
+        <module>random-beans-jodatime</module>
     </modules>
 
     <scm>
-        <url>git@github.com:benas/jPopulator.git</url>
-        <connection>scm:git:git@github.com:benas/jPopulator.git</connection>
-        <developerConnection>scm:git:git@github.com:benas/jPopulator.git</developerConnection>
+        <url>git@github.com:benas/random-beans.git</url>
+        <connection>scm:git:git@github.com:benas/random-beans.git</connection>
+        <developerConnection>scm:git:git@github.com:benas/random-beans.git</developerConnection>
         <tag>HEAD</tag>
     </scm>
 
     <ciManagement>
         <system>Travis CI</system>
-        <url>https://travis-ci.org/benas/jPopulator</url>
+        <url>https://travis-ci.org/benas/random-beans</url>
     </ciManagement>
 
     <issueManagement>
         <system>GitHub</system>
-        <url>https://github.com/benas/jPopulator/issues</url>
+        <url>https://github.com/benas/random-beans/issues</url>
     </issueManagement>
 
     <licenses>
@@ -116,17 +114,12 @@
         <dependencies>
             <dependency>
                 <groupId>io.github.benas</groupId>
-                <artifactId>jpopulator-core</artifactId>
+                <artifactId>random-beans</artifactId>
                 <version>${project.version}</version>
             </dependency>
             <dependency>
                 <groupId>io.github.benas</groupId>
-                <artifactId>jpopulator-test</artifactId>
-                <version>${project.version}</version>
-            </dependency>
-            <dependency>
-                <groupId>io.github.benas</groupId>
-                <artifactId>jpopulator-api</artifactId>
+                <artifactId>random-beans-test</artifactId>
                 <version>${project.version}</version>
             </dependency>
             <dependency>

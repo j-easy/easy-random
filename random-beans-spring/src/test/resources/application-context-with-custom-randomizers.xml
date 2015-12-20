@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+       http://www.springframework.org/schema/beans/spring-beans.xsd">
+
+    <bean id="populator" class="io.github.benas.randombeans.spring.JPopulatorFactoryBean">
+        <property name="randomizers">
+            <list value-type="java.util.ArrayList">
+                <ref bean="nameRandomizer"/>
+            </list>
+        </property>
+    </bean>
+
+    <bean id="nameRandomizer" class="io.github.benas.randombeans.spring.RandomizerBean">
+        <constructor-arg type="java.lang.Class" index="0" value="io.github.benas.randombeans.spring.Foo"/>
+        <constructor-arg type="java.lang.Class" index="1" value="java.lang.String"/>
+        <constructor-arg value="name"/>
+        <constructor-arg>
+            <bean class="io.github.benas.randombeans.spring.NameRandomizer"/>
+        </constructor-arg>
+    </bean>
+
+
+</beans>
