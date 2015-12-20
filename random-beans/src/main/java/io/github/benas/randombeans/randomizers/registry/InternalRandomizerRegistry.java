@@ -50,7 +50,7 @@ import java.util.concurrent.atomic.AtomicLong;
 @Priority(-255)
 public class InternalRandomizerRegistry implements RandomizerRegistry {
 
-    private Map<Class, Randomizer> randomizers = new HashMap<>();
+    private Map<Class, Randomizer> randomizers = new HashMap<Class, Randomizer>();
 
     public InternalRandomizerRegistry() {
         randomizers.put(String.class, new StringRandomizer());

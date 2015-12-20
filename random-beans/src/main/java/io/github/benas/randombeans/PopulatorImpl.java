@@ -51,9 +51,9 @@ final class PopulatorImpl implements Populator {
 
     private static final Logger LOGGER = Logger.getLogger(PopulatorImpl.class.getName());
 
-    private Map<RandomizerDefinition, Randomizer> randomizers = new HashMap<>();
+    private Map<RandomizerDefinition, Randomizer> randomizers = new HashMap<RandomizerDefinition, Randomizer>();
 
-    private List<RandomizerRegistry> registries = new ArrayList<>();
+    private List<RandomizerRegistry> registries = new ArrayList<RandomizerRegistry>();
 
     private Comparator<Object> priorityComparator = new PriorityComparator();
 
@@ -78,7 +78,7 @@ final class PopulatorImpl implements Populator {
             // create a new instance of the target type
             try {
                 result = type.newInstance();
-            } catch (ReflectiveOperationException ex) {
+            } catch (Exception ex) {
                 result = objenesis.newInstance(type);
             }
 
@@ -112,7 +112,7 @@ final class PopulatorImpl implements Populator {
         if (size < 0) {
             throw new IllegalArgumentException("The number of beans to populate must be positive.");
         }
-        List<Object> beans = new ArrayList<>();
+        List<Object> beans = new ArrayList<Object>();
         for (int i = 0; i < size; i++) {
             Object bean = populateBean(type, excludedFields);
             beans.add(bean);
@@ -121,11 +121,11 @@ final class PopulatorImpl implements Populator {
     }
 
     private <T> ArrayList<Field> getDeclaredFields(T result) {
-        return new ArrayList<>(Arrays.asList(result.getClass().getDeclaredFields()));
+        return new ArrayList<Field>(Arrays.asList(result.getClass().getDeclaredFields()));
     }
 
     private List<Field> getInheritedFields(Class clazz) {
-        List<Field> inheritedFields = new ArrayList<>();
+        List<Field> inheritedFields = new ArrayList<Field>();
         while (clazz.getSuperclass() != null) {
             Class superclass = clazz.getSuperclass();
             inheritedFields.addAll(Arrays.asList(superclass.getDeclaredFields()));
@@ -198,7 +198,7 @@ final class PopulatorImpl implements Populator {
      * @return a {@link Randomizer} for this field, or null if none is found.
      */
     private Randomizer getDefaultRandomizer(final Field field) {
-        List<Randomizer> randomizers = new ArrayList<>();
+        List<Randomizer> randomizers = new ArrayList<Randomizer>();
         for (RandomizerRegistry registry : registries) {
             Randomizer randomizer = registry.getRandomizer(field);
             if (randomizer != null) {

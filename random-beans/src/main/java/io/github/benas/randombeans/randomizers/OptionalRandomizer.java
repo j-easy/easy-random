@@ -75,7 +75,7 @@ public class OptionalRandomizer<T> implements Randomizer<T> {
      * @return optional randomizer
      */
     public static <T> Randomizer<T> option(final Randomizer<T> delegate, final int optionalPercent) {
-        return new OptionalRandomizer<>(delegate, optionalPercent);
+        return new OptionalRandomizer<T>(delegate, optionalPercent);
     }
 
 }

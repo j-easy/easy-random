@@ -69,7 +69,7 @@ public class QueueRandomizer<T> extends CollectionRandomizer<T> {
 
     @Override
     public Queue<T> getRandomValue() {
-        Queue<T> result = new LinkedList<>();
+        Queue<T> result = new LinkedList<T>();
         for (int i = 0; i < nbElements; i++) {
             result.add(getRandomElement());
         }
