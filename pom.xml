@@ -19,7 +19,8 @@
 
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-        <java.version>1.6</java.version>
+        <java-source.version>1.8</java-source.version>
+        <java-target.version>1.8</java-target.version>
         <junit.version>4.12</junit.version>
         <assertj.version>1.7.1</assertj.version>
         <commons-beanutils.version>1.9.2</commons-beanutils.version>
@@ -43,6 +44,7 @@
     <modules>
         <module>random-beans</module>
         <module>random-beans-spring</module>
+        <module>random-beans-java8</module>
         <module>random-beans-validation</module>
         <module>random-beans-jodatime</module>
     </modules>
@@ -194,8 +196,8 @@
                     <version>${maven-compiler-plugin.version}</version>
                     <configuration>
                         <verbose>true</verbose>
-                        <source>${java.version}</source>
-                        <target>${java.version}</target>
+                        <source>${java-source.version}</source>
+                        <target>${java-target.version}</target>
                         <showWarnings>true</showWarnings>
                     </configuration>
                 </plugin>

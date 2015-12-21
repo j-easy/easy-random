@@ -36,7 +36,7 @@ import java.util.Random;
  *
  * @author Mahmoud Ben Hassine (mahmoud.benhassine@icloud.com)
  */
-public final class Constants {
+public abstract class Constants {
 
     /**
      * Default date range in which dates will be generated: [now - 10 years, now + 10 years].
@@ -63,6 +63,16 @@ public final class Constants {
      */
     public static final DateRangeRandomizer DATE_RANGE_RANDOMIZER;
 
+    /**
+     * Default min value for years.
+     */
+    public static final int TEN_YEARS_AGO;
+
+    /**
+     * Default max value for years.
+     */
+    public static final int IN_TEN_YEARS;
+
     static {
         RANDOM = new Random();
 
@@ -70,15 +80,15 @@ public final class Constants {
         Calendar calendar = Calendar.getInstance();
         calendar.add(Calendar.YEAR, DEFAULT_DATE_RANGE);
         Date inTenYears = calendar.getTime();
+        IN_TEN_YEARS = inTenYears.getYear();
         calendar = Calendar.getInstance();
         calendar.add(Calendar.YEAR, -DEFAULT_DATE_RANGE);
         Date tenYearsAgo = calendar.getTime();
+        TEN_YEARS_AGO = tenYearsAgo.getYear();
         DATE_RANGE_RANDOMIZER = new DateRangeRandomizer(tenYearsAgo, inTenYears);
 
     }
 
-    private Constants() {
-
-    }
+    private Constants() { }
 
 }
