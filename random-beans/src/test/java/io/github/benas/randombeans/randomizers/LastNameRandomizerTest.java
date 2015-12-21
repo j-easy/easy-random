@@ -49,8 +49,7 @@ public class LastNameRandomizerTest {
     public void generatedLastNameShouldBeInThePredefinedLastNamesList() throws Exception {
         String randomValue = lastNameRandomizer.getRandomValue();
 
-        assertThat(randomValue).isNotNull().isNotEmpty();
-        assertThat(lastNames).contains(randomValue);
+        assertThat(randomValue).isNotNull().isNotEmpty().isIn(lastNames);
     }
 
 }

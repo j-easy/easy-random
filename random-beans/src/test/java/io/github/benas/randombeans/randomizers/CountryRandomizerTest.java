@@ -49,8 +49,7 @@ public class CountryRandomizerTest {
     public void generatedCountryShouldBeInThePredefinedCountriesList() throws Exception {
         String randomValue = countryRandomizer.getRandomValue();
 
-        assertThat(randomValue).isNotNull().isNotEmpty();
-        assertThat(countries).contains(randomValue);
+        assertThat(randomValue).isNotNull().isNotEmpty().isIn(countries);
     }
 
 }

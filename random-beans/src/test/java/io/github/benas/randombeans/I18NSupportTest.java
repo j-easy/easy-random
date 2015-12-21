@@ -39,7 +39,7 @@ import java.util.Locale;
 import static io.github.benas.randombeans.PopulatorBuilder.aNewPopulator;
 import static org.assertj.core.api.Assertions.assertThat;
 
-public class I18NTest {
+public class I18NSupportTest {
 
     private Populator populator;
 

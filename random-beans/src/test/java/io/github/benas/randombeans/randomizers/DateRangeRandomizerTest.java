@@ -62,18 +62,19 @@ public class DateRangeRandomizerTest {
         new DateRangeRandomizer(tomorrow, today);
     }
 
-
-    public void whenSpecifiedMinDateIsNullThenThrowIllegalArgumentException() throws Exception {
-        DateRangeRandomizer nullStartRandomizer = new DateRangeRandomizer(null, tomorrow);
-        Date randomDate = nullStartRandomizer.getRandomValue();
+    @Test
+    public void whenSpecifiedMinDateIsNullThenShouldUseDefaultMinValue() throws Exception {
+        dateRangeRandomizer = new DateRangeRandomizer(null, tomorrow);
+        Date randomDate = dateRangeRandomizer.getRandomValue();
         assertThat(randomDate)
                 .isNotNull()
                 .isBefore(tomorrow);
     }
 
-    public void whenSpecifiedMaxDateIsNullThenThrowIllegalArgumentException() throws Exception {
-        DateRangeRandomizer nullEndRandomizer = new DateRangeRandomizer(today, null);
-        Date randomDate = nullEndRandomizer.getRandomValue();
+    @Test
+    public void whenSpecifiedMaxDateIsNullThenShouldUseDefaultMaxValue() throws Exception {
+        dateRangeRandomizer = new DateRangeRandomizer(today, null);
+        Date randomDate = dateRangeRandomizer.getRandomValue();
         assertThat(randomDate)
                 .isNotNull()
                 .isAfter(today);

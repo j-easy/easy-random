@@ -24,20 +24,28 @@
 
 package io.github.benas.randombeans.randomizers;
 
+import io.github.benas.randombeans.api.Randomizer;
 import org.junit.Before;
 import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.mockito.Mock;
+import org.mockito.runners.MockitoJUnitRunner;
 
 import java.util.Collection;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
+@RunWith(MockitoJUnitRunner.class)
 public class SetRandomizerTest {
+
+    @Mock
+    private Randomizer<String> randomizer;
 
     private SetRandomizer<String> setRandomizer;
 
     @Before
     public void setUp() throws Exception {
-        setRandomizer = new SetRandomizer<String>(new FirstNameRandomizer(), 3);
+        setRandomizer = new SetRandomizer<String>(randomizer, 3);
     }
 
     @Test
@@ -50,17 +58,17 @@ public class SetRandomizerTest {
 
     @Test(expected = IllegalArgumentException.class)
     public void minElementsShouldBePositive() throws Exception {
-        setRandomizer = new SetRandomizer<String>(new FirstNameRandomizer(), -3);
+        setRandomizer = new SetRandomizer<String>(randomizer, -3);
     }
 
     @Test(expected = IllegalArgumentException.class)
     public void maxElementsShouldBeGreaterThanOrEqualToOne() throws Exception {
-        setRandomizer = new SetRandomizer<String>(new FirstNameRandomizer(), 0, 0);
+        setRandomizer = new SetRandomizer<String>(randomizer, 0, 0);
     }
 
     @Test(expected = IllegalArgumentException.class)
     public void maxElementsShouldBeGreaterThanOrEqualToMinElements() throws Exception {
-        setRandomizer = new SetRandomizer<String>(new FirstNameRandomizer(), 2, 1);
+        setRandomizer = new SetRandomizer<String>(randomizer, 2, 1);
     }
 
 }

@@ -49,8 +49,7 @@ public class CityRandomizerTest {
     public void generatedCityShouldBeInThePredefinedCitiesList() throws Exception {
         String randomValue = cityRandomizer.getRandomValue();
 
-        assertThat(randomValue).isNotNull().isNotEmpty();
-        assertThat(cities).contains(randomValue);
+        assertThat(randomValue).isNotNull().isNotEmpty().isIn(cities);
     }
 
 }

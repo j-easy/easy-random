@@ -24,20 +24,28 @@
 
 package io.github.benas.randombeans.randomizers;
 
+import io.github.benas.randombeans.api.Randomizer;
 import org.junit.Before;
 import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.mockito.Mock;
+import org.mockito.runners.MockitoJUnitRunner;
 
 import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
+@RunWith(MockitoJUnitRunner.class)
 public class ListRandomizerTest {
+
+    @Mock
+    private Randomizer<String> randomizer;
 
     private ListRandomizer<String> listRandomizer;
 
     @Before
     public void setUp() throws Exception {
-        listRandomizer = new ListRandomizer<String>(new FirstNameRandomizer(), 3);
+        listRandomizer = new ListRandomizer<String>(randomizer, 3);
     }
 
     @Test

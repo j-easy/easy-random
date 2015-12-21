@@ -49,8 +49,7 @@ public class FirstNameRandomizerTest {
     public void generatedFirstNameShouldBeInThePredefinedFirstNamesList() throws Exception {
         String randomValue = firstNameRandomizer.getRandomValue();
 
-        assertThat(randomValue).isNotNull().isNotEmpty();
-        assertThat(firstNames).contains(randomValue);
+        assertThat(randomValue).isNotNull().isNotEmpty().isIn(firstNames);
     }
 
 }

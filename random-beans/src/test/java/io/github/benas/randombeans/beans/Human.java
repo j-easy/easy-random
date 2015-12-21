@@ -27,7 +27,7 @@ package io.github.benas.randombeans.beans;
 
 public class Human {
 
-    protected final Long id = null; //deliberately set to null to test that final fields should not be populated
+    protected final Long id = null;
 
     protected String name;
 

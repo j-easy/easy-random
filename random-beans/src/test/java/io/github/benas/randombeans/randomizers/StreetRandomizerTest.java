@@ -49,8 +49,7 @@ public class StreetRandomizerTest {
     public void generatedStreetShouldBeInThePredefinedStreetsList() throws Exception {
         String randomValue = streetRandomizer.getRandomValue();
 
-        assertThat(randomValue).isNotNull().isNotEmpty();
-        assertThat(streets).contains(randomValue);
+        assertThat(randomValue).isNotNull().isNotEmpty().isIn(streets);
     }
 
 }

@@ -25,7 +25,6 @@
 
 package io.github.benas.randombeans;
 
-import io.github.benas.randombeans.api.Populator;
 import org.junit.Test;
 
 import static io.github.benas.randombeans.PopulatorBuilder.aNewPopulator;
@@ -34,9 +33,8 @@ import static org.assertj.core.api.Assertions.assertThat;
 public class RandomizerAnnotationTest {
 
     @Test
-    public void testFieldPopulationWithCustomRandomizerDeclaredWithAnnotation() throws Exception {
-        Populator populator = aNewPopulator().build();
-        Foo foo = populator.populateBean(Foo.class);
+    public void fieldAnnotatedWithRandomizerShouldBePopulatedWithValuesGeneratedByTheDeclaredRandomizer() throws Exception {
+        Foo foo = aNewPopulator().build().populateBean(Foo.class);
         assertThat(foo.getName()).isEqualTo("foo");
     }
 
