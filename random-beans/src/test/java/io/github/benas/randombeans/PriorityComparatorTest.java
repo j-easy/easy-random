@@ -54,11 +54,11 @@ public class PriorityComparatorTest {
     public void testCompare() throws Exception {
         assertThat(priorityComparator.compare(foo, bar)).isGreaterThan(0);
 
-        List objects = new ArrayList();
+        List<Object> objects = new ArrayList<Object>();
         objects.add(foo);
         objects.add(bar);
         Collections.sort(objects, priorityComparator);
-        // objects must be sorted in decreasing priority order: 2 > 1 > -254 > -255
+        // objects must be sorted in decreasing priority order: 2 > 1
         assertThat(objects.get(0)).isEqualTo(bar);
         assertThat(objects.get(1)).isEqualTo(foo);
     }

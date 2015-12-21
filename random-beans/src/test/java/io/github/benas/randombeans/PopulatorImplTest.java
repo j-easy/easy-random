@@ -61,22 +61,22 @@ public class PopulatorImplTest {
         Person person = populator.populateBean(Person.class);
 
         assertThat(person).isNotNull();
-        assertThat(person.getEmail()).isNotNull().isNotEmpty();
-        assertThat(person.getGender()).isNotNull().isIn(asList(Gender.MALE, Gender.FEMALE));
+        assertThat(person.getEmail()).isNotEmpty();
+        assertThat(person.getGender()).isIn(asList(Gender.MALE, Gender.FEMALE));
         assertThat(person.getBirthDate()).isNotNull();
-        assertThat(person.getPhoneNumber()).isNotNull().isNotEmpty();
-        assertThat(person.getNicknames()).isNotNull().isEmpty();
-        assertThat(person.getName()).isNotNull().isNotEmpty();
+        assertThat(person.getPhoneNumber()).isNotEmpty();
+        assertThat(person.getNicknames()).isEmpty();
+        assertThat(person.getName()).isNotEmpty();
 
         final Address address = person.getAddress();
         assertThat(address).isNotNull();
-        assertThat(address.getCity()).isNotNull().isNotEmpty();
-        assertThat(address.getCountry()).isNotNull().isNotEmpty();
-        assertThat(address.getZipCode()).isNotNull().isNotEmpty();
+        assertThat(address.getCity()).isNotEmpty();
+        assertThat(address.getCountry()).isNotEmpty();
+        assertThat(address.getZipCode()).isNotEmpty();
 
         final Street street = address.getStreet();
         assertThat(street).isNotNull();
-        assertThat(street.getName()).isNotNull().isNotEmpty();
+        assertThat(street.getName()).isNotEmpty();
         assertThat(street.getNumber()).isNotNull();
         assertThat(street.getType()).isNotNull();
     }
@@ -117,14 +117,14 @@ public class PopulatorImplTest {
     public void generatedBeansListShouldNotBeEmpty() throws Exception {
         List<Person> persons = populator.populateBeans(Person.class);
 
-        assertThat(persons).isNotNull().isNotEmpty();
+        assertThat(persons).isNotEmpty();
     }
 
     @Test
     public void generatedBeansNumberShouldBeEqualToSpecifiedNumber() throws Exception {
         List<Person> persons = populator.populateBeans(Person.class, 2);
 
-        assertThat(persons).isNotNull().hasSize(2);
+        assertThat(persons).hasSize(2);
     }
 
     @Test
@@ -136,7 +136,7 @@ public class PopulatorImplTest {
         Person person = populator.populateBean(Person.class);
 
         assertThat(person).isNotNull();
-        assertThat(person.getName()).isNotNull().isNotEmpty().isEqualTo(NAME);
+        assertThat(person.getName()).isEqualTo(NAME);
     }
 
     @Test
@@ -155,25 +155,15 @@ public class PopulatorImplTest {
         final CollectionsBean collectionsBean = populator.populateBean(CollectionsBean.class);
 
         assertThat(collectionsBean).isNotNull();
-        assertThat(collectionsBean.getCollection()).isNotNull();
         assertThat(collectionsBean.getCollection()).isEmpty();
-        assertThat(collectionsBean.getList()).isNotNull();
         assertThat(collectionsBean.getList()).isEmpty();
-        assertThat(collectionsBean.getSet()).isNotNull();
         assertThat(collectionsBean.getSet()).isEmpty();
-        assertThat(collectionsBean.getSortedSet()).isNotNull();
         assertThat(collectionsBean.getSortedSet()).isEmpty();
-        assertThat(collectionsBean.getNavigableSet()).isNotNull();
         assertThat(collectionsBean.getNavigableSet()).isEmpty();
-        assertThat(collectionsBean.getQueue()).isNotNull();
         assertThat(collectionsBean.getQueue()).isEmpty();
-        assertThat(collectionsBean.getDeque()).isNotNull();
         assertThat(collectionsBean.getDeque()).isEmpty();
-        assertThat(collectionsBean.getMap()).isNotNull();
         assertThat(collectionsBean.getMap()).isEmpty();
-        assertThat(collectionsBean.getSortedMap()).isNotNull();
         assertThat(collectionsBean.getSortedMap()).isEmpty();
-        assertThat(collectionsBean.getNavigableMap()).isNotNull();
         assertThat(collectionsBean.getNavigableMap()).isEmpty();
     }
 

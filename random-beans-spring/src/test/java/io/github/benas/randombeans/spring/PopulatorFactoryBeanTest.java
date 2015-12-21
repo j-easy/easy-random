@@ -45,7 +45,7 @@ public class PopulatorFactoryBeanTest {
         Foo foo = populator.populateBean(Foo.class);
 
         assertThat(foo).isNotNull();
-        assertThat(foo.getName()).isNotNull().isNotEmpty();
+        assertThat(foo.getName()).isNotEmpty();
     }
 
     @Test
@@ -60,7 +60,7 @@ public class PopulatorFactoryBeanTest {
         Foo foo = populator.populateBean(Foo.class);
 
         assertThat(foo).isNotNull();
-        assertThat(foo.getName()).isNotNull().isNotEmpty();
+        assertThat(foo.getName()).isNotEmpty();
     }
 
     private Populator getPopulatorFromSpringContext(String contextFileName) {

@@ -78,7 +78,7 @@ public class BeanValidationTest {
 
         final String briefMessage = bean.getBriefMessage();
 
-        assertThat(briefMessage).isNotNull().isNotEmpty();
+        assertThat(briefMessage).isNotEmpty();
 
         final int length = briefMessage.length();
         assertThat(length).isGreaterThanOrEqualTo(2).isLessThanOrEqualTo(10);// @Size(min=2, max=10) String briefMessage;

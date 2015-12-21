@@ -5,18 +5,16 @@ import org.junit.Test;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-public class EnumRandomizerTest {
-
-    private EnumRandomizer enumRandomizer;
+public class EnumRandomizerTest extends AbstractRandomizerTest<Enum> {
 
     @Before
     public void setUp() throws Exception {
-        enumRandomizer = new EnumRandomizer(Gender.class);
+        randomizer = new EnumRandomizer(Gender.class);
     }
 
     @Test
     public void testGetRandomValue() throws Exception {
-        Enum value = enumRandomizer.getRandomValue();
+        Enum value = randomizer.getRandomValue();
         assertThat(value).isIn(Gender.values());
     }
 

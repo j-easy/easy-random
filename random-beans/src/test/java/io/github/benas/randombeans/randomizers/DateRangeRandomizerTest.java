@@ -33,9 +33,7 @@ import java.util.Date;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-public class DateRangeRandomizerTest {
-
-    private DateRangeRandomizer dateRangeRandomizer;
+public class DateRangeRandomizerTest extends AbstractRandomizerTest<Date> {
 
     private Date today, tomorrow;
 
@@ -45,14 +43,13 @@ public class DateRangeRandomizerTest {
         Calendar calendar = Calendar.getInstance();
         calendar.add(Calendar.DATE, 1);
         tomorrow = calendar.getTime();
-        dateRangeRandomizer = new DateRangeRandomizer(today, tomorrow);
+        randomizer = new DateRangeRandomizer(today, tomorrow);
     }
 
     @Test
     public void generatedDateShouldBeWithinSpecifiedRange() throws Exception {
-        Date randomDate = dateRangeRandomizer.getRandomValue();
+        Date randomDate = randomizer.getRandomValue();
         assertThat(randomDate)
-                .isNotNull()
                 .isAfter(today)
                 .isBefore(tomorrow);
     }
@@ -64,19 +61,17 @@ public class DateRangeRandomizerTest {
 
     @Test
     public void whenSpecifiedMinDateIsNullThenShouldUseDefaultMinValue() throws Exception {
-        dateRangeRandomizer = new DateRangeRandomizer(null, tomorrow);
-        Date randomDate = dateRangeRandomizer.getRandomValue();
+        randomizer = new DateRangeRandomizer(null, tomorrow);
+        Date randomDate = randomizer.getRandomValue();
         assertThat(randomDate)
-                .isNotNull()
                 .isBefore(tomorrow);
     }
 
     @Test
     public void whenSpecifiedMaxDateIsNullThenShouldUseDefaultMaxValue() throws Exception {
-        dateRangeRandomizer = new DateRangeRandomizer(today, null);
-        Date randomDate = dateRangeRandomizer.getRandomValue();
+        randomizer = new DateRangeRandomizer(today, null);
+        Date randomDate = randomizer.getRandomValue();
         assertThat(randomDate)
-                .isNotNull()
                 .isAfter(today);
     }
 

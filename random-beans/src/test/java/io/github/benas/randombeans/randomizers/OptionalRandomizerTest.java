@@ -53,8 +53,6 @@ public class OptionalRandomizerTest {
     @Test
     public void whenOptionalPercentIsOneHundredThenShouldGenerateValue()  {
         assertThat(optionalRandomizer.getRandomValue())
-                .isNotNull()
-                .isNotEmpty()
                 .isEqualTo(NAME);
     }
 

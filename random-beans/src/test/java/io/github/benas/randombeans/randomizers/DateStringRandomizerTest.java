@@ -35,12 +35,10 @@ import java.util.Date;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-public class DateStringRandomizerTest {
+public class DateStringRandomizerTest extends AbstractRandomizerTest<String> {
 
     private static final String DATE_FORMAT = "yyyy-MM-dd";
     private static final String DEFAULT_DATE_FORMAT = "E M dd hh:mm:ss a zzz";
-
-    private DateStringRandomizer dateStringRandomizer;
 
     private Date today, tomorrow;
 
@@ -54,8 +52,8 @@ public class DateStringRandomizerTest {
 
     @Test
     public void returnedStringShouldBeDate() {
-        dateStringRandomizer = new DateStringRandomizer();
-        String randomDate = dateStringRandomizer.getRandomValue();
+        randomizer = new DateStringRandomizer();
+        String randomDate = randomizer.getRandomValue();
         assertThat(randomDate).isNotNull();
         try {
             convertToDate(randomDate, DEFAULT_DATE_FORMAT);
@@ -66,17 +64,16 @@ public class DateStringRandomizerTest {
 
     @Test
     public void returnedStringDateShouldBeInRange() throws ParseException {
-        dateStringRandomizer = new DateStringRandomizer(today, tomorrow);
-        Date actual = convertToDate(dateStringRandomizer.getRandomValue(), DEFAULT_DATE_FORMAT);
+        randomizer = new DateStringRandomizer(today, tomorrow);
+        Date actual = convertToDate(randomizer.getRandomValue(), DEFAULT_DATE_FORMAT);
         assertThat(actual).isNotNull();
         assertThat(today.compareTo(actual) * tomorrow.compareTo(actual)).isGreaterThan(0);
     }
 
     @Test
     public void returnedStringDateShouldHaveSpecifiedFormat() throws Exception {
-        dateStringRandomizer = new DateStringRandomizer(DATE_FORMAT, today, tomorrow);
-        String randomDate = dateStringRandomizer.getRandomValue();
-        assertThat(randomDate).isNotNull();
+        randomizer = new DateStringRandomizer(DATE_FORMAT, today, tomorrow);
+        String randomDate = randomizer.getRandomValue();
         assertThat(randomDate).matches("\\d{4}-\\d{2}-\\d{2}");
     }
 

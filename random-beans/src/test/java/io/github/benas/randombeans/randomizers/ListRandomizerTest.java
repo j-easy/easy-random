@@ -52,22 +52,22 @@ public class ListRandomizerTest {
     public void generatedListShouldNotBeEmpty() throws Exception {
         List<String> names = listRandomizer.getRandomValue();
 
-        assertThat(names).isNotNull().hasSize(3);
+        assertThat(names).hasSize(3);
     }
 
     @Test(expected = IllegalArgumentException.class)
     public void minElementsShouldBePositive() throws Exception {
-        listRandomizer = new ListRandomizer<String>(new FirstNameRandomizer(), -3);
+        listRandomizer = new ListRandomizer<String>(randomizer, -3);
     }
 
     @Test(expected = IllegalArgumentException.class)
     public void maxElementsShouldBeGreaterThanOrEqualToOne() throws Exception {
-        listRandomizer = new ListRandomizer<String>(new FirstNameRandomizer(), 0, 0);
+        listRandomizer = new ListRandomizer<String>(randomizer, 0, 0);
     }
 
     @Test(expected = IllegalArgumentException.class)
     public void maxElementsShouldBeGreaterThanOrEqualToMinElements() throws Exception {
-        listRandomizer = new ListRandomizer<String>(new FirstNameRandomizer(), 2, 1);
+        listRandomizer = new ListRandomizer<String>(randomizer, 2, 1);
     }
 
 }

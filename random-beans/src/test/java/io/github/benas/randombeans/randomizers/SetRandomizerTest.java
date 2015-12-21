@@ -52,7 +52,6 @@ public class SetRandomizerTest {
     public void generatedSetShouldNotBeEmpty() throws Exception {
         Collection<String> names = setRandomizer.getRandomValue();
 
-        assertThat(names).isNotNull();
         assertThat(names.size()).isLessThanOrEqualTo(3);// duplicate random values are not inserted in the set
     }
 

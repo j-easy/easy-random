@@ -52,7 +52,7 @@ public class QueueRandomizerTest {
     public void generatedQueueShouldNotBeEmpty() throws Exception {
         Queue<String> names = queueRandomizer.getRandomValue();
 
-        assertThat(names).isNotNull().hasSize(3);
+        assertThat(names).hasSize(3);
     }
 
     @Test(expected = IllegalArgumentException.class)

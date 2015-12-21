@@ -22,7 +22,6 @@ public class YearRandomizerTest {
         Year year = yearRandomizer.getRandomValue();
         assertThat(year).isNotNull();
         assertThat(year.getValue())
-                .isNotNull()
                 .isGreaterThanOrEqualTo(Constants.TEN_YEARS_AGO)
                 .isLessThanOrEqualTo(Constants.IN_TEN_YEARS);
     }

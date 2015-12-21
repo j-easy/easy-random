@@ -54,7 +54,7 @@ public class MapRandomizerTest {
     public void generatedMapSizeShouldNotBeEqualToTheSpecifiedSize() throws Exception {
         Map<Integer, Integer> names = mapRandomizer.getRandomValue();
 
-        assertThat(names).isNotNull().hasSize(3);
+        assertThat(names).hasSize(3);
     }
 
     @Test(expected = IllegalArgumentException.class)

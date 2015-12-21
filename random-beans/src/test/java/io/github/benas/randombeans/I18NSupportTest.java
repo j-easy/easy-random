@@ -33,10 +33,11 @@ import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
-import java.util.Arrays;
+import java.util.List;
 import java.util.Locale;
 
 import static io.github.benas.randombeans.PopulatorBuilder.aNewPopulator;
+import static java.util.Arrays.asList;
 import static org.assertj.core.api.Assertions.assertThat;
 
 public class I18NSupportTest {
@@ -58,9 +59,10 @@ public class I18NSupportTest {
     @Test
     public void generatedValueShouldBeInternationalized() throws Exception {
         Person person = populator.populateBean(Person.class);
+        String country = person.getAddress().getCountry();
+        List<String> i18nValues = asList("Etats Unis", "Chine", "Allemagne", "France", "Italie", "Espagne");
 
-        assertThat(person.getAddress().getCountry())
-                .isIn(Arrays.asList("Etats Unis", "Chine", "Allemagne", "France", "Italie", "Espagne"));
+        assertThat(i18nValues).contains(country);
     }
 
     @AfterClass

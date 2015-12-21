@@ -27,29 +27,26 @@ package io.github.benas.randombeans.randomizers;
 import org.junit.Before;
 import org.junit.Test;
 
-import java.util.Arrays;
 import java.util.List;
-import java.util.ResourceBundle;
 
+import static java.util.Arrays.asList;
 import static org.assertj.core.api.Assertions.assertThat;
 
-public class CountryRandomizerTest {
+public class CountryRandomizerTest extends AbstractRandomizerTest<String> {
 
     private List<String> countries;
 
-    private CountryRandomizer countryRandomizer;
-
     @Before
     public void setUp() throws Exception {
-        countries = Arrays.asList(ResourceBundle.getBundle("io/github/benas/randombeans/data/data").getString("countries").split(","));
-        countryRandomizer = new CountryRandomizer();
+        countries = asList(getData("countries"));
+        randomizer = new CountryRandomizer();
     }
 
     @Test
     public void generatedCountryShouldBeInThePredefinedCountriesList() throws Exception {
-        String randomValue = countryRandomizer.getRandomValue();
+        String randomValue = randomizer.getRandomValue();
 
-        assertThat(randomValue).isNotNull().isNotEmpty().isIn(countries);
+        assertThat(countries).contains(randomValue);
     }
 
 }

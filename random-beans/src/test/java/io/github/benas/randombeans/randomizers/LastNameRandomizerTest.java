@@ -27,29 +27,26 @@ package io.github.benas.randombeans.randomizers;
 import org.junit.Before;
 import org.junit.Test;
 
-import java.util.Arrays;
 import java.util.List;
-import java.util.ResourceBundle;
 
+import static java.util.Arrays.asList;
 import static org.assertj.core.api.Assertions.assertThat;
 
-public class LastNameRandomizerTest {
+public class LastNameRandomizerTest extends AbstractRandomizerTest<String> {
 
     private List<String> lastNames;
 
-    private LastNameRandomizer lastNameRandomizer;
-
     @Before
     public void setUp() throws Exception {
-        lastNames = Arrays.asList(ResourceBundle.getBundle("io/github/benas/randombeans/data/data").getString("lastNames").split(","));
-        lastNameRandomizer = new LastNameRandomizer();
+        lastNames = asList(getData("lastNames"));
+        randomizer = new LastNameRandomizer();
     }
 
     @Test
     public void generatedLastNameShouldBeInThePredefinedLastNamesList() throws Exception {
-        String randomValue = lastNameRandomizer.getRandomValue();
+        String randomValue = randomizer.getRandomValue();
 
-        assertThat(randomValue).isNotNull().isNotEmpty().isIn(lastNames);
+        assertThat(lastNames).contains(randomValue);
     }
 
 }
