@@ -90,7 +90,7 @@ public class PopulatorImplTest {
     }
 
     @Test
-    public void fieldsExcludedWithAnnotationShouldNotBePopulated() {
+    public void fieldsExcludedWithAnnotationShouldNotBePopulated() throws Exception {
         Person person = populator.populateBean(Person.class);
 
         assertThat(person).isNotNull();
@@ -128,7 +128,7 @@ public class PopulatorImplTest {
     }
 
     @Test
-    public void generatedBeansWithCustomRandomizersShouldBeCorrectlyPopulated() {
+    public void generatedBeansWithCustomRandomizersShouldBeCorrectlyPopulated() throws Exception {
         populator = aNewPopulator()
                 .registerRandomizer(Person.class, String.class, "name", randomizer)
                 .build();

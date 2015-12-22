@@ -1,5 +1,6 @@
 package io.github.benas.randombeans;
 
+import io.github.benas.randombeans.api.BeanPopulationException;
 import io.github.benas.randombeans.api.Populator;
 import io.github.benas.randombeans.api.Randomizer;
 import io.github.benas.randombeans.beans.Human;
@@ -37,7 +38,7 @@ public class PopulatorBuilderTest {
     }
 
     @Test
-    public void customRandomizerShouldBeRegisteredInAllBuiltInstances() {
+    public void customRandomizerShouldBeRegisteredInAllBuiltInstances() throws BeanPopulationException {
         PopulatorBuilder builder = aNewPopulator();
 
         builder.registerRandomizer(Human.class, String.class, "name", randomizer);

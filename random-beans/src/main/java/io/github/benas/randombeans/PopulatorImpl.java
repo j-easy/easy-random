@@ -26,6 +26,7 @@
 package io.github.benas.randombeans;
 
 import io.github.benas.randombeans.annotation.Exclude;
+import io.github.benas.randombeans.api.BeanPopulationException;
 import io.github.benas.randombeans.api.Populator;
 import io.github.benas.randombeans.api.Randomizer;
 import io.github.benas.randombeans.api.RandomizerRegistry;
@@ -39,8 +40,6 @@ import java.lang.reflect.Field;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Modifier;
 import java.util.*;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
 /**
  * The core implementation of the {@link Populator} interface.
@@ -48,8 +47,6 @@ import java.util.logging.Logger;
  * @author Mahmoud Ben Hassine (mahmoud.benhassine@icloud.com)
  */
 final class PopulatorImpl implements Populator {
-
-    private static final Logger LOGGER = Logger.getLogger(PopulatorImpl.class.getName());
 
     private Map<RandomizerDefinition, Randomizer> randomizers = new HashMap<RandomizerDefinition, Randomizer>();
 
@@ -67,7 +64,7 @@ final class PopulatorImpl implements Populator {
 
     @Override
     @SuppressWarnings("unchecked")
-    public <T> T populateBean(final Class<T> type, final String... excludedFields) {
+    public <T> T populateBean(final Class<T> type, final String... excludedFields) throws BeanPopulationException {
         T result;
         try {
             //No instantiation needed for enum types.
@@ -76,11 +73,7 @@ final class PopulatorImpl implements Populator {
             }
 
             // create a new instance of the target type
-            try {
-                result = type.newInstance();
-            } catch (Exception ex) {
-                result = objenesis.newInstance(type);
-            }
+            result = objenesis.newInstance(type);
 
             // retrieve declared and inherited fields
             List<Field> declaredFields = getDeclaredFields(result);
@@ -95,20 +88,19 @@ final class PopulatorImpl implements Populator {
             }
             return result;
         } catch (Exception e) {
-            LOGGER.log(Level.SEVERE, String.format("Unable to populate an instance of type %s", type), e);
-            return null;
+            throw new BeanPopulationException("Unable to populate an instance of type " + type, e);
         }
     }
 
     @Override
-    public <T> List<T> populateBeans(final Class<T> type, final String... excludedFields) {
+    public <T> List<T> populateBeans(final Class<T> type, final String... excludedFields) throws BeanPopulationException {
         int size = new RandomDataGenerator().nextInt(1, Short.MAX_VALUE);
         return populateBeans(type, size, excludedFields);
     }
 
     @Override
     @SuppressWarnings("unchecked")
-    public <T> List<T> populateBeans(final Class<T> type, final int size, final String... excludedFields) {
+    public <T> List<T> populateBeans(final Class<T> type, final int size, final String... excludedFields) throws BeanPopulationException {
         if (size < 0) {
             throw new IllegalArgumentException("The number of beans to populate must be positive.");
         }
@@ -144,7 +136,7 @@ final class PopulatorImpl implements Populator {
      * @throws InvocationTargetException Thrown when the setter of the given field can not be invoked
      */
     private void populateField(final Object target, final Field field)
-            throws IllegalAccessException, NoSuchMethodException, InvocationTargetException {
+            throws IllegalAccessException, NoSuchMethodException, InvocationTargetException, BeanPopulationException {
 
         Class fieldType = field.getType();
         Class targetClass = target.getClass();

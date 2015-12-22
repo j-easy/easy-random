@@ -24,6 +24,7 @@
 
 package io.github.benas.randombeans.randomizers.jodatime;
 
+import io.github.benas.randombeans.api.BeanPopulationException;
 import io.github.benas.randombeans.api.Populator;
 import org.junit.Before;
 import org.junit.Test;
@@ -41,7 +42,7 @@ public class JodaTimeSupportTest {
     }
 
     @Test
-    public void jodaTimeBeansShouldBeFilledIn() {
+    public void jodaTimeBeansShouldBeFilledIn() throws BeanPopulationException {
 
         Organizer organizer = populator.populateBean(Organizer.class);
 

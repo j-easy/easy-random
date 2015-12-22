@@ -36,36 +36,39 @@ public interface Populator {
 
     /**
      * Populate a java bean instance for the given type.
-     * It is possible to exclude some fields from being populated using the {@code excludedFields} param.
+     * It is possible to exclude some fields from being populated using the {@code excludedFields} parameter.
      *
      * @param type           the type for which an instance will be populated
      * @param excludedFields the name of fields to exclude
      * @param <T>            the actual type of the target java bean
      * @return a populated instance of the given type
+     * @throws BeanPopulationException when unable to populate an instance of the given type
      */
-    <T> T populateBean(final Class<T> type, final String... excludedFields);
+    <T> T populateBean(final Class<T> type, final String... excludedFields) throws BeanPopulationException;
 
     /**
      * Populate a random number of instances for the given type.
-     * It is possible to exclude some fields from being populated using the {@code excludedFields} param.
+     * It is possible to exclude some fields from being populated using the {@code excludedFields} parameter.
      *
      * @param type           the type for which instances will be populated
      * @param excludedFields the name of fields to exclude
      * @param <T>            the actual type of the target java bean
      * @return a list of populated instances of the given type
+     * @throws BeanPopulationException when unable to populate an instance of the given type
      */
-    <T> List<T> populateBeans(final Class<T> type, final String... excludedFields);
+    <T> List<T> populateBeans(final Class<T> type, final String... excludedFields) throws BeanPopulationException;
 
     /**
      * Populate a fixed number of instances for the given type.
-     * It is possible to exclude some fields from being populated using the {@code excludedFields} param.
+     * It is possible to exclude some fields from being populated using the {@code excludedFields} parameter.
      *
      * @param type           the type for which instances will be populated
      * @param excludedFields the name of fields to exclude
      * @param size           the number of instances to populate
      * @param <T>            the actual type of the target java bean
      * @return a list of populated instances of the given type
+     * @throws BeanPopulationException when unable to populate an instance of the given type
      */
-    <T> List<T> populateBeans(final Class<T> type, int size, final String... excludedFields);
+    <T> List<T> populateBeans(final Class<T> type, int size, final String... excludedFields) throws BeanPopulationException;
 
 }
