@@ -21,8 +21,6 @@ public class HourRandomizerTest {
         int hour = hourRandomizer.getRandomValue();
 
         assertThat(hour)
-                .isNotNull()
-                .isGreaterThanOrEqualTo(MIN_HOUR)
-                .isLessThanOrEqualTo(MAX_HOUR);
+                .isBetween(MIN_HOUR, MAX_HOUR);
     }
 }
