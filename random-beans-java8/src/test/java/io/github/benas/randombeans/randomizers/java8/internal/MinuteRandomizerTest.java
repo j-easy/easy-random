@@ -21,8 +21,6 @@ public class MinuteRandomizerTest {
         int minute = minuteRandomizer.getRandomValue();
 
         assertThat(minute)
-                .isNotNull()
-                .isGreaterThanOrEqualTo(MIN_MINUTE)
-                .isLessThanOrEqualTo(MAX_MINUTE);
+                .isBetween(MIN_MINUTE, MAX_MINUTE);
     }
 }
