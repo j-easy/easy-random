@@ -67,6 +67,7 @@ public class PopulatorImplTest {
         assertThat(person.getPhoneNumber()).isNotEmpty();
         assertThat(person.getNicknames()).isEmpty();
         assertThat(person.getName()).isNotEmpty();
+        assertThat(person.getParent()).isEqualTo(person);
 
         final Address address = person.getAddress();
         assertThat(address).isNotNull();

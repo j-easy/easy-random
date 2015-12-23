@@ -67,6 +67,10 @@ final class PopulatorImpl implements Populator {
     @Override
     @SuppressWarnings("unchecked")
     public <T> T populateBean(final Class<T> type, final String... excludedFields) throws BeanPopulationException {
+        return doPopulateBean(type, new PopulatorContext(), excludedFields);
+    }
+
+    protected <T> T doPopulateBean(final Class<T> type, final PopulatorContext context, final String... excludedFields) throws BeanPopulationException {
         T result;
         try {
             //No instantiation needed for enum types.
@@ -74,17 +78,23 @@ final class PopulatorImpl implements Populator {
                 return (T) getEnumRandomizer((Class<? extends Enum>) type).getRandomValue();
             }
 
+            // If the type has been already randomized, reuse the cached instance to avoid recursion.
+            if (context.hasPopulatedBean(type)) {
+                return (T) context.getPopulatedBean(type);
+            }
+
             // create a new instance of the target type
             result = objenesis.newInstance(type);
 
             // retrieve declared and inherited fields
+            context.addPopulatedBean(type, result);
             List<Field> declaredFields = getDeclaredFields(result);
             declaredFields.addAll(getInheritedFields(type));
 
             //Generate random data for each field
             for (Field field : declaredFields) {
                 if (!shouldExcludeField(field, excludedFields)) {
-                    populateField(result, field);
+                    populateField(result, field, context);
                 }
             }
             return result;
@@ -118,11 +128,12 @@ final class PopulatorImpl implements Populator {
      *
      * @param target The target object on which the generated value will be set
      * @param field  The field in which the generated value will be set
+     * @param context The context of this call
      * @throws IllegalAccessException    Thrown when the generated value cannot be set to the given field
      * @throws NoSuchMethodException     Thrown when there is no setter for the given field
      * @throws InvocationTargetException Thrown when the setter of the given field can not be invoked
      */
-    private void populateField(final Object target, final Field field)
+    private void populateField(final Object target, final Field field, final PopulatorContext context)
             throws IllegalAccessException, NoSuchMethodException, InvocationTargetException, BeanPopulationException {
 
         Object value;
@@ -130,12 +141,13 @@ final class PopulatorImpl implements Populator {
         if (randomizer != null) {
             value = randomizer.getRandomValue();
         } else {
-            value = generateRandomValue(field);
+            value = generateRandomValue(field, context);
         }
         setProperty(target, field, value);
     }
 
-    private Object generateRandomValue(final Field field) throws IllegalAccessException, NoSuchMethodException, InvocationTargetException, BeanPopulationException {
+    private Object generateRandomValue(final Field field, final PopulatorContext context)
+            throws IllegalAccessException, NoSuchMethodException, InvocationTargetException, BeanPopulationException {
         Class fieldType = field.getType();
         Object value;
         if (fieldType.isEnum()) {
@@ -143,7 +155,7 @@ final class PopulatorImpl implements Populator {
         } else if (isCollectionType(fieldType)) {
             value = getRandomCollection(fieldType);
         } else {
-            value = populateBean(fieldType);
+            value = doPopulateBean(fieldType, context);
         }
         return value;
     }
@@ -198,7 +210,7 @@ final class PopulatorImpl implements Populator {
         if (fieldType.isArray()) {
             return emptyArray(fieldType);
         } else {
-            return emptyCollection(fieldType); // return empty collection until collection population is implemented
+            return emptyCollection(fieldType);
         }
     }
 

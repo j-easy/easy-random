@@ -44,18 +44,10 @@ public class Person extends Human {
 
     protected List<String> nicknames;
 
+    protected Person parent;
+
     @Exclude
     protected String excluded;
-
-    public Person() {
-    }
-
-    public Person(String name, String email, Gender gender, Address address) {
-        super(name);
-        this.email = email;
-        this.gender = gender;
-        this.address = address;
-    }
 
     public String getEmail() {
         return email;
@@ -113,19 +105,11 @@ public class Person extends Human {
         this.excluded = excluded;
     }
 
-    @Override
-    public String toString() {
-        final StringBuilder sb = new StringBuilder("Person{");
-        sb.append("id=").append(id);
-        sb.append(", name='").append(name).append('\'');
-        sb.append(", email='").append(email).append('\'');
-        sb.append(", gender=").append(gender);
-        sb.append(", address=").append(address);
-        sb.append(", birthDate=").append(birthDate);
-        sb.append(", phoneNumber='").append(phoneNumber).append('\'');
-        sb.append(", nicknames=").append(nicknames);
-        sb.append(", excluded='").append(excluded).append('\'');
-        sb.append('}');
-        return sb.toString();
+    public Person getParent() {
+        return parent;
+    }
+
+    public void setParent(Person parent) {
+        this.parent = parent;
     }
 }
