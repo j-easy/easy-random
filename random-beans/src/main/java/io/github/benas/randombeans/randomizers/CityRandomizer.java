@@ -27,8 +27,6 @@ package io.github.benas.randombeans.randomizers;
 
 import io.github.benas.randombeans.api.Randomizer;
 
-import java.util.ResourceBundle;
-
 /**
  * A {@link Randomizer} that generates random cities.
  *
@@ -40,7 +38,7 @@ public class CityRandomizer extends GenericStringRandomizer {
      * Public constructor.
      */
     public CityRandomizer() {
-        super(ResourceBundle.getBundle("io/github/benas/randombeans/data/data").getString("cities").split(","));
+        super("cities");
     }
 
 }

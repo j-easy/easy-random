@@ -40,13 +40,13 @@ public class DateStringRandomizer implements Randomizer<String> {
 
     private SimpleDateFormat simpleDateFormat = new SimpleDateFormat(Constants.DEFAULT_DATE_FORMAT);
 
-    private static DateRangeRandomizer dateRangeRandomizer = Constants.DATE_RANGE_RANDOMIZER;
+    private DateRangeRandomizer dateRangeRandomizer;
 
     /**
      * Create a new {@link DateStringRandomizer}.
      */
     public DateStringRandomizer() {
-
+        dateRangeRandomizer = Constants.DATE_RANGE_RANDOMIZER;
     }
 
     /**

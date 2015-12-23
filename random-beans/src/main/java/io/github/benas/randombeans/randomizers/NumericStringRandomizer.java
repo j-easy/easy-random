@@ -25,23 +25,23 @@
 package io.github.benas.randombeans.randomizers;
 
 import io.github.benas.randombeans.api.Randomizer;
-import io.github.benas.randombeans.util.Constants;
-import io.github.benas.randombeans.randomizers.GenericStringRandomizer;
+import io.github.benas.randombeans.randomizers.internal.IntegerRandomizer;
+import io.github.benas.randombeans.randomizers.range.IntegerRangeRandomizer;
 
 /**
  * A {@link Randomizer} that generates numbers in string representation.
  *
  * @author Nikola Milivojevic (0dziga0@gmail.com)
  */
-public class NumericStringRandomizer extends GenericStringRandomizer {
+public class NumericStringRandomizer implements Randomizer<String> {
 
-    private static String[] words = new String[1];
+    private Randomizer delegate;
 
     /**
      * Create a new {@link NumericStringRandomizer}.
      */
     public NumericStringRandomizer() {
-        super(addNumbersToWords(null, null));
+        delegate = new IntegerRandomizer();
     }
 
     /**
@@ -51,22 +51,16 @@ public class NumericStringRandomizer extends GenericStringRandomizer {
      * @param maxNumericValue the max numeric value
      */
     public NumericStringRandomizer(final Integer minNumericValue, final Integer maxNumericValue) {
-        super(addNumbersToWords(minNumericValue, maxNumericValue));
+        delegate = new IntegerRangeRandomizer(minNumericValue, maxNumericValue);
     }
 
-    private static String[] addNumbersToWords(final Integer minNumericValue, final Integer maxNumericValue) {
-        Integer randomNum;
-        if (maxNumericValue != null && minNumericValue != null) {
-            if (minNumericValue > maxNumericValue) {
-                throw new IllegalArgumentException("min value must be lower than max value");
-            } else {
-                randomNum = Constants.RANDOM.nextInt(maxNumericValue - minNumericValue + 1) + minNumericValue;
-            }
-        } else {
-            randomNum = Constants.RANDOM.nextInt();
-        }
-        words[0] = randomNum.toString();
-        return words;
+    /**
+     * Generate a random value for the given type.
+     *
+     * @return a random value for the given type
+     */
+    @Override
+    public String getRandomValue() {
+        return new StringDelegatingRandomizer(delegate).getRandomValue();
     }
-
 }

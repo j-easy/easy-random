@@ -27,8 +27,6 @@ package io.github.benas.randombeans.randomizers;
 
 import io.github.benas.randombeans.api.Randomizer;
 
-import java.util.ResourceBundle;
-
 /**
  * A {@link Randomizer} that generates random street names.
  *
@@ -40,7 +38,7 @@ public class StreetRandomizer extends GenericStringRandomizer {
      * Public constructor.
      */
     public StreetRandomizer() {
-        super(ResourceBundle.getBundle("io/github/benas/randombeans/data/data").getString("streets").split(","));
+        super("streets");
     }
 
 }

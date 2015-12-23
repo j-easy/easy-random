@@ -37,16 +37,16 @@ import java.util.Comparator;
 class PriorityComparator implements Comparator<Object> {
 
     @Override
-    public int compare(Object o1, Object o2) {
+    public int compare(final Object o1, final Object o2) {
         int o1Priority = getPriority(o1);
         int o2Priority = getPriority(o2);
 
         return o2Priority - o1Priority;
     }
 
-    private int getPriority(Object o1) {
-        if (o1 != null) {
-            Priority annotation = o1.getClass().getAnnotation(Priority.class);
+    private int getPriority(final Object object) {
+        if (object != null) {
+            Priority annotation = object.getClass().getAnnotation(Priority.class);
             if (annotation != null) {
                 return annotation.value();
             }

@@ -28,6 +28,8 @@ package io.github.benas.randombeans.randomizers;
 import io.github.benas.randombeans.api.Randomizer;
 import io.github.benas.randombeans.util.Constants;
 
+import java.util.ResourceBundle;
+
 /**
  * A generic {@link Randomizer} that generates String values from a list of words.
  *
@@ -40,15 +42,23 @@ public class GenericStringRandomizer implements Randomizer<String> {
     /**
      * Create a {@link GenericStringRandomizer}.
      *
-     * @param words the words array from which generate a random String.
+     * @param key the key in the data resource bundle.
      */
-    public GenericStringRandomizer(final String[] words) {
-        this.words = words;
+    public GenericStringRandomizer(final String key) {
+        this.words = getData(key);
     }
 
     @Override
     public String getRandomValue() {
         return words[Constants.RANDOM.nextInt(words.length)];
+    }
+
+    protected String[] getData(final String key) {
+        return getResourceBundle().getString(key).split(",");
+    }
+
+    private ResourceBundle getResourceBundle() {
+        return ResourceBundle.getBundle("io/github/benas/randombeans/data/data");
     }
 
 }

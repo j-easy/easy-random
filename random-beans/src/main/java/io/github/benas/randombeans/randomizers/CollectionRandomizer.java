@@ -53,7 +53,7 @@ public abstract class CollectionRandomizer<T> implements Randomizer<Collection<T
      * @param elementRandomizer the randomizer to use to generate elements of the list
      */
     public CollectionRandomizer(final Randomizer<T> elementRandomizer) {
-        this(elementRandomizer, 0, (byte) Math.abs((byte) (Constants.RANDOM.nextInt())));
+        this(elementRandomizer, 0, getRandomMaxElements());
     }
 
     /**
@@ -97,6 +97,10 @@ public abstract class CollectionRandomizer<T> implements Randomizer<Collection<T
 
     protected T getRandomElement() {
         return elementRandomizer.getRandomValue();
+    }
+
+    private static byte getRandomMaxElements() {
+        return (byte) Math.abs((byte) (Constants.RANDOM.nextInt()));
     }
 
 }

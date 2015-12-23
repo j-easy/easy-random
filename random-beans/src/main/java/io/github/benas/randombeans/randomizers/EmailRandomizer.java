@@ -39,12 +39,12 @@ public class EmailRandomizer implements Randomizer<String> {
 
     private final Random random = new Random();
 
-    private final ResourceBundle resourceBundle = ResourceBundle.getBundle("io/github/benas/randombeans/data/data");
+    private final ResourceBundle resourceBundle = getResourceBundle();
 
-    private final String[] firstNames = resourceBundle.getString("firstNames").split(",");
-    private final String[] lastNames = resourceBundle.getString("lastNames").split(",");
-    private final String[] emailServers = resourceBundle.getString("email.servers").split(",");
-    private final String[] emailDomains = resourceBundle.getString("email.domains").split(",");
+    private final String[] firstNames =   getData("firstNames");
+    private final String[] lastNames =    getData("lastNames");
+    private final String[] emailServers = getData("email.servers");
+    private final String[] emailDomains = getData("email.domains");
 
     @Override
     public String getRandomValue() {
@@ -57,6 +57,14 @@ public class EmailRandomizer implements Randomizer<String> {
                 .append(".")
                 .append(emailDomains[random.nextInt(emailDomains.length)]);
         return stringBuilder.toString();
+    }
+
+    private ResourceBundle getResourceBundle() {
+        return ResourceBundle.getBundle("io/github/benas/randombeans/data/data");
+    }
+
+    private String[] getData(final String key) {
+        return resourceBundle.getString(key).split(",");
     }
 
 }

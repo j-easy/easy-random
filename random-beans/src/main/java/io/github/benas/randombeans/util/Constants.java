@@ -26,8 +26,8 @@
 package io.github.benas.randombeans.util;
 
 import io.github.benas.randombeans.randomizers.range.DateRangeRandomizer;
+import org.apache.commons.lang3.time.DateUtils;
 
-import java.util.Calendar;
 import java.util.Date;
 import java.util.Random;
 
@@ -66,27 +66,19 @@ public abstract class Constants {
     /**
      * Default min value for years.
      */
-    public static final int TEN_YEARS_AGO;
+    public static final Date TEN_YEARS_AGO;
 
     /**
      * Default max value for years.
      */
-    public static final int IN_TEN_YEARS;
+    public static final Date IN_TEN_YEARS;
 
     static {
         RANDOM = new Random();
-
-        //initialise date randomizer to generate dates in [now - 10 years, now + 10 years]
-        Calendar calendar = Calendar.getInstance();
-        calendar.add(Calendar.YEAR, DEFAULT_DATE_RANGE);
-        Date inTenYears = calendar.getTime();
-        IN_TEN_YEARS = inTenYears.getYear();
-        calendar = Calendar.getInstance();
-        calendar.add(Calendar.YEAR, -DEFAULT_DATE_RANGE);
-        Date tenYearsAgo = calendar.getTime();
-        TEN_YEARS_AGO = tenYearsAgo.getYear();
-        DATE_RANGE_RANDOMIZER = new DateRangeRandomizer(tenYearsAgo, inTenYears);
-
+        Date today = new Date();
+        IN_TEN_YEARS = DateUtils.addYears(today, DEFAULT_DATE_RANGE);
+        TEN_YEARS_AGO = DateUtils.addYears(today, -DEFAULT_DATE_RANGE);
+        DATE_RANGE_RANDOMIZER = new DateRangeRandomizer(TEN_YEARS_AGO, IN_TEN_YEARS);
     }
 
     private Constants() { }

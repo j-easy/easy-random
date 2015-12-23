@@ -27,8 +27,6 @@ package io.github.benas.randombeans.randomizers;
 
 import io.github.benas.randombeans.api.Randomizer;
 
-import java.util.ResourceBundle;
-
 /**
  * A {@link Randomizer} that generates random last names.
  *
@@ -40,7 +38,7 @@ public class LastNameRandomizer extends GenericStringRandomizer {
      * Create a new {@link LastNameRandomizer}.
      */
     public LastNameRandomizer() {
-        super(ResourceBundle.getBundle("io/github/benas/randombeans/data/data").getString("lastNames").split(","));
+        super("lastNames");
     }
 
 }

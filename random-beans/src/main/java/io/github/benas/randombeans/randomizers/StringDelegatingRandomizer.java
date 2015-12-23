@@ -49,6 +49,6 @@ public class StringDelegatingRandomizer implements Randomizer<String> {
 
     @Override
     public String getRandomValue() {
-        return valueOf(delegate.getRandomValue().toString());
+        return valueOf(delegate.getRandomValue());
     }
 }
