@@ -21,8 +21,6 @@ public class DayRandomizerTest {
         int day = dayRandomizer.getRandomValue();
 
         assertThat(day)
-                .isNotNull()
-                .isGreaterThanOrEqualTo(MIN_DAY)
-                .isLessThanOrEqualTo(MAX_DAY);
+                .isBetween(MIN_DAY, MAX_DAY);
     }
 }

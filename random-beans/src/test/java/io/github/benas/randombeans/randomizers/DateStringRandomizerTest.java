@@ -24,13 +24,13 @@
 
 package io.github.benas.randombeans.randomizers;
 
+import org.apache.commons.lang3.time.DateUtils;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.Calendar;
 import java.util.Date;
 
 import static org.assertj.core.api.Assertions.assertThat;
@@ -45,9 +45,7 @@ public class DateStringRandomizerTest extends AbstractRandomizerTest<String> {
     @Before
     public void setUp() throws Exception {
         today = new Date();
-        Calendar calendar = Calendar.getInstance();
-        calendar.add(Calendar.DATE, 1);
-        tomorrow = calendar.getTime();
+        tomorrow = DateUtils.addDays(today, 1);
     }
 
     @Test

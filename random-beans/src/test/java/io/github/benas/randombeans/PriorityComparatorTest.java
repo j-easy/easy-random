@@ -29,7 +29,7 @@ import io.github.benas.randombeans.annotation.Priority;
 import org.junit.Before;
 import org.junit.Test;
 
-import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 
@@ -54,13 +54,10 @@ public class PriorityComparatorTest {
     public void testCompare() throws Exception {
         assertThat(priorityComparator.compare(foo, bar)).isGreaterThan(0);
 
-        List<Object> objects = new ArrayList<Object>();
-        objects.add(foo);
-        objects.add(bar);
+        List<Object> objects = Arrays.asList(foo,bar);
         Collections.sort(objects, priorityComparator);
         // objects must be sorted in decreasing priority order: 2 > 1
-        assertThat(objects.get(0)).isEqualTo(bar);
-        assertThat(objects.get(1)).isEqualTo(foo);
+        assertThat(objects).containsExactly(bar, foo);
     }
 
     @Priority(1)

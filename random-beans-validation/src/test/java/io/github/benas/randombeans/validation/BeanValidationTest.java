@@ -33,7 +33,6 @@ import javax.validation.Validation;
 import javax.validation.Validator;
 import javax.validation.ValidatorFactory;
 import java.math.BigDecimal;
-import java.util.Date;
 import java.util.Set;
 
 import static io.github.benas.randombeans.PopulatorBuilder.aNewPopulator;
@@ -62,17 +61,17 @@ public class BeanValidationTest {
 
         assertThat(bean.getUsername()).isNotNull();// @NotNull String username;
 
-        assertThat(bean.getBirthday()).isBefore(new Date());// @Past Date birthday;
+        assertThat(bean.getBirthday()).isInThePast();// @Past Date birthday;
 
-        assertThat(bean.getEventDate()).isAfter(new Date());// @Future Date eventDate;
+        assertThat(bean.getEventDate()).isInTheFuture();// @Future Date eventDate;
 
         assertThat(bean.getMaxQuantity()).isLessThanOrEqualTo(10);// @Max(10) int maxQuantity;
 
         assertThat(bean.getMinQuantity()).isGreaterThanOrEqualTo(5);// @Min(5) int minQuantity;
 
-        assertThat(bean.getMaxDiscount().compareTo(new BigDecimal("30.00"))).isLessThanOrEqualTo(0);// @DecimalMax("30.00") BigDecimal maxDiscount;;
+        assertThat(bean.getMaxDiscount()).isLessThanOrEqualTo(new BigDecimal("30.00"));// @DecimalMax("30.00") BigDecimal maxDiscount;;
 
-        assertThat(bean.getMinDiscount().compareTo(new BigDecimal("5.00"))).isGreaterThanOrEqualTo(0);// @DecimalMin("5.00") BigDecimal minDiscount;;
+        assertThat(bean.getMinDiscount()).isGreaterThanOrEqualTo(new BigDecimal("5.00"));// @DecimalMin("5.00") BigDecimal minDiscount;;
 
         assertThat(bean.getMinQuantity()).isGreaterThanOrEqualTo(5);// @Min(5) int minQuantity;
 
@@ -81,7 +80,7 @@ public class BeanValidationTest {
         assertThat(briefMessage).isNotEmpty();
 
         final int length = briefMessage.length();
-        assertThat(length).isGreaterThanOrEqualTo(2).isLessThanOrEqualTo(10);// @Size(min=2, max=10) String briefMessage;
+        assertThat(length).isBetween(2, 10);// @Size(min=2, max=10) String briefMessage;
     }
 
     @Test
