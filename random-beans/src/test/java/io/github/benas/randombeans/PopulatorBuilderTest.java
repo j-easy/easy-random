@@ -10,7 +10,7 @@ import org.junit.runner.RunWith;
 import org.mockito.Mock;
 import org.mockito.runners.MockitoJUnitRunner;
 
-import static io.github.benas.randombeans.PopulatorBuilder.aNewPopulator;
+import static io.github.benas.randombeans.PopulatorBuilder.aNewPopulatorBuilder;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.Mockito.when;
 
@@ -29,7 +29,7 @@ public class PopulatorBuilderTest {
 
     @Test
     public void builtInstancesShouldBeDistinct() {
-        PopulatorBuilder builder = aNewPopulator();
+        PopulatorBuilder builder = aNewPopulatorBuilder();
 
         Populator populator1 = builder.build();
         Populator populator2 = builder.build();
@@ -39,7 +39,7 @@ public class PopulatorBuilderTest {
 
     @Test
     public void customRandomizerShouldBeRegisteredInAllBuiltInstances() throws BeanPopulationException {
-        PopulatorBuilder builder = aNewPopulator();
+        PopulatorBuilder builder = aNewPopulatorBuilder();
 
         builder.registerRandomizer(Human.class, String.class, "name", randomizer);
 

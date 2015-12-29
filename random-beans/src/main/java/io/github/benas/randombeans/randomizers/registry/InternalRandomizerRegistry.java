@@ -25,11 +25,6 @@
 
 package io.github.benas.randombeans.randomizers.registry;
 
-import io.github.benas.randombeans.annotation.Priority;
-import io.github.benas.randombeans.api.Randomizer;
-import io.github.benas.randombeans.api.RandomizerRegistry;
-import io.github.benas.randombeans.randomizers.internal.*;
-
 import java.lang.reflect.Field;
 import java.math.BigDecimal;
 import java.math.BigInteger;
@@ -42,6 +37,30 @@ import java.util.Map;
 import java.util.concurrent.atomic.AtomicInteger;
 import java.util.concurrent.atomic.AtomicLong;
 
+import io.github.benas.randombeans.annotation.Priority;
+import io.github.benas.randombeans.api.Randomizer;
+import io.github.benas.randombeans.api.RandomizerRegistry;
+import io.github.benas.randombeans.randomizers.internal.AtomicIntegerRandomizer;
+import io.github.benas.randombeans.randomizers.internal.AtomicLongRandomizer;
+import io.github.benas.randombeans.randomizers.internal.BigDecimalRandomizer;
+import io.github.benas.randombeans.randomizers.internal.BigIntegerRandomizer;
+import io.github.benas.randombeans.randomizers.internal.BooleanRandomizer;
+import io.github.benas.randombeans.randomizers.internal.ByteRandomizer;
+import io.github.benas.randombeans.randomizers.internal.CalendarRandomizer;
+import io.github.benas.randombeans.randomizers.internal.CharacterRandomizer;
+import io.github.benas.randombeans.randomizers.internal.DateRandomizer;
+import io.github.benas.randombeans.randomizers.internal.DoubleRandomizer;
+import io.github.benas.randombeans.randomizers.internal.FloatRandomizer;
+import io.github.benas.randombeans.randomizers.internal.IntegerRandomizer;
+import io.github.benas.randombeans.randomizers.internal.LongRandomizer;
+import io.github.benas.randombeans.randomizers.internal.ShortRandomizer;
+import io.github.benas.randombeans.randomizers.internal.SqlDateRandomizer;
+import io.github.benas.randombeans.randomizers.internal.SqlTimeRandomizer;
+import io.github.benas.randombeans.randomizers.internal.SqlTimestampRandomizer;
+import io.github.benas.randombeans.randomizers.internal.StringRandomizer;
+import io.github.benas.randombeans.randomizers.internal.UriRandomizer;
+import io.github.benas.randombeans.randomizers.internal.UrlRandomizer;
+
 /**
  * Registry for Java built-in types.
  *
@@ -50,7 +69,7 @@ import java.util.concurrent.atomic.AtomicLong;
 @Priority(-255)
 public class InternalRandomizerRegistry implements RandomizerRegistry {
 
-    private Map<Class, Randomizer> randomizers = new HashMap<Class, Randomizer>();
+    private final Map<Class, Randomizer> randomizers = new HashMap<Class, Randomizer>();
 
     public InternalRandomizerRegistry() {
         randomizers.put(String.class, new StringRandomizer());
@@ -85,6 +104,14 @@ public class InternalRandomizerRegistry implements RandomizerRegistry {
 
     @Override
     public Randomizer getRandomizer(final Field field) {
-        return randomizers.get(field.getType());
+        return getRandomizer(field.getType());
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public Randomizer getRandomizer(Class<?> type) {
+        return randomizers.get(type);
     }
 }
