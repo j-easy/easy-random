@@ -202,4 +202,9 @@ public class BeanValidationRandomizerRegistry implements RandomizerRegistry {
 
         return null;
     }
+
+    @Override
+    public Randomizer getRandomizer(Class<?> fieldType) {
+        return null;
+    }
 }
