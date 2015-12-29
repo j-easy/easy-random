@@ -29,7 +29,7 @@ import io.github.benas.randombeans.api.Populator;
 import org.junit.Before;
 import org.junit.Test;
 
-import static io.github.benas.randombeans.PopulatorBuilder.aNewPopulator;
+import static io.github.benas.randombeans.PopulatorBuilder.aNewPopulatorBuilder;
 import static org.assertj.core.api.Assertions.assertThat;
 
 public class JodaTimeSupportTest {
@@ -38,7 +38,7 @@ public class JodaTimeSupportTest {
 
     @Before
     public void setUp() throws Exception {
-        populator = aNewPopulator().build();
+        populator = aNewPopulatorBuilder().build();
     }
 
     @Test

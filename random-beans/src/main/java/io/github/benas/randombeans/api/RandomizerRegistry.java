@@ -41,4 +41,13 @@ public interface RandomizerRegistry {
      * @return the randomizer registered for the given field
      */
     Randomizer getRandomizer(final Field field);
+
+    /**
+     * Retrieves a randomizer for a given type.
+     *
+     * @param type
+     *            the type for which a randomizer was registered
+     * @return the randomizer registered for the given class type.
+     */
+    Randomizer getRandomizer(final Class<?> type);
 }

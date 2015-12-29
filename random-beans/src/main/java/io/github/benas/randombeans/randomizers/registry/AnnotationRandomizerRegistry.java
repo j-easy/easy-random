@@ -25,13 +25,13 @@
 
 package io.github.benas.randombeans.randomizers.registry;
 
-import io.github.benas.randombeans.annotation.Priority;
-import io.github.benas.randombeans.api.Randomizer;
-import io.github.benas.randombeans.api.RandomizerRegistry;
-
 import java.lang.reflect.Field;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+
+import io.github.benas.randombeans.annotation.Priority;
+import io.github.benas.randombeans.api.Randomizer;
+import io.github.benas.randombeans.api.RandomizerRegistry;
 
 /**
  * A {@link RandomizerRegistry} for fields annotated with {@link io.github.benas.randombeans.annotation.Randomizer}.
@@ -60,6 +60,14 @@ public class AnnotationRandomizerRegistry implements RandomizerRegistry {
                 LOGGER.log(Level.WARNING, "Unable to create an instance of " + type.getName(), e);
             }
         }
+        return null;
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public Randomizer getRandomizer(Class<?> clazz) {
         return null;
     }
 }

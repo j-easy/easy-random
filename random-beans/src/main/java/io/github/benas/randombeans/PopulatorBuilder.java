@@ -25,11 +25,19 @@
 
 package io.github.benas.randombeans;
 
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Collections;
+import java.util.HashMap;
+import java.util.LinkedHashSet;
+import java.util.List;
+import java.util.Map;
+import java.util.ServiceLoader;
+import java.util.Set;
+
 import io.github.benas.randombeans.api.Populator;
 import io.github.benas.randombeans.api.Randomizer;
 import io.github.benas.randombeans.api.RandomizerRegistry;
-
-import java.util.*;
 
 /**
  * A builder to create {@link Populator} instances.
@@ -42,6 +50,10 @@ public class PopulatorBuilder {
 
     private Set<RandomizerRegistry> userRegistries;
 
+    private Set<RandomizerRegistry> registries;
+
+    private short maximumCollectionSize = 20;
+
     private PopulatorBuilder() {
         reset();
     }
@@ -51,7 +63,7 @@ public class PopulatorBuilder {
      *
      * @return a new {@link PopulatorBuilder}
      */
-    public static PopulatorBuilder aNewPopulator() {
+    public static PopulatorBuilder aNewPopulatorBuilder() {
         return new PopulatorBuilder();
     }
 
@@ -81,15 +93,25 @@ public class PopulatorBuilder {
     }
 
     /**
+     * Set the maximum size of randomly generated collections. The default value is 20.
+     *
+     * @param maximumCollectionSize
+     * @return
+     */
+    public PopulatorBuilder setMaximumCollectionSize(short maximumCollectionSize) {
+        this.maximumCollectionSize = maximumCollectionSize;
+        return this;
+    }
+
+    /**
      * Build a {@link Populator} instance and reset the builder to its initial state.
      *
      * @return a configured {@link Populator} instance
      */
     public Populator build() {
-        LinkedHashSet<RandomizerRegistry> registries = new LinkedHashSet<RandomizerRegistry>();
         registries.addAll(userRegistries); // programatically registered registries
         registries.addAll(loadRegistries()); // registries added to classpath through the SPI
-        Populator populator = new PopulatorImpl(registries, randomizers);
+        Populator populator = new PopulatorImpl(this);
         reset();
         return populator;
     }
@@ -97,6 +119,7 @@ public class PopulatorBuilder {
     private void reset() {
         randomizers = new HashMap<RandomizerDefinition, Randomizer>();
         userRegistries = new LinkedHashSet<RandomizerRegistry>();
+        registries = new LinkedHashSet<RandomizerRegistry>();
     }
 
     private Collection<RandomizerRegistry> loadRegistries() {
@@ -106,6 +129,27 @@ public class PopulatorBuilder {
             registries.add(registry);
         }
         return registries;
+    }
+
+    /**
+     * @return the randomizers map.
+     */
+    public Map<RandomizerDefinition, Randomizer> getRandomizers() {
+        return Collections.unmodifiableMap(randomizers);
+    }
+
+    /**
+     * @return the userRegistries.
+     */
+    public Set<RandomizerRegistry> getRegistries() {
+        return Collections.unmodifiableSet(registries);
+    }
+
+    /**
+     * @return the maximumCollectionSize.
+     */
+    public short getMaximumCollectionSize() {
+        return maximumCollectionSize;
     }
 
 }

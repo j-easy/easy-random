@@ -14,7 +14,7 @@ public class ThreeTenSupportTest {
 
     @Before
     public void setUp() throws Exception {
-        populator = PopulatorBuilder.aNewPopulator().build();
+        populator = PopulatorBuilder.aNewPopulatorBuilder().build();
     }
 
     @Test
