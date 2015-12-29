@@ -35,7 +35,7 @@ import javax.validation.ValidatorFactory;
 import java.math.BigDecimal;
 import java.util.Set;
 
-import static io.github.benas.randombeans.PopulatorBuilder.aNewPopulator;
+import static io.github.benas.randombeans.PopulatorBuilder.aNewPopulatorBuilder;
 import static org.assertj.core.api.Assertions.assertThat;
 
 public class BeanValidationTest {
@@ -44,7 +44,7 @@ public class BeanValidationTest {
 
     @Before
     public void setUp() throws Exception {
-        populator = aNewPopulator().build();
+        populator = aNewPopulatorBuilder().build();
     }
 
     @Test

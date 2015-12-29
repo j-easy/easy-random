@@ -32,7 +32,7 @@ import org.springframework.beans.factory.FactoryBean;
 import java.util.ArrayList;
 import java.util.List;
 
-import static io.github.benas.randombeans.PopulatorBuilder.aNewPopulator;
+import static io.github.benas.randombeans.PopulatorBuilder.aNewPopulatorBuilder;
 
 /**
  * Spring Factory Bean that creates {@link Populator} instances.
@@ -45,7 +45,7 @@ public class PopulatorFactoryBean implements FactoryBean {
 
     @Override
     public Object getObject() throws Exception {
-        PopulatorBuilder populatorBuilder = aNewPopulator();
+        PopulatorBuilder populatorBuilder = aNewPopulatorBuilder();
         for (RandomizerBean randomizerBean : randomizers) {
             populatorBuilder.registerRandomizer(
                     randomizerBean.getType(),
