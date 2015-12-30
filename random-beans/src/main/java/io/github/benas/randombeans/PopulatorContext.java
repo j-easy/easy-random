@@ -27,6 +27,7 @@ package io.github.benas.randombeans;
 
 import java.util.IdentityHashMap;
 import java.util.Map;
+import java.util.Stack;
 
 /**
  * Context object for a single call on {@link io.github.benas.randombeans.api.Populator#populateBean(Class, String...)}.
@@ -36,7 +37,15 @@ import java.util.Map;
  */
 class PopulatorContext {
 
+    private String[] excludedFields;
+
     private Map<Class, Object> populatedBeans = new IdentityHashMap<Class, Object>();
+
+    private Stack<PopulatorContextStackItem> stack = new Stack<PopulatorContextStackItem>();
+
+    public PopulatorContext(String... excludedFields) {
+        this.excludedFields = excludedFields;
+    }
 
     public void addPopulatedBean(final Class type, Object object) {
         populatedBeans.put(type, object);
@@ -48,6 +57,37 @@ class PopulatorContext {
 
     public boolean hasPopulatedBean(final Class type) {
         return populatedBeans.containsKey(type);
+    }
+
+    public String[] getExcludedFields() {
+        return excludedFields;
+    }
+
+    public void pushStackItem(PopulatorContextStackItem field) {
+        stack.push(field);
+    }
+
+    public PopulatorContextStackItem popStackItem() {
+        return stack.pop();
+    }
+
+    public String getFieldFullName(String ... fieldNames) {
+        StringBuilder builder = new StringBuilder();
+        for (PopulatorContextStackItem stackItem : stack) {
+            if (builder.length() > 0) {
+                builder.append(".");
+            }
+            builder.append(stackItem.getField().getName());
+        }
+
+        for (String fieldName : fieldNames) {
+            if (builder.length() > 0) {
+                builder.append(".");
+            }
+            builder.append(fieldName);
+        }
+
+        return builder.toString();
     }
 
 }

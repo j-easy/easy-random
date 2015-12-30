@@ -67,7 +67,7 @@ final class PopulatorImpl implements Populator {
     @Override
     @SuppressWarnings("unchecked")
     public <T> T populateBean(final Class<T> type, final String... excludedFields) throws BeanPopulationException {
-        return doPopulateBean(type, new PopulatorContext(), excludedFields);
+        return doPopulateBean(type, new PopulatorContext(excludedFields));
     }
 
     protected <T> T doPopulateBean(final Class<T> type, final PopulatorContext context, final String... excludedFields) throws BeanPopulationException {
@@ -93,7 +93,7 @@ final class PopulatorImpl implements Populator {
 
             //Generate random data for each field
             for (Field field : declaredFields) {
-                if (!shouldExcludeField(field, excludedFields)) {
+                if (!shouldExcludeField(field, context)) {
                     populateField(result, field, context);
                 }
             }
@@ -136,6 +136,7 @@ final class PopulatorImpl implements Populator {
     private void populateField(final Object target, final Field field, final PopulatorContext context)
             throws IllegalAccessException, NoSuchMethodException, InvocationTargetException, BeanPopulationException {
 
+        context.pushStackItem(new PopulatorContextStackItem(target, field));
         Object value;
         Randomizer randomizer = getRandomizer(target.getClass(), field);
         if (randomizer != null) {
@@ -144,6 +145,7 @@ final class PopulatorImpl implements Populator {
             value = generateRandomValue(field, context);
         }
         setProperty(target, field, value);
+        context.popStackItem();
     }
 
     private Object generateRandomValue(final Field field, final PopulatorContext context)
@@ -214,12 +216,16 @@ final class PopulatorImpl implements Populator {
         }
     }
 
-    private boolean shouldExcludeField(final Field field, String... excludedFields) {
+    private boolean shouldExcludeField(final Field field, final PopulatorContext context) {
         if (field.isAnnotationPresent(Exclude.class)) {
             return true;
         }
-        for (String excludedFieldName : excludedFields) {
-            if (field.getName().equalsIgnoreCase(excludedFieldName)) {
+        if (context.getExcludedFields().length == 0) {
+            return false;
+        }
+        String fieldFullName = context.getFieldFullName(field.getName());
+        for (String excludedFieldName : context.getExcludedFields()) {
+            if (fieldFullName.equalsIgnoreCase(excludedFieldName)) {
                 return true;
             }
         }

@@ -91,6 +91,16 @@ public class PopulatorImplTest {
     }
 
     @Test
+    public void excludedDottedFieldsShouldNotBePopulated() throws Exception {
+        Person person = populator.populateBean(Person.class, "address.street.name");
+
+        assertThat(person).isNotNull();
+        assertThat(person.getAddress()).isNotNull();
+        assertThat(person.getAddress().getStreet()).isNotNull();
+        assertThat(person.getAddress().getStreet().getName()).isNull();
+    }
+
+    @Test
     public void fieldsExcludedWithAnnotationShouldNotBePopulated() throws Exception {
         Person person = populator.populateBean(Person.class);
 
