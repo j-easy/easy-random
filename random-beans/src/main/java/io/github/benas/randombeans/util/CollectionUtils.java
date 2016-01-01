@@ -8,7 +8,7 @@ import java.util.*;
  *
  * @author Mahmoud Ben Hassine (mahmoud.benhassine@icloud.com)
  */
-public class CollectionUtils {
+public abstract class CollectionUtils {
 
     public static Object emptyArray(final Class type) {
         return Array.newInstance(type.getComponentType(), 0);
