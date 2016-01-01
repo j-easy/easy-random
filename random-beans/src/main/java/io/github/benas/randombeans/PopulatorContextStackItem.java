@@ -7,7 +7,7 @@ import java.lang.reflect.Field;
  *
  * @author Rémi Alvergnat (toilal.dev@gmail.com)
  */
-public class PopulatorContextStackItem {
+class PopulatorContextStackItem {
 
     private Object object;
 
