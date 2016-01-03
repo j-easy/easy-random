@@ -20,14 +20,22 @@
  *   LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
  *   OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  *   THE SOFTWARE.
- *
  */
 
 package io.github.benas.randombeans.beans;
 
-import java.util.*;
+import java.util.Collection;
+import java.util.Deque;
+import java.util.List;
+import java.util.Map;
+import java.util.NavigableMap;
+import java.util.NavigableSet;
+import java.util.Queue;
+import java.util.Set;
+import java.util.SortedMap;
+import java.util.SortedSet;
 
-public class CollectionsBean {
+public class CollectionInterfacesBean {
 
     private Collection collection;
 
@@ -49,7 +57,7 @@ public class CollectionsBean {
 
     private NavigableMap navigableMap;
 
-    public CollectionsBean() {
+    public CollectionInterfacesBean() {
     }
 
     public Collection getCollection() {

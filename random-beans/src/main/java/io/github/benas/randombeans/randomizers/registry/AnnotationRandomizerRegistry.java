@@ -62,4 +62,12 @@ public class AnnotationRandomizerRegistry implements RandomizerRegistry {
         }
         return null;
     }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public Randomizer getRandomizer(Class<?> clazz) {
+        return null;
+    }
 }
