@@ -73,8 +73,7 @@ public abstract class ReflectionUtils {
      * @param value  value to set
      * @throws IllegalAccessException if the property cannot be set
      */
-    public static void setProperty(final Object object, final Field field, final Object value)
-            throws IllegalAccessException {
+    public static void setProperty(final Object object, final Field field, final Object value) throws IllegalAccessException {
         boolean access = field.isAccessible();
         field.setAccessible(true);
         field.set(object, value);
