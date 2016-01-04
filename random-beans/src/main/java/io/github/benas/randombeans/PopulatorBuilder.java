@@ -25,11 +25,19 @@
 
 package io.github.benas.randombeans;
 
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.HashMap;
+import java.util.LinkedHashSet;
+import java.util.List;
+import java.util.Map;
+import java.util.ServiceLoader;
+import java.util.Set;
+
 import io.github.benas.randombeans.api.Populator;
 import io.github.benas.randombeans.api.Randomizer;
 import io.github.benas.randombeans.api.RandomizerRegistry;
-
-import java.util.*;
+import io.github.benas.randombeans.util.Constants;
 
 /**
  * A builder to create {@link Populator} instances.
@@ -41,6 +49,8 @@ public class PopulatorBuilder {
     private Map<RandomizerDefinition, Randomizer> randomizers;
 
     private Set<RandomizerRegistry> userRegistries;
+
+    private short maximumCollectionSize = Constants.maximumCollectionSize;
 
     private PopulatorBuilder() {
         reset();
@@ -80,6 +90,11 @@ public class PopulatorBuilder {
         return this;
     }
 
+    public PopulatorBuilder setMaximumCollectionSize(short maximumCollectionSize) {
+        this.maximumCollectionSize = maximumCollectionSize;
+        return this;
+    }
+
     /**
      * Build a {@link Populator} instance and reset the builder to its initial state.
      *
@@ -89,7 +104,7 @@ public class PopulatorBuilder {
         LinkedHashSet<RandomizerRegistry> registries = new LinkedHashSet<RandomizerRegistry>();
         registries.addAll(userRegistries); // programatically registered registries
         registries.addAll(loadRegistries()); // registries added to classpath through the SPI
-        Populator populator = new PopulatorImpl(registries, randomizers);
+        Populator populator = new PopulatorImpl(registries, randomizers, maximumCollectionSize);
         reset();
         return populator;
     }

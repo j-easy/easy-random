@@ -25,23 +25,48 @@
 
 package io.github.benas.randombeans;
 
+import static io.github.benas.randombeans.util.ReflectionUtils.getDeclaredFields;
+import static io.github.benas.randombeans.util.ReflectionUtils.getInheritedFields;
+import static io.github.benas.randombeans.util.ReflectionUtils.isArrayType;
+import static io.github.benas.randombeans.util.ReflectionUtils.isCollectionType;
+import static io.github.benas.randombeans.util.ReflectionUtils.isMapType;
+import static io.github.benas.randombeans.util.ReflectionUtils.isStatic;
+import static io.github.benas.randombeans.util.ReflectionUtils.setProperty;
+
+import java.lang.reflect.Array;
+import java.lang.reflect.Field;
+import java.lang.reflect.InvocationTargetException;
+import java.lang.reflect.ParameterizedType;
+import java.lang.reflect.Type;
+import java.util.ArrayDeque;
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Collections;
+import java.util.Comparator;
+import java.util.Deque;
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Map;
+import java.util.NavigableMap;
+import java.util.NavigableSet;
+import java.util.Queue;
+import java.util.Set;
+import java.util.SortedMap;
+import java.util.SortedSet;
+import java.util.TreeMap;
+import java.util.TreeSet;
+
+import org.apache.commons.math3.random.RandomDataGenerator;
+import org.objenesis.Objenesis;
+import org.objenesis.ObjenesisStd;
+
 import io.github.benas.randombeans.annotation.Exclude;
 import io.github.benas.randombeans.api.BeanPopulationException;
 import io.github.benas.randombeans.api.Populator;
 import io.github.benas.randombeans.api.Randomizer;
 import io.github.benas.randombeans.api.RandomizerRegistry;
 import io.github.benas.randombeans.randomizers.EnumRandomizer;
-import org.apache.commons.math3.random.RandomDataGenerator;
-import org.objenesis.Objenesis;
-import org.objenesis.ObjenesisStd;
-
-import java.lang.reflect.Field;
-import java.lang.reflect.InvocationTargetException;
-import java.util.*;
-
-import static io.github.benas.randombeans.util.CollectionUtils.emptyArray;
-import static io.github.benas.randombeans.util.CollectionUtils.emptyCollection;
-import static io.github.benas.randombeans.util.ReflectionUtils.*;
 
 /**
  * The core implementation of the {@link Populator} interface.
@@ -50,23 +75,31 @@ import static io.github.benas.randombeans.util.ReflectionUtils.*;
  */
 final class PopulatorImpl implements Populator {
 
-    private Map<RandomizerDefinition, Randomizer> randomizers = new HashMap<RandomizerDefinition, Randomizer>();
+    private final short maximumCollectionSize;
 
-    private List<RandomizerRegistry> registries = new ArrayList<RandomizerRegistry>();
+    private final Map<RandomizerDefinition, Randomizer> randomizers = new HashMap<RandomizerDefinition, Randomizer>();
 
-    private Comparator<Object> priorityComparator = new PriorityComparator();
+    private final List<RandomizerRegistry> registries = new ArrayList<RandomizerRegistry>();
 
-    private Objenesis objenesis = new ObjenesisStd();
+    private final Comparator<Object> priorityComparator = new PriorityComparator();
 
-    PopulatorImpl(final Set<RandomizerRegistry> registries, final Map<RandomizerDefinition, Randomizer> randomizers) {
+    private final Objenesis objenesis = new ObjenesisStd();
+
+    PopulatorImpl(final Set<RandomizerRegistry> registries, final Map<RandomizerDefinition, Randomizer> randomizers,
+            short maximumCollectionSize) {
         this.registries.addAll(registries);
         this.randomizers.putAll(randomizers);
+        this.maximumCollectionSize = maximumCollectionSize;
         Collections.sort(this.registries, priorityComparator);
     }
 
     @Override
     @SuppressWarnings("unchecked")
     public <T> T populateBean(final Class<T> type, final String... excludedFields) throws BeanPopulationException {
+        Randomizer<T> randomizer = getDefaultRandomizer(type);
+        if (randomizer != null) {
+            return randomizer.getRandomValue();
+        }
         return doPopulateBean(type, new PopulatorContext(excludedFields));
     }
 
@@ -105,7 +138,7 @@ final class PopulatorImpl implements Populator {
 
     @Override
     public <T> List<T> populateBeans(final Class<T> type, final String... excludedFields) throws BeanPopulationException {
-        int size = new RandomDataGenerator().nextInt(1, Short.MAX_VALUE);
+        int size = new RandomDataGenerator().nextInt(1, maximumCollectionSize);
         return populateBeans(type, size, excludedFields);
     }
 
@@ -154,8 +187,12 @@ final class PopulatorImpl implements Populator {
         Object value;
         if (fieldType.isEnum()) {
             value = getEnumRandomizer(fieldType).getRandomValue();
+        } else if (isArrayType(fieldType)) {
+            value = getRandomArray(fieldType);
         } else if (isCollectionType(fieldType)) {
-            value = getRandomCollection(fieldType);
+            value = getRandomCollection(field);
+        } else if (isMapType(fieldType)) {
+            value = getRandomMap(field);
         } else {
             value = doPopulateBean(fieldType, context);
         }
@@ -208,12 +245,116 @@ final class PopulatorImpl implements Populator {
         return null;
     }
 
-    private Object getRandomCollection(final Class fieldType) throws IllegalAccessException, NoSuchMethodException, InvocationTargetException {
-        if (fieldType.isArray()) {
-            return emptyArray(fieldType);
-        } else {
-            return emptyCollection(fieldType);
+    private Randomizer getDefaultRandomizer(final Class<?> type) {
+        List<Randomizer> randomizers = new ArrayList<Randomizer>();
+        for (RandomizerRegistry registry : registries) {
+            Randomizer randomizer = registry.getRandomizer(type);
+            if (randomizer != null) {
+                randomizers.add(randomizer);
+            }
         }
+        Collections.sort(randomizers, priorityComparator);
+        if (!randomizers.isEmpty()) {
+            return randomizers.get(0);
+        }
+        return null;
+    }
+
+    private <T> T[] getRandomArray(final Class<?> fieldType) throws BeanPopulationException {
+        if (fieldType.isArray()) {
+            List<?> items = populateBeans(fieldType.getComponentType());
+            T[] itemsList = (T[]) Array.newInstance(fieldType.getComponentType(), items.size());
+            return items.toArray(itemsList);
+        }
+        return null;
+    }
+
+    private Collection<?> getRandomCollection(final Field field) throws IllegalAccessException, BeanPopulationException {
+        Class<?> fieldType = field.getType();
+        Collection<?> collection = null;
+        if (!fieldType.isInterface()) {
+            try {
+                collection = (Collection<?>) fieldType.newInstance();
+            } catch (InstantiationException e) {
+                Objenesis objenesis = new ObjenesisStd();
+                collection = (Collection<?>) objenesis.newInstance(fieldType);
+            }
+        } else if (List.class.isAssignableFrom(fieldType)) {
+            collection = new ArrayList<>();
+        } else if (List.class.isAssignableFrom(fieldType)) {
+            collection = new ArrayList<>();
+        } else if (NavigableSet.class.isAssignableFrom(fieldType)) {
+            collection = new TreeSet<>();
+        } else if (SortedSet.class.isAssignableFrom(fieldType)) {
+            collection = new TreeSet<>();
+        } else if (Set.class.isAssignableFrom(fieldType)) {
+            collection = new HashSet<>();
+        } else if (Deque.class.isAssignableFrom(fieldType)) {
+            collection = new ArrayDeque<>();
+        } else if (Queue.class.isAssignableFrom(fieldType)) {
+            collection = new ArrayDeque<>();
+        } else if (Collection.class.isAssignableFrom(fieldType)) {
+            collection = new HashSet<>();
+        } else {
+            collection = new ArrayList<>();
+        }
+        Type genericType = field.getGenericType();
+        // default to String rather than Object b/c
+        // (1) it apparently does not matter to the author of the code that is calling this and
+        // (2) some collections require comparable objects.
+        Type baseType = String.class;
+        if (genericType instanceof ParameterizedType) {
+            ParameterizedType parameterizedType = (ParameterizedType) genericType;
+            baseType = parameterizedType.getActualTypeArguments()[0];
+        }
+        Class<?> baseTypeClass = (Class<?>) baseType;
+        List items = populateBeans(baseTypeClass);
+        collection.addAll(items);
+        return collection;
+    }
+
+    private Map<?, ?> getRandomMap(final Field field) throws IllegalAccessException, BeanPopulationException {
+        Class<?> fieldType = field.getType();
+
+        Map map = null;
+        if (!fieldType.isInterface()) {
+            try {
+                map = (Map) fieldType.newInstance();
+            } catch (InstantiationException e) {
+                Objenesis objenesis = new ObjenesisStd();
+                map = (Map) objenesis.newInstance(fieldType);
+            }
+        } else if (NavigableMap.class.isAssignableFrom(fieldType)) {
+            map = new TreeMap<>();
+        } else if (SortedMap.class.isAssignableFrom(fieldType)) {
+            map = new TreeMap<>();
+        } else {
+            map = new HashMap<>();
+        }
+
+        int size = new RandomDataGenerator().nextInt(1, 100);
+
+        Type genericKeyType = field.getGenericType();
+        // default to String rather than Object b/c
+        // (1) it apparently does not matter to the author of the code that is calling this and
+        // (2) some collections require comparable objects.
+        Type baseKeyType = String.class;
+        Type baseValueType = String.class;
+        if (genericKeyType instanceof ParameterizedType) {
+            ParameterizedType parameterizedType = (ParameterizedType) genericKeyType;
+            baseKeyType = parameterizedType.getActualTypeArguments()[0];
+            baseValueType = parameterizedType.getActualTypeArguments()[1];
+        }
+        Class<?> baseKeyTypeClass = (Class<?>) baseKeyType;
+        List keyItems = populateBeans(baseKeyTypeClass, size);
+
+        Class<?> baseValueTypeClass = (Class<?>) baseValueType;
+        List valueItems = populateBeans(baseValueTypeClass, size);
+
+        for (int index = 0; index < size; index++) {
+            map.put(keyItems.get(index), valueItems.get(index));
+        }
+        return map;
     }
 
     private boolean shouldExcludeField(final Field field, final PopulatorContext context) {

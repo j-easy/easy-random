@@ -75,6 +75,7 @@ If you have any question, suggestion, or feedback, do not hesitate to use the [G
 * [Jose Manuel Prieto](https://github.com/prietopa)
 * [Nikola Milivojevic](https://github.com/dziga)
 * [Rémi Alvergnat](http://www.pragmasphere.com)
+* [Fred Eckertson](https://github.com/feckertson)
 
 Thank you all for your contributions!
 

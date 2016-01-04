@@ -56,6 +56,11 @@ public class JodaTimeRandomizerRegistry implements RandomizerRegistry {
 
     @Override
     public Randomizer getRandomizer(final Field field) {
-        return randomizers.get(field.getType());
+        return getRandomizer(field.getType());
+    }
+
+    @Override
+    public Randomizer getRandomizer(Class<?> type) {
+        return randomizers.get(type);
     }
 }

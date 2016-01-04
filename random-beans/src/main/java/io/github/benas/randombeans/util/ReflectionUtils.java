@@ -22,11 +22,16 @@
  *   THE SOFTWARE.
  *
  */
+
 package io.github.benas.randombeans.util;
 
 import java.lang.reflect.Field;
 import java.lang.reflect.Modifier;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collection;
+import java.util.List;
+import java.util.Map;
 
 /**
  * Reflection utility methods.
@@ -86,11 +91,31 @@ public abstract class ReflectionUtils {
     }
 
     /**
+     * Check if a type is an array type.
+     * @param type the type to check.
+     * @return true if the type is an array type, false otherwise.
+     */
+    public static boolean isArrayType(final Class type) {
+        return type.isArray();
+    }
+
+    /**
      * Check if a type is a collection type.
-     * @param type the type to check
-     * @return true if the type is a collection type, false else
+     * @param type the type to check.
+     * @return true if the type is a collection type, false otherwise
      */
     public static boolean isCollectionType(final Class type) {
-        return type.isArray() || Map.class.isAssignableFrom(type) || Collection.class.isAssignableFrom(type);
+        return Collection.class.isAssignableFrom(type);
+    }
+
+    /**
+     * Check if a type is a map type.
+     *
+     * @param type
+     *            the type to check
+     * @return true if the type is a map type, false otherwise.
+     */
+    public static boolean isMapType(final Class<?> type) {
+        return Map.class.isAssignableFrom(type);
     }
 }

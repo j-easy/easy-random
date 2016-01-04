@@ -31,12 +31,18 @@ import org.apache.commons.lang3.time.DateUtils;
 import java.util.Date;
 import java.util.Random;
 
+
 /**
  * Constants utilities class.
  *
  * @author Mahmoud Ben Hassine (mahmoud.benhassine@icloud.com)
  */
 public abstract class Constants {
+
+    /**
+     * Default limit on the size of a randomly generated collection.
+     */
+    public static final int maximumCollectionSize = 20;
 
     /**
      * Default date range in which dates will be generated: [now - 10 years, now + 10 years].
