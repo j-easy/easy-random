@@ -32,7 +32,14 @@ import static org.mockito.Mockito.when;
 import java.lang.reflect.Field;
 import java.lang.reflect.ParameterizedType;
 import java.lang.reflect.Type;
+import java.util.Collection;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+import java.util.NavigableMap;
+import java.util.SortedMap;
+import java.util.TreeMap;
+import java.util.concurrent.ConcurrentSkipListMap;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -187,83 +194,38 @@ public class PopulatorImplTest {
     }
 
     @Test
+    @SuppressWarnings({ "unchecked", "rawtypes" })
     public void testCollectionInterfacesPopulation() throws Exception {
         final CollectionInterfacesBean collectionsBean = populator.populateBean(CollectionInterfacesBean.class);
 
         assertThat(collectionsBean).isNotNull();
 
-        assertThat(collectionsBean.getCollection()).isNotNull();
-        assertThat(collectionsBean.getCollection()).isNotEmpty();
-        for (Object item : collectionsBean.getCollection()) {
-            assertThat(item.getClass()).isEqualTo(String.class);
-            assertThat((String) item).isNotEmpty();
-        }
+        assertThat(collectionsBean.getCollection()).isNotEmpty().hasOnlyElementsOfType(String.class).doesNotContain(null, "");
 
-        assertThat(collectionsBean.getList()).isNotEmpty();
-        for (Object item : collectionsBean.getList()) {
-            assertThat(item.getClass()).isEqualTo(String.class);
-            assertThat((String) item).isNotEmpty();
-        }
+        assertThat(collectionsBean.getList()).isNotEmpty().hasOnlyElementsOfType(String.class).doesNotContain(null, "");
 
-        assertThat(collectionsBean.getSet()).isNotEmpty();
-        for (Object item : collectionsBean.getSet()) {
-            assertThat(item.getClass()).isEqualTo(String.class);
-            assertThat((String) item).isNotEmpty();
-        }
+        assertThat(collectionsBean.getSet()).isNotEmpty().hasOnlyElementsOfType(String.class).doesNotContain(null, "");
 
-        assertThat(collectionsBean.getSortedSet()).isNotEmpty();
-        for (Object item : collectionsBean.getSortedSet()) {
-            assertThat(item.getClass()).isEqualTo(String.class);
-            assertThat((String) item).isNotEmpty();
-        }
+        assertThat(collectionsBean.getSortedSet()).isNotEmpty().hasOnlyElementsOfType(String.class).doesNotContain(null, "");
 
-        assertThat(collectionsBean.getNavigableSet()).isNotEmpty();
-        for (Object item : collectionsBean.getNavigableSet()) {
-            assertThat(item.getClass()).isEqualTo(String.class);
-            assertThat((String) item).isNotEmpty();
-        }
+        assertThat(collectionsBean.getNavigableSet()).isNotEmpty().hasOnlyElementsOfType(String.class).doesNotContain(null, "");
 
-        assertThat(collectionsBean.getQueue()).isNotEmpty();
-        for (Object item : collectionsBean.getQueue()) {
-            assertThat(item.getClass()).isEqualTo(String.class);
-            assertThat((String) item).isNotEmpty();
-        }
+        assertThat(collectionsBean.getQueue()).isNotEmpty().hasOnlyElementsOfType(String.class).doesNotContain(null, "");
 
-        assertThat(collectionsBean.getDeque()).isNotEmpty();
-        for (Object item : collectionsBean.getDeque()) {
-            assertThat(item.getClass()).isEqualTo(String.class);
-            assertThat((String) item).isNotEmpty();
-        }
+        assertThat(collectionsBean.getDeque()).isNotEmpty().hasOnlyElementsOfType(String.class).doesNotContain(null, "");
 
-        assertThat(collectionsBean.getMap()).isNotEmpty();
-        for (Object item : collectionsBean.getMap().values()) {
-            assertThat(item.getClass()).isEqualTo(String.class);
-            assertThat((String) item).isNotEmpty();
-        }
-        for (Object item : collectionsBean.getMap().keySet()) {
-            assertThat(item.getClass()).isEqualTo(String.class);
-            assertThat((String) item).isNotEmpty();
-        }
+        Map map = collectionsBean.getMap();
+        assertThat(map.values()).isNotEmpty().hasOnlyElementsOfType(String.class).doesNotContain(null, "");
+        assertThat(map.keySet()).isNotEmpty().hasOnlyElementsOfType(String.class).doesNotContain(null, "");
 
-        assertThat(collectionsBean.getSortedMap()).isNotEmpty();
-        for (Object item : collectionsBean.getSortedMap().values()) {
-            assertThat(item.getClass()).isEqualTo(String.class);
-            assertThat((String) item).isNotEmpty();
-        }
-        for (Object item : collectionsBean.getSortedMap().keySet()) {
-            assertThat(item.getClass()).isEqualTo(String.class);
-            assertThat((String) item).isNotEmpty();
-        }
+        
+        SortedMap sortedMap = collectionsBean.getSortedMap();
+        assertThat(sortedMap.values()).isNotEmpty().hasOnlyElementsOfType(String.class).doesNotContain(null, "");
+        assertThat(sortedMap.keySet()).isNotEmpty().hasOnlyElementsOfType(String.class).doesNotContain(null, "");
 
-        assertThat(collectionsBean.getNavigableMap()).isNotEmpty();
-        for (Object item : collectionsBean.getNavigableMap().values()) {
-            assertThat(item.getClass()).isEqualTo(String.class);
-            assertThat((String) item).isNotEmpty();
-        }
-        for (Object item : collectionsBean.getNavigableMap().keySet()) {
-            assertThat(item.getClass()).isEqualTo(String.class);
-            assertThat((String) item).isNotEmpty();
-        }
+        NavigableMap navigableMap = collectionsBean.getNavigableMap();
+        assertThat(navigableMap.values()).isNotEmpty().hasOnlyElementsOfType(String.class).doesNotContain(null, "");
+        assertThat(navigableMap.keySet()).isNotEmpty().hasOnlyElementsOfType(String.class).doesNotContain(null, "");
     }
 
     @Test
@@ -273,181 +235,56 @@ public class PopulatorImplTest {
 
         assertThat(collectionsBean).isNotNull();
 
-        assertThat(collectionsBean.getIntegerCollection()).isNotEmpty();
-        for (Integer item : collectionsBean.getIntegerCollection()) {
-            assertThat(item).isNotEqualTo(0);
-        }
+        assertThat(collectionsBean.getIntegerCollection()).isNotEmpty().doesNotContain(0);
 
-        assertThat(collectionsBean.getSocialPersonCollection()).isNotEmpty();
-        for (SocialPerson item : collectionsBean.getSocialPersonCollection()) {
-            assertThat(item).isNotNull();
-            assertThat(item.getAddress().getCity()).isNotEmpty();
-            assertThat(item.getAddress().getZipCode()).isNotEmpty();
-            assertThat(item.getName()).isNotEmpty();
-            assertThat(item.getFriends()).isNotEmpty();
-            Person friend = item.getFriends().iterator().next();
-            assertThat(friend.getName()).isNotEmpty();
-            assertThat(friend.getNicknames()).isNotEmpty();
-            assertThat(friend.getNicknames().get(0)).isNotEmpty();
-        }
+        assertIsNotEmptyAndContainsOnlyNonEmptySocialPersons(collectionsBean.getSocialPersonCollection());
 
-        assertThat(collectionsBean.getIntegerSet()).isNotEmpty();
-        for (Integer item : collectionsBean.getIntegerSet()) {
-            assertThat(item).isNotEqualTo(0);
-        }
+        assertThat(collectionsBean.getIntegerSet()).isNotEmpty().doesNotContain(0);
 
-        assertThat(collectionsBean.getSocialPersonSet()).isNotEmpty();
-        for (SocialPerson item : collectionsBean.getSocialPersonSet()) {
-            assertThat(item).isNotNull();
-            assertThat(item.getAddress().getCity()).isNotEmpty();
-            assertThat(item.getAddress().getZipCode()).isNotEmpty();
-            assertThat(item.getName()).isNotEmpty();
-            assertThat(item.getFriends()).isNotEmpty();
-            Person friend = item.getFriends().iterator().next();
-            assertThat(friend.getName()).isNotEmpty();
-            assertThat(friend.getNicknames()).isNotEmpty();
-            assertThat(friend.getNicknames().get(0)).isNotEmpty();
-        }
+        assertIsNotEmptyAndContainsOnlyNonEmptySocialPersons(collectionsBean.getSocialPersonSet());
 
-        assertThat(collectionsBean.getIntegerSortedSet()).isNotEmpty();
-        for (Integer item : collectionsBean.getIntegerSortedSet()) {
-            assertThat(item).isNotEqualTo(0);
-        }
+        assertThat(collectionsBean.getIntegerSortedSet()).isNotEmpty().doesNotContain(0);
 
         // skipping SocialPerson because no getSocialPersonSortedSet because SocialPerson is not Comparable
 
-        assertThat(collectionsBean.getIntegerNavigableSet()).isNotEmpty();
-        for (Integer item : collectionsBean.getIntegerNavigableSet()) {
-            assertThat(item).isNotEqualTo(0);
-        }
+        assertThat(collectionsBean.getIntegerNavigableSet()).isNotEmpty().doesNotContain(0);
 
         // skipping SocialPerson because no getSocialPersonNavigablSet because SocialPerson is not Comparable
 
-        assertThat(collectionsBean.getIntegerList()).isNotEmpty();
-        for (Integer item : collectionsBean.getIntegerList()) {
-            assertThat(item).isNotEqualTo(0);
-        }
+        assertThat(collectionsBean.getIntegerList()).isNotEmpty().doesNotContain(0);
 
-        assertThat(collectionsBean.getSocialPersonList()).isNotEmpty();
-        for (SocialPerson item : collectionsBean.getSocialPersonList()) {
-            assertThat(item).isNotNull();
-            assertThat(item.getAddress().getCity()).isNotEmpty();
-            assertThat(item.getAddress().getZipCode()).isNotEmpty();
-            assertThat(item.getName()).isNotEmpty();
-            assertThat(item.getFriends()).isNotEmpty();
-            Person friend = item.getFriends().iterator().next();
-            assertThat(friend.getName()).isNotEmpty();
-            assertThat(friend.getNicknames()).isNotEmpty();
-            assertThat(friend.getNicknames().get(0)).isNotEmpty();
-        }
+        assertIsNotEmptyAndContainsOnlyNonEmptySocialPersons(collectionsBean.getSocialPersonList());
 
-        assertThat(collectionsBean.getIntegerQueue()).isNotEmpty();
-        for (Integer item : collectionsBean.getIntegerQueue()) {
-            assertThat(item).isNotEqualTo(0);
-        }
+        assertThat(collectionsBean.getIntegerQueue()).isNotEmpty().doesNotContain(0);
 
-        assertThat(collectionsBean.getSocialPersonQueue()).isNotEmpty();
-        for (SocialPerson item : collectionsBean.getSocialPersonQueue()) {
-            assertThat(item).isNotNull();
-            assertThat(item.getAddress().getCity()).isNotEmpty();
-            assertThat(item.getAddress().getZipCode()).isNotEmpty();
-            assertThat(item.getName()).isNotEmpty();
-            assertThat(item.getFriends()).isNotEmpty();
-            Person friend = item.getFriends().iterator().next();
-            assertThat(friend.getName()).isNotEmpty();
-            assertThat(friend.getNicknames()).isNotEmpty();
-            assertThat(friend.getNicknames().get(0)).isNotEmpty();
-        }
+        assertIsNotEmptyAndContainsOnlyNonEmptySocialPersons(collectionsBean.getSocialPersonQueue());
 
-        assertThat(collectionsBean.getIntegerDeque()).isNotEmpty();
-        for (Integer item : collectionsBean.getIntegerDeque()) {
-            assertThat(item).isNotEqualTo(0);
-        }
+        assertThat(collectionsBean.getIntegerDeque()).isNotEmpty().doesNotContain(0);
 
-        assertThat(collectionsBean.getSocialPersonDeque()).isNotEmpty();
-        for (SocialPerson item : collectionsBean.getSocialPersonDeque()) {
-            assertThat(item).isNotNull();
-            assertThat(item.getAddress().getCity()).isNotEmpty();
-            assertThat(item.getAddress().getZipCode()).isNotEmpty();
-            assertThat(item.getName()).isNotEmpty();
-            assertThat(item.getFriends()).isNotEmpty();
-            Person friend = item.getFriends().iterator().next();
-            assertThat(friend.getName()).isNotEmpty();
-            assertThat(friend.getNicknames()).isNotEmpty();
-            assertThat(friend.getNicknames().get(0)).isNotEmpty();
-        }
+        assertIsNotEmptyAndContainsOnlyNonEmptySocialPersons(collectionsBean.getSocialPersonDeque());
 
-        assertThat(collectionsBean.getIntegerMap()).isNotEmpty();
-        for (String item : collectionsBean.getIntegerMap().keySet()) {
-            assertThat(item).isNotEmpty();
-        }
-        for (Integer item : collectionsBean.getIntegerMap().values()) {
-            assertThat(item).isNotEqualTo(0);
-        }
+        assertThat(collectionsBean.getIntegerMap()).isNotEmpty().doesNotContainKey(null).doesNotContainKey("").doesNotContainValue(0);
 
-        assertThat(collectionsBean.getSocialPersonMap()).isNotEmpty();
-        for (String item : collectionsBean.getSocialPersonMap().keySet()) {
-            assertThat(item).isNotEmpty();
-        }
-        for (SocialPerson item : collectionsBean.getSocialPersonMap().values()) {
-            assertThat(item).isNotNull();
-            assertThat(item.getAddress().getCity()).isNotEmpty();
-            assertThat(item.getAddress().getZipCode()).isNotEmpty();
-            assertThat(item.getName()).isNotEmpty();
-            assertThat(item.getFriends()).isNotEmpty();
-            Person friend = item.getFriends().iterator().next();
-            assertThat(friend.getName()).isNotEmpty();
-            assertThat(friend.getNicknames()).isNotEmpty();
-            assertThat(friend.getNicknames().get(0)).isNotEmpty();
-        }
+        Map<String, SocialPerson> socialPersonMap = collectionsBean.getSocialPersonMap();
+        assertThat(socialPersonMap).isNotEmpty().doesNotContainKey(null).doesNotContainKey("");
+        assertIsNotEmptyAndContainsOnlyNonEmptySocialPersons(socialPersonMap.values());
 
-        assertThat(collectionsBean.getIntegerSortedMap()).isNotEmpty();
-        for (String item : collectionsBean.getIntegerSortedMap().keySet()) {
-            assertThat(item).isNotEmpty();
-        }
-        for (Integer item : collectionsBean.getIntegerSortedMap().values()) {
-            assertThat(item).isNotEqualTo(0);
-        }
+        assertThat(collectionsBean.getIntegerSortedMap()).isNotEmpty()
+            .doesNotContainKey("")
+            .doesNotContainValue(0);
 
-        assertThat(collectionsBean.getSocialPersonSortedMap()).isNotEmpty();
-        for (String item : collectionsBean.getSocialPersonSortedMap().keySet()) {
-            assertThat(item).isNotEmpty();
-        }
-        for (SocialPerson item : collectionsBean.getSocialPersonSortedMap().values()) {
-            assertThat(item).isNotNull();
-            assertThat(item.getAddress().getCity()).isNotEmpty();
-            assertThat(item.getAddress().getZipCode()).isNotEmpty();
-            assertThat(item.getName()).isNotEmpty();
-            assertThat(item.getFriends()).isNotEmpty();
-            Person friend = item.getFriends().iterator().next();
-            assertThat(friend.getName()).isNotEmpty();
-            assertThat(friend.getNicknames()).isNotEmpty();
-            assertThat(friend.getNicknames().get(0)).isNotEmpty();
-        }
+        SortedMap<String, SocialPerson> socialPersonSortedMap = collectionsBean.getSocialPersonSortedMap();
+        assertThat(socialPersonSortedMap).isNotEmpty()
+            .doesNotContainKey("");
+        assertIsNotEmptyAndContainsOnlyNonEmptySocialPersons(socialPersonSortedMap.values());
 
-        assertThat(collectionsBean.getIntegerNavigableMap()).isNotEmpty();
-        for (String item : collectionsBean.getIntegerNavigableMap().keySet()) {
-            assertThat(item).isNotEmpty();
-        }
-        for (Integer item : collectionsBean.getIntegerNavigableMap().values()) {
-            assertThat(item).isNotEqualTo(0);
-        }
+        assertThat(collectionsBean.getIntegerNavigableMap()).isNotEmpty()
+            .doesNotContainKey("")
+            .doesNotContainValue(0);
 
-        assertThat(collectionsBean.getSocialPersonNavigableMap()).isNotEmpty();
-        for (String item : collectionsBean.getSocialPersonNavigableMap().keySet()) {
-            assertThat(item).isNotEmpty();
-        }
-        for (SocialPerson item : collectionsBean.getSocialPersonNavigableMap().values()) {
-            assertThat(item).isNotNull();
-            assertThat(item.getAddress().getCity()).isNotEmpty();
-            assertThat(item.getAddress().getZipCode()).isNotEmpty();
-            assertThat(item.getName()).isNotEmpty();
-            assertThat(item.getFriends()).isNotEmpty();
-            Person friend = item.getFriends().iterator().next();
-            assertThat(friend.getName()).isNotEmpty();
-            assertThat(friend.getNicknames()).isNotEmpty();
-            assertThat(friend.getNicknames().get(0)).isNotEmpty();
-        }
+        assertThat(collectionsBean.getSocialPersonNavigableMap()).isNotEmpty()
+            .doesNotContainKey("");
+        assertIsNotEmptyAndContainsOnlyNonEmptySocialPersons(collectionsBean.getSocialPersonNavigableMap().values());
     }
 
     @Test
@@ -456,271 +293,118 @@ public class PopulatorImplTest {
 
         assertThat(collectionsBean).isNotNull();
 
-        String[] stringArray = collectionsBean.getStringArray();
-        assertThat(stringArray).isNotEmpty();
-        for (int idx = 0; idx < stringArray.length; idx++) {
-            assertThat(stringArray[idx]).isNotEmpty();
-        }
+        assertThat(collectionsBean.getStringArray()).isNotEmpty().doesNotContain(null, "");
 
-        Integer[] integerArray = collectionsBean.getIntegerArray();
-        assertThat(integerArray).isNotEmpty();
-        for (int idx = 0; idx < integerArray.length; idx++) {
-            assertThat(integerArray[idx]).isNotEqualTo(0);
-        }
+        assertThat(collectionsBean.getIntegerArray()).isNotEmpty().doesNotContain(0);
 
-        assertThat(collectionsBean.getIntegerVector()).isNotEmpty();
-        for (Integer item : collectionsBean.getIntegerVector()) {
-            assertThat(item).isNotEqualTo(0);
-        }
+        assertThat(collectionsBean.getIntegerVector()).isNotEmpty().doesNotContain(0);
 
-        assertThat(collectionsBean.getSocialPersonVector()).isNotEmpty();
-        for (SocialPerson item : collectionsBean.getSocialPersonVector()) {
-            assertThat(item).isNotNull();
-            assertThat(item.getAddress().getCity()).isNotEmpty();
-            assertThat(item.getAddress().getZipCode()).isNotEmpty();
-            assertThat(item.getName()).isNotEmpty();
-            assertThat(item.getFriends()).isNotEmpty();
-            Person friend = item.getFriends().iterator().next();
-            assertThat(friend.getName()).isNotEmpty();
-            assertThat(friend.getNicknames()).isNotEmpty();
-            assertThat(friend.getNicknames().get(0)).isNotEmpty();
-        }
+        assertIsNotEmptyAndContainsOnlyNonEmptySocialPersons(collectionsBean.getSocialPersonVector());
 
-        assertThat(collectionsBean.getIntegerArrayList()).isNotEmpty();
-        for (Integer item : collectionsBean.getIntegerArrayList()) {
-            assertThat(item).isNotEqualTo(0);
-        }
+        assertThat(collectionsBean.getIntegerArrayList()).isNotEmpty().doesNotContain(0);
 
-        assertThat(collectionsBean.getSocialPersonArrayList()).isNotEmpty();
-        for (SocialPerson item : collectionsBean.getSocialPersonArrayList()) {
-            assertThat(item).isNotNull();
-            assertThat(item.getAddress().getCity()).isNotEmpty();
-            assertThat(item.getAddress().getZipCode()).isNotEmpty();
-            assertThat(item.getName()).isNotEmpty();
-            assertThat(item.getFriends()).isNotEmpty();
-            Person friend = item.getFriends().iterator().next();
-            assertThat(friend.getName()).isNotEmpty();
-            assertThat(friend.getNicknames()).isNotEmpty();
-            assertThat(friend.getNicknames().get(0)).isNotEmpty();
-        }
+        assertIsNotEmptyAndContainsOnlyNonEmptySocialPersons(collectionsBean.getSocialPersonArrayList());
 
-        assertThat(collectionsBean.getIntegerLinkedList()).isNotEmpty();
-        for (Integer item : collectionsBean.getIntegerLinkedList()) {
-            assertThat(item).isNotEqualTo(0);
-        }
+        assertThat(collectionsBean.getIntegerLinkedList()).isNotEmpty().doesNotContain(0);
 
-        assertThat(collectionsBean.getSocialPersonLinkedList()).isNotEmpty();
-        for (SocialPerson item : collectionsBean.getSocialPersonLinkedList()) {
-            assertThat(item).isNotNull();
-            assertThat(item.getAddress().getCity()).isNotEmpty();
-            assertThat(item.getAddress().getZipCode()).isNotEmpty();
-            assertThat(item.getName()).isNotEmpty();
-            assertThat(item.getFriends()).isNotEmpty();
-            Person friend = item.getFriends().iterator().next();
-            assertThat(friend.getName()).isNotEmpty();
-            assertThat(friend.getNicknames()).isNotEmpty();
-            assertThat(friend.getNicknames().get(0)).isNotEmpty();
-        }
+        assertIsNotEmptyAndContainsOnlyNonEmptySocialPersons(collectionsBean.getSocialPersonLinkedList());
 
-        assertThat(collectionsBean.getIntegerHashSet()).isNotEmpty();
-        for (Integer item : collectionsBean.getIntegerHashSet()) {
-            assertThat(item).isNotEqualTo(0);
-        }
+        assertThat(collectionsBean.getIntegerHashSet()).isNotEmpty().doesNotContain(0);
 
-        assertThat(collectionsBean.getSocialPersonHashSet()).isNotEmpty();
-        for (SocialPerson item : collectionsBean.getSocialPersonHashSet()) {
-            assertThat(item).isNotNull();
-            assertThat(item.getAddress().getCity()).isNotEmpty();
-            assertThat(item.getAddress().getZipCode()).isNotEmpty();
-            assertThat(item.getName()).isNotEmpty();
-            assertThat(item.getFriends()).isNotEmpty();
-            Person friend = item.getFriends().iterator().next();
-            assertThat(friend.getName()).isNotEmpty();
-            assertThat(friend.getNicknames()).isNotEmpty();
-            assertThat(friend.getNicknames().get(0)).isNotEmpty();
-        }
+        assertIsNotEmptyAndContainsOnlyNonEmptySocialPersons(collectionsBean.getSocialPersonHashSet());
 
-        assertThat(collectionsBean.getIntegerTreeSet()).isNotEmpty();
-        for (Integer item : collectionsBean.getIntegerTreeSet()) {
-            assertThat(item).isNotEqualTo(0);
-        }
+        assertThat(collectionsBean.getIntegerTreeSet()).isNotEmpty().doesNotContain(0);
 
         // skipping SocialPerson because no getSocialPersonTreeSet because SocialPerson is not Comparable
 
-        assertThat(collectionsBean.getIntegerConcurrentSkipListSet()).isNotEmpty();
-        for (Integer item : collectionsBean.getIntegerConcurrentSkipListSet()) {
-            assertThat(item).isNotEqualTo(0);
-        }
+        assertThat(collectionsBean.getIntegerConcurrentSkipListSet()).isNotEmpty().doesNotContain(0);
 
         // skipping SocialPerson because no getSocialPersonConcurrentSkipListSet because SocialPerson is not Comparable
 
-        assertThat(collectionsBean.getIntegerHashMap()).isNotEmpty();
-        for (String item : collectionsBean.getIntegerHashMap().keySet()) {
-            assertThat(item).isNotEmpty();
-        }
-        for (Integer item : collectionsBean.getIntegerHashMap().values()) {
-            assertThat(item).isNotEqualTo(0);
-        }
+        assertThat(collectionsBean.getIntegerHashMap()).isNotEmpty()
+            .doesNotContainKey(null).doesNotContainKey("")
+            .doesNotContainValue(0);
 
-        assertThat(collectionsBean.getSocialPersonHashMap()).isNotEmpty();
-        for (String item : collectionsBean.getSocialPersonHashMap().keySet()) {
-            assertThat(item).isNotEmpty();
-        }
-        for (SocialPerson item : collectionsBean.getSocialPersonHashMap().values()) {
-            assertThat(item).isNotNull();
-            assertThat(item.getAddress().getCity()).isNotEmpty();
-            assertThat(item.getAddress().getZipCode()).isNotEmpty();
-            assertThat(item.getName()).isNotEmpty();
-            assertThat(item.getFriends()).isNotEmpty();
-            Person friend = item.getFriends().iterator().next();
-            assertThat(friend.getName()).isNotEmpty();
-            assertThat(friend.getNicknames()).isNotEmpty();
-            assertThat(friend.getNicknames().get(0)).isNotEmpty();
-        }
+        HashMap<String, SocialPerson> socialPersonHashMap = collectionsBean.getSocialPersonHashMap();
+        assertThat(socialPersonHashMap).isNotEmpty()
+            .doesNotContainKey(null).doesNotContainKey("");
+        assertIsNotEmptyAndContainsOnlyNonEmptySocialPersons(socialPersonHashMap.values());
 
-        assertThat(collectionsBean.getIntegerTreeMap()).isNotEmpty();
-        for (String item : collectionsBean.getIntegerTreeMap().keySet()) {
-            assertThat(item).isNotEmpty();
-        }
-        for (Integer item : collectionsBean.getIntegerTreeMap().values()) {
-            assertThat(item).isNotEqualTo(0);
-        }
+        assertThat(collectionsBean.getIntegerTreeMap()).isNotEmpty()
+            .doesNotContainKey("")
+            .doesNotContainValue(0);
 
-        assertThat(collectionsBean.getSocialPersonTreeMap()).isNotEmpty();
-        for (String item : collectionsBean.getSocialPersonTreeMap().keySet()) {
-            assertThat(item).isNotEmpty();
-        }
-        for (SocialPerson item : collectionsBean.getSocialPersonTreeMap().values()) {
-            assertThat(item).isNotNull();
-            assertThat(item.getAddress().getCity()).isNotEmpty();
-            assertThat(item.getAddress().getZipCode()).isNotEmpty();
-            assertThat(item.getName()).isNotEmpty();
-            assertThat(item.getFriends()).isNotEmpty();
-            Person friend = item.getFriends().iterator().next();
-            assertThat(friend.getName()).isNotEmpty();
-            assertThat(friend.getNicknames()).isNotEmpty();
-            assertThat(friend.getNicknames().get(0)).isNotEmpty();
-        }
+        TreeMap<String, SocialPerson> socialPersonTreeMap = collectionsBean.getSocialPersonTreeMap();
+        assertThat(socialPersonTreeMap).isNotEmpty()
+            .doesNotContainKey("");
+        assertIsNotEmptyAndContainsOnlyNonEmptySocialPersons(socialPersonTreeMap.values());
 
-        assertThat(collectionsBean.getIntegerConcurrentSkipListMap()).isNotEmpty();
-        for (String item : collectionsBean.getIntegerConcurrentSkipListMap().keySet()) {
-            assertThat(item).isNotEmpty();
-        }
-        for (Integer item : collectionsBean.getIntegerConcurrentSkipListMap().values()) {
-            assertThat(item).isNotEqualTo(0);
-        }
+        assertThat(collectionsBean.getIntegerConcurrentSkipListMap()).isNotEmpty()
+            .doesNotContainKey("")
+            .doesNotContainValue(0);
 
-        assertThat(collectionsBean.getSocialPersonConcurrentSkipListMap()).isNotEmpty();
-        for (String item : collectionsBean.getSocialPersonConcurrentSkipListMap().keySet()) {
-            assertThat(item).isNotEmpty();
-        }
-        for (SocialPerson item : collectionsBean.getSocialPersonConcurrentSkipListMap().values()) {
-            assertThat(item).isNotNull();
-            assertThat(item.getAddress().getCity()).isNotEmpty();
-            assertThat(item.getAddress().getZipCode()).isNotEmpty();
-            assertThat(item.getName()).isNotEmpty();
-            assertThat(item.getFriends()).isNotEmpty();
-            Person friend = item.getFriends().iterator().next();
-            assertThat(friend.getName()).isNotEmpty();
-            assertThat(friend.getNicknames()).isNotEmpty();
-            assertThat(friend.getNicknames().get(0)).isNotEmpty();
-        }
+        ConcurrentSkipListMap<String, SocialPerson> socialPersonConcurrentSkipListMap = collectionsBean.getSocialPersonConcurrentSkipListMap();
+        assertThat(socialPersonConcurrentSkipListMap).isNotEmpty()
+            .doesNotContainKey("");
+        assertIsNotEmptyAndContainsOnlyNonEmptySocialPersons(socialPersonConcurrentSkipListMap.values());
 
-        assertThat(collectionsBean.getIntegerArrayDeque()).isNotEmpty();
-        for (Integer item : collectionsBean.getIntegerArrayDeque()) {
-            assertThat(item).isNotEqualTo(0);
-        }
+        assertThat(collectionsBean.getIntegerArrayDeque()).isNotEmpty().doesNotContain(0);
 
-        assertThat(collectionsBean.getSocialPersonArrayDeque()).isNotEmpty();
-        for (SocialPerson item : collectionsBean.getSocialPersonArrayDeque()) {
-            assertThat(item).isNotNull();
-            assertThat(item.getAddress().getCity()).isNotEmpty();
-            assertThat(item.getAddress().getZipCode()).isNotEmpty();
-            assertThat(item.getName()).isNotEmpty();
-            assertThat(item.getFriends()).isNotEmpty();
-            Person friend = item.getFriends().iterator().next();
-            assertThat(friend.getName()).isNotEmpty();
-            assertThat(friend.getNicknames()).isNotEmpty();
-            assertThat(friend.getNicknames().get(0)).isNotEmpty();
-        }
+        assertIsNotEmptyAndContainsOnlyNonEmptySocialPersons(collectionsBean.getSocialPersonArrayDeque());
     }
 
     @Test
+    @SuppressWarnings({ "unchecked", "rawtypes" })
     public void testCollectionClassesPopulation() throws Exception {
         final CollectionClassesBean collectionsBean = populator.populateBean(CollectionClassesBean.class);
 
         assertThat(collectionsBean).isNotNull();
 
-        assertThat(collectionsBean.getVector()).isNotEmpty();
-        for (Object item : collectionsBean.getVector()) {
-            assertThat(item.getClass()).isEqualTo(String.class);
-            assertThat((String) item).isNotEmpty();
-        }
+        assertThat(collectionsBean.getVector()).isNotEmpty().hasOnlyElementsOfType(String.class).doesNotContain(null, "");
 
-        assertThat(collectionsBean.getArrayList()).isNotEmpty();
-        for (Object item : collectionsBean.getArrayList()) {
-            assertThat(item.getClass()).isEqualTo(String.class);
-            assertThat((String) item).isNotEmpty();
-        }
+        assertThat(collectionsBean.getArrayList()).isNotEmpty().hasOnlyElementsOfType(String.class).doesNotContain(null, "");
 
-        assertThat(collectionsBean.getHashSet()).isNotEmpty();
-        for (Object item : collectionsBean.getHashSet()) {
-            assertThat(item.getClass()).isEqualTo(String.class);
-            assertThat((String) item).isNotEmpty();
-        }
+        assertThat(collectionsBean.getHashSet()).isNotEmpty().hasOnlyElementsOfType(String.class).doesNotContain(null, "");
 
-        assertThat(collectionsBean.getTreeSet()).isNotEmpty();
-        for (Object item : collectionsBean.getTreeSet()) {
-            assertThat(item.getClass()).isEqualTo(String.class);
-            assertThat((String) item).isNotEmpty();
-        }
+        assertThat(collectionsBean.getTreeSet()).isNotEmpty().hasOnlyElementsOfType(String.class).doesNotContain(null, "");
 
-        assertThat(collectionsBean.getConcurrentSkipListSet()).isNotEmpty();
-        for (Object item : collectionsBean.getConcurrentSkipListSet()) {
-            assertThat(item.getClass()).isEqualTo(String.class);
-            assertThat((String) item).isNotEmpty();
-        }
+        assertThat(collectionsBean.getConcurrentSkipListSet()).isNotEmpty().hasOnlyElementsOfType(String.class).doesNotContain(null, "");
 
-        assertThat(collectionsBean.getHashMap()).isNotEmpty();
-        for (Object item : collectionsBean.getHashMap().values()) {
-            assertThat(item.getClass()).isEqualTo(String.class);
-            assertThat((String) item).isNotEmpty();
-        }
-        for (Object item : collectionsBean.getHashMap().keySet()) {
-            assertThat(item.getClass()).isEqualTo(String.class);
-            assertThat((String) item).isNotEmpty();
-        }
+        HashMap hashMap = collectionsBean.getHashMap();
+        assertThat(hashMap).isNotEmpty();
+        assertThat(hashMap.values()).isNotEmpty().hasOnlyElementsOfType(String.class).doesNotContain(null, "");
+        assertThat(hashMap.keySet()).isNotEmpty().hasOnlyElementsOfType(String.class).doesNotContain(null, "");
 
-        assertThat(collectionsBean.getTreeMap()).isNotEmpty();
-        for (Object item : collectionsBean.getTreeMap().values()) {
-            assertThat(item.getClass()).isEqualTo(String.class);
-            assertThat((String) item).isNotEmpty();
-        }
-        for (Object item : collectionsBean.getTreeMap().keySet()) {
-            assertThat(item.getClass()).isEqualTo(String.class);
-            assertThat((String) item).isNotEmpty();
-        }
+        TreeMap treeMap = collectionsBean.getTreeMap();
+        assertThat(treeMap).isNotEmpty();
+        assertThat(treeMap.values()).isNotEmpty().hasOnlyElementsOfType(String.class).doesNotContain(null, "");
+        assertThat(treeMap.keySet()).isNotEmpty().hasOnlyElementsOfType(String.class).doesNotContain(null, "");
 
-        assertThat(collectionsBean.getConcurrentSkipListMap()).isNotEmpty();
-        for (Object item : collectionsBean.getConcurrentSkipListMap().values()) {
-            assertThat(item.getClass()).isEqualTo(String.class);
-            assertThat((String) item).isNotEmpty();
-        }
-        for (Object item : collectionsBean.getConcurrentSkipListMap().keySet()) {
-            assertThat(item.getClass()).isEqualTo(String.class);
-            assertThat((String) item).isNotEmpty();
-        }
+        ConcurrentSkipListMap concurrentSkipListMap = collectionsBean.getConcurrentSkipListMap();
+        assertThat(concurrentSkipListMap).isNotEmpty();
+        assertThat(concurrentSkipListMap.values()).isNotEmpty().hasOnlyElementsOfType(String.class).doesNotContain(null, "");
+        assertThat(concurrentSkipListMap.keySet()).isNotEmpty().hasOnlyElementsOfType(String.class).doesNotContain(null, "");
 
-        assertThat(collectionsBean.getArrayDeque()).isNotEmpty();
-        for (Object item : collectionsBean.getArrayDeque()) {
-            assertThat(item.getClass()).isEqualTo(String.class);
-            assertThat((String) item).isNotEmpty();
-        }
+        assertThat(collectionsBean.getArrayDeque()).isNotEmpty().hasOnlyElementsOfType(String.class).doesNotContain(null, "");
     }
-
 
     @Test(expected = IllegalArgumentException.class)
     public void whenThenSpecifiedNumberOfBeansToGenerateIsNegativeThenShouldThrowAnIllegalArgumentException() throws Exception {
         populator.populateBeans(Person.class, -2);
+    }
+    
+    private void assertIsNotEmptyAndContainsOnlyNonEmptySocialPersons(Collection<SocialPerson> persons) {
+        assertThat(persons).isNotEmpty();
+        for (SocialPerson socialPerson : persons) {
+            assertThat(socialPerson).isNotNull();
+            assertThat(socialPerson.getAddress().getCity()).isNotEmpty();
+            assertThat(socialPerson.getAddress().getZipCode()).isNotEmpty();
+            assertThat(socialPerson.getName()).isNotEmpty();
+            assertThat(socialPerson.getFriends()).isNotEmpty();
+            Person friend = socialPerson.getFriends().iterator().next();
+            assertThat(friend.getName()).isNotEmpty();
+            assertThat(friend.getNicknames()).isNotEmpty();
+            assertThat(friend.getNicknames().get(0)).isNotEmpty();
+        }
     }
 }
