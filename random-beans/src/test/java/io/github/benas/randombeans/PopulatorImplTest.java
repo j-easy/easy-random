@@ -24,7 +24,7 @@
 
 package io.github.benas.randombeans;
 
-import static io.github.benas.randombeans.PopulatorBuilder.aNewPopulator;
+import static io.github.benas.randombeans.PopulatorBuilder.aNewPopulatorBuilder;
 import static java.util.Arrays.asList;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.Mockito.when;
@@ -73,7 +73,7 @@ public class PopulatorImplTest {
 
     @Before
     public void setUp() throws Exception {
-        populator = aNewPopulator().build();
+        populator = aNewPopulatorBuilder().build();
         when(randomizer.getRandomValue()).thenReturn(NAME);
     }
 
@@ -161,7 +161,7 @@ public class PopulatorImplTest {
 
     @Test
     public void generatedBeansWithCustomRandomizersShouldBeCorrectlyPopulated() throws Exception {
-        populator = aNewPopulator()
+        populator = aNewPopulatorBuilder()
                 .registerRandomizer(Person.class, String.class, "name", randomizer)
                 .build();
 

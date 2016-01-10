@@ -61,7 +61,7 @@ public class PopulatorBuilder {
      *
      * @return a new {@link PopulatorBuilder}
      */
-    public static PopulatorBuilder aNewPopulator() {
+    public static PopulatorBuilder aNewPopulatorBuilder() {
         return new PopulatorBuilder();
     }
 
