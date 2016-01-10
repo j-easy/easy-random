@@ -6,7 +6,7 @@ involves many related classes. Random Beans tries to make this task easier.
 
 # How to use it?
 
-Random Beans provides the `Populator` API that is able to generate a random instance of given type:
+Random Beans provides the `Populator` API that is able to generate random instances of a given type:
 
 ```java
 Populator populator = new PopulatorBuilder().build();
@@ -55,9 +55,29 @@ person.setAddress(address);
 
 As you can see, Random Beans can tremendously reduce the code of generating random test data than doing it by hand.
 
-## Documentation
+## Quick links
 
-Random Beans documentation can be found in the project's wiki: [https://github.com/benas/random-beans/wiki](https://github.com/benas/random-beans/wiki)
+|Item                  |Link                                                                                      |
+|:---------------------|:-----------------------------------------------------------------------------------------|
+|Documentation         | [https://github.com/benas/random-beans/wiki](https://github.com/benas/random-beans/wiki) |
+|Continuous integration| [Build job @ Travis CI](https://travis-ci.org/benas/random-beans)                        |
+|Agile Board           | [Backlog items @ waffle.io](https://waffle.io/benas/random-beans)                        |
+|Code coverage         | [![Coverage Status](https://coveralls.io/repos/benas/random-beans/badge.svg?branch=master&service=github)](https://coveralls.io/github/benas/random-beans?branch=master) |
+|Dependencies          | [![Dependency Status](https://www.versioneye.com/user/projects/56920ec1daa0bf0039000161/badge.svg?style=flat)](https://www.versioneye.com/user/projects/56920ec1daa0bf0039000161) |
+
+## Current version
+
+* The current stable version is `1.2.0` : [![Maven Central](https://maven-badges.herokuapp.com/maven-central/io.github.benas/jpopulator/badge.svg?style=flat)](http://search.maven.org/#artifactdetails|io.github.benas|jpopulator|1.2.0|) 
+* The current development version is `2.0.0-SNAPSHOT` : [![Build Status](https://travis-ci.org/benas/random-beans.svg?branch=master)](https://travis-ci.org/benas/random-beans)
+
+In order to use snapshot versions, you need to add the following maven repository in your `pom.xml`:
+
+```xml
+<repository>
+    <id>ossrh</id>
+    <url>https://oss.sonatype.org/content/repositories/snapshots</url>
+</repository>
+```
 
 ## Contribution
 
@@ -82,7 +102,7 @@ Thank you all for your contributions!
 
 ## License
 
-Random Beans is released under the [MIT License](http://opensource.org/licenses/mit-license.php/):
+Random Beans is released under the [![MIT license](http://img.shields.io/badge/license-MIT-brightgreen.svg?style=flat)](http://opensource.org/licenses/MIT).
 
 ```
 The MIT License
