@@ -261,12 +261,9 @@ final class PopulatorImpl implements Populator {
     }
 
     private <T> T[] getRandomArray(final Class<?> fieldType) throws BeanPopulationException {
-        if (fieldType.isArray()) {
-            List<?> items = populateBeans(fieldType.getComponentType());
-            T[] itemsList = (T[]) Array.newInstance(fieldType.getComponentType(), items.size());
-            return items.toArray(itemsList);
-        }
-        return null;
+        List<?> items = populateBeans(fieldType.getComponentType());
+        T[] itemsList = (T[]) Array.newInstance(fieldType.getComponentType(), items.size());
+        return items.toArray(itemsList);
     }
 
     private Collection<?> getRandomCollection(final Field field) throws IllegalAccessException, BeanPopulationException {
