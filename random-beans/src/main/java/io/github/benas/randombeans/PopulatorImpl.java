@@ -148,12 +148,12 @@ final class PopulatorImpl implements Populator {
         if (size < 0) {
             throw new IllegalArgumentException("The number of beans to populate must be positive.");
         }
-        List<Object> beans = new ArrayList<Object>();
+        List<T> beans = new ArrayList<T>();
         for (int i = 0; i < size; i++) {
-            Object bean = populateBean(type, excludedFields);
+            T bean = populateBean(type, excludedFields);
             beans.add(bean);
         }
-        return (List<T>) beans;
+        return beans;
     }
 
     /**
