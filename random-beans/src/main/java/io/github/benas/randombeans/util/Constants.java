@@ -42,7 +42,7 @@ public abstract class Constants {
     /**
      * Default limit on the size of a randomly generated collection.
      */
-    public static final int maximumCollectionSize = 20;
+    public static final int MAXIMUM_COLLECTION_SIZE = 20;
 
     /**
      * Default date range in which dates will be generated: [now - 10 years, now + 10 years].

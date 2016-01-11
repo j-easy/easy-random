@@ -25,19 +25,13 @@
 
 package io.github.benas.randombeans;
 
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.HashMap;
-import java.util.LinkedHashSet;
-import java.util.List;
-import java.util.Map;
-import java.util.ServiceLoader;
-import java.util.Set;
-
 import io.github.benas.randombeans.api.Populator;
 import io.github.benas.randombeans.api.Randomizer;
 import io.github.benas.randombeans.api.RandomizerRegistry;
-import io.github.benas.randombeans.util.Constants;
+
+import java.util.*;
+
+import static io.github.benas.randombeans.util.Constants.MAXIMUM_COLLECTION_SIZE;
 
 /**
  * A builder to create {@link Populator} instances.
@@ -50,7 +44,7 @@ public class PopulatorBuilder {
 
     private Set<RandomizerRegistry> userRegistries;
 
-    private short maximumCollectionSize = Constants.maximumCollectionSize;
+    private short maximumCollectionSize;
 
     private PopulatorBuilder() {
         reset();
@@ -112,6 +106,7 @@ public class PopulatorBuilder {
     private void reset() {
         randomizers = new HashMap<RandomizerDefinition, Randomizer>();
         userRegistries = new LinkedHashSet<RandomizerRegistry>();
+        maximumCollectionSize = MAXIMUM_COLLECTION_SIZE;
     }
 
     private Collection<RandomizerRegistry> loadRegistries() {
