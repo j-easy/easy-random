@@ -103,7 +103,7 @@ final class PopulatorImpl implements Populator {
         return doPopulateBean(type, new PopulatorContext(excludedFields));
     }
 
-    protected <T> T doPopulateBean(final Class<T> type, final PopulatorContext context, final String... excludedFields) throws BeanPopulationException {
+    protected <T> T doPopulateBean(final Class<T> type, final PopulatorContext context) throws BeanPopulationException {
         T result;
         try {
             //No instantiation needed for enum types.
@@ -132,7 +132,7 @@ final class PopulatorImpl implements Populator {
             }
             return result;
         } catch (Exception e) {
-            throw new BeanPopulationException("Unable to populate an instance of type " + type, e);
+            throw new BeanPopulationException("Unable to generate a random instance of type " + type, e);
         }
     }
 
