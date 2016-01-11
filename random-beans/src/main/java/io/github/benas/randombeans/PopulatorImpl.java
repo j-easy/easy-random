@@ -25,48 +25,20 @@
 
 package io.github.benas.randombeans;
 
-import static io.github.benas.randombeans.util.ReflectionUtils.getDeclaredFields;
-import static io.github.benas.randombeans.util.ReflectionUtils.getInheritedFields;
-import static io.github.benas.randombeans.util.ReflectionUtils.isArrayType;
-import static io.github.benas.randombeans.util.ReflectionUtils.isCollectionType;
-import static io.github.benas.randombeans.util.ReflectionUtils.isMapType;
-import static io.github.benas.randombeans.util.ReflectionUtils.isStatic;
-import static io.github.benas.randombeans.util.ReflectionUtils.setProperty;
-
-import java.lang.reflect.Array;
-import java.lang.reflect.Field;
-import java.lang.reflect.InvocationTargetException;
-import java.lang.reflect.ParameterizedType;
-import java.lang.reflect.Type;
-import java.util.ArrayDeque;
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.Collections;
-import java.util.Comparator;
-import java.util.Deque;
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Map;
-import java.util.NavigableMap;
-import java.util.NavigableSet;
-import java.util.Queue;
-import java.util.Set;
-import java.util.SortedMap;
-import java.util.SortedSet;
-import java.util.TreeMap;
-import java.util.TreeSet;
-
-import org.apache.commons.math3.random.RandomDataGenerator;
-import org.objenesis.Objenesis;
-import org.objenesis.ObjenesisStd;
-
 import io.github.benas.randombeans.annotation.Exclude;
 import io.github.benas.randombeans.api.BeanPopulationException;
 import io.github.benas.randombeans.api.Populator;
 import io.github.benas.randombeans.api.Randomizer;
 import io.github.benas.randombeans.api.RandomizerRegistry;
 import io.github.benas.randombeans.randomizers.EnumRandomizer;
+import org.apache.commons.math3.random.RandomDataGenerator;
+import org.objenesis.Objenesis;
+import org.objenesis.ObjenesisStd;
+
+import java.lang.reflect.*;
+import java.util.*;
+
+import static io.github.benas.randombeans.util.ReflectionUtils.*;
 
 /**
  * The core implementation of the {@link Populator} interface.
@@ -84,6 +56,8 @@ final class PopulatorImpl implements Populator {
     private final Comparator<Object> priorityComparator = new PriorityComparator();
 
     private final Objenesis objenesis = new ObjenesisStd();
+
+    private final RandomDataGenerator randomDataGenerator = new RandomDataGenerator();
 
     PopulatorImpl(final Set<RandomizerRegistry> registries, final Map<RandomizerDefinition, Randomizer> randomizers,
             short maximumCollectionSize) {
@@ -108,7 +82,7 @@ final class PopulatorImpl implements Populator {
         try {
             //No instantiation needed for enum types.
             if (type.isEnum()) {
-                return (T) getEnumRandomizer((Class<? extends Enum>) type).getRandomValue();
+                return (T) getRandomEnum(type);
             }
 
             // If the type has been already randomized, reuse the cached instance to avoid recursion.
@@ -138,7 +112,7 @@ final class PopulatorImpl implements Populator {
 
     @Override
     public <T> List<T> populateBeans(final Class<T> type, final String... excludedFields) throws BeanPopulationException {
-        int size = new RandomDataGenerator().nextInt(1, maximumCollectionSize);
+        int size = randomDataGenerator.nextInt(1, maximumCollectionSize);
         return populateBeans(type, size, excludedFields);
     }
 
@@ -156,16 +130,6 @@ final class PopulatorImpl implements Populator {
         return beans;
     }
 
-    /**
-     * Method to populate a simple (ie non collection) type which can be a java built-in type or a user's custom type.
-     *
-     * @param target The target object on which the generated value will be set
-     * @param field  The field in which the generated value will be set
-     * @param context The context of this call
-     * @throws IllegalAccessException    Thrown when the generated value cannot be set to the given field
-     * @throws NoSuchMethodException     Thrown when there is no setter for the given field
-     * @throws InvocationTargetException Thrown when the setter of the given field can not be invoked
-     */
     private void populateField(final Object target, final Field field, final PopulatorContext context)
             throws IllegalAccessException, NoSuchMethodException, InvocationTargetException, BeanPopulationException {
 
@@ -186,7 +150,7 @@ final class PopulatorImpl implements Populator {
         Class fieldType = field.getType();
         Object value;
         if (fieldType.isEnum()) {
-            value = getEnumRandomizer(fieldType).getRandomValue();
+            value = getRandomEnum(fieldType);
         } else if (isArrayType(fieldType)) {
             value = getRandomArray(fieldType);
         } else if (isCollectionType(fieldType)) {
@@ -199,23 +163,14 @@ final class PopulatorImpl implements Populator {
         return value;
     }
 
-    /**
-     * Get an {@link EnumRandomizer} for the given enumeration type.
-     *
-     * @param enumeration the enumeration type
-     * @return an {@link EnumRandomizer} for the given enumeration.
-     */
+    private Enum getRandomEnum(Class fieldType) {
+        return getEnumRandomizer(fieldType).getRandomValue();
+    }
+
     private EnumRandomizer getEnumRandomizer(Class<? extends Enum> enumeration) {
         return new EnumRandomizer(enumeration);
     }
 
-    /**
-     * Retrieves the randomizer to use, either the one defined by user for a specific field or a default one provided by registries.
-     *
-     * @param targetClass the type of the target object
-     * @param field       the field for which the {@link Randomizer} should generate values
-     * @return a {@link Randomizer} for this field, or null if none is found.
-     */
     private Randomizer getRandomizer(final Class targetClass, final Field field) {
         Randomizer customRandomizer = randomizers.get(new RandomizerDefinition(targetClass, field.getType(), field.getName()));
         if (customRandomizer != null) {
@@ -224,12 +179,6 @@ final class PopulatorImpl implements Populator {
         return getDefaultRandomizer(field);
     }
 
-    /**
-     * Retrieves the default {@link Randomizer} to use, by using user registry first and default registries after.
-     *
-     * @param field field for which the {@link Randomizer} should generate values
-     * @return a {@link Randomizer} for this field, or null if none is found.
-     */
     private Randomizer getDefaultRandomizer(final Field field) {
         List<Randomizer> randomizers = new ArrayList<Randomizer>();
         for (RandomizerRegistry registry : registries) {
@@ -268,16 +217,13 @@ final class PopulatorImpl implements Populator {
 
     private Collection<?> getRandomCollection(final Field field) throws IllegalAccessException, BeanPopulationException {
         Class<?> fieldType = field.getType();
-        Collection<?> collection = null;
+        Collection<?> collection;
         if (!fieldType.isInterface()) {
             try {
                 collection = (Collection<?>) fieldType.newInstance();
             } catch (InstantiationException e) {
-                Objenesis objenesis = new ObjenesisStd();
                 collection = (Collection<?>) objenesis.newInstance(fieldType);
             }
-        } else if (List.class.isAssignableFrom(fieldType)) {
-            collection = new ArrayList<>();
         } else if (List.class.isAssignableFrom(fieldType)) {
             collection = new ArrayList<>();
         } else if (NavigableSet.class.isAssignableFrom(fieldType)) {
@@ -295,6 +241,7 @@ final class PopulatorImpl implements Populator {
         } else {
             collection = new ArrayList<>();
         }
+
         Type genericType = field.getGenericType();
         // default to String rather than Object b/c
         // (1) it apparently does not matter to the author of the code that is calling this and
@@ -313,12 +260,11 @@ final class PopulatorImpl implements Populator {
     private Map<?, ?> getRandomMap(final Field field) throws IllegalAccessException, BeanPopulationException {
         Class<?> fieldType = field.getType();
 
-        Map map = null;
+        Map map;
         if (!fieldType.isInterface()) {
             try {
                 map = (Map) fieldType.newInstance();
             } catch (InstantiationException e) {
-                Objenesis objenesis = new ObjenesisStd();
                 map = (Map) objenesis.newInstance(fieldType);
             }
         } else if (NavigableMap.class.isAssignableFrom(fieldType)) {
@@ -329,7 +275,7 @@ final class PopulatorImpl implements Populator {
             map = new HashMap<>();
         }
 
-        int size = new RandomDataGenerator().nextInt(1, 100);
+        int size = randomDataGenerator.nextInt(1, maximumCollectionSize);
 
         Type genericKeyType = field.getGenericType();
         // default to String rather than Object b/c
