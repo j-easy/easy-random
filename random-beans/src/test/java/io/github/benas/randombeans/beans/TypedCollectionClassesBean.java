@@ -35,11 +35,6 @@ import java.util.Vector;
 import java.util.concurrent.ConcurrentSkipListMap;
 import java.util.concurrent.ConcurrentSkipListSet;
 
-/**
- * Java bean used to test gthe population of collection classes.
- *
- * @author Fred Eckertson (feckertson@cerner.com)
- */
 public class TypedCollectionClassesBean {
 
     private String[] stringArray;
@@ -64,11 +59,11 @@ public class TypedCollectionClassesBean {
 
     private TreeSet<Integer> integerTreeSet;
 
-    // omitting TreeSet<SocialPerson> because SocialPerson is not comparable
+    private TreeSet<SocialPerson> socialPersonTreeSet;
 
     private ConcurrentSkipListSet<Integer> integerConcurrentSkipListSet;
 
-    // omitting ConcurrentSkipListSet<SocialPerson> because SocialPerson is not comparable
+    private ConcurrentSkipListSet<SocialPerson> socialPersonConcurrentSkipListSet;
 
     private HashMap<String, Integer> integerHashMap;
 
@@ -168,5 +163,13 @@ public class TypedCollectionClassesBean {
 
     public ArrayDeque<SocialPerson> getSocialPersonArrayDeque() {
         return socialPersonArrayDeque;
+    }
+
+    public TreeSet<SocialPerson> getSocialPersonTreeSet() {
+        return socialPersonTreeSet;
+    }
+
+    public ConcurrentSkipListSet<SocialPerson> getSocialPersonConcurrentSkipListSet() {
+        return socialPersonConcurrentSkipListSet;
     }
 }

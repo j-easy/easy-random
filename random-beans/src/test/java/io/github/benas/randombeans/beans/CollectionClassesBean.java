@@ -35,11 +35,6 @@ import java.util.Vector;
 import java.util.concurrent.ConcurrentSkipListMap;
 import java.util.concurrent.ConcurrentSkipListSet;
 
-/**
- * Java bean used to test gthe population of collection classes.
- *
- * @author Fred Eckertson (feckertson@cerner.com)
- */
 public class CollectionClassesBean {
 
     private Vector vector;

@@ -35,11 +35,6 @@ import java.util.Set;
 import java.util.SortedMap;
 import java.util.SortedSet;
 
-/**
- * Java bean used to test the population of typed collections .
- *
- * @author Fred Eckertson (feckertson@cerner.com)
- */
 public class TypedCollectionInterfacesBean {
 
     private Collection<Integer> integerCollection;
@@ -52,11 +47,11 @@ public class TypedCollectionInterfacesBean {
 
     private SortedSet<Integer> integerSortedSet;
 
-    //omitting SortedSet<SocialPerson> because SocialPerson is not Comparable.
+    private SortedSet<SocialPerson> socialPersonSortedSet;
 
     private NavigableSet<Integer> integerNavigableSet;
 
-    //omitting NavigableSet<SocialPerson> because SocialPerson is not Comparable
+    private NavigableSet<SocialPerson> socialPersonNavigableSet;
 
     private List<Integer> integerList;
 
@@ -153,5 +148,13 @@ public class TypedCollectionInterfacesBean {
 
     public NavigableMap<String, SocialPerson> getSocialPersonNavigableMap() {
         return socialPersonNavigableMap;
+    }
+
+    public SortedSet<SocialPerson> getSocialPersonSortedSet() {
+        return socialPersonSortedSet;
+    }
+
+    public NavigableSet<SocialPerson> getSocialPersonNavigableSet() {
+        return socialPersonNavigableSet;
     }
 }
