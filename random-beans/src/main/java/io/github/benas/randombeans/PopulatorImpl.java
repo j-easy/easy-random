@@ -209,10 +209,85 @@ final class PopulatorImpl implements Populator {
         return null;
     }
 
-    private <T> T[] getRandomArray(final Class<?> fieldType) throws BeanPopulationException {
-        List<?> items = populateBeans(fieldType.getComponentType());
-        T[] itemsList = (T[]) Array.newInstance(fieldType.getComponentType(), items.size());
-        return items.toArray(itemsList);
+    private <T> Object getRandomArray(final Class<?> fieldType) throws BeanPopulationException {
+        if (fieldType.isArray()) {
+            Class<?> componentType = fieldType.getComponentType();
+            if (componentType.isPrimitive()) {
+                return getRandomPrimitiveArray(componentType);
+            }
+            List<?> items = populateBeans(fieldType.getComponentType());
+            T[] itemsList = (T[]) Array.newInstance(componentType, items.size());
+            return items.toArray(itemsList);
+        }
+        return null;
+    }
+    
+    private Object getRandomPrimitiveArray(final Class<?> primitiveType) throws BeanPopulationException {
+        if (primitiveType.getTypeName().equals("byte")) {
+            List<Byte> items = populateBeans(Byte.TYPE);
+            byte[] retVal = new byte[items.size()];
+            for (int index = 0; index < items.size(); index ++){
+                retVal[index] = items.get(index);
+            }
+            return retVal;
+        }
+        if (primitiveType.getTypeName().equals("short")) {
+            List<Short> items = populateBeans(Short.TYPE);
+            short[] retVal = new short[items.size()];
+            for (int index = 0; index < items.size(); index ++){
+                retVal[index] = items.get(index);
+            }
+            return retVal;
+        }
+        if (primitiveType.getTypeName().equals("int")) {
+            List<Integer> items = populateBeans(Integer.TYPE);
+            int[] retVal = new int[items.size()];
+            for (int index = 0; index < items.size(); index ++){
+                retVal[index] = items.get(index);
+            }
+            return retVal;
+        }
+        if (primitiveType.getTypeName().equals("long")) {
+            List<Long> items = populateBeans(Long.TYPE);
+            long[] retVal = new long[items.size()];
+            for (int index = 0; index < items.size(); index ++){
+                retVal[index] = items.get(index);
+            }
+            return retVal;
+        }
+        if (primitiveType.getTypeName().equals("float")) {
+            List<Float> items = populateBeans(Float.TYPE);
+            float[] retVal = new float[items.size()];
+            for (int index = 0; index < items.size(); index ++){
+                retVal[index] = items.get(index);
+            }
+            return retVal;
+        }
+        if (primitiveType.getTypeName().equals("double")) {
+            List<Double> items = populateBeans(Double.TYPE);
+            double[] retVal = new double[items.size()];
+            for (int index = 0; index < items.size(); index ++){
+                retVal[index] = items.get(index);
+            }
+            return retVal;
+        }
+        if (primitiveType.getTypeName().equals("char")) {
+            List<Character> items = populateBeans(Character.TYPE);
+            char[] retVal = new char[items.size()];
+            for (int index = 0; index < items.size(); index ++){
+                retVal[index] = items.get(index);
+            }
+            return retVal;
+        }
+        if (primitiveType.getTypeName().equals("boolean")) {
+            List<Boolean> items = populateBeans(Boolean.TYPE);
+            boolean[] retVal = new boolean[items.size()];
+            for (int index = 0; index < items.size(); index ++){
+                retVal[index] = items.get(index);
+            }
+            return retVal;
+        }
+        return null;
     }
 
     private Collection<?> getRandomCollection(final Field field) throws IllegalAccessException, BeanPopulationException {

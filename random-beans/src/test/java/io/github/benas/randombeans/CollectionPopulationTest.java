@@ -21,6 +21,19 @@ public class CollectionPopulationTest {
     }
 
     @Test
+    public void testPrimitiveArray() throws Exception{
+        final PrimitiveArrayBean bean = populator.populateBean(PrimitiveArrayBean.class);
+        assertThat(bean.getByteArray()).isNotEmpty().doesNotContain((byte) 0);
+        assertThat(bean.getShortArray()).isNotEmpty().doesNotContain((short) 0);
+        assertThat(bean.getIntArray()).isNotEmpty().doesNotContain(0);
+        assertThat(bean.getLongArray()).isNotEmpty().doesNotContain(0);
+        assertThat(bean.getFloatArray()).isNotEmpty().doesNotContain(0);
+        assertThat(bean.getDoubleArray()).isNotEmpty().doesNotContain(0);
+        assertThat(bean.getCharArray()).isNotEmpty().doesNotContain((char) 0);
+        assertThat(bean.getIntArray()).isNotEmpty();
+    }
+
+    @Test
     public void testCollectionInterfacesPopulation() throws Exception {
         final CollectionInterfacesBean collectionsBean = populator.populateBean(CollectionInterfacesBean.class);
 
@@ -186,5 +199,4 @@ public class CollectionPopulationTest {
     private void assertIsNotEmptyAndContainsNonZeroIntegers(final Collection collection) {
         assertThat(collection).isNotEmpty().hasOnlyElementsOfType(Integer.class).doesNotContain(0);
     }
-
 }
