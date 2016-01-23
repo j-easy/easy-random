@@ -37,6 +37,7 @@ import org.objenesis.ObjenesisStd;
 
 import java.lang.reflect.*;
 import java.util.*;
+import java.util.concurrent.*;
 
 import static io.github.benas.randombeans.util.ReflectionUtils.*;
 
@@ -210,20 +211,17 @@ final class PopulatorImpl implements Populator {
     }
 
     private <T> Object getRandomArray(final Class<?> fieldType) throws BeanPopulationException {
-        if (fieldType.isArray()) {
-            Class<?> componentType = fieldType.getComponentType();
-            if (componentType.isPrimitive()) {
-                return getRandomPrimitiveArray(componentType);
-            }
-            List<?> items = populateBeans(fieldType.getComponentType());
-            T[] itemsList = (T[]) Array.newInstance(componentType, items.size());
-            return items.toArray(itemsList);
+        Class<?> componentType = fieldType.getComponentType();
+        if (componentType.isPrimitive()) {
+            return getRandomPrimitiveArray(componentType);
         }
-        return null;
+        List<?> items = populateBeans(fieldType.getComponentType());
+        T[] itemsList = (T[]) Array.newInstance(componentType, items.size());
+        return items.toArray(itemsList);
     }
     
     private Object getRandomPrimitiveArray(final Class<?> primitiveType) throws BeanPopulationException {
-        if (primitiveType.getTypeName().equals("byte")) {
+        if (primitiveType.getName().equals("byte")) {
             List<Byte> items = populateBeans(Byte.TYPE);
             byte[] retVal = new byte[items.size()];
             for (int index = 0; index < items.size(); index ++){
@@ -231,7 +229,7 @@ final class PopulatorImpl implements Populator {
             }
             return retVal;
         }
-        if (primitiveType.getTypeName().equals("short")) {
+        if (primitiveType.getName().equals("short")) {
             List<Short> items = populateBeans(Short.TYPE);
             short[] retVal = new short[items.size()];
             for (int index = 0; index < items.size(); index ++){
@@ -239,7 +237,7 @@ final class PopulatorImpl implements Populator {
             }
             return retVal;
         }
-        if (primitiveType.getTypeName().equals("int")) {
+        if (primitiveType.getName().equals("int")) {
             List<Integer> items = populateBeans(Integer.TYPE);
             int[] retVal = new int[items.size()];
             for (int index = 0; index < items.size(); index ++){
@@ -247,7 +245,7 @@ final class PopulatorImpl implements Populator {
             }
             return retVal;
         }
-        if (primitiveType.getTypeName().equals("long")) {
+        if (primitiveType.getName().equals("long")) {
             List<Long> items = populateBeans(Long.TYPE);
             long[] retVal = new long[items.size()];
             for (int index = 0; index < items.size(); index ++){
@@ -255,7 +253,7 @@ final class PopulatorImpl implements Populator {
             }
             return retVal;
         }
-        if (primitiveType.getTypeName().equals("float")) {
+        if (primitiveType.getName().equals("float")) {
             List<Float> items = populateBeans(Float.TYPE);
             float[] retVal = new float[items.size()];
             for (int index = 0; index < items.size(); index ++){
@@ -263,7 +261,7 @@ final class PopulatorImpl implements Populator {
             }
             return retVal;
         }
-        if (primitiveType.getTypeName().equals("double")) {
+        if (primitiveType.getName().equals("double")) {
             List<Double> items = populateBeans(Double.TYPE);
             double[] retVal = new double[items.size()];
             for (int index = 0; index < items.size(); index ++){
@@ -271,7 +269,7 @@ final class PopulatorImpl implements Populator {
             }
             return retVal;
         }
-        if (primitiveType.getTypeName().equals("char")) {
+        if (primitiveType.getName().equals("char")) {
             List<Character> items = populateBeans(Character.TYPE);
             char[] retVal = new char[items.size()];
             for (int index = 0; index < items.size(); index ++){
@@ -279,7 +277,7 @@ final class PopulatorImpl implements Populator {
             }
             return retVal;
         }
-        if (primitiveType.getTypeName().equals("boolean")) {
+        if (primitiveType.getName().equals("boolean")) {
             List<Boolean> items = populateBeans(Boolean.TYPE);
             boolean[] retVal = new boolean[items.size()];
             for (int index = 0; index < items.size(); index ++){
@@ -307,20 +305,21 @@ final class PopulatorImpl implements Populator {
             collection = new TreeSet<>();
         } else if (Set.class.isAssignableFrom(fieldType)) {
             collection = new HashSet<>();
+        } else if (BlockingDeque.class.isAssignableFrom(fieldType)) {
+            collection = new LinkedBlockingDeque<>();
         } else if (Deque.class.isAssignableFrom(fieldType)) {
             collection = new ArrayDeque<>();
+        } else if (TransferQueue.class.isAssignableFrom(fieldType)) {
+            collection = new LinkedTransferQueue<>();
+        } else if (BlockingQueue.class.isAssignableFrom(fieldType)) {
+            collection = new LinkedBlockingQueue<>();
         } else if (Queue.class.isAssignableFrom(fieldType)) {
-            collection = new ArrayDeque<>();
-        } else if (Collection.class.isAssignableFrom(fieldType)) {
-            collection = new HashSet<>();
-        } else {
+            collection = new LinkedList<>();
+        }  else {
             collection = new ArrayList<>();
         }
 
         Type genericType = field.getGenericType();
-        // default to String rather than Object b/c
-        // (1) it apparently does not matter to the author of the code that is calling this and
-        // (2) some collections require comparable objects.
         Type baseType = String.class;
         if (genericType instanceof ParameterizedType) {
             ParameterizedType parameterizedType = (ParameterizedType) genericType;
@@ -342,6 +341,10 @@ final class PopulatorImpl implements Populator {
             } catch (InstantiationException e) {
                 map = (Map) objenesis.newInstance(fieldType);
             }
+        } else if (ConcurrentNavigableMap.class.isAssignableFrom(fieldType)) {
+            map = new ConcurrentSkipListMap();
+        } else if (ConcurrentMap.class.isAssignableFrom(fieldType)) {
+            map = new ConcurrentHashMap();
         } else if (NavigableMap.class.isAssignableFrom(fieldType)) {
             map = new TreeMap<>();
         } else if (SortedMap.class.isAssignableFrom(fieldType)) {
@@ -353,9 +356,6 @@ final class PopulatorImpl implements Populator {
         int size = randomDataGenerator.nextInt(1, maximumCollectionSize);
 
         Type genericKeyType = field.getGenericType();
-        // default to String rather than Object b/c
-        // (1) it apparently does not matter to the author of the code that is calling this and
-        // (2) some collections require comparable objects.
         Type baseKeyType = String.class;
         Type baseValueType = String.class;
         if (genericKeyType instanceof ParameterizedType) {

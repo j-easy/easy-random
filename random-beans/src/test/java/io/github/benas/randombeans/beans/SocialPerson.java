@@ -27,7 +27,7 @@ package io.github.benas.randombeans.beans;
 
 import java.util.Set;
 
-public class SocialPerson extends Person implements Comparable<SocialPerson> {
+public class SocialPerson extends Person {
 
     private Set<Person> friends;
 
@@ -40,10 +40,5 @@ public class SocialPerson extends Person implements Comparable<SocialPerson> {
 
     public void setFriends(Set<Person> friends) {
         this.friends = friends;
-    }
-
-    @Override
-    public int compareTo(SocialPerson socialPerson) {
-        return name.compareTo(socialPerson.getName());
     }
 }

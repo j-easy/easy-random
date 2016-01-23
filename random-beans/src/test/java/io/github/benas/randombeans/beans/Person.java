@@ -30,7 +30,7 @@ import io.github.benas.randombeans.annotation.Exclude;
 import java.util.Date;
 import java.util.List;
 
-public class Person extends Human {
+public class Person extends Human implements Comparable<Person> {
 
     protected String email;
 
@@ -111,5 +111,10 @@ public class Person extends Human {
 
     public void setParent(Person parent) {
         this.parent = parent;
+    }
+
+    @Override
+    public int compareTo(Person person) {
+        return name.compareTo(person.getName());
     }
 }
