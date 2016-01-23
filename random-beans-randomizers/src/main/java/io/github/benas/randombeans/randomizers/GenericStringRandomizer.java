@@ -20,31 +20,45 @@
  *   LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
  *   OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  *   THE SOFTWARE.
+ *
  */
+
 package io.github.benas.randombeans.randomizers;
 
 import io.github.benas.randombeans.api.Randomizer;
-import org.junit.Before;
-import org.junit.Test;
+import io.github.benas.randombeans.util.Constants;
 
-import static org.assertj.core.api.Assertions.assertThat;
+import java.util.ResourceBundle;
 
-public class EnumRandomizerTest {
+/**
+ * A generic {@link Randomizer} that generates String values from a list of words.
+ *
+ * @author Mahmoud Ben Hassine (mahmoud.benhassine@icloud.com)
+ */
+public class GenericStringRandomizer implements Randomizer<String> {
 
-    private Randomizer<Enum> randomizer;
+    private final String[] words;
 
-    @Before
-    public void setUp() throws Exception {
-        randomizer = new EnumRandomizer(Gender.class);
+    /**
+     * Create a {@link GenericStringRandomizer}.
+     *
+     * @param key the key in the data resource bundle.
+     */
+    public GenericStringRandomizer(final String key) {
+        this.words = getData(key);
     }
 
-    @Test
-    public void testGetRandomValue() throws Exception {
-        Enum value = randomizer.getRandomValue();
-        assertThat(value).isIn(Gender.values());
+    @Override
+    public String getRandomValue() {
+        return words[Constants.RANDOM.nextInt(words.length)];
     }
 
-    private enum Gender {
-        MALE, FEMALE
+    protected String[] getData(final String key) {
+        return getResourceBundle().getString(key).split(",");
     }
+
+    private ResourceBundle getResourceBundle() {
+        return ResourceBundle.getBundle("io/github/benas/randombeans/randomizers/data");
+    }
+
 }

@@ -24,27 +24,18 @@
 package io.github.benas.randombeans.randomizers;
 
 import io.github.benas.randombeans.api.Randomizer;
-import org.junit.Before;
-import org.junit.Test;
 
-import static org.assertj.core.api.Assertions.assertThat;
+import java.util.ResourceBundle;
 
-public class EnumRandomizerTest {
+public class AbstractRandomizerTest<T> {
 
-    private Randomizer<Enum> randomizer;
+    protected Randomizer<T> randomizer;
 
-    @Before
-    public void setUp() throws Exception {
-        randomizer = new EnumRandomizer(Gender.class);
+    protected String[] getData(String key) {
+        return getResourceBundle().getString(key).split(",");
     }
 
-    @Test
-    public void testGetRandomValue() throws Exception {
-        Enum value = randomizer.getRandomValue();
-        assertThat(value).isIn(Gender.values());
-    }
-
-    private enum Gender {
-        MALE, FEMALE
+    private ResourceBundle getResourceBundle() {
+        return ResourceBundle.getBundle("io/github/benas/randombeans/randomizers/data");
     }
 }

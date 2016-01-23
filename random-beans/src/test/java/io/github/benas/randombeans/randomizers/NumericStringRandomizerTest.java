@@ -24,6 +24,7 @@
 
 package io.github.benas.randombeans.randomizers;
 
+import io.github.benas.randombeans.api.Randomizer;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -31,7 +32,9 @@ import static java.util.Arrays.asList;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.fail;
 
-public class NumericStringRandomizerTest extends AbstractRandomizerTest<String> {
+public class NumericStringRandomizerTest {
+
+    private Randomizer<String> randomizer;
 
     @Before
     public void setUp() throws Exception {

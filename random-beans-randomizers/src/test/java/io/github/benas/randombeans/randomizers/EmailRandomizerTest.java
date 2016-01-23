@@ -21,21 +21,28 @@
  *   OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  *   THE SOFTWARE.
  */
+
 package io.github.benas.randombeans.randomizers;
 
-import io.github.benas.randombeans.api.Randomizer;
+import org.apache.commons.validator.routines.EmailValidator;
+import org.junit.Before;
+import org.junit.Test;
 
-import java.util.ResourceBundle;
+import static org.assertj.core.api.Assertions.assertThat;
 
-public class AbstractRandomizerTest<T> {
+public class EmailRandomizerTest extends AbstractRandomizerTest<String> {
 
-    protected Randomizer<T> randomizer;
-
-    protected String[] getData(String key) {
-        return getResourceBundle().getString(key).split(",");
+    @Before
+    public void setUp() throws Exception {
+        randomizer = new EmailRandomizer();
     }
 
-    private ResourceBundle getResourceBundle() {
-        return ResourceBundle.getBundle("io/github/benas/randombeans/data/data");
+    @Test
+    public void generatedEmailsShouldBeValid() throws Exception {
+        String randomValue = randomizer.getRandomValue();
+
+        boolean isValidEmail = EmailValidator.getInstance().isValid(randomValue);
+        assertThat(isValidEmail).isTrue();
     }
+
 }

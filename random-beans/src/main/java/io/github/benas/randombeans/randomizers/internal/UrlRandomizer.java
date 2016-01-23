@@ -31,8 +31,6 @@ import io.github.benas.randombeans.util.Constants;
 import java.net.MalformedURLException;
 import java.net.URL;
 
-import static java.util.ResourceBundle.getBundle;
-
 /**
  * Generate a random {@link URL}.
  *
@@ -40,14 +38,19 @@ import static java.util.ResourceBundle.getBundle;
  */
 public class UrlRandomizer implements Randomizer<URL> {
 
-    private final String[] urls = getBundle("io/github/benas/randombeans/data/data").getString("urls").split(",");
+    private final String[] urls = { "https://home.java.net",
+                                    "http://www.oracle.com",
+                                    "http://www.google.com",
+                                    "https://www.github.com",
+                                    "http://www.yahoo.com",
+                                    "http://www.wikipedia.org" };
 
     @Override
     public URL getRandomValue() {
         try {
             return new URL(urls[Constants.RANDOM.nextInt(urls.length)]);
         } catch (MalformedURLException e) {
-            // random URLs form the resource bundle are valid
+            // predefined URLs are valid
             return null;
         }
     }

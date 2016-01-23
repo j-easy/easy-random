@@ -24,6 +24,7 @@
 
 package io.github.benas.randombeans.randomizers;
 
+import io.github.benas.randombeans.api.Randomizer;
 import org.apache.commons.lang3.time.DateUtils;
 import org.junit.Assert;
 import org.junit.Before;
@@ -35,12 +36,14 @@ import java.util.Date;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-public class DateStringRandomizerTest extends AbstractRandomizerTest<String> {
+public class DateStringRandomizerTest {
 
     private static final String DATE_FORMAT = "yyyy-MM-dd";
     private static final String DEFAULT_DATE_FORMAT = "E M dd hh:mm:ss a zzz";
 
     private Date today, tomorrow;
+
+    private Randomizer<String> randomizer;
 
     @Before
     public void setUp() throws Exception {

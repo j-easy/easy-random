@@ -20,45 +20,46 @@
  *   LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
  *   OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  *   THE SOFTWARE.
- *
  */
 
 package io.github.benas.randombeans.randomizers;
 
-import io.github.benas.randombeans.api.Randomizer;
-import io.github.benas.randombeans.util.Constants;
+import org.junit.AfterClass;
+import org.junit.Before;
+import org.junit.BeforeClass;
+import org.junit.Test;
 
-import java.util.ResourceBundle;
+import java.util.List;
+import java.util.Locale;
 
-/**
- * A generic {@link Randomizer} that generates String values from a list of words.
- *
- * @author Mahmoud Ben Hassine (mahmoud.benhassine@icloud.com)
- */
-public class GenericStringRandomizer implements Randomizer<String> {
+import static java.util.Arrays.asList;
+import static org.assertj.core.api.Assertions.assertThat;
 
-    private final String[] words;
+public class I18NSupportTest {
 
-    /**
-     * Create a {@link GenericStringRandomizer}.
-     *
-     * @param key the key in the data resource bundle.
-     */
-    public GenericStringRandomizer(final String key) {
-        this.words = getData(key);
+    private CountryRandomizer countryRandomizer;
+
+    @BeforeClass
+    public static void setLocale() {
+        Locale.setDefault(new Locale("FR", "fr"));
     }
 
-    @Override
-    public String getRandomValue() {
-        return words[Constants.RANDOM.nextInt(words.length)];
+    @Before
+    public void setUp() throws Exception {
+        countryRandomizer = new CountryRandomizer();
     }
 
-    protected String[] getData(final String key) {
-        return getResourceBundle().getString(key).split(",");
+    @Test
+    public void generatedValueShouldBeInternationalized() throws Exception {
+        String country = countryRandomizer.getRandomValue();
+        List<String> i18nValues = asList("Etats Unis", "Chine", "Allemagne", "France", "Italie", "Espagne");
+
+        assertThat(country).isIn(i18nValues);
     }
 
-    private ResourceBundle getResourceBundle() {
-        return ResourceBundle.getBundle("io/github/benas/randombeans/data/data");
+    @AfterClass
+    public static void resetLocale() {
+        Locale.setDefault(Locale.getDefault());
     }
 
 }

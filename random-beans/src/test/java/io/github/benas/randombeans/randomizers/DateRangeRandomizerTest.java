@@ -24,8 +24,8 @@
 
 package io.github.benas.randombeans.randomizers;
 
+import io.github.benas.randombeans.api.Randomizer;
 import io.github.benas.randombeans.randomizers.range.DateRangeRandomizer;
-
 import org.apache.commons.lang3.time.DateUtils;
 import org.junit.Before;
 import org.junit.Test;
@@ -34,7 +34,9 @@ import java.util.Date;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-public class DateRangeRandomizerTest extends AbstractRandomizerTest<Date> {
+public class DateRangeRandomizerTest {
+
+    private Randomizer<Date> randomizer;
 
     private Date today, tomorrow;
 

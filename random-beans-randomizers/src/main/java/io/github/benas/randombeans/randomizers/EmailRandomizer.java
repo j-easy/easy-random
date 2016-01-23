@@ -60,7 +60,7 @@ public class EmailRandomizer implements Randomizer<String> {
     }
 
     private ResourceBundle getResourceBundle() {
-        return ResourceBundle.getBundle("io/github/benas/randombeans/data/data");
+        return ResourceBundle.getBundle("io/github/benas/randombeans/randomizers/data");
     }
 
     private String[] getData(final String key) {
