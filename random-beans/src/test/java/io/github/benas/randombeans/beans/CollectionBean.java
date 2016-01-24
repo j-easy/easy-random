@@ -27,6 +27,7 @@ package io.github.benas.randombeans.beans;
 import java.util.*;
 import java.util.concurrent.*;
 
+@SuppressWarnings("rawtypes")
 public class CollectionBean {
 
     /*
