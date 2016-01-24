@@ -170,18 +170,18 @@ final class PopulatorImpl implements Populator {
         return new EnumRandomizer(enumeration);
     }
 
-    private <T> Randomizer<T> getRandomizer(final Class targetClass, final Field field) {
-        Randomizer customRandomizer = randomizers.get(new RandomizerDefinition(targetClass, field.getType(), field.getName()));
+    private Randomizer<?> getRandomizer(final Class targetClass, final Field field) {
+        Randomizer<?> customRandomizer = randomizers.get(new RandomizerDefinition(targetClass, field.getType(), field.getName()));
         if (customRandomizer != null) {
             return customRandomizer;
         }
         return getDefaultRandomizer(field);
     }
 
-    private <T> Randomizer<T> getDefaultRandomizer(final Field field) {
-        List<Randomizer<T>> randomizers = new ArrayList<>();
+    private Randomizer<?> getDefaultRandomizer(final Field field) {
+        List<Randomizer<?>> randomizers = new ArrayList<>();
         for (RandomizerRegistry registry : registries) {
-            Randomizer<T> randomizer = registry.getRandomizer(field);
+            Randomizer<?> randomizer = registry.getRandomizer(field);
             if (randomizer != null) {
                 randomizers.add(randomizer);
             }
@@ -193,10 +193,10 @@ final class PopulatorImpl implements Populator {
         return null;
     }
 
-    private Randomizer getDefaultRandomizer(final Class<?> type) {
-        List<Randomizer> randomizers = new ArrayList<Randomizer>();
+    private <T> Randomizer<T> getDefaultRandomizer(final Class<T> type) {
+        List<Randomizer<T>> randomizers = new ArrayList<>();
         for (RandomizerRegistry registry : registries) {
-            Randomizer randomizer = registry.getRandomizer(type);
+            Randomizer<T> randomizer = registry.getRandomizer(type);
             if (randomizer != null) {
                 randomizers.add(randomizer);
             }
