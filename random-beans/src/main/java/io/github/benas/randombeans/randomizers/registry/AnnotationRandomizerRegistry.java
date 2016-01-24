@@ -50,12 +50,12 @@ public class AnnotationRandomizerRegistry implements RandomizerRegistry {
      * @return the randomizer registered for the given field
      */
     @Override
-    public Randomizer getRandomizer(Field field) {
+    public Randomizer<?> getRandomizer(Field field) {
         if (field.isAnnotationPresent(io.github.benas.randombeans.annotation.Randomizer.class)) {
             io.github.benas.randombeans.annotation.Randomizer randomizer = field.getAnnotation(io.github.benas.randombeans.annotation.Randomizer.class);
-            Class type = randomizer.value();
+            Class<?> type = randomizer.value();
             try {
-                return (Randomizer) type.newInstance();
+                return (Randomizer<?>) type.newInstance();
             } catch (Exception e) {
                 LOGGER.log(Level.WARNING, "Unable to create an instance of " + type.getName(), e);
             }
@@ -67,7 +67,7 @@ public class AnnotationRandomizerRegistry implements RandomizerRegistry {
      * {@inheritDoc}
      */
     @Override
-    public Randomizer getRandomizer(Class<?> clazz) {
+    public <T> Randomizer<T> getRandomizer(Class<T> clazz) {
         return null;
     }
 }

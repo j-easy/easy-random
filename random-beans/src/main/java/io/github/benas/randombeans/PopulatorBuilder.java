@@ -40,7 +40,7 @@ import static io.github.benas.randombeans.util.Constants.MAXIMUM_COLLECTION_SIZE
  */
 public class PopulatorBuilder {
 
-    private Map<RandomizerDefinition, Randomizer> randomizers;
+    private Map<RandomizerDefinition, Randomizer<?>> randomizers;
 
     private Set<RandomizerRegistry> userRegistries;
 
@@ -104,7 +104,7 @@ public class PopulatorBuilder {
     }
 
     private void reset() {
-        randomizers = new HashMap<RandomizerDefinition, Randomizer>();
+        randomizers = new HashMap<RandomizerDefinition, Randomizer<?>>();
         userRegistries = new LinkedHashSet<RandomizerRegistry>();
         maximumCollectionSize = MAXIMUM_COLLECTION_SIZE;
     }

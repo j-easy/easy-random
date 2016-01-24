@@ -69,7 +69,7 @@ import io.github.benas.randombeans.randomizers.internal.UrlRandomizer;
 @Priority(-255)
 public class InternalRandomizerRegistry implements RandomizerRegistry {
 
-    private final Map<Class, Randomizer> randomizers = new HashMap<Class, Randomizer>();
+    private final Map<Class<?>, Randomizer<?>> randomizers = new HashMap<>();
 
     public InternalRandomizerRegistry() {
         randomizers.put(String.class, new StringRandomizer());
@@ -103,7 +103,7 @@ public class InternalRandomizerRegistry implements RandomizerRegistry {
     }
 
     @Override
-    public Randomizer getRandomizer(final Field field) {
+    public Randomizer<?> getRandomizer(final Field field) {
         return getRandomizer(field.getType());
     }
 
@@ -111,7 +111,8 @@ public class InternalRandomizerRegistry implements RandomizerRegistry {
      * {@inheritDoc}
      */
     @Override
-    public Randomizer getRandomizer(Class<?> type) {
-        return randomizers.get(type);
+    @SuppressWarnings("unchecked")
+    public <T> Randomizer<T> getRandomizer(Class<T> type) {
+        return (Randomizer<T>) randomizers.get(type);
     }
 }

@@ -50,7 +50,7 @@ final class PopulatorImpl implements Populator {
 
     private final short maximumCollectionSize;
 
-    private final Map<RandomizerDefinition, Randomizer> randomizers = new HashMap<RandomizerDefinition, Randomizer>();
+    private final Map<RandomizerDefinition, Randomizer<?>> randomizers = new HashMap<>();
 
     private final List<RandomizerRegistry> registries = new ArrayList<RandomizerRegistry>();
 
@@ -60,7 +60,7 @@ final class PopulatorImpl implements Populator {
 
     private final RandomDataGenerator randomDataGenerator = new RandomDataGenerator();
 
-    PopulatorImpl(final Set<RandomizerRegistry> registries, final Map<RandomizerDefinition, Randomizer> randomizers,
+    PopulatorImpl(final Set<RandomizerRegistry> registries, final Map<RandomizerDefinition, Randomizer<?>> randomizers,
             short maximumCollectionSize) {
         this.registries.addAll(registries);
         this.randomizers.putAll(randomizers);
@@ -69,7 +69,6 @@ final class PopulatorImpl implements Populator {
     }
 
     @Override
-    @SuppressWarnings("unchecked")
     public <T> T populateBean(final Class<T> type, final String... excludedFields) throws BeanPopulationException {
         Randomizer<T> randomizer = getDefaultRandomizer(type);
         if (randomizer != null) {
@@ -118,7 +117,6 @@ final class PopulatorImpl implements Populator {
     }
 
     @Override
-    @SuppressWarnings("unchecked")
     public <T> List<T> populateBeans(final Class<T> type, final int size, final String... excludedFields) throws BeanPopulationException {
         if (size < 0) {
             throw new IllegalArgumentException("The number of beans to populate must be positive.");
@@ -172,18 +170,18 @@ final class PopulatorImpl implements Populator {
         return new EnumRandomizer(enumeration);
     }
 
-    private Randomizer getRandomizer(final Class targetClass, final Field field) {
-        Randomizer customRandomizer = randomizers.get(new RandomizerDefinition(targetClass, field.getType(), field.getName()));
+    private Randomizer<?> getRandomizer(final Class targetClass, final Field field) {
+        Randomizer<?> customRandomizer = randomizers.get(new RandomizerDefinition(targetClass, field.getType(), field.getName()));
         if (customRandomizer != null) {
             return customRandomizer;
         }
         return getDefaultRandomizer(field);
     }
 
-    private Randomizer getDefaultRandomizer(final Field field) {
-        List<Randomizer> randomizers = new ArrayList<Randomizer>();
+    private Randomizer<?> getDefaultRandomizer(final Field field) {
+        List<Randomizer<?>> randomizers = new ArrayList<>();
         for (RandomizerRegistry registry : registries) {
-            Randomizer randomizer = registry.getRandomizer(field);
+            Randomizer<?> randomizer = registry.getRandomizer(field);
             if (randomizer != null) {
                 randomizers.add(randomizer);
             }
@@ -195,10 +193,10 @@ final class PopulatorImpl implements Populator {
         return null;
     }
 
-    private Randomizer getDefaultRandomizer(final Class<?> type) {
-        List<Randomizer> randomizers = new ArrayList<Randomizer>();
+    private <T> Randomizer<T> getDefaultRandomizer(final Class<T> type) {
+        List<Randomizer<T>> randomizers = new ArrayList<>();
         for (RandomizerRegistry registry : registries) {
-            Randomizer randomizer = registry.getRandomizer(type);
+            Randomizer<T> randomizer = registry.getRandomizer(type);
             if (randomizer != null) {
                 randomizers.add(randomizer);
             }
@@ -216,6 +214,7 @@ final class PopulatorImpl implements Populator {
             return getRandomPrimitiveArray(componentType);
         }
         List<?> items = populateBeans(fieldType.getComponentType());
+        @SuppressWarnings("unchecked")
         T[] itemsList = (T[]) Array.newInstance(componentType, items.size());
         return items.toArray(itemsList);
     }

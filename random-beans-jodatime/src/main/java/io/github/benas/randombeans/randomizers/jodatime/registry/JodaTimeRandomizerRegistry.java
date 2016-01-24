@@ -42,7 +42,7 @@ import java.util.Map;
 @Priority(-255)
 public class JodaTimeRandomizerRegistry implements RandomizerRegistry {
 
-    private Map<Class, Randomizer> randomizers = new HashMap<Class, Randomizer>();
+    private Map<Class<?>, Randomizer<?>> randomizers = new HashMap<>();
 
     public JodaTimeRandomizerRegistry() {
         randomizers.put(org.joda.time.DateTime.class, new JodaTimeDateTimeRandomizer());
@@ -55,12 +55,13 @@ public class JodaTimeRandomizerRegistry implements RandomizerRegistry {
     }
 
     @Override
-    public Randomizer getRandomizer(final Field field) {
+    public Randomizer<?> getRandomizer(final Field field) {
         return getRandomizer(field.getType());
     }
 
     @Override
-    public Randomizer getRandomizer(Class<?> type) {
-        return randomizers.get(type);
+    @SuppressWarnings("unchecked")
+    public <T> Randomizer<T> getRandomizer(Class<T> type) {
+        return (Randomizer<T>) randomizers.get(type);
     }
 }

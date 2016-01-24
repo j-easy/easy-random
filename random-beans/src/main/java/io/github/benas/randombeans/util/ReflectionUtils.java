@@ -55,10 +55,10 @@ public abstract class ReflectionUtils {
      * @param clazz the target type
      * @return list of inherited fields
      */
-    public static List<Field> getInheritedFields(Class clazz) {
+    public static List<Field> getInheritedFields(Class<?> clazz) {
         List<Field> inheritedFields = new ArrayList<Field>();
         while (clazz.getSuperclass() != null) {
-            Class superclass = clazz.getSuperclass();
+            Class<?> superclass = clazz.getSuperclass();
             inheritedFields.addAll(Arrays.asList(superclass.getDeclaredFields()));
             clazz = superclass;
         }
@@ -95,7 +95,7 @@ public abstract class ReflectionUtils {
      * @param type the type to check.
      * @return true if the type is an array type, false otherwise.
      */
-    public static boolean isArrayType(final Class type) {
+    public static boolean isArrayType(final Class<?> type) {
         return type.isArray();
     }
 
@@ -104,7 +104,7 @@ public abstract class ReflectionUtils {
      * @param type the type to check.
      * @return true if the type is a collection type, false otherwise
      */
-    public static boolean isCollectionType(final Class type) {
+    public static boolean isCollectionType(final Class<?> type) {
         return Collection.class.isAssignableFrom(type);
     }
 

@@ -39,7 +39,7 @@ import java.util.Map;
  */
 public class ThreeTenRandomizerRegistry implements RandomizerRegistry {
 
-    private Map<Class, Randomizer> randomizers = new HashMap<Class, Randomizer>();
+    private Map<Class<?>, Randomizer<?>> randomizers = new HashMap<>();
 
     public ThreeTenRandomizerRegistry() {
         randomizers.put(java.time.Duration.class, new DurationRandomizer());
@@ -59,12 +59,13 @@ public class ThreeTenRandomizerRegistry implements RandomizerRegistry {
     }
 
     @Override
-    public Randomizer getRandomizer(final Field field) {
+    public Randomizer<?> getRandomizer(final Field field) {
         return getRandomizer(field.getType());
     }
 
     @Override
-    public Randomizer getRandomizer(Class<?> type) {
-        return randomizers.get(type);
+    @SuppressWarnings("unchecked")
+    public <T> Randomizer<T> getRandomizer(Class<T> type) {
+        return (Randomizer<T>) randomizers.get(type);
     }
 }

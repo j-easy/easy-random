@@ -50,9 +50,9 @@ import java.util.Date;
 public class BeanValidationRandomizerRegistry implements RandomizerRegistry {
 
     @Override
-    public Randomizer getRandomizer(final Field field) {
+    public Randomizer<?> getRandomizer(final Field field) {
 
-        Class fieldType = field.getType();
+        Class<?> fieldType = field.getType();
         if (field.isAnnotationPresent(AssertFalse.class)) {
             return new ConstantRandomizer<Boolean>(false);
         }
@@ -204,7 +204,7 @@ public class BeanValidationRandomizerRegistry implements RandomizerRegistry {
     }
 
     @Override
-    public Randomizer getRandomizer(Class<?> fieldType) {
+    public <T> Randomizer<T> getRandomizer(Class<T> fieldType) {
         return null;
     }
 }

@@ -35,7 +35,7 @@ import io.github.benas.randombeans.randomizers.range.IntegerRangeRandomizer;
  */
 public class NumericStringRandomizer implements Randomizer<String> {
 
-    private Randomizer delegate;
+    private Randomizer<Integer> delegate;
 
     /**
      * Create a new {@link NumericStringRandomizer}.
