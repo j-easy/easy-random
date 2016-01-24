@@ -36,14 +36,14 @@ import static java.lang.String.valueOf;
  */
 public class StringDelegatingRandomizer implements Randomizer<String> {
 
-    private final Randomizer delegate;
+    private final Randomizer<?> delegate;
 
     /**
      * Create a new {@link StringDelegatingRandomizer}.
      *
      * @param delegate the delegate {@link Randomizer}
      */
-    public StringDelegatingRandomizer(final Randomizer delegate) {
+    public StringDelegatingRandomizer(final Randomizer<?> delegate) {
         this.delegate = delegate;
     }
 

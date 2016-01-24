@@ -38,7 +38,7 @@ import static org.mockito.Mockito.when;
 public class StringDelegatingRandomizerTest {
 
     @Mock
-    private Randomizer delegate;
+    private Randomizer<Object> delegate;
     @Mock
     private Object object;
 
