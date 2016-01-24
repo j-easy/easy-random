@@ -29,17 +29,7 @@ import static java.util.Arrays.asList;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.Mockito.when;
 
-import java.lang.reflect.Field;
-import java.lang.reflect.ParameterizedType;
-import java.lang.reflect.Type;
-import java.util.Collection;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
-import java.util.NavigableMap;
-import java.util.SortedMap;
-import java.util.TreeMap;
-import java.util.concurrent.ConcurrentSkipListMap;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -53,7 +43,6 @@ import io.github.benas.randombeans.beans.Address;
 import io.github.benas.randombeans.beans.Gender;
 import io.github.benas.randombeans.beans.ImmutableBean;
 import io.github.benas.randombeans.beans.Person;
-import io.github.benas.randombeans.beans.SocialPerson;
 import io.github.benas.randombeans.beans.Street;
 import io.github.benas.randombeans.beans.Website;
 
