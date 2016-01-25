@@ -50,7 +50,7 @@ final class PopulatorImpl implements Populator {
 
     private final short maximumCollectionSize;
 
-    private final Map<RandomizerDefinition, Randomizer<?>> randomizers = new HashMap<>();
+    private final Map<RandomizerDefinition<?, ?>, Randomizer<?>> randomizers = new HashMap<>();
 
     private final List<RandomizerRegistry> registries = new ArrayList<RandomizerRegistry>();
 
@@ -60,7 +60,7 @@ final class PopulatorImpl implements Populator {
 
     private final RandomDataGenerator randomDataGenerator = new RandomDataGenerator();
 
-    PopulatorImpl(final Set<RandomizerRegistry> registries, final Map<RandomizerDefinition, Randomizer<?>> randomizers,
+    PopulatorImpl(final Set<RandomizerRegistry> registries, final Map<RandomizerDefinition<?, ?>, Randomizer<?>> randomizers,
             short maximumCollectionSize) {
         this.registries.addAll(registries);
         this.randomizers.putAll(randomizers);
@@ -146,7 +146,7 @@ final class PopulatorImpl implements Populator {
 
     private Object generateRandomValue(final Field field, final PopulatorContext context)
             throws IllegalAccessException, NoSuchMethodException, InvocationTargetException, BeanPopulationException {
-        Class fieldType = field.getType();
+        Class<?> fieldType = field.getType();
         Object value;
         if (fieldType.isEnum()) {
             value = getRandomEnum(fieldType);
@@ -170,7 +170,7 @@ final class PopulatorImpl implements Populator {
         return new EnumRandomizer(enumeration);
     }
 
-    private Randomizer<?> getRandomizer(final Class targetClass, final Field field) {
+    private Randomizer<?> getRandomizer(final Class<?> targetClass, final Field field) {
         Randomizer<?> customRandomizer = randomizers.get(new RandomizerDefinition(targetClass, field.getType(), field.getName()));
         if (customRandomizer != null) {
             return customRandomizer;
@@ -333,17 +333,17 @@ final class PopulatorImpl implements Populator {
     private Map<?, ?> getRandomMap(final Field field) throws IllegalAccessException, BeanPopulationException {
         Class<?> fieldType = field.getType();
 
-        Map map;
+        Map<Object, Object> map;
         if (!fieldType.isInterface()) {
             try {
-                map = (Map) fieldType.newInstance();
+                map = (Map<Object, Object>) fieldType.newInstance();
             } catch (InstantiationException e) {
-                map = (Map) objenesis.newInstance(fieldType);
+                map = (Map<Object, Object>) objenesis.newInstance(fieldType);
             }
         } else if (ConcurrentNavigableMap.class.isAssignableFrom(fieldType)) {
-            map = new ConcurrentSkipListMap();
+            map = new ConcurrentSkipListMap<>();
         } else if (ConcurrentMap.class.isAssignableFrom(fieldType)) {
-            map = new ConcurrentHashMap();
+            map = new ConcurrentHashMap<>();
         } else if (NavigableMap.class.isAssignableFrom(fieldType)) {
             map = new TreeMap<>();
         } else if (SortedMap.class.isAssignableFrom(fieldType)) {
@@ -363,10 +363,10 @@ final class PopulatorImpl implements Populator {
             baseValueType = parameterizedType.getActualTypeArguments()[1];
         }
         Class<?> baseKeyTypeClass = (Class<?>) baseKeyType;
-        List keyItems = populateBeans(baseKeyTypeClass, size);
+        List<?> keyItems = populateBeans(baseKeyTypeClass, size);
 
         Class<?> baseValueTypeClass = (Class<?>) baseValueType;
-        List valueItems = populateBeans(baseValueTypeClass, size);
+        List<?> valueItems = populateBeans(baseValueTypeClass, size);
 
         for (int index = 0; index < size; index++) {
             map.put(keyItems.get(index), valueItems.get(index));

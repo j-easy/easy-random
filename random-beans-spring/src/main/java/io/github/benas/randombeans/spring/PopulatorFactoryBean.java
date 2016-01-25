@@ -39,14 +39,14 @@ import static io.github.benas.randombeans.PopulatorBuilder.aNewPopulatorBuilder;
  *
  * @author Mahmoud Ben Hassine (mahmoud.benhassine@icloud.com)
  */
-public class PopulatorFactoryBean implements FactoryBean {
+public class PopulatorFactoryBean implements FactoryBean<Populator> {
 
-    private List<RandomizerBean> randomizers = new ArrayList<RandomizerBean>();
+    private List<RandomizerBean<?, ?>> randomizers = new ArrayList<>();
 
     @Override
-    public Object getObject() throws Exception {
+    public Populator getObject() throws Exception {
         PopulatorBuilder populatorBuilder = aNewPopulatorBuilder();
-        for (RandomizerBean randomizerBean : randomizers) {
+        for (RandomizerBean<?, ?> randomizerBean : randomizers) {
             populatorBuilder.registerRandomizer(
                     randomizerBean.getType(),
                     randomizerBean.getFieldType(),
@@ -58,7 +58,7 @@ public class PopulatorFactoryBean implements FactoryBean {
     }
 
     @Override
-    public Class<?> getObjectType() {
+    public Class<Populator> getObjectType() {
         return Populator.class;
     }
 
@@ -67,7 +67,7 @@ public class PopulatorFactoryBean implements FactoryBean {
         return true;
     }
 
-    public void setRandomizers(List<RandomizerBean> randomizers) {
+    public void setRandomizers(List<RandomizerBean<?, ?>> randomizers) {
         this.randomizers = randomizers;
     }
 
