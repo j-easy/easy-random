@@ -32,17 +32,17 @@ import io.github.benas.randombeans.api.Randomizer;
  *
  * @author Mahmoud Ben Hassine (mahmoud.benhassine@icloud.com)
  */
-public class RandomizerBean {
+public class RandomizerBean<T, F> {
 
     /**
      * The class type for which the randomizer will be used.
      */
-    private Class type;
+    private Class<T> type;
 
     /**
      * The field type within the class for which the randomizer will be used.
      */
-    private Class fieldType;
+    private Class<F> fieldType;
 
     /**
      * The field name within the class for which the randomizer will be used.
@@ -52,20 +52,20 @@ public class RandomizerBean {
     /**
      * The randomizer to register.
      */
-    private Randomizer randomizer;
+    private Randomizer<T> randomizer;
 
-    public RandomizerBean(Class type, Class fieldType, String fieldName, Randomizer randomizer) {
+    public RandomizerBean(Class<T> type, Class<F> fieldType, String fieldName, Randomizer<T> randomizer) {
         this.type = type;
         this.fieldType = fieldType;
         this.fieldName = fieldName;
         this.randomizer = randomizer;
     }
 
-    public Class getType() {
+    public Class<T> getType() {
         return type;
     }
 
-    public Class getFieldType() {
+    public Class<F> getFieldType() {
         return fieldType;
     }
 
@@ -73,7 +73,7 @@ public class RandomizerBean {
         return fieldName;
     }
 
-    public Randomizer getRandomizer() {
+    public Randomizer<T> getRandomizer() {
         return randomizer;
     }
 }

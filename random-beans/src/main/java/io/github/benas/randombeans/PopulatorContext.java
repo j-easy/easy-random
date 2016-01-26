@@ -39,7 +39,7 @@ class PopulatorContext {
 
     private String[] excludedFields;
 
-    private Map<Class, Object> populatedBeans = new IdentityHashMap<Class, Object>();
+    private Map<Class<?>, Object> populatedBeans = new IdentityHashMap<>();
 
     private Stack<PopulatorContextStackItem> stack = new Stack<PopulatorContextStackItem>();
 
@@ -47,15 +47,15 @@ class PopulatorContext {
         this.excludedFields = excludedFields;
     }
 
-    public void addPopulatedBean(final Class type, Object object) {
+    public void addPopulatedBean(final Class<?> type, Object object) {
         populatedBeans.put(type, object);
     }
 
-    public Object getPopulatedBean(final Class type) {
+    public Object getPopulatedBean(final Class<?> type) {
         return populatedBeans.get(type);
     }
 
-    public boolean hasPopulatedBean(final Class type) {
+    public boolean hasPopulatedBean(final Class<?> type) {
         return populatedBeans.containsKey(type);
     }
 

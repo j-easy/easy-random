@@ -68,7 +68,7 @@ public class PopulatorFactoryBeanTest {
 
         ApplicationContext applicationContext = new ClassPathXmlApplicationContext(contextFileName);
 
-        return (Populator) applicationContext.getBean("populator");
+        return applicationContext.getBean(Populator.class);
     }
 
 }

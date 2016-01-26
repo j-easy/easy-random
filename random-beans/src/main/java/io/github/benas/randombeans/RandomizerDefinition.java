@@ -31,16 +31,18 @@ import io.github.benas.randombeans.api.Randomizer;
  * This class defines the target object type and the field (type and name) for which a custom {@link Randomizer} should be used.
  *
  * @author Mahmoud Ben Hassine (mahmoud.benhassine@icloud.com)
+ * @param <F>
+ * @param <T>
  */
-final class RandomizerDefinition {
+final class RandomizerDefinition<T, F> {
 
-    private Class type;
+    private Class<T> type;
 
-    private Class fieldType;
+    private Class<F> fieldType;
 
     private String fieldName;
 
-    RandomizerDefinition(Class type, Class fieldType, String fieldName) {
+    RandomizerDefinition(Class<T> type, Class<F> fieldType, String fieldName) {
         this.type = type;
         this.fieldType = fieldType;
         this.fieldName = fieldName;
@@ -50,19 +52,19 @@ final class RandomizerDefinition {
      * Getters and setters
      */
 
-    public Class getType() {
+    public Class<T> getType() {
         return type;
     }
 
-    public void setType(Class type) {
+    public void setType(Class<T> type) {
         this.type = type;
     }
 
-    public Class getFieldType() {
+    public Class<F> getFieldType() {
         return fieldType;
     }
 
-    public void setFieldType(Class fieldType) {
+    public void setFieldType(Class<F> fieldType) {
         this.fieldType = fieldType;
     }
 
@@ -87,10 +89,9 @@ final class RandomizerDefinition {
             return false;
         }
 
-        RandomizerDefinition that = (RandomizerDefinition) o;
+        RandomizerDefinition<?, ?> that = (RandomizerDefinition<?, ?>) o;
 
         return fieldName.equals(that.fieldName) && fieldType.equals(that.fieldType) && type.equals(that.type);
-
     }
 
     @Override
