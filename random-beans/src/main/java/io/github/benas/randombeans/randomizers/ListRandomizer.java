@@ -72,7 +72,7 @@ public class ListRandomizer<T> extends CollectionRandomizer<T> {
 
     @Override
     public List<T> getRandomValue() {
-        List<T> result = new ArrayList<T>();
+        List<T> result = new ArrayList<T>(nbElements);
         for (int i = 0; i < nbElements; i++) {
             result.add(getRandomElement());
         }
