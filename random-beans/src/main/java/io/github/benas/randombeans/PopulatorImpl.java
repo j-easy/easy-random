@@ -31,7 +31,6 @@ import io.github.benas.randombeans.api.Populator;
 import io.github.benas.randombeans.api.Randomizer;
 import io.github.benas.randombeans.api.RandomizerRegistry;
 import io.github.benas.randombeans.randomizers.EnumRandomizer;
-import org.apache.commons.math3.random.RandomDataGenerator;
 import org.objenesis.Objenesis;
 import org.objenesis.ObjenesisStd;
 
@@ -39,6 +38,7 @@ import java.lang.reflect.*;
 import java.util.*;
 import java.util.concurrent.*;
 
+import static io.github.benas.randombeans.util.Constants.RANDOM;
 import static io.github.benas.randombeans.util.ReflectionUtils.*;
 
 /**
@@ -57,8 +57,6 @@ final class PopulatorImpl implements Populator {
     private final Comparator<Object> priorityComparator = new PriorityComparator();
 
     private final Objenesis objenesis = new ObjenesisStd();
-
-    private final RandomDataGenerator randomDataGenerator = new RandomDataGenerator();
 
     PopulatorImpl(final Set<RandomizerRegistry> registries, final Map<RandomizerDefinition<?, ?>, Randomizer<?>> randomizers,
             short maximumCollectionSize) {
@@ -112,7 +110,7 @@ final class PopulatorImpl implements Populator {
 
     @Override
     public <T> List<T> populateBeans(final Class<T> type, final String... excludedFields) throws BeanPopulationException {
-        int size = randomDataGenerator.nextInt(1, maximumCollectionSize);
+        int size = getRandomCollectionSize();
         return populateBeans(type, size, excludedFields);
     }
 
@@ -127,6 +125,10 @@ final class PopulatorImpl implements Populator {
             beans.add(bean);
         }
         return beans;
+    }
+
+    private int getRandomCollectionSize() {
+        return RANDOM.nextInt(maximumCollectionSize) + 1;
     }
 
     private void populateField(final Object target, final Field field, final PopulatorContext context)
@@ -352,7 +354,7 @@ final class PopulatorImpl implements Populator {
             map = new HashMap<>();
         }
 
-        int size = randomDataGenerator.nextInt(1, maximumCollectionSize);
+        int size = getRandomCollectionSize();
 
         Type genericKeyType = field.getGenericType();
         Type baseKeyType = String.class;
@@ -387,10 +389,7 @@ final class PopulatorImpl implements Populator {
                 return true;
             }
         }
-        if (isStatic(field)) {
-            return true;
-        }
-        return false;
+        return isStatic(field);
     }
 
 }
