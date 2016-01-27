@@ -27,10 +27,12 @@ package io.github.benas.randombeans;
 import static io.github.benas.randombeans.PopulatorBuilder.aNewPopulatorBuilder;
 import static java.util.Arrays.asList;
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.fail;
 import static org.mockito.Mockito.when;
 
 import java.util.List;
 
+import io.github.benas.randombeans.beans.*;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -39,12 +41,6 @@ import org.mockito.runners.MockitoJUnitRunner;
 
 import io.github.benas.randombeans.api.Populator;
 import io.github.benas.randombeans.api.Randomizer;
-import io.github.benas.randombeans.beans.Address;
-import io.github.benas.randombeans.beans.Gender;
-import io.github.benas.randombeans.beans.ImmutableBean;
-import io.github.benas.randombeans.beans.Person;
-import io.github.benas.randombeans.beans.Street;
-import io.github.benas.randombeans.beans.Website;
 
 @RunWith(MockitoJUnitRunner.class)
 public class PopulatorImplTest {
@@ -120,6 +116,16 @@ public class PopulatorImplTest {
 
         assertThat(person).isNotNull();
         assertThat(person.getId()).isNotNull();
+    }
+
+    @Test
+    public void staticFieldsShouldNotBePopulated() throws Exception {
+        try {
+            Human human = populator.populateBean(Human.class);
+            assertThat(human).isNotNull();
+        } catch (Exception e) {
+            fail("Should be able to propulate types with private static final fields");
+        }
     }
 
     @Test

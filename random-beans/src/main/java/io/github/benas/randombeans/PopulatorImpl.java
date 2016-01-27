@@ -224,6 +224,9 @@ final class PopulatorImpl implements Populator {
         if (field.isAnnotationPresent(Exclude.class)) {
             return true;
         }
+        if (isStatic(field)) {
+            return true;
+        }
         if (context.getExcludedFields().length == 0) {
             return false;
         }
@@ -233,7 +236,7 @@ final class PopulatorImpl implements Populator {
                 return true;
             }
         }
-        return isStatic(field);
+        return false;
     }
 
 }
