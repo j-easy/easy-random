@@ -52,7 +52,7 @@ final class PopulatorImpl implements Populator {
 
     private final Map<RandomizerDefinition<?, ?>, Randomizer<?>> randomizers = new HashMap<>();
 
-    private final List<RandomizerRegistry> registries = new ArrayList<RandomizerRegistry>();
+    private final List<RandomizerRegistry> registries = new ArrayList<>();
 
     private final Comparator<Object> priorityComparator = new PriorityComparator();
 
@@ -121,7 +121,7 @@ final class PopulatorImpl implements Populator {
         if (size < 0) {
             throw new IllegalArgumentException("The number of beans to populate must be positive.");
         }
-        List<T> beans = new ArrayList<T>(size);
+        List<T> beans = new ArrayList<>(size);
         for (int i = 0; i < size; i++) {
             T bean = populateBean(type, excludedFields);
             beans.add(bean);

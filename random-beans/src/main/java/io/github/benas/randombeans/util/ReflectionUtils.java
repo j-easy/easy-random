@@ -47,7 +47,7 @@ public abstract class ReflectionUtils {
      * @return list of declared fields
      */
     public static <T> ArrayList<Field> getDeclaredFields(T result) {
-        return new ArrayList<Field>(Arrays.asList(result.getClass().getDeclaredFields()));
+        return new ArrayList<>(Arrays.asList(result.getClass().getDeclaredFields()));
     }
 
     /**
@@ -56,7 +56,7 @@ public abstract class ReflectionUtils {
      * @return list of inherited fields
      */
     public static List<Field> getInheritedFields(Class<?> clazz) {
-        List<Field> inheritedFields = new ArrayList<Field>();
+        List<Field> inheritedFields = new ArrayList<>();
         while (clazz.getSuperclass() != null) {
             Class<?> superclass = clazz.getSuperclass();
             inheritedFields.addAll(Arrays.asList(superclass.getDeclaredFields()));

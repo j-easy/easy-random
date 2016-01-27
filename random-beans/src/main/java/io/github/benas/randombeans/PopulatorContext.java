@@ -41,7 +41,7 @@ class PopulatorContext {
 
     private Map<Class<?>, Object> populatedBeans = new IdentityHashMap<>();
 
-    private Stack<PopulatorContextStackItem> stack = new Stack<PopulatorContextStackItem>();
+    private Stack<PopulatorContextStackItem> stack = new Stack<>();
 
     public PopulatorContext(String... excludedFields) {
         this.excludedFields = excludedFields;

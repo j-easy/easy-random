@@ -69,7 +69,7 @@ public class PopulatorBuilder {
      * @return a pre configured {@link PopulatorBuilder} instance
      */
     public <T, F, R> PopulatorBuilder registerRandomizer(final Class<T> type, final Class<F> fieldType, final String fieldName, final Randomizer<R> randomizer) {
-        randomizers.put(new RandomizerDefinition<T, F>(type, fieldType, fieldName), randomizer);
+        randomizers.put(new RandomizerDefinition<>(type, fieldType, fieldName), randomizer);
         return this;
     }
 
@@ -95,7 +95,7 @@ public class PopulatorBuilder {
      * @return a configured {@link Populator} instance
      */
     public Populator build() {
-        LinkedHashSet<RandomizerRegistry> registries = new LinkedHashSet<RandomizerRegistry>();
+        LinkedHashSet<RandomizerRegistry> registries = new LinkedHashSet<>();
         registries.addAll(userRegistries); // programatically registered registries
         registries.addAll(loadRegistries()); // registries added to classpath through the SPI
         Populator populator = new PopulatorImpl(registries, randomizers, maximumCollectionSize);
@@ -104,13 +104,13 @@ public class PopulatorBuilder {
     }
 
     private void reset() {
-        randomizers = new HashMap<RandomizerDefinition<?, ?>, Randomizer<?>>();
-        userRegistries = new LinkedHashSet<RandomizerRegistry>();
+        randomizers = new HashMap<>();
+        userRegistries = new LinkedHashSet<>();
         maximumCollectionSize = MAXIMUM_COLLECTION_SIZE;
     }
 
     private Collection<RandomizerRegistry> loadRegistries() {
-        List<RandomizerRegistry> registries = new ArrayList<RandomizerRegistry>();
+        List<RandomizerRegistry> registries = new ArrayList<>();
         ServiceLoader<RandomizerRegistry> loader = ServiceLoader.load(RandomizerRegistry.class);
         for (RandomizerRegistry registry : loader) {
             registries.add(registry);
