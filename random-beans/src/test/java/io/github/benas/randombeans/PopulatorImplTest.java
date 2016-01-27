@@ -124,7 +124,7 @@ public class PopulatorImplTest {
             Human human = populator.populateBean(Human.class);
             assertThat(human).isNotNull();
         } catch (Exception e) {
-            fail("Should be able to propulate types with private static final fields");
+            fail("Should be able to populate types with private static final fields");
         }
     }
 
