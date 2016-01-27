@@ -27,11 +27,8 @@ package io.github.benas.randombeans.util;
 
 import java.lang.reflect.Field;
 import java.lang.reflect.Modifier;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collection;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
+import java.util.concurrent.*;
 
 /**
  * Reflection utility methods.
@@ -117,5 +114,53 @@ public abstract class ReflectionUtils {
      */
     public static boolean isMapType(final Class<?> type) {
         return Map.class.isAssignableFrom(type);
+    }
+
+    /**
+     * Get an empty implementation class of the given interface.
+     * @param type the interface type
+     * @return empty implementation class of the given interface.
+     */
+    public static Collection<?> getEmptyTypedCollection(final Class<?> type) {
+        Collection<?> collection = new ArrayList<>();
+        if (List.class.isAssignableFrom(type)) {
+            collection = new ArrayList<>();
+        } else if (NavigableSet.class.isAssignableFrom(type)) {
+            collection = new TreeSet<>();
+        } else if (SortedSet.class.isAssignableFrom(type)) {
+            collection = new TreeSet<>();
+        } else if (Set.class.isAssignableFrom(type)) {
+            collection = new HashSet<>();
+        } else if (BlockingDeque.class.isAssignableFrom(type)) {
+            collection = new LinkedBlockingDeque<>();
+        } else if (Deque.class.isAssignableFrom(type)) {
+            collection = new ArrayDeque<>();
+        } else if (TransferQueue.class.isAssignableFrom(type)) {
+            collection = new LinkedTransferQueue<>();
+        } else if (BlockingQueue.class.isAssignableFrom(type)) {
+            collection = new LinkedBlockingQueue<>();
+        } else if (Queue.class.isAssignableFrom(type)) {
+            collection = new LinkedList<>();
+        }
+        return collection;
+    }
+
+    /**
+     * Get an empty implementation class of the given Map interface.
+     * @param type the type of the Map interface
+     * @return empty implementation class of the given Map interface.
+     */
+    public static Map<?, ?> getEmptyTypedMap(final Class<?> type) {
+        Map<?, ?> map = new HashMap<>();
+        if (ConcurrentNavigableMap.class.isAssignableFrom(type)) {
+            map = new ConcurrentSkipListMap<>();
+        } else if (ConcurrentMap.class.isAssignableFrom(type)) {
+            map = new ConcurrentHashMap<>();
+        } else if (NavigableMap.class.isAssignableFrom(type)) {
+            map = new TreeMap<>();
+        } else if (SortedMap.class.isAssignableFrom(type)) {
+            map = new TreeMap<>();
+        }
+        return map;
     }
 }

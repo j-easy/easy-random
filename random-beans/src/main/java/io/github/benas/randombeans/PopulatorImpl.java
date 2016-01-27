@@ -31,12 +31,12 @@ import io.github.benas.randombeans.api.Populator;
 import io.github.benas.randombeans.api.Randomizer;
 import io.github.benas.randombeans.api.RandomizerRegistry;
 import io.github.benas.randombeans.randomizers.EnumRandomizer;
+import io.github.benas.randombeans.util.ReflectionUtils;
 import org.objenesis.Objenesis;
 import org.objenesis.ObjenesisStd;
 
 import java.lang.reflect.*;
 import java.util.*;
-import java.util.concurrent.*;
 
 import static io.github.benas.randombeans.util.Constants.RANDOM;
 import static io.github.benas.randombeans.util.ReflectionUtils.*;
@@ -75,7 +75,7 @@ final class PopulatorImpl implements Populator {
         return doPopulateBean(type, new PopulatorContext(excludedFields));
     }
 
-    protected <T> T doPopulateBean(final Class<T> type, final PopulatorContext context) throws BeanPopulationException {
+    private <T> T doPopulateBean(final Class<T> type, final PopulatorContext context) throws BeanPopulationException {
         T result;
         try {
             //No instantiation needed for enum types.
@@ -136,7 +136,7 @@ final class PopulatorImpl implements Populator {
 
         context.pushStackItem(new PopulatorContextStackItem(target, field));
         Object value;
-        Randomizer randomizer = getRandomizer(target.getClass(), field);
+        Randomizer<?> randomizer = getRandomizer(target.getClass(), field);
         if (randomizer != null) {
             value = randomizer.getRandomValue();
         } else {
@@ -298,26 +298,8 @@ final class PopulatorImpl implements Populator {
             } catch (InstantiationException e) {
                 collection = (Collection<?>) objenesis.newInstance(fieldType);
             }
-        } else if (List.class.isAssignableFrom(fieldType)) {
-            collection = new ArrayList<>();
-        } else if (NavigableSet.class.isAssignableFrom(fieldType)) {
-            collection = new TreeSet<>();
-        } else if (SortedSet.class.isAssignableFrom(fieldType)) {
-            collection = new TreeSet<>();
-        } else if (Set.class.isAssignableFrom(fieldType)) {
-            collection = new HashSet<>();
-        } else if (BlockingDeque.class.isAssignableFrom(fieldType)) {
-            collection = new LinkedBlockingDeque<>();
-        } else if (Deque.class.isAssignableFrom(fieldType)) {
-            collection = new ArrayDeque<>();
-        } else if (TransferQueue.class.isAssignableFrom(fieldType)) {
-            collection = new LinkedTransferQueue<>();
-        } else if (BlockingQueue.class.isAssignableFrom(fieldType)) {
-            collection = new LinkedBlockingQueue<>();
-        } else if (Queue.class.isAssignableFrom(fieldType)) {
-            collection = new LinkedList<>();
-        }  else {
-            collection = new ArrayList<>();
+        } else {
+            collection = ReflectionUtils.getEmptyTypedCollection(fieldType);
         }
 
         Type genericType = field.getGenericType();
@@ -342,16 +324,8 @@ final class PopulatorImpl implements Populator {
             } catch (InstantiationException e) {
                 map = (Map<Object, Object>) objenesis.newInstance(fieldType);
             }
-        } else if (ConcurrentNavigableMap.class.isAssignableFrom(fieldType)) {
-            map = new ConcurrentSkipListMap<>();
-        } else if (ConcurrentMap.class.isAssignableFrom(fieldType)) {
-            map = new ConcurrentHashMap<>();
-        } else if (NavigableMap.class.isAssignableFrom(fieldType)) {
-            map = new TreeMap<>();
-        } else if (SortedMap.class.isAssignableFrom(fieldType)) {
-            map = new TreeMap<>();
         } else {
-            map = new HashMap<>();
+            map = (Map<Object, Object>) ReflectionUtils.getEmptyTypedMap(fieldType);
         }
 
         int size = getRandomCollectionSize();
