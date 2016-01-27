@@ -46,7 +46,7 @@ public class NumericStringRandomizerTest {
         try {
             Integer.parseInt(randomizer.getRandomValue());
         } catch (NumberFormatException e) {
-            fail("Numeric string randomizer should generate number");
+            fail("Numeric string randomizer should generate number.", e);
         }
     }
 

@@ -26,7 +26,6 @@ package io.github.benas.randombeans.randomizers;
 
 import io.github.benas.randombeans.api.Randomizer;
 import org.apache.commons.lang3.time.DateUtils;
-import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -35,6 +34,7 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.fail;
 
 public class DateStringRandomizerTest {
 
@@ -59,7 +59,7 @@ public class DateStringRandomizerTest {
         try {
             convertToDate(randomDate, DEFAULT_DATE_FORMAT);
         } catch (ParseException e) {
-            Assert.fail("Returned date doesn't have a proper format " + randomDate);
+            fail("Returned date doesn't have a proper format " + randomDate, e);
         }
     }
 
