@@ -23,20 +23,20 @@
  *
  */
 
-package io.github.benas.randombeans.randomizers.internal;
+package io.github.benas.randombeans.randomizers;
 
 import io.github.benas.randombeans.api.Randomizer;
 import io.github.benas.randombeans.util.Constants;
 
 /**
- * Generate a random {@link Byte}.
+ * Generate a random {@link Float}.
  *
  * @author Mahmoud Ben Hassine (mahmoud.benhassine@icloud.com)
  */
-public class ByteRandomizer implements Randomizer<Byte> {
+public class FloatRandomizer implements Randomizer<Float> {
 
     @Override
-    public Byte getRandomValue() {
-        return (byte) Constants.RANDOM.nextInt();
+    public Float getRandomValue() {
+        return Constants.RANDOM.nextFloat();
     }
 }

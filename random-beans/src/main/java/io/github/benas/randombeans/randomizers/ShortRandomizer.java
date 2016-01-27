@@ -23,9 +23,20 @@
  *
  */
 
+package io.github.benas.randombeans.randomizers;
+
+import io.github.benas.randombeans.api.Randomizer;
+import io.github.benas.randombeans.util.Constants;
+
 /**
- * Internal randomizers used by Random Beans.
+ * Generate a random {@link Short}.
  *
- * @author Rémi Alvergnat (toilal.dev@gmail.com)
+ * @author Mahmoud Ben Hassine (mahmoud.benhassine@icloud.com)
  */
-package io.github.benas.randombeans.randomizers.internal;
+public class ShortRandomizer implements Randomizer<Short> {
+
+    @Override
+    public Short getRandomValue() {
+        return (short) Constants.RANDOM.nextInt();
+    }
+}

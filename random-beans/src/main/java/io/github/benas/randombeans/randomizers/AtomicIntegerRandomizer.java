@@ -23,25 +23,23 @@
  *
  */
 
-package io.github.benas.randombeans.randomizers.internal;
+package io.github.benas.randombeans.randomizers;
 
 import io.github.benas.randombeans.api.Randomizer;
 
-import java.util.Calendar;
+import java.util.concurrent.atomic.AtomicInteger;
 
 /**
- * Generate a random {@link Calendar}.
+ * Generate a random {@link AtomicInteger}.
  *
  * @author Mahmoud Ben Hassine (mahmoud.benhassine@icloud.com)
  */
-public class CalendarRandomizer implements Randomizer<Calendar> {
+public class AtomicIntegerRandomizer implements Randomizer<AtomicInteger> {
 
-    private DateRandomizer delegate = new DateRandomizer();
+    private IntegerRandomizer delegate = new IntegerRandomizer();
 
     @Override
-    public Calendar getRandomValue() {
-        Calendar calendar = Calendar.getInstance();
-        calendar.setTime(delegate.getRandomValue());
-        return calendar;
+    public AtomicInteger getRandomValue() {
+        return new AtomicInteger(delegate.getRandomValue());
     }
 }

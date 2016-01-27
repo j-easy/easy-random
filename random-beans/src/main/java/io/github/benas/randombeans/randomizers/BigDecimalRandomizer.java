@@ -23,20 +23,23 @@
  *
  */
 
-package io.github.benas.randombeans.randomizers.internal;
+package io.github.benas.randombeans.randomizers;
 
 import io.github.benas.randombeans.api.Randomizer;
-import io.github.benas.randombeans.util.Constants;
+
+import java.math.BigDecimal;
 
 /**
- * Generate a random {@link Float}.
+ * Generate a random {@link BigDecimal}.
  *
  * @author Mahmoud Ben Hassine (mahmoud.benhassine@icloud.com)
  */
-public class FloatRandomizer implements Randomizer<Float> {
+public class BigDecimalRandomizer implements Randomizer<BigDecimal> {
+
+    private DoubleRandomizer delegate = new DoubleRandomizer();
 
     @Override
-    public Float getRandomValue() {
-        return Constants.RANDOM.nextFloat();
+    public BigDecimal getRandomValue() {
+        return new BigDecimal(delegate.getRandomValue());
     }
 }

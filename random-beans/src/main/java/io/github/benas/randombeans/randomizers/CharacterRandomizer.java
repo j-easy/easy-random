@@ -23,20 +23,20 @@
  *
  */
 
-package io.github.benas.randombeans.randomizers.internal;
+package io.github.benas.randombeans.randomizers;
 
 import io.github.benas.randombeans.api.Randomizer;
-import io.github.benas.randombeans.util.Constants;
+import org.apache.commons.lang3.RandomStringUtils;
 
 /**
- * Generate a random {@link Short}.
+ * Generate a random {@link Character}.
  *
  * @author Mahmoud Ben Hassine (mahmoud.benhassine@icloud.com)
  */
-public class ShortRandomizer implements Randomizer<Short> {
+public class CharacterRandomizer implements Randomizer<Character> {
 
     @Override
-    public Short getRandomValue() {
-        return (short) Constants.RANDOM.nextInt();
+    public Character getRandomValue() {
+        return RandomStringUtils.randomAlphabetic(1).charAt(0);
     }
 }

@@ -23,35 +23,22 @@
  *
  */
 
-package io.github.benas.randombeans.randomizers.internal;
+package io.github.benas.randombeans.randomizers;
 
 import io.github.benas.randombeans.api.Randomizer;
 import io.github.benas.randombeans.util.Constants;
 
-import java.net.MalformedURLException;
-import java.net.URL;
+import java.util.Date;
 
 /**
- * Generate a random {@link URL}.
+ * Generate a random {@link Date}.
  *
  * @author Mahmoud Ben Hassine (mahmoud.benhassine@icloud.com)
  */
-public class UrlRandomizer implements Randomizer<URL> {
-
-    private final String[] urls = { "https://home.java.net",
-                                    "http://www.oracle.com",
-                                    "http://www.google.com",
-                                    "https://www.github.com",
-                                    "http://www.yahoo.com",
-                                    "http://www.wikipedia.org" };
+public class DateRandomizer implements Randomizer<Date> {
 
     @Override
-    public URL getRandomValue() {
-        try {
-            return new URL(urls[Constants.RANDOM.nextInt(urls.length)]);
-        } catch (MalformedURLException e) {
-            // predefined URLs are valid
-            return null;
-        }
+    public Date getRandomValue() {
+        return Constants.DATE_RANGE_RANDOMIZER.getRandomValue();
     }
 }

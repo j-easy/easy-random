@@ -23,20 +23,24 @@
  *
  */
 
-package io.github.benas.randombeans.randomizers.internal;
+package io.github.benas.randombeans.randomizers;
 
 import io.github.benas.randombeans.api.Randomizer;
 import io.github.benas.randombeans.util.Constants;
 
+import java.math.BigInteger;
+
 /**
- * Generate a random {@link Boolean}.
+ * Generate a random {@link BigInteger}.
  *
  * @author Mahmoud Ben Hassine (mahmoud.benhassine@icloud.com)
  */
-public class BooleanRandomizer implements Randomizer<Boolean> {
+public class BigIntegerRandomizer implements Randomizer<BigInteger> {
+
+    private IntegerRandomizer delegate = new IntegerRandomizer();
 
     @Override
-    public Boolean getRandomValue() {
-        return Constants.RANDOM.nextBoolean();
+    public BigInteger getRandomValue() {
+        return new BigInteger(delegate.getRandomValue(), Constants.RANDOM);
     }
 }

@@ -23,24 +23,23 @@
  *
  */
 
-package io.github.benas.randombeans.randomizers.internal;
+package io.github.benas.randombeans.randomizers;
 
 import io.github.benas.randombeans.api.Randomizer;
 
-import java.sql.Date;
+import java.sql.Time;
 
 /**
- * Generate a random {@link Date}.
+ * Generate a random {@link Time}.
  *
  * @author Mahmoud Ben Hassine (mahmoud.benhassine@icloud.com)
  */
-public class SqlDateRandomizer implements Randomizer<Date> {
+public class SqlTimeRandomizer implements Randomizer<Time> {
 
     private DateRandomizer delegate = new DateRandomizer();
 
     @Override
-    public Date getRandomValue() {
-        return new Date(delegate.getRandomValue().getTime());
+    public Time getRandomValue() {
+        return new Time(delegate.getRandomValue().getTime());
     }
-
 }

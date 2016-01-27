@@ -23,22 +23,20 @@
  *
  */
 
-package io.github.benas.randombeans.randomizers.internal;
+package io.github.benas.randombeans.randomizers;
 
 import io.github.benas.randombeans.api.Randomizer;
 import io.github.benas.randombeans.util.Constants;
 
-import java.util.Date;
-
 /**
- * Generate a random {@link Date}.
+ * Generate a random {@link Byte}.
  *
  * @author Mahmoud Ben Hassine (mahmoud.benhassine@icloud.com)
  */
-public class DateRandomizer implements Randomizer<Date> {
+public class ByteRandomizer implements Randomizer<Byte> {
 
     @Override
-    public Date getRandomValue() {
-        return Constants.DATE_RANGE_RANDOMIZER.getRandomValue();
+    public Byte getRandomValue() {
+        return (byte) Constants.RANDOM.nextInt();
     }
 }

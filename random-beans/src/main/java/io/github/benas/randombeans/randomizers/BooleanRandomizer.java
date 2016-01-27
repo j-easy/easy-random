@@ -23,21 +23,20 @@
  *
  */
 
-package io.github.benas.randombeans.randomizers.internal;
+package io.github.benas.randombeans.randomizers;
 
 import io.github.benas.randombeans.api.Randomizer;
 import io.github.benas.randombeans.util.Constants;
-import org.apache.commons.lang3.RandomStringUtils;
 
 /**
- * Generate a random {@link String}.
+ * Generate a random {@link Boolean}.
  *
  * @author Mahmoud Ben Hassine (mahmoud.benhassine@icloud.com)
  */
-public class StringRandomizer implements Randomizer<String> {
+public class BooleanRandomizer implements Randomizer<Boolean> {
 
     @Override
-    public String getRandomValue() {
-        return RandomStringUtils.randomAlphabetic(Constants.DEFAULT_STRING_LENGTH);
+    public Boolean getRandomValue() {
+        return Constants.RANDOM.nextBoolean();
     }
 }

@@ -23,20 +23,23 @@
  *
  */
 
-package io.github.benas.randombeans.randomizers.internal;
+package io.github.benas.randombeans.randomizers;
 
 import io.github.benas.randombeans.api.Randomizer;
-import io.github.benas.randombeans.util.Constants;
+
+import java.util.concurrent.atomic.AtomicLong;
 
 /**
- * Generate a random {@link Double}.
+ * Generate a random {@link AtomicLong}.
  *
  * @author Mahmoud Ben Hassine (mahmoud.benhassine@icloud.com)
  */
-public class DoubleRandomizer implements Randomizer<Double> {
+public class AtomicLongRandomizer implements Randomizer<AtomicLong> {
+
+    private LongRandomizer delegate = new LongRandomizer();
 
     @Override
-    public Double getRandomValue() {
-        return Constants.RANDOM.nextDouble();
+    public AtomicLong getRandomValue() {
+        return new AtomicLong(delegate.getRandomValue());
     }
 }

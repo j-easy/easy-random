@@ -23,34 +23,20 @@
  *
  */
 
-package io.github.benas.randombeans.randomizers.internal;
+package io.github.benas.randombeans.randomizers;
 
 import io.github.benas.randombeans.api.Randomizer;
 import io.github.benas.randombeans.util.Constants;
 
-import java.net.URI;
-import java.net.URISyntaxException;
-
 /**
- * Generate a random {@link URI}.
+ * Generate a random {@link Double}.
  *
  * @author Mahmoud Ben Hassine (mahmoud.benhassine@icloud.com)
  */
-public class UriRandomizer implements Randomizer<URI> {
-
-    private final String[] uris = { "ftp://ftp.is.co.za/rfc/rfc1808.txt",
-                                    "http://www.ietf.org/rfc/rfc2396.txt",
-                                    "telnet://192.0.2.16:80/",
-                                    "mailto:John.Doe@example.com",
-                                    "http://www.wikipedia.org" };
+public class DoubleRandomizer implements Randomizer<Double> {
 
     @Override
-    public URI getRandomValue() {
-        try {
-            return new URI(uris[Constants.RANDOM.nextInt(uris.length)]);
-        } catch (URISyntaxException e) {
-            // predefined URIs are valid
-            return null;
-        }
+    public Double getRandomValue() {
+        return Constants.RANDOM.nextDouble();
     }
 }
