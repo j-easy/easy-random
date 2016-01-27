@@ -31,15 +31,16 @@ import io.github.benas.randombeans.api.Populator;
 import io.github.benas.randombeans.api.Randomizer;
 import io.github.benas.randombeans.api.RandomizerRegistry;
 import io.github.benas.randombeans.randomizers.EnumRandomizer;
-import io.github.benas.randombeans.util.ReflectionUtils;
 import org.objenesis.Objenesis;
 import org.objenesis.ObjenesisStd;
 
-import java.lang.reflect.*;
+import java.lang.reflect.Field;
+import java.lang.reflect.InvocationTargetException;
 import java.util.*;
 
 import static io.github.benas.randombeans.util.Constants.RANDOM;
 import static io.github.benas.randombeans.util.ReflectionUtils.*;
+import static java.util.Collections.sort;
 
 /**
  * The core implementation of the {@link Populator} interface.
@@ -58,12 +59,21 @@ final class PopulatorImpl implements Populator {
 
     private final Objenesis objenesis = new ObjenesisStd();
 
+    private ArrayPopulator arrayPopulator;
+
+    private CollectionPopulator collectionPopulator;
+
+    private MapPopulator mapPopulator;
+
     PopulatorImpl(final Set<RandomizerRegistry> registries, final Map<RandomizerDefinition<?, ?>, Randomizer<?>> randomizers,
             short maximumCollectionSize) {
         this.registries.addAll(registries);
         this.randomizers.putAll(randomizers);
         this.maximumCollectionSize = maximumCollectionSize;
-        Collections.sort(this.registries, priorityComparator);
+        arrayPopulator = new ArrayPopulator(this);
+        collectionPopulator = new CollectionPopulator(this, objenesis);
+        mapPopulator = new MapPopulator(this, objenesis);
+        sort(this.registries, priorityComparator);
     }
 
     @Override
@@ -153,11 +163,11 @@ final class PopulatorImpl implements Populator {
         if (fieldType.isEnum()) {
             value = getRandomEnum(fieldType);
         } else if (isArrayType(fieldType)) {
-            value = getRandomArray(fieldType);
+            value = arrayPopulator.getRandomArray(fieldType);
         } else if (isCollectionType(fieldType)) {
-            value = getRandomCollection(field);
+            value = collectionPopulator.getRandomCollection(field);
         } else if (isMapType(fieldType)) {
-            value = getRandomMap(field);
+            value = mapPopulator.getRandomMap(field);
         } else {
             value = doPopulateBean(fieldType, context);
         }
@@ -188,7 +198,7 @@ final class PopulatorImpl implements Populator {
                 randomizers.add(randomizer);
             }
         }
-        Collections.sort(randomizers, priorityComparator);
+        sort(randomizers, priorityComparator);
         if (!randomizers.isEmpty()) {
             return randomizers.get(0);
         }
@@ -203,151 +213,11 @@ final class PopulatorImpl implements Populator {
                 randomizers.add(randomizer);
             }
         }
-        Collections.sort(randomizers, priorityComparator);
+        sort(randomizers, priorityComparator);
         if (!randomizers.isEmpty()) {
             return randomizers.get(0);
         }
         return null;
-    }
-
-    private <T> Object getRandomArray(final Class<?> fieldType) throws BeanPopulationException {
-        Class<?> componentType = fieldType.getComponentType();
-        if (componentType.isPrimitive()) {
-            return getRandomPrimitiveArray(componentType);
-        }
-        List<?> items = populateBeans(fieldType.getComponentType());
-        @SuppressWarnings("unchecked")
-        T[] itemsList = (T[]) Array.newInstance(componentType, items.size());
-        return items.toArray(itemsList);
-    }
-    
-    private Object getRandomPrimitiveArray(final Class<?> primitiveType) throws BeanPopulationException {
-        if (primitiveType.getName().equals("byte")) {
-            List<Byte> items = populateBeans(Byte.TYPE);
-            byte[] retVal = new byte[items.size()];
-            for (int index = 0; index < items.size(); index ++){
-                retVal[index] = items.get(index);
-            }
-            return retVal;
-        }
-        if (primitiveType.getName().equals("short")) {
-            List<Short> items = populateBeans(Short.TYPE);
-            short[] retVal = new short[items.size()];
-            for (int index = 0; index < items.size(); index ++){
-                retVal[index] = items.get(index);
-            }
-            return retVal;
-        }
-        if (primitiveType.getName().equals("int")) {
-            List<Integer> items = populateBeans(Integer.TYPE);
-            int[] retVal = new int[items.size()];
-            for (int index = 0; index < items.size(); index ++){
-                retVal[index] = items.get(index);
-            }
-            return retVal;
-        }
-        if (primitiveType.getName().equals("long")) {
-            List<Long> items = populateBeans(Long.TYPE);
-            long[] retVal = new long[items.size()];
-            for (int index = 0; index < items.size(); index ++){
-                retVal[index] = items.get(index);
-            }
-            return retVal;
-        }
-        if (primitiveType.getName().equals("float")) {
-            List<Float> items = populateBeans(Float.TYPE);
-            float[] retVal = new float[items.size()];
-            for (int index = 0; index < items.size(); index ++){
-                retVal[index] = items.get(index);
-            }
-            return retVal;
-        }
-        if (primitiveType.getName().equals("double")) {
-            List<Double> items = populateBeans(Double.TYPE);
-            double[] retVal = new double[items.size()];
-            for (int index = 0; index < items.size(); index ++){
-                retVal[index] = items.get(index);
-            }
-            return retVal;
-        }
-        if (primitiveType.getName().equals("char")) {
-            List<Character> items = populateBeans(Character.TYPE);
-            char[] retVal = new char[items.size()];
-            for (int index = 0; index < items.size(); index ++){
-                retVal[index] = items.get(index);
-            }
-            return retVal;
-        }
-        if (primitiveType.getName().equals("boolean")) {
-            List<Boolean> items = populateBeans(Boolean.TYPE);
-            boolean[] retVal = new boolean[items.size()];
-            for (int index = 0; index < items.size(); index ++){
-                retVal[index] = items.get(index);
-            }
-            return retVal;
-        }
-        return null;
-    }
-
-    private Collection<?> getRandomCollection(final Field field) throws IllegalAccessException, BeanPopulationException {
-        Class<?> fieldType = field.getType();
-        Collection<?> collection;
-        if (!fieldType.isInterface()) {
-            try {
-                collection = (Collection<?>) fieldType.newInstance();
-            } catch (InstantiationException e) {
-                collection = (Collection<?>) objenesis.newInstance(fieldType);
-            }
-        } else {
-            collection = ReflectionUtils.getEmptyTypedCollection(fieldType);
-        }
-
-        Type genericType = field.getGenericType();
-        Type baseType = String.class;
-        if (genericType instanceof ParameterizedType) {
-            ParameterizedType parameterizedType = (ParameterizedType) genericType;
-            baseType = parameterizedType.getActualTypeArguments()[0];
-        }
-        Class<?> baseTypeClass = (Class<?>) baseType;
-        List items = populateBeans(baseTypeClass);
-        collection.addAll(items);
-        return collection;
-    }
-
-    private Map<?, ?> getRandomMap(final Field field) throws IllegalAccessException, BeanPopulationException {
-        Class<?> fieldType = field.getType();
-
-        Map<Object, Object> map;
-        if (!fieldType.isInterface()) {
-            try {
-                map = (Map<Object, Object>) fieldType.newInstance();
-            } catch (InstantiationException e) {
-                map = (Map<Object, Object>) objenesis.newInstance(fieldType);
-            }
-        } else {
-            map = (Map<Object, Object>) ReflectionUtils.getEmptyTypedMap(fieldType);
-        }
-
-        int size = getRandomCollectionSize();
-
-        Type genericKeyType = field.getGenericType();
-        Type baseKeyType = String.class;
-        Type baseValueType = String.class;
-        if (genericKeyType instanceof ParameterizedType) {
-            ParameterizedType parameterizedType = (ParameterizedType) genericKeyType;
-            baseKeyType = parameterizedType.getActualTypeArguments()[0];
-            baseValueType = parameterizedType.getActualTypeArguments()[1];
-        }
-        Class<?> baseKeyTypeClass = (Class<?>) baseKeyType;
-        List<?> keyItems = populateBeans(baseKeyTypeClass, size);
-
-        Class<?> baseValueTypeClass = (Class<?>) baseValueType;
-        List<?> valueItems = populateBeans(baseValueTypeClass, size);
-
-        for (int index = 0; index < size; index++) {
-            map.put(keyItems.get(index), valueItems.get(index));
-        }
-        return map;
     }
 
     private boolean shouldExcludeField(final Field field, final PopulatorContext context) {
