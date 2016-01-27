@@ -36,11 +36,13 @@ import org.objenesis.ObjenesisStd;
 
 import java.lang.reflect.Field;
 import java.lang.reflect.InvocationTargetException;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Map;
+import java.util.Set;
 
 import static io.github.benas.randombeans.util.Constants.RANDOM;
 import static io.github.benas.randombeans.util.ReflectionUtils.*;
-import static java.util.Collections.sort;
 
 /**
  * The core implementation of the {@link Populator} interface.
@@ -51,12 +53,6 @@ final class PopulatorImpl implements Populator {
 
     private final short maximumCollectionSize;
 
-    private final Map<RandomizerDefinition<?, ?>, Randomizer<?>> randomizers = new HashMap<>();
-
-    private final List<RandomizerRegistry> registries = new ArrayList<>();
-
-    private final Comparator<Object> priorityComparator = new PriorityComparator();
-
     private final Objenesis objenesis = new ObjenesisStd();
 
     private ArrayPopulator arrayPopulator;
@@ -65,20 +61,20 @@ final class PopulatorImpl implements Populator {
 
     private MapPopulator mapPopulator;
 
+    private RandomizerProvider randomizerProvider;
+
     PopulatorImpl(final Set<RandomizerRegistry> registries, final Map<RandomizerDefinition<?, ?>, Randomizer<?>> randomizers,
             short maximumCollectionSize) {
-        this.registries.addAll(registries);
-        this.randomizers.putAll(randomizers);
+        this.randomizerProvider = new RandomizerProvider(registries, randomizers);
         this.maximumCollectionSize = maximumCollectionSize;
         arrayPopulator = new ArrayPopulator(this);
         collectionPopulator = new CollectionPopulator(this, objenesis);
         mapPopulator = new MapPopulator(this, objenesis);
-        sort(this.registries, priorityComparator);
     }
 
     @Override
     public <T> T populateBean(final Class<T> type, final String... excludedFields) throws BeanPopulationException {
-        Randomizer<T> randomizer = getDefaultRandomizer(type);
+        Randomizer<T> randomizer = randomizerProvider.getDefaultRandomizer(type);
         if (randomizer != null) {
             return randomizer.getRandomValue();
         }
@@ -146,7 +142,7 @@ final class PopulatorImpl implements Populator {
 
         context.pushStackItem(new PopulatorContextStackItem(target, field));
         Object value;
-        Randomizer<?> randomizer = getRandomizer(target.getClass(), field);
+        Randomizer<?> randomizer = randomizerProvider.getRandomizer(target.getClass(), field);
         if (randomizer != null) {
             value = randomizer.getRandomValue();
         } else {
@@ -175,49 +171,7 @@ final class PopulatorImpl implements Populator {
     }
 
     private Enum getRandomEnum(Class fieldType) {
-        return getEnumRandomizer(fieldType).getRandomValue();
-    }
-
-    private EnumRandomizer getEnumRandomizer(Class<? extends Enum> enumeration) {
-        return new EnumRandomizer(enumeration);
-    }
-
-    private Randomizer<?> getRandomizer(final Class<?> targetClass, final Field field) {
-        Randomizer<?> customRandomizer = randomizers.get(new RandomizerDefinition(targetClass, field.getType(), field.getName()));
-        if (customRandomizer != null) {
-            return customRandomizer;
-        }
-        return getDefaultRandomizer(field);
-    }
-
-    private Randomizer<?> getDefaultRandomizer(final Field field) {
-        List<Randomizer<?>> randomizers = new ArrayList<>();
-        for (RandomizerRegistry registry : registries) {
-            Randomizer<?> randomizer = registry.getRandomizer(field);
-            if (randomizer != null) {
-                randomizers.add(randomizer);
-            }
-        }
-        sort(randomizers, priorityComparator);
-        if (!randomizers.isEmpty()) {
-            return randomizers.get(0);
-        }
-        return null;
-    }
-
-    private <T> Randomizer<T> getDefaultRandomizer(final Class<T> type) {
-        List<Randomizer<T>> randomizers = new ArrayList<>();
-        for (RandomizerRegistry registry : registries) {
-            Randomizer<T> randomizer = registry.getRandomizer(type);
-            if (randomizer != null) {
-                randomizers.add(randomizer);
-            }
-        }
-        sort(randomizers, priorityComparator);
-        if (!randomizers.isEmpty()) {
-            return randomizers.get(0);
-        }
-        return null;
+        return new EnumRandomizer(fieldType).getRandomValue();
     }
 
     private boolean shouldExcludeField(final Field field, final PopulatorContext context) {
