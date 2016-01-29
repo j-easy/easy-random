@@ -15,28 +15,16 @@ import static java.util.Collections.sort;
  */
 class RandomizerProvider {
 
-    private final Map<RandomizerDefinition<?, ?>, Randomizer<?>> randomizers = new HashMap<>();
-
     private final List<RandomizerRegistry> registries = new ArrayList<>();
 
     private final Comparator<Object> priorityComparator = new PriorityComparator();
 
-    RandomizerProvider(final Set<RandomizerRegistry> registries, final Map<RandomizerDefinition<?, ?>, Randomizer<?>> randomizers) {
+    RandomizerProvider(final Set<RandomizerRegistry> registries) {
         this.registries.addAll(registries);
-        this.randomizers.putAll(randomizers);
         sort(this.registries, priorityComparator);
     }
 
-    Randomizer<?> getRandomizer(final Field field) {
-        Randomizer<?> customRandomizer = getCustomRandomizer(field);
-        return customRandomizer != null ? customRandomizer : getDefaultRandomizer(field);
-    }
-
-    Randomizer<?> getCustomRandomizer(final Field field) {
-        return randomizers.get(new RandomizerDefinition(field.getDeclaringClass(), field.getType(), field.getName()));
-    }
-
-    Randomizer<?> getDefaultRandomizer(final Field field) {
+    Randomizer<?> getRandomizerByField(final Field field) {
         List<Randomizer<?>> randomizers = new ArrayList<>();
         for (RandomizerRegistry registry : registries) {
             Randomizer<?> randomizer = registry.getRandomizer(field);
@@ -51,7 +39,7 @@ class RandomizerProvider {
         return null;
     }
 
-    <T> Randomizer<T> getDefaultRandomizer(final Class<T> type) {
+    <T> Randomizer<T> getRandomizerByType(final Class<T> type) {
         List<Randomizer<T>> randomizers = new ArrayList<>();
         for (RandomizerRegistry registry : registries) {
             Randomizer<T> randomizer = registry.getRandomizer(type);

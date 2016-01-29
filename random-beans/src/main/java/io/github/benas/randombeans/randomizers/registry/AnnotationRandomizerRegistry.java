@@ -38,7 +38,7 @@ import java.util.logging.Logger;
  *
  * @author Mahmoud Ben Hassine (mahmoud.benhassine@icloud.com)
  */
-@Priority(-254)
+@Priority(-253)
 public class AnnotationRandomizerRegistry implements RandomizerRegistry {
 
     private static final Logger LOGGER = Logger.getLogger(AnnotationRandomizerRegistry.class.getName());

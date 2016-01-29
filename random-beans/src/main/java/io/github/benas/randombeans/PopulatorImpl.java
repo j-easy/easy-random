@@ -38,7 +38,6 @@ import java.lang.reflect.Field;
 import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
 import java.util.Set;
 
 import static io.github.benas.randombeans.util.Constants.RANDOM;
@@ -63,9 +62,8 @@ final class PopulatorImpl implements Populator {
 
     private RandomizerProvider randomizerProvider;
 
-    PopulatorImpl(final Set<RandomizerRegistry> registries, final Map<RandomizerDefinition<?, ?>, Randomizer<?>> randomizers,
-            short maximumCollectionSize) {
-        this.randomizerProvider = new RandomizerProvider(registries, randomizers);
+    PopulatorImpl(final Set<RandomizerRegistry> registries, short maximumCollectionSize) {
+        this.randomizerProvider = new RandomizerProvider(registries);
         this.maximumCollectionSize = maximumCollectionSize;
         arrayPopulator = new ArrayPopulator(this);
         collectionPopulator = new CollectionPopulator(this, objenesis);
@@ -74,7 +72,7 @@ final class PopulatorImpl implements Populator {
 
     @Override
     public <T> T populateBean(final Class<T> type, final String... excludedFields) throws BeanPopulationException {
-        Randomizer<T> randomizer = randomizerProvider.getDefaultRandomizer(type);
+        Randomizer<T> randomizer = randomizerProvider.getRandomizerByType(type);
         if (randomizer != null) {
             return randomizer.getRandomValue();
         }
@@ -142,7 +140,7 @@ final class PopulatorImpl implements Populator {
 
         context.pushStackItem(new PopulatorContextStackItem(target, field));
         Object value;
-        Randomizer<?> randomizer = randomizerProvider.getRandomizer(field);
+        Randomizer<?> randomizer = randomizerProvider.getRandomizerByField(field);
         if (randomizer != null) {
             value = randomizer.getRandomValue();
         } else {

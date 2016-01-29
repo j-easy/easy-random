@@ -28,6 +28,7 @@ package io.github.benas.randombeans;
 import io.github.benas.randombeans.api.Populator;
 import io.github.benas.randombeans.api.Randomizer;
 import io.github.benas.randombeans.api.RandomizerRegistry;
+import io.github.benas.randombeans.randomizers.registry.CustomRandomizerRegistry;
 
 import java.util.*;
 
@@ -40,7 +41,7 @@ import static io.github.benas.randombeans.util.Constants.MAXIMUM_COLLECTION_SIZE
  */
 public class PopulatorBuilder {
 
-    private Map<RandomizerDefinition<?, ?>, Randomizer<?>> randomizers;
+    private CustomRandomizerRegistry customRandomizerRegistry;
 
     private Set<RandomizerRegistry> userRegistries;
 
@@ -69,7 +70,7 @@ public class PopulatorBuilder {
      * @return a pre configured {@link PopulatorBuilder} instance
      */
     public <T, F, R> PopulatorBuilder registerRandomizer(final Class<T> type, final Class<F> fieldType, final String fieldName, final Randomizer<R> randomizer) {
-        randomizers.put(new RandomizerDefinition<>(type, fieldType, fieldName), randomizer);
+        customRandomizerRegistry.registerRandomizer(type, fieldType, fieldName, randomizer);
         return this;
     }
 
@@ -96,15 +97,16 @@ public class PopulatorBuilder {
      */
     public Populator build() {
         LinkedHashSet<RandomizerRegistry> registries = new LinkedHashSet<>();
-        registries.addAll(userRegistries); // programatically registered registries
+        registries.add(customRandomizerRegistry); // programatically registered randomizers through registerRandomizer()
+        registries.addAll(userRegistries); // programatically registered registries through registerRandomizerRegistry()
         registries.addAll(loadRegistries()); // registries added to classpath through the SPI
-        Populator populator = new PopulatorImpl(registries, randomizers, maximumCollectionSize);
+        Populator populator = new PopulatorImpl(registries, maximumCollectionSize);
         reset();
         return populator;
     }
 
     private void reset() {
-        randomizers = new HashMap<>();
+        customRandomizerRegistry = new CustomRandomizerRegistry();
         userRegistries = new LinkedHashSet<>();
         maximumCollectionSize = MAXIMUM_COLLECTION_SIZE;
     }
