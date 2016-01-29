@@ -153,7 +153,7 @@ public class PopulatorImplTest {
     @Test
     public void generatedBeansWithCustomRandomizersShouldBeCorrectlyPopulated() throws Exception {
         populator = aNewPopulatorBuilder()
-                .registerRandomizer(Person.class, String.class, "name", randomizer)
+                .registerRandomizer(Human.class, String.class, "name", randomizer)
                 .build();
 
         Person person = populator.populateBean(Person.class);

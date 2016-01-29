@@ -62,7 +62,7 @@ public class PopulatorBuilder {
     /**
      * Register a custom randomizer for a given field.
      *
-     * @param type       the target object type
+     * @param type       the type of class declaring the field. If the field is inherited, then this should be the type of the base class.
      * @param fieldType  the field type within the target object
      * @param fieldName  the field name within the target object
      * @param randomizer the custom {@link Randomizer} to use

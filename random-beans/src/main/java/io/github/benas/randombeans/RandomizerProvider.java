@@ -27,12 +27,13 @@ class RandomizerProvider {
         sort(this.registries, priorityComparator);
     }
 
-    Randomizer<?> getRandomizer(final Class<?> targetClass, final Field field) {
-        Randomizer<?> customRandomizer = randomizers.get(new RandomizerDefinition(targetClass, field.getType(), field.getName()));
-        if (customRandomizer != null) {
-            return customRandomizer;
-        }
-        return getDefaultRandomizer(field);
+    Randomizer<?> getRandomizer(final Field field) {
+        Randomizer<?> customRandomizer = getCustomRandomizer(field);
+        return customRandomizer != null ? customRandomizer : getDefaultRandomizer(field);
+    }
+
+    Randomizer<?> getCustomRandomizer(final Field field) {
+        return randomizers.get(new RandomizerDefinition(field.getDeclaringClass(), field.getType(), field.getName()));
     }
 
     Randomizer<?> getDefaultRandomizer(final Field field) {

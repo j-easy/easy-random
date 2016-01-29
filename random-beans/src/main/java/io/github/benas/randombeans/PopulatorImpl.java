@@ -142,7 +142,7 @@ final class PopulatorImpl implements Populator {
 
         context.pushStackItem(new PopulatorContextStackItem(target, field));
         Object value;
-        Randomizer<?> randomizer = randomizerProvider.getRandomizer(target.getClass(), field);
+        Randomizer<?> randomizer = randomizerProvider.getRandomizer(field);
         if (randomizer != null) {
             value = randomizer.getRandomValue();
         } else {
