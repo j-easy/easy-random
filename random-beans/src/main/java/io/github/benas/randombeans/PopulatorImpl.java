@@ -31,6 +31,7 @@ import io.github.benas.randombeans.api.Populator;
 import io.github.benas.randombeans.api.Randomizer;
 import io.github.benas.randombeans.api.RandomizerRegistry;
 import io.github.benas.randombeans.randomizers.EnumRandomizer;
+import io.github.benas.randombeans.util.Constants;
 import org.objenesis.Objenesis;
 import org.objenesis.ObjenesisStd;
 
@@ -50,8 +51,6 @@ import static io.github.benas.randombeans.util.ReflectionUtils.*;
  */
 final class PopulatorImpl implements Populator {
 
-    private final short maximumCollectionSize;
-
     private final Objenesis objenesis = new ObjenesisStd();
 
     private ArrayPopulator arrayPopulator;
@@ -62,9 +61,8 @@ final class PopulatorImpl implements Populator {
 
     private RandomizerProvider randomizerProvider;
 
-    PopulatorImpl(final Set<RandomizerRegistry> registries, short maximumCollectionSize) {
+    PopulatorImpl(final Set<RandomizerRegistry> registries) {
         this.randomizerProvider = new RandomizerProvider(registries);
-        this.maximumCollectionSize = maximumCollectionSize;
         arrayPopulator = new ArrayPopulator(this);
         collectionPopulator = new CollectionPopulator(this, objenesis);
         mapPopulator = new MapPopulator(this, objenesis);
@@ -132,7 +130,7 @@ final class PopulatorImpl implements Populator {
     }
 
     private int getRandomCollectionSize() {
-        return RANDOM.nextInt(maximumCollectionSize) + 1;
+        return RANDOM.nextInt(Constants.MAXIMUM_COLLECTION_SIZE) + 1;
     }
 
     private void populateField(final Object target, final Field field, final PopulatorContext context)

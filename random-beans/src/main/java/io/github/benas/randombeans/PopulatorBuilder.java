@@ -32,8 +32,6 @@ import io.github.benas.randombeans.randomizers.registry.CustomRandomizerRegistry
 
 import java.util.*;
 
-import static io.github.benas.randombeans.util.Constants.MAXIMUM_COLLECTION_SIZE;
-
 /**
  * A builder to create {@link Populator} instances.
  *
@@ -44,8 +42,6 @@ public class PopulatorBuilder {
     private CustomRandomizerRegistry customRandomizerRegistry;
 
     private Set<RandomizerRegistry> userRegistries;
-
-    private short maximumCollectionSize;
 
     private PopulatorBuilder() {
         reset();
@@ -85,11 +81,6 @@ public class PopulatorBuilder {
         return this;
     }
 
-    public PopulatorBuilder setMaximumCollectionSize(short maximumCollectionSize) {
-        this.maximumCollectionSize = maximumCollectionSize;
-        return this;
-    }
-
     /**
      * Build a {@link Populator} instance and reset the builder to its initial state.
      *
@@ -100,7 +91,7 @@ public class PopulatorBuilder {
         registries.add(customRandomizerRegistry); // programatically registered randomizers through registerRandomizer()
         registries.addAll(userRegistries); // programatically registered registries through registerRandomizerRegistry()
         registries.addAll(loadRegistries()); // registries added to classpath through the SPI
-        Populator populator = new PopulatorImpl(registries, maximumCollectionSize);
+        Populator populator = new PopulatorImpl(registries);
         reset();
         return populator;
     }
@@ -108,7 +99,6 @@ public class PopulatorBuilder {
     private void reset() {
         customRandomizerRegistry = new CustomRandomizerRegistry();
         userRegistries = new LinkedHashSet<>();
-        maximumCollectionSize = MAXIMUM_COLLECTION_SIZE;
     }
 
     private Collection<RandomizerRegistry> loadRegistries() {
