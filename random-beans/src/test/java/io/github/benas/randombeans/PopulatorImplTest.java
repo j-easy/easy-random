@@ -34,6 +34,7 @@ import org.junit.runner.RunWith;
 import org.mockito.Mock;
 import org.mockito.runners.MockitoJUnitRunner;
 
+import java.util.Date;
 import java.util.List;
 
 import static io.github.benas.randombeans.FieldDefinitionBuilder.field;
@@ -144,6 +145,34 @@ public class PopulatorImplTest {
         assertThat(website.getName()).isNotNull();
         assertThat(website.getUri()).isNotNull();
         assertThat(website.getUrl()).isNotNull();
+    }
+
+    @Test(expected = BeanPopulationException.class)
+    public void failsToPopulateInterfacesAndAbstractClassesIfScanClasspathForConcreteClassesIsDisabled() throws Exception {
+        Populator nonScanningPopulator = aNewPopulatorBuilder().scanClasspathForConcreteClasses(false).build();
+
+        nonScanningPopulator.populateBean(Mamals.class);
+    }
+
+    @Test
+    public void generatesConcreteTypesForInterfacesAndAbstractClassesIfScanClasspathForConcreteClassesIsEnabled() throws Exception {
+        Populator scanningPopulator = aNewPopulatorBuilder().scanClasspathForConcreteClasses(true).build();
+
+        Mamals mamals = scanningPopulator.populateBean(Mamals.class);
+
+        assertThat(mamals.getMamal()).isOfAnyClassIn(Human.class, Ape.class, Person.class, SocialPerson.class);
+        assertThat(mamals.getMamalImpl()).isOfAnyClassIn(Human.class, Ape.class, Person.class, SocialPerson.class);
+    }
+
+    @Test
+    @SuppressWarnings("unchecked")
+    public void  generatesConcreteTypesForComparablesIfScanClasspathForConcreteClassesIsEnabled() throws Exception {
+        Populator scanningPopulator = aNewPopulatorBuilder().scanClasspathForConcreteClasses(true).build();
+
+        ComparableBean comparableBean = scanningPopulator.populateBean(ComparableBean.class);
+
+        assertThat(comparableBean.getUntypedComparable()).isInstanceOf(Comparable.class);
+        assertThat(comparableBean.getDoubleComparable()).isInstanceOf(Comparable.class);
     }
 
     @Test(expected = IllegalArgumentException.class)

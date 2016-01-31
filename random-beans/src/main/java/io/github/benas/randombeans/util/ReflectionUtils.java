@@ -29,7 +29,17 @@ import java.lang.reflect.Field;
 import java.lang.reflect.Modifier;
 import java.lang.reflect.ParameterizedType;
 import java.lang.reflect.Type;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collection;
+import java.util.List;
+import java.util.Map;
+import java.util.Set;
+import java.util.concurrent.ConcurrentHashMap;
+
+import org.reflections.Reflections;
+import org.reflections.util.ClasspathHelper;
+import org.reflections.util.ConfigurationBuilder;
 
 /**
  * Reflection utility methods.
@@ -37,6 +47,8 @@ import java.util.*;
  * @author Mahmoud Ben Hassine (mahmoud.benhassine@icloud.com)
  */
 public abstract class ReflectionUtils {
+
+    private static final ConcurrentHashMap<Class<?>, List<Class <?>>> typeToConcreteSubTypes = new ConcurrentHashMap<>();
 
     /**
      * Get declared field of a given type.
@@ -98,6 +110,26 @@ public abstract class ReflectionUtils {
     }
 
     /**
+     * Check if the type is abstract (either an interface or an abstract class).
+     * 
+     * @param type the type to check
+     * @return true if the type is abstract, false otherwise
+     */
+    public static <T> boolean isAbstract(final Class<T> type) {
+        return Modifier.isAbstract(type.getModifiers());
+    }
+
+    /**
+     * Check if the type is public.
+     * 
+     * @param type the type to check
+     * @return true if the type is public, false otherwise
+     */
+    public static <T> boolean isPublic(final Class<T> type) {
+        return Modifier.isPublic(type.getModifiers());
+    }
+
+    /**
      * Check if a type is an array type.
      * @param type the type to check.
      * @return true if the type is an array type, false otherwise.
@@ -133,5 +165,32 @@ public abstract class ReflectionUtils {
      */
     public static boolean isParameterizedType(final Type type) {
         return type != null && type instanceof ParameterizedType && ((ParameterizedType) type).getActualTypeArguments().length > 0;
+    }
+
+    /**
+     * Searches the classpath for all public concrete subtypes of the given interface or abstract class.
+     * 
+     * @param type to search concrete subtypes of
+     * @return a list of all concrete subtypes found
+     */
+    public static <T> List<Class<?>> getPublicConcreteSubTypesOf(final Class<T> type) {
+        List<Class<?>> concreteSubTypes = typeToConcreteSubTypes.get(type);
+        if (concreteSubTypes == null) {
+            concreteSubTypes = searchForPublicConcreteSubTypesOf(type);
+            typeToConcreteSubTypes.putIfAbsent(type, concreteSubTypes);
+        }
+        return concreteSubTypes;
+    }
+
+    private static <T> List<Class<?>> searchForPublicConcreteSubTypesOf(final Class<T> type) {
+        Reflections reflections = new Reflections(new ConfigurationBuilder().setUrls(ClasspathHelper.forJavaClassPath()));
+        Set<Class<? extends T>> subTypes = reflections.getSubTypesOf(type);
+        List<Class<?>> concreteSubTypes = new ArrayList<>();
+        for (Class<? extends T> currentSubType : subTypes) {
+            if (isPublic(currentSubType) && !isAbstract(currentSubType)) {
+                concreteSubTypes.add(currentSubType);
+            }
+        }
+        return concreteSubTypes;
     }
 }

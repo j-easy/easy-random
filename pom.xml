@@ -30,6 +30,7 @@
         <joda-time.version>2.9.1</joda-time.version>
         <spring-context.version>4.2.4.RELEASE</spring-context.version>
         <objenesis.version>2.2</objenesis.version>
+        <reflections.version>0.9.10</reflections.version>
         <hibernate-validator.version>5.2.2.Final</hibernate-validator.version>
         <javax.el.version>2.2.6</javax.el.version>
         <mockito-core.version>1.10.19</mockito-core.version>
@@ -159,6 +160,11 @@
                 <groupId>org.objenesis</groupId>
                 <artifactId>objenesis</artifactId>
                 <version>${objenesis.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.reflections</groupId>
+                <artifactId>reflections</artifactId>
+                <version>${reflections.version}</version>
             </dependency>
             <dependency>
                 <groupId>org.hibernate</groupId>

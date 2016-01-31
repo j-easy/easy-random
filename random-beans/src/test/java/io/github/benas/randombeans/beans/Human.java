@@ -25,7 +25,7 @@
 
 package io.github.benas.randombeans.beans;
 
-public class Human {
+public class Human implements Mammal {
 
     @SuppressWarnings("unused")
     private static final long SERIAL_VERSION_UID = 593716507559065802L;
@@ -45,10 +45,12 @@ public class Human {
         return id;
     }
 
+    @Override
     public String getName() {
         return name;
     }
 
+    @Override
     public void setName(String name) {
         this.name = name;
     }

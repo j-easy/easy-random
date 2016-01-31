@@ -31,12 +31,14 @@ import io.github.benas.randombeans.api.Populator;
 import io.github.benas.randombeans.api.Randomizer;
 import io.github.benas.randombeans.api.RandomizerRegistry;
 import io.github.benas.randombeans.randomizers.EnumRandomizer;
+import io.github.benas.randombeans.util.ReflectionUtils;
 import io.github.benas.randombeans.randomizers.SkipRandomizer;
 import org.objenesis.Objenesis;
 import org.objenesis.ObjenesisStd;
 
 import java.lang.reflect.Field;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.Set;
 
@@ -60,6 +62,8 @@ final class PopulatorImpl implements Populator {
     private MapPopulator mapPopulator;
 
     private RandomizerProvider randomizerProvider;
+    
+    private boolean scanClasspathForConcreteClasses;
 
     PopulatorImpl(final Set<RandomizerRegistry> registries) {
         objenesis = new ObjenesisStd();
@@ -93,8 +97,13 @@ final class PopulatorImpl implements Populator {
                 return (T) context.getPopulatedBean(type);
             }
 
-            // create a new instance of the target type
-            result = objenesis.newInstance(type);
+            if (scanClasspathForConcreteClasses && isAbstract(type)) {
+                // create a new instance of a random concrete subtype
+                result = (T) objenesis.newInstance(randomConcreteSubTypeOf(type));
+            } else {
+                // create a new instance of the target type
+                result = objenesis.newInstance(type);
+            }
 
             // retrieve declared and inherited fields
             context.addPopulatedBean(type, result);
@@ -111,6 +120,13 @@ final class PopulatorImpl implements Populator {
         } catch (InstantiationError | Exception e) {
             throw new BeanPopulationException("Unable to generate a random instance of type " + type, e);
         }
+    }
+
+    private <T> Class<?> randomConcreteSubTypeOf(final Class<T> type) throws ClassNotFoundException {
+        List<Class<?>> concreteSubtypes = ReflectionUtils.getPublicConcreteSubTypesOf(type);
+        if (concreteSubtypes.isEmpty()) throw new ClassNotFoundException("Unable to find a concrete subtype of type: " + type);
+        Collections.shuffle(concreteSubtypes);
+        return concreteSubtypes.get(0);
     }
 
     @Override
@@ -194,4 +210,7 @@ final class PopulatorImpl implements Populator {
         return false;
     }
 
+    public void setScanClasspathForConcreteClasses(boolean scanClasspathForConcreteClasses) {
+        this.scanClasspathForConcreteClasses = scanClasspathForConcreteClasses;
+    }
 }
