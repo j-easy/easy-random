@@ -33,6 +33,7 @@ class MapPopulator {
         this.objenesis = objenesis;
     }
 
+    @SuppressWarnings("unchecked")
     Map<?, ?> getRandomMap(final Field field) throws IllegalAccessException, BeanPopulationException {
         Class<?> fieldType = field.getType();
 

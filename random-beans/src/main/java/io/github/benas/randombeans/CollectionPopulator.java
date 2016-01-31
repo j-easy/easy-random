@@ -28,6 +28,7 @@ class CollectionPopulator {
         this.objenesis = objenesis;
     }
 
+    @SuppressWarnings("unchecked")
     Collection<?> getRandomCollection(final Field field) throws IllegalAccessException, BeanPopulationException {
         Class<?> fieldType = field.getType();
         Collection<?> collection;
@@ -48,6 +49,7 @@ class CollectionPopulator {
             baseType = parameterizedType.getActualTypeArguments()[0];
         }
         Class<?> baseTypeClass = (Class<?>) baseType;
+        @SuppressWarnings("rawtypes")
         List items = populator.populateBeans(baseTypeClass);
         collection.addAll(items);
         return collection;

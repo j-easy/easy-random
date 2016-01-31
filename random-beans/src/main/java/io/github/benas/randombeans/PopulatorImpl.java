@@ -77,6 +77,7 @@ final class PopulatorImpl implements Populator {
         return doPopulateBean(type, new PopulatorContext(excludedFields));
     }
 
+    @SuppressWarnings("unchecked")
     private <T> T doPopulateBean(final Class<T> type, final PopulatorContext context) throws BeanPopulationException {
         T result;
         try {
@@ -164,6 +165,7 @@ final class PopulatorImpl implements Populator {
         return value;
     }
 
+    @SuppressWarnings({ "rawtypes", "unchecked" })    
     private Enum getRandomEnum(final Class fieldType) {
         return new EnumRandomizer(fieldType).getRandomValue();
     }

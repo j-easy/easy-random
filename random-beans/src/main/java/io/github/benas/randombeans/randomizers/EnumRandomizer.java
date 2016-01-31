@@ -33,30 +33,31 @@ import static io.github.benas.randombeans.randomizers.range.IntegerRangeRandomiz
  *
  * @author Mahmoud Ben Hassine (mahmoud.benhassine@icloud.com)
  */
-public class EnumRandomizer implements Randomizer<Enum> {
+public class EnumRandomizer<T extends Enum<T>> implements Randomizer<Enum<T>> {
 
-    private Class<? extends Enum> enumeration;
+    private Class<T> enumeration;
 
     /**
      * Create a new {@link EnumRandomizer}.
      * @return a new {@link EnumRandomizer}.
      */
-    public static EnumRandomizer aNewEnumRandomizer(Class<? extends Enum> enumeration) {
-        return new EnumRandomizer(enumeration);
+    public static <R extends Enum<R>> EnumRandomizer<R> aNewEnumRandomizer(Class<R> class1) {
+        return new EnumRandomizer<R>(class1);
     }
 
     /**
      * Create a new {@link EnumRandomizer}.
      *
-     * @param enumeration the enumeration from which this randomizer will generate random values
+     * @param class1 the enumeration from which this randomizer will generate random values
      */
-    public EnumRandomizer(Class<? extends Enum> enumeration) {
-        this.enumeration = enumeration;
+    @SuppressWarnings("unchecked")
+    public <R extends Enum<R>>EnumRandomizer(Class<R> class1) {
+        this.enumeration = (Class<T>) class1;
     }
 
     @Override
-    public Enum getRandomValue() {
-        Enum[] enumConstants = enumeration.getEnumConstants();
+    public Enum<T> getRandomValue() {
+        Enum<T>[] enumConstants = enumeration.getEnumConstants();
         int randomIndex = aNewIntegerRangeRandomizer(0, enumConstants.length - 1).getRandomValue();
         return enumConstants[randomIndex];
     }
