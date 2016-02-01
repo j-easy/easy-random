@@ -13,9 +13,9 @@ import java.util.concurrent.ConcurrentMap;
 import java.util.concurrent.ConcurrentNavigableMap;
 import java.util.concurrent.ConcurrentSkipListMap;
 
-import static io.github.benas.randombeans.util.Constants.MAXIMUM_COLLECTION_SIZE;
-import static io.github.benas.randombeans.util.Constants.RANDOM;
+import static io.github.benas.randombeans.randomizers.ByteRandomizer.aNewByteRandomizer;
 import static io.github.benas.randombeans.util.ReflectionUtils.isInterface;
+import static java.lang.Math.abs;
 
 /**
  * Random map populator.
@@ -47,7 +47,7 @@ class MapPopulator {
             }
         }
 
-        int size = RANDOM.nextInt(MAXIMUM_COLLECTION_SIZE) + 1;
+        int size = abs(aNewByteRandomizer().getRandomValue());
 
         Type fieldGenericType = field.getGenericType();
         Type baseKeyType = String.class;

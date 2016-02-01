@@ -25,15 +25,12 @@
 
 package io.github.benas.randombeans.randomizers;
 
-import io.github.benas.randombeans.api.Randomizer;
-import io.github.benas.randombeans.util.Constants;
-
 /**
  * Generate a random {@link Boolean}.
  *
  * @author Mahmoud Ben Hassine (mahmoud.benhassine@icloud.com)
  */
-public class BooleanRandomizer implements Randomizer<Boolean> {
+public class BooleanRandomizer extends AbstractRandomizer<Boolean> {
 
     /**
      * Create a new {@link BooleanRandomizer}.
@@ -45,6 +42,6 @@ public class BooleanRandomizer implements Randomizer<Boolean> {
 
     @Override
     public Boolean getRandomValue() {
-        return Constants.RANDOM.nextBoolean();
+        return random.nextBoolean();
     }
 }

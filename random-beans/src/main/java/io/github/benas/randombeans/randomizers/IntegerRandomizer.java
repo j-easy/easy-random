@@ -25,15 +25,12 @@
 
 package io.github.benas.randombeans.randomizers;
 
-import io.github.benas.randombeans.api.Randomizer;
-import io.github.benas.randombeans.util.Constants;
-
 /**
  * Generate a random {@link Integer}.
  *
  * @author Mahmoud Ben Hassine (mahmoud.benhassine@icloud.com)
  */
-public class IntegerRandomizer implements Randomizer<Integer> {
+public class IntegerRandomizer extends AbstractRandomizer<Integer> {
 
     /**
      * Create a new {@link IntegerRandomizer}.
@@ -45,6 +42,6 @@ public class IntegerRandomizer implements Randomizer<Integer> {
 
     @Override
     public Integer getRandomValue() {
-        return Constants.RANDOM.nextInt();
+        return random.nextInt();
     }
 }

@@ -28,7 +28,6 @@ package io.github.benas.randombeans.util;
 import io.github.benas.randombeans.randomizers.range.DateRangeRandomizer;
 
 import java.util.Date;
-import java.util.Random;
 
 import static org.apache.commons.lang3.time.DateUtils.addYears;
 
@@ -38,11 +37,6 @@ import static org.apache.commons.lang3.time.DateUtils.addYears;
  * @author Mahmoud Ben Hassine (mahmoud.benhassine@icloud.com)
  */
 public abstract class Constants {
-
-    /**
-     * Default limit on the size of a randomly generated collection.
-     */
-    public static final int MAXIMUM_COLLECTION_SIZE = 20;
 
     /**
      * Default date range in which dates will be generated: [now - 10 years, now + 10 years].
@@ -60,17 +54,11 @@ public abstract class Constants {
     public static final int DEFAULT_STRING_LENGTH = 10;
 
     /**
-     * The common random object used to generate random values.
-     */
-    public static final Random RANDOM;
-
-    /**
      * The common random date randomizer used to generate date types.
      */
     public static final DateRangeRandomizer DATE_RANGE_RANDOMIZER;
 
     static {
-        RANDOM = new Random();
         Date today = new Date();
         Date tenYearsAgo = addYears(today, -DEFAULT_DATE_RANGE);
         Date inTenYears = addYears(today, DEFAULT_DATE_RANGE);

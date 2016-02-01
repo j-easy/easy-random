@@ -39,9 +39,9 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
 
-import static io.github.benas.randombeans.util.Constants.MAXIMUM_COLLECTION_SIZE;
-import static io.github.benas.randombeans.util.Constants.RANDOM;
+import static io.github.benas.randombeans.randomizers.ByteRandomizer.aNewByteRandomizer;
 import static io.github.benas.randombeans.util.ReflectionUtils.*;
+import static java.lang.Math.abs;
 
 /**
  * The core implementation of the {@link Populator} interface.
@@ -112,7 +112,8 @@ final class PopulatorImpl implements Populator {
 
     @Override
     public <T> List<T> populateBeans(final Class<T> type, final String... excludedFields) throws BeanPopulationException {
-        return populateBeans(type, getRandomCollectionSize(), excludedFields);
+        int randomSize = abs(aNewByteRandomizer().getRandomValue());
+        return populateBeans(type, randomSize, excludedFields);
     }
 
     @Override
@@ -130,10 +131,6 @@ final class PopulatorImpl implements Populator {
         if (size < 0) {
             throw new IllegalArgumentException("The size must be positive");
         }
-    }
-
-    private int getRandomCollectionSize() {
-        return RANDOM.nextInt(MAXIMUM_COLLECTION_SIZE) + 1;
     }
 
     private void populateField(final Object target, final Field field, final PopulatorContext context)

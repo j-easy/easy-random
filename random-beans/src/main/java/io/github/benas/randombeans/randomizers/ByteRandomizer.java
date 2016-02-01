@@ -26,7 +26,8 @@
 package io.github.benas.randombeans.randomizers;
 
 import io.github.benas.randombeans.api.Randomizer;
-import io.github.benas.randombeans.util.Constants;
+
+import static io.github.benas.randombeans.randomizers.IntegerRandomizer.aNewIntegerRandomizer;
 
 /**
  * Generate a random {@link Byte}.
@@ -45,6 +46,6 @@ public class ByteRandomizer implements Randomizer<Byte> {
 
     @Override
     public Byte getRandomValue() {
-        return (byte) Constants.RANDOM.nextInt();
+        return aNewIntegerRandomizer().getRandomValue().byteValue();
     }
 }

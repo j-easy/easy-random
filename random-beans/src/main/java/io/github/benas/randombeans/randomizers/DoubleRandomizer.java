@@ -25,15 +25,12 @@
 
 package io.github.benas.randombeans.randomizers;
 
-import io.github.benas.randombeans.api.Randomizer;
-import io.github.benas.randombeans.util.Constants;
-
 /**
  * Generate a random {@link Double}.
  *
  * @author Mahmoud Ben Hassine (mahmoud.benhassine@icloud.com)
  */
-public class DoubleRandomizer implements Randomizer<Double> {
+public class DoubleRandomizer extends AbstractRandomizer<Double> {
 
     /**
      * Create a new {@link DoubleRandomizer}.
@@ -45,6 +42,6 @@ public class DoubleRandomizer implements Randomizer<Double> {
 
     @Override
     public Double getRandomValue() {
-        return Constants.RANDOM.nextDouble();
+        return random.nextDouble();
     }
 }

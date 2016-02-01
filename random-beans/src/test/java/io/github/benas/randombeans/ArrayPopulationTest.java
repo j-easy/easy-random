@@ -23,15 +23,14 @@
  */
 package io.github.benas.randombeans;
 
-import static io.github.benas.randombeans.PopulatorBuilder.aNewPopulatorBuilder;
-import static org.assertj.core.api.Assertions.assertThat;
-
-import org.junit.Before;
-import org.junit.Test;
-
 import io.github.benas.randombeans.api.Populator;
 import io.github.benas.randombeans.beans.ArrayBean;
 import io.github.benas.randombeans.beans.Person;
+import org.junit.Before;
+import org.junit.Test;
+
+import static io.github.benas.randombeans.PopulatorBuilder.aNewPopulatorBuilder;
+import static org.assertj.core.api.Assertions.assertThat;
 
 public class ArrayPopulationTest {
 
@@ -57,25 +56,23 @@ public class ArrayPopulationTest {
         assertThat(bean.getBooleanArray()).isNotEmpty();
         
         // wrapper types
-        assertThat(bean.getBytes()).isNotEmpty();
-        assertThat(bean.getShorts()).isNotEmpty();
-        assertThat(bean.getIntegers()).isNotEmpty();
-        assertThat(bean.getLongs()).isNotEmpty();
-        assertThat(bean.getFloats()).isNotEmpty();
-        assertThat(bean.getDoubles()).isNotEmpty();
-        assertThat(bean.getCharacters()).isNotEmpty();
-        assertThat(bean.getBooleans()).isNotEmpty();
+        assertThat(bean.getBytes()).hasOnlyElementsOfType(Byte.class);
+        assertThat(bean.getShorts()).hasOnlyElementsOfType(Short.class);
+        assertThat(bean.getIntegers()).hasOnlyElementsOfType(Integer.class);
+        assertThat(bean.getLongs()).hasOnlyElementsOfType(Long.class);
+        assertThat(bean.getFloats()).hasOnlyElementsOfType(Float.class);
+        assertThat(bean.getDoubles()).hasOnlyElementsOfType(Double.class);
+        assertThat(bean.getCharacters()).hasOnlyElementsOfType(Character.class);
+        assertThat(bean.getBooleans()).hasOnlyElementsOfType(Boolean.class);
         
         // custom types
-        assertThat(bean.getStrings()).isNotEmpty().doesNotContain(null, "");
+        assertThat(bean.getStrings()).doesNotContain(null, "");
         
         Person[] persons = bean.getPersons();
-        assertThat(persons).isNotEmpty();
         assertContainsOnlyNonEmptyPersons(persons);
     }
     
     private void assertContainsOnlyNonEmptyPersons(final Person[] persons) {
-        assertThat(persons).isNotEmpty();
         for (Person person : persons) {
             assertThat(person).isNotNull();
             assertThat(person.getAddress().getCity()).isNotEmpty();

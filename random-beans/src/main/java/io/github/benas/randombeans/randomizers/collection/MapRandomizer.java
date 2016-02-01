@@ -26,11 +26,13 @@
 package io.github.benas.randombeans.randomizers.collection;
 
 import io.github.benas.randombeans.api.Randomizer;
-import io.github.benas.randombeans.util.Constants;
 
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
+
+import static io.github.benas.randombeans.randomizers.ByteRandomizer.aNewByteRandomizer;
+import static java.lang.Math.abs;
 
 /**
  * A {@link Randomizer} that generates a {@link Map} with random entries.
@@ -54,7 +56,7 @@ public class MapRandomizer<K, V> implements Randomizer<Map<K, V>> {
      * @param valueRandomizer the randomizer for values
      */
     public MapRandomizer(Randomizer<K> keyRandomizer, Randomizer<V> valueRandomizer) {
-        this(keyRandomizer, valueRandomizer, (byte) Math.abs((byte) (Constants.RANDOM.nextInt())));
+        this(keyRandomizer, valueRandomizer, abs(aNewByteRandomizer().getRandomValue()));
     }
 
     /**

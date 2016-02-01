@@ -26,7 +26,8 @@
 package io.github.benas.randombeans.randomizers;
 
 import io.github.benas.randombeans.api.Randomizer;
-import io.github.benas.randombeans.util.Constants;
+
+import static io.github.benas.randombeans.randomizers.IntegerRandomizer.aNewIntegerRandomizer;
 
 /**
  * Generate a random {@link Short}.
@@ -45,6 +46,6 @@ public class ShortRandomizer implements Randomizer<Short> {
 
     @Override
     public Short getRandomValue() {
-        return (short) Constants.RANDOM.nextInt();
+        return aNewIntegerRandomizer().getRandomValue().shortValue();
     }
 }

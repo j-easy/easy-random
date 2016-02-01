@@ -26,10 +26,12 @@
 package io.github.benas.randombeans.randomizers.collection;
 
 import io.github.benas.randombeans.api.Randomizer;
-import io.github.benas.randombeans.util.Constants;
 
 import java.util.Collection;
 import java.util.Objects;
+
+import static io.github.benas.randombeans.randomizers.ByteRandomizer.aNewByteRandomizer;
+import static java.lang.Math.abs;
 
 /**
  * A base class for collection randomizers.
@@ -44,7 +46,7 @@ public abstract class CollectionRandomizer<T> implements Randomizer<Collection<T
     protected Randomizer<T> delegate;
 
     protected CollectionRandomizer(final Randomizer<T> delegate) {
-        this(delegate, getRandomNumberOfElements());
+        this(delegate, abs(aNewByteRandomizer().getRandomValue()));
     }
 
     protected CollectionRandomizer(final Randomizer<T> delegate, final int nbElements) {
@@ -62,10 +64,6 @@ public abstract class CollectionRandomizer<T> implements Randomizer<Collection<T
 
     protected T getRandomElement() {
         return delegate.getRandomValue();
-    }
-
-    private static byte getRandomNumberOfElements() {
-        return (byte) Math.abs((byte) (Constants.RANDOM.nextInt()));
     }
 
 }

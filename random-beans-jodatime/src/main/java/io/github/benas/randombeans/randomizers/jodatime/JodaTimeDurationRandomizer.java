@@ -26,8 +26,10 @@
 package io.github.benas.randombeans.randomizers.jodatime;
 
 import io.github.benas.randombeans.api.Randomizer;
-import io.github.benas.randombeans.util.Constants;
 import org.joda.time.Duration;
+
+import static io.github.benas.randombeans.randomizers.IntegerRandomizer.aNewIntegerRandomizer;
+import static java.lang.Math.abs;
 
 /**
  * A {@link Randomizer} that generates random {@link Duration}.
@@ -37,6 +39,6 @@ import org.joda.time.Duration;
 public class JodaTimeDurationRandomizer implements Randomizer<Duration> {
     @Override
     public Duration getRandomValue() {
-        return new Duration(Math.abs(Constants.RANDOM.nextLong()));
+        return new Duration(abs(aNewIntegerRandomizer().getRandomValue()));
     }
 }

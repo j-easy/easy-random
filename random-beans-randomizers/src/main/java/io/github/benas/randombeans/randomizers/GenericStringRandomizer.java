@@ -26,7 +26,6 @@
 package io.github.benas.randombeans.randomizers;
 
 import io.github.benas.randombeans.api.Randomizer;
-import io.github.benas.randombeans.util.Constants;
 
 import java.util.ResourceBundle;
 
@@ -35,7 +34,7 @@ import java.util.ResourceBundle;
  *
  * @author Mahmoud Ben Hassine (mahmoud.benhassine@icloud.com)
  */
-public class GenericStringRandomizer implements Randomizer<String> {
+public class GenericStringRandomizer extends AbstractRandomizer<String> {
 
     private final String[] words;
 
@@ -50,7 +49,7 @@ public class GenericStringRandomizer implements Randomizer<String> {
 
     @Override
     public String getRandomValue() {
-        return words[Constants.RANDOM.nextInt(words.length)];
+        return words[random.nextInt(words.length)];
     }
 
     protected String[] getData(final String key) {

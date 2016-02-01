@@ -6,8 +6,8 @@ import io.github.benas.randombeans.api.Populator;
 import java.lang.reflect.Array;
 import java.util.List;
 
-import static io.github.benas.randombeans.util.Constants.MAXIMUM_COLLECTION_SIZE;
-import static io.github.benas.randombeans.util.Constants.RANDOM;
+import static io.github.benas.randombeans.randomizers.ByteRandomizer.aNewByteRandomizer;
+import static java.lang.Math.abs;
 import static java.util.Arrays.fill;
 
 /**
@@ -35,7 +35,7 @@ class ArrayPopulator {
     }
 
     Object getRandomPrimitiveArray(final Class<?> primitiveType) throws BeanPopulationException {
-        int size = RANDOM.nextInt(MAXIMUM_COLLECTION_SIZE) + 1;
+        int size = abs(aNewByteRandomizer().getRandomValue());
         // TODO A bounty will be offered to anybody that comes with a generic template method for that..
         if (primitiveType.equals(Byte.TYPE)) {
             byte[] result = new byte[size];

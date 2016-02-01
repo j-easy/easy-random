@@ -26,10 +26,11 @@
 package io.github.benas.randombeans.randomizers;
 
 import io.github.benas.randombeans.api.Randomizer;
-import io.github.benas.randombeans.util.Constants;
 
 import java.net.MalformedURLException;
 import java.net.URL;
+
+import static io.github.benas.randombeans.randomizers.range.IntegerRangeRandomizer.aNewIntegerRangeRandomizer;
 
 /**
  * Generate a random {@link URL}.
@@ -56,7 +57,8 @@ public class UrlRandomizer implements Randomizer<URL> {
     @Override
     public URL getRandomValue() {
         try {
-            return new URL(urls[Constants.RANDOM.nextInt(urls.length)]);
+            int randomIndex = aNewIntegerRangeRandomizer(0, urls.length - 1).getRandomValue();
+            return new URL(urls[randomIndex]);
         } catch (MalformedURLException e) {
             // predefined URLs are valid
             return null;

@@ -49,30 +49,30 @@ public class MapPopulationTest {
 
         assertThat(mapBean).isNotNull();
 
-        assertIsNotEmptyAndContainsNotNullAndNotEmptyStrings(mapBean.getMap().values());
-        assertIsNotEmptyAndContainsNotNullAndNotEmptyStrings(mapBean.getMap().keySet());
-        assertIsNotEmptyAndContainsNonZeroIntegers(mapBean.getTypedMap().keySet());
-        assertIsNotEmptyAndContainsOnlyNonEmptyPersons(mapBean.getTypedMap().values());
+        assertContainsNotNullAndNotEmptyStrings(mapBean.getMap().values());
+        assertContainsNotNullAndNotEmptyStrings(mapBean.getMap().keySet());
+        assertContainsNonZeroIntegers(mapBean.getTypedMap().keySet());
+        assertContainsOnlyNonEmptyPersons(mapBean.getTypedMap().values());
 
-        assertIsNotEmptyAndContainsNotNullAndNotEmptyStrings(mapBean.getSortedMap().values());
-        assertIsNotEmptyAndContainsNotNullAndNotEmptyStrings(mapBean.getSortedMap().keySet());
-        assertIsNotEmptyAndContainsNonZeroIntegers(mapBean.getTypedSortedMap().keySet());
-        assertIsNotEmptyAndContainsOnlyNonEmptyPersons(mapBean.getTypedSortedMap().values());
+        assertContainsNotNullAndNotEmptyStrings(mapBean.getSortedMap().values());
+        assertContainsNotNullAndNotEmptyStrings(mapBean.getSortedMap().keySet());
+        assertContainsNonZeroIntegers(mapBean.getTypedSortedMap().keySet());
+        assertContainsOnlyNonEmptyPersons(mapBean.getTypedSortedMap().values());
 
-        assertIsNotEmptyAndContainsNotNullAndNotEmptyStrings(mapBean.getNavigableMap().values());
-        assertIsNotEmptyAndContainsNotNullAndNotEmptyStrings(mapBean.getNavigableMap().keySet());
-        assertIsNotEmptyAndContainsNonZeroIntegers(mapBean.getTypedNavigableMap().keySet());
-        assertIsNotEmptyAndContainsOnlyNonEmptyPersons(mapBean.getTypedNavigableMap().values());
+        assertContainsNotNullAndNotEmptyStrings(mapBean.getNavigableMap().values());
+        assertContainsNotNullAndNotEmptyStrings(mapBean.getNavigableMap().keySet());
+        assertContainsNonZeroIntegers(mapBean.getTypedNavigableMap().keySet());
+        assertContainsOnlyNonEmptyPersons(mapBean.getTypedNavigableMap().values());
 
-        assertIsNotEmptyAndContainsNotNullAndNotEmptyStrings(mapBean.getConcurrentMap().values());
-        assertIsNotEmptyAndContainsNotNullAndNotEmptyStrings(mapBean.getConcurrentMap().keySet());
-        assertIsNotEmptyAndContainsNonZeroIntegers(mapBean.getTypedConcurrentMap().keySet());
-        assertIsNotEmptyAndContainsOnlyNonEmptyPersons(mapBean.getTypedConcurrentMap().values());
+        assertContainsNotNullAndNotEmptyStrings(mapBean.getConcurrentMap().values());
+        assertContainsNotNullAndNotEmptyStrings(mapBean.getConcurrentMap().keySet());
+        assertContainsNonZeroIntegers(mapBean.getTypedConcurrentMap().keySet());
+        assertContainsOnlyNonEmptyPersons(mapBean.getTypedConcurrentMap().values());
         
-        assertIsNotEmptyAndContainsNotNullAndNotEmptyStrings(mapBean.getConcurrentNavigableMap().values());
-        assertIsNotEmptyAndContainsNotNullAndNotEmptyStrings(mapBean.getConcurrentNavigableMap().keySet());
-        assertIsNotEmptyAndContainsNonZeroIntegers(mapBean.getTypedConcurrentNavigableMap().keySet());
-        assertIsNotEmptyAndContainsOnlyNonEmptyPersons(mapBean.getTypedConcurrentNavigableMap().values());
+        assertContainsNotNullAndNotEmptyStrings(mapBean.getConcurrentNavigableMap().values());
+        assertContainsNotNullAndNotEmptyStrings(mapBean.getConcurrentNavigableMap().keySet());
+        assertContainsNonZeroIntegers(mapBean.getTypedConcurrentNavigableMap().keySet());
+        assertContainsOnlyNonEmptyPersons(mapBean.getTypedConcurrentNavigableMap().values());
     }
 
     @Test
@@ -81,44 +81,43 @@ public class MapPopulationTest {
 
         assertThat(mapBean).isNotNull();
 
-        assertIsNotEmptyAndContainsNotNullAndNotEmptyStrings(mapBean.getHashMap().values());
-        assertIsNotEmptyAndContainsNotNullAndNotEmptyStrings(mapBean.getHashMap().keySet());
-        assertIsNotEmptyAndContainsNonZeroIntegers(mapBean.getTypedHashMap().keySet());
-        assertIsNotEmptyAndContainsOnlyNonEmptyPersons(mapBean.getTypedHashMap().values());
+        assertContainsNotNullAndNotEmptyStrings(mapBean.getHashMap().values());
+        assertContainsNotNullAndNotEmptyStrings(mapBean.getHashMap().keySet());
+        assertContainsNonZeroIntegers(mapBean.getTypedHashMap().keySet());
+        assertContainsOnlyNonEmptyPersons(mapBean.getTypedHashMap().values());
 
-        assertIsNotEmptyAndContainsNotNullAndNotEmptyStrings(mapBean.getHashtable().values());
-        assertIsNotEmptyAndContainsNotNullAndNotEmptyStrings(mapBean.getHashtable().keySet());
-        assertIsNotEmptyAndContainsNonZeroIntegers(mapBean.getTypedHashtable().keySet());
-        assertIsNotEmptyAndContainsOnlyNonEmptyPersons(mapBean.getTypedHashtable().values());
+        assertContainsNotNullAndNotEmptyStrings(mapBean.getHashtable().values());
+        assertContainsNotNullAndNotEmptyStrings(mapBean.getHashtable().keySet());
+        assertContainsNonZeroIntegers(mapBean.getTypedHashtable().keySet());
+        assertContainsOnlyNonEmptyPersons(mapBean.getTypedHashtable().values());
 
-        assertIsNotEmptyAndContainsNotNullAndNotEmptyStrings(mapBean.getLinkedHashMap().values());
-        assertIsNotEmptyAndContainsNotNullAndNotEmptyStrings(mapBean.getLinkedHashMap().keySet());
-        assertIsNotEmptyAndContainsNonZeroIntegers(mapBean.getTypedLinkedHashMap().keySet());
-        assertIsNotEmptyAndContainsOnlyNonEmptyPersons(mapBean.getTypedLinkedHashMap().values());
+        assertContainsNotNullAndNotEmptyStrings(mapBean.getLinkedHashMap().values());
+        assertContainsNotNullAndNotEmptyStrings(mapBean.getLinkedHashMap().keySet());
+        assertContainsNonZeroIntegers(mapBean.getTypedLinkedHashMap().keySet());
+        assertContainsOnlyNonEmptyPersons(mapBean.getTypedLinkedHashMap().values());
 
-        assertIsNotEmptyAndContainsNotNullAndNotEmptyStrings(mapBean.getWeakHashMap().values());
-        assertIsNotEmptyAndContainsNotNullAndNotEmptyStrings(mapBean.getWeakHashMap().keySet());
-        assertIsNotEmptyAndContainsNonZeroIntegers(mapBean.getTypedWeakHashMap().keySet());
-        assertIsNotEmptyAndContainsOnlyNonEmptyPersons(mapBean.getTypedWeakHashMap().values());
+        assertContainsNotNullAndNotEmptyStrings(mapBean.getWeakHashMap().values());
+        assertContainsNotNullAndNotEmptyStrings(mapBean.getWeakHashMap().keySet());
+        assertContainsNonZeroIntegers(mapBean.getTypedWeakHashMap().keySet());
+        assertContainsOnlyNonEmptyPersons(mapBean.getTypedWeakHashMap().values());
 
-        assertIsNotEmptyAndContainsNotNullAndNotEmptyStrings(mapBean.getIdentityHashMap().values());
-        assertIsNotEmptyAndContainsNotNullAndNotEmptyStrings(mapBean.getIdentityHashMap().keySet());
-        assertIsNotEmptyAndContainsNonZeroIntegers(mapBean.getTypedIdentityHashMap().keySet());
-        assertIsNotEmptyAndContainsOnlyNonEmptyPersons(mapBean.getTypedIdentityHashMap().values());
+        assertContainsNotNullAndNotEmptyStrings(mapBean.getIdentityHashMap().values());
+        assertContainsNotNullAndNotEmptyStrings(mapBean.getIdentityHashMap().keySet());
+        assertContainsNonZeroIntegers(mapBean.getTypedIdentityHashMap().keySet());
+        assertContainsOnlyNonEmptyPersons(mapBean.getTypedIdentityHashMap().values());
 
-        assertIsNotEmptyAndContainsNotNullAndNotEmptyStrings(mapBean.getTreeMap().values());
-        assertIsNotEmptyAndContainsNotNullAndNotEmptyStrings(mapBean.getTreeMap().keySet());
-        assertIsNotEmptyAndContainsNonZeroIntegers(mapBean.getTypedTreeMap().keySet());
-        assertIsNotEmptyAndContainsOnlyNonEmptyPersons(mapBean.getTypedTreeMap().values());
+        assertContainsNotNullAndNotEmptyStrings(mapBean.getTreeMap().values());
+        assertContainsNotNullAndNotEmptyStrings(mapBean.getTreeMap().keySet());
+        assertContainsNonZeroIntegers(mapBean.getTypedTreeMap().keySet());
+        assertContainsOnlyNonEmptyPersons(mapBean.getTypedTreeMap().values());
 
-        assertIsNotEmptyAndContainsNotNullAndNotEmptyStrings(mapBean.getConcurrentSkipListMap().values());
-        assertIsNotEmptyAndContainsNotNullAndNotEmptyStrings(mapBean.getConcurrentSkipListMap().keySet());
-        assertIsNotEmptyAndContainsNonZeroIntegers(mapBean.getTypedConcurrentSkipListMap().keySet());
-        assertIsNotEmptyAndContainsOnlyNonEmptyPersons(mapBean.getTypedConcurrentSkipListMap().values());
+        assertContainsNotNullAndNotEmptyStrings(mapBean.getConcurrentSkipListMap().values());
+        assertContainsNotNullAndNotEmptyStrings(mapBean.getConcurrentSkipListMap().keySet());
+        assertContainsNonZeroIntegers(mapBean.getTypedConcurrentSkipListMap().keySet());
+        assertContainsOnlyNonEmptyPersons(mapBean.getTypedConcurrentSkipListMap().values());
     }
 
-    private void assertIsNotEmptyAndContainsOnlyNonEmptyPersons(Collection<Person> persons) {
-        assertThat(persons).isNotEmpty();
+    private void assertContainsOnlyNonEmptyPersons(Collection<Person> persons) {
         for (Person person : persons) {
             assertThat(person).isNotNull();
             assertThat(person.getAddress().getCity()).isNotEmpty();
@@ -128,12 +127,12 @@ public class MapPopulationTest {
     }
 
     @SuppressWarnings({"unchecked", "rawtypes"})
-    private void assertIsNotEmptyAndContainsNotNullAndNotEmptyStrings(final Collection collection) {
+    private void assertContainsNotNullAndNotEmptyStrings(final Collection collection) {
         assertThat(collection).isNotEmpty().hasOnlyElementsOfType(String.class).doesNotContain(null, "");
     }
 
     @SuppressWarnings({"unchecked", "rawtypes"})
-    private void assertIsNotEmptyAndContainsNonZeroIntegers(final Collection collection) {
+    private void assertContainsNonZeroIntegers(final Collection collection) {
         assertThat(collection).isNotEmpty().hasOnlyElementsOfType(Integer.class).doesNotContain(0);
     }
 }

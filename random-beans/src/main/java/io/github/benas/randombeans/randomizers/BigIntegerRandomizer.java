@@ -26,9 +26,10 @@
 package io.github.benas.randombeans.randomizers;
 
 import io.github.benas.randombeans.api.Randomizer;
-import io.github.benas.randombeans.util.Constants;
 
 import java.math.BigInteger;
+
+import static java.lang.String.valueOf;
 
 /**
  * Generate a random {@link BigInteger}.
@@ -49,6 +50,6 @@ public class BigIntegerRandomizer implements Randomizer<BigInteger> {
 
     @Override
     public BigInteger getRandomValue() {
-        return new BigInteger(delegate.getRandomValue(), Constants.RANDOM);
+        return new BigInteger(valueOf(delegate.getRandomValue()));
     }
 }

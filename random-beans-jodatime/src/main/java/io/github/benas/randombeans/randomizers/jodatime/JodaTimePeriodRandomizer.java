@@ -26,8 +26,10 @@
 package io.github.benas.randombeans.randomizers.jodatime;
 
 import io.github.benas.randombeans.api.Randomizer;
-import io.github.benas.randombeans.util.Constants;
 import org.joda.time.Period;
+
+import static io.github.benas.randombeans.randomizers.IntegerRandomizer.aNewIntegerRandomizer;
+import static java.lang.Math.abs;
 
 /**
  * A {@link Randomizer} that generates random {@link Period}.
@@ -37,6 +39,6 @@ import org.joda.time.Period;
 public class JodaTimePeriodRandomizer implements Randomizer<Period> {
     @Override
     public Period getRandomValue() {
-        return new Period(Math.abs(Constants.RANDOM.nextInt()));
+        return new Period(abs(aNewIntegerRandomizer().getRandomValue()));
     }
 }

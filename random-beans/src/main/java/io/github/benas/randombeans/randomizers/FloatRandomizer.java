@@ -25,15 +25,12 @@
 
 package io.github.benas.randombeans.randomizers;
 
-import io.github.benas.randombeans.api.Randomizer;
-import io.github.benas.randombeans.util.Constants;
-
 /**
  * Generate a random {@link Float}.
  *
  * @author Mahmoud Ben Hassine (mahmoud.benhassine@icloud.com)
  */
-public class FloatRandomizer implements Randomizer<Float> {
+public class FloatRandomizer extends AbstractRandomizer<Float> {
 
     /**
      * Create a new {@link FloatRandomizer}.
@@ -45,6 +42,6 @@ public class FloatRandomizer implements Randomizer<Float> {
 
     @Override
     public Float getRandomValue() {
-        return Constants.RANDOM.nextFloat();
+        return random.nextFloat();
     }
 }

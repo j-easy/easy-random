@@ -25,15 +25,12 @@
 
 package io.github.benas.randombeans.randomizers;
 
-import io.github.benas.randombeans.api.Randomizer;
-import io.github.benas.randombeans.util.Constants;
-
 /**
  * Generate a random {@link Long}.
  *
  * @author Mahmoud Ben Hassine (mahmoud.benhassine@icloud.com)
  */
-public class LongRandomizer implements Randomizer<Long> {
+public class LongRandomizer extends AbstractRandomizer<Long> {
 
     /**
      * Create a new {@link LongRandomizer}.
@@ -45,6 +42,6 @@ public class LongRandomizer implements Randomizer<Long> {
 
     @Override
     public Long getRandomValue() {
-        return Constants.RANDOM.nextLong();
+        return random.nextLong();
     }
 }
