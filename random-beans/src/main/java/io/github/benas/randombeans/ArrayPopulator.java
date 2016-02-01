@@ -8,7 +8,7 @@ import java.util.List;
 
 import static io.github.benas.randombeans.randomizers.ByteRandomizer.aNewByteRandomizer;
 import static java.lang.Math.abs;
-import static java.util.Arrays.fill;
+import static org.apache.commons.lang3.ArrayUtils.add;
 
 /**
  * Random array populator.
@@ -40,56 +40,56 @@ class ArrayPopulator {
         if (primitiveType.equals(Byte.TYPE)) {
             byte[] result = new byte[size];
             for (int index = 0; index < size; index ++) {
-                fill(result, populator.populateBean(Byte.TYPE));
+                add(result, populator.populateBean(Byte.TYPE));
             }
             return result;
         }
         if (primitiveType.equals(Short.TYPE)) {
             short[] result = new short[size];
-            for (int index = 0; index < size; index ++){
-                fill(result, populator.populateBean(Short.TYPE));
+            for (int index = 0; index < size; index ++) {
+                add(result, populator.populateBean(Short.TYPE));
             }
             return result;
         }
         if (primitiveType.equals(Integer.TYPE)) {
             int[] result = new int[size];
             for (int index = 0; index < size; index ++){
-                fill(result, populator.populateBean(Integer.TYPE));
+                add(result, populator.populateBean(Integer.TYPE));
             }
             return result;
         }
         if (primitiveType.equals(Long.TYPE)) {
             long[] result = new long[size];
             for (int index = 0; index < size; index ++){
-                fill(result, populator.populateBean(Long.TYPE));
+                add(result, populator.populateBean(Long.TYPE));
             }
             return result;
         }
         if (primitiveType.equals(Float.TYPE)) {
             float[] result = new float[size];
             for (int index = 0; index < size; index ++){
-                fill(result, populator.populateBean(Float.TYPE));
+                add(result, populator.populateBean(Float.TYPE));
             }
             return result;
         }
         if (primitiveType.equals(Double.TYPE)) {
             double[] result = new double[size];
             for (int index = 0; index < size; index ++){
-                fill(result, populator.populateBean(Double.TYPE));
+                add(result, populator.populateBean(Double.TYPE));
             }
             return result;
         }
         if (primitiveType.equals(Character.TYPE)) {
             char[] result = new char[size];
             for (int index = 0; index < size; index ++){
-                fill(result, populator.populateBean(Character.TYPE));
+                add(result, populator.populateBean(Character.TYPE));
             }
             return result;
         }
         if (primitiveType.equals(Boolean.TYPE)) {
             boolean[] result = new boolean[size];
             for (int index = 0; index < size; index ++){
-                fill(result, populator.populateBean(Boolean.TYPE));
+                add(result, populator.populateBean(Boolean.TYPE));
             }
             return result;
         }

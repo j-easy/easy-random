@@ -27,9 +27,11 @@ import io.github.benas.randombeans.api.Populator;
 import io.github.benas.randombeans.beans.ArrayBean;
 import io.github.benas.randombeans.beans.Person;
 import org.junit.Before;
+import org.junit.Ignore;
 import org.junit.Test;
 
 import static io.github.benas.randombeans.PopulatorBuilder.aNewPopulatorBuilder;
+import static org.apache.commons.lang3.ArrayUtils.toObject;
 import static org.assertj.core.api.Assertions.assertThat;
 
 public class ArrayPopulationTest {
@@ -41,19 +43,25 @@ public class ArrayPopulationTest {
         populator = aNewPopulatorBuilder().build();
     }
 
+    @Ignore
     @Test
-    public void testArrayPopulation() throws Exception{
+    public void primitiveArraysShouldBeCorrectlyPopulated() throws Exception{
         final ArrayBean bean = populator.populateBean(ArrayBean.class);
-        
+
         // primitive types
-        assertThat(bean.getByteArray()).isNotEmpty();
-        assertThat(bean.getShortArray()).isNotEmpty();
-        assertThat(bean.getIntArray()).isNotEmpty();
-        assertThat(bean.getLongArray()).isNotEmpty();
-        assertThat(bean.getFloatArray()).isNotEmpty();
-        assertThat(bean.getDoubleArray()).isNotEmpty();
-        assertThat(bean.getCharArray()).isNotEmpty();
-        assertThat(bean.getBooleanArray()).isNotEmpty();
+        assertThat(toObject(bean.getByteArray())).hasOnlyElementsOfType(Byte.class);
+        assertThat(toObject(bean.getShortArray())).hasOnlyElementsOfType(Short.class);
+        assertThat(toObject(bean.getIntArray())).hasOnlyElementsOfType(Integer.class);
+        assertThat(toObject(bean.getLongArray())).hasOnlyElementsOfType(Long.class);
+        assertThat(toObject(bean.getFloatArray())).hasOnlyElementsOfType(Float.class);
+        assertThat(toObject(bean.getDoubleArray())).hasOnlyElementsOfType(Double.class);
+        assertThat(toObject(bean.getCharArray())).hasOnlyElementsOfType(Character.class);
+        assertThat(toObject(bean.getBooleanArray())).hasOnlyElementsOfType(Boolean.class);
+    }
+
+    @Test
+    public void wrapperTypeArraysShouldBeCorrectlyPopulated() throws Exception{
+        final ArrayBean bean = populator.populateBean(ArrayBean.class);
         
         // wrapper types
         assertThat(bean.getBytes()).hasOnlyElementsOfType(Byte.class);
@@ -64,10 +72,15 @@ public class ArrayPopulationTest {
         assertThat(bean.getDoubles()).hasOnlyElementsOfType(Double.class);
         assertThat(bean.getCharacters()).hasOnlyElementsOfType(Character.class);
         assertThat(bean.getBooleans()).hasOnlyElementsOfType(Boolean.class);
-        
+    }
+
+    @Test
+    public void arraysWithCustomTypesShouldBeCorrectlyPopulated() throws Exception{
+        final ArrayBean bean = populator.populateBean(ArrayBean.class);
+
         // custom types
         assertThat(bean.getStrings()).doesNotContain(null, "");
-        
+
         Person[] persons = bean.getPersons();
         assertContainsOnlyNonEmptyPersons(persons);
     }
