@@ -25,9 +25,10 @@
 
 package io.github.benas.randombeans;
 
-import java.util.IdentityHashMap;
-import java.util.Map;
-import java.util.Stack;
+import java.lang.reflect.Field;
+import java.util.*;
+
+import static java.util.Collections.singletonList;
 
 /**
  * Context object for a single call on {@link io.github.benas.randombeans.api.Populator#populateBean(Class, String...)}.
@@ -39,11 +40,13 @@ class PopulatorContext {
 
     private String[] excludedFields;
 
-    private Map<Class<?>, Object> populatedBeans = new IdentityHashMap<>();
+    private Map<Class<?>, Object> populatedBeans;
 
-    private Stack<PopulatorContextStackItem> stack = new Stack<>();
+    private Stack<PopulatorContextStackItem> stack;
 
     public PopulatorContext(String... excludedFields) {
+        populatedBeans = new IdentityHashMap<>();
+        stack = new Stack<>();
         this.excludedFields = excludedFields;
     }
 
@@ -71,23 +74,29 @@ class PopulatorContext {
         return stack.pop();
     }
 
-    public String getFieldFullName(String ... fieldNames) {
+    public String getFieldFullName(Field field) {
         StringBuilder builder = new StringBuilder();
-        for (PopulatorContextStackItem stackItem : stack) {
-            if (builder.length() > 0) {
-                builder.append(".");
-            }
-            builder.append(stackItem.getField().getName());
-        }
-
-        for (String fieldName : fieldNames) {
-            if (builder.length() > 0) {
-                builder.append(".");
-            }
-            builder.append(fieldName);
-        }
-
+        List<Field> stackedFields = getStackedFields();
+        appendDottedName(builder, stackedFields);
+        appendDottedName(builder, singletonList(field));
         return builder.toString();
+    }
+
+    private List<Field> getStackedFields() {
+        List<Field> fields = new ArrayList<>();
+        for (PopulatorContextStackItem stackItem : stack) {
+            fields.add(stackItem.getField());
+        }
+        return fields;
+    }
+
+    private void appendDottedName(StringBuilder builder, List<Field> fields) {
+        for (Field field : fields) {
+            if (builder.length() > 0) {
+                builder.append(".");
+            }
+            builder.append(field.getName());
+        }
     }
 
 }

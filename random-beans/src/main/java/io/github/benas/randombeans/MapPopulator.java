@@ -2,17 +2,20 @@ package io.github.benas.randombeans;
 
 import io.github.benas.randombeans.api.BeanPopulationException;
 import io.github.benas.randombeans.api.Populator;
-import io.github.benas.randombeans.util.ReflectionUtils;
 import org.objenesis.Objenesis;
 
 import java.lang.reflect.Field;
 import java.lang.reflect.ParameterizedType;
 import java.lang.reflect.Type;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
+import java.util.concurrent.ConcurrentHashMap;
+import java.util.concurrent.ConcurrentMap;
+import java.util.concurrent.ConcurrentNavigableMap;
+import java.util.concurrent.ConcurrentSkipListMap;
 
 import static io.github.benas.randombeans.util.Constants.MAXIMUM_COLLECTION_SIZE;
 import static io.github.benas.randombeans.util.Constants.RANDOM;
+import static io.github.benas.randombeans.util.ReflectionUtils.isInterface;
 
 /**
  * Random map populator.
@@ -34,23 +37,23 @@ class MapPopulator {
         Class<?> fieldType = field.getType();
 
         Map<Object, Object> map;
-        if (!fieldType.isInterface()) {
+        if (isInterface(field)) {
+            map = (Map<Object, Object>) getEmptyTypedMap(fieldType);
+        } else {
             try {
                 map = (Map<Object, Object>) fieldType.newInstance();
             } catch (InstantiationException e) {
                 map = (Map<Object, Object>) objenesis.newInstance(fieldType);
             }
-        } else {
-            map = (Map<Object, Object>) ReflectionUtils.getEmptyTypedMap(fieldType);
         }
 
         int size = RANDOM.nextInt(MAXIMUM_COLLECTION_SIZE) + 1;
 
-        Type genericKeyType = field.getGenericType();
+        Type fieldGenericType = field.getGenericType();
         Type baseKeyType = String.class;
         Type baseValueType = String.class;
-        if (genericKeyType instanceof ParameterizedType) {
-            ParameterizedType parameterizedType = (ParameterizedType) genericKeyType;
+        if (fieldGenericType instanceof ParameterizedType) {
+            ParameterizedType parameterizedType = (ParameterizedType) fieldGenericType;
             baseKeyType = parameterizedType.getActualTypeArguments()[0];
             baseValueType = parameterizedType.getActualTypeArguments()[1];
         }
@@ -62,6 +65,20 @@ class MapPopulator {
 
         for (int index = 0; index < size; index++) {
             map.put(keyItems.get(index), valueItems.get(index));
+        }
+        return map;
+    }
+
+    private Map<?, ?> getEmptyTypedMap(final Class<?> type) {
+        Map<?, ?> map = new HashMap<>();
+        if (ConcurrentNavigableMap.class.isAssignableFrom(type)) {
+            map = new ConcurrentSkipListMap<>();
+        } else if (ConcurrentMap.class.isAssignableFrom(type)) {
+            map = new ConcurrentHashMap<>();
+        } else if (NavigableMap.class.isAssignableFrom(type)) {
+            map = new TreeMap<>();
+        } else if (SortedMap.class.isAssignableFrom(type)) {
+            map = new TreeMap<>();
         }
         return map;
     }

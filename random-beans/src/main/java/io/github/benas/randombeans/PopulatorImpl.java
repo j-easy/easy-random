@@ -31,16 +31,15 @@ import io.github.benas.randombeans.api.Populator;
 import io.github.benas.randombeans.api.Randomizer;
 import io.github.benas.randombeans.api.RandomizerRegistry;
 import io.github.benas.randombeans.randomizers.EnumRandomizer;
-import io.github.benas.randombeans.util.Constants;
 import org.objenesis.Objenesis;
 import org.objenesis.ObjenesisStd;
 
 import java.lang.reflect.Field;
-import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
 
+import static io.github.benas.randombeans.util.Constants.MAXIMUM_COLLECTION_SIZE;
 import static io.github.benas.randombeans.util.Constants.RANDOM;
 import static io.github.benas.randombeans.util.ReflectionUtils.*;
 
@@ -51,7 +50,7 @@ import static io.github.benas.randombeans.util.ReflectionUtils.*;
  */
 final class PopulatorImpl implements Populator {
 
-    private final Objenesis objenesis = new ObjenesisStd();
+    private Objenesis objenesis;
 
     private ArrayPopulator arrayPopulator;
 
@@ -62,7 +61,8 @@ final class PopulatorImpl implements Populator {
     private RandomizerProvider randomizerProvider;
 
     PopulatorImpl(final Set<RandomizerRegistry> registries) {
-        this.randomizerProvider = new RandomizerProvider(registries);
+        objenesis = new ObjenesisStd();
+        randomizerProvider = new RandomizerProvider(registries);
         arrayPopulator = new ArrayPopulator(this);
         collectionPopulator = new CollectionPopulator(this, objenesis);
         mapPopulator = new MapPopulator(this, objenesis);
@@ -100,7 +100,7 @@ final class PopulatorImpl implements Populator {
 
             //Generate random data for each field
             for (Field field : declaredFields) {
-                if (!shouldExcludeField(field, context)) {
+                if (!shouldBeExcluded(field, context)) {
                     populateField(result, field, context);
                 }
             }
@@ -112,15 +112,12 @@ final class PopulatorImpl implements Populator {
 
     @Override
     public <T> List<T> populateBeans(final Class<T> type, final String... excludedFields) throws BeanPopulationException {
-        int size = getRandomCollectionSize();
-        return populateBeans(type, size, excludedFields);
+        return populateBeans(type, getRandomCollectionSize(), excludedFields);
     }
 
     @Override
     public <T> List<T> populateBeans(final Class<T> type, final int size, final String... excludedFields) throws BeanPopulationException {
-        if (size < 0) {
-            throw new IllegalArgumentException("The number of beans to populate must be positive.");
-        }
+        checkSize(size);
         List<T> beans = new ArrayList<>(size);
         for (int i = 0; i < size; i++) {
             T bean = populateBean(type, excludedFields);
@@ -129,12 +126,18 @@ final class PopulatorImpl implements Populator {
         return beans;
     }
 
+    private void checkSize(final int size) {
+        if (size < 0) {
+            throw new IllegalArgumentException("The size must be positive");
+        }
+    }
+
     private int getRandomCollectionSize() {
-        return RANDOM.nextInt(Constants.MAXIMUM_COLLECTION_SIZE) + 1;
+        return RANDOM.nextInt(MAXIMUM_COLLECTION_SIZE) + 1;
     }
 
     private void populateField(final Object target, final Field field, final PopulatorContext context)
-            throws IllegalAccessException, NoSuchMethodException, InvocationTargetException, BeanPopulationException {
+            throws BeanPopulationException, IllegalAccessException {
 
         context.pushStackItem(new PopulatorContextStackItem(target, field));
         Object value;
@@ -149,12 +152,10 @@ final class PopulatorImpl implements Populator {
     }
 
     private Object generateRandomValue(final Field field, final PopulatorContext context)
-            throws IllegalAccessException, NoSuchMethodException, InvocationTargetException, BeanPopulationException {
+            throws BeanPopulationException, IllegalAccessException {
         Class<?> fieldType = field.getType();
         Object value;
-        if (fieldType.isEnum()) {
-            value = getRandomEnum(fieldType);
-        } else if (isArrayType(fieldType)) {
+        if (isArrayType(fieldType)) {
             value = arrayPopulator.getRandomArray(fieldType);
         } else if (isCollectionType(fieldType)) {
             value = collectionPopulator.getRandomCollection(field);
@@ -166,11 +167,11 @@ final class PopulatorImpl implements Populator {
         return value;
     }
 
-    private Enum getRandomEnum(Class fieldType) {
+    private Enum getRandomEnum(final Class fieldType) {
         return new EnumRandomizer(fieldType).getRandomValue();
     }
 
-    private boolean shouldExcludeField(final Field field, final PopulatorContext context) {
+    private boolean shouldBeExcluded(final Field field, final PopulatorContext context) {
         if (field.isAnnotationPresent(Exclude.class)) {
             return true;
         }
@@ -180,7 +181,7 @@ final class PopulatorImpl implements Populator {
         if (context.getExcludedFields().length == 0) {
             return false;
         }
-        String fieldFullName = context.getFieldFullName(field.getName());
+        String fieldFullName = context.getFieldFullName(field);
         for (String excludedFieldName : context.getExcludedFields()) {
             if (fieldFullName.equalsIgnoreCase(excludedFieldName)) {
                 return true;

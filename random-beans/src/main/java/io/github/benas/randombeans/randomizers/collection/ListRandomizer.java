@@ -25,7 +25,6 @@
 package io.github.benas.randombeans.randomizers.collection;
 
 import io.github.benas.randombeans.api.Randomizer;
-import io.github.benas.randombeans.randomizers.collection.CollectionRandomizer;
 
 import java.util.ArrayList;
 import java.util.List;

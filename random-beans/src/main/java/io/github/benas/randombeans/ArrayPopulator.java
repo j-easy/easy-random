@@ -6,6 +6,10 @@ import io.github.benas.randombeans.api.Populator;
 import java.lang.reflect.Array;
 import java.util.List;
 
+import static io.github.benas.randombeans.util.Constants.MAXIMUM_COLLECTION_SIZE;
+import static io.github.benas.randombeans.util.Constants.RANDOM;
+import static java.util.Arrays.fill;
+
 /**
  * Random array populator.
  *
@@ -19,81 +23,75 @@ class ArrayPopulator {
         this.populator = populator;
     }
 
+    @SuppressWarnings("unchecked")
     <T> Object getRandomArray(final Class<?> fieldType) throws BeanPopulationException {
         Class<?> componentType = fieldType.getComponentType();
         if (componentType.isPrimitive()) {
             return getRandomPrimitiveArray(componentType);
         }
         List<?> items = populator.populateBeans(fieldType.getComponentType());
-        @SuppressWarnings("unchecked")
         T[] itemsList = (T[]) Array.newInstance(componentType, items.size());
         return items.toArray(itemsList);
     }
 
     Object getRandomPrimitiveArray(final Class<?> primitiveType) throws BeanPopulationException {
-        if (primitiveType.getName().equals("byte")) {
-            List<Byte> items = populator.populateBeans(Byte.TYPE);
-            byte[] retVal = new byte[items.size()];
-            for (int index = 0; index < items.size(); index ++){
-                retVal[index] = items.get(index);
+        int size = RANDOM.nextInt(MAXIMUM_COLLECTION_SIZE) + 1;
+        // TODO A bounty will be offered to anybody that comes with a generic template method for that..
+        if (primitiveType.equals(Byte.TYPE)) {
+            byte[] result = new byte[size];
+            for (int index = 0; index < size; index ++) {
+                fill(result, populator.populateBean(Byte.TYPE));
             }
-            return retVal;
+            return result;
         }
-        if (primitiveType.getName().equals("short")) {
-            List<Short> items = populator.populateBeans(Short.TYPE);
-            short[] retVal = new short[items.size()];
-            for (int index = 0; index < items.size(); index ++){
-                retVal[index] = items.get(index);
+        if (primitiveType.equals(Short.TYPE)) {
+            short[] result = new short[size];
+            for (int index = 0; index < size; index ++){
+                fill(result, populator.populateBean(Short.TYPE));
             }
-            return retVal;
+            return result;
         }
-        if (primitiveType.getName().equals("int")) {
-            List<Integer> items = populator.populateBeans(Integer.TYPE);
-            int[] retVal = new int[items.size()];
-            for (int index = 0; index < items.size(); index ++){
-                retVal[index] = items.get(index);
+        if (primitiveType.equals(Integer.TYPE)) {
+            int[] result = new int[size];
+            for (int index = 0; index < size; index ++){
+                fill(result, populator.populateBean(Integer.TYPE));
             }
-            return retVal;
+            return result;
         }
-        if (primitiveType.getName().equals("long")) {
-            List<Long> items = populator.populateBeans(Long.TYPE);
-            long[] retVal = new long[items.size()];
-            for (int index = 0; index < items.size(); index ++){
-                retVal[index] = items.get(index);
+        if (primitiveType.equals(Long.TYPE)) {
+            long[] result = new long[size];
+            for (int index = 0; index < size; index ++){
+                fill(result, populator.populateBean(Long.TYPE));
             }
-            return retVal;
+            return result;
         }
-        if (primitiveType.getName().equals("float")) {
-            List<Float> items = populator.populateBeans(Float.TYPE);
-            float[] retVal = new float[items.size()];
-            for (int index = 0; index < items.size(); index ++){
-                retVal[index] = items.get(index);
+        if (primitiveType.equals(Float.TYPE)) {
+            float[] result = new float[size];
+            for (int index = 0; index < size; index ++){
+                fill(result, populator.populateBean(Float.TYPE));
             }
-            return retVal;
+            return result;
         }
-        if (primitiveType.getName().equals("double")) {
-            List<Double> items = populator.populateBeans(Double.TYPE);
-            double[] retVal = new double[items.size()];
-            for (int index = 0; index < items.size(); index ++){
-                retVal[index] = items.get(index);
+        if (primitiveType.equals(Double.TYPE)) {
+            double[] result = new double[size];
+            for (int index = 0; index < size; index ++){
+                fill(result, populator.populateBean(Double.TYPE));
             }
-            return retVal;
+            return result;
         }
-        if (primitiveType.getName().equals("char")) {
-            List<Character> items = populator.populateBeans(Character.TYPE);
-            char[] retVal = new char[items.size()];
-            for (int index = 0; index < items.size(); index ++){
-                retVal[index] = items.get(index);
+        if (primitiveType.equals(Character.TYPE)) {
+            char[] result = new char[size];
+            for (int index = 0; index < size; index ++){
+                fill(result, populator.populateBean(Character.TYPE));
             }
-            return retVal;
+            return result;
         }
-        if (primitiveType.getName().equals("boolean")) {
-            List<Boolean> items = populator.populateBeans(Boolean.TYPE);
-            boolean[] retVal = new boolean[items.size()];
-            for (int index = 0; index < items.size(); index ++){
-                retVal[index] = items.get(index);
+        if (primitiveType.equals(Boolean.TYPE)) {
+            boolean[] result = new boolean[size];
+            for (int index = 0; index < size; index ++){
+                fill(result, populator.populateBean(Boolean.TYPE));
             }
-            return retVal;
+            return result;
         }
         return null;
     }
