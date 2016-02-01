@@ -26,7 +26,6 @@
 package io.github.benas.randombeans.randomizers.jodatime;
 
 import io.github.benas.randombeans.api.Randomizer;
-import io.github.benas.randombeans.util.Constants;
 import org.joda.time.LocalTime;
 
 /**
@@ -34,9 +33,10 @@ import org.joda.time.LocalTime;
  *
  * @author Nikola Milivojevic (0dziga0@gmail.com)
  */
-public class JodaTimeLocalTimeRandomizer implements Randomizer<LocalTime> {
+public class JodaTimeLocalTimeRandomizer extends JodaTimeAbstractRandomizer<LocalTime> {
+
     @Override
     public LocalTime getRandomValue() {
-        return new LocalTime(Constants.DATE_RANGE_RANDOMIZER.getRandomValue().getTime());
+        return new LocalTime(getRandomDate().getTime());
     }
 }

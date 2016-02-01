@@ -25,8 +25,6 @@
 
 package io.github.benas.randombeans.util;
 
-import io.github.benas.randombeans.randomizers.range.DateRangeRandomizer;
-
 import java.util.Date;
 
 import static org.apache.commons.lang3.time.DateUtils.addYears;
@@ -44,26 +42,19 @@ public abstract class Constants {
     public static final int DEFAULT_DATE_RANGE = 10;
 
     /**
-     * Default generated dates format.
-     */
-    public static final String DEFAULT_DATE_FORMAT = "E M dd hh:mm:ss a zzz";
-
-    /**
      * Default generated strings length.
      */
     public static final int DEFAULT_STRING_LENGTH = 10;
 
     /**
-     * The common random date randomizer used to generate date types.
+     * The date of ten years ago form now.
      */
-    public static final DateRangeRandomizer DATE_RANGE_RANDOMIZER;
+    public static final Date TEN_YEARS_AGO = addYears(new Date(), -DEFAULT_DATE_RANGE);;
 
-    static {
-        Date today = new Date();
-        Date tenYearsAgo = addYears(today, -DEFAULT_DATE_RANGE);
-        Date inTenYears = addYears(today, DEFAULT_DATE_RANGE);
-        DATE_RANGE_RANDOMIZER = new DateRangeRandomizer(tenYearsAgo, inTenYears);
-    }
+    /**
+     * The date of ten years in the future.
+     */
+    public static final Date IN_TEN_YEARS = addYears(new Date(), DEFAULT_DATE_RANGE);;
 
     private Constants() { }
 

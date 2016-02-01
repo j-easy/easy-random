@@ -26,9 +26,12 @@
 package io.github.benas.randombeans.randomizers;
 
 import io.github.benas.randombeans.api.Randomizer;
-import io.github.benas.randombeans.util.Constants;
 
 import java.util.Date;
+
+import static io.github.benas.randombeans.randomizers.range.DateRangeRandomizer.aNewDateRangeRandomizer;
+import static io.github.benas.randombeans.util.Constants.IN_TEN_YEARS;
+import static io.github.benas.randombeans.util.Constants.TEN_YEARS_AGO;
 
 /**
  * Generate a random {@link Date}.
@@ -47,6 +50,6 @@ public class DateRandomizer implements Randomizer<Date> {
 
     @Override
     public Date getRandomValue() {
-        return Constants.DATE_RANGE_RANDOMIZER.getRandomValue();
+        return aNewDateRangeRandomizer(TEN_YEARS_AGO, IN_TEN_YEARS).getRandomValue();
     }
 }

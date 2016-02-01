@@ -26,7 +26,6 @@
 package io.github.benas.randombeans.randomizers.jodatime;
 
 import io.github.benas.randombeans.api.Randomizer;
-import io.github.benas.randombeans.util.Constants;
 import org.joda.time.DateTime;
 
 /**
@@ -34,9 +33,9 @@ import org.joda.time.DateTime;
  *
  * @author Nikola Milivojevic (0dziga0@gmail.com)
  */
-public class JodaTimeDateTimeRandomizer implements Randomizer<DateTime> {
+public class JodaTimeDateTimeRandomizer extends JodaTimeAbstractRandomizer<DateTime> {
     @Override
     public DateTime getRandomValue() {
-        return new DateTime(Constants.DATE_RANGE_RANDOMIZER.getRandomValue().getTime());
+        return new DateTime(getRandomDate().getTime());
     }
 }
