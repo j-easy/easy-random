@@ -44,6 +44,14 @@ public class UriRandomizer implements Randomizer<URI> {
                                     "mailto:John.Doe@example.com",
                                     "http://www.wikipedia.org" };
 
+    /**
+     * Create a new {@link UriRandomizer}.
+     * @return a new {@link UriRandomizer}.
+     */
+    public static UriRandomizer aNewUriRandomizer() {
+        return new UriRandomizer();
+    }
+
     @Override
     public URI getRandomValue() {
         try {

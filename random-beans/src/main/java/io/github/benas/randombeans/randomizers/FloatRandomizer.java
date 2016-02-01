@@ -35,6 +35,14 @@ import io.github.benas.randombeans.util.Constants;
  */
 public class FloatRandomizer implements Randomizer<Float> {
 
+    /**
+     * Create a new {@link FloatRandomizer}.
+     * @return a new {@link FloatRandomizer}.
+     */
+    public static FloatRandomizer aNewFloatRandomizer() {
+        return new FloatRandomizer();
+    }
+
     @Override
     public Float getRandomValue() {
         return Constants.RANDOM.nextFloat();

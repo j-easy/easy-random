@@ -35,6 +35,14 @@ import io.github.benas.randombeans.util.Constants;
  */
 public class BooleanRandomizer implements Randomizer<Boolean> {
 
+    /**
+     * Create a new {@link BooleanRandomizer}.
+     * @return a new {@link BooleanRandomizer}.
+     */
+    public static BooleanRandomizer aNewBooleanRandomizer() {
+        return new BooleanRandomizer();
+    }
+
     @Override
     public Boolean getRandomValue() {
         return Constants.RANDOM.nextBoolean();

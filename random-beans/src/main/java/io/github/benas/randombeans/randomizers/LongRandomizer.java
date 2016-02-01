@@ -35,6 +35,14 @@ import io.github.benas.randombeans.util.Constants;
  */
 public class LongRandomizer implements Randomizer<Long> {
 
+    /**
+     * Create a new {@link LongRandomizer}.
+     * @return a new {@link LongRandomizer}.
+     */
+    public static LongRandomizer aNewLongRandomizer() {
+        return new LongRandomizer();
+    }
+
     @Override
     public Long getRandomValue() {
         return Constants.RANDOM.nextLong();

@@ -37,6 +37,14 @@ import java.util.Date;
  */
 public class DateRandomizer implements Randomizer<Date> {
 
+    /**
+     * Create a new {@link DateRandomizer}.
+     * @return a new {@link DateRandomizer}.
+     */
+    public static DateRandomizer aNewDateRandomizer() {
+        return new DateRandomizer();
+    }
+
     @Override
     public Date getRandomValue() {
         return Constants.DATE_RANGE_RANDOMIZER.getRandomValue();

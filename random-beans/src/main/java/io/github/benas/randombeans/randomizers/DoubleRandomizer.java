@@ -35,6 +35,14 @@ import io.github.benas.randombeans.util.Constants;
  */
 public class DoubleRandomizer implements Randomizer<Double> {
 
+    /**
+     * Create a new {@link DoubleRandomizer}.
+     * @return a new {@link DoubleRandomizer}.
+     */
+    public static DoubleRandomizer aNewDoubleRandomizer() {
+        return new DoubleRandomizer();
+    }
+
     @Override
     public Double getRandomValue() {
         return Constants.RANDOM.nextDouble();

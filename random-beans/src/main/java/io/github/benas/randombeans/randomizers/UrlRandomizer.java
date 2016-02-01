@@ -45,6 +45,14 @@ public class UrlRandomizer implements Randomizer<URL> {
                                     "http://www.yahoo.com",
                                     "http://www.wikipedia.org" };
 
+    /**
+     * Create a new {@link UrlRandomizer}.
+     * @return a new {@link UrlRandomizer}.
+     */
+    public static UrlRandomizer aNewUrlRandomizer() {
+        return new UrlRandomizer();
+    }
+
     @Override
     public URL getRandomValue() {
         try {

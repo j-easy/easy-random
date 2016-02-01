@@ -36,6 +36,14 @@ import org.apache.commons.lang3.RandomStringUtils;
  */
 public class StringRandomizer implements Randomizer<String> {
 
+    /**
+     * Create a new {@link StringRandomizer}.
+     * @return a new {@link StringRandomizer}.
+     */
+    public static StringRandomizer aNewStringRandomizer() {
+        return new StringRandomizer();
+    }
+
     @Override
     public String getRandomValue() {
         return RandomStringUtils.randomAlphabetic(Constants.DEFAULT_STRING_LENGTH);

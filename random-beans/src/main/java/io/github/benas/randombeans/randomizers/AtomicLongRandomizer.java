@@ -38,6 +38,14 @@ public class AtomicLongRandomizer implements Randomizer<AtomicLong> {
 
     private LongRandomizer delegate = new LongRandomizer();
 
+    /**
+     * Create a new {@link AtomicLongRandomizer}.
+     * @return a new {@link AtomicLongRandomizer}.
+     */
+    public static AtomicLongRandomizer aNewAtomicLongRandomizer() {
+        return new AtomicLongRandomizer();
+    }
+
     @Override
     public AtomicLong getRandomValue() {
         return new AtomicLong(delegate.getRandomValue());

@@ -38,6 +38,14 @@ public class CalendarRandomizer implements Randomizer<Calendar> {
 
     private DateRandomizer delegate = new DateRandomizer();
 
+    /**
+     * Create a new {@link CalendarRandomizer}.
+     * @return a new {@link CalendarRandomizer}.
+     */
+    public static CalendarRandomizer aNewCalendarRandomizer() {
+        return new CalendarRandomizer();
+    }
+
     @Override
     public Calendar getRandomValue() {
         Calendar calendar = Calendar.getInstance();

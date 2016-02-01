@@ -38,6 +38,14 @@ public class SqlDateRandomizer implements Randomizer<Date> {
 
     private DateRandomizer delegate = new DateRandomizer();
 
+    /**
+     * Create a new {@link SqlDateRandomizer}.
+     * @return a new {@link SqlDateRandomizer}.
+     */
+    public static SqlDateRandomizer aNewSqlDateRandomizer() {
+        return new SqlDateRandomizer();
+    }
+
     @Override
     public Date getRandomValue() {
         return new Date(delegate.getRandomValue().getTime());

@@ -38,6 +38,17 @@ public class BigIntegerRangeRandomizer implements Randomizer<BigInteger> {
 
     private final LongRangeRandomizer delegate;
 
+    /**
+     * Create a new {@link BigIntegerRangeRandomizer}.
+     * @return a new {@link BigIntegerRangeRandomizer}.
+     */
+    public static BigIntegerRangeRandomizer aNewBigIntegerRangeRandomizer(final Long min, final Long max) {
+        return new BigIntegerRangeRandomizer(min, max);
+    }
+
+    /**
+     * Create a new {@link BigIntegerRangeRandomizer}.
+     */
     public BigIntegerRangeRandomizer(final Long min, final Long max) {
         delegate = new LongRangeRandomizer(min, max);
     }

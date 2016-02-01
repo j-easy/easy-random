@@ -38,6 +38,14 @@ public class EnumRandomizer implements Randomizer<Enum> {
 
     /**
      * Create a new {@link EnumRandomizer}.
+     * @return a new {@link EnumRandomizer}.
+     */
+    public static EnumRandomizer aNewEnumRandomizer(Class<? extends Enum> enumeration) {
+        return new EnumRandomizer(enumeration);
+    }
+
+    /**
+     * Create a new {@link EnumRandomizer}.
      *
      * @param enumeration the enumeration from which this randomizer will generate random values
      */

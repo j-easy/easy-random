@@ -35,6 +35,14 @@ import io.github.benas.randombeans.util.Constants;
  */
 public class ByteRandomizer implements Randomizer<Byte> {
 
+    /**
+     * Create a new {@link ByteRandomizer}.
+     * @return a new {@link ByteRandomizer}.
+     */
+    public static ByteRandomizer aNewByteRandomizer() {
+        return new ByteRandomizer();
+    }
+
     @Override
     public Byte getRandomValue() {
         return (byte) Constants.RANDOM.nextInt();

@@ -38,6 +38,14 @@ public class BigDecimalRandomizer implements Randomizer<BigDecimal> {
 
     private DoubleRandomizer delegate = new DoubleRandomizer();
 
+    /**
+     * Create a new {@link BigDecimalRandomizer}.
+     * @return a new {@link BigDecimalRandomizer}.
+     */
+    public static BigDecimalRandomizer aNewBigDecimalRandomizer() {
+        return new BigDecimalRandomizer();
+    }
+
     @Override
     public BigDecimal getRandomValue() {
         return new BigDecimal(delegate.getRandomValue());

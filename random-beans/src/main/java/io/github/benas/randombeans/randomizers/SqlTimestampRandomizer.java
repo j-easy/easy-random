@@ -38,6 +38,14 @@ public class SqlTimestampRandomizer implements Randomizer<Timestamp> {
 
     private DateRandomizer delegate = new DateRandomizer();
 
+    /**
+     * Create a new {@link SqlTimestampRandomizer}.
+     * @return a new {@link SqlTimestampRandomizer}.
+     */
+    public static SqlTimestampRandomizer aNewSqlTimestampRandomizer() {
+        return new SqlTimestampRandomizer();
+    }
+
     @Override
     public Timestamp getRandomValue() {
         return new Timestamp(delegate.getRandomValue().getTime());

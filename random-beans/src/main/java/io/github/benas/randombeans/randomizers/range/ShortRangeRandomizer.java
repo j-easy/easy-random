@@ -32,6 +32,17 @@ package io.github.benas.randombeans.randomizers.range;
  */
 public class ShortRangeRandomizer extends AbstractRangeRandomizer<Short> {
 
+    /**
+     * Create a new {@link ShortRangeRandomizer}.
+     * @return a new {@link ShortRangeRandomizer}.
+     */
+    public static ShortRangeRandomizer aNewShortRangeRandomizer(final Short min, final Short max) {
+        return new ShortRangeRandomizer(min, max);
+    }
+
+    /**
+     * Create a new {@link ShortRangeRandomizer}.
+     */
     public ShortRangeRandomizer(final Short min, final Short max) {
         super(min, max);
     }

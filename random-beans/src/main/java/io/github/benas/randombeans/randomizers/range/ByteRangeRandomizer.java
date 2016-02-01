@@ -32,6 +32,17 @@ package io.github.benas.randombeans.randomizers.range;
  */
 public class ByteRangeRandomizer extends AbstractRangeRandomizer<Byte> {
 
+    /**
+     * Create a new {@link ByteRangeRandomizer}.
+     * @return a new {@link ByteRangeRandomizer}.
+     */
+    public static ByteRangeRandomizer aNewByteRangeRandomizer(final Byte min, final Byte max) {
+        return new ByteRangeRandomizer(min, max);
+    }
+
+    /**
+     * Create a new {@link ByteRangeRandomizer}.
+     */
     public ByteRangeRandomizer(final Byte min, final Byte max) {
         super(min, max);
     }

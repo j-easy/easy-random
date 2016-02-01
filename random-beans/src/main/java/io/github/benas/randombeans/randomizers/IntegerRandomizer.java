@@ -35,6 +35,14 @@ import io.github.benas.randombeans.util.Constants;
  */
 public class IntegerRandomizer implements Randomizer<Integer> {
 
+    /**
+     * Create a new {@link IntegerRandomizer}.
+     * @return a new {@link IntegerRandomizer}.
+     */
+    public static IntegerRandomizer aNewIntegerRandomizer() {
+        return new IntegerRandomizer();
+    }
+
     @Override
     public Integer getRandomValue() {
         return Constants.RANDOM.nextInt();

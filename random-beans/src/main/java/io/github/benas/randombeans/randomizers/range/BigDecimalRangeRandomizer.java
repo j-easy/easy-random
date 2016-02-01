@@ -38,6 +38,17 @@ public class BigDecimalRangeRandomizer implements Randomizer<BigDecimal> {
 
     private final LongRangeRandomizer delegate;
 
+    /**
+     * Create a new {@link BigDecimalRangeRandomizer}.
+     * @return a new {@link BigDecimalRangeRandomizer}.
+     */
+    public static BigDecimalRangeRandomizer aNewBigDecimalRangeRandomizer(final Long min, final Long max) {
+        return new BigDecimalRangeRandomizer(min, max);
+    }
+
+    /**
+     * Create a new {@link BigDecimalRangeRandomizer}.
+     */
     public BigDecimalRangeRandomizer(final Long min, final Long max) {
         delegate = new LongRangeRandomizer(min, max);
     }

@@ -37,6 +37,17 @@ public class StringLengthRandomizer implements Randomizer<String> {
 
     private IntegerRangeRandomizer delegate;
 
+    /**
+     * Create a new {@link StringLengthRandomizer}.
+     * @return a new {@link StringLengthRandomizer}.
+     */
+    public static StringLengthRandomizer aNewStringLengthRandomizer(final Integer min, final Integer max) {
+        return new StringLengthRandomizer(min, max);
+    }
+
+    /**
+     * Create a new {@link StringLengthRandomizer}.
+     */
     public StringLengthRandomizer(final Integer min, final Integer max) {
         delegate = new IntegerRangeRandomizer(min, max);
     }

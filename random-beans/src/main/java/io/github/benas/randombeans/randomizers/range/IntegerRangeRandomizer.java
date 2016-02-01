@@ -32,6 +32,17 @@ package io.github.benas.randombeans.randomizers.range;
  */
 public class IntegerRangeRandomizer extends AbstractRangeRandomizer<Integer> {
 
+    /**
+     * Create a new {@link IntegerRangeRandomizer}.
+     * @return a new {@link IntegerRangeRandomizer}.
+     */
+    public static IntegerRangeRandomizer aNewIntegerRangeRandomizer(final Integer min, final Integer max) {
+        return new IntegerRangeRandomizer(min, max);
+    }
+
+    /**
+     * Create a new {@link IntegerRangeRandomizer}.
+     */
     public IntegerRangeRandomizer(final Integer min, final Integer max) {
         super(min, max);
     }

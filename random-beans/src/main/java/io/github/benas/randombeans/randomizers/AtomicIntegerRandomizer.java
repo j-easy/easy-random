@@ -38,6 +38,14 @@ public class AtomicIntegerRandomizer implements Randomizer<AtomicInteger> {
 
     private IntegerRandomizer delegate = new IntegerRandomizer();
 
+    /**
+     * Create a new {@link AtomicIntegerRandomizer}.
+     * @return a new {@link AtomicIntegerRandomizer}.
+     */
+    public static AtomicIntegerRandomizer aNewAtomicIntegerRandomizer() {
+        return new AtomicIntegerRandomizer();
+    }
+
     @Override
     public AtomicInteger getRandomValue() {
         return new AtomicInteger(delegate.getRandomValue());

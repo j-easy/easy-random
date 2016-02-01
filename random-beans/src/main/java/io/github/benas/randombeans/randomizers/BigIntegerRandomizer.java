@@ -39,6 +39,14 @@ public class BigIntegerRandomizer implements Randomizer<BigInteger> {
 
     private IntegerRandomizer delegate = new IntegerRandomizer();
 
+    /**
+     * Create a new {@link BigIntegerRandomizer}.
+     * @return a new {@link BigIntegerRandomizer}.
+     */
+    public static BigIntegerRandomizer aNewBigIntegerRandomizer() {
+        return new BigIntegerRandomizer();
+    }
+
     @Override
     public BigInteger getRandomValue() {
         return new BigInteger(delegate.getRandomValue(), Constants.RANDOM);

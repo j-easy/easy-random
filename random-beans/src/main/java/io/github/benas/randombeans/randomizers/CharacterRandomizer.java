@@ -35,6 +35,14 @@ import org.apache.commons.lang3.RandomStringUtils;
  */
 public class CharacterRandomizer implements Randomizer<Character> {
 
+    /**
+     * Create a new {@link CharacterRandomizer}.
+     * @return a new {@link CharacterRandomizer}.
+     */
+    public static CharacterRandomizer aNewCharacterRandomizer() {
+        return new CharacterRandomizer();
+    }
+
     @Override
     public Character getRandomValue() {
         return RandomStringUtils.randomAlphabetic(1).charAt(0);

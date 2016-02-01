@@ -35,6 +35,14 @@ import io.github.benas.randombeans.util.Constants;
  */
 public class ShortRandomizer implements Randomizer<Short> {
 
+    /**
+     * Create a new {@link ShortRandomizer}.
+     * @return a new {@link ShortRandomizer}.
+     */
+    public static ShortRandomizer aNewShortRandomizer() {
+        return new ShortRandomizer();
+    }
+
     @Override
     public Short getRandomValue() {
         return (short) Constants.RANDOM.nextInt();

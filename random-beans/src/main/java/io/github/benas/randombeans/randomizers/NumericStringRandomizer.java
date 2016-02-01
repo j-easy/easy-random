@@ -38,6 +38,14 @@ public class NumericStringRandomizer implements Randomizer<String> {
 
     /**
      * Create a new {@link NumericStringRandomizer}.
+     * @return a new {@link NumericStringRandomizer}.
+     */
+    public static NumericStringRandomizer aNewNumericStringRandomizer() {
+        return new NumericStringRandomizer();
+    }
+
+    /**
+     * Create a new {@link NumericStringRandomizer}.
      */
     public NumericStringRandomizer() {
         delegate = new IntegerRandomizer();

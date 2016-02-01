@@ -34,6 +34,17 @@ import java.util.Date;
  */
 public class DateRangeRandomizer extends AbstractRangeRandomizer<Date> {
 
+    /**
+     * Create a new {@link DateRangeRandomizer}.
+     * @return a new {@link DateRangeRandomizer}.
+     */
+    public static DateRangeRandomizer aNewDateRangeRandomizer(final Date min, final Date max) {
+        return new DateRangeRandomizer(min, max);
+    }
+
+    /**
+     * Create a new {@link DateRangeRandomizer}.
+     */
     public DateRangeRandomizer(final Date min, final Date max) {
         super(min, max);
     }

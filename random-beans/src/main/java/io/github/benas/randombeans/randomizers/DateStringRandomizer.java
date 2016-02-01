@@ -44,6 +44,14 @@ public class DateStringRandomizer implements Randomizer<String> {
 
     /**
      * Create a new {@link DateStringRandomizer}.
+     * @return a new {@link DateStringRandomizer}.
+     */
+    public static DateStringRandomizer aNewDateStringRandomizer() {
+        return new DateStringRandomizer();
+    }
+
+    /**
+     * Create a new {@link DateStringRandomizer}.
      */
     public DateStringRandomizer() {
         dateRangeRandomizer = Constants.DATE_RANGE_RANDOMIZER;
