@@ -36,12 +36,13 @@ import org.apache.commons.math3.random.RandomDataGenerator;
  */
 public abstract class AbstractRangeRandomizer<T> implements Randomizer<T> {
 
-    protected RandomDataGenerator randomDataGenerator = new RandomDataGenerator();
+    protected RandomDataGenerator randomDataGenerator;
 
     protected final T min;
     protected final T max;
 
-    public AbstractRangeRandomizer(T min, T max) {
+    public AbstractRangeRandomizer(final T min, final T max) {
+        randomDataGenerator = new RandomDataGenerator();
         this.min = min != null ? min : getDefaultMinValue();
         this.max = max != null ? max : getDefaultMaxValue();
         checkValues();

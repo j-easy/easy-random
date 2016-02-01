@@ -32,13 +32,15 @@ package io.github.benas.randombeans.randomizers.range;
  */
 public class ShortRangeRandomizer extends AbstractRangeRandomizer<Short> {
 
-    public ShortRangeRandomizer(Short min, Short max) {
+    public ShortRangeRandomizer(final Short min, final Short max) {
         super(min, max);
     }
 
     @Override
     protected void checkValues() {
-        if (min > max) throw new IllegalArgumentException("max must be greater than min");
+        if (min > max) {
+            throw new IllegalArgumentException("max must be greater than min");
+        }
     }
 
     @Override

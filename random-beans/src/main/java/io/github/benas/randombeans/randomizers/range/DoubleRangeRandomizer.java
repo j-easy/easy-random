@@ -36,7 +36,7 @@ public class DoubleRangeRandomizer implements Randomizer<Double> {
 
     private final LongRangeRandomizer delegate;
 
-    public DoubleRangeRandomizer(Double min, Double max) {
+    public DoubleRangeRandomizer(final Double min, final Double max) {
         delegate = new LongRangeRandomizer(min.longValue(), max.longValue());
     }
 

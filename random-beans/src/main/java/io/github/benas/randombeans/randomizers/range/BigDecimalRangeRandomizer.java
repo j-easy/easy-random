@@ -38,7 +38,7 @@ public class BigDecimalRangeRandomizer implements Randomizer<BigDecimal> {
 
     private final LongRangeRandomizer delegate;
 
-    public BigDecimalRangeRandomizer(Long min, Long max) {
+    public BigDecimalRangeRandomizer(final Long min, final Long max) {
         delegate = new LongRangeRandomizer(min, max);
     }
 

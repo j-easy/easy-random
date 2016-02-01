@@ -32,13 +32,15 @@ package io.github.benas.randombeans.randomizers.range;
  */
 public class ByteRangeRandomizer extends AbstractRangeRandomizer<Byte> {
 
-    public ByteRangeRandomizer(Byte min, Byte max) {
+    public ByteRangeRandomizer(final Byte min, final Byte max) {
         super(min, max);
     }
 
     @Override
     protected void checkValues() {
-        if (min > max) throw new IllegalArgumentException("max must be greater than min");
+        if (min > max) {
+            throw new IllegalArgumentException("max must be greater than min");
+        }
     }
 
     @Override

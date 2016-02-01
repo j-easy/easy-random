@@ -40,7 +40,9 @@ public class DateRangeRandomizer extends AbstractRangeRandomizer<Date> {
 
     @Override
     protected void checkValues() {
-        if (min.after(max)) throw new IllegalArgumentException("max must be after min");
+        if (min.after(max)) {
+            throw new IllegalArgumentException("max must be after min");
+        }
     }
 
     @Override

@@ -37,7 +37,7 @@ public class StringLengthRandomizer implements Randomizer<String> {
 
     private IntegerRangeRandomizer delegate;
 
-    public StringLengthRandomizer(Integer min, Integer max) {
+    public StringLengthRandomizer(final Integer min, final Integer max) {
         delegate = new IntegerRangeRandomizer(min, max);
     }
 
