@@ -23,7 +23,7 @@
  *
  */
 
-package io.github.benas.randombeans.randomizers;
+package io.github.benas.randombeans.randomizers.collection;
 
 import io.github.benas.randombeans.api.Randomizer;
 import io.github.benas.randombeans.util.Constants;

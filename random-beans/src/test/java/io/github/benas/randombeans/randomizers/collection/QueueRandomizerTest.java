@@ -22,7 +22,7 @@
  *   THE SOFTWARE.
  */
 
-package io.github.benas.randombeans.randomizers;
+package io.github.benas.randombeans.randomizers.collection;
 
 import io.github.benas.randombeans.api.Randomizer;
 import org.junit.Before;
@@ -31,45 +31,43 @@ import org.junit.runner.RunWith;
 import org.mockito.Mock;
 import org.mockito.runners.MockitoJUnitRunner;
 
-import java.util.Map;
+import java.util.Queue;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.mockito.Mockito.when;
 
 @RunWith(MockitoJUnitRunner.class)
-public class MapRandomizerTest {
+public class QueueRandomizerTest {
 
     @Mock
-    private Randomizer<Integer> randomizer;
-    
-    private MapRandomizer<Integer, Integer> mapRandomizer;
+    private Randomizer<String> randomizer;
+
+    private QueueRandomizer<String> queueRandomizer;
 
     @Before
     public void setUp() throws Exception {
-        when(randomizer.getRandomValue()).thenReturn(0, 1, 2, 3, 4, 5, 6);
-        mapRandomizer = new MapRandomizer<Integer, Integer>(randomizer, randomizer, 3);
+        queueRandomizer = new QueueRandomizer<String>(randomizer, 3);
     }
 
     @Test
-    public void generatedMapSizeShouldNotBeEqualToTheSpecifiedSize() throws Exception {
-        Map<Integer, Integer> names = mapRandomizer.getRandomValue();
+    public void generatedQueueShouldNotBeEmpty() throws Exception {
+        Queue<String> names = queueRandomizer.getRandomValue();
 
         assertThat(names).hasSize(3);
     }
 
     @Test(expected = IllegalArgumentException.class)
     public void minElementsShouldBePositive() throws Exception {
-        mapRandomizer = new MapRandomizer<Integer, Integer>(randomizer, randomizer, -3);
+        queueRandomizer = new QueueRandomizer<String>(randomizer, -3);
     }
 
     @Test(expected = IllegalArgumentException.class)
     public void maxElementsShouldBeGreaterThanOrEqualToOne() throws Exception {
-        mapRandomizer = new MapRandomizer<Integer, Integer>(randomizer, randomizer, 0, 0);
+        queueRandomizer = new QueueRandomizer<String>(randomizer, 0, 0);
     }
 
     @Test(expected = IllegalArgumentException.class)
     public void maxElementsShouldBeGreaterThanOrEqualToMinElements() throws Exception {
-        mapRandomizer = new MapRandomizer<Integer, Integer>(randomizer, randomizer, 2, 1);
+        queueRandomizer = new QueueRandomizer<String>(randomizer, 2, 1);
     }
 
 }
