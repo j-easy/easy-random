@@ -34,6 +34,7 @@ import io.github.benas.randombeans.api.Populator;
 import io.github.benas.randombeans.beans.MapBean;
 import io.github.benas.randombeans.beans.Person;
 
+@SuppressWarnings({"unchecked", "rawtypes"})
 public class MapPopulationTest {
 
     private Populator populator;
@@ -126,13 +127,11 @@ public class MapPopulationTest {
         }
     }
 
-    @SuppressWarnings({"unchecked", "rawtypes"})
     private void assertContainsNotNullAndNotEmptyStrings(final Collection collection) {
-        assertThat(collection).isNotEmpty().hasOnlyElementsOfType(String.class).doesNotContain(null, "");
+        assertThat(collection).hasOnlyElementsOfType(String.class).doesNotContain(null, "");
     }
 
-    @SuppressWarnings({"unchecked", "rawtypes"})
     private void assertContainsNonZeroIntegers(final Collection collection) {
-        assertThat(collection).isNotEmpty().hasOnlyElementsOfType(Integer.class).doesNotContain(0);
+        assertThat(collection).hasOnlyElementsOfType(Integer.class).doesNotContain(0);
     }
 }
