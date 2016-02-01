@@ -30,9 +30,10 @@ import io.github.benas.randombeans.util.Constants;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Objects;
 
 /**
- * A randomizer that generates a map with random entries.
+ * A {@link Randomizer} that generates a {@link Map} with random entries.
  *
  * @param <K> the type of keys
  * @param <V> the type of values
@@ -53,7 +54,7 @@ public class MapRandomizer<K, V> implements Randomizer<Map<K, V>> {
      * @param valueRandomizer the randomizer for values
      */
     public MapRandomizer(Randomizer<K> keyRandomizer, Randomizer<V> valueRandomizer) {
-        this(keyRandomizer, valueRandomizer, 0, (byte) Math.abs((byte) (Constants.RANDOM.nextInt())));
+        this(keyRandomizer, valueRandomizer, (byte) Math.abs((byte) (Constants.RANDOM.nextInt())));
     }
 
     /**
@@ -61,25 +62,13 @@ public class MapRandomizer<K, V> implements Randomizer<Map<K, V>> {
      *
      * @param keyRandomizer   the randomizer for keys
      * @param valueRandomizer the randomizer for values
-     * @param nbElements      the number of elements to generate
+     * @param nbEntries       the number of entries to generate
      */
-    public MapRandomizer(Randomizer<K> keyRandomizer, Randomizer<V> valueRandomizer, final int nbElements) {
-        this(keyRandomizer, valueRandomizer, nbElements, nbElements);
-    }
-
-    /**
-     * Create a new {@link MapRandomizer}.
-     *
-     * @param keyRandomizer   the randomizer for keys
-     * @param valueRandomizer the randomizer for values
-     * @param minElements     the minimum number of elements to generate
-     * @param maxElements     the maximum number of elements to generate
-     */
-    public MapRandomizer(Randomizer<K> keyRandomizer, Randomizer<V> valueRandomizer, int minElements, int maxElements) {
-        checkArguments(minElements, maxElements);
+    public MapRandomizer(final Randomizer<K> keyRandomizer, final Randomizer<V> valueRandomizer, final int nbEntries) {
+        checkArguments(keyRandomizer, valueRandomizer, nbEntries);
         this.keyRandomizer = keyRandomizer;
         this.valueRandomizer = valueRandomizer;
-        nbElements = Constants.RANDOM.nextInt(maxElements + 1 - minElements) + minElements;
+        this.nbElements = nbEntries;
     }
 
     @Override
@@ -91,12 +80,11 @@ public class MapRandomizer<K, V> implements Randomizer<Map<K, V>> {
         return result;
     }
 
-    private void checkArguments(int minElements, int maxElements) {
-        if (minElements < 1) {
-            throw new IllegalArgumentException("The minimum number of elements to generate must be >= 1");
-        }
-        if (maxElements < minElements) {
-            throw new IllegalArgumentException("The maximum number of elements should be greater than or equal to the minimum number of elements.");
+    private void checkArguments(final Randomizer<K> keyRandomizer, final Randomizer<V> valueRandomizer, final int nbEntries) {
+        Objects.requireNonNull(keyRandomizer, "The randomizer of keys must not be null");
+        Objects.requireNonNull(valueRandomizer, "The randomizer of values must not be null");
+        if (nbEntries < 1) {
+            throw new IllegalArgumentException("The number of entries to generate must be >= 1");
         }
     }
 

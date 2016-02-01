@@ -45,7 +45,7 @@ public class SetRandomizerTest {
 
     @Before
     public void setUp() throws Exception {
-        setRandomizer = new SetRandomizer<String>(randomizer, 3);
+        setRandomizer = new SetRandomizer<>(randomizer, 3);
     }
 
     @Test
@@ -56,18 +56,8 @@ public class SetRandomizerTest {
     }
 
     @Test(expected = IllegalArgumentException.class)
-    public void minElementsShouldBePositive() throws Exception {
-        setRandomizer = new SetRandomizer<String>(randomizer, -3);
-    }
-
-    @Test(expected = IllegalArgumentException.class)
-    public void maxElementsShouldBeGreaterThanOrEqualToOne() throws Exception {
-        setRandomizer = new SetRandomizer<String>(randomizer, 0, 0);
-    }
-
-    @Test(expected = IllegalArgumentException.class)
-    public void maxElementsShouldBeGreaterThanOrEqualToMinElements() throws Exception {
-        setRandomizer = new SetRandomizer<String>(randomizer, 2, 1);
+    public void nbElementsShouldBePositive() throws Exception {
+        setRandomizer = new SetRandomizer<>(randomizer, -3);
     }
 
 }

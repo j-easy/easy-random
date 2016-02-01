@@ -25,7 +25,6 @@
 package io.github.benas.randombeans.randomizers.collection;
 
 import io.github.benas.randombeans.api.Randomizer;
-import io.github.benas.randombeans.randomizers.collection.MapRandomizer;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -48,29 +47,19 @@ public class MapRandomizerTest {
     @Before
     public void setUp() throws Exception {
         when(randomizer.getRandomValue()).thenReturn(0, 1, 2, 3, 4, 5, 6);
-        mapRandomizer = new MapRandomizer<Integer, Integer>(randomizer, randomizer, 3);
+        mapRandomizer = new MapRandomizer<>(randomizer, randomizer, 3);
     }
 
     @Test
-    public void generatedMapSizeShouldNotBeEqualToTheSpecifiedSize() throws Exception {
+    public void generatedMapSizeShouldBeEqualToTheSpecifiedSize() throws Exception {
         Map<Integer, Integer> names = mapRandomizer.getRandomValue();
 
         assertThat(names).hasSize(3);
     }
 
     @Test(expected = IllegalArgumentException.class)
-    public void minElementsShouldBePositive() throws Exception {
-        mapRandomizer = new MapRandomizer<Integer, Integer>(randomizer, randomizer, -3);
-    }
-
-    @Test(expected = IllegalArgumentException.class)
-    public void maxElementsShouldBeGreaterThanOrEqualToOne() throws Exception {
-        mapRandomizer = new MapRandomizer<Integer, Integer>(randomizer, randomizer, 0, 0);
-    }
-
-    @Test(expected = IllegalArgumentException.class)
-    public void maxElementsShouldBeGreaterThanOrEqualToMinElements() throws Exception {
-        mapRandomizer = new MapRandomizer<Integer, Integer>(randomizer, randomizer, 2, 1);
+    public void nbEntriesShouldBePositive() throws Exception {
+        mapRandomizer = new MapRandomizer<>(randomizer, randomizer, -3);
     }
 
 }

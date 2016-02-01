@@ -30,7 +30,7 @@ import java.util.LinkedList;
 import java.util.Queue;
 
 /**
- * A {@link Randomizer} that generates a queue of random values from another {@link Randomizer}.
+ * A {@link Randomizer} that generates a queue of random values using a delegate {@link Randomizer}.
  *
  * @param <T> the type of elements in the queue
  * @author Mahmoud Ben Hassine (mahmoud.benhassine@icloud.com)
@@ -40,31 +40,20 @@ public class QueueRandomizer<T> extends CollectionRandomizer<T> {
     /**
      * Create a new {@link QueueRandomizer} that will generate a queue with a random number of elements.
      *
-     * @param elementRandomizer the delegate randomizer used to generate elements of the queue
+     * @param delegate the delegate {@link Randomizer} used to generate elements
      */
-    public QueueRandomizer(final Randomizer<T> elementRandomizer) {
-        super(elementRandomizer);
+    public QueueRandomizer(final Randomizer<T> delegate) {
+        super(delegate);
     }
 
     /**
      * Create a new {@link QueueRandomizer} that will generate a queue with a fixed number of elements.
      *
-     * @param elementRandomizer The delegate randomizer used to generate elements of the queue
-     * @param nbElements        The number of elements to generate in the queue
+     * @param delegate   The delegate {@link Randomizer} used to generate elements
+     * @param nbElements The number of elements to generate
      */
-    public QueueRandomizer(final Randomizer<T> elementRandomizer, final int nbElements) {
-        super(elementRandomizer, nbElements, nbElements);
-    }
-
-    /**
-     * Create a new {@link QueueRandomizer} that will generate a queue with a random number of elements.
-     *
-     * @param elementRandomizer The delegate randomizer used to generate each element
-     * @param minElements       The minimum number of elements to generate in the queue
-     * @param maxElements       The maximum number of elements to generate in the queue
-     */
-    public QueueRandomizer(final Randomizer<T> elementRandomizer, final int minElements, final int maxElements) {
-        super(elementRandomizer, minElements, maxElements);
+    public QueueRandomizer(final Randomizer<T> delegate, final int nbElements) {
+        super(delegate, nbElements);
     }
 
     @Override

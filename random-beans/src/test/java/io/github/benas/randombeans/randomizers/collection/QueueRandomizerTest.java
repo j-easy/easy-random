@@ -45,7 +45,7 @@ public class QueueRandomizerTest {
 
     @Before
     public void setUp() throws Exception {
-        queueRandomizer = new QueueRandomizer<String>(randomizer, 3);
+        queueRandomizer = new QueueRandomizer<>(randomizer, 3);
     }
 
     @Test
@@ -56,18 +56,8 @@ public class QueueRandomizerTest {
     }
 
     @Test(expected = IllegalArgumentException.class)
-    public void minElementsShouldBePositive() throws Exception {
-        queueRandomizer = new QueueRandomizer<String>(randomizer, -3);
-    }
-
-    @Test(expected = IllegalArgumentException.class)
-    public void maxElementsShouldBeGreaterThanOrEqualToOne() throws Exception {
-        queueRandomizer = new QueueRandomizer<String>(randomizer, 0, 0);
-    }
-
-    @Test(expected = IllegalArgumentException.class)
-    public void maxElementsShouldBeGreaterThanOrEqualToMinElements() throws Exception {
-        queueRandomizer = new QueueRandomizer<String>(randomizer, 2, 1);
+    public void nbElementsShouldBePositive() throws Exception {
+        queueRandomizer = new QueueRandomizer<>(randomizer, -3);
     }
 
 }

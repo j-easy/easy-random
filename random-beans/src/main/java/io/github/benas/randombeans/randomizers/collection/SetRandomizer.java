@@ -30,7 +30,7 @@ import java.util.HashSet;
 import java.util.Set;
 
 /**
- * A {@link Randomizer} that generates a set of random values using another {@link Randomizer}.
+ * A {@link Randomizer} that generates a set of random values using a delegate {@link Randomizer}.
  *
  * @param <T> the type of elements to generate
  * @author Eric Taix (eric.taix@gmail.com)
@@ -38,33 +38,22 @@ import java.util.Set;
 public class SetRandomizer<T> extends CollectionRandomizer<T> {
 
     /**
-     * Create a new {@link SetRandomizer} that will generate a {@link Set} with a random number of element.
+     * Create a new {@link SetRandomizer} that will generate a {@link Set} with a random number of elements.
      *
-     * @param elementRandomizer the {@link Randomizer} to use to generate random elements of the set
+     * @param delegate the {@link Randomizer} to use to generate random elements
      */
-    public SetRandomizer(final Randomizer<T> elementRandomizer) {
-        super(elementRandomizer);
+    public SetRandomizer(final Randomizer<T> delegate) {
+        super(delegate);
     }
 
     /**
      * Create a new {@link SetRandomizer} that will generate a {@link Set} with a fixed number of elements.
      *
-     * @param elementRandomizer The {@link Randomizer} used to generate each element
-     * @param nbElements        The number of elements to generate in the set
+     * @param delegate   The {@link Randomizer} used to generate each element
+     * @param nbElements The number of elements to generate
      */
-    public SetRandomizer(final Randomizer<T> elementRandomizer, final int nbElements) {
-        super(elementRandomizer, nbElements);
-    }
-
-    /**
-     * Create a new {@link SetRandomizer} that will generate a {@link Set} with a random number of elements.
-     *
-     * @param elementRandomizer The {@link Randomizer} used to generate each element
-     * @param minElements       The minimum number of elements in the set to generate
-     * @param maxElements       The maximum number of elements in the set to generate
-     */
-    public SetRandomizer(final Randomizer<T> elementRandomizer, final int minElements, final int maxElements) {
-        super(elementRandomizer, minElements, maxElements);
+    public SetRandomizer(final Randomizer<T> delegate, final int nbElements) {
+        super(delegate, nbElements);
     }
 
     @Override
