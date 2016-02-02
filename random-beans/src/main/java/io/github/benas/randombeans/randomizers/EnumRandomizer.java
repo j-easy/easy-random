@@ -39,20 +39,22 @@ public class EnumRandomizer<T extends Enum<T>> implements Randomizer<Enum<T>> {
 
     /**
      * Create a new {@link EnumRandomizer}.
+     *
+     * @param enumeration the enumeration from which this randomizer will generate random values
      * @return a new {@link EnumRandomizer}.
      */
-    public static <R extends Enum<R>> EnumRandomizer<R> aNewEnumRandomizer(Class<R> class1) {
-        return new EnumRandomizer<R>(class1);
+    public static <R extends Enum<R>> EnumRandomizer<R> aNewEnumRandomizer(Class<R> enumeration) {
+        return new EnumRandomizer<>(enumeration);
     }
 
     /**
      * Create a new {@link EnumRandomizer}.
      *
-     * @param class1 the enumeration from which this randomizer will generate random values
+     * @param enumeration the enumeration from which this randomizer will generate random values
      */
     @SuppressWarnings("unchecked")
-    public <R extends Enum<R>>EnumRandomizer(Class<R> class1) {
-        this.enumeration = (Class<T>) class1;
+    public <R extends Enum<R>> EnumRandomizer(Class<R> enumeration) {
+        this.enumeration = (Class<T>) enumeration;
     }
 
     @Override
