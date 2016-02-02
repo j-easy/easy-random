@@ -46,6 +46,7 @@ public class RandomizerAnnotationTest {
             return name;
         }
 
+        @SuppressWarnings("unused")
         public void setName(String name) {
             this.name = name;
         }

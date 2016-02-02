@@ -27,7 +27,7 @@ package io.github.benas.randombeans.spring;
 import io.github.benas.randombeans.api.BeanPopulationException;
 import io.github.benas.randombeans.api.Populator;
 import org.junit.Test;
-import org.springframework.context.ApplicationContext;
+import org.springframework.context.support.AbstractApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 
 import static org.assertj.core.api.Assertions.assertThat;
@@ -65,10 +65,9 @@ public class PopulatorFactoryBeanTest {
     }
 
     private Populator getPopulatorFromSpringContext(String contextFileName) {
-
-        ApplicationContext applicationContext = new ClassPathXmlApplicationContext(contextFileName);
-
-        return applicationContext.getBean(Populator.class);
+        try (AbstractApplicationContext applicationContext = new ClassPathXmlApplicationContext(contextFileName)) {
+            return applicationContext.getBean(Populator.class);
+        }
     }
 
 }

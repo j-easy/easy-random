@@ -32,6 +32,8 @@ package io.github.benas.randombeans.api;
  */
 public class BeanPopulationException extends Exception {
 
+    private static final long serialVersionUID = -9049778508557432869L;
+
     public BeanPopulationException(String message, Throwable cause) {
         super(message, cause);
     }
