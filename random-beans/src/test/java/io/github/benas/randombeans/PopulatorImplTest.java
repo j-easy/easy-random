@@ -64,12 +64,11 @@ public class PopulatorImplTest {
 
         assertThat(person).isNotNull();
         assertThat(person.getEmail()).isNotEmpty();
-        assertThat(person.getGender()).isIn(asList(Gender.MALE, Gender.FEMALE));
+        assertThat(person.getGender()).isIn(Gender.values());
         assertThat(person.getBirthDate()).isNotNull();
         assertThat(person.getPhoneNumber()).isNotEmpty();
         assertThat(person.getNicknames()).isNotEmpty();
         assertThat(person.getName()).isNotEmpty();
-        assertThat(person.getParent()).isEqualTo(person);
 
         final Address address = person.getAddress();
         assertThat(address).isNotNull();
