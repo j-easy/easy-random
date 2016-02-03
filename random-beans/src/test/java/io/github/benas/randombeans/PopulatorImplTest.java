@@ -64,12 +64,11 @@ public class PopulatorImplTest {
 
         assertThat(person).isNotNull();
         assertThat(person.getEmail()).isNotEmpty();
-        assertThat(person.getGender()).isIn(asList(Gender.MALE, Gender.FEMALE));
+        assertThat(person.getGender()).isIn(Gender.values());
         assertThat(person.getBirthDate()).isNotNull();
         assertThat(person.getPhoneNumber()).isNotEmpty();
         assertThat(person.getNicknames()).isNotEmpty();
         assertThat(person.getName()).isNotEmpty();
-        assertThat(person.getParent()).isEqualTo(person);
 
         final Address address = person.getAddress();
         assertThat(address).isNotNull();
@@ -82,32 +81,6 @@ public class PopulatorImplTest {
         assertThat(street.getName()).isNotEmpty();
         assertThat(street.getNumber()).isNotNull();
         assertThat(street.getType()).isNotNull();
-    }
-
-    @Test
-    public void excludedFieldsShouldNotBePopulated() throws Exception {
-        Person person = populator.populateBean(Person.class, "name");
-
-        assertThat(person).isNotNull();
-        assertThat(person.getName()).isNull();
-    }
-
-    @Test
-    public void excludedDottedFieldsShouldNotBePopulated() throws Exception {
-        Person person = populator.populateBean(Person.class, "address.street.name");
-
-        assertThat(person).isNotNull();
-        assertThat(person.getAddress()).isNotNull();
-        assertThat(person.getAddress().getStreet()).isNotNull();
-        assertThat(person.getAddress().getStreet().getName()).isNull();
-    }
-
-    @Test
-    public void fieldsExcludedWithAnnotationShouldNotBePopulated() throws Exception {
-        Person person = populator.populateBean(Person.class);
-
-        assertThat(person).isNotNull();
-        assertThat(person.getExcluded()).isNull();
     }
 
     @Test

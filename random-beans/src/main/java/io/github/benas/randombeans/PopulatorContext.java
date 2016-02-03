@@ -28,6 +28,7 @@ package io.github.benas.randombeans;
 import java.lang.reflect.Field;
 import java.util.*;
 
+import static io.github.benas.randombeans.randomizers.range.IntegerRangeRandomizer.aNewIntegerRangeRandomizer;
 import static java.util.Collections.singletonList;
 
 /**
@@ -38,9 +39,11 @@ import static java.util.Collections.singletonList;
  */
 class PopulatorContext {
 
+    private static final byte OBJECT_POOL_SIZE = 10;
+
     private String[] excludedFields;
 
-    private Map<Class<?>, Object> populatedBeans;
+    private Map<Class<?>, List<Object>> populatedBeans;
 
     private Stack<PopulatorContextStackItem> stack;
 
@@ -51,15 +54,24 @@ class PopulatorContext {
     }
 
     public void addPopulatedBean(final Class<?> type, Object object) {
-        populatedBeans.put(type, object);
+        List<Object> objects = populatedBeans.get(type);
+        if (objects == null) {
+            objects = new ArrayList<>(OBJECT_POOL_SIZE);
+        }
+        if (objects.size() < OBJECT_POOL_SIZE) {
+            objects.add(object);
+        }
+        populatedBeans.put(type, objects);
     }
 
     public Object getPopulatedBean(final Class<?> type) {
-        return populatedBeans.get(type);
+        int actualPoolSize = populatedBeans.get(type).size();
+        int randomIndex = actualPoolSize > 1 ? aNewIntegerRangeRandomizer(0, actualPoolSize - 1).getRandomValue() : 0;
+        return populatedBeans.get(type).get(randomIndex);
     }
 
     public boolean hasPopulatedBean(final Class<?> type) {
-        return populatedBeans.containsKey(type);
+        return populatedBeans.containsKey(type) && populatedBeans.get(type).size() == OBJECT_POOL_SIZE;
     }
 
     public String[] getExcludedFields() {
