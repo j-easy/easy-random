@@ -34,7 +34,7 @@
         <mockito-core.version>1.10.19</mockito-core.version>
         <maven-javadoc-plugin.version>2.10.3</maven-javadoc-plugin.version>
         <maven-surefire-plugin.version>2.19</maven-surefire-plugin.version>
-        <maven-compiler-plugin.version>3.3</maven-compiler-plugin.version>
+        <maven-compiler-plugin.version>3.5</maven-compiler-plugin.version>
         <maven-cobertura-plugin.version>2.7</maven-cobertura-plugin.version>
         <maven-coveralls-plugin.version>4.1.0</maven-coveralls-plugin.version>
         <maven-release-plugin.version>2.5.3</maven-release-plugin.version>
@@ -199,6 +199,10 @@
                         <source>${java.version}</source>
                         <target>${java.version}</target>
                         <showWarnings>true</showWarnings>
+                        <compilerArgs>
+                            <arg>-verbose</arg>
+                            <arg>-Xlint:unchecked</arg>
+                        </compilerArgs>
                     </configuration>
                 </plugin>
                 <plugin>
