@@ -23,9 +23,11 @@
  */
 package io.github.benas.randombeans;
 
+import io.github.benas.randombeans.api.BeanPopulationException;
 import io.github.benas.randombeans.api.Populator;
 import io.github.benas.randombeans.beans.CollectionBean;
 import io.github.benas.randombeans.beans.Person;
+import io.github.benas.randombeans.beans.SynchronousQueueBean;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -128,9 +130,6 @@ public class CollectionPopulationTest {
         assertContainsNotNullAndNotEmptyStrings(collectionsBean.getPriorityBlockingQueue());
         assertContainsOnlyNonEmptyPersons(collectionsBean.getTypedPriorityBlockingQueue());
         
-        /*assertContainsNotNullAndNotEmptyStrings(collectionsBean.getSynchronousQueue());
-        assertContainsOnlyNonEmptyPersons(collectionsBean.getTypedSynchronousQueue());*/
-        
         assertContainsNotNullAndNotEmptyStrings(collectionsBean.getArrayDeque());
         assertContainsOnlyNonEmptyPersons(collectionsBean.getTypedArrayDeque());
         
@@ -139,6 +138,11 @@ public class CollectionPopulationTest {
         
         assertContainsNotNullAndNotEmptyStrings(collectionsBean.getConcurrentLinkedDeque());
         assertContainsOnlyNonEmptyPersons(collectionsBean.getTypedConcurrentLinkedDeque());
+    }
+
+    @Test (expected = BeanPopulationException.class)
+    public void synchronousQueueTypeMustBeRejected() throws Exception {
+        populator.populateBean(SynchronousQueueBean.class);
     }
     
     private void assertContainsOnlyNonEmptyPersons(Collection<Person> persons) {

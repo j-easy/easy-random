@@ -112,9 +112,6 @@ public class CollectionBean {
     
     private PriorityBlockingQueue priorityBlockingQueue;
     private PriorityBlockingQueue<Person> typedPriorityBlockingQueue;
-    
-    /*private SynchronousQueue synchronousQueue;
-    private SynchronousQueue<Person> typedSynchronousQueue;*/
 
     private ArrayDeque arrayDeque;
     private ArrayDeque<Person> typedArrayDeque;
@@ -328,14 +325,6 @@ public class CollectionBean {
     public void setStack(Stack stack) {
         this.stack = stack;
     }
-
-    /*public SynchronousQueue getSynchronousQueue() {
-        return synchronousQueue;
-    }
-
-    public void setSynchronousQueue(SynchronousQueue synchronousQueue) {
-        this.synchronousQueue = synchronousQueue;
-    }*/
 
     public TransferQueue getTransferQueue() {
         return transferQueue;
@@ -553,14 +542,6 @@ public class CollectionBean {
     public void setTypedStack(Stack<Person> typedStack) {
         this.typedStack = typedStack;
     }
-
-    /*public SynchronousQueue<Person> getTypedSynchronousQueue() {
-        return typedSynchronousQueue;
-    }
-
-    public void setTypedSynchronousQueue(SynchronousQueue<Person> typedSynchronousQueue) {
-        this.typedSynchronousQueue = typedSynchronousQueue;
-    }*/
 
     public TransferQueue<Person> getTypedTransferQueue() {
         return typedTransferQueue;

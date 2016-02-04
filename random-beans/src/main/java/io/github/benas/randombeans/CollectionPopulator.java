@@ -62,6 +62,9 @@ class CollectionPopulator {
             // This leads to inconsistent state of the collection (locks are not initialized) that causes NPE at elements insertion time..
             if (fieldType.equals(ArrayBlockingQueue.class)) {
                 collection = new ArrayBlockingQueue<>(initialSize);
+            } else if (fieldType.equals(SynchronousQueue.class)) {
+                // SynchronousQueue is not supported since it requires a consuming thread at insertion time
+                throw new UnsupportedOperationException(SynchronousQueue.class.getName() + " type is not supported");
             } else {
                 collection = (Collection<?>) objenesis.newInstance(fieldType);
             }
