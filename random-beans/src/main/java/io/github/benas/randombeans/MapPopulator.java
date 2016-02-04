@@ -38,7 +38,7 @@ class MapPopulator {
         Class<?> fieldType = field.getType();
 
         Map<Object, Object> map;
-        if (isInterface(field)) {
+        if (isInterface(fieldType)) {
             map = (Map<Object, Object>) getEmptyTypedMap(fieldType);
         } else {
             try {

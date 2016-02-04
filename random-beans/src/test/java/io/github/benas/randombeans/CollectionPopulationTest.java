@@ -110,8 +110,8 @@ public class CollectionPopulationTest {
         assertContainsNotNullAndNotEmptyStrings(collectionsBean.getConcurrentSkipListSet());
         assertContainsOnlyNonEmptyPersons(collectionsBean.getTypedConcurrentSkipListSet());
         
-        /*assertContainsNotNullAndNotEmptyStrings(collectionsBean.getArrayBlockingQueue());
-        assertContainsOnlyNonEmptyPersons(collectionsBean.getTypedArrayBlockingQueue());*/
+        assertContainsNotNullAndNotEmptyStrings(collectionsBean.getArrayBlockingQueue());
+        assertContainsOnlyNonEmptyPersons(collectionsBean.getTypedArrayBlockingQueue());
         
         assertContainsNotNullAndNotEmptyStrings(collectionsBean.getLinkedBlockingQueue());
         assertContainsOnlyNonEmptyPersons(collectionsBean.getTypedLinkedBlockingQueue());

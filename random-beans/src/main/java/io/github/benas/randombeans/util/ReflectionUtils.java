@@ -87,12 +87,12 @@ public abstract class ReflectionUtils {
     }
 
     /**
-     * Check if a field is an interface.
-     * @param field the field to check
-     * @return true if the field is an interface, false otherwise
+     * Check if a type is an interface.
+     * @param type the type to check
+     * @return true if the type is an interface, false otherwise
      */
-    public static boolean isInterface(final Field field) {
-        return field.getType().isInterface();
+    public static boolean isInterface(final Class<?> type) {
+        return type.isInterface();
     }
 
     /**

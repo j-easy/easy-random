@@ -92,8 +92,8 @@ public class CollectionBean {
     private ConcurrentSkipListSet concurrentSkipListSet;
     private ConcurrentSkipListSet<Person> typedConcurrentSkipListSet;
     
-    /*private ArrayBlockingQueue arrayBlockingQueue;
-    private ArrayBlockingQueue<Person> typedArrayBlockingQueue;*/
+    private ArrayBlockingQueue arrayBlockingQueue;
+    private ArrayBlockingQueue<Person> typedArrayBlockingQueue;
 
     private LinkedBlockingQueue linkedBlockingQueue;
     private LinkedBlockingQueue<Person> typedLinkedBlockingQueue;
@@ -129,13 +129,13 @@ public class CollectionBean {
      * Getters and setters
      */
 
-    /*public ArrayBlockingQueue getArrayBlockingQueue() {
+    public ArrayBlockingQueue getArrayBlockingQueue() {
         return arrayBlockingQueue;
     }
 
     public void setArrayBlockingQueue(ArrayBlockingQueue arrayBlockingQueue) {
         this.arrayBlockingQueue = arrayBlockingQueue;
-    }*/
+    }
 
     public ArrayDeque getArrayDeque() {
         return arrayDeque;
@@ -353,13 +353,13 @@ public class CollectionBean {
         this.treeSet = treeSet;
     }
 
-    /*public ArrayBlockingQueue<Person> getTypedArrayBlockingQueue() {
+    public ArrayBlockingQueue<Person> getTypedArrayBlockingQueue() {
         return typedArrayBlockingQueue;
     }
 
     public void setTypedArrayBlockingQueue(ArrayBlockingQueue<Person> typedArrayBlockingQueue) {
         this.typedArrayBlockingQueue = typedArrayBlockingQueue;
-    }*/
+    }
 
     public ArrayDeque<Person> getTypedArrayDeque() {
         return typedArrayDeque;

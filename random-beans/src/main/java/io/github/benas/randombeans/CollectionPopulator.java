@@ -10,7 +10,9 @@ import java.lang.reflect.Type;
 import java.util.*;
 import java.util.concurrent.*;
 
+import static io.github.benas.randombeans.randomizers.ByteRandomizer.aNewByteRandomizer;
 import static io.github.benas.randombeans.util.ReflectionUtils.isInterface;
+import static java.lang.Math.abs;
 
 /**
  * Random collection populator.
@@ -28,18 +30,15 @@ class CollectionPopulator {
         this.objenesis = objenesis;
     }
 
-    @SuppressWarnings("unchecked")
+    @SuppressWarnings({"unchecked", "rawtypes"})
     Collection<?> getRandomCollection(final Field field) throws IllegalAccessException, BeanPopulationException {
+        int randomSize = abs(aNewByteRandomizer().getRandomValue());
         Class<?> fieldType = field.getType();
         Collection<?> collection;
-        if (isInterface(field)) {
-            collection = getEmptyTypedCollection(fieldType);
+        if (isInterface(fieldType)) {
+            collection = getEmptyImplementationForInterface(fieldType);
         } else {
-            try {
-                collection = (Collection<?>) fieldType.newInstance();
-            } catch (InstantiationException e) {
-                collection = (Collection<?>) objenesis.newInstance(fieldType);
-            }
+            collection = getEmptyCollection(fieldType, randomSize);
         }
 
         Type fieldGenericType = field.getGenericType();
@@ -49,31 +48,46 @@ class CollectionPopulator {
             baseType = parameterizedType.getActualTypeArguments()[0];
         }
         Class<?> baseTypeClass = (Class<?>) baseType;
-        @SuppressWarnings("rawtypes")
-        List items = populator.populateBeans(baseTypeClass);
+        List items = populator.populateBeans(baseTypeClass, randomSize);
         collection.addAll(items);
         return collection;
     }
 
-    private Collection<?> getEmptyTypedCollection(final Class<?> type) {
+    private Collection<?> getEmptyCollection(Class<?> fieldType, int initialSize) throws IllegalAccessException {
+        Collection<?> collection;
+        try {
+            collection = (Collection<?>) fieldType.newInstance();
+        } catch (InstantiationException e) {
+            // Creating an ArrayBlockingQueue with objenesis by-passes the constructor.
+            // This leads to inconsistent state of the collection (locks are not initialized) that causes NPE at elements insertion time..
+            if (fieldType.equals(ArrayBlockingQueue.class)) {
+                collection = new ArrayBlockingQueue<>(initialSize);
+            } else {
+                collection = (Collection<?>) objenesis.newInstance(fieldType);
+            }
+        }
+        return collection;
+    }
+
+    private Collection<?> getEmptyImplementationForInterface(final Class<?> interfaceType) {
         Collection<?> collection = new ArrayList<>();
-        if (List.class.isAssignableFrom(type)) {
+        if (List.class.isAssignableFrom(interfaceType)) {
             collection = new ArrayList<>();
-        } else if (NavigableSet.class.isAssignableFrom(type)) {
+        } else if (NavigableSet.class.isAssignableFrom(interfaceType)) {
             collection = new TreeSet<>();
-        } else if (SortedSet.class.isAssignableFrom(type)) {
+        } else if (SortedSet.class.isAssignableFrom(interfaceType)) {
             collection = new TreeSet<>();
-        } else if (Set.class.isAssignableFrom(type)) {
+        } else if (Set.class.isAssignableFrom(interfaceType)) {
             collection = new HashSet<>();
-        } else if (BlockingDeque.class.isAssignableFrom(type)) {
+        } else if (BlockingDeque.class.isAssignableFrom(interfaceType)) {
             collection = new LinkedBlockingDeque<>();
-        } else if (Deque.class.isAssignableFrom(type)) {
+        } else if (Deque.class.isAssignableFrom(interfaceType)) {
             collection = new ArrayDeque<>();
-        } else if (TransferQueue.class.isAssignableFrom(type)) {
+        } else if (TransferQueue.class.isAssignableFrom(interfaceType)) {
             collection = new LinkedTransferQueue<>();
-        } else if (BlockingQueue.class.isAssignableFrom(type)) {
+        } else if (BlockingQueue.class.isAssignableFrom(interfaceType)) {
             collection = new LinkedBlockingQueue<>();
-        } else if (Queue.class.isAssignableFrom(type)) {
+        } else if (Queue.class.isAssignableFrom(interfaceType)) {
             collection = new LinkedList<>();
         }
         return collection;
