@@ -1,13 +1,13 @@
 package io.github.benas.randombeans;
 
 /**
- * Defines attributes used to identify fields to exclude.
+ * Defines attributes used to identify fields.
  *
- * @param <T> The target class type
+ * @param <T> The declaring class type
  * @param <F> The field type
  * @author Mahmoud Ben Hassine (mahmoud.benhassine@icloud.com)
  */
-public final class ExclusionDefinition<T, F> {
+public class FieldDefinition<T, F> {
 
     private final String name;
 
@@ -16,13 +16,13 @@ public final class ExclusionDefinition<T, F> {
     private final Class<T> clazz;
 
     /**
-     * Create a new {@link ExclusionDefinition}.
+     * Create a new {@link FieldDefinition}.
      *
      * @param name the name of the field
      * @param type the type of the field
      * @param clazz the type of the class containing the field
      */
-    public ExclusionDefinition(String name, Class<F> type, Class<T> clazz) {
+    public FieldDefinition(String name, Class<F> type, Class<T> clazz) {
         this.name = name;
         this.type = type;
         this.clazz = clazz;
@@ -41,7 +41,7 @@ public final class ExclusionDefinition<T, F> {
     }
 
     /*
-     * Exclusion definitions are unique according to field name, field type, and class type
+     * Field definitions are unique according to field name, field type, and declaring class type
      */
 
     @Override
@@ -49,7 +49,7 @@ public final class ExclusionDefinition<T, F> {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
 
-        ExclusionDefinition that = (ExclusionDefinition) o;
+        FieldDefinition that = (FieldDefinition) o;
 
         if (!name.equals(that.name)) return false;
         if (!type.equals(that.type)) return false;

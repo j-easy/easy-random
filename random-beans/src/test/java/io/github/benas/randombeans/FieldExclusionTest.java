@@ -36,7 +36,7 @@ import org.junit.runner.RunWith;
 import org.mockito.Mock;
 import org.mockito.runners.MockitoJUnitRunner;
 
-import static io.github.benas.randombeans.ExclusionDefinitionBuilder.field;
+import static io.github.benas.randombeans.FieldDefinitionBuilder.field;
 import static io.github.benas.randombeans.PopulatorBuilder.aNewPopulatorBuilder;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.Mockito.when;

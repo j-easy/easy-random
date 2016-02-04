@@ -60,25 +60,23 @@ public class PopulatorBuilder {
     /**
      * Register a custom randomizer for a given field.
      *
-     * @param type       the type of class declaring the field. If the field is inherited, then this should be the type of the base class.
-     * @param fieldType  the field type within the target object
-     * @param fieldName  the field name within the target object
+     * @param fieldDefinition definition of the field to randomize
      * @param randomizer the custom {@link Randomizer} to use
      * @return a pre configured {@link PopulatorBuilder} instance
      */
-    public <T, F, R> PopulatorBuilder registerRandomizer(final Class<T> type, final Class<F> fieldType, final String fieldName, final Randomizer<R> randomizer) {
-        customRandomizerRegistry.registerRandomizer(type, fieldType, fieldName, randomizer);
+    public <R> PopulatorBuilder randomize(FieldDefinition fieldDefinition, Randomizer<R> randomizer) {
+        customRandomizerRegistry.registerRandomizer(fieldDefinition.getName(), fieldDefinition.getType(), fieldDefinition.getClazz(), randomizer);
         return this;
     }
 
     /**
      * Exclude a field from being populated.
      *
-     * @param exclusionDefinition the definition of field exclusion
+     * @param fieldDefinition definition of the field to exclude
      * @return a pre configured {@link PopulatorBuilder} instance
      */
-    public PopulatorBuilder exclude(ExclusionDefinition exclusionDefinition) {
-        return registerRandomizer(exclusionDefinition.getClazz(), exclusionDefinition.getType(), exclusionDefinition.getName(), new SkipRandomizer());
+    public PopulatorBuilder exclude(FieldDefinition fieldDefinition) {
+        return randomize(fieldDefinition, new SkipRandomizer());
     }
 
     /**
@@ -99,7 +97,7 @@ public class PopulatorBuilder {
      */
     public Populator build() {
         LinkedHashSet<RandomizerRegistry> registries = new LinkedHashSet<>();
-        registries.add(customRandomizerRegistry); // programatically registered randomizers through registerRandomizer()
+        registries.add(customRandomizerRegistry); // programatically registered randomizers through randomize()
         registries.addAll(userRegistries); // programatically registered registries through registerRandomizerRegistry()
         registries.addAll(loadRegistries()); // registries added to classpath through the SPI
         Populator populator = new PopulatorImpl(registries);

@@ -33,6 +33,7 @@ import org.junit.runner.RunWith;
 import org.mockito.Mock;
 import org.mockito.runners.MockitoJUnitRunner;
 
+import static io.github.benas.randombeans.FieldDefinitionBuilder.field;
 import static io.github.benas.randombeans.PopulatorBuilder.aNewPopulatorBuilder;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.Mockito.when;
@@ -64,7 +65,7 @@ public class PopulatorBuilderTest {
     public void customRandomizerShouldBeRegisteredInAllBuiltInstances() throws BeanPopulationException {
         PopulatorBuilder builder = aNewPopulatorBuilder();
 
-        builder.registerRandomizer(Human.class, String.class, "name", randomizer);
+        builder.randomize(field().named("name").ofType(String.class).inClass(Human.class).get(), randomizer);
 
         Populator populator = builder.build();
         Human human = populator.populateBean(Human.class);

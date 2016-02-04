@@ -32,6 +32,7 @@ import org.springframework.beans.factory.FactoryBean;
 import java.util.ArrayList;
 import java.util.List;
 
+import static io.github.benas.randombeans.FieldDefinitionBuilder.field;
 import static io.github.benas.randombeans.PopulatorBuilder.aNewPopulatorBuilder;
 
 /**
@@ -46,12 +47,14 @@ public class PopulatorFactoryBean implements FactoryBean<Populator> {
     @Override
     public Populator getObject() throws Exception {
         PopulatorBuilder populatorBuilder = aNewPopulatorBuilder();
-        for (RandomizerBean<?, ?> randomizerBean : randomizers) {
-            populatorBuilder.registerRandomizer(
-                    randomizerBean.getType(),
-                    randomizerBean.getFieldType(),
-                    randomizerBean.getFieldName(),
-                    randomizerBean.getRandomizer());
+        for (RandomizerBean<?, ?> bean : randomizers) {
+            populatorBuilder.randomize(
+                    field()
+                            .named(bean.getFieldName())
+                            .ofType(bean.getFieldType())
+                            .inClass(bean.getType())
+                            .get(),
+                    bean.getRandomizer());
         }
 
         return populatorBuilder.build();
