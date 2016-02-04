@@ -28,6 +28,7 @@ package io.github.benas.randombeans;
 import io.github.benas.randombeans.api.Populator;
 import io.github.benas.randombeans.api.Randomizer;
 import io.github.benas.randombeans.api.RandomizerRegistry;
+import io.github.benas.randombeans.randomizers.SkipRandomizer;
 import io.github.benas.randombeans.randomizers.registry.CustomRandomizerRegistry;
 
 import java.util.*;
@@ -68,6 +69,16 @@ public class PopulatorBuilder {
     public <T, F, R> PopulatorBuilder registerRandomizer(final Class<T> type, final Class<F> fieldType, final String fieldName, final Randomizer<R> randomizer) {
         customRandomizerRegistry.registerRandomizer(type, fieldType, fieldName, randomizer);
         return this;
+    }
+
+    /**
+     * Exclude a field from being populated.
+     *
+     * @param exclusionDefinition the definition of field exclusion
+     * @return a pre configured {@link PopulatorBuilder} instance
+     */
+    public PopulatorBuilder exclude(ExclusionDefinition exclusionDefinition) {
+        return registerRandomizer(exclusionDefinition.getClazz(), exclusionDefinition.getType(), exclusionDefinition.getName(), new SkipRandomizer());
     }
 
     /**

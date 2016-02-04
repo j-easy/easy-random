@@ -27,6 +27,7 @@ package io.github.benas.randombeans;
 import io.github.benas.randombeans.api.Populator;
 import io.github.benas.randombeans.api.Randomizer;
 import io.github.benas.randombeans.beans.C;
+import io.github.benas.randombeans.beans.Human;
 import io.github.benas.randombeans.beans.Person;
 import org.assertj.core.api.Assertions;
 import org.junit.Before;
@@ -35,6 +36,7 @@ import org.junit.runner.RunWith;
 import org.mockito.Mock;
 import org.mockito.runners.MockitoJUnitRunner;
 
+import static io.github.benas.randombeans.ExclusionDefinitionBuilder.field;
 import static io.github.benas.randombeans.PopulatorBuilder.aNewPopulatorBuilder;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.Mockito.when;
@@ -59,6 +61,21 @@ public class FieldExclusionTest {
     public void excludedFieldsShouldNotBePopulated() throws Exception {
         Person person = populator.populateBean(Person.class, "name");
 
+        assertThat(person).isNotNull();
+        assertThat(person.getName()).isNull();
+    }
+
+    @Test
+    public void excludedFieldsUsingSkipRandomizerShouldNotBePopulated() throws Exception {
+        // given
+        populator = aNewPopulatorBuilder()
+                .exclude(field().named("name").ofType(String.class).inClass(Human.class).get())
+                .build();
+
+        // when
+        Person person = populator.populateBean(Person.class);
+
+        // then
         assertThat(person).isNotNull();
         assertThat(person.getName()).isNull();
     }

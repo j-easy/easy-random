@@ -31,6 +31,7 @@ import io.github.benas.randombeans.api.Populator;
 import io.github.benas.randombeans.api.Randomizer;
 import io.github.benas.randombeans.api.RandomizerRegistry;
 import io.github.benas.randombeans.randomizers.EnumRandomizer;
+import io.github.benas.randombeans.randomizers.SkipRandomizer;
 import org.objenesis.Objenesis;
 import org.objenesis.ObjenesisStd;
 
@@ -137,9 +138,12 @@ final class PopulatorImpl implements Populator {
     private void populateField(final Object target, final Field field, final PopulatorContext context)
             throws BeanPopulationException, IllegalAccessException {
 
+        Randomizer<?> randomizer = randomizerProvider.getRandomizerByField(field);
+        if (randomizer instanceof SkipRandomizer) {
+            return;
+        }
         context.pushStackItem(new PopulatorContextStackItem(target, field));
         Object value;
-        Randomizer<?> randomizer = randomizerProvider.getRandomizerByField(field);
         if (randomizer != null) {
             value = randomizer.getRandomValue();
         } else {
