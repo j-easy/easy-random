@@ -101,9 +101,6 @@ public class CollectionBean {
     private ConcurrentLinkedQueue concurrentLinkedQueue;
     private ConcurrentLinkedQueue<Person> typedConcurrentLinkedQueue;
     
-    /*private DelayQueue delayQueue; // String implements Comparable but does not implement Delayed ..
-    private DelayQueue<Person> typedDelayQueue;*/
-    
     private LinkedTransferQueue linkedTransferQueue;
     private LinkedTransferQueue<Person> typedLinkedTransferQueue;
 
@@ -197,14 +194,6 @@ public class CollectionBean {
     public void setConcurrentSkipListSet(ConcurrentSkipListSet concurrentSkipListSet) {
         this.concurrentSkipListSet = concurrentSkipListSet;
     }
-
-    /*public DelayQueue getDelayQueue() {
-        return delayQueue;
-    }
-
-    public void setDelayQueue(DelayQueue delayQueue) {
-        this.delayQueue = delayQueue;
-    }*/
 
     public Deque getDeque() {
         return deque;
@@ -413,15 +402,6 @@ public class CollectionBean {
     public void setTypedConcurrentSkipListSet(ConcurrentSkipListSet<Person> typedConcurrentSkipListSet) {
         this.typedConcurrentSkipListSet = typedConcurrentSkipListSet;
     }
-
-    /* // person does not implement delayed
-    public DelayQueue<Person> getTypedDelayQueue() {
-        return typedDelayQueue;
-    }
-
-    public void setTypedDelayQueue(DelayQueue<Person> typedDelayQueue) {
-        this.typedDelayQueue = typedDelayQueue;
-    }*/
 
     public Deque<Person> getTypedDeque() {
         return typedDeque;

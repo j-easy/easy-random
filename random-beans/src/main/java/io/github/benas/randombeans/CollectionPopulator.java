@@ -54,6 +54,7 @@ class CollectionPopulator {
     }
 
     private Collection<?> getEmptyCollection(Class<?> fieldType, int initialSize) throws IllegalAccessException {
+        rejectUnsupportedTypes(fieldType);
         Collection<?> collection;
         try {
             collection = (Collection<?>) fieldType.newInstance();
@@ -62,14 +63,22 @@ class CollectionPopulator {
             // This leads to inconsistent state of the collection (locks are not initialized) that causes NPE at elements insertion time..
             if (fieldType.equals(ArrayBlockingQueue.class)) {
                 collection = new ArrayBlockingQueue<>(initialSize);
-            } else if (fieldType.equals(SynchronousQueue.class)) {
-                // SynchronousQueue is not supported since it requires a consuming thread at insertion time
-                throw new UnsupportedOperationException(SynchronousQueue.class.getName() + " type is not supported");
             } else {
                 collection = (Collection<?>) objenesis.newInstance(fieldType);
             }
         }
         return collection;
+    }
+
+    private void rejectUnsupportedTypes(Class<?> type) {
+        if (type.equals(SynchronousQueue.class)) {
+            // SynchronousQueue is not supported since it requires a consuming thread at insertion time
+            throw new UnsupportedOperationException(SynchronousQueue.class.getName() + " type is not supported");
+        }
+        if (type.equals(DelayQueue.class)) {
+            // DelayQueue is not supported since it requires creating dummy delayed objects
+            throw new UnsupportedOperationException(DelayQueue.class.getName() + " type is not supported");
+        }
     }
 
     private Collection<?> getEmptyImplementationForInterface(final Class<?> interfaceType) {
