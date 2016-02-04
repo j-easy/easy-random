@@ -25,7 +25,7 @@ public class CustomRandomizerRegistry implements RandomizerRegistry {
     }
 
     @Override
-    public <T> Randomizer<T> getRandomizer(Class<T> type) {
+    public Randomizer<?> getRandomizer(Class<?> type) {
         return null;
     }
 

@@ -60,8 +60,7 @@ public class JodaTimeRandomizerRegistry implements RandomizerRegistry {
     }
 
     @Override
-    @SuppressWarnings("unchecked")
-    public <T> Randomizer<T> getRandomizer(Class<T> type) {
-        return (Randomizer<T>) randomizers.get(type);
+    public Randomizer<?> getRandomizer(Class<?> type) {
+        return randomizers.get(type);
     }
 }
