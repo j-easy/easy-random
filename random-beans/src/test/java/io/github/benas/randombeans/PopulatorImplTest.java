@@ -109,10 +109,10 @@ public class PopulatorImplTest {
     }
 
     @Test
-    public void generatedBeansListShouldNotBeEmpty() throws Exception {
+    public void generatedBeansListShouldNotBeNull() throws Exception {
         List<Person> persons = populator.populateBeans(Person.class);
 
-        assertThat(persons).isNotEmpty();
+        assertThat(persons).isNotNull();
     }
 
     @Test
