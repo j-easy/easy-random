@@ -70,10 +70,11 @@ final class PopulatorImpl implements Populator {
     }
 
     @Override
+    @SuppressWarnings("unchecked")
     public <T> T populateBean(final Class<T> type, final String... excludedFields) throws BeanPopulationException {
-        Randomizer<T> randomizer = randomizerProvider.getRandomizerByType(type);
+        Randomizer<?> randomizer = randomizerProvider.getRandomizerByType(type);
         if (randomizer != null) {
-            return randomizer.getRandomValue();
+            return (T) randomizer.getRandomValue();
         }
         return doPopulateBean(type, new PopulatorContext(excludedFields));
     }

@@ -25,9 +25,17 @@ class RandomizerProvider {
     }
 
     Randomizer<?> getRandomizerByField(final Field field) {
+        return getRandomizer(new ByFieldProvider(field));
+    }
+
+    Randomizer<?> getRandomizerByType(final Class<?> type) {
+        return getRandomizer(new ByTypeProvider(type));
+    }
+
+    private Randomizer<?> getRandomizer(Provider provider) {
         List<Randomizer<?>> randomizers = new ArrayList<>();
         for (RandomizerRegistry registry : registries) {
-            Randomizer<?> randomizer = registry.getRandomizer(field);
+            Randomizer<?> randomizer = provider.getRandomizer(registry);
             if (randomizer != null) {
                 randomizers.add(randomizer);
             }
@@ -39,18 +47,35 @@ class RandomizerProvider {
         return null;
     }
 
-    <T> Randomizer<T> getRandomizerByType(final Class<T> type) {
-        List<Randomizer<T>> randomizers = new ArrayList<>();
-        for (RandomizerRegistry registry : registries) {
-            Randomizer<T> randomizer = registry.getRandomizer(type);
-            if (randomizer != null) {
-                randomizers.add(randomizer);
-            }
+    private interface Provider {
+        Randomizer<?> getRandomizer(RandomizerRegistry registry);
+    }
+
+    private class ByTypeProvider implements Provider {
+
+        private Class<?> type;
+
+        public ByTypeProvider(final Class<?> type) {
+            this.type = type;
         }
-        sort(randomizers, priorityComparator);
-        if (!randomizers.isEmpty()) {
-            return randomizers.get(0);
+
+        @Override
+        public Randomizer<?> getRandomizer(final RandomizerRegistry registry) {
+            return registry.getRandomizer(type);
         }
-        return null;
+    }
+
+    private class ByFieldProvider implements Provider {
+
+        private Field field;
+
+        public ByFieldProvider(final Field field) {
+            this.field = field;
+        }
+
+        @Override
+        public Randomizer<?> getRandomizer(final RandomizerRegistry registry) {
+            return registry.getRandomizer(field);
+        }
     }
 }

@@ -204,7 +204,7 @@ public class BeanValidationRandomizerRegistry implements RandomizerRegistry {
     }
 
     @Override
-    public <T> Randomizer<T> getRandomizer(Class<T> fieldType) {
+    public Randomizer<?> getRandomizer(Class<?> fieldType) {
         return null;
     }
 }
