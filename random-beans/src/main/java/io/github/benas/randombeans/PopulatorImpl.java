@@ -130,7 +130,7 @@ final class PopulatorImpl implements Populator {
         return beans;
     }
 
-    private void checkSize(final int size) {
+    private static void checkSize(final int size) {
         if (size < 0) {
             throw new IllegalArgumentException("The size must be positive");
         }
