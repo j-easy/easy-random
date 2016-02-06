@@ -108,7 +108,7 @@ final class PopulatorImpl implements Populator {
                 }
             }
             return result;
-        } catch (Exception e) {
+        } catch (InstantiationError | Exception e) {
             throw new BeanPopulationException("Unable to generate a random instance of type " + type, e);
         }
     }

@@ -24,6 +24,7 @@
 
 package io.github.benas.randombeans;
 
+import io.github.benas.randombeans.api.BeanPopulationException;
 import io.github.benas.randombeans.api.Populator;
 import io.github.benas.randombeans.api.Randomizer;
 import io.github.benas.randombeans.beans.*;
@@ -148,5 +149,11 @@ public class PopulatorImplTest {
     @Test(expected = IllegalArgumentException.class)
     public void whenSpecifiedNumberOfBeansToGenerateIsNegativeThenShouldThrowAnIllegalArgumentException() throws Exception {
         populator.populateBeans(Person.class, -2);
+    }
+
+
+    @Test(expected = BeanPopulationException.class)
+    public void whenUnableToInstantiateFieldThenShouldThrowABeanPopulationException() throws Exception {
+        populator.populateBean(AbstractBean.class);
     }
 }
