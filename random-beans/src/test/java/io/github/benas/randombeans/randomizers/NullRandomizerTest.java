@@ -33,12 +33,12 @@ public class NullRandomizerTest {
     private NullRandomizer nullRandomizer;
 
     @Before
-    public void setUp() throws Exception {
+    public void setUp() {
         nullRandomizer = new NullRandomizer();
     }
 
     @Test
-    public void testGenerateNullValue() throws Exception {
+    public void testGenerateNullValue() {
         assertThat(nullRandomizer.getRandomValue()).isNull();
     }
 

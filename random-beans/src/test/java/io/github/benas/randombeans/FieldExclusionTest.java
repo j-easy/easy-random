@@ -52,13 +52,13 @@ public class FieldExclusionTest {
     private Populator populator;
 
     @Before
-    public void setUp() throws Exception {
+    public void setUp() {
         populator = aNewPopulatorBuilder().build();
         when(randomizer.getRandomValue()).thenReturn(NAME);
     }
 
     @Test
-    public void excludedFieldsShouldNotBePopulated() throws Exception {
+    public void excludedFieldsShouldNotBePopulated() {
         Person person = populator.populateBean(Person.class, "name");
 
         assertThat(person).isNotNull();
@@ -66,7 +66,7 @@ public class FieldExclusionTest {
     }
 
     @Test
-    public void excludedFieldsUsingSkipRandomizerShouldNotBePopulated() throws Exception {
+    public void excludedFieldsUsingSkipRandomizerShouldNotBePopulated() {
         // given
         populator = aNewPopulatorBuilder()
                 .exclude(field().named("name").ofType(String.class).inClass(Human.class).get())
@@ -81,7 +81,7 @@ public class FieldExclusionTest {
     }
 
     @Test
-    public void excludedDottedFieldsShouldNotBePopulated() throws Exception {
+    public void excludedDottedFieldsShouldNotBePopulated() {
         Person person = populator.populateBean(Person.class, "address.street.name");
 
         assertThat(person).isNotNull();
@@ -91,7 +91,7 @@ public class FieldExclusionTest {
     }
 
     @Test
-    public void fieldsExcludedWithAnnotationShouldNotBePopulated() throws Exception {
+    public void fieldsExcludedWithAnnotationShouldNotBePopulated() {
         Person person = populator.populateBean(Person.class);
 
         assertThat(person).isNotNull();
@@ -99,7 +99,7 @@ public class FieldExclusionTest {
     }
 
     @Test
-    public void testFirstLevelExclusion() throws Exception {
+    public void testFirstLevelExclusion() {
         C c = populator.populateBean(C.class, "b2"); // please, confirm that it works
 
         Assertions.assertThat(c).isNotNull();
@@ -118,7 +118,7 @@ public class FieldExclusionTest {
     }
 
     @Test
-    public void testSecondLevelExclusion() throws Exception {
+    public void testSecondLevelExclusion() {
         C c = populator.populateBean(C.class, "b2.a2"); // please, confirm that it works
 
         Assertions.assertThat(c).isNotNull();
@@ -141,7 +141,7 @@ public class FieldExclusionTest {
     }
 
     @Test
-    public void testThirdLevelExclusion() throws Exception {
+    public void testThirdLevelExclusion() {
         C c = populator.populateBean(C.class, "b2.a2.s2"); // please, confirm that it works
 
         // B1 and its "children" must not be null
@@ -163,7 +163,7 @@ public class FieldExclusionTest {
     }
 
     @Test
-    public void testFirstLevelCollectionExclusion() throws Exception {
+    public void testFirstLevelCollectionExclusion() {
         C c = populator.populateBean(C.class, "b3"); // please, confirm that it works
 
         Assertions.assertThat(c).isNotNull();
@@ -191,7 +191,7 @@ public class FieldExclusionTest {
     }
 
     @Test
-    public void testSecondLevelCollectionExclusion() throws Exception {
+    public void testSecondLevelCollectionExclusion() {
         C c = populator.populateBean(C.class, "b3.a2"); // b3.a2 does not make sense, should be ignored
 
         Assertions.assertThat(c).isNotNull();

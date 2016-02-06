@@ -45,7 +45,7 @@ public class ArrayPopulationTest {
 
     @Ignore
     @Test
-    public void primitiveArraysShouldBeCorrectlyPopulated() throws Exception{
+    public void primitiveArraysShouldBeCorrectlyPopulated() {
         final ArrayBean bean = populator.populateBean(ArrayBean.class);
 
         // primitive types
@@ -60,7 +60,7 @@ public class ArrayPopulationTest {
     }
 
     @Test
-    public void wrapperTypeArraysShouldBeCorrectlyPopulated() throws Exception{
+    public void wrapperTypeArraysShouldBeCorrectlyPopulated() {
         final ArrayBean bean = populator.populateBean(ArrayBean.class);
         
         // wrapper types
@@ -75,7 +75,7 @@ public class ArrayPopulationTest {
     }
 
     @Test
-    public void arraysWithCustomTypesShouldBeCorrectlyPopulated() throws Exception{
+    public void arraysWithCustomTypesShouldBeCorrectlyPopulated() {
         final ArrayBean bean = populator.populateBean(ArrayBean.class);
 
         // custom types

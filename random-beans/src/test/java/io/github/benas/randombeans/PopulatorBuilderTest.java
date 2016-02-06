@@ -23,7 +23,6 @@
  */
 package io.github.benas.randombeans;
 
-import io.github.benas.randombeans.api.BeanPopulationException;
 import io.github.benas.randombeans.api.Populator;
 import io.github.benas.randombeans.api.Randomizer;
 import io.github.benas.randombeans.beans.Human;
@@ -62,7 +61,7 @@ public class PopulatorBuilderTest {
     }
 
     @Test
-    public void customRandomizerShouldBeRegisteredInAllBuiltInstances() throws BeanPopulationException {
+    public void customRandomizerShouldBeRegisteredInAllBuiltInstances() {
         PopulatorBuilder builder = aNewPopulatorBuilder();
 
         builder.randomize(field().named("name").ofType(String.class).inClass(Human.class).get(), randomizer);

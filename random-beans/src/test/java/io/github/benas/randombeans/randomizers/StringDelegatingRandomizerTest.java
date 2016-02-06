@@ -45,13 +45,13 @@ public class StringDelegatingRandomizerTest {
     private StringDelegatingRandomizer stringDelegatingRandomizer;
 
     @Before
-    public void setUp() throws Exception {
+    public void setUp() {
         stringDelegatingRandomizer = new StringDelegatingRandomizer(delegate);
         when(delegate.getRandomValue()).thenReturn(object);
     }
 
     @Test
-    public void testGetRandomValue() throws Exception {
+    public void testGetRandomValue() {
         String actual = stringDelegatingRandomizer.getRandomValue();
 
         assertThat(actual).isEqualTo(valueOf(object));

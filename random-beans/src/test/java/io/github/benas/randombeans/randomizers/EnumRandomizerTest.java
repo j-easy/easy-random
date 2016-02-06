@@ -35,12 +35,12 @@ public class EnumRandomizerTest {
     private Randomizer<Enum<Gender>> randomizer;
 
     @Before
-    public void setUp() throws Exception {
+    public void setUp() {
         randomizer = new EnumRandomizer<>(Gender.class);
     }
 
     @Test
-    public void testGetRandomValue() throws Exception {
+    public void testGetRandomValue() {
         Enum<Gender> value = randomizer.getRandomValue();
         assertThat(value).isIn((Object[]) Gender.values());
     }

@@ -45,7 +45,7 @@ public class OptionalRandomizerTest {
     private OptionalRandomizer<String> optionalRandomizer;
 
     @Before
-    public void setUp() throws Exception {
+    public void setUp() {
         when(randomizer.getRandomValue()).thenReturn(NAME);
         optionalRandomizer = new OptionalRandomizer<>(randomizer, 100);
     }

@@ -41,26 +41,26 @@ public class DateRangeRandomizerTest {
     private Date today, tomorrow;
 
     @Before
-    public void setUp() throws Exception {
+    public void setUp() {
         today = new Date();
         tomorrow = DateUtils.addDays(today, 1);
         randomizer = new DateRangeRandomizer(today, tomorrow);
     }
 
     @Test
-    public void generatedDateShouldBeWithinSpecifiedRange() throws Exception {
+    public void generatedDateShouldBeWithinSpecifiedRange() {
         Date randomDate = randomizer.getRandomValue();
         assertThat(randomDate)
                 .isBetween(today, tomorrow);
     }
 
     @Test(expected = IllegalArgumentException.class)
-    public void whenSpecifiedMinDateIsAfterMaxDateThenThrowIllegalArgumentException() throws Exception {
+    public void whenSpecifiedMinDateIsAfterMaxDateThenThrowIllegalArgumentException() {
         new DateRangeRandomizer(tomorrow, today);
     }
 
     @Test
-    public void whenSpecifiedMinDateIsNullThenShouldUseDefaultMinValue() throws Exception {
+    public void whenSpecifiedMinDateIsNullThenShouldUseDefaultMinValue() {
         randomizer = new DateRangeRandomizer(null, tomorrow);
         Date randomDate = randomizer.getRandomValue();
         assertThat(randomDate)
@@ -68,7 +68,7 @@ public class DateRangeRandomizerTest {
     }
 
     @Test
-    public void whenSpecifiedMaxDateIsNullThenShouldUseDefaultMaxValue() throws Exception {
+    public void whenSpecifiedMaxDateIsNullThenShouldUseDefaultMaxValue() {
         randomizer = new DateRangeRandomizer(today, null);
         Date randomDate = randomizer.getRandomValue();
         assertThat(randomDate)

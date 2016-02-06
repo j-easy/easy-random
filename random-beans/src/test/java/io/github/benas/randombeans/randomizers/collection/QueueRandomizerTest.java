@@ -49,14 +49,14 @@ public class QueueRandomizerTest {
     }
 
     @Test
-    public void generatedQueueShouldNotBeEmpty() throws Exception {
+    public void generatedQueueShouldNotBeEmpty() {
         Queue<String> names = queueRandomizer.getRandomValue();
 
         assertThat(names).hasSize(3);
     }
 
     @Test(expected = IllegalArgumentException.class)
-    public void nbElementsShouldBePositive() throws Exception {
+    public void nbElementsShouldBePositive() {
         queueRandomizer = new QueueRandomizer<>(randomizer, -3);
     }
 

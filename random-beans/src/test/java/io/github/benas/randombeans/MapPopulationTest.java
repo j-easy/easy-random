@@ -40,12 +40,12 @@ public class MapPopulationTest {
     private Populator populator;
 
     @Before
-    public void setUp() throws Exception {
+    public void setUp() {
         populator = aNewPopulatorBuilder().build();
     }
 
     @Test
-    public void testMapInterfacesPopulation() throws Exception {
+    public void testMapInterfacesPopulation() {
         final MapBean mapBean = populator.populateBean(MapBean.class);
 
         assertThat(mapBean).isNotNull();
@@ -77,7 +77,7 @@ public class MapPopulationTest {
     }
 
     @Test
-    public void testMapClassesPopulation() throws Exception {
+    public void testMapClassesPopulation() {
         final MapBean mapBean = populator.populateBean(MapBean.class);
 
         assertThat(mapBean).isNotNull();

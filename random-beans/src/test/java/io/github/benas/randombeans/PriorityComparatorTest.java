@@ -51,7 +51,7 @@ public class PriorityComparatorTest {
     }
 
     @Test
-    public void testCompare() throws Exception {
+    public void testCompare() {
         assertThat(priorityComparator.compare(foo, bar)).isGreaterThan(0);
 
         List<Object> objects = Arrays.asList(foo,bar);

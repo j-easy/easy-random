@@ -49,14 +49,14 @@ public class ListRandomizerTest {
     }
 
     @Test
-    public void generatedListShouldNotBeEmpty() throws Exception {
+    public void generatedListShouldNotBeEmpty() {
         List<String> names = listRandomizer.getRandomValue();
 
         assertThat(names).hasSize(3);
     }
 
     @Test(expected = IllegalArgumentException.class)
-    public void nbElementsShouldBePositive() throws Exception {
+    public void nbElementsShouldBePositive() {
         listRandomizer = new ListRandomizer<>(randomizer, -3);
     }
 

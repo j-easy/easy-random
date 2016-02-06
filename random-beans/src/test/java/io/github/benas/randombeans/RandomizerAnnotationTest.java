@@ -33,7 +33,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 public class RandomizerAnnotationTest {
 
     @Test
-    public void fieldAnnotatedWithRandomizerShouldBePopulatedWithValuesGeneratedByTheDeclaredRandomizer() throws Exception {
+    public void fieldAnnotatedWithRandomizerShouldBePopulatedWithValuesGeneratedByTheDeclaredRandomizer() {
         Foo foo = aNewPopulatorBuilder().build().populateBean(Foo.class);
         assertThat(foo.getName()).isEqualTo("foo");
     }

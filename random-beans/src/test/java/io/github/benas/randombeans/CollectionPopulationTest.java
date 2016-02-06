@@ -47,7 +47,7 @@ public class CollectionPopulationTest {
     }
 
     @Test
-    public void testCollectionInterfacesPopulation() throws Exception {
+    public void testCollectionInterfacesPopulation() {
         final CollectionBean collectionsBean = populator.populateBean(CollectionBean.class);
 
         assertThat(collectionsBean).isNotNull();
@@ -84,7 +84,7 @@ public class CollectionPopulationTest {
     }
 
     @Test
-    public void testCollectionClassesPopulation() throws Exception {
+    public void testCollectionClassesPopulation() {
         final CollectionBean collectionsBean = populator.populateBean(CollectionBean.class);
 
         assertThat(collectionsBean).isNotNull();
@@ -142,12 +142,12 @@ public class CollectionPopulationTest {
     }
 
     @Test (expected = BeanPopulationException.class)
-    public void synchronousQueueTypeMustBeRejected() throws Exception {
+    public void synchronousQueueTypeMustBeRejected() {
         populator.populateBean(SynchronousQueueBean.class);
     }
 
     @Test (expected = BeanPopulationException.class)
-    public void delayedQueueTypeMustBeRejected() throws Exception {
+    public void delayedQueueTypeMustBeRejected() {
         populator.populateBean(DelayedQueueBean.class);
     }
     

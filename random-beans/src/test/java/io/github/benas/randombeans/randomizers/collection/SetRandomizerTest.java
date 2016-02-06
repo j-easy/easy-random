@@ -49,14 +49,14 @@ public class SetRandomizerTest {
     }
 
     @Test
-    public void generatedSetShouldNotBeEmpty() throws Exception {
+    public void generatedSetShouldNotBeEmpty() {
         Collection<String> names = setRandomizer.getRandomValue();
 
         assertThat(names.size()).isLessThanOrEqualTo(3);// duplicate random values are not inserted in the set
     }
 
     @Test(expected = IllegalArgumentException.class)
-    public void nbElementsShouldBePositive() throws Exception {
+    public void nbElementsShouldBePositive() {
         setRandomizer = new SetRandomizer<>(randomizer, -3);
     }
 

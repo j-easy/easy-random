@@ -53,13 +53,13 @@ public class PopulatorImplTest {
     private Populator populator;
 
     @Before
-    public void setUp() throws Exception {
+    public void setUp() {
         populator = aNewPopulatorBuilder().build();
         when(randomizer.getRandomValue()).thenReturn(NAME);
     }
 
     @Test
-    public void generatedBeansShouldBeCorrectlyPopulated() throws Exception {
+    public void generatedBeansShouldBeCorrectlyPopulated() {
         Person person = populator.populateBean(Person.class);
 
         assertThat(person).isNotNull();
@@ -84,7 +84,7 @@ public class PopulatorImplTest {
     }
 
     @Test
-    public void finalFieldsShouldBePopulated() throws Exception {
+    public void finalFieldsShouldBePopulated() {
         Person person = populator.populateBean(Person.class);
 
         assertThat(person).isNotNull();
@@ -92,7 +92,7 @@ public class PopulatorImplTest {
     }
 
     @Test
-    public void staticFieldsShouldNotBePopulated() throws Exception {
+    public void staticFieldsShouldNotBePopulated() {
         try {
             Human human = populator.populateBean(Human.class);
             assertThat(human).isNotNull();
@@ -102,7 +102,7 @@ public class PopulatorImplTest {
     }
 
     @Test
-    public void immutableBeansShouldBePopulated() throws Exception {
+    public void immutableBeansShouldBePopulated() {
         final ImmutableBean immutableBean = populator.populateBean(ImmutableBean.class);
         assertThat(immutableBean).isNotNull();
         assertThat(immutableBean.getFinalValue()).isNotNull();
@@ -110,21 +110,21 @@ public class PopulatorImplTest {
     }
 
     @Test
-    public void generatedBeansListShouldNotBeNull() throws Exception {
+    public void generatedBeansListShouldNotBeNull() {
         List<Person> persons = populator.populateBeans(Person.class);
 
         assertThat(persons).isNotNull();
     }
 
     @Test
-    public void generatedBeansNumberShouldBeEqualToSpecifiedNumber() throws Exception {
+    public void generatedBeansNumberShouldBeEqualToSpecifiedNumber() {
         List<Person> persons = populator.populateBeans(Person.class, 2);
 
         assertThat(persons).hasSize(2);
     }
 
     @Test
-    public void generatedBeansWithCustomRandomizersShouldBeCorrectlyPopulated() throws Exception {
+    public void generatedBeansWithCustomRandomizersShouldBeCorrectlyPopulated() {
         populator = aNewPopulatorBuilder()
                 .randomize(field().named("name").ofType(String.class).inClass(Human.class).get(), randomizer)
                 .build();
@@ -136,7 +136,7 @@ public class PopulatorImplTest {
     }
 
     @Test
-    public void javaNetTypesShouldBePopulated() throws Exception {
+    public void javaNetTypesShouldBePopulated() {
 
         Website website = populator.populateBean(Website.class);
 
@@ -147,13 +147,13 @@ public class PopulatorImplTest {
     }
 
     @Test(expected = IllegalArgumentException.class)
-    public void whenSpecifiedNumberOfBeansToGenerateIsNegativeThenShouldThrowAnIllegalArgumentException() throws Exception {
+    public void whenSpecifiedNumberOfBeansToGenerateIsNegativeThenShouldThrowAnIllegalArgumentException() {
         populator.populateBeans(Person.class, -2);
     }
 
 
     @Test(expected = BeanPopulationException.class)
-    public void whenUnableToInstantiateFieldThenShouldThrowABeanPopulationException() throws Exception {
+    public void whenUnableToInstantiateFieldThenShouldThrowABeanPopulationException() {
         populator.populateBean(AbstractBean.class);
     }
 }

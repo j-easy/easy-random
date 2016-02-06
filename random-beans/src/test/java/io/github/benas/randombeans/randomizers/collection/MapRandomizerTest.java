@@ -51,14 +51,14 @@ public class MapRandomizerTest {
     }
 
     @Test
-    public void generatedMapSizeShouldBeEqualToTheSpecifiedSize() throws Exception {
+    public void generatedMapSizeShouldBeEqualToTheSpecifiedSize() {
         Map<Integer, Integer> names = mapRandomizer.getRandomValue();
 
         assertThat(names).hasSize(3);
     }
 
     @Test(expected = IllegalArgumentException.class)
-    public void nbEntriesShouldBePositive() throws Exception {
+    public void nbEntriesShouldBePositive() {
         mapRandomizer = new MapRandomizer<>(randomizer, randomizer, -3);
     }
 
