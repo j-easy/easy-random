@@ -44,7 +44,7 @@ public interface Populator {
      * @return a populated instance of the given type
      * @throws BeanPopulationException when unable to populate an instance of the given type
      */
-    <T> T populateBean(final Class<T> type, final String... excludedFields) throws BeanPopulationException;
+    <T> T populateBean(final Class<T> type, final String... excludedFields);
 
     /**
      * Populate a random number of instances for the given type.
@@ -56,7 +56,7 @@ public interface Populator {
      * @return a list of populated instances of the given type
      * @throws BeanPopulationException when unable to populate an instance of the given type
      */
-    <T> List<T> populateBeans(final Class<T> type, final String... excludedFields) throws BeanPopulationException;
+    <T> List<T> populateBeans(final Class<T> type, final String... excludedFields);
 
     /**
      * Populate a fixed number of instances for the given type.
@@ -69,6 +69,6 @@ public interface Populator {
      * @return a list of populated instances of the given type
      * @throws BeanPopulationException when unable to populate an instance of the given type
      */
-    <T> List<T> populateBeans(final Class<T> type, int size, final String... excludedFields) throws BeanPopulationException;
+    <T> List<T> populateBeans(final Class<T> type, int size, final String... excludedFields);
 
 }

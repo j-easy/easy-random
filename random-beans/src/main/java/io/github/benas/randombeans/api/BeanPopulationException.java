@@ -30,7 +30,7 @@ package io.github.benas.randombeans.api;
  *
  * @author Mahmoud Ben Hassine (mahmoud.benhassine@icloud.com)
  */
-public class BeanPopulationException extends Exception {
+public class BeanPopulationException extends RuntimeException {
 
     private static final long serialVersionUID = -9049778508557432869L;
 
