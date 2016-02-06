@@ -37,13 +37,13 @@ public class LastNameRandomizerTest extends AbstractRandomizerTest<String> {
     private List<String> lastNames;
 
     @Before
-    public void setUp() throws Exception {
+    public void setUp() {
         lastNames = asList(getData("lastNames"));
         randomizer = new LastNameRandomizer();
     }
 
     @Test
-    public void generatedLastNameShouldBeInThePredefinedLastNamesList() throws Exception {
+    public void generatedLastNameShouldBeInThePredefinedLastNamesList() {
         String randomValue = randomizer.getRandomValue();
 
         assertThat(lastNames).contains(randomValue);

@@ -37,13 +37,13 @@ public class CountryRandomizerTest extends AbstractRandomizerTest<String> {
     private List<String> countries;
 
     @Before
-    public void setUp() throws Exception {
+    public void setUp() {
         countries = asList(getData("countries"));
         randomizer = new CountryRandomizer();
     }
 
     @Test
-    public void generatedCountryShouldBeInThePredefinedCountriesList() throws Exception {
+    public void generatedCountryShouldBeInThePredefinedCountriesList() {
         String randomValue = randomizer.getRandomValue();
 
         assertThat(countries).contains(randomValue);

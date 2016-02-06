@@ -24,7 +24,6 @@
 
 package io.github.benas.randombeans.spring;
 
-import io.github.benas.randombeans.api.BeanPopulationException;
 import io.github.benas.randombeans.api.Populator;
 import org.junit.Test;
 import org.springframework.context.support.AbstractApplicationContext;
@@ -35,7 +34,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 public class PopulatorFactoryBeanTest {
 
     @Test
-    public void testJPopulatorFactoryBeanWithDefaultRandomizers() throws BeanPopulationException {
+    public void testJPopulatorFactoryBeanWithDefaultRandomizers() {
 
         Populator populator = getPopulatorFromSpringContext("/application-context.xml");
 
@@ -50,7 +49,7 @@ public class PopulatorFactoryBeanTest {
     }
 
     @Test
-    public void testJPopulatorFactoryBeanWithCustomRandomizers() throws BeanPopulationException {
+    public void testJPopulatorFactoryBeanWithCustomRandomizers() {
 
         Populator populator = getPopulatorFromSpringContext("/application-context-with-custom-randomizers.xml");
 

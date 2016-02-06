@@ -42,7 +42,7 @@ public class JodaTimeSupportTest {
     }
 
     @Test
-    public void jodaTimeBeansShouldBeFilledIn() throws BeanPopulationException {
+    public void jodaTimeBeansShouldBeFilledIn() {
 
         Organizer organizer = populator.populateBean(Organizer.class);
 

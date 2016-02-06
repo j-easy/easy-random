@@ -37,13 +37,13 @@ public class CityRandomizerTest extends AbstractRandomizerTest<String> {
     private List<String> cities;
 
     @Before
-    public void setUp() throws Exception {
+    public void setUp() {
         cities = asList(getData("cities"));
         randomizer = new CityRandomizer();
     }
 
     @Test
-    public void generatedCityShouldBeInThePredefinedCitiesList() throws Exception {
+    public void generatedCityShouldBeInThePredefinedCitiesList() {
         String randomValue = randomizer.getRandomValue();
 
         assertThat(cities).contains(randomValue);

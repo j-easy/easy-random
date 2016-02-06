@@ -45,12 +45,12 @@ public class I18NSupportTest {
     }
 
     @Before
-    public void setUp() throws Exception {
+    public void setUp() {
         countryRandomizer = new CountryRandomizer();
     }
 
     @Test
-    public void generatedValueShouldBeInternationalized() throws Exception {
+    public void generatedValueShouldBeInternationalized() {
         String country = countryRandomizer.getRandomValue();
         List<String> i18nValues = asList("Etats Unis", "Chine", "Allemagne", "France", "Italie", "Espagne");
 

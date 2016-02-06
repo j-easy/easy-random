@@ -33,12 +33,12 @@ import static org.assertj.core.api.Assertions.assertThat;
 public class EmailRandomizerTest extends AbstractRandomizerTest<String> {
 
     @Before
-    public void setUp() throws Exception {
+    public void setUp() {
         randomizer = new EmailRandomizer();
     }
 
     @Test
-    public void generatedEmailsShouldBeValid() throws Exception {
+    public void generatedEmailsShouldBeValid() {
         String randomValue = randomizer.getRandomValue();
 
         boolean isValidEmail = EmailValidator.getInstance().isValid(randomValue);
