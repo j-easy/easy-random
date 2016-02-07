@@ -32,6 +32,7 @@ import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
+import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -177,7 +178,7 @@ public abstract class ReflectionUtils {
         List<Class<?>> concreteSubTypes = typeToConcreteSubTypes.get(type);
         if (concreteSubTypes == null) {
             concreteSubTypes = searchForPublicConcreteSubTypesOf(type);
-            typeToConcreteSubTypes.putIfAbsent(type, concreteSubTypes);
+            typeToConcreteSubTypes.putIfAbsent(type, Collections.unmodifiableList(concreteSubTypes));
         }
         return concreteSubTypes;
     }
@@ -187,10 +188,46 @@ public abstract class ReflectionUtils {
         Set<Class<? extends T>> subTypes = reflections.getSubTypesOf(type);
         List<Class<?>> concreteSubTypes = new ArrayList<>();
         for (Class<? extends T> currentSubType : subTypes) {
-            if (isPublic(currentSubType) && !isAbstract(currentSubType)) {
+            if (isPublic(currentSubType) && !(isAbstract(currentSubType))) {
                 concreteSubTypes.add(currentSubType);
             }
         }
         return concreteSubTypes;
+    }
+    
+    /**
+     * Returns a list of all subtypes of the type of the field which have the same parameterized types.
+     * 
+     * @param field the field to use for the search
+     * @param subTypes a list of subtypes of the type of the filed
+     * @return a list of with the same parameterized types
+     */
+    public static List<Class<?>> findSubTypesWithSameParameterizedTypes(final Field field, final List<Class<?>> subTypes) {
+        Type fieldGenericType = field.getGenericType();
+        if (fieldGenericType instanceof ParameterizedType) {
+            Type[] fieldArugmentTypes = ((ParameterizedType) fieldGenericType).getActualTypeArguments();
+            List<Class<?>> subTypesWithSameParameterizedTypes = new ArrayList<>();
+            for (Class<?> currentConcreteSubType : subTypes) {
+                List<Type[]> actualTypeArguments = ReflectionUtils.getActualTypeArgumentsOfGenericInterfaces(currentConcreteSubType);
+                for (Type[] currentTypeArguments : actualTypeArguments) {
+                    if (Arrays.equals(fieldArugmentTypes, currentTypeArguments)) {
+                        subTypesWithSameParameterizedTypes.add(currentConcreteSubType);
+                    }
+                }
+            }
+            return subTypesWithSameParameterizedTypes;
+        }
+        return subTypes;
+    }
+
+    private static List<Type[]> getActualTypeArgumentsOfGenericInterfaces(final Class<?> type) {
+        List<Type[]> actualTypeArguments = new ArrayList<>();
+        Type[] genericInterfaceTypes = type.getGenericInterfaces();
+        for (Type currentGenericInterfaceType : genericInterfaceTypes) {
+            if (currentGenericInterfaceType instanceof ParameterizedType) {
+                actualTypeArguments.add(((ParameterizedType) currentGenericInterfaceType).getActualTypeArguments());
+            }
+        }
+        return actualTypeArguments;
     }
 }
