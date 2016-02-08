@@ -27,10 +27,8 @@ package io.github.benas.randombeans.randomizers;
 
 import io.github.benas.randombeans.api.Randomizer;
 
-import java.util.ResourceBundle;
-
 /**
- * A generic {@link Randomizer} that generates String values from a list of words.
+ * A generic {@link Randomizer} that generates random values from a list of words.
  *
  * @author Mahmoud Ben Hassine (mahmoud.benhassine@icloud.com)
  */
@@ -39,25 +37,17 @@ public class GenericStringRandomizer extends AbstractRandomizer<String> {
     private final String[] words;
 
     /**
-     * Create a {@link GenericStringRandomizer}.
+     * Create a new {@link GenericStringRandomizer}.
      *
-     * @param key the key in the data resource bundle.
+     * @param words the list of words from which this randomizer will generate random values.
      */
-    public GenericStringRandomizer(final String key) {
-        this.words = getData(key);
+    public GenericStringRandomizer(final String[] words) {
+        this.words = words;
     }
 
     @Override
     public String getRandomValue() {
         return words[random.nextInt(words.length)];
-    }
-
-    protected String[] getData(final String key) {
-        return getResourceBundle().getString(key).split(",");
-    }
-
-    private static ResourceBundle getResourceBundle() {
-        return ResourceBundle.getBundle("io/github/benas/randombeans/randomizers/data");
     }
 
 }

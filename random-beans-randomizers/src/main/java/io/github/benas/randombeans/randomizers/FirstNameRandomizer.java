@@ -32,14 +32,24 @@ import io.github.benas.randombeans.api.Randomizer;
  *
  * @author Mahmoud Ben Hassine (mahmoud.benhassine@icloud.com)
  */
-public class FirstNameRandomizer extends GenericStringRandomizer {
+public class FirstNameRandomizer extends FakerBasedRandomizer<String> {
 
     /**
-     * Public constructor.
+     * Create a new {@link FirstNameRandomizer}.
      */
     public FirstNameRandomizer() {
-        super("firstNames");
     }
 
+    /**
+     * Create a new {@link FirstNameRandomizer}.
+     * @param seed the initial seed
+     */
+    public FirstNameRandomizer(long seed) {
+        super(seed);
+    }
 
+    @Override
+    public String getRandomValue() {
+        return faker.name().firstName();
+    }
 }

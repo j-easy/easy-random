@@ -27,33 +27,20 @@ package io.github.benas.randombeans.randomizers;
 import org.junit.Before;
 import org.junit.Test;
 
-import java.util.List;
-
-import static java.util.Arrays.asList;
 import static org.assertj.core.api.Assertions.assertThat;
 
 public class FullNameRandomizerTest extends AbstractRandomizerTest<String> {
 
-    private List<String> firstNames;
-    private List<String> lastNames;
-
     @Before
     public void setUp() {
-        firstNames = asList(getData("firstNames"));
-        lastNames = asList(getData("lastNames"));
-        randomizer = new FullNameRandomizer();
+        randomizer = new FullNameRandomizer(SEED);
     }
 
     @Test
-    public void generatedFullNameShouldBeGeneratedFromThePredefinedFirstNamesAndLastNamesLists() {
+    public void generatedFullNameShouldBeAlwaysTheSameForTheSameSeed() {
         String randomValue = randomizer.getRandomValue();
 
-        String[] values = randomValue.split(" ");
-        String firstName = values[0];
-        String lastName = values[1];
-
-        assertThat(firstNames).contains(firstName);
-        assertThat(lastNames).contains(lastName);
+        assertThat(randomValue).isEqualTo("Javon Crona");
     }
 
 }

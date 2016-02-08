@@ -32,13 +32,24 @@ import io.github.benas.randombeans.api.Randomizer;
  *
  * @author Mahmoud Ben Hassine (mahmoud.benhassine@icloud.com)
  */
-public class CityRandomizer extends GenericStringRandomizer {
+public class CityRandomizer extends FakerBasedRandomizer<String> {
 
     /**
-     * Public constructor.
+     * Create a new {@link CityRandomizer}.
      */
     public CityRandomizer() {
-        super("cities");
     }
 
+    /**
+     * Create a new {@link CityRandomizer}.
+     * @param seed the initial seed
+     */
+    public CityRandomizer(final long seed) {
+        super(seed);
+    }
+
+    @Override
+    public String getRandomValue() {
+        return faker.address().city();
+    }
 }

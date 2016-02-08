@@ -27,26 +27,20 @@ package io.github.benas.randombeans.randomizers;
 import org.junit.Before;
 import org.junit.Test;
 
-import java.util.List;
-
-import static java.util.Arrays.asList;
 import static org.assertj.core.api.Assertions.assertThat;
 
 public class CityRandomizerTest extends AbstractRandomizerTest<String> {
 
-    private List<String> cities;
-
     @Before
     public void setUp() {
-        cities = asList(getData("cities"));
-        randomizer = new CityRandomizer();
+        randomizer = new CityRandomizer(SEED);
     }
 
     @Test
-    public void generatedCityShouldBeInThePredefinedCitiesList() {
+    public void generatedCityShouldBeAlwaysTheSameForTheSameSeed() {
         String randomValue = randomizer.getRandomValue();
 
-        assertThat(cities).contains(randomValue);
+        assertThat(randomValue).isEqualTo("Weissnatmouth");
     }
 
 }

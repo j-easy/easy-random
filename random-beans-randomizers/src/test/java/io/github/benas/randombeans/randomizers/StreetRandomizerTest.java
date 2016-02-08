@@ -27,26 +27,19 @@ package io.github.benas.randombeans.randomizers;
 import org.junit.Before;
 import org.junit.Test;
 
-import java.util.List;
-
-import static java.util.Arrays.asList;
 import static org.assertj.core.api.Assertions.assertThat;
 
 public class StreetRandomizerTest extends AbstractRandomizerTest<String> {
 
-    private List<String> streets;
-
     @Before
     public void setUp() {
-        streets = asList(getData("streets"));
-        randomizer = new StreetRandomizer();
+        randomizer = new StreetRandomizer(SEED);
     }
 
     @Test
-    public void generatedStreetShouldBeInThePredefinedStreetsList() {
+    public void generatedStreetShouldBeAlwaysTheSameForTheSameSeed() {
         String randomValue = randomizer.getRandomValue();
 
-        assertThat(streets).contains(randomValue);
+        assertThat(randomValue).isEqualTo("Weissnat Locks");
     }
-
 }

@@ -27,44 +27,30 @@ package io.github.benas.randombeans.randomizers;
 
 import io.github.benas.randombeans.api.Randomizer;
 
-import java.util.Random;
-import java.util.ResourceBundle;
-
 /**
  * A {@link Randomizer} that generates random emails.
  *
  * @author Mahmoud Ben Hassine (mahmoud.benhassine@icloud.com)
  */
-public class EmailRandomizer implements Randomizer<String> {
+public class EmailRandomizer extends FakerBasedRandomizer<String> {
 
-    private final Random random = new Random();
+    /**
+     * Create a new {@link EmailRandomizer}.
+     */
+    public EmailRandomizer() {
+    }
 
-    private final ResourceBundle resourceBundle = getResourceBundle();
-
-    private final String[] firstNames =   getData("firstNames");
-    private final String[] lastNames =    getData("lastNames");
-    private final String[] emailServers = getData("email.servers");
-    private final String[] emailDomains = getData("email.domains");
+    /**
+     * Create a new {@link EmailRandomizer}.
+     * @param seed the initial seed
+     */
+    public EmailRandomizer(long seed) {
+        super(seed);
+    }
 
     @Override
     public String getRandomValue() {
-        StringBuilder stringBuilder = new StringBuilder();
-        stringBuilder.append(firstNames[random.nextInt(firstNames.length)])
-                .append(".")
-                .append(lastNames[random.nextInt(lastNames.length)])
-                .append("@")
-                .append(emailServers[random.nextInt(emailServers.length)])
-                .append(".")
-                .append(emailDomains[random.nextInt(emailDomains.length)]);
-        return stringBuilder.toString();
-    }
-
-    private static ResourceBundle getResourceBundle() {
-        return ResourceBundle.getBundle("io/github/benas/randombeans/randomizers/data");
-    }
-
-    private String[] getData(final String key) {
-        return resourceBundle.getString(key).split(",");
+        return faker.internet().emailAddress();
     }
 
 }
