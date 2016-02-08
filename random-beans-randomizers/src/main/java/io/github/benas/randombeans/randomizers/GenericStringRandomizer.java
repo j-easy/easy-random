@@ -56,7 +56,7 @@ public class GenericStringRandomizer extends AbstractRandomizer<String> {
         return getResourceBundle().getString(key).split(",");
     }
 
-    private ResourceBundle getResourceBundle() {
+    private static ResourceBundle getResourceBundle() {
         return ResourceBundle.getBundle("io/github/benas/randombeans/randomizers/data");
     }
 

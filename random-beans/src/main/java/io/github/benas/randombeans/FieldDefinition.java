@@ -46,13 +46,21 @@ public class FieldDefinition<T, F> {
 
     @Override
     public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
+        if (this == o) {
+            return true;
+        }
+        if (o == null || getClass() != o.getClass()) {
+            return false;
+        }
 
         FieldDefinition that = (FieldDefinition) o;
 
-        if (!name.equals(that.name)) return false;
-        if (!type.equals(that.type)) return false;
+        if (!name.equals(that.name)) {
+            return false;
+        }
+        if (!type.equals(that.type)) {
+            return false;
+        }
         return clazz.equals(that.clazz);
 
     }

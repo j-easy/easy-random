@@ -49,12 +49,12 @@ public abstract class Constants {
     /**
      * The date of ten years ago form now.
      */
-    public static final Date TEN_YEARS_AGO = addYears(new Date(), -DEFAULT_DATE_RANGE);;
+    public static final Date TEN_YEARS_AGO = addYears(new Date(), -DEFAULT_DATE_RANGE);
 
     /**
      * The date of ten years in the future.
      */
-    public static final Date IN_TEN_YEARS = addYears(new Date(), DEFAULT_DATE_RANGE);;
+    public static final Date IN_TEN_YEARS = addYears(new Date(), DEFAULT_DATE_RANGE);
 
     private Constants() { }
 

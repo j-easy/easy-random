@@ -102,7 +102,7 @@ class PopulatorContext {
         return fields;
     }
 
-    private void appendDottedName(StringBuilder builder, List<Field> fields) {
+    private static void appendDottedName(StringBuilder builder, List<Field> fields) {
         for (Field field : fields) {
             if (builder.length() > 0) {
                 builder.append(".");
