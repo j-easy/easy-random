@@ -32,7 +32,7 @@ import io.github.benas.randombeans.api.Randomizer;
  *
  * @author Mahmoud Ben Hassine (mahmoud.benhassine@icloud.com)
  */
-public class GenericStringRandomizer extends AbstractRandomizer<String> {
+public class GenericStringRandomizer extends FakerBasedRandomizer<String> {
 
     private final String[] words;
 
@@ -42,12 +42,23 @@ public class GenericStringRandomizer extends AbstractRandomizer<String> {
      * @param words the list of words from which this randomizer will generate random values.
      */
     public GenericStringRandomizer(final String[] words) {
+        super();
+        this.words = words;
+    }
+
+    /**
+     * Create a new {@link GenericStringRandomizer}.
+     * @param words the list of words from which this randomizer will generate random values.
+     * @param seed the initial seed
+     */
+    public GenericStringRandomizer(final String[] words, final long seed) {
+        super(seed);
         this.words = words;
     }
 
     @Override
     public String getRandomValue() {
-        return words[random.nextInt(words.length)];
+        return faker.options().option(words);
     }
 
 }
