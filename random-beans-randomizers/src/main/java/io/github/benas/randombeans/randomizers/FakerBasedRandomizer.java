@@ -3,6 +3,7 @@ package io.github.benas.randombeans.randomizers;
 import com.github.javafaker.Faker;
 import io.github.benas.randombeans.api.Randomizer;
 
+import java.util.Locale;
 import java.util.Random;
 
 /**
@@ -20,6 +21,10 @@ public abstract class FakerBasedRandomizer<T> extends AbstractRandomizer<T> {
 
     protected FakerBasedRandomizer(final long seed) {
         faker = new Faker(new Random(seed));
+    }
+
+    protected FakerBasedRandomizer(final long seed, final Locale locale) {
+        faker = new Faker(locale, new Random(seed));
     }
 
     @Override

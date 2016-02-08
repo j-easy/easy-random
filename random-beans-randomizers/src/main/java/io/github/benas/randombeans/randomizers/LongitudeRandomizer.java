@@ -27,6 +27,8 @@ package io.github.benas.randombeans.randomizers;
 
 import io.github.benas.randombeans.api.Randomizer;
 
+import java.util.Locale;
+
 /**
  * A {@link Randomizer} that generates random longitudes.
  *
@@ -46,6 +48,16 @@ public class LongitudeRandomizer extends FakerBasedRandomizer<String> {
      */
     public LongitudeRandomizer(final long seed) {
         super(seed);
+    }
+
+    /**
+     * Create a new {@link LongitudeRandomizer}.
+     *
+     * @param seed the initial seed
+     * @param locale the locale to use
+     */
+    protected LongitudeRandomizer(final long seed, final Locale locale) {
+        super(seed, locale);
     }
 
     @Override

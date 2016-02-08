@@ -27,6 +27,8 @@ package io.github.benas.randombeans.randomizers;
 
 import io.github.benas.randombeans.api.Randomizer;
 
+import java.util.Locale;
+
 /**
  * A {@link Randomizer} that generates random latitudes.
  *
@@ -46,6 +48,16 @@ public class LatitudeRandomizer extends FakerBasedRandomizer<String> {
      */
     public LatitudeRandomizer(final long seed) {
         super(seed);
+    }
+
+    /**
+     * Create a new {@link LatitudeRandomizer}.
+     *
+     * @param seed the initial seed
+     * @param locale the locale to use
+     */
+    protected LatitudeRandomizer(final long seed, final Locale locale) {
+        super(seed, locale);
     }
 
     @Override

@@ -27,6 +27,8 @@ package io.github.benas.randombeans.randomizers;
 
 import io.github.benas.randombeans.api.Randomizer;
 
+import java.util.Locale;
+
 /**
  * A {@link Randomizer} that generates random credit card numbers.
  *
@@ -46,6 +48,16 @@ public class CreditCardNumberRandomizer extends FakerBasedRandomizer<String> {
      */
     public CreditCardNumberRandomizer(final long seed) {
         super(seed);
+    }
+
+    /**
+     * Create a new {@link CreditCardNumberRandomizer}.
+     *
+     * @param seed the initial seed
+     * @param locale the locale to use
+     */
+    protected CreditCardNumberRandomizer(final long seed, final Locale locale) {
+        super(seed, locale);
     }
 
     @Override

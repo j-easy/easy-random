@@ -27,6 +27,8 @@ package io.github.benas.randombeans.randomizers;
 
 import io.github.benas.randombeans.api.Randomizer;
 
+import java.util.Locale;
+
 /**
  * A {@link Randomizer} that generates random states.
  *
@@ -46,6 +48,16 @@ public class StateRandomizer extends FakerBasedRandomizer<String> {
      */
     public StateRandomizer(final long seed) {
         super(seed);
+    }
+
+    /**
+     * Create a new {@link StateRandomizer}.
+     *
+     * @param seed the initial seed
+     * @param locale the locale to use
+     */
+    protected StateRandomizer(final long seed, final Locale locale) {
+        super(seed, locale);
     }
 
     @Override

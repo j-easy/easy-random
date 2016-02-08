@@ -27,6 +27,8 @@ package io.github.benas.randombeans.randomizers;
 
 import io.github.benas.randombeans.api.Randomizer;
 
+import java.util.Locale;
+
 /**
  * A {@link Randomizer} that generates random street names.
  *
@@ -46,6 +48,16 @@ public class StreetRandomizer extends FakerBasedRandomizer<String> {
      */
     public StreetRandomizer(long seed) {
         super(seed);
+    }
+
+    /**
+     * Create a new {@link StreetRandomizer}.
+     *
+     * @param seed the initial seed
+     * @param locale the locale to use
+     */
+    protected StreetRandomizer(final long seed, final Locale locale) {
+        super(seed, locale);
     }
 
     @Override

@@ -27,6 +27,8 @@ package io.github.benas.randombeans.randomizers;
 
 import io.github.benas.randombeans.api.Randomizer;
 
+import java.util.Locale;
+
 /**
  * A {@link Randomizer} that generates random paragraphs.
  *
@@ -46,6 +48,16 @@ public class ParagraphRandomizer extends FakerBasedRandomizer<String> {
      */
     public ParagraphRandomizer(final long seed) {
         super(seed);
+    }
+
+    /**
+     * Create a new {@link ParagraphRandomizer}.
+     *
+     * @param seed the initial seed
+     * @param locale the locale to use
+     */
+    protected ParagraphRandomizer(final long seed, final Locale locale) {
+        super(seed, locale);
     }
 
     @Override

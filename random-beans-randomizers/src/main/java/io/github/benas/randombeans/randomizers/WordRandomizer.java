@@ -27,6 +27,8 @@ package io.github.benas.randombeans.randomizers;
 
 import io.github.benas.randombeans.api.Randomizer;
 
+import java.util.Locale;
+
 /**
  * A {@link Randomizer} that generates random words.
  *
@@ -46,6 +48,16 @@ public class WordRandomizer extends FakerBasedRandomizer<String> {
      */
     public WordRandomizer(final long seed) {
         super(seed);
+    }
+
+    /**
+     * Create a new {@link WordRandomizer}.
+     *
+     * @param seed the initial seed
+     * @param locale the locale to use
+     */
+    protected WordRandomizer(final long seed, final Locale locale) {
+        super(seed, locale);
     }
 
     @Override

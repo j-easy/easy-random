@@ -27,6 +27,8 @@ package io.github.benas.randombeans.randomizers;
 
 import io.github.benas.randombeans.api.Randomizer;
 
+import java.util.Locale;
+
 /**
  * A {@link Randomizer} that generates random ISBNs.
  *
@@ -46,6 +48,16 @@ public class IsbnRandomizer extends FakerBasedRandomizer<String> {
      */
     public IsbnRandomizer(final long seed) {
         super(seed);
+    }
+
+    /**
+     * Create a new {@link IsbnRandomizer}.
+     *
+     * @param seed the initial seed
+     * @param locale the locale to use
+     */
+    protected IsbnRandomizer(final long seed, final Locale locale) {
+        super(seed, locale);
     }
 
     @Override

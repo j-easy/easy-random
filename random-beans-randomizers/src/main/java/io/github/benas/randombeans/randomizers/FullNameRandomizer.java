@@ -27,6 +27,8 @@ package io.github.benas.randombeans.randomizers;
 
 import io.github.benas.randombeans.api.Randomizer;
 
+import java.util.Locale;
+
 /**
  * A {@link Randomizer} that generates random full names.
  *
@@ -46,6 +48,16 @@ public class FullNameRandomizer extends FakerBasedRandomizer<String> {
      */
     public FullNameRandomizer(long seed) {
         super(seed);
+    }
+
+    /**
+     * Create a new {@link FullNameRandomizer}.
+     *
+     * @param seed the initial seed
+     * @param locale the locale to use
+     */
+    protected FullNameRandomizer(final long seed, final Locale locale) {
+        super(seed, locale);
     }
 
     @Override
