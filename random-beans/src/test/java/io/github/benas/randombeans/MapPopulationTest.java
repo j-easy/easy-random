@@ -44,6 +44,7 @@ public class MapPopulationTest {
     }
 
     @Test
+    @SuppressWarnings("unchecked")
     public void rawMapInterfacesShouldBeEmpty() {
         final MapBean mapBean = populator.populateBean(MapBean.class);
 
@@ -88,6 +89,7 @@ public class MapPopulationTest {
     }
 
     @Test
+    @SuppressWarnings("unchecked")
     public void rawMapClassesShouldBeEmpty() {
         final MapBean mapBean = populator.populateBean(MapBean.class);
 

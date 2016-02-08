@@ -27,11 +27,11 @@ package io.github.benas.randombeans.beans;
 
 import java.util.Date;
 
+@SuppressWarnings("rawtypes")
 public class AbstractBean {
 
     private Comparable c1;
     private Comparable<Date> c2;
-
 
     public Comparable getC1() {
         return c1;

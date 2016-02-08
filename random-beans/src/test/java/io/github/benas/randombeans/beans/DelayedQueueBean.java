@@ -29,6 +29,7 @@ import java.util.concurrent.DelayQueue;
 import java.util.concurrent.Delayed;
 import java.util.concurrent.TimeUnit;
 
+@SuppressWarnings("rawtypes")
 public class DelayedQueueBean {
 
     private DelayQueue delayQueue;
