@@ -15,6 +15,7 @@ import java.util.concurrent.ConcurrentSkipListMap;
 
 import static io.github.benas.randombeans.randomizers.ByteRandomizer.aNewByteRandomizer;
 import static io.github.benas.randombeans.util.ReflectionUtils.isInterface;
+import static io.github.benas.randombeans.util.ReflectionUtils.isParameterizedType;
 import static java.lang.Math.abs;
 
 /**
@@ -48,24 +49,18 @@ class MapPopulator {
             }
         }
 
-        int size = abs(aNewByteRandomizer().getRandomValue());
+        int randomSize = abs(aNewByteRandomizer().getRandomValue());
 
         Type fieldGenericType = field.getGenericType();
-        Type baseKeyType = String.class;
-        Type baseValueType = String.class;
-        if (fieldGenericType instanceof ParameterizedType) {
+        if (isParameterizedType(fieldGenericType)) { // populate only parametrized types, raw types will be empty
             ParameterizedType parameterizedType = (ParameterizedType) fieldGenericType;
-            baseKeyType = parameterizedType.getActualTypeArguments()[0];
-            baseValueType = parameterizedType.getActualTypeArguments()[1];
-        }
-        Class<?> baseKeyTypeClass = (Class<?>) baseKeyType;
-        List<?> keyItems = populator.populateBeans(baseKeyTypeClass, size);
-
-        Class<?> baseValueTypeClass = (Class<?>) baseValueType;
-        List<?> valueItems = populator.populateBeans(baseValueTypeClass, size);
-
-        for (int index = 0; index < size; index++) {
-            map.put(keyItems.get(index), valueItems.get(index));
+            Type keyType = parameterizedType.getActualTypeArguments()[0];
+            Type valueType = parameterizedType.getActualTypeArguments()[1];
+            for (int index = 0; index < randomSize; index++) {
+                Object randomKey = populator.populateBean((Class<?>) keyType);
+                Object randomValue = populator.populateBean((Class<?>) valueType);
+                map.put(randomKey, randomValue);
+            }
         }
         return map;
     }

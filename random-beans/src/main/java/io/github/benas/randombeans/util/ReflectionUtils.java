@@ -27,6 +27,8 @@ package io.github.benas.randombeans.util;
 
 import java.lang.reflect.Field;
 import java.lang.reflect.Modifier;
+import java.lang.reflect.ParameterizedType;
+import java.lang.reflect.Type;
 import java.util.*;
 
 /**
@@ -122,5 +124,14 @@ public abstract class ReflectionUtils {
      */
     public static boolean isMapType(final Class<?> type) {
         return Map.class.isAssignableFrom(type);
+    }
+
+    /**
+     * Check if a type is a parameterized type
+     * @param type the type to check
+     * @return true if the type is parameterized, false otherwise
+     */
+    public static boolean isParameterizedType(final Type type) {
+        return type != null && type instanceof ParameterizedType && ((ParameterizedType) type).getActualTypeArguments().length > 0;
     }
 }

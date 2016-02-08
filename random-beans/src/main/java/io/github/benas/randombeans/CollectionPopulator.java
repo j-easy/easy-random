@@ -12,6 +12,7 @@ import java.util.concurrent.*;
 
 import static io.github.benas.randombeans.randomizers.ByteRandomizer.aNewByteRandomizer;
 import static io.github.benas.randombeans.util.ReflectionUtils.isInterface;
+import static io.github.benas.randombeans.util.ReflectionUtils.isParameterizedType;
 import static java.lang.Math.abs;
 
 /**
@@ -42,15 +43,14 @@ class CollectionPopulator {
         }
 
         Type fieldGenericType = field.getGenericType();
-        Type baseType = String.class;
-        if (fieldGenericType instanceof ParameterizedType) {
+        if (isParameterizedType(fieldGenericType)) { // populate only parametrized types, raw types will be empty
             ParameterizedType parameterizedType = (ParameterizedType) fieldGenericType;
-            baseType = parameterizedType.getActualTypeArguments()[0];
+            Type type = parameterizedType.getActualTypeArguments()[0];
+            List items = populator.populateBeans((Class<?>) type, randomSize);
+            collection.addAll(items);
         }
-        Class<?> baseTypeClass = (Class<?>) baseType;
-        List items = populator.populateBeans(baseTypeClass, randomSize);
-        collection.addAll(items);
         return collection;
+
     }
 
     private Collection<?> getEmptyCollection(Class<?> fieldType, int initialSize) throws IllegalAccessException {

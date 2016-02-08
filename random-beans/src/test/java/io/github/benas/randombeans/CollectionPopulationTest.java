@@ -47,97 +47,88 @@ public class CollectionPopulationTest {
     }
 
     @Test
-    public void testCollectionInterfacesPopulation() {
+    public void rawCollectionInterfacesShouldBeEmpty() {
+        final CollectionBean collectionsBean = populator.populateBean(CollectionBean.class);
+
+        assertThat(collectionsBean).isNotNull();
+
+        assertThat(collectionsBean.getCollection()).isEmpty();
+        assertThat(collectionsBean.getSet()).isEmpty();
+        assertThat(collectionsBean.getSortedSet()).isEmpty();
+        assertThat(collectionsBean.getNavigableSet()).isEmpty();
+        assertThat(collectionsBean.getList()).isEmpty();
+        assertThat(collectionsBean.getQueue()).isEmpty();
+        assertThat(collectionsBean.getBlockingQueue()).isEmpty();
+        assertThat(collectionsBean.getTransferQueue()).isEmpty();
+        assertThat(collectionsBean.getDeque()).isEmpty();
+        assertThat(collectionsBean.getBlockingDeque()).isEmpty();
+    }
+
+    @Test
+    public void typedCollectionInterfacesShouldNotBeEmpty() {
         final CollectionBean collectionsBean = populator.populateBean(CollectionBean.class);
 
         assertThat(collectionsBean).isNotNull();
         
-        assertContainsNotNullAndNotEmptyStrings(collectionsBean.getCollection());
         assertContainsOnlyNonEmptyPersons(collectionsBean.getTypedCollection());
-        
-        assertContainsNotNullAndNotEmptyStrings(collectionsBean.getSet());
         assertContainsOnlyNonEmptyPersons(collectionsBean.getTypedSet());
-        
-        assertContainsNotNullAndNotEmptyStrings(collectionsBean.getSortedSet());
         assertContainsOnlyNonEmptyPersons(collectionsBean.getTypedSortedSet());
-        
-        assertContainsNotNullAndNotEmptyStrings(collectionsBean.getNavigableSet());
         assertContainsOnlyNonEmptyPersons(collectionsBean.getTypedNavigableSet());
-        
-        assertContainsNotNullAndNotEmptyStrings(collectionsBean.getList());
         assertContainsOnlyNonEmptyPersons(collectionsBean.getTypedList());
-        
-        assertContainsNotNullAndNotEmptyStrings(collectionsBean.getQueue());
         assertContainsOnlyNonEmptyPersons(collectionsBean.getTypedQueue());
-        
-        assertContainsNotNullAndNotEmptyStrings(collectionsBean.getBlockingQueue());
         assertContainsOnlyNonEmptyPersons(collectionsBean.getTypedBlockingQueue());
-        
-        assertContainsNotNullAndNotEmptyStrings(collectionsBean.getTransferQueue());
         assertContainsOnlyNonEmptyPersons(collectionsBean.getTypedTransferQueue());
-        
-        assertContainsNotNullAndNotEmptyStrings(collectionsBean.getDeque());
         assertContainsOnlyNonEmptyPersons(collectionsBean.getTypedDeque());
-        
-        assertContainsNotNullAndNotEmptyStrings(collectionsBean.getBlockingDeque());
         assertContainsOnlyNonEmptyPersons(collectionsBean.getTypedBlockingDeque());
     }
 
     @Test
-    public void testCollectionClassesPopulation() {
+    public void rawCollectionClassesShouldBeEmpty() {
         final CollectionBean collectionsBean = populator.populateBean(CollectionBean.class);
 
         assertThat(collectionsBean).isNotNull();
-        assertContainsNotNullAndNotEmptyStrings(collectionsBean.getArrayList());
+
+        assertThat(collectionsBean.getArrayList()).isEmpty();
+        assertThat(collectionsBean.getLinkedList()).isEmpty();
+        assertThat(collectionsBean.getVector()).isEmpty();
+        assertThat(collectionsBean.getStack()).isEmpty();
+        assertThat(collectionsBean.getHashSet()).isEmpty();
+        assertThat(collectionsBean.getLinkedHashSet()).isEmpty();
+        assertThat(collectionsBean.getTreeSet()).isEmpty();
+        assertThat(collectionsBean.getConcurrentSkipListSet()).isEmpty();
+        assertThat(collectionsBean.getArrayBlockingQueue()).isEmpty();
+        assertThat(collectionsBean.getLinkedBlockingQueue()).isEmpty();
+        assertThat(collectionsBean.getConcurrentLinkedQueue()).isEmpty();
+        assertThat(collectionsBean.getLinkedTransferQueue()).isEmpty();
+        assertThat(collectionsBean.getPriorityQueue()).isEmpty();
+        assertThat(collectionsBean.getPriorityBlockingQueue()).isEmpty();
+        assertThat(collectionsBean.getArrayDeque()).isEmpty();
+        assertThat(collectionsBean.getLinkedBlockingDeque()).isEmpty();
+        assertThat(collectionsBean.getConcurrentLinkedDeque()).isEmpty();
+    }
+
+    @Test
+    public void typedCollectionClassesShouldNoBeEmpty() {
+        final CollectionBean collectionsBean = populator.populateBean(CollectionBean.class);
+
+        assertThat(collectionsBean).isNotNull();
+
         assertContainsOnlyNonEmptyPersons(collectionsBean.getTypedArrayList());
-        
-        assertContainsNotNullAndNotEmptyStrings(collectionsBean.getLinkedList());
         assertContainsOnlyNonEmptyPersons(collectionsBean.getTypedLinkedList());
-        
-        assertContainsNotNullAndNotEmptyStrings(collectionsBean.getVector());
         assertContainsOnlyNonEmptyPersons(collectionsBean.getTypedVector());
-        
-        assertContainsNotNullAndNotEmptyStrings(collectionsBean.getStack());
         assertContainsOnlyNonEmptyPersons(collectionsBean.getTypedStack());
-        
-        
-        assertContainsNotNullAndNotEmptyStrings(collectionsBean.getHashSet());
         assertContainsOnlyNonEmptyPersons(collectionsBean.getTypedHashSet());
-        
-        assertContainsNotNullAndNotEmptyStrings(collectionsBean.getLinkedHashSet());
         assertContainsOnlyNonEmptyPersons(collectionsBean.getTypedLinkedHashSet());
-        
-        assertContainsNotNullAndNotEmptyStrings(collectionsBean.getTreeSet());
         assertContainsOnlyNonEmptyPersons(collectionsBean.getTypedTreeSet());
-        
-        assertContainsNotNullAndNotEmptyStrings(collectionsBean.getConcurrentSkipListSet());
         assertContainsOnlyNonEmptyPersons(collectionsBean.getTypedConcurrentSkipListSet());
-        
-        assertContainsNotNullAndNotEmptyStrings(collectionsBean.getArrayBlockingQueue());
         assertContainsOnlyNonEmptyPersons(collectionsBean.getTypedArrayBlockingQueue());
-        
-        assertContainsNotNullAndNotEmptyStrings(collectionsBean.getLinkedBlockingQueue());
         assertContainsOnlyNonEmptyPersons(collectionsBean.getTypedLinkedBlockingQueue());
-        
-        assertContainsNotNullAndNotEmptyStrings(collectionsBean.getConcurrentLinkedQueue());
         assertContainsOnlyNonEmptyPersons(collectionsBean.getTypedConcurrentLinkedQueue());
-        
-        assertContainsNotNullAndNotEmptyStrings(collectionsBean.getLinkedTransferQueue());
         assertContainsOnlyNonEmptyPersons(collectionsBean.getTypedLinkedTransferQueue());
-        
-        assertContainsNotNullAndNotEmptyStrings(collectionsBean.getPriorityQueue());
         assertContainsOnlyNonEmptyPersons(collectionsBean.getTypedPriorityQueue());
-        
-        assertContainsNotNullAndNotEmptyStrings(collectionsBean.getPriorityBlockingQueue());
         assertContainsOnlyNonEmptyPersons(collectionsBean.getTypedPriorityBlockingQueue());
-        
-        assertContainsNotNullAndNotEmptyStrings(collectionsBean.getArrayDeque());
         assertContainsOnlyNonEmptyPersons(collectionsBean.getTypedArrayDeque());
-        
-        assertContainsNotNullAndNotEmptyStrings(collectionsBean.getLinkedBlockingDeque());
         assertContainsOnlyNonEmptyPersons(collectionsBean.getTypedLinkedBlockingDeque());
-        
-        assertContainsNotNullAndNotEmptyStrings(collectionsBean.getConcurrentLinkedDeque());
         assertContainsOnlyNonEmptyPersons(collectionsBean.getTypedConcurrentLinkedDeque());
     }
 
@@ -158,10 +149,5 @@ public class CollectionPopulationTest {
             assertThat(Person.getAddress().getZipCode()).isNotEmpty();
             assertThat(Person.getName()).isNotEmpty();
         }
-    }
-
-    @SuppressWarnings({ "unchecked", "rawtypes" })
-    private void assertContainsNotNullAndNotEmptyStrings(final Collection collection) {
-        assertThat(collection).hasOnlyElementsOfType(String.class).doesNotContain(null, "");
     }
 }

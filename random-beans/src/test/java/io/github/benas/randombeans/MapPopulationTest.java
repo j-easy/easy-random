@@ -34,7 +34,6 @@ import io.github.benas.randombeans.api.Populator;
 import io.github.benas.randombeans.beans.MapBean;
 import io.github.benas.randombeans.beans.Person;
 
-@SuppressWarnings({"unchecked", "rawtypes"})
 public class MapPopulationTest {
 
     private Populator populator;
@@ -45,75 +44,101 @@ public class MapPopulationTest {
     }
 
     @Test
-    public void testMapInterfacesPopulation() {
+    public void rawMapInterfacesShouldBeEmpty() {
         final MapBean mapBean = populator.populateBean(MapBean.class);
 
         assertThat(mapBean).isNotNull();
 
-        assertContainsNotNullAndNotEmptyStrings(mapBean.getMap().values());
-        assertContainsNotNullAndNotEmptyStrings(mapBean.getMap().keySet());
+        assertThat(mapBean.getMap().values()).isEmpty();
+        assertThat(mapBean.getMap().keySet()).isEmpty();
+
+        assertThat(mapBean.getSortedMap().values()).isEmpty();
+        assertThat(mapBean.getSortedMap().keySet()).isEmpty();
+
+        assertThat(mapBean.getNavigableMap().values()).isEmpty();
+        assertThat(mapBean.getNavigableMap().keySet()).isEmpty();
+
+        assertThat(mapBean.getConcurrentMap().values()).isEmpty();
+        assertThat(mapBean.getConcurrentMap().keySet()).isEmpty();
+
+        assertThat(mapBean.getConcurrentNavigableMap().values()).isEmpty();
+        assertThat(mapBean.getConcurrentNavigableMap().keySet()).isEmpty();
+    }
+
+    @Test
+    public void typedMapInterfacesShouldNotBeEmpty() {
+        final MapBean mapBean = populator.populateBean(MapBean.class);
+
+        assertThat(mapBean).isNotNull();
+
         assertContainsNonZeroIntegers(mapBean.getTypedMap().keySet());
         assertContainsOnlyNonEmptyPersons(mapBean.getTypedMap().values());
 
-        assertContainsNotNullAndNotEmptyStrings(mapBean.getSortedMap().values());
-        assertContainsNotNullAndNotEmptyStrings(mapBean.getSortedMap().keySet());
         assertContainsNonZeroIntegers(mapBean.getTypedSortedMap().keySet());
         assertContainsOnlyNonEmptyPersons(mapBean.getTypedSortedMap().values());
 
-        assertContainsNotNullAndNotEmptyStrings(mapBean.getNavigableMap().values());
-        assertContainsNotNullAndNotEmptyStrings(mapBean.getNavigableMap().keySet());
         assertContainsNonZeroIntegers(mapBean.getTypedNavigableMap().keySet());
         assertContainsOnlyNonEmptyPersons(mapBean.getTypedNavigableMap().values());
 
-        assertContainsNotNullAndNotEmptyStrings(mapBean.getConcurrentMap().values());
-        assertContainsNotNullAndNotEmptyStrings(mapBean.getConcurrentMap().keySet());
         assertContainsNonZeroIntegers(mapBean.getTypedConcurrentMap().keySet());
         assertContainsOnlyNonEmptyPersons(mapBean.getTypedConcurrentMap().values());
         
-        assertContainsNotNullAndNotEmptyStrings(mapBean.getConcurrentNavigableMap().values());
-        assertContainsNotNullAndNotEmptyStrings(mapBean.getConcurrentNavigableMap().keySet());
         assertContainsNonZeroIntegers(mapBean.getTypedConcurrentNavigableMap().keySet());
         assertContainsOnlyNonEmptyPersons(mapBean.getTypedConcurrentNavigableMap().values());
     }
 
     @Test
-    public void testMapClassesPopulation() {
+    public void rawMapClassesShouldBeEmpty() {
         final MapBean mapBean = populator.populateBean(MapBean.class);
 
         assertThat(mapBean).isNotNull();
 
-        assertContainsNotNullAndNotEmptyStrings(mapBean.getHashMap().values());
-        assertContainsNotNullAndNotEmptyStrings(mapBean.getHashMap().keySet());
+        assertThat(mapBean.getHashMap().values()).isEmpty();
+        assertThat(mapBean.getHashMap().keySet()).isEmpty();
+
+        assertThat(mapBean.getHashtable().values()).isEmpty();
+        assertThat(mapBean.getHashtable().keySet()).isEmpty();
+
+        assertThat(mapBean.getLinkedHashMap().values()).isEmpty();
+        assertThat(mapBean.getLinkedHashMap().keySet()).isEmpty();
+
+        assertThat(mapBean.getWeakHashMap().values()).isEmpty();
+        assertThat(mapBean.getWeakHashMap().keySet()).isEmpty();
+
+        assertThat(mapBean.getIdentityHashMap().values()).isEmpty();
+        assertThat(mapBean.getIdentityHashMap().keySet()).isEmpty();
+
+        assertThat(mapBean.getTreeMap().values()).isEmpty();
+        assertThat(mapBean.getTreeMap().keySet()).isEmpty();
+
+        assertThat(mapBean.getConcurrentSkipListMap().values()).isEmpty();
+        assertThat(mapBean.getConcurrentSkipListMap().keySet()).isEmpty();
+    }
+
+    @Test
+    public void typedMapClassesShouldNotBeEmpty() {
+        final MapBean mapBean = populator.populateBean(MapBean.class);
+
+        assertThat(mapBean).isNotNull();
+
         assertContainsNonZeroIntegers(mapBean.getTypedHashMap().keySet());
         assertContainsOnlyNonEmptyPersons(mapBean.getTypedHashMap().values());
 
-        assertContainsNotNullAndNotEmptyStrings(mapBean.getHashtable().values());
-        assertContainsNotNullAndNotEmptyStrings(mapBean.getHashtable().keySet());
         assertContainsNonZeroIntegers(mapBean.getTypedHashtable().keySet());
         assertContainsOnlyNonEmptyPersons(mapBean.getTypedHashtable().values());
 
-        assertContainsNotNullAndNotEmptyStrings(mapBean.getLinkedHashMap().values());
-        assertContainsNotNullAndNotEmptyStrings(mapBean.getLinkedHashMap().keySet());
         assertContainsNonZeroIntegers(mapBean.getTypedLinkedHashMap().keySet());
         assertContainsOnlyNonEmptyPersons(mapBean.getTypedLinkedHashMap().values());
 
-        assertContainsNotNullAndNotEmptyStrings(mapBean.getWeakHashMap().values());
-        assertContainsNotNullAndNotEmptyStrings(mapBean.getWeakHashMap().keySet());
         assertContainsNonZeroIntegers(mapBean.getTypedWeakHashMap().keySet());
         assertContainsOnlyNonEmptyPersons(mapBean.getTypedWeakHashMap().values());
 
-        assertContainsNotNullAndNotEmptyStrings(mapBean.getIdentityHashMap().values());
-        assertContainsNotNullAndNotEmptyStrings(mapBean.getIdentityHashMap().keySet());
         assertContainsNonZeroIntegers(mapBean.getTypedIdentityHashMap().keySet());
         assertContainsOnlyNonEmptyPersons(mapBean.getTypedIdentityHashMap().values());
 
-        assertContainsNotNullAndNotEmptyStrings(mapBean.getTreeMap().values());
-        assertContainsNotNullAndNotEmptyStrings(mapBean.getTreeMap().keySet());
         assertContainsNonZeroIntegers(mapBean.getTypedTreeMap().keySet());
         assertContainsOnlyNonEmptyPersons(mapBean.getTypedTreeMap().values());
 
-        assertContainsNotNullAndNotEmptyStrings(mapBean.getConcurrentSkipListMap().values());
-        assertContainsNotNullAndNotEmptyStrings(mapBean.getConcurrentSkipListMap().keySet());
         assertContainsNonZeroIntegers(mapBean.getTypedConcurrentSkipListMap().keySet());
         assertContainsOnlyNonEmptyPersons(mapBean.getTypedConcurrentSkipListMap().values());
     }
@@ -127,10 +152,7 @@ public class MapPopulationTest {
         }
     }
 
-    private void assertContainsNotNullAndNotEmptyStrings(final Collection collection) {
-        assertThat(collection).hasOnlyElementsOfType(String.class).doesNotContain(null, "");
-    }
-
+    @SuppressWarnings({"unchecked", "rawtypes"})
     private void assertContainsNonZeroIntegers(final Collection collection) {
         assertThat(collection).hasOnlyElementsOfType(Integer.class).doesNotContain(0);
     }
