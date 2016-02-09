@@ -47,6 +47,7 @@ public class CollectionPopulationTest {
     }
 
     @Test
+    @SuppressWarnings("unchecked")
     public void rawCollectionInterfacesShouldBeEmpty() {
         final CollectionBean collectionsBean = populator.populateBean(CollectionBean.class);
 
@@ -83,6 +84,7 @@ public class CollectionPopulationTest {
     }
 
     @Test
+    @SuppressWarnings("unchecked")
     public void rawCollectionClassesShouldBeEmpty() {
         final CollectionBean collectionsBean = populator.populateBean(CollectionBean.class);
 
