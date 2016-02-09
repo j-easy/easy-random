@@ -25,34 +25,44 @@
 
 package io.github.benas.randombeans.beans;
 
-public class Human implements Mammal {
+import java.util.List;
 
-    @SuppressWarnings("unused")
-    private static final long SERIAL_VERSION_UID = 593716507559065802L;
+public class Mamals {
 
-    protected final Long id = null;
-
-    protected String name;
-
-    public Human() {
+    private Mammal mamal;
+    private MammalImpl mamalImpl;
+    private List<Mammal> mamalList;
+    private List<MammalImpl> mamalImplList;
+    
+    public Mammal getMamal() {
+        return mamal;
     }
 
-    public Human(String name) {
-        this.name = name;
+    public void setMamal(Mammal mamal) {
+        this.mamal = mamal;
     }
 
-    public Long getId() {
-        return id;
+    public MammalImpl getMamalImpl() {
+        return mamalImpl;
     }
 
-    @Override
-    public String getName() {
-        return name;
+    public void setMamalImpl(MammalImpl mamalImpl) {
+        this.mamalImpl = mamalImpl;
     }
 
-    @Override
-    public void setName(String name) {
-        this.name = name;
+    public List<Mammal> getMamalList() {
+        return mamalList;
     }
 
+    public void setMamalList(List<Mammal> mamalList) {
+        this.mamalList = mamalList;
+    }
+
+    public List<MammalImpl> getMamalImplList() {
+        return mamalImplList;
+    }
+
+    public void setMamalImplList(List<MammalImpl> mamalImplList) {
+        this.mamalImplList = mamalImplList;
+    }
 }

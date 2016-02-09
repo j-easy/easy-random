@@ -32,6 +32,8 @@ import io.github.benas.randombeans.api.Randomizer;
 import io.github.benas.randombeans.api.RandomizerRegistry;
 import io.github.benas.randombeans.randomizers.EnumRandomizer;
 import io.github.benas.randombeans.randomizers.SkipRandomizer;
+
+import org.apache.commons.lang3.RandomUtils;
 import org.objenesis.Objenesis;
 import org.objenesis.ObjenesisStd;
 
@@ -60,6 +62,8 @@ final class PopulatorImpl implements Populator {
     private MapPopulator mapPopulator;
 
     private RandomizerProvider randomizerProvider;
+    
+    private boolean scanClasspathForConcreteClasses;
 
     PopulatorImpl(final Set<RandomizerRegistry> registries) {
         objenesis = new ObjenesisStd();
@@ -93,8 +97,13 @@ final class PopulatorImpl implements Populator {
                 return (T) context.getPopulatedBean(type);
             }
 
-            // create a new instance of the target type
-            result = objenesis.newInstance(type);
+            if (scanClasspathForConcreteClasses && isAbstract(type)) {
+                // create a new instance of a random concrete subtype
+                result = (T) objenesis.newInstance(randomConcreteSubTypeOf(type));
+            } else {
+                // create a new instance of the target type
+                result = objenesis.newInstance(type);
+            }
 
             // retrieve declared and inherited fields
             context.addPopulatedBean(type, result);
@@ -111,6 +120,24 @@ final class PopulatorImpl implements Populator {
         } catch (InstantiationError | Exception e) {
             throw new BeanPopulationException("Unable to generate a random instance of type " + type, e);
         }
+    }
+
+    private Class<?> randomConcreteSubTypeOf(final Field field) throws ClassNotFoundException {
+        Class<?> fieldType = field.getType();
+        List<Class<?>> concreteSubTypes = getPublicConcreteSubTypesOf(fieldType);
+        concreteSubTypes = findSubTypesWithSameParameterizedTypes(field, concreteSubTypes);
+        if (concreteSubTypes.isEmpty()) throw new ClassNotFoundException("Unable to find a matching concrete subtype of type: " + fieldType);
+        return randomElementOf(concreteSubTypes);
+    }
+
+    private Class<?> randomConcreteSubTypeOf(final Class<?> type) throws ClassNotFoundException {
+        List<Class<?>> concreteSubTypes = getPublicConcreteSubTypesOf(type);
+        if (concreteSubTypes.isEmpty()) throw new ClassNotFoundException("Unable to find a concrete subtype of type: " + type);
+        return randomElementOf(concreteSubTypes);
+    }
+
+    private Class<?> randomElementOf(List<Class<?>> concreteSubTypes) {
+        return concreteSubTypes.get(RandomUtils.nextInt(0, concreteSubTypes.size()));
     }
 
     @Override
@@ -137,7 +164,7 @@ final class PopulatorImpl implements Populator {
     }
 
     private void populateField(final Object target, final Field field, final PopulatorContext context)
-            throws BeanPopulationException, IllegalAccessException {
+            throws BeanPopulationException, IllegalAccessException, ClassNotFoundException {
 
         Randomizer<?> randomizer = randomizerProvider.getRandomizerByField(field);
         if (randomizer instanceof SkipRandomizer) {
@@ -155,7 +182,7 @@ final class PopulatorImpl implements Populator {
     }
 
     private Object generateRandomValue(final Field field, final PopulatorContext context)
-            throws BeanPopulationException, IllegalAccessException {
+            throws BeanPopulationException, IllegalAccessException, ClassNotFoundException {
         Class<?> fieldType = field.getType();
         Object value;
         if (isArrayType(fieldType)) {
@@ -165,7 +192,12 @@ final class PopulatorImpl implements Populator {
         } else if (isMapType(fieldType)) {
             value = mapPopulator.getRandomMap(field);
         } else {
-            value = doPopulateBean(fieldType, context);
+            if (scanClasspathForConcreteClasses && isAbstract(fieldType)) {
+                // create a new instance of a random concrete subtype
+                value = objenesis.newInstance(randomConcreteSubTypeOf(field));
+            } else {
+                value = doPopulateBean(fieldType, context);
+            }
         }
         return value;
     }
@@ -194,4 +226,7 @@ final class PopulatorImpl implements Populator {
         return false;
     }
 
+    public void setScanClasspathForConcreteClasses(boolean scanClasspathForConcreteClasses) {
+        this.scanClasspathForConcreteClasses = scanClasspathForConcreteClasses;
+    }
 }

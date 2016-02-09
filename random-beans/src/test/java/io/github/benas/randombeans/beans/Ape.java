@@ -25,34 +25,5 @@
 
 package io.github.benas.randombeans.beans;
 
-public class Human implements Mammal {
-
-    @SuppressWarnings("unused")
-    private static final long SERIAL_VERSION_UID = 593716507559065802L;
-
-    protected final Long id = null;
-
-    protected String name;
-
-    public Human() {
-    }
-
-    public Human(String name) {
-        this.name = name;
-    }
-
-    public Long getId() {
-        return id;
-    }
-
-    @Override
-    public String getName() {
-        return name;
-    }
-
-    @Override
-    public void setName(String name) {
-        this.name = name;
-    }
-
+public class Ape extends MammalImpl {
 }

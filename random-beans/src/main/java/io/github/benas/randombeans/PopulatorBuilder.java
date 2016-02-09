@@ -44,6 +44,8 @@ public class PopulatorBuilder {
 
     private Set<RandomizerRegistry> userRegistries;
 
+    private boolean scanClasspathForConcreteClasses = false;
+
     private PopulatorBuilder() {
         reset();
     }
@@ -91,6 +93,20 @@ public class PopulatorBuilder {
     }
 
     /**
+     * Should the classpath be scanned for concrete classes when a field with an interface or abstract 
+     * class type is encountered?
+     * 
+     * Deactivated by default.
+     * 
+     * @param scanClasspathForConcreteClasses whether to scan the classpath
+     * @return a pre configured {@link PopulatorBuilder} instance
+     */
+    public PopulatorBuilder scanClasspathForConcreteClasses(boolean scanClasspathForConcreteClasses) {
+        this.scanClasspathForConcreteClasses = scanClasspathForConcreteClasses;
+        return this;
+    }
+
+    /**
      * Build a {@link Populator} instance and reset the builder to its initial state.
      *
      * @return a configured {@link Populator} instance
@@ -100,7 +116,8 @@ public class PopulatorBuilder {
         registries.add(customRandomizerRegistry); // programatically registered randomizers through randomize()
         registries.addAll(userRegistries); // programatically registered registries through registerRandomizerRegistry()
         registries.addAll(loadRegistries()); // registries added to classpath through the SPI
-        Populator populator = new PopulatorImpl(registries);
+        PopulatorImpl populator = new PopulatorImpl(registries);
+        populator.setScanClasspathForConcreteClasses(scanClasspathForConcreteClasses);
         reset();
         return populator;
     }

@@ -25,34 +25,24 @@
 
 package io.github.benas.randombeans.beans;
 
-public class Human implements Mammal {
+import java.util.Date;
 
-    @SuppressWarnings("unused")
-    private static final long SERIAL_VERSION_UID = 593716507559065802L;
+public class ComparableBean {
 
-    protected final Long id = null;
-
-    protected String name;
-
-    public Human() {
+    private Comparable<Date> dateComparable;
+    
+    public Comparable<Date> getDateComparable() {
+        return dateComparable;
     }
 
-    public Human(String name) {
-        this.name = name;
+    public void setDateComparable(Comparable<Date> dateComparable) {
+        this.dateComparable = dateComparable;
     }
 
-    public Long getId() {
-        return id;
+    public static class AlwaysEqual implements Comparable<Date> {
+        @Override
+        public int compareTo(Date o) {
+            return 0;
+        }
     }
-
-    @Override
-    public String getName() {
-        return name;
-    }
-
-    @Override
-    public void setName(String name) {
-        this.name = name;
-    }
-
 }
