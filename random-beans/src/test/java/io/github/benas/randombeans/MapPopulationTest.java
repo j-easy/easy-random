@@ -28,7 +28,6 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 import java.util.Collection;
 
-import io.github.benas.randombeans.api.BeanPopulationException;
 import io.github.benas.randombeans.beans.RawMapBean;
 import org.junit.Before;
 import org.junit.Test;
@@ -149,9 +148,12 @@ public class MapPopulationTest {
     }
 
 
-    @Test(expected = BeanPopulationException.class)
-    public void rawMapTypesMustBeRejected() {
-        populator.populate(RawMapBean.class);
+    @Test
+    public void rawMapTypesMustBeEmpty() {
+        RawMapBean rawMapBean = populator.populate(RawMapBean.class);
+
+        assertThat(rawMapBean).isNotNull();
+        assertThat(rawMapBean.getMap()).isEmpty();
     }
 
     private void assertContainsOnlyNonEmptyPersons(Collection<Person> persons) {

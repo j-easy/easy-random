@@ -141,9 +141,12 @@ public class CollectionPopulationTest {
         populator.populate(DelayedQueueBean.class);
     }
 
-    @Test(expected = BeanPopulationException.class)
-    public void rawCollectionTypesMustBeRejected() {
-        populator.populate(RawCollectionBean.class);
+    @Test
+    public void rawCollectionTypesMustBeEmpty() {
+        RawCollectionBean rawCollectionBean = populator.populate(RawCollectionBean.class);
+
+        assertThat(rawCollectionBean).isNotNull();
+        assertThat(rawCollectionBean.getObjects()).isEmpty();
     }
     
     private void assertContainsOnlyNonEmptyPersons(Collection<Person> persons) {

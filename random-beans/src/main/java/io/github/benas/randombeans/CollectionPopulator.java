@@ -15,7 +15,6 @@ import java.util.concurrent.SynchronousQueue;
 import static io.github.benas.randombeans.util.CollectionUtils.getEmptyImplementationForCllectionInterface;
 import static io.github.benas.randombeans.util.Constants.MAX_COLLECTION_SIZE;
 import static io.github.benas.randombeans.util.ReflectionUtils.*;
-import static java.lang.String.format;
 import static org.apache.commons.lang3.RandomUtils.nextInt;
 
 /**
@@ -50,19 +49,13 @@ class CollectionPopulator {
         if (isParameterizedType(fieldGenericType)) { // populate only parametrized types, raw types will be empty
             ParameterizedType parameterizedType = (ParameterizedType) fieldGenericType;
             Type type = parameterizedType.getActualTypeArguments()[0];
-            rejectWildcardTypes(type, field);
-            List items = populator.populate((Class<?>) type, randomSize);
-            collection.addAll(items);
+            if (!isWildcardType(type)) {
+                List items = populator.populate((Class<?>) type, randomSize);
+                collection.addAll(items);
+            }
         }
         return collection;
 
-    }
-
-    private void rejectWildcardTypes(final Type type, final Field field) {
-        if (isWildcardType(type)) {
-            throw new UnsupportedOperationException(format("Field '%s' of type '%s' in class '%s' cannot be populated, collections with wildcard types are not supported",
-                    field.getName(), field.getGenericType(), field.getDeclaringClass()));
-        }
     }
 
     private Collection<?> getEmptyCollection(Class<?> fieldType, int initialSize) throws IllegalAccessException {
