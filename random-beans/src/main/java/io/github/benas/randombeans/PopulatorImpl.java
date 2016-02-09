@@ -49,6 +49,7 @@ import static java.lang.Math.abs;
  *
  * @author Mahmoud Ben Hassine (mahmoud.benhassine@icloud.com)
  */
+@SuppressWarnings({ "rawtypes", "unchecked" })
 final class PopulatorImpl implements Populator {
 
     private Objenesis objenesis;
@@ -72,8 +73,7 @@ final class PopulatorImpl implements Populator {
     }
 
     @Override
-    @SuppressWarnings("unchecked")
-    public <T> T populateBean(final Class<T> type, final String... excludedFields) throws BeanPopulationException {
+    public <T> T populateBean(final Class<T> type, final String... excludedFields) {
         Randomizer<?> randomizer = randomizerProvider.getRandomizerByType(type);
         if (randomizer != null) {
             return (T) randomizer.getRandomValue();
@@ -81,8 +81,24 @@ final class PopulatorImpl implements Populator {
         return doPopulateBean(type, new PopulatorContext(excludedFields));
     }
 
-    @SuppressWarnings("unchecked")
-    private <T> T doPopulateBean(final Class<T> type, final PopulatorContext context) throws BeanPopulationException {
+    @Override
+    public <T> List<T> populateBeans(final Class<T> type, final String... excludedFields) {
+        int randomSize = abs(aNewByteRandomizer().getRandomValue());
+        return populateBeans(type, randomSize, excludedFields);
+    }
+
+    @Override
+    public <T> List<T> populateBeans(final Class<T> type, final int size, final String... excludedFields) {
+        checkSize(size);
+        List<T> beans = new ArrayList<>(size);
+        for (int i = 0; i < size; i++) {
+            T bean = populateBean(type, excludedFields);
+            beans.add(bean);
+        }
+        return beans;
+    }
+
+    private <T> T doPopulateBean(final Class<T> type, final PopulatorContext context) {
         T result;
         try {
             //No instantiation needed for enum types.
@@ -125,31 +141,13 @@ final class PopulatorImpl implements Populator {
         }
     }
 
-    @Override
-    public <T> List<T> populateBeans(final Class<T> type, final String... excludedFields) throws BeanPopulationException {
-        int randomSize = abs(aNewByteRandomizer().getRandomValue());
-        return populateBeans(type, randomSize, excludedFields);
-    }
-
-    @Override
-    public <T> List<T> populateBeans(final Class<T> type, final int size, final String... excludedFields) throws BeanPopulationException {
-        checkSize(size);
-        List<T> beans = new ArrayList<>(size);
-        for (int i = 0; i < size; i++) {
-            T bean = populateBean(type, excludedFields);
-            beans.add(bean);
-        }
-        return beans;
-    }
-
     private static void checkSize(final int size) {
         if (size < 0) {
             throw new IllegalArgumentException("The size must be positive");
         }
     }
 
-    private void populateField(final Object target, final Field field, final PopulatorContext context)
-            throws BeanPopulationException, IllegalAccessException, ClassNotFoundException {
+    private void populateField(final Object target, final Field field, final PopulatorContext context) throws IllegalAccessException {
 
         Randomizer<?> randomizer = randomizerProvider.getRandomizerByField(field);
         if (randomizer instanceof SkipRandomizer) {
@@ -166,8 +164,7 @@ final class PopulatorImpl implements Populator {
         context.popStackItem();
     }
 
-    private Object generateRandomValue(final Field field, final PopulatorContext context)
-            throws BeanPopulationException, IllegalAccessException, ClassNotFoundException {
+    private Object generateRandomValue(final Field field, final PopulatorContext context) throws IllegalAccessException {
         Class<?> fieldType = field.getType();
         Object value;
         if (isArrayType(fieldType)) {
@@ -192,7 +189,6 @@ final class PopulatorImpl implements Populator {
         return value;
     }
 
-    @SuppressWarnings({ "rawtypes", "unchecked" })    
     private Enum getRandomEnum(final Class fieldType) {
         return new EnumRandomizer(fieldType).getRandomValue();
     }
@@ -216,7 +212,11 @@ final class PopulatorImpl implements Populator {
         return false;
     }
 
-    public void setScanClasspathForConcreteClasses(boolean scanClasspathForConcreteClasses) {
+    /*
+     * Setters for optional parameters
+     */
+
+    void setScanClasspathForConcreteClasses(boolean scanClasspathForConcreteClasses) {
         this.scanClasspathForConcreteClasses = scanClasspathForConcreteClasses;
     }
 }

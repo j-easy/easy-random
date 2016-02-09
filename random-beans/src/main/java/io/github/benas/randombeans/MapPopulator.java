@@ -1,6 +1,5 @@
 package io.github.benas.randombeans;
 
-import io.github.benas.randombeans.api.BeanPopulationException;
 import io.github.benas.randombeans.api.Populator;
 import org.objenesis.Objenesis;
 
@@ -32,7 +31,7 @@ class MapPopulator {
     }
 
     @SuppressWarnings("unchecked")
-    Map<?, ?> getRandomMap(final Field field) throws IllegalAccessException, BeanPopulationException {
+    Map<?, ?> getRandomMap(final Field field) throws IllegalAccessException {
         Class<?> fieldType = field.getType();
 
         Map<Object, Object> map;

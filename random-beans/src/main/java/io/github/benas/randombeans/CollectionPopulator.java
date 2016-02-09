@@ -33,7 +33,7 @@ class CollectionPopulator {
     }
 
     @SuppressWarnings({"unchecked", "rawtypes"})
-    Collection<?> getRandomCollection(final Field field) throws IllegalAccessException, BeanPopulationException {
+    Collection<?> getRandomCollection(final Field field) throws IllegalAccessException {
         int randomSize = nextInt(1, MAX_COLLECTION_SIZE);
         Class<?> fieldType = field.getType();
         Collection<?> collection;

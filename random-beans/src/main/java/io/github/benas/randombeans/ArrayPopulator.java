@@ -1,6 +1,5 @@
 package io.github.benas.randombeans;
 
-import io.github.benas.randombeans.api.BeanPopulationException;
 import io.github.benas.randombeans.api.Populator;
 
 import java.lang.reflect.Array;
@@ -24,7 +23,7 @@ class ArrayPopulator {
     }
 
     @SuppressWarnings("unchecked")
-    <T> Object getRandomArray(final Class<?> fieldType) throws BeanPopulationException {
+    <T> Object getRandomArray(final Class<?> fieldType) {
         Class<?> componentType = fieldType.getComponentType();
         if (componentType.isPrimitive()) {
             return getRandomPrimitiveArray(componentType);
@@ -34,7 +33,7 @@ class ArrayPopulator {
         return items.toArray(itemsList);
     }
 
-    Object getRandomPrimitiveArray(final Class<?> primitiveType) throws BeanPopulationException {
+    Object getRandomPrimitiveArray(final Class<?> primitiveType) {
         int size = abs(aNewByteRandomizer().getRandomValue());
         // TODO A bounty will be offered to anybody that comes with a generic template method for that..
         if (primitiveType.equals(Byte.TYPE)) {
