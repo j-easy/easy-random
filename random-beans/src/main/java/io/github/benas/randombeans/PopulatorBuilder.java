@@ -44,7 +44,7 @@ public class PopulatorBuilder {
 
     private Set<RandomizerRegistry> userRegistries;
 
-    private boolean scanClasspathForConcreteClasses = false;
+    private boolean scanClasspathForConcreteClasses;
 
     private PopulatorBuilder() {
         reset();
@@ -125,6 +125,7 @@ public class PopulatorBuilder {
     private void reset() {
         customRandomizerRegistry = new CustomRandomizerRegistry();
         userRegistries = new LinkedHashSet<>();
+        scanClasspathForConcreteClasses = false;
     }
 
     private Collection<RandomizerRegistry> loadRegistries() {
