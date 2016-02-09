@@ -37,6 +37,11 @@ import static org.apache.commons.lang3.time.DateUtils.addYears;
 public abstract class Constants {
 
     /**
+     * Maximum collection size
+     */
+    public static final byte MAX_COLLECTION_SIZE = Byte.MAX_VALUE;
+
+    /**
      * Default date range in which dates will be generated: [now - 10 years, now + 10 years].
      */
     public static final int DEFAULT_DATE_RANGE = 10;

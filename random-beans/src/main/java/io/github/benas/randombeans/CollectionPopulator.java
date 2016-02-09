@@ -10,10 +10,10 @@ import java.lang.reflect.Type;
 import java.util.*;
 import java.util.concurrent.*;
 
-import static io.github.benas.randombeans.randomizers.ByteRandomizer.aNewByteRandomizer;
+import static io.github.benas.randombeans.util.Constants.MAX_COLLECTION_SIZE;
 import static io.github.benas.randombeans.util.ReflectionUtils.isInterface;
 import static io.github.benas.randombeans.util.ReflectionUtils.isParameterizedType;
-import static java.lang.Math.abs;
+import static org.apache.commons.lang3.RandomUtils.nextInt;
 
 /**
  * Random collection populator.
@@ -33,7 +33,7 @@ class CollectionPopulator {
 
     @SuppressWarnings({"unchecked", "rawtypes"})
     Collection<?> getRandomCollection(final Field field) throws IllegalAccessException, BeanPopulationException {
-        int randomSize = abs(aNewByteRandomizer().getRandomValue());
+        int randomSize = nextInt(1, MAX_COLLECTION_SIZE);
         Class<?> fieldType = field.getType();
         Collection<?> collection;
         if (isInterface(fieldType)) {
