@@ -32,8 +32,6 @@ import io.github.benas.randombeans.api.Randomizer;
 import io.github.benas.randombeans.api.RandomizerRegistry;
 import io.github.benas.randombeans.randomizers.EnumRandomizer;
 import io.github.benas.randombeans.randomizers.SkipRandomizer;
-
-import org.apache.commons.lang3.RandomUtils;
 import org.objenesis.Objenesis;
 import org.objenesis.ObjenesisStd;
 
@@ -43,6 +41,7 @@ import java.util.List;
 import java.util.Set;
 
 import static io.github.benas.randombeans.randomizers.ByteRandomizer.aNewByteRandomizer;
+import static io.github.benas.randombeans.util.CollectionUtils.randomElementOf;
 import static io.github.benas.randombeans.util.ReflectionUtils.*;
 import static java.lang.Math.abs;
 
@@ -134,10 +133,6 @@ final class PopulatorImpl implements Populator {
         List<Class<?>> concreteSubTypes = getPublicConcreteSubTypesOf(type);
         if (concreteSubTypes.isEmpty()) throw new ClassNotFoundException("Unable to find a concrete subtype of type: " + type);
         return randomElementOf(concreteSubTypes);
-    }
-
-    private Class<?> randomElementOf(List<Class<?>> concreteSubTypes) {
-        return concreteSubTypes.get(RandomUtils.nextInt(0, concreteSubTypes.size()));
     }
 
     @Override

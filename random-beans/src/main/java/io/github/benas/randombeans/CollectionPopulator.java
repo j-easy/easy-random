@@ -10,6 +10,7 @@ import java.lang.reflect.Type;
 import java.util.*;
 import java.util.concurrent.*;
 
+import static io.github.benas.randombeans.util.CollectionUtils.getEmptyImplementationForCllectionInterface;
 import static io.github.benas.randombeans.util.Constants.MAX_COLLECTION_SIZE;
 import static io.github.benas.randombeans.util.ReflectionUtils.isInterface;
 import static io.github.benas.randombeans.util.ReflectionUtils.isParameterizedType;
@@ -37,7 +38,7 @@ class CollectionPopulator {
         Class<?> fieldType = field.getType();
         Collection<?> collection;
         if (isInterface(fieldType)) {
-            collection = getEmptyImplementationForInterface(fieldType);
+            collection = getEmptyImplementationForCllectionInterface(fieldType);
         } else {
             collection = getEmptyCollection(fieldType, randomSize);
         }
@@ -79,29 +80,5 @@ class CollectionPopulator {
             // DelayQueue is not supported since it requires creating dummy delayed objects
             throw new UnsupportedOperationException(DelayQueue.class.getName() + " type is not supported");
         }
-    }
-
-    private Collection<?> getEmptyImplementationForInterface(final Class<?> interfaceType) {
-        Collection<?> collection = new ArrayList<>();
-        if (List.class.isAssignableFrom(interfaceType)) {
-            collection = new ArrayList<>();
-        } else if (NavigableSet.class.isAssignableFrom(interfaceType)) {
-            collection = new TreeSet<>();
-        } else if (SortedSet.class.isAssignableFrom(interfaceType)) {
-            collection = new TreeSet<>();
-        } else if (Set.class.isAssignableFrom(interfaceType)) {
-            collection = new HashSet<>();
-        } else if (BlockingDeque.class.isAssignableFrom(interfaceType)) {
-            collection = new LinkedBlockingDeque<>();
-        } else if (Deque.class.isAssignableFrom(interfaceType)) {
-            collection = new ArrayDeque<>();
-        } else if (TransferQueue.class.isAssignableFrom(interfaceType)) {
-            collection = new LinkedTransferQueue<>();
-        } else if (BlockingQueue.class.isAssignableFrom(interfaceType)) {
-            collection = new LinkedBlockingQueue<>();
-        } else if (Queue.class.isAssignableFrom(interfaceType)) {
-            collection = new LinkedList<>();
-        }
-        return collection;
     }
 }

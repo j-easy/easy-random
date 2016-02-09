@@ -7,13 +7,10 @@ import org.objenesis.Objenesis;
 import java.lang.reflect.Field;
 import java.lang.reflect.ParameterizedType;
 import java.lang.reflect.Type;
-import java.util.*;
-import java.util.concurrent.ConcurrentHashMap;
-import java.util.concurrent.ConcurrentMap;
-import java.util.concurrent.ConcurrentNavigableMap;
-import java.util.concurrent.ConcurrentSkipListMap;
+import java.util.Map;
 
 import static io.github.benas.randombeans.randomizers.ByteRandomizer.aNewByteRandomizer;
+import static io.github.benas.randombeans.util.CollectionUtils.getEmptyImplementationForMapInterface;
 import static io.github.benas.randombeans.util.ReflectionUtils.isInterface;
 import static io.github.benas.randombeans.util.ReflectionUtils.isParameterizedType;
 import static java.lang.Math.abs;
@@ -40,7 +37,7 @@ class MapPopulator {
 
         Map<Object, Object> map;
         if (isInterface(fieldType)) {
-            map = (Map<Object, Object>) getEmptyTypedMap(fieldType);
+            map = (Map<Object, Object>) getEmptyImplementationForMapInterface(fieldType);
         } else {
             try {
                 map = (Map<Object, Object>) fieldType.newInstance();
@@ -61,20 +58,6 @@ class MapPopulator {
                 Object randomValue = populator.populateBean((Class<?>) valueType);
                 map.put(randomKey, randomValue);
             }
-        }
-        return map;
-    }
-
-    private Map<?, ?> getEmptyTypedMap(final Class<?> type) {
-        Map<?, ?> map = new HashMap<>();
-        if (ConcurrentNavigableMap.class.isAssignableFrom(type)) {
-            map = new ConcurrentSkipListMap<>();
-        } else if (ConcurrentMap.class.isAssignableFrom(type)) {
-            map = new ConcurrentHashMap<>();
-        } else if (NavigableMap.class.isAssignableFrom(type)) {
-            map = new TreeMap<>();
-        } else if (SortedMap.class.isAssignableFrom(type)) {
-            map = new TreeMap<>();
         }
         return map;
     }
