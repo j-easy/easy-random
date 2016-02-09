@@ -24,6 +24,8 @@
 
 package io.github.benas.randombeans.randomizers;
 
+import java.text.DecimalFormatSymbols;
+
 import org.junit.Before;
 import org.junit.Test;
 
@@ -40,6 +42,7 @@ public class LongitudeRandomizerTest extends AbstractRandomizerTest<String> {
     public void generatedLongitudeShouldBeAlwaysTheSameForTheSameSeed() {
         String randomValue = randomizer.getRandomValue();
 
-        assertThat(randomValue).isEqualTo("80.342713");
+        char decimalSeparator = new DecimalFormatSymbols().getDecimalSeparator();
+        assertThat(randomValue).isEqualTo("80" + decimalSeparator + "342713");
     }
 }
