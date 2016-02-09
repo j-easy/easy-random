@@ -38,17 +38,17 @@ public class DoubleRangeRandomizer implements Randomizer<Double> {
 
     /**
      * Create a new {@link DoubleRangeRandomizer}.
-     * @return a new {@link DoubleRangeRandomizer}.
      */
-    public static DoubleRangeRandomizer aNewDoubleRangeRandomizer(final Double min, final Double max) {
-        return new DoubleRangeRandomizer(min, max);
+    public DoubleRangeRandomizer(final Double min, final Double max) {
+        delegate = new LongRangeRandomizer(min.longValue(), max.longValue());
     }
 
     /**
      * Create a new {@link DoubleRangeRandomizer}.
+     * @return a new {@link DoubleRangeRandomizer}.
      */
-    public DoubleRangeRandomizer(final Double min, final Double max) {
-        delegate = new LongRangeRandomizer(min.longValue(), max.longValue());
+    public static DoubleRangeRandomizer aNewDoubleRangeRandomizer(final Double min, final Double max) {
+        return new DoubleRangeRandomizer(min, max);
     }
 
     @Override

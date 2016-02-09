@@ -39,17 +39,17 @@ public class StringLengthRandomizer implements Randomizer<String> {
 
     /**
      * Create a new {@link StringLengthRandomizer}.
-     * @return a new {@link StringLengthRandomizer}.
      */
-    public static StringLengthRandomizer aNewStringLengthRandomizer(final Integer min, final Integer max) {
-        return new StringLengthRandomizer(min, max);
+    public StringLengthRandomizer(final Integer min, final Integer max) {
+        delegate = new IntegerRangeRandomizer(min, max);
     }
 
     /**
      * Create a new {@link StringLengthRandomizer}.
+     * @return a new {@link StringLengthRandomizer}.
      */
-    public StringLengthRandomizer(final Integer min, final Integer max) {
-        delegate = new IntegerRangeRandomizer(min, max);
+    public static StringLengthRandomizer aNewStringLengthRandomizer(final Integer min, final Integer max) {
+        return new StringLengthRandomizer(min, max);
     }
 
     @Override
