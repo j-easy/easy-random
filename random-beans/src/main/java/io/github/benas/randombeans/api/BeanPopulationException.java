@@ -34,6 +34,10 @@ public class BeanPopulationException extends RuntimeException {
 
     private static final long serialVersionUID = -9049778508557432869L;
 
+    public BeanPopulationException(String message) {
+        super(message);
+    }
+
     public BeanPopulationException(String message, Throwable cause) {
         super(message, cause);
     }
