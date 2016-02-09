@@ -41,7 +41,6 @@ import java.util.List;
 import java.util.Set;
 
 import static io.github.benas.randombeans.randomizers.ByteRandomizer.aNewByteRandomizer;
-import static io.github.benas.randombeans.util.CollectionUtils.randomElementOf;
 import static io.github.benas.randombeans.util.ReflectionUtils.*;
 import static java.lang.Math.abs;
 
@@ -98,7 +97,12 @@ final class PopulatorImpl implements Populator {
 
             if (scanClasspathForConcreteClasses && isAbstract(type)) {
                 // create a new instance of a random concrete subtype
-                result = (T) objenesis.newInstance(randomConcreteSubTypeOf(type));
+                Class<?> randomConcreteSubType = randomConcreteSubTypeOf(type);
+                if (randomConcreteSubType == null) {
+                    throw new BeanPopulationException("Unable to find a matching concrete subtype of type: " + type);
+                } else {
+                    result = (T) objenesis.newInstance(randomConcreteSubType);
+                }
             } else {
                 // create a new instance of the target type
                 result = objenesis.newInstance(type);
@@ -119,20 +123,6 @@ final class PopulatorImpl implements Populator {
         } catch (InstantiationError | Exception e) {
             throw new BeanPopulationException("Unable to generate a random instance of type " + type, e);
         }
-    }
-
-    private Class<?> randomConcreteSubTypeOf(final Field field) throws ClassNotFoundException {
-        Class<?> fieldType = field.getType();
-        List<Class<?>> concreteSubTypes = getPublicConcreteSubTypesOf(fieldType);
-        concreteSubTypes = findSubTypesWithSameParameterizedTypes(field, concreteSubTypes);
-        if (concreteSubTypes.isEmpty()) throw new ClassNotFoundException("Unable to find a matching concrete subtype of type: " + fieldType);
-        return randomElementOf(concreteSubTypes);
-    }
-
-    private Class<?> randomConcreteSubTypeOf(final Class<?> type) throws ClassNotFoundException {
-        List<Class<?>> concreteSubTypes = getPublicConcreteSubTypesOf(type);
-        if (concreteSubTypes.isEmpty()) throw new ClassNotFoundException("Unable to find a concrete subtype of type: " + type);
-        return randomElementOf(concreteSubTypes);
     }
 
     @Override
@@ -189,7 +179,12 @@ final class PopulatorImpl implements Populator {
         } else {
             if (scanClasspathForConcreteClasses && isAbstract(fieldType)) {
                 // create a new instance of a random concrete subtype
-                value = objenesis.newInstance(randomConcreteSubTypeOf(field));
+                Class<?> randomConcreteSubType = randomConcreteSubTypeOf(field);
+                if (randomConcreteSubType == null) {
+                    throw new BeanPopulationException("Unable to find a matching concrete subtype of type: " + fieldType);
+                } else {
+                    value = objenesis.newInstance(randomConcreteSubType);
+                }
             } else {
                 value = doPopulateBean(fieldType, context);
             }

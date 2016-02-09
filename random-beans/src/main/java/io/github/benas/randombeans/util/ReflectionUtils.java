@@ -25,22 +25,18 @@
 
 package io.github.benas.randombeans.util;
 
+import org.reflections.Reflections;
+import org.reflections.util.ClasspathHelper;
+import org.reflections.util.ConfigurationBuilder;
+
 import java.lang.reflect.Field;
 import java.lang.reflect.Modifier;
 import java.lang.reflect.ParameterizedType;
 import java.lang.reflect.Type;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collection;
-import java.util.Collections;
-import java.util.List;
-import java.util.Map;
-import java.util.Set;
+import java.util.*;
 import java.util.concurrent.ConcurrentHashMap;
 
-import org.reflections.Reflections;
-import org.reflections.util.ClasspathHelper;
-import org.reflections.util.ConfigurationBuilder;
+import static io.github.benas.randombeans.util.CollectionUtils.randomElementOf;
 
 /**
  * Reflection utility methods.
@@ -49,7 +45,7 @@ import org.reflections.util.ConfigurationBuilder;
  */
 public abstract class ReflectionUtils {
 
-    private static final ConcurrentHashMap<Class<?>, List<Class <?>>> typeToConcreteSubTypes = new ConcurrentHashMap<>();
+    private static final ConcurrentHashMap<Class<?>, List<Class<?>>> typeToConcreteSubTypes = new ConcurrentHashMap<>();
 
     /**
      * Get declared field of a given type.
@@ -208,7 +204,7 @@ public abstract class ReflectionUtils {
             Type[] fieldArugmentTypes = ((ParameterizedType) fieldGenericType).getActualTypeArguments();
             List<Class<?>> subTypesWithSameParameterizedTypes = new ArrayList<>();
             for (Class<?> currentConcreteSubType : subTypes) {
-                List<Type[]> actualTypeArguments = ReflectionUtils.getActualTypeArgumentsOfGenericInterfaces(currentConcreteSubType);
+                List<Type[]> actualTypeArguments = getActualTypeArgumentsOfGenericInterfaces(currentConcreteSubType);
                 for (Type[] currentTypeArguments : actualTypeArguments) {
                     if (Arrays.equals(fieldArugmentTypes, currentTypeArguments)) {
                         subTypesWithSameParameterizedTypes.add(currentConcreteSubType);
@@ -230,4 +226,17 @@ public abstract class ReflectionUtils {
         }
         return actualTypeArguments;
     }
+
+    public static Class<?> randomConcreteSubTypeOf(final Field field) {
+        Class<?> fieldType = field.getType();
+        List<Class<?>> concreteSubTypes = getPublicConcreteSubTypesOf(fieldType);
+        concreteSubTypes = findSubTypesWithSameParameterizedTypes(field, concreteSubTypes);
+        return randomElementOf(concreteSubTypes);
+    }
+
+    public static Class<?> randomConcreteSubTypeOf(final Class<?> type) {
+        List<Class<?>> concreteSubTypes = getPublicConcreteSubTypesOf(type);
+        return randomElementOf(concreteSubTypes);
+    }
+
 }
