@@ -27,6 +27,9 @@ import static io.github.benas.randombeans.PopulatorBuilder.aNewPopulatorBuilder;
 import static org.assertj.core.api.Assertions.assertThat;
 
 import java.util.Collection;
+
+import io.github.benas.randombeans.api.BeanPopulationException;
+import io.github.benas.randombeans.beans.RawMapBean;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -143,6 +146,12 @@ public class MapPopulationTest {
 
         assertContainsNonZeroIntegers(mapBean.getTypedConcurrentSkipListMap().keySet());
         assertContainsOnlyNonEmptyPersons(mapBean.getTypedConcurrentSkipListMap().values());
+    }
+
+
+    @Test(expected = BeanPopulationException.class)
+    public void rawMapTypesMustBeRejected() {
+        populator.populate(RawMapBean.class);
     }
 
     private void assertContainsOnlyNonEmptyPersons(Collection<Person> persons) {

@@ -29,10 +29,7 @@ import org.reflections.Reflections;
 import org.reflections.util.ClasspathHelper;
 import org.reflections.util.ConfigurationBuilder;
 
-import java.lang.reflect.Field;
-import java.lang.reflect.Modifier;
-import java.lang.reflect.ParameterizedType;
-import java.lang.reflect.Type;
+import java.lang.reflect.*;
 import java.util.*;
 import java.util.concurrent.ConcurrentHashMap;
 
@@ -162,6 +159,15 @@ public abstract class ReflectionUtils {
      */
     public static boolean isParameterizedType(final Type type) {
         return type != null && type instanceof ParameterizedType && ((ParameterizedType) type).getActualTypeArguments().length > 0;
+    }
+
+    /**
+     * Check if a type is a wildcard type
+     * @param type the type to check
+     * @return true if the type is a wildcard type, false otherwise
+     */
+    public static boolean isWildcardType(final Type type) {
+        return type instanceof WildcardType;
     }
 
     /**

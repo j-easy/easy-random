@@ -25,10 +25,7 @@ package io.github.benas.randombeans;
 
 import io.github.benas.randombeans.api.BeanPopulationException;
 import io.github.benas.randombeans.api.Populator;
-import io.github.benas.randombeans.beans.CollectionBean;
-import io.github.benas.randombeans.beans.DelayedQueueBean;
-import io.github.benas.randombeans.beans.Person;
-import io.github.benas.randombeans.beans.SynchronousQueueBean;
+import io.github.benas.randombeans.beans.*;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -142,6 +139,11 @@ public class CollectionPopulationTest {
     @Test (expected = BeanPopulationException.class)
     public void delayedQueueTypeMustBeRejected() {
         populator.populate(DelayedQueueBean.class);
+    }
+
+    @Test(expected = BeanPopulationException.class)
+    public void rawCollectionTypesMustBeRejected() {
+        populator.populate(RawCollectionBean.class);
     }
     
     private void assertContainsOnlyNonEmptyPersons(Collection<Person> persons) {
