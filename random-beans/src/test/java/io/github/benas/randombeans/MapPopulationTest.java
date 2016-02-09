@@ -46,7 +46,7 @@ public class MapPopulationTest {
     @Test
     @SuppressWarnings("unchecked")
     public void rawMapInterfacesShouldBeEmpty() {
-        final MapBean mapBean = populator.populateBean(MapBean.class);
+        final MapBean mapBean = populator.populate(MapBean.class);
 
         assertThat(mapBean).isNotNull();
 
@@ -68,7 +68,7 @@ public class MapPopulationTest {
 
     @Test
     public void typedMapInterfacesShouldNotBeEmpty() {
-        final MapBean mapBean = populator.populateBean(MapBean.class);
+        final MapBean mapBean = populator.populate(MapBean.class);
 
         assertThat(mapBean).isNotNull();
 
@@ -91,7 +91,7 @@ public class MapPopulationTest {
     @Test
     @SuppressWarnings("unchecked")
     public void rawMapClassesShouldBeEmpty() {
-        final MapBean mapBean = populator.populateBean(MapBean.class);
+        final MapBean mapBean = populator.populate(MapBean.class);
 
         assertThat(mapBean).isNotNull();
 
@@ -119,7 +119,7 @@ public class MapPopulationTest {
 
     @Test
     public void typedMapClassesShouldNotBeEmpty() {
-        final MapBean mapBean = populator.populateBean(MapBean.class);
+        final MapBean mapBean = populator.populate(MapBean.class);
 
         assertThat(mapBean).isNotNull();
 

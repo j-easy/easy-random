@@ -42,7 +42,7 @@ public class PopulatorFactoryBeanTest {
         assertThat(populator).isNotNull();
 
         // the populator should populate valid instances
-        Foo foo = populator.populateBean(Foo.class);
+        Foo foo = populator.populate(Foo.class);
 
         assertThat(foo).isNotNull();
         assertThat(foo.getName()).isNotEmpty();
@@ -57,7 +57,7 @@ public class PopulatorFactoryBeanTest {
         assertThat(populator).isNotNull();
 
         // the populator should populate valid instances
-        Foo foo = populator.populateBean(Foo.class);
+        Foo foo = populator.populate(Foo.class);
 
         assertThat(foo).isNotNull();
         assertThat(foo.getName()).isNotEmpty();

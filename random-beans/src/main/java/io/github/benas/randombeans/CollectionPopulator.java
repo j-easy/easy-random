@@ -1,14 +1,16 @@
 package io.github.benas.randombeans;
 
-import io.github.benas.randombeans.api.BeanPopulationException;
 import io.github.benas.randombeans.api.Populator;
 import org.objenesis.Objenesis;
 
 import java.lang.reflect.Field;
 import java.lang.reflect.ParameterizedType;
 import java.lang.reflect.Type;
-import java.util.*;
-import java.util.concurrent.*;
+import java.util.Collection;
+import java.util.List;
+import java.util.concurrent.ArrayBlockingQueue;
+import java.util.concurrent.DelayQueue;
+import java.util.concurrent.SynchronousQueue;
 
 import static io.github.benas.randombeans.util.CollectionUtils.getEmptyImplementationForCllectionInterface;
 import static io.github.benas.randombeans.util.Constants.MAX_COLLECTION_SIZE;
@@ -47,7 +49,7 @@ class CollectionPopulator {
         if (isParameterizedType(fieldGenericType)) { // populate only parametrized types, raw types will be empty
             ParameterizedType parameterizedType = (ParameterizedType) fieldGenericType;
             Type type = parameterizedType.getActualTypeArguments()[0];
-            List items = populator.populateBeans((Class<?>) type, randomSize);
+            List items = populator.populate((Class<?>) type, randomSize);
             collection.addAll(items);
         }
         return collection;

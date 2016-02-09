@@ -28,7 +28,8 @@ class ArrayPopulator {
         if (componentType.isPrimitive()) {
             return getRandomPrimitiveArray(componentType);
         }
-        List<?> items = populator.populateBeans(fieldType.getComponentType());
+        int randomSize = abs(aNewByteRandomizer().getRandomValue());
+        List<?> items = populator.populate(fieldType.getComponentType(), randomSize);
         T[] itemsList = (T[]) Array.newInstance(componentType, items.size());
         return items.toArray(itemsList);
     }
@@ -39,56 +40,56 @@ class ArrayPopulator {
         if (primitiveType.equals(Byte.TYPE)) {
             byte[] result = new byte[size];
             for (int index = 0; index < size; index ++) {
-                add(result, populator.populateBean(Byte.TYPE));
+                add(result, populator.populate(Byte.TYPE));
             }
             return result;
         }
         if (primitiveType.equals(Short.TYPE)) {
             short[] result = new short[size];
             for (int index = 0; index < size; index ++) {
-                add(result, populator.populateBean(Short.TYPE));
+                add(result, populator.populate(Short.TYPE));
             }
             return result;
         }
         if (primitiveType.equals(Integer.TYPE)) {
             int[] result = new int[size];
             for (int index = 0; index < size; index ++){
-                add(result, populator.populateBean(Integer.TYPE));
+                add(result, populator.populate(Integer.TYPE));
             }
             return result;
         }
         if (primitiveType.equals(Long.TYPE)) {
             long[] result = new long[size];
             for (int index = 0; index < size; index ++){
-                add(result, populator.populateBean(Long.TYPE));
+                add(result, populator.populate(Long.TYPE));
             }
             return result;
         }
         if (primitiveType.equals(Float.TYPE)) {
             float[] result = new float[size];
             for (int index = 0; index < size; index ++){
-                add(result, populator.populateBean(Float.TYPE));
+                add(result, populator.populate(Float.TYPE));
             }
             return result;
         }
         if (primitiveType.equals(Double.TYPE)) {
             double[] result = new double[size];
             for (int index = 0; index < size; index ++){
-                add(result, populator.populateBean(Double.TYPE));
+                add(result, populator.populate(Double.TYPE));
             }
             return result;
         }
         if (primitiveType.equals(Character.TYPE)) {
             char[] result = new char[size];
             for (int index = 0; index < size; index ++){
-                add(result, populator.populateBean(Character.TYPE));
+                add(result, populator.populate(Character.TYPE));
             }
             return result;
         }
         if (primitiveType.equals(Boolean.TYPE)) {
             boolean[] result = new boolean[size];
             for (int index = 0; index < size; index ++){
-                add(result, populator.populateBean(Boolean.TYPE));
+                add(result, populator.populate(Boolean.TYPE));
             }
             return result;
         }

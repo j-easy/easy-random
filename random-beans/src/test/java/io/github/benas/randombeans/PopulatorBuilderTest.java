@@ -67,12 +67,12 @@ public class PopulatorBuilderTest {
         builder.randomize(field().named("name").ofType(String.class).inClass(Human.class).get(), randomizer);
 
         Populator populator = builder.build();
-        Human human = populator.populateBean(Human.class);
+        Human human = populator.populate(Human.class);
 
         assertThat(human.getName()).isEqualTo(NAME);
 
         Populator populator2 = builder.build();
-        Human human2 = populator2.populateBean(Human.class);
+        Human human2 = populator2.populate(Human.class);
 
         assertThat(human2.getName()).isNotEqualTo(NAME);
     }

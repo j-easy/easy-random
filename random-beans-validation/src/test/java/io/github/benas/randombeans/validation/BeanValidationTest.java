@@ -49,7 +49,7 @@ public class BeanValidationTest {
 
     @Test
     public void generatedValuesShouldBeValidAccordingToValidationConstraints() {
-        BeanValidationAnnotatedBean bean = populator.populateBean(BeanValidationAnnotatedBean.class);
+        BeanValidationAnnotatedBean bean = populator.populate(BeanValidationAnnotatedBean.class);
 
         assertThat(bean).isNotNull();
 
@@ -85,7 +85,7 @@ public class BeanValidationTest {
 
     @Test
     public void generatedBeanShouldBeValidUsingBeanValidationAPI() {
-        BeanValidationAnnotatedBean bean = populator.populateBean(BeanValidationAnnotatedBean.class);
+        BeanValidationAnnotatedBean bean = populator.populate(BeanValidationAnnotatedBean.class);
 
         ValidatorFactory validatorFactory = Validation.buildDefaultValidatorFactory();
         Validator validator = validatorFactory.getValidator();

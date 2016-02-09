@@ -116,7 +116,7 @@ public class PopulatorBuilder {
         registries.add(customRandomizerRegistry); // programatically registered randomizers through randomize()
         registries.addAll(userRegistries); // programatically registered registries through registerRandomizerRegistry()
         registries.addAll(loadRegistries()); // registries added to classpath through the SPI
-        PopulatorImpl populator = new PopulatorImpl(registries);
+        BeanPopulator populator = new BeanPopulator(registries);
         populator.setScanClasspathForConcreteClasses(scanClasspathForConcreteClasses);
         reset();
         return populator;

@@ -53,8 +53,8 @@ class MapPopulator {
             Type keyType = parameterizedType.getActualTypeArguments()[0];
             Type valueType = parameterizedType.getActualTypeArguments()[1];
             for (int index = 0; index < randomSize; index++) {
-                Object randomKey = populator.populateBean((Class<?>) keyType);
-                Object randomValue = populator.populateBean((Class<?>) valueType);
+                Object randomKey = populator.populate((Class<?>) keyType);
+                Object randomValue = populator.populate((Class<?>) valueType);
                 map.put(randomKey, randomValue);
             }
         }

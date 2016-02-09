@@ -44,7 +44,7 @@ import static org.assertj.core.api.Assertions.fail;
 import static org.mockito.Mockito.when;
 
 @RunWith(MockitoJUnitRunner.class)
-public class PopulatorImplTest {
+public class BeanPopulatorTest {
 
     private static final String NAME = "foo";
 
@@ -61,7 +61,7 @@ public class PopulatorImplTest {
 
     @Test
     public void generatedBeansShouldBeCorrectlyPopulated() {
-        Person person = populator.populateBean(Person.class);
+        Person person = populator.populate(Person.class);
 
         assertThat(person).isNotNull();
         assertThat(person.getEmail()).isNotEmpty();
@@ -86,7 +86,7 @@ public class PopulatorImplTest {
 
     @Test
     public void finalFieldsShouldBePopulated() {
-        Person person = populator.populateBean(Person.class);
+        Person person = populator.populate(Person.class);
 
         assertThat(person).isNotNull();
         assertThat(person.getId()).isNotNull();
@@ -95,7 +95,7 @@ public class PopulatorImplTest {
     @Test
     public void staticFieldsShouldNotBePopulated() {
         try {
-            Human human = populator.populateBean(Human.class);
+            Human human = populator.populate(Human.class);
             assertThat(human).isNotNull();
         } catch (Exception e) {
             fail("Should be able to populate types with private static final fields.", e);
@@ -104,22 +104,15 @@ public class PopulatorImplTest {
 
     @Test
     public void immutableBeansShouldBePopulated() {
-        final ImmutableBean immutableBean = populator.populateBean(ImmutableBean.class);
+        final ImmutableBean immutableBean = populator.populate(ImmutableBean.class);
         assertThat(immutableBean).isNotNull();
         assertThat(immutableBean.getFinalValue()).isNotNull();
         assertThat(immutableBean.getFinalCollection()).isNotNull();
     }
 
     @Test
-    public void generatedBeansListShouldNotBeNull() {
-        List<Person> persons = populator.populateBeans(Person.class);
-
-        assertThat(persons).isNotNull();
-    }
-
-    @Test
     public void generatedBeansNumberShouldBeEqualToSpecifiedNumber() {
-        List<Person> persons = populator.populateBeans(Person.class, 2);
+        List<Person> persons = populator.populate(Person.class, 2);
 
         assertThat(persons).hasSize(2);
     }
@@ -130,7 +123,7 @@ public class PopulatorImplTest {
                 .randomize(field().named("name").ofType(String.class).inClass(Human.class).get(), randomizer)
                 .build();
 
-        Person person = populator.populateBean(Person.class);
+        Person person = populator.populate(Person.class);
 
         assertThat(person).isNotNull();
         assertThat(person.getName()).isEqualTo(NAME);
@@ -139,7 +132,7 @@ public class PopulatorImplTest {
     @Test
     public void javaNetTypesShouldBePopulated() {
 
-        Website website = populator.populateBean(Website.class);
+        Website website = populator.populate(Website.class);
 
         assertThat(website).isNotNull();
         assertThat(website.getName()).isNotNull();
@@ -151,14 +144,14 @@ public class PopulatorImplTest {
     public void failsToPopulateInterfacesAndAbstractClassesIfScanClasspathForConcreteClassesIsDisabled() {
         Populator nonScanningPopulator = aNewPopulatorBuilder().scanClasspathForConcreteClasses(false).build();
 
-        nonScanningPopulator.populateBean(Mamals.class);
+        nonScanningPopulator.populate(Mamals.class);
     }
 
     @Test
     public void generatesConcreteTypesForInterfacesAndAbstractClassesIfScanClasspathForConcreteClassesIsEnabled() {
         Populator scanningPopulator = aNewPopulatorBuilder().scanClasspathForConcreteClasses(true).build();
 
-        Mamals mamals = scanningPopulator.populateBean(Mamals.class);
+        Mamals mamals = scanningPopulator.populate(Mamals.class);
 
         assertThat(mamals.getMamal()).isOfAnyClassIn(Human.class, Ape.class, Person.class, SocialPerson.class);
         assertThat(mamals.getMamalImpl()).isOfAnyClassIn(Human.class, Ape.class, Person.class, SocialPerson.class);
@@ -168,18 +161,18 @@ public class PopulatorImplTest {
     public void generatesConcreteTypesForFieldsWithGenericParametersIfScanClasspathForConcreteClassesIsEnabled() {
         Populator scanningPopulator = aNewPopulatorBuilder().scanClasspathForConcreteClasses(true).build();
 
-        ComparableBean comparableBean = scanningPopulator.populateBean(ComparableBean.class);
+        ComparableBean comparableBean = scanningPopulator.populate(ComparableBean.class);
 
         assertThat(comparableBean.getDateComparable()).isInstanceOf(ComparableBean.AlwaysEqual.class);
     }
 
     @Test(expected = IllegalArgumentException.class)
     public void whenSpecifiedNumberOfBeansToGenerateIsNegativeThenShouldThrowAnIllegalArgumentException() {
-        populator.populateBeans(Person.class, -2);
+        populator.populate(Person.class, -2);
     }
 
     @Test(expected = BeanPopulationException.class)
     public void whenUnableToInstantiateFieldThenShouldThrowABeanPopulationException() {
-        populator.populateBean(AbstractBean.class);
+        populator.populate(AbstractBean.class);
     }
 }

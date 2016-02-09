@@ -49,7 +49,7 @@ public class CollectionPopulationTest {
     @Test
     @SuppressWarnings("unchecked")
     public void rawCollectionInterfacesShouldBeEmpty() {
-        final CollectionBean collectionsBean = populator.populateBean(CollectionBean.class);
+        final CollectionBean collectionsBean = populator.populate(CollectionBean.class);
 
         assertThat(collectionsBean).isNotNull();
 
@@ -67,7 +67,7 @@ public class CollectionPopulationTest {
 
     @Test
     public void typedCollectionInterfacesShouldNotBeEmpty() {
-        final CollectionBean collectionsBean = populator.populateBean(CollectionBean.class);
+        final CollectionBean collectionsBean = populator.populate(CollectionBean.class);
 
         assertThat(collectionsBean).isNotNull();
         
@@ -86,7 +86,7 @@ public class CollectionPopulationTest {
     @Test
     @SuppressWarnings("unchecked")
     public void rawCollectionClassesShouldBeEmpty() {
-        final CollectionBean collectionsBean = populator.populateBean(CollectionBean.class);
+        final CollectionBean collectionsBean = populator.populate(CollectionBean.class);
 
         assertThat(collectionsBean).isNotNull();
 
@@ -111,7 +111,7 @@ public class CollectionPopulationTest {
 
     @Test
     public void typedCollectionClassesShouldNoBeEmpty() {
-        final CollectionBean collectionsBean = populator.populateBean(CollectionBean.class);
+        final CollectionBean collectionsBean = populator.populate(CollectionBean.class);
 
         assertThat(collectionsBean).isNotNull();
 
@@ -136,12 +136,12 @@ public class CollectionPopulationTest {
 
     @Test (expected = BeanPopulationException.class)
     public void synchronousQueueTypeMustBeRejected() {
-        populator.populateBean(SynchronousQueueBean.class);
+        populator.populate(SynchronousQueueBean.class);
     }
 
     @Test (expected = BeanPopulationException.class)
     public void delayedQueueTypeMustBeRejected() {
-        populator.populateBean(DelayedQueueBean.class);
+        populator.populate(DelayedQueueBean.class);
     }
     
     private void assertContainsOnlyNonEmptyPersons(Collection<Person> persons) {

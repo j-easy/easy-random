@@ -46,7 +46,7 @@ public class ArrayPopulationTest {
     @Ignore
     @Test
     public void primitiveArraysShouldBeCorrectlyPopulated() {
-        final ArrayBean bean = populator.populateBean(ArrayBean.class);
+        final ArrayBean bean = populator.populate(ArrayBean.class);
 
         // primitive types
         assertThat(toObject(bean.getByteArray())).hasOnlyElementsOfType(Byte.class);
@@ -61,7 +61,7 @@ public class ArrayPopulationTest {
 
     @Test
     public void wrapperTypeArraysShouldBeCorrectlyPopulated() {
-        final ArrayBean bean = populator.populateBean(ArrayBean.class);
+        final ArrayBean bean = populator.populate(ArrayBean.class);
         
         // wrapper types
         assertThat(bean.getBytes()).hasOnlyElementsOfType(Byte.class);
@@ -76,7 +76,7 @@ public class ArrayPopulationTest {
 
     @Test
     public void arraysWithCustomTypesShouldBeCorrectlyPopulated() {
-        final ArrayBean bean = populator.populateBean(ArrayBean.class);
+        final ArrayBean bean = populator.populate(ArrayBean.class);
 
         // custom types
         assertThat(bean.getStrings()).doesNotContain(null, "");

@@ -40,9 +40,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
 
-import static io.github.benas.randombeans.randomizers.ByteRandomizer.aNewByteRandomizer;
 import static io.github.benas.randombeans.util.ReflectionUtils.*;
-import static java.lang.Math.abs;
 
 /**
  * The core implementation of the {@link Populator} interface.
@@ -50,7 +48,7 @@ import static java.lang.Math.abs;
  * @author Mahmoud Ben Hassine (mahmoud.benhassine@icloud.com)
  */
 @SuppressWarnings({ "rawtypes", "unchecked" })
-final class PopulatorImpl implements Populator {
+final class BeanPopulator implements Populator {
 
     private Objenesis objenesis;
 
@@ -64,7 +62,7 @@ final class PopulatorImpl implements Populator {
     
     private boolean scanClasspathForConcreteClasses;
 
-    PopulatorImpl(final Set<RandomizerRegistry> registries) {
+    BeanPopulator(final Set<RandomizerRegistry> registries) {
         objenesis = new ObjenesisStd();
         randomizerProvider = new RandomizerProvider(registries);
         arrayPopulator = new ArrayPopulator(this);
@@ -73,7 +71,7 @@ final class PopulatorImpl implements Populator {
     }
 
     @Override
-    public <T> T populateBean(final Class<T> type, final String... excludedFields) {
+    public <T> T populate(final Class<T> type, final String... excludedFields) {
         Randomizer<?> randomizer = randomizerProvider.getRandomizerByType(type);
         if (randomizer != null) {
             return (T) randomizer.getRandomValue();
@@ -82,17 +80,11 @@ final class PopulatorImpl implements Populator {
     }
 
     @Override
-    public <T> List<T> populateBeans(final Class<T> type, final String... excludedFields) {
-        int randomSize = abs(aNewByteRandomizer().getRandomValue());
-        return populateBeans(type, randomSize, excludedFields);
-    }
-
-    @Override
-    public <T> List<T> populateBeans(final Class<T> type, final int size, final String... excludedFields) {
+    public <T> List<T> populate(final Class<T> type, final int size, final String... excludedFields) {
         checkSize(size);
         List<T> beans = new ArrayList<>(size);
         for (int i = 0; i < size; i++) {
-            T bean = populateBean(type, excludedFields);
+            T bean = populate(type, excludedFields);
             beans.add(bean);
         }
         return beans;

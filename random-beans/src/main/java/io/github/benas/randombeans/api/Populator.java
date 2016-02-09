@@ -35,7 +35,7 @@ import java.util.List;
 public interface Populator {
 
     /**
-     * Populate a java bean instance for the given type.
+     * Populate a random java bean instance for the given type.
      * It is possible to exclude some fields from being populated using the {@code excludedFields} parameter.
      *
      * @param type           the type for which an instance will be populated
@@ -44,22 +44,10 @@ public interface Populator {
      * @return a populated instance of the given type
      * @throws BeanPopulationException when unable to populate an instance of the given type
      */
-    <T> T populateBean(final Class<T> type, final String... excludedFields);
+    <T> T populate(final Class<T> type, final String... excludedFields);
 
     /**
-     * Populate a random number of instances for the given type.
-     * It is possible to exclude some fields from being populated using the {@code excludedFields} parameter.
-     *
-     * @param type           the type for which instances will be populated
-     * @param excludedFields the name of fields to exclude
-     * @param <T>            the actual type of the target java bean
-     * @return a list of populated instances of the given type
-     * @throws BeanPopulationException when unable to populate an instance of the given type
-     */
-    <T> List<T> populateBeans(final Class<T> type, final String... excludedFields);
-
-    /**
-     * Populate a fixed number of instances for the given type.
+     * Populate a fixed number of random instances for the given type.
      * It is possible to exclude some fields from being populated using the {@code excludedFields} parameter.
      *
      * @param type           the type for which instances will be populated
@@ -69,6 +57,6 @@ public interface Populator {
      * @return a list of populated instances of the given type
      * @throws BeanPopulationException when unable to populate an instance of the given type
      */
-    <T> List<T> populateBeans(final Class<T> type, int size, final String... excludedFields);
+    <T> List<T> populate(final Class<T> type, final int size, final String... excludedFields);
 
 }

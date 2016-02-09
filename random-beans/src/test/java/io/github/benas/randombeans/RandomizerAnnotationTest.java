@@ -34,7 +34,7 @@ public class RandomizerAnnotationTest {
 
     @Test
     public void fieldAnnotatedWithRandomizerShouldBePopulatedWithValuesGeneratedByTheDeclaredRandomizer() {
-        Foo foo = aNewPopulatorBuilder().build().populateBean(Foo.class);
+        Foo foo = aNewPopulatorBuilder().build().populate(Foo.class);
         assertThat(foo.getName()).isEqualTo("foo");
     }
 
