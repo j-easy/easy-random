@@ -90,6 +90,12 @@ final class BeanPopulator implements Populator {
         return beans;
     }
 
+    private static void checkSize(final int size) {
+        if (size < 0) {
+            throw new IllegalArgumentException("The size must be positive");
+        }
+    }
+
     private <T> T doPopulateBean(final Class<T> type, final PopulatorContext context) {
         T result;
         try {
@@ -103,44 +109,49 @@ final class BeanPopulator implements Populator {
                 return (T) context.getPopulatedBean(type);
             }
 
-            if (scanClasspathForConcreteClasses && isAbstract(type)) {
-                // create a new instance of a random concrete subtype
-                Class<?> randomConcreteSubType = randomConcreteSubTypeOf(type);
-                if (randomConcreteSubType == null) {
-                    throw new BeanPopulationException("Unable to find a matching concrete subtype of type: " + type);
-                } else {
-                    result = (T) objenesis.newInstance(randomConcreteSubType);
-                }
-            } else {
-                // create a new instance of the target type
-                result = objenesis.newInstance(type);
-            }
+            // create a new instance of the target type
+            result = createInstance(type);
+
+            // cache instance in the population context
+            context.addPopulatedBean(type, result);
 
             // retrieve declared and inherited fields
-            context.addPopulatedBean(type, result);
-            List<Field> declaredFields = getDeclaredFields(result);
-            declaredFields.addAll(getInheritedFields(type));
+            List<Field> fields = getDeclaredFields(result);
+            fields.addAll(getInheritedFields(type));
 
-            //Generate random data for each field
-            for (Field field : declaredFields) {
-                if (!shouldBeExcluded(field, context)) {
-                    populateField(result, field, context);
-                }
-            }
+            // populate fields with random data
+            populateFields(fields, result, context);
+
             return result;
         } catch (InstantiationError | Exception e) {
             throw new BeanPopulationException("Unable to generate a random instance of type " + type, e);
         }
     }
 
-    private static void checkSize(final int size) {
-        if (size < 0) {
-            throw new IllegalArgumentException("The size must be positive");
+    private <T> T createInstance(final Class<T> type) {
+        T result;
+        if (scanClasspathForConcreteClasses && isAbstract(type)) {
+            Class<?> randomConcreteSubType = randomConcreteSubTypeOf(type);
+            if (randomConcreteSubType == null) {
+                throw new InstantiationError("Unable to find a matching concrete subtype of type: " + type + " in the classpath");
+            } else {
+                result = (T) objenesis.newInstance(randomConcreteSubType);
+            }
+        } else {
+            result = objenesis.newInstance(type);
+        }
+        return result;
+    }
+
+    private <T> void populateFields(final List<Field> fields, final T result, final PopulatorContext context) throws IllegalAccessException {
+        for (Field field : fields) {
+            if (!shouldBeExcluded(field, context)) {
+                populateField(result, field, context);
+            }
         }
     }
 
     private void populateField(final Object target, final Field field, final PopulatorContext context) throws IllegalAccessException {
-
         Randomizer<?> randomizer = randomizerProvider.getRandomizerByField(field);
         if (randomizer instanceof SkipRandomizer) {
             return;

@@ -37,6 +37,7 @@ import java.util.*;
 import java.util.concurrent.ConcurrentHashMap;
 
 import static io.github.benas.randombeans.util.CollectionUtils.randomElementOf;
+import static java.util.Arrays.asList;
 
 /**
  * Reflection utility methods.
@@ -48,26 +49,25 @@ public abstract class ReflectionUtils {
     private static final ConcurrentHashMap<Class<?>, List<Class<?>>> typeToConcreteSubTypes = new ConcurrentHashMap<>();
 
     /**
-     * Get declared field of a given type.
-     * @param result the list of declared fields.
-     * @param <T> the target type
+     * Get declared fields of a given type.
+     * @param type the type to introspect
      * @return list of declared fields
      */
-    public static <T> ArrayList<Field> getDeclaredFields(T result) {
-        return new ArrayList<>(Arrays.asList(result.getClass().getDeclaredFields()));
+    public static <T> List<Field> getDeclaredFields(T type) {
+        return new ArrayList<>(asList(type.getClass().getDeclaredFields()));
     }
 
     /**
      * Get inherited fields of a given type.
-     * @param clazz the target type
+     * @param type the type to introspect
      * @return list of inherited fields
      */
-    public static List<Field> getInheritedFields(Class<?> clazz) {
+    public static List<Field> getInheritedFields(Class<?> type) {
         List<Field> inheritedFields = new ArrayList<>();
-        while (clazz.getSuperclass() != null) {
-            Class<?> superclass = clazz.getSuperclass();
-            inheritedFields.addAll(Arrays.asList(superclass.getDeclaredFields()));
-            clazz = superclass;
+        while (type.getSuperclass() != null) {
+            Class<?> superclass = type.getSuperclass();
+            inheritedFields.addAll(asList(superclass.getDeclaredFields()));
+            type = superclass;
         }
         return inheritedFields;
     }

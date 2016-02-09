@@ -8,11 +8,11 @@ import java.lang.reflect.ParameterizedType;
 import java.lang.reflect.Type;
 import java.util.Map;
 
-import static io.github.benas.randombeans.randomizers.ByteRandomizer.aNewByteRandomizer;
 import static io.github.benas.randombeans.util.CollectionUtils.getEmptyImplementationForMapInterface;
+import static io.github.benas.randombeans.util.Constants.MAX_COLLECTION_SIZE;
 import static io.github.benas.randombeans.util.ReflectionUtils.isInterface;
 import static io.github.benas.randombeans.util.ReflectionUtils.isParameterizedType;
-import static java.lang.Math.abs;
+import static org.apache.commons.lang3.RandomUtils.nextInt;
 
 /**
  * Random map populator.
@@ -25,16 +25,18 @@ class MapPopulator {
 
     private Objenesis objenesis;
 
-    MapPopulator(Populator populator, Objenesis objenesis) {
+    MapPopulator(final Populator populator, final Objenesis objenesis) {
         this.populator = populator;
         this.objenesis = objenesis;
     }
 
     @SuppressWarnings("unchecked")
     Map<?, ?> getRandomMap(final Field field) throws IllegalAccessException {
+        int randomSize = nextInt(1, MAX_COLLECTION_SIZE);
         Class<?> fieldType = field.getType();
-
+        Type fieldGenericType = field.getGenericType();
         Map<Object, Object> map;
+
         if (isInterface(fieldType)) {
             map = (Map<Object, Object>) getEmptyImplementationForMapInterface(fieldType);
         } else {
@@ -45,9 +47,6 @@ class MapPopulator {
             }
         }
 
-        int randomSize = abs(aNewByteRandomizer().getRandomValue());
-
-        Type fieldGenericType = field.getGenericType();
         if (isParameterizedType(fieldGenericType)) { // populate only parametrized types, raw types will be empty
             ParameterizedType parameterizedType = (ParameterizedType) fieldGenericType;
             Type keyType = parameterizedType.getActualTypeArguments()[0];

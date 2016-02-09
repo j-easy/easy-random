@@ -32,7 +32,7 @@ class RandomizerProvider {
         return getRandomizer(new ByTypeProvider(type));
     }
 
-    private Randomizer<?> getRandomizer(Provider provider) {
+    private Randomizer<?> getRandomizer(final Provider provider) {
         List<Randomizer<?>> randomizers = new ArrayList<>();
         for (RandomizerRegistry registry : registries) {
             Randomizer<?> randomizer = provider.getRandomizer(registry);

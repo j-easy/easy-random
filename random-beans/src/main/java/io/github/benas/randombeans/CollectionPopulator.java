@@ -29,7 +29,7 @@ class CollectionPopulator {
 
     private Objenesis objenesis;
 
-    CollectionPopulator(Populator populator, Objenesis objenesis) {
+    CollectionPopulator(final Populator populator, final Objenesis objenesis) {
         this.populator = populator;
         this.objenesis = objenesis;
     }
@@ -38,14 +38,15 @@ class CollectionPopulator {
     Collection<?> getRandomCollection(final Field field) throws IllegalAccessException {
         int randomSize = nextInt(1, MAX_COLLECTION_SIZE);
         Class<?> fieldType = field.getType();
+        Type fieldGenericType = field.getGenericType();
         Collection<?> collection;
+
         if (isInterface(fieldType)) {
             collection = getEmptyImplementationForCllectionInterface(fieldType);
         } else {
             collection = getEmptyCollection(fieldType, randomSize);
         }
 
-        Type fieldGenericType = field.getGenericType();
         if (isParameterizedType(fieldGenericType)) { // populate only parametrized types, raw types will be empty
             ParameterizedType parameterizedType = (ParameterizedType) fieldGenericType;
             Type type = parameterizedType.getActualTypeArguments()[0];

@@ -28,7 +28,7 @@ package io.github.benas.randombeans;
 import java.lang.reflect.Field;
 
 /**
- * An object holding data about the recursion step of {@link io.github.benas.randombeans.api.Populator#populateBean(Class, String...)}.
+ * An object holding data about the recursion step of {@link io.github.benas.randombeans.api.Populator#populate(Class, String...)}.
  *
  * @author Rémi Alvergnat (toilal.dev@gmail.com)
  */
@@ -47,7 +47,7 @@ class PopulatorContextStackItem {
         return object;
     }
 
-    public void setObject(Object object) {
+    public void setObject(final Object object) {
         this.object = object;
     }
 
@@ -55,7 +55,7 @@ class PopulatorContextStackItem {
         return field;
     }
 
-    public void setField(Field field) {
+    public void setField(final Field field) {
         this.field = field;
     }
 }

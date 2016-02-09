@@ -32,7 +32,7 @@ import static io.github.benas.randombeans.randomizers.range.IntegerRangeRandomiz
 import static java.util.Collections.singletonList;
 
 /**
- * Context object for a single call on {@link io.github.benas.randombeans.api.Populator#populateBean(Class, String...)}.
+ * Context object for a single call on {@link io.github.benas.randombeans.api.Populator#populate(Class, String...)}.
  * It contains a map acting as a cache of populated beans to avoid infinite recursion.
  *
  * @author Rémi Alvergnat (toilal.dev@gmail.com)
@@ -47,7 +47,7 @@ class PopulatorContext {
 
     private Stack<PopulatorContextStackItem> stack;
 
-    public PopulatorContext(String... excludedFields) {
+    public PopulatorContext(final String... excludedFields) {
         populatedBeans = new IdentityHashMap<>();
         stack = new Stack<>();
         this.excludedFields = excludedFields;
@@ -78,7 +78,7 @@ class PopulatorContext {
         return excludedFields;
     }
 
-    public void pushStackItem(PopulatorContextStackItem field) {
+    public void pushStackItem(final PopulatorContextStackItem field) {
         stack.push(field);
     }
 
@@ -86,7 +86,7 @@ class PopulatorContext {
         return stack.pop();
     }
 
-    public String getFieldFullName(Field field) {
+    public String getFieldFullName(final Field field) {
         StringBuilder builder = new StringBuilder();
         List<Field> stackedFields = getStackedFields();
         appendDottedName(builder, stackedFields);
@@ -102,7 +102,7 @@ class PopulatorContext {
         return fields;
     }
 
-    private static void appendDottedName(StringBuilder builder, List<Field> fields) {
+    private static void appendDottedName(final StringBuilder builder, final List<Field> fields) {
         for (Field field : fields) {
             if (builder.length() > 0) {
                 builder.append(".");

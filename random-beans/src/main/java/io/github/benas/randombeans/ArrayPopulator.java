@@ -18,7 +18,7 @@ class ArrayPopulator {
 
     private Populator populator;
 
-    ArrayPopulator(Populator populator) {
+    ArrayPopulator(final Populator populator) {
         this.populator = populator;
     }
 
