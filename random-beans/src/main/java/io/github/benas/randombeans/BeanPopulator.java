@@ -183,7 +183,7 @@ final class BeanPopulator implements Populator {
                 if (randomConcreteSubType == null) {
                     throw new BeanPopulationException("Unable to find a matching concrete subtype of type: " + fieldType);
                 } else {
-                    value = objenesis.newInstance(randomConcreteSubType);
+                    value = populate(randomConcreteSubType);
                 }
             } else {
                 value = doPopulateBean(fieldType, context);

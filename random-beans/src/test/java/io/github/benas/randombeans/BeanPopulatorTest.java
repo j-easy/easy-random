@@ -28,7 +28,6 @@ import io.github.benas.randombeans.api.BeanPopulationException;
 import io.github.benas.randombeans.api.Populator;
 import io.github.benas.randombeans.api.Randomizer;
 import io.github.benas.randombeans.beans.*;
-
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -142,16 +141,16 @@ public class BeanPopulatorTest {
 
     @Test(expected = BeanPopulationException.class)
     public void failsToPopulateInterfacesAndAbstractClassesIfScanClasspathForConcreteClassesIsDisabled() {
-        Populator nonScanningPopulator = aNewPopulatorBuilder().scanClasspathForConcreteClasses(false).build();
+        populator = aNewPopulatorBuilder().scanClasspathForConcreteClasses(false).build();
 
-        nonScanningPopulator.populate(Mamals.class);
+        populator.populate(Mamals.class);
     }
 
     @Test
     public void generatesConcreteTypesForInterfacesAndAbstractClassesIfScanClasspathForConcreteClassesIsEnabled() {
-        Populator scanningPopulator = aNewPopulatorBuilder().scanClasspathForConcreteClasses(true).build();
+        populator = aNewPopulatorBuilder().scanClasspathForConcreteClasses(true).build();
 
-        Mamals mamals = scanningPopulator.populate(Mamals.class);
+        Mamals mamals = populator.populate(Mamals.class);
 
         assertThat(mamals.getMamal()).isOfAnyClassIn(Human.class, Ape.class, Person.class, SocialPerson.class);
         assertThat(mamals.getMamalImpl()).isOfAnyClassIn(Human.class, Ape.class, Person.class, SocialPerson.class);
@@ -159,11 +158,25 @@ public class BeanPopulatorTest {
 
     @Test
     public void generatesConcreteTypesForFieldsWithGenericParametersIfScanClasspathForConcreteClassesIsEnabled() {
-        Populator scanningPopulator = aNewPopulatorBuilder().scanClasspathForConcreteClasses(true).build();
+        populator = aNewPopulatorBuilder().scanClasspathForConcreteClasses(true).build();
 
-        ComparableBean comparableBean = scanningPopulator.populate(ComparableBean.class);
+        ComparableBean comparableBean = populator.populate(ComparableBean.class);
 
         assertThat(comparableBean.getDateComparable()).isInstanceOf(ComparableBean.AlwaysEqual.class);
+    }
+
+    @Test
+    public void generatedConcreteSubTypesMustBePopulatedWhenScanClasspathForConcreteClassesIsEnabled() throws Exception {
+        // Given
+        populator = PopulatorBuilder.aNewPopulatorBuilder().scanClasspathForConcreteClasses(true).build();
+
+        // When
+        Foo foo = populator.populate(Foo.class);
+
+        // Then
+        assertThat(foo).isNotNull();
+        assertThat(foo.getBar()).isInstanceOf(ConcreteBar.class);
+        assertThat(foo.getBar().getName()).isNotEmpty();
     }
 
     @Test(expected = IllegalArgumentException.class)
