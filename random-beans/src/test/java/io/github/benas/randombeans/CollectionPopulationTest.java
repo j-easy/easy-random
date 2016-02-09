@@ -66,6 +66,24 @@ public class CollectionPopulationTest {
     }
 
     @Test
+    public void unboundedWildCardTypedCollectionInterfacesShouldBeEmpty() {
+        final CollectionBean collectionsBean = populator.populate(CollectionBean.class);
+
+        assertThat(collectionsBean).isNotNull();
+
+        assertThat(collectionsBean.getUnboundedWildCardTypedCollection()).isEmpty();
+        assertThat(collectionsBean.getUnboundedWildCardTypedSet()).isEmpty();
+        assertThat(collectionsBean.getUnboundedWildCardTypedSortedSet()).isEmpty();
+        assertThat(collectionsBean.getUnboundedWildCardTypedNavigableSet()).isEmpty();
+        assertThat(collectionsBean.getUnboundedWildCardTypedList()).isEmpty();
+        assertThat(collectionsBean.getUnboundedWildCardTypedQueue()).isEmpty();
+        assertThat(collectionsBean.getUnboundedWildCardTypedBlockingQueue()).isEmpty();
+        assertThat(collectionsBean.getUnboundedWildCardTypedTransferQueue()).isEmpty();
+        assertThat(collectionsBean.getUnboundedWildCardTypedDeque()).isEmpty();
+        assertThat(collectionsBean.getUnboundedWildCardTypedBlockingDeque()).isEmpty();
+    }
+
+    @Test
     public void typedCollectionInterfacesShouldNotBeEmpty() {
         final CollectionBean collectionsBean = populator.populate(CollectionBean.class);
 
@@ -107,6 +125,31 @@ public class CollectionPopulationTest {
         assertThat(collectionsBean.getArrayDeque()).isEmpty();
         assertThat(collectionsBean.getLinkedBlockingDeque()).isEmpty();
         assertThat(collectionsBean.getConcurrentLinkedDeque()).isEmpty();
+    }
+
+    @Test
+    public void unboundedWildCardTypedCollectionClassesShouldBeEmpty() {
+        final CollectionBean collectionsBean = populator.populate(CollectionBean.class);
+
+        assertThat(collectionsBean).isNotNull();
+
+        assertThat(collectionsBean.getUnboundedWildCardTypedArrayList()).isEmpty();
+        assertThat(collectionsBean.getUnboundedWildCardTypedLinkedList()).isEmpty();
+        assertThat(collectionsBean.getUnboundedWildCardTypedVector()).isEmpty();
+        assertThat(collectionsBean.getUnboundedWildCardTypedStack()).isEmpty();
+        assertThat(collectionsBean.getUnboundedWildCardTypedHashSet()).isEmpty();
+        assertThat(collectionsBean.getUnboundedWildCardTypedLinkedHashSet()).isEmpty();
+        assertThat(collectionsBean.getUnboundedWildCardTypedTreeSet()).isEmpty();
+        assertThat(collectionsBean.getUnboundedWildCardTypedConcurrentSkipListSet()).isEmpty();
+        assertThat(collectionsBean.getUnboundedWildCardTypedArrayBlockingQueue()).isEmpty();
+        assertThat(collectionsBean.getUnboundedWildCardTypedLinkedBlockingQueue()).isEmpty();
+        assertThat(collectionsBean.getUnboundedWildCardTypedConcurrentLinkedQueue()).isEmpty();
+        assertThat(collectionsBean.getUnboundedWildCardTypedLinkedTransferQueue()).isEmpty();
+        assertThat(collectionsBean.getUnboundedWildCardTypedPriorityQueue()).isEmpty();
+        assertThat(collectionsBean.getUnboundedWildCardTypedPriorityBlockingQueue()).isEmpty();
+        assertThat(collectionsBean.getUnboundedWildCardTypedArrayDeque()).isEmpty();
+        assertThat(collectionsBean.getUnboundedWildCardTypedLinkedBlockingDeque()).isEmpty();
+        assertThat(collectionsBean.getUnboundedWildCardTypedConcurrentLinkedDeque()).isEmpty();
     }
 
     @Test

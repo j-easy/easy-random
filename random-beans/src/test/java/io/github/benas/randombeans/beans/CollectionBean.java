@@ -35,33 +35,43 @@ public class CollectionBean {
      */
     
     private Collection collection;
+    private Collection<?> unboundedWildCardTypedCollection;
     private Collection<Person> typedCollection;
 
     private Set set;
+    private Set<?> unboundedWildCardTypedSet;
     private Set<Person> typedSet;
     
     private SortedSet sortedSet;
+    private SortedSet<?> unboundedWildCardTypedSortedSet;
     private SortedSet<Person> typedSortedSet;
     
     private NavigableSet navigableSet;
+    private NavigableSet<?> unboundedWildCardTypedNavigableSet;
     private NavigableSet<Person> typedNavigableSet;
 
     private List list;
+    private List<?> unboundedWildCardTypedList;
     private List<Person> typedList;
 
     private Queue queue;
+    private Queue<?> unboundedWildCardTypedQueue;
     private Queue<Person> typedQueue;
     
     private BlockingQueue blockingQueue;
+    private BlockingQueue<?> unboundedWildCardTypedBlockingQueue;
     private BlockingQueue<Person> typedBlockingQueue;
     
     private TransferQueue transferQueue;
+    private TransferQueue<?> unboundedWildCardTypedTransferQueue;
     private TransferQueue<Person> typedTransferQueue;
 
     private Deque deque;
+    private Deque<?> unboundedWildCardTypedDeque;
     private Deque<Person> typedDeque;
     
     private BlockingDeque blockingDeque;
+    private BlockingDeque<?> unboundedWildCardTypedBlockingDeque;
     private BlockingDeque<Person> typedBlockingDeque;
     
     /*
@@ -69,54 +79,71 @@ public class CollectionBean {
      */
 
     private ArrayList arrayList;
+    private ArrayList<?> unboundedWildCardTypedArrayList;
     private ArrayList<Person> typedArrayList;
     
     private LinkedList linkedList;
+    private LinkedList<?> unboundedWildCardTypedLinkedList;
     private LinkedList<Person> typedLinkedList;
     
     private Vector vector;
+    private Vector<?> unboundedWildCardTypedVector;
     private Vector<Person> typedVector;
     
     private Stack stack;
+    private Stack<?> unboundedWildCardTypedStack;
     private Stack<Person> typedStack;
 
     private HashSet hashSet;
+    private HashSet<?> unboundedWildCardTypedHashSet;
     private HashSet<Person> typedHashSet;
     
     private LinkedHashSet linkedHashSet;
+    private LinkedHashSet<?> unboundedWildCardTypedLinkedHashSet;
     private LinkedHashSet<Person> typedLinkedHashSet;
     
     private TreeSet treeSet;
+    private TreeSet<?> unboundedWildCardTypedTreeSet;
     private TreeSet<Person> typedTreeSet;
     
     private ConcurrentSkipListSet concurrentSkipListSet;
+    private ConcurrentSkipListSet<?> unboundedWildCardTypedConcurrentSkipListSet;
     private ConcurrentSkipListSet<Person> typedConcurrentSkipListSet;
     
     private ArrayBlockingQueue arrayBlockingQueue;
+    private ArrayBlockingQueue<?> unboundedWildCardTypedArrayBlockingQueue;
     private ArrayBlockingQueue<Person> typedArrayBlockingQueue;
 
     private LinkedBlockingQueue linkedBlockingQueue;
+    private LinkedBlockingQueue<?> unboundedWildCardTypedLinkedBlockingQueue;
     private LinkedBlockingQueue<Person> typedLinkedBlockingQueue;
     
     private ConcurrentLinkedQueue concurrentLinkedQueue;
+    private ConcurrentLinkedQueue<?> unboundedWildCardTypedConcurrentLinkedQueue;
     private ConcurrentLinkedQueue<Person> typedConcurrentLinkedQueue;
     
     private LinkedTransferQueue linkedTransferQueue;
+    private LinkedTransferQueue<?> unboundedWildCardTypedLinkedTransferQueue;
     private LinkedTransferQueue<Person> typedLinkedTransferQueue;
 
     private PriorityQueue priorityQueue;
+    private PriorityQueue<?> unboundedWildCardTypedPriorityQueue;
     private PriorityQueue<Person> typedPriorityQueue;
     
     private PriorityBlockingQueue priorityBlockingQueue;
+    private PriorityBlockingQueue<?> unboundedWildCardTypedPriorityBlockingQueue;
     private PriorityBlockingQueue<Person> typedPriorityBlockingQueue;
 
     private ArrayDeque arrayDeque;
+    private ArrayDeque<?> unboundedWildCardTypedArrayDeque;
     private ArrayDeque<Person> typedArrayDeque;
 
     private LinkedBlockingDeque linkedBlockingDeque;
+    private LinkedBlockingDeque<?> unboundedWildCardTypedLinkedBlockingDeque;
     private LinkedBlockingDeque<Person> typedLinkedBlockingDeque;
 
     private ConcurrentLinkedDeque concurrentLinkedDeque;
+    private ConcurrentLinkedDeque<?> unboundedWildCardTypedConcurrentLinkedDeque;
     private ConcurrentLinkedDeque<Person> typedConcurrentLinkedDeque;
 
     /*
@@ -553,5 +580,221 @@ public class CollectionBean {
 
     public void setVector(Vector vector) {
         this.vector = vector;
+    }
+
+    public Collection<?> getUnboundedWildCardTypedCollection() {
+        return unboundedWildCardTypedCollection;
+    }
+
+    public void setUnboundedWildCardTypedCollection(Collection<?> unboundedWildCardTypedCollection) {
+        this.unboundedWildCardTypedCollection = unboundedWildCardTypedCollection;
+    }
+
+    public Set<?> getUnboundedWildCardTypedSet() {
+        return unboundedWildCardTypedSet;
+    }
+
+    public void setUnboundedWildCardTypedSet(Set<?> unboundedWildCardTypedSet) {
+        this.unboundedWildCardTypedSet = unboundedWildCardTypedSet;
+    }
+
+    public SortedSet<?> getUnboundedWildCardTypedSortedSet() {
+        return unboundedWildCardTypedSortedSet;
+    }
+
+    public void setUnboundedWildCardTypedSortedSet(SortedSet<?> unboundedWildCardTypedSortedSet) {
+        this.unboundedWildCardTypedSortedSet = unboundedWildCardTypedSortedSet;
+    }
+
+    public NavigableSet<?> getUnboundedWildCardTypedNavigableSet() {
+        return unboundedWildCardTypedNavigableSet;
+    }
+
+    public void setUnboundedWildCardTypedNavigableSet(NavigableSet<?> unboundedWildCardTypedNavigableSet) {
+        this.unboundedWildCardTypedNavigableSet = unboundedWildCardTypedNavigableSet;
+    }
+
+    public List<?> getUnboundedWildCardTypedList() {
+        return unboundedWildCardTypedList;
+    }
+
+    public void setUnboundedWildCardTypedList(List<?> unboundedWildCardTypedList) {
+        this.unboundedWildCardTypedList = unboundedWildCardTypedList;
+    }
+
+    public Queue<?> getUnboundedWildCardTypedQueue() {
+        return unboundedWildCardTypedQueue;
+    }
+
+    public void setUnboundedWildCardTypedQueue(Queue<?> unboundedWildCardTypedQueue) {
+        this.unboundedWildCardTypedQueue = unboundedWildCardTypedQueue;
+    }
+
+    public BlockingQueue<?> getUnboundedWildCardTypedBlockingQueue() {
+        return unboundedWildCardTypedBlockingQueue;
+    }
+
+    public void setUnboundedWildCardTypedBlockingQueue(BlockingQueue<?> unboundedWildCardTypedBlockingQueue) {
+        this.unboundedWildCardTypedBlockingQueue = unboundedWildCardTypedBlockingQueue;
+    }
+
+    public TransferQueue<?> getUnboundedWildCardTypedTransferQueue() {
+        return unboundedWildCardTypedTransferQueue;
+    }
+
+    public void setUnboundedWildCardTypedTransferQueue(TransferQueue<?> unboundedWildCardTypedTransferQueue) {
+        this.unboundedWildCardTypedTransferQueue = unboundedWildCardTypedTransferQueue;
+    }
+
+    public Deque<?> getUnboundedWildCardTypedDeque() {
+        return unboundedWildCardTypedDeque;
+    }
+
+    public void setUnboundedWildCardTypedDeque(Deque<?> unboundedWildCardTypedDeque) {
+        this.unboundedWildCardTypedDeque = unboundedWildCardTypedDeque;
+    }
+
+    public BlockingDeque<?> getUnboundedWildCardTypedBlockingDeque() {
+        return unboundedWildCardTypedBlockingDeque;
+    }
+
+    public void setUnboundedWildCardTypedBlockingDeque(BlockingDeque<?> unboundedWildCardTypedBlockingDeque) {
+        this.unboundedWildCardTypedBlockingDeque = unboundedWildCardTypedBlockingDeque;
+    }
+
+    public ArrayList<?> getUnboundedWildCardTypedArrayList() {
+        return unboundedWildCardTypedArrayList;
+    }
+
+    public void setUnboundedWildCardTypedArrayList(ArrayList<?> unboundedWildCardTypedArrayList) {
+        this.unboundedWildCardTypedArrayList = unboundedWildCardTypedArrayList;
+    }
+
+    public LinkedList<?> getUnboundedWildCardTypedLinkedList() {
+        return unboundedWildCardTypedLinkedList;
+    }
+
+    public void setUnboundedWildCardTypedLinkedList(LinkedList<?> unboundedWildCardTypedLinkedList) {
+        this.unboundedWildCardTypedLinkedList = unboundedWildCardTypedLinkedList;
+    }
+
+    public Vector<?> getUnboundedWildCardTypedVector() {
+        return unboundedWildCardTypedVector;
+    }
+
+    public void setUnboundedWildCardTypedVector(Vector<?> unboundedWildCardTypedVector) {
+        this.unboundedWildCardTypedVector = unboundedWildCardTypedVector;
+    }
+
+    public Stack<?> getUnboundedWildCardTypedStack() {
+        return unboundedWildCardTypedStack;
+    }
+
+    public void setUnboundedWildCardTypedStack(Stack<?> unboundedWildCardTypedStack) {
+        this.unboundedWildCardTypedStack = unboundedWildCardTypedStack;
+    }
+
+    public HashSet<?> getUnboundedWildCardTypedHashSet() {
+        return unboundedWildCardTypedHashSet;
+    }
+
+    public void setUnboundedWildCardTypedHashSet(HashSet<?> unboundedWildCardTypedHashSet) {
+        this.unboundedWildCardTypedHashSet = unboundedWildCardTypedHashSet;
+    }
+
+    public LinkedHashSet<?> getUnboundedWildCardTypedLinkedHashSet() {
+        return unboundedWildCardTypedLinkedHashSet;
+    }
+
+    public void setUnboundedWildCardTypedLinkedHashSet(LinkedHashSet<?> unboundedWildCardTypedLinkedHashSet) {
+        this.unboundedWildCardTypedLinkedHashSet = unboundedWildCardTypedLinkedHashSet;
+    }
+
+    public TreeSet<?> getUnboundedWildCardTypedTreeSet() {
+        return unboundedWildCardTypedTreeSet;
+    }
+
+    public void setUnboundedWildCardTypedTreeSet(TreeSet<?> unboundedWildCardTypedTreeSet) {
+        this.unboundedWildCardTypedTreeSet = unboundedWildCardTypedTreeSet;
+    }
+
+    public ConcurrentSkipListSet<?> getUnboundedWildCardTypedConcurrentSkipListSet() {
+        return unboundedWildCardTypedConcurrentSkipListSet;
+    }
+
+    public void setUnboundedWildCardTypedConcurrentSkipListSet(ConcurrentSkipListSet<?> unboundedWildCardTypedConcurrentSkipListSet) {
+        this.unboundedWildCardTypedConcurrentSkipListSet = unboundedWildCardTypedConcurrentSkipListSet;
+    }
+
+    public ArrayBlockingQueue<?> getUnboundedWildCardTypedArrayBlockingQueue() {
+        return unboundedWildCardTypedArrayBlockingQueue;
+    }
+
+    public void setUnboundedWildCardTypedArrayBlockingQueue(ArrayBlockingQueue<?> unboundedWildCardTypedArrayBlockingQueue) {
+        this.unboundedWildCardTypedArrayBlockingQueue = unboundedWildCardTypedArrayBlockingQueue;
+    }
+
+    public LinkedBlockingQueue<?> getUnboundedWildCardTypedLinkedBlockingQueue() {
+        return unboundedWildCardTypedLinkedBlockingQueue;
+    }
+
+    public void setUnboundedWildCardTypedLinkedBlockingQueue(LinkedBlockingQueue<?> unboundedWildCardTypedLinkedBlockingQueue) {
+        this.unboundedWildCardTypedLinkedBlockingQueue = unboundedWildCardTypedLinkedBlockingQueue;
+    }
+
+    public ConcurrentLinkedQueue<?> getUnboundedWildCardTypedConcurrentLinkedQueue() {
+        return unboundedWildCardTypedConcurrentLinkedQueue;
+    }
+
+    public void setUnboundedWildCardTypedConcurrentLinkedQueue(ConcurrentLinkedQueue<?> unboundedWildCardTypedConcurrentLinkedQueue) {
+        this.unboundedWildCardTypedConcurrentLinkedQueue = unboundedWildCardTypedConcurrentLinkedQueue;
+    }
+
+    public LinkedTransferQueue<?> getUnboundedWildCardTypedLinkedTransferQueue() {
+        return unboundedWildCardTypedLinkedTransferQueue;
+    }
+
+    public void setUnboundedWildCardTypedLinkedTransferQueue(LinkedTransferQueue<?> unboundedWildCardTypedLinkedTransferQueue) {
+        this.unboundedWildCardTypedLinkedTransferQueue = unboundedWildCardTypedLinkedTransferQueue;
+    }
+
+    public PriorityQueue<?> getUnboundedWildCardTypedPriorityQueue() {
+        return unboundedWildCardTypedPriorityQueue;
+    }
+
+    public void setUnboundedWildCardTypedPriorityQueue(PriorityQueue<?> unboundedWildCardTypedPriorityQueue) {
+        this.unboundedWildCardTypedPriorityQueue = unboundedWildCardTypedPriorityQueue;
+    }
+
+    public PriorityBlockingQueue<?> getUnboundedWildCardTypedPriorityBlockingQueue() {
+        return unboundedWildCardTypedPriorityBlockingQueue;
+    }
+
+    public void setUnboundedWildCardTypedPriorityBlockingQueue(PriorityBlockingQueue<?> unboundedWildCardTypedPriorityBlockingQueue) {
+        this.unboundedWildCardTypedPriorityBlockingQueue = unboundedWildCardTypedPriorityBlockingQueue;
+    }
+
+    public ArrayDeque<?> getUnboundedWildCardTypedArrayDeque() {
+        return unboundedWildCardTypedArrayDeque;
+    }
+
+    public void setUnboundedWildCardTypedArrayDeque(ArrayDeque<?> unboundedWildCardTypedArrayDeque) {
+        this.unboundedWildCardTypedArrayDeque = unboundedWildCardTypedArrayDeque;
+    }
+
+    public LinkedBlockingDeque<?> getUnboundedWildCardTypedLinkedBlockingDeque() {
+        return unboundedWildCardTypedLinkedBlockingDeque;
+    }
+
+    public void setUnboundedWildCardTypedLinkedBlockingDeque(LinkedBlockingDeque<?> unboundedWildCardTypedLinkedBlockingDeque) {
+        this.unboundedWildCardTypedLinkedBlockingDeque = unboundedWildCardTypedLinkedBlockingDeque;
+    }
+
+    public ConcurrentLinkedDeque<?> getUnboundedWildCardTypedConcurrentLinkedDeque() {
+        return unboundedWildCardTypedConcurrentLinkedDeque;
+    }
+
+    public void setUnboundedWildCardTypedConcurrentLinkedDeque(ConcurrentLinkedDeque<?> unboundedWildCardTypedConcurrentLinkedDeque) {
+        this.unboundedWildCardTypedConcurrentLinkedDeque = unboundedWildCardTypedConcurrentLinkedDeque;
     }
 }

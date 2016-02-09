@@ -12,10 +12,11 @@ import java.util.concurrent.ArrayBlockingQueue;
 import java.util.concurrent.DelayQueue;
 import java.util.concurrent.SynchronousQueue;
 
-import static io.github.benas.randombeans.util.CollectionUtils.getEmptyImplementationForCllectionInterface;
+import static io.github.benas.randombeans.util.CollectionUtils.getEmptyImplementationForCollectionInterface;
 import static io.github.benas.randombeans.util.Constants.MAX_COLLECTION_SIZE;
 import static io.github.benas.randombeans.util.ReflectionUtils.isInterface;
 import static io.github.benas.randombeans.util.ReflectionUtils.isParameterizedType;
+import static io.github.benas.randombeans.util.ReflectionUtils.isUnboundedWildcardType;
 import static org.apache.commons.lang3.RandomUtils.nextInt;
 
 /**
@@ -42,19 +43,20 @@ class CollectionPopulator {
         Collection<?> collection;
 
         if (isInterface(fieldType)) {
-            collection = getEmptyImplementationForCllectionInterface(fieldType);
+            collection = getEmptyImplementationForCollectionInterface(fieldType);
         } else {
             collection = getEmptyCollection(fieldType, randomSize);
         }
 
         if (isParameterizedType(fieldGenericType)) { // populate only parametrized types, raw types will be empty
             ParameterizedType parameterizedType = (ParameterizedType) fieldGenericType;
-            Type type = parameterizedType.getActualTypeArguments()[0];
-            List items = populator.populate((Class<?>) type, randomSize);
-            collection.addAll(items);
+            if (!isUnboundedWildcardType(parameterizedType)) {
+                Type type = parameterizedType.getActualTypeArguments()[0];
+                List items = populator.populate((Class<?>) type, randomSize);
+                collection.addAll(items);
+            }
         }
         return collection;
-
     }
 
     private Collection<?> getEmptyCollection(Class<?> fieldType, int initialSize) throws IllegalAccessException {

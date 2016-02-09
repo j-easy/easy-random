@@ -56,7 +56,7 @@ public abstract class CollectionUtils {
      * @param collectionInterface the collection interface type
      * @return empty implementation of the given collection interface type
      */
-    public static Collection<?> getEmptyImplementationForCllectionInterface(final Class<?> collectionInterface) {
+    public static Collection<?> getEmptyImplementationForCollectionInterface(final Class<?> collectionInterface) {
         Collection<?> collection = new ArrayList<>();
         if (List.class.isAssignableFrom(collectionInterface)) {
             collection = new ArrayList<>();

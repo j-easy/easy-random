@@ -33,6 +33,7 @@ import java.lang.reflect.Field;
 import java.lang.reflect.Modifier;
 import java.lang.reflect.ParameterizedType;
 import java.lang.reflect.Type;
+import java.lang.reflect.WildcardType;
 import java.util.*;
 import java.util.concurrent.ConcurrentHashMap;
 
@@ -162,6 +163,24 @@ public abstract class ReflectionUtils {
      */
     public static boolean isParameterizedType(final Type type) {
         return type != null && type instanceof ParameterizedType && ((ParameterizedType) type).getActualTypeArguments().length > 0;
+    }
+
+    /**
+     * Check if a type is an unbounded wildcard type
+     * @param parameterizedType the ParameterizedType to check
+     * @return true if the ParameterizedType is an unbounded wild card type, false otherwise
+     */
+    public static boolean isUnboundedWildcardType(final ParameterizedType parameterizedType) {
+        Type[] actualTypeArguments = parameterizedType.getActualTypeArguments();
+        Type type = actualTypeArguments[0];
+        if (actualTypeArguments.length == 1 && type instanceof WildcardType) {
+            WildcardType wildcardType = (WildcardType) type;
+            Type upperBound = wildcardType.getUpperBounds()[0];
+            if (upperBound.equals(Object.class)) {
+                return true;
+            }
+        }
+        return false;
     }
 
     /**
