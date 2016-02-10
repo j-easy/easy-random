@@ -30,16 +30,14 @@ import io.github.benas.randombeans.api.Populator;
 import io.github.benas.randombeans.api.Randomizer;
 import io.github.benas.randombeans.api.RandomizerRegistry;
 import io.github.benas.randombeans.randomizers.EnumRandomizer;
-import io.github.benas.randombeans.randomizers.SkipRandomizer;
 
 import java.lang.reflect.Field;
-import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
 
-import static io.github.benas.randombeans.util.CollectionUtils.randomElementOf;
-import static io.github.benas.randombeans.util.ReflectionUtils.*;
+import static io.github.benas.randombeans.util.ReflectionUtils.getDeclaredFields;
+import static io.github.benas.randombeans.util.ReflectionUtils.getInheritedFields;
 
 /**
  * The core implementation of the {@link Populator} interface.
@@ -49,15 +47,9 @@ import static io.github.benas.randombeans.util.ReflectionUtils.*;
 @SuppressWarnings({ "rawtypes", "unchecked" })
 final class BeanPopulator implements Populator {
 
-    private ArrayPopulator arrayPopulator;
-
-    private CollectionPopulator collectionPopulator;
-
-    private MapPopulator mapPopulator;
+    private FieldPopulator fieldPopulator;
 
     private RandomizerProvider randomizerProvider;
-    
-    private boolean scanClasspathForConcreteClasses;
 
     private ObjectFactory objectFactory;
 
@@ -66,9 +58,7 @@ final class BeanPopulator implements Populator {
     BeanPopulator(final Set<RandomizerRegistry> registries) {
         objectFactory = new ObjectFactory();
         randomizerProvider = new RandomizerProvider(registries);
-        arrayPopulator = new ArrayPopulator(this);
-        collectionPopulator = new CollectionPopulator(this, objectFactory);
-        mapPopulator = new MapPopulator(this, objectFactory);
+        fieldPopulator = new FieldPopulator(this, randomizerProvider, objectFactory);
         fieldExclusionChecker = new FieldExclusionChecker();
     }
 
@@ -83,7 +73,9 @@ final class BeanPopulator implements Populator {
 
     @Override
     public <T> List<T> populate(final Class<T> type, final int size, final String... excludedFields) {
-        checkSize(size);
+        if (size < 0) {
+            throw new IllegalArgumentException("The size must be positive");
+        }
         List<T> beans = new ArrayList<>(size);
         for (int i = 0; i < size; i++) {
             T bean = populate(type, excludedFields);
@@ -92,18 +84,12 @@ final class BeanPopulator implements Populator {
         return beans;
     }
 
-    private static void checkSize(final int size) {
-        if (size < 0) {
-            throw new IllegalArgumentException("The size must be positive");
-        }
-    }
-
-    private <T> T doPopulateBean(final Class<T> type, final PopulatorContext context) {
+    <T> T doPopulateBean(final Class<T> type, final PopulatorContext context) {
         T result;
         try {
             //No instantiation needed for enum types.
             if (type.isEnum()) {
-                return (T) getRandomEnum(type);
+                return (T) new EnumRandomizer(type).getRandomValue();
             }
 
             // If the type has been already randomized, reuse the cached instance to avoid recursion.
@@ -131,57 +117,11 @@ final class BeanPopulator implements Populator {
     }
 
     private <T> void populateFields(final List<Field> fields, final T result, final PopulatorContext context) throws IllegalAccessException {
-        for (Field field : fields) {
+        for (final Field field : fields) {
             if (!fieldExclusionChecker.shouldBeExcluded(field, context)) {
-                populateField(result, field, context);
+                fieldPopulator.populateField(result, field, context);
             }
         }
-    }
-
-    private void populateField(final Object target, final Field field, final PopulatorContext context) throws IllegalAccessException {
-        Randomizer<?> randomizer = randomizerProvider.getRandomizerByField(field);
-        if (randomizer instanceof SkipRandomizer) {
-            return;
-        }
-        context.pushStackItem(new PopulatorContextStackItem(target, field));
-        Object value;
-        if (randomizer != null) {
-            value = randomizer.getRandomValue();
-        } else {
-            value = generateRandomValue(field, context);
-        }
-        setProperty(target, field, value);
-        context.popStackItem();
-    }
-
-    private Object generateRandomValue(final Field field, final PopulatorContext context) throws IllegalAccessException {
-        Class<?> fieldType = field.getType();
-        Type fieldGenericType = field.getGenericType();
-
-        Object value;
-        if (isArrayType(fieldType)) {
-            value = arrayPopulator.getRandomArray(fieldType);
-        } else if (isCollectionType(fieldType)) {
-            value = collectionPopulator.getRandomCollection(field);
-        } else if (isMapType(fieldType)) {
-            value = mapPopulator.getRandomMap(field);
-        } else {
-            if (scanClasspathForConcreteClasses && isAbstract(fieldType)) {
-                Class<?> randomConcreteSubType = randomElementOf(filterSameParameterizedTypes(getPublicConcreteSubTypesOf(fieldType), fieldGenericType));
-                if (randomConcreteSubType == null) {
-                    throw new BeanPopulationException("Unable to find a matching concrete subtype of type: " + fieldType);
-                } else {
-                    value = populate(randomConcreteSubType);
-                }
-            } else {
-                value = doPopulateBean(fieldType, context);
-            }
-        }
-        return value;
-    }
-
-    private Enum getRandomEnum(final Class fieldType) {
-        return new EnumRandomizer(fieldType).getRandomValue();
     }
 
     /*
@@ -189,7 +129,7 @@ final class BeanPopulator implements Populator {
      */
 
     void setScanClasspathForConcreteClasses(final boolean scanClasspathForConcreteClasses) {
-        this.scanClasspathForConcreteClasses = scanClasspathForConcreteClasses;
+        fieldPopulator.setScanClasspathForConcreteClasses(scanClasspathForConcreteClasses);
         objectFactory.setScanClasspathForConcreteClasses(scanClasspathForConcreteClasses);
     }
 }
