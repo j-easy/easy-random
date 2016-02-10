@@ -25,7 +25,6 @@
 
 package io.github.benas.randombeans;
 
-import io.github.benas.randombeans.annotation.Exclude;
 import io.github.benas.randombeans.api.BeanPopulationException;
 import io.github.benas.randombeans.api.Populator;
 import io.github.benas.randombeans.api.Randomizer;
@@ -62,12 +61,15 @@ final class BeanPopulator implements Populator {
 
     private ObjectFactory objectFactory;
 
+    private FieldExclusionChecker fieldExclusionChecker;
+
     BeanPopulator(final Set<RandomizerRegistry> registries) {
         objectFactory = new ObjectFactory();
         randomizerProvider = new RandomizerProvider(registries);
         arrayPopulator = new ArrayPopulator(this);
         collectionPopulator = new CollectionPopulator(this, objectFactory);
         mapPopulator = new MapPopulator(this, objectFactory);
+        fieldExclusionChecker = new FieldExclusionChecker();
     }
 
     @Override
@@ -130,7 +132,7 @@ final class BeanPopulator implements Populator {
 
     private <T> void populateFields(final List<Field> fields, final T result, final PopulatorContext context) throws IllegalAccessException {
         for (Field field : fields) {
-            if (!shouldBeExcluded(field, context)) {
+            if (!fieldExclusionChecker.shouldBeExcluded(field, context)) {
                 populateField(result, field, context);
             }
         }
@@ -180,25 +182,6 @@ final class BeanPopulator implements Populator {
 
     private Enum getRandomEnum(final Class fieldType) {
         return new EnumRandomizer(fieldType).getRandomValue();
-    }
-
-    private boolean shouldBeExcluded(final Field field, final PopulatorContext context) {
-        if (field.isAnnotationPresent(Exclude.class)) {
-            return true;
-        }
-        if (isStatic(field)) {
-            return true;
-        }
-        if (context.getExcludedFields().length == 0) {
-            return false;
-        }
-        String fieldFullName = context.getFieldFullName(field);
-        for (String excludedFieldName : context.getExcludedFields()) {
-            if (fieldFullName.equalsIgnoreCase(excludedFieldName)) {
-                return true;
-            }
-        }
-        return false;
     }
 
     /*
