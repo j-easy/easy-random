@@ -1,18 +1,13 @@
 package io.github.benas.randombeans;
 
 import io.github.benas.randombeans.api.Populator;
-import org.objenesis.Objenesis;
 
 import java.lang.reflect.Field;
 import java.lang.reflect.ParameterizedType;
 import java.lang.reflect.Type;
 import java.util.Collection;
 import java.util.List;
-import java.util.concurrent.ArrayBlockingQueue;
-import java.util.concurrent.DelayQueue;
-import java.util.concurrent.SynchronousQueue;
 
-import static io.github.benas.randombeans.util.CollectionUtils.getEmptyImplementationForCllectionInterface;
 import static io.github.benas.randombeans.util.Constants.MAX_COLLECTION_SIZE;
 import static io.github.benas.randombeans.util.ReflectionUtils.*;
 import static org.apache.commons.lang3.RandomUtils.nextInt;
@@ -26,11 +21,11 @@ class CollectionPopulator {
 
     private Populator populator;
 
-    private Objenesis objenesis;
+    private ObjectFactory objectFactory;
 
-    CollectionPopulator(final Populator populator, final Objenesis objenesis) {
+    CollectionPopulator(final Populator populator, final ObjectFactory objectFactory) {
         this.populator = populator;
-        this.objenesis = objenesis;
+        this.objectFactory = objectFactory;
     }
 
     @SuppressWarnings({"unchecked", "rawtypes"})
@@ -41,9 +36,9 @@ class CollectionPopulator {
         Collection<?> collection;
 
         if (isInterface(fieldType)) {
-            collection = getEmptyImplementationForCllectionInterface(fieldType);
+            collection = objectFactory.createEmptyImplementationForCollectionInterface(fieldType);
         } else {
-            collection = getEmptyCollection(fieldType, randomSize);
+            collection = objectFactory.createEmptyCollectionForType(fieldType, randomSize);
         }
 
         if (isParameterizedType(fieldGenericType)) { // populate only parametrized types, raw types will be empty
@@ -56,33 +51,5 @@ class CollectionPopulator {
         }
         return collection;
 
-    }
-
-    private Collection<?> getEmptyCollection(Class<?> fieldType, int initialSize) throws IllegalAccessException {
-        rejectUnsupportedTypes(fieldType);
-        Collection<?> collection;
-        try {
-            collection = (Collection<?>) fieldType.newInstance();
-        } catch (InstantiationException e) {
-            // Creating an ArrayBlockingQueue with objenesis by-passes the constructor.
-            // This leads to inconsistent state of the collection (locks are not initialized) that causes NPE at elements insertion time..
-            if (fieldType.equals(ArrayBlockingQueue.class)) {
-                collection = new ArrayBlockingQueue<>(initialSize);
-            } else {
-                collection = (Collection<?>) objenesis.newInstance(fieldType);
-            }
-        }
-        return collection;
-    }
-
-    private void rejectUnsupportedTypes(Class<?> type) {
-        if (type.equals(SynchronousQueue.class)) {
-            // SynchronousQueue is not supported since it requires a consuming thread at insertion time
-            throw new UnsupportedOperationException(SynchronousQueue.class.getName() + " type is not supported");
-        }
-        if (type.equals(DelayQueue.class)) {
-            // DelayQueue is not supported since it requires creating dummy delayed objects
-            throw new UnsupportedOperationException(DelayQueue.class.getName() + " type is not supported");
-        }
     }
 }

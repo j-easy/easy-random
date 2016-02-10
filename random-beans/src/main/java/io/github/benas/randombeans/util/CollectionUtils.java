@@ -25,7 +25,6 @@
 package io.github.benas.randombeans.util;
 
 import java.util.*;
-import java.util.concurrent.*;
 
 import static org.apache.commons.lang3.RandomUtils.nextInt;
 
@@ -48,55 +47,5 @@ public abstract class CollectionUtils {
             return null;
         }
         return list.get(nextInt(0, list.size()));
-    }
-
-    /**
-     * Get an empty implementation for the given collection interface type.
-     *
-     * @param collectionInterface the collection interface type
-     * @return empty implementation of the given collection interface type
-     */
-    public static Collection<?> getEmptyImplementationForCllectionInterface(final Class<?> collectionInterface) {
-        Collection<?> collection = new ArrayList<>();
-        if (List.class.isAssignableFrom(collectionInterface)) {
-            collection = new ArrayList<>();
-        } else if (NavigableSet.class.isAssignableFrom(collectionInterface)) {
-            collection = new TreeSet<>();
-        } else if (SortedSet.class.isAssignableFrom(collectionInterface)) {
-            collection = new TreeSet<>();
-        } else if (Set.class.isAssignableFrom(collectionInterface)) {
-            collection = new HashSet<>();
-        } else if (BlockingDeque.class.isAssignableFrom(collectionInterface)) {
-            collection = new LinkedBlockingDeque<>();
-        } else if (Deque.class.isAssignableFrom(collectionInterface)) {
-            collection = new ArrayDeque<>();
-        } else if (TransferQueue.class.isAssignableFrom(collectionInterface)) {
-            collection = new LinkedTransferQueue<>();
-        } else if (BlockingQueue.class.isAssignableFrom(collectionInterface)) {
-            collection = new LinkedBlockingQueue<>();
-        } else if (Queue.class.isAssignableFrom(collectionInterface)) {
-            collection = new LinkedList<>();
-        }
-        return collection;
-    }
-
-    /**
-     * Get an empty implementation for the given map interface type.
-     *
-     * @param mapInterface the map interface type
-     * @return empty implementation of the given map interface type
-     */
-    public static Map<?, ?> getEmptyImplementationForMapInterface(final Class<?> mapInterface) {
-        Map<?, ?> map = new HashMap<>();
-        if (ConcurrentNavigableMap.class.isAssignableFrom(mapInterface)) {
-            map = new ConcurrentSkipListMap<>();
-        } else if (ConcurrentMap.class.isAssignableFrom(mapInterface)) {
-            map = new ConcurrentHashMap<>();
-        } else if (NavigableMap.class.isAssignableFrom(mapInterface)) {
-            map = new TreeMap<>();
-        } else if (SortedMap.class.isAssignableFrom(mapInterface)) {
-            map = new TreeMap<>();
-        }
-        return map;
     }
 }

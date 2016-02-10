@@ -1,14 +1,12 @@
 package io.github.benas.randombeans;
 
 import io.github.benas.randombeans.api.Populator;
-import org.objenesis.Objenesis;
 
 import java.lang.reflect.Field;
 import java.lang.reflect.ParameterizedType;
 import java.lang.reflect.Type;
 import java.util.Map;
 
-import static io.github.benas.randombeans.util.CollectionUtils.getEmptyImplementationForMapInterface;
 import static io.github.benas.randombeans.util.Constants.MAX_COLLECTION_SIZE;
 import static io.github.benas.randombeans.util.ReflectionUtils.*;
 import static org.apache.commons.lang3.RandomUtils.nextInt;
@@ -22,11 +20,11 @@ class MapPopulator {
 
     private Populator populator;
 
-    private Objenesis objenesis;
+    private ObjectFactory objectFactory;
 
-    MapPopulator(final Populator populator, final Objenesis objenesis) {
+    MapPopulator(final Populator populator, final ObjectFactory objectFactory) {
         this.populator = populator;
-        this.objenesis = objenesis;
+        this.objectFactory = objectFactory;
     }
 
     @SuppressWarnings("unchecked")
@@ -37,12 +35,12 @@ class MapPopulator {
         Map<Object, Object> map;
 
         if (isInterface(fieldType)) {
-            map = (Map<Object, Object>) getEmptyImplementationForMapInterface(fieldType);
+            map = (Map<Object, Object>) objectFactory.createEmptyImplementationForMapInterface(fieldType);
         } else {
             try {
                 map = (Map<Object, Object>) fieldType.newInstance();
             } catch (InstantiationException e) {
-                map = (Map<Object, Object>) objenesis.newInstance(fieldType);
+                map = (Map<Object, Object>) objectFactory.createInstance(fieldType);
             }
         }
 

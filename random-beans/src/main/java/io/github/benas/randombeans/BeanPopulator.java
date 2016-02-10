@@ -32,8 +32,6 @@ import io.github.benas.randombeans.api.Randomizer;
 import io.github.benas.randombeans.api.RandomizerRegistry;
 import io.github.benas.randombeans.randomizers.EnumRandomizer;
 import io.github.benas.randombeans.randomizers.SkipRandomizer;
-import org.objenesis.Objenesis;
-import org.objenesis.ObjenesisStd;
 
 import java.lang.reflect.Field;
 import java.lang.reflect.Type;
@@ -52,8 +50,6 @@ import static io.github.benas.randombeans.util.ReflectionUtils.*;
 @SuppressWarnings({ "rawtypes", "unchecked" })
 final class BeanPopulator implements Populator {
 
-    private Objenesis objenesis;
-
     private ArrayPopulator arrayPopulator;
 
     private CollectionPopulator collectionPopulator;
@@ -64,12 +60,14 @@ final class BeanPopulator implements Populator {
     
     private boolean scanClasspathForConcreteClasses;
 
+    private ObjectFactory objectFactory;
+
     BeanPopulator(final Set<RandomizerRegistry> registries) {
-        objenesis = new ObjenesisStd();
+        objectFactory = new ObjectFactory();
         randomizerProvider = new RandomizerProvider(registries);
         arrayPopulator = new ArrayPopulator(this);
-        collectionPopulator = new CollectionPopulator(this, objenesis);
-        mapPopulator = new MapPopulator(this, objenesis);
+        collectionPopulator = new CollectionPopulator(this, objectFactory);
+        mapPopulator = new MapPopulator(this, objectFactory);
     }
 
     @Override
@@ -112,7 +110,7 @@ final class BeanPopulator implements Populator {
             }
 
             // create a new instance of the target type
-            result = createInstance(type);
+            result = objectFactory.createInstance(type);
 
             // cache instance in the population context
             context.addPopulatedBean(type, result);
@@ -128,21 +126,6 @@ final class BeanPopulator implements Populator {
         } catch (InstantiationError | Exception e) {
             throw new BeanPopulationException("Unable to generate a random instance of type " + type, e);
         }
-    }
-
-    private <T> T createInstance(final Class<T> type) {
-        T result;
-        if (scanClasspathForConcreteClasses && isAbstract(type)) {
-            Class<?> randomConcreteSubType = randomElementOf(getPublicConcreteSubTypesOf((type)));
-            if (randomConcreteSubType == null) {
-                throw new InstantiationError("Unable to find a matching concrete subtype of type: " + type + " in the classpath");
-            } else {
-                result = (T) objenesis.newInstance(randomConcreteSubType);
-            }
-        } else {
-            result = objenesis.newInstance(type);
-        }
-        return result;
     }
 
     private <T> void populateFields(final List<Field> fields, final T result, final PopulatorContext context) throws IllegalAccessException {
@@ -222,7 +205,8 @@ final class BeanPopulator implements Populator {
      * Setters for optional parameters
      */
 
-    void setScanClasspathForConcreteClasses(boolean scanClasspathForConcreteClasses) {
+    void setScanClasspathForConcreteClasses(final boolean scanClasspathForConcreteClasses) {
         this.scanClasspathForConcreteClasses = scanClasspathForConcreteClasses;
+        objectFactory.setScanClasspathForConcreteClasses(scanClasspathForConcreteClasses);
     }
 }
