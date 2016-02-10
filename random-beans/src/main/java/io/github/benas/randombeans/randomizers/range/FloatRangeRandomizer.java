@@ -38,17 +38,17 @@ public class FloatRangeRandomizer implements Randomizer<Float> {
 
     /**
      * Create a new {@link FloatRangeRandomizer}.
-     * @return a new {@link FloatRangeRandomizer}.
      */
-    public static FloatRangeRandomizer aNewFloatRangeRandomizer(final Float min, final Float max) {
-        return new FloatRangeRandomizer(min, max);
+    public FloatRangeRandomizer(final Float min, final Float max) {
+        delegate = new LongRangeRandomizer(min.longValue(), max.longValue());
     }
 
     /**
      * Create a new {@link FloatRangeRandomizer}.
+     * @return a new {@link FloatRangeRandomizer}.
      */
-    public FloatRangeRandomizer(final Float min, final Float max) {
-        delegate = new LongRangeRandomizer(min.longValue(), max.longValue());
+    public static FloatRangeRandomizer aNewFloatRangeRandomizer(final Float min, final Float max) {
+        return new FloatRangeRandomizer(min, max);
     }
 
     @Override
