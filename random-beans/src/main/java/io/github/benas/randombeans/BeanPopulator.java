@@ -36,10 +36,12 @@ import org.objenesis.Objenesis;
 import org.objenesis.ObjenesisStd;
 
 import java.lang.reflect.Field;
+import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
 
+import static io.github.benas.randombeans.util.CollectionUtils.randomElementOf;
 import static io.github.benas.randombeans.util.ReflectionUtils.*;
 
 /**
@@ -131,7 +133,7 @@ final class BeanPopulator implements Populator {
     private <T> T createInstance(final Class<T> type) {
         T result;
         if (scanClasspathForConcreteClasses && isAbstract(type)) {
-            Class<?> randomConcreteSubType = randomConcreteSubTypeOf(type);
+            Class<?> randomConcreteSubType = randomElementOf(getPublicConcreteSubTypesOf((type)));
             if (randomConcreteSubType == null) {
                 throw new InstantiationError("Unable to find a matching concrete subtype of type: " + type + " in the classpath");
             } else {
@@ -169,6 +171,8 @@ final class BeanPopulator implements Populator {
 
     private Object generateRandomValue(final Field field, final PopulatorContext context) throws IllegalAccessException {
         Class<?> fieldType = field.getType();
+        Type fieldGenericType = field.getGenericType();
+
         Object value;
         if (isArrayType(fieldType)) {
             value = arrayPopulator.getRandomArray(fieldType);
@@ -178,8 +182,7 @@ final class BeanPopulator implements Populator {
             value = mapPopulator.getRandomMap(field);
         } else {
             if (scanClasspathForConcreteClasses && isAbstract(fieldType)) {
-                // create a new instance of a random concrete subtype
-                Class<?> randomConcreteSubType = randomConcreteSubTypeOf(field);
+                Class<?> randomConcreteSubType = randomElementOf(filterSameParameterizedTypes(getPublicConcreteSubTypesOf(fieldType), fieldGenericType));
                 if (randomConcreteSubType == null) {
                     throw new BeanPopulationException("Unable to find a matching concrete subtype of type: " + fieldType);
                 } else {

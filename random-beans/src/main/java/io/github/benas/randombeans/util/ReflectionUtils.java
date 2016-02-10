@@ -26,15 +26,14 @@
 package io.github.benas.randombeans.util;
 
 import org.reflections.Reflections;
-import org.reflections.util.ClasspathHelper;
 import org.reflections.util.ConfigurationBuilder;
 
 import java.lang.reflect.*;
 import java.util.*;
 import java.util.concurrent.ConcurrentHashMap;
 
-import static io.github.benas.randombeans.util.CollectionUtils.randomElementOf;
 import static java.util.Arrays.asList;
+import static org.reflections.util.ClasspathHelper.forJavaClassPath;
 
 /**
  * Reflection utility methods.
@@ -43,10 +42,18 @@ import static java.util.Arrays.asList;
  */
 public abstract class ReflectionUtils {
 
-    private static final ConcurrentHashMap<Class<?>, List<Class<?>>> typeToConcreteSubTypes = new ConcurrentHashMap<>();
+    private static final ConcurrentHashMap<Class<?>, List<Class<?>>> typeToConcreteSubTypes;
+
+    private static final Reflections reflections;
+
+    static {
+        typeToConcreteSubTypes = new ConcurrentHashMap<>();
+        reflections = new Reflections(new ConfigurationBuilder().setUrls(forJavaClassPath()));
+    }
 
     /**
      * Get declared fields of a given type.
+     *
      * @param type the type to introspect
      * @return list of declared fields
      */
@@ -56,6 +63,7 @@ public abstract class ReflectionUtils {
 
     /**
      * Get inherited fields of a given type.
+     *
      * @param type the type to introspect
      * @return list of inherited fields
      */
@@ -86,16 +94,17 @@ public abstract class ReflectionUtils {
 
     /**
      * Check if a field is static.
+     *
      * @param field the field to check
      * @return true if the field is static, false otherwise
      */
     public static boolean isStatic(final Field field) {
-        int fieldModifiers = field.getModifiers();
-        return Modifier.isStatic(fieldModifiers);
+        return Modifier.isStatic(field.getModifiers());
     }
 
     /**
      * Check if a type is an interface.
+     *
      * @param type the type to check
      * @return true if the type is an interface, false otherwise
      */
@@ -105,7 +114,7 @@ public abstract class ReflectionUtils {
 
     /**
      * Check if the type is abstract (either an interface or an abstract class).
-     * 
+     *
      * @param type the type to check
      * @return true if the type is abstract, false otherwise
      */
@@ -115,7 +124,7 @@ public abstract class ReflectionUtils {
 
     /**
      * Check if the type is public.
-     * 
+     *
      * @param type the type to check
      * @return true if the type is public, false otherwise
      */
@@ -125,6 +134,7 @@ public abstract class ReflectionUtils {
 
     /**
      * Check if a type is an array type.
+     *
      * @param type the type to check.
      * @return true if the type is an array type, false otherwise.
      */
@@ -134,6 +144,7 @@ public abstract class ReflectionUtils {
 
     /**
      * Check if a type is a collection type.
+     *
      * @param type the type to check.
      * @return true if the type is a collection type, false otherwise
      */
@@ -144,8 +155,7 @@ public abstract class ReflectionUtils {
     /**
      * Check if a type is a map type.
      *
-     * @param type
-     *            the type to check
+     * @param type the type to check
      * @return true if the type is a map type, false otherwise.
      */
     public static boolean isMapType(final Class<?> type) {
@@ -154,6 +164,7 @@ public abstract class ReflectionUtils {
 
     /**
      * Check if a type is a parameterized type
+     *
      * @param type the type to check
      * @return true if the type is parameterized, false otherwise
      */
@@ -163,6 +174,7 @@ public abstract class ReflectionUtils {
 
     /**
      * Check if a type is a wildcard type
+     *
      * @param type the type to check
      * @return true if the type is a wildcard type, false otherwise
      */
@@ -172,7 +184,7 @@ public abstract class ReflectionUtils {
 
     /**
      * Searches the classpath for all public concrete subtypes of the given interface or abstract class.
-     * 
+     *
      * @param type to search concrete subtypes of
      * @return a list of all concrete subtypes found
      */
@@ -185,8 +197,31 @@ public abstract class ReflectionUtils {
         return concreteSubTypes;
     }
 
+    /**
+     * Filters a list of types to keep only elements having the same parameterized types as the given type.
+     *
+     * @param type  the type to use for the search
+     * @param types a list of types to filter
+     * @return a list of types having the same parameterized types as the given type
+     */
+    public static List<Class<?>> filterSameParameterizedTypes(final List<Class<?>> types, final Type type) {
+        if (type instanceof ParameterizedType) {
+            Type[] fieldArugmentTypes = ((ParameterizedType) type).getActualTypeArguments();
+            List<Class<?>> typesWithSameParameterizedTypes = new ArrayList<>();
+            for (Class<?> currentConcreteType : types) {
+                List<Type[]> actualTypeArguments = getActualTypeArgumentsOfGenericInterfaces(currentConcreteType);
+                for (Type[] currentTypeArguments : actualTypeArguments) {
+                    if (Arrays.equals(fieldArugmentTypes, currentTypeArguments)) {
+                        typesWithSameParameterizedTypes.add(currentConcreteType);
+                    }
+                }
+            }
+            return typesWithSameParameterizedTypes;
+        }
+        return types;
+    }
+
     private static <T> List<Class<?>> searchForPublicConcreteSubTypesOf(final Class<T> type) {
-        Reflections reflections = new Reflections(new ConfigurationBuilder().setUrls(ClasspathHelper.forJavaClassPath()));
         Set<Class<? extends T>> subTypes = reflections.getSubTypesOf(type);
         List<Class<?>> concreteSubTypes = new ArrayList<>();
         for (Class<? extends T> currentSubType : subTypes) {
@@ -195,31 +230,6 @@ public abstract class ReflectionUtils {
             }
         }
         return concreteSubTypes;
-    }
-    
-    /**
-     * Returns a list of all subtypes of the type of the field which have the same parameterized types.
-     * 
-     * @param field the field to use for the search
-     * @param subTypes a list of subtypes of the type of the filed
-     * @return a list of with the same parameterized types
-     */
-    public static List<Class<?>> findSubTypesWithSameParameterizedTypes(final Field field, final List<Class<?>> subTypes) {
-        Type fieldGenericType = field.getGenericType();
-        if (fieldGenericType instanceof ParameterizedType) {
-            Type[] fieldArugmentTypes = ((ParameterizedType) fieldGenericType).getActualTypeArguments();
-            List<Class<?>> subTypesWithSameParameterizedTypes = new ArrayList<>();
-            for (Class<?> currentConcreteSubType : subTypes) {
-                List<Type[]> actualTypeArguments = getActualTypeArgumentsOfGenericInterfaces(currentConcreteSubType);
-                for (Type[] currentTypeArguments : actualTypeArguments) {
-                    if (Arrays.equals(fieldArugmentTypes, currentTypeArguments)) {
-                        subTypesWithSameParameterizedTypes.add(currentConcreteSubType);
-                    }
-                }
-            }
-            return subTypesWithSameParameterizedTypes;
-        }
-        return subTypes;
     }
 
     private static List<Type[]> getActualTypeArgumentsOfGenericInterfaces(final Class<?> type) {
@@ -231,18 +241,6 @@ public abstract class ReflectionUtils {
             }
         }
         return actualTypeArguments;
-    }
-
-    public static Class<?> randomConcreteSubTypeOf(final Field field) {
-        Class<?> fieldType = field.getType();
-        List<Class<?>> concreteSubTypes = getPublicConcreteSubTypesOf(fieldType);
-        concreteSubTypes = findSubTypesWithSameParameterizedTypes(field, concreteSubTypes);
-        return randomElementOf(concreteSubTypes);
-    }
-
-    public static Class<?> randomConcreteSubTypeOf(final Class<?> type) {
-        List<Class<?>> concreteSubTypes = getPublicConcreteSubTypesOf(type);
-        return randomElementOf(concreteSubTypes);
     }
 
 }
