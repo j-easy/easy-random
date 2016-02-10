@@ -34,6 +34,7 @@ import org.junit.runner.RunWith;
 import org.mockito.Mock;
 import org.mockito.runners.MockitoJUnitRunner;
 
+import java.util.Date;
 import java.util.List;
 
 import static io.github.benas.randombeans.FieldDefinitionBuilder.field;
@@ -162,7 +163,7 @@ public class BeanPopulatorTest {
 
         ComparableBean comparableBean = populator.populate(ComparableBean.class);
 
-        assertThat(comparableBean.getDateComparable()).isInstanceOf(ComparableBean.AlwaysEqual.class);
+        assertThat(comparableBean.getDateComparable()).isOfAnyClassIn(ComparableBean.AlwaysEqual.class, Date.class);
     }
 
     @Test
