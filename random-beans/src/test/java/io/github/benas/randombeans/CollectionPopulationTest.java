@@ -63,6 +63,42 @@ public class CollectionPopulationTest {
     }
 
     @Test
+    public void unboundedWildCardTypedCollectionInterfacesShouldBeEmpty() {
+        final WildCardCollectionBean collectionsBean = populator.populate(WildCardCollectionBean.class);
+
+        assertThat(collectionsBean).isNotNull();
+
+        assertThat(collectionsBean.getUnboundedWildCardTypedCollection()).isEmpty();
+        assertThat(collectionsBean.getUnboundedWildCardTypedSet()).isEmpty();
+        assertThat(collectionsBean.getUnboundedWildCardTypedSortedSet()).isEmpty();
+        assertThat(collectionsBean.getUnboundedWildCardTypedNavigableSet()).isEmpty();
+        assertThat(collectionsBean.getUnboundedWildCardTypedList()).isEmpty();
+        assertThat(collectionsBean.getUnboundedWildCardTypedQueue()).isEmpty();
+        assertThat(collectionsBean.getUnboundedWildCardTypedBlockingQueue()).isEmpty();
+        assertThat(collectionsBean.getUnboundedWildCardTypedTransferQueue()).isEmpty();
+        assertThat(collectionsBean.getUnboundedWildCardTypedDeque()).isEmpty();
+        assertThat(collectionsBean.getUnboundedWildCardTypedBlockingDeque()).isEmpty();
+    }
+
+    @Test
+    public void boundedWildCardTypedCollectionInterfacesShouldBeEmpty() {
+        final WildCardCollectionBean collectionsBean = populator.populate(WildCardCollectionBean.class);
+
+        assertThat(collectionsBean).isNotNull();
+
+        assertThat(collectionsBean.getBoundedWildCardTypedCollection()).isEmpty();
+        assertThat(collectionsBean.getBoundedWildCardTypedSet()).isEmpty();
+        assertThat(collectionsBean.getBoundedWildCardTypedSortedSet()).isEmpty();
+        assertThat(collectionsBean.getBoundedWildCardTypedNavigableSet()).isEmpty();
+        assertThat(collectionsBean.getBoundedWildCardTypedList()).isEmpty();
+        assertThat(collectionsBean.getBoundedWildCardTypedQueue()).isEmpty();
+        assertThat(collectionsBean.getBoundedWildCardTypedBlockingQueue()).isEmpty();
+        assertThat(collectionsBean.getBoundedWildCardTypedTransferQueue()).isEmpty();
+        assertThat(collectionsBean.getBoundedWildCardTypedDeque()).isEmpty();
+        assertThat(collectionsBean.getBoundedWildCardTypedBlockingDeque()).isEmpty();
+    }
+
+    @Test
     public void typedCollectionInterfacesShouldNotBeEmpty() {
         final CollectionBean collectionsBean = populator.populate(CollectionBean.class);
 
@@ -107,6 +143,56 @@ public class CollectionPopulationTest {
     }
 
     @Test
+    public void unboundedWildCardTypedCollectionClassesShouldBeEmpty() {
+        final WildCardCollectionBean collectionsBean = populator.populate(WildCardCollectionBean.class);
+
+        assertThat(collectionsBean).isNotNull();
+
+        assertThat(collectionsBean.getUnboundedWildCardTypedArrayList()).isEmpty();
+        assertThat(collectionsBean.getUnboundedWildCardTypedLinkedList()).isEmpty();
+        assertThat(collectionsBean.getUnboundedWildCardTypedVector()).isEmpty();
+        assertThat(collectionsBean.getUnboundedWildCardTypedStack()).isEmpty();
+        assertThat(collectionsBean.getUnboundedWildCardTypedHashSet()).isEmpty();
+        assertThat(collectionsBean.getUnboundedWildCardTypedLinkedHashSet()).isEmpty();
+        assertThat(collectionsBean.getUnboundedWildCardTypedTreeSet()).isEmpty();
+        assertThat(collectionsBean.getUnboundedWildCardTypedConcurrentSkipListSet()).isEmpty();
+        assertThat(collectionsBean.getUnboundedWildCardTypedArrayBlockingQueue()).isEmpty();
+        assertThat(collectionsBean.getUnboundedWildCardTypedLinkedBlockingQueue()).isEmpty();
+        assertThat(collectionsBean.getUnboundedWildCardTypedConcurrentLinkedQueue()).isEmpty();
+        assertThat(collectionsBean.getUnboundedWildCardTypedLinkedTransferQueue()).isEmpty();
+        assertThat(collectionsBean.getUnboundedWildCardTypedPriorityQueue()).isEmpty();
+        assertThat(collectionsBean.getUnboundedWildCardTypedPriorityBlockingQueue()).isEmpty();
+        assertThat(collectionsBean.getUnboundedWildCardTypedArrayDeque()).isEmpty();
+        assertThat(collectionsBean.getUnboundedWildCardTypedLinkedBlockingDeque()).isEmpty();
+        assertThat(collectionsBean.getUnboundedWildCardTypedConcurrentLinkedDeque()).isEmpty();
+    }
+
+    @Test
+    public void boundedWildCardTypedCollectionClassesShouldBeEmpty() {
+        final WildCardCollectionBean collectionsBean = populator.populate(WildCardCollectionBean.class);
+
+        assertThat(collectionsBean).isNotNull();
+
+        assertThat(collectionsBean.getBoundedWildCardTypedArrayList()).isEmpty();
+        assertThat(collectionsBean.getBoundedWildCardTypedLinkedList()).isEmpty();
+        assertThat(collectionsBean.getBoundedWildCardTypedVector()).isEmpty();
+        assertThat(collectionsBean.getBoundedWildCardTypedStack()).isEmpty();
+        assertThat(collectionsBean.getBoundedWildCardTypedHashSet()).isEmpty();
+        assertThat(collectionsBean.getBoundedWildCardTypedLinkedHashSet()).isEmpty();
+        assertThat(collectionsBean.getBoundedWildCardTypedTreeSet()).isEmpty();
+        assertThat(collectionsBean.getBoundedWildCardTypedConcurrentSkipListSet()).isEmpty();
+        assertThat(collectionsBean.getBoundedWildCardTypedArrayBlockingQueue()).isEmpty();
+        assertThat(collectionsBean.getBoundedWildCardTypedLinkedBlockingQueue()).isEmpty();
+        assertThat(collectionsBean.getBoundedWildCardTypedConcurrentLinkedQueue()).isEmpty();
+        assertThat(collectionsBean.getBoundedWildCardTypedLinkedTransferQueue()).isEmpty();
+        assertThat(collectionsBean.getBoundedWildCardTypedPriorityQueue()).isEmpty();
+        assertThat(collectionsBean.getBoundedWildCardTypedPriorityBlockingQueue()).isEmpty();
+        assertThat(collectionsBean.getBoundedWildCardTypedArrayDeque()).isEmpty();
+        assertThat(collectionsBean.getBoundedWildCardTypedLinkedBlockingDeque()).isEmpty();
+        assertThat(collectionsBean.getBoundedWildCardTypedConcurrentLinkedDeque()).isEmpty();
+    }
+
+    @Test
     public void typedCollectionClassesShouldNoBeEmpty() {
         final CollectionBean collectionsBean = populator.populate(CollectionBean.class);
 
@@ -141,14 +227,6 @@ public class CollectionPopulationTest {
         populator.populate(DelayedQueueBean.class);
     }
 
-    @Test
-    public void rawCollectionTypesMustBeEmpty() {
-        RawCollectionBean rawCollectionBean = populator.populate(RawCollectionBean.class);
-
-        assertThat(rawCollectionBean).isNotNull();
-        assertThat(rawCollectionBean.getObjects()).isEmpty();
-    }
-    
     private void assertContainsOnlyNonEmptyPersons(Collection<Person> persons) {
         for (Person Person : persons) {
             assertThat(Person).isNotNull();
