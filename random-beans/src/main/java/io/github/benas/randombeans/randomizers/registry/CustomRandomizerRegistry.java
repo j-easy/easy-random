@@ -44,9 +44,8 @@ public class CustomRandomizerRegistry implements RandomizerRegistry {
     private Map<FieldDefinition<?, ?>, Randomizer<?>> customRandomizersRegistry = new HashMap<>();
 
     @Override
-    @SuppressWarnings({ "unchecked", "rawtypes" })
     public Randomizer<?> getRandomizer(Field field) {
-        return customRandomizersRegistry.get(new FieldDefinition(field.getName(), field.getType(), field.getDeclaringClass()));
+        return customRandomizersRegistry.get(new FieldDefinition<>(field.getName(), field.getType(), field.getDeclaringClass()));
     }
 
     @Override

@@ -42,9 +42,8 @@ public class EnumRandomizer<T extends Enum<T>> implements Randomizer<Enum<T>> {
      *
      * @param enumeration the enumeration from which this randomizer will generate random values
      */
-    @SuppressWarnings("unchecked")
-    public <R extends Enum<R>> EnumRandomizer(Class<R> enumeration) {
-        this.enumeration = (Class<T>) enumeration;
+    public EnumRandomizer(Class<T> enumeration) {
+        this.enumeration = enumeration;
     }
 
     /**
