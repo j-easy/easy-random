@@ -29,7 +29,7 @@ import io.github.benas.randombeans.api.Randomizer;
 import java.net.URI;
 import java.net.URISyntaxException;
 
-import static io.github.benas.randombeans.randomizers.range.IntegerRangeRandomizer.aNewIntegerRangeRandomizer;
+import static org.apache.commons.lang3.RandomUtils.nextInt;
 
 /**
  * Generate a random {@link URI}.
@@ -56,7 +56,7 @@ public class UriRandomizer implements Randomizer<URI> {
     @Override
     public URI getRandomValue() {
         try {
-            int randomIndex = aNewIntegerRangeRandomizer(0, uris.length - 1).getRandomValue();
+            int randomIndex = nextInt(0, uris.length);
             return new URI(uris[randomIndex]);
         } catch (URISyntaxException e) {
             // predefined URIs are valid

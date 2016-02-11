@@ -26,7 +26,7 @@ package io.github.benas.randombeans.randomizers;
 
 import io.github.benas.randombeans.api.Randomizer;
 
-import static io.github.benas.randombeans.randomizers.range.IntegerRangeRandomizer.aNewIntegerRangeRandomizer;
+import static org.apache.commons.lang3.RandomUtils.nextInt;
 
 /**
  * A {@link Randomizer} that generates a random value from a given enumeration values set.
@@ -59,7 +59,7 @@ public class EnumRandomizer<T extends Enum<T>> implements Randomizer<Enum<T>> {
     @Override
     public Enum<T> getRandomValue() {
         Enum<T>[] enumConstants = enumeration.getEnumConstants();
-        int randomIndex = aNewIntegerRangeRandomizer(0, enumConstants.length - 1).getRandomValue();
+        int randomIndex = nextInt(0, enumConstants.length);
         return enumConstants[randomIndex];
     }
 }

@@ -29,7 +29,7 @@ import io.github.benas.randombeans.api.Randomizer;
 import java.net.MalformedURLException;
 import java.net.URL;
 
-import static io.github.benas.randombeans.randomizers.range.IntegerRangeRandomizer.aNewIntegerRangeRandomizer;
+import static org.apache.commons.lang3.RandomUtils.nextInt;
 
 /**
  * Generate a random {@link URL}.
@@ -57,7 +57,7 @@ public class UrlRandomizer implements Randomizer<URL> {
     @Override
     public URL getRandomValue() {
         try {
-            int randomIndex = aNewIntegerRangeRandomizer(0, urls.length - 1).getRandomValue();
+            int randomIndex = nextInt(0, urls.length);
             return new URL(urls[randomIndex]);
         } catch (MalformedURLException e) {
             // predefined URLs are valid

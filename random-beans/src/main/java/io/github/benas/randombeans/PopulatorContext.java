@@ -27,8 +27,8 @@ package io.github.benas.randombeans;
 import java.lang.reflect.Field;
 import java.util.*;
 
-import static io.github.benas.randombeans.randomizers.range.IntegerRangeRandomizer.aNewIntegerRangeRandomizer;
 import static java.util.Collections.singletonList;
+import static org.apache.commons.lang3.RandomUtils.nextInt;
 
 /**
  * Context object for a single call on {@link io.github.benas.randombeans.api.Populator#populate(Class, String...)}.
@@ -65,7 +65,7 @@ class PopulatorContext {
 
     public Object getPopulatedBean(final Class<?> type) {
         int actualPoolSize = populatedBeans.get(type).size();
-        int randomIndex = actualPoolSize > 1 ? aNewIntegerRangeRandomizer(0, actualPoolSize - 1).getRandomValue() : 0;
+        int randomIndex = actualPoolSize > 1 ? nextInt(0, actualPoolSize) : 0;
         return populatedBeans.get(type).get(randomIndex);
     }
 

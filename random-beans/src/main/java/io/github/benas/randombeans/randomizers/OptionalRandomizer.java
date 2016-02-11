@@ -26,7 +26,7 @@ package io.github.benas.randombeans.randomizers;
 
 import io.github.benas.randombeans.api.Randomizer;
 
-import static io.github.benas.randombeans.randomizers.range.IntegerRangeRandomizer.aNewIntegerRangeRandomizer;
+import static org.apache.commons.lang3.RandomUtils.nextInt;
 
 /**
  * A {@link Randomizer} which, according to the optional percent, returns the random value from a delegate.
@@ -71,7 +71,7 @@ public class OptionalRandomizer<T> implements Randomizer<T> {
 
     @Override
     public T getRandomValue() {
-        Integer randomPercent = aNewIntegerRangeRandomizer(0, MAX_PERCENT - 1).getRandomValue();
+        Integer randomPercent = nextInt(0, MAX_PERCENT);
         if (randomPercent <= optionalPercent) {
             return delegate.getRandomValue();
         }
