@@ -64,7 +64,8 @@ public class PopulatorBuilderTest {
     public void customRandomizerShouldBeRegisteredInAllBuiltInstances() {
         PopulatorBuilder builder = aNewPopulatorBuilder();
 
-        builder.randomize(field().named("name").ofType(String.class).inClass(Human.class).get(), randomizer);
+        FieldDefinition<?, ?> fieldDefinition = field().named("name").ofType(String.class).inClass(Human.class).get();
+        builder.randomize(fieldDefinition, randomizer);
 
         Populator populator = builder.build();
         Human human = populator.populate(Human.class);

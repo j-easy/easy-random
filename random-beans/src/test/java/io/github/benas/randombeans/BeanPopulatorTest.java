@@ -39,6 +39,7 @@ import java.util.List;
 
 import static io.github.benas.randombeans.FieldDefinitionBuilder.field;
 import static io.github.benas.randombeans.PopulatorBuilder.aNewPopulatorBuilder;
+import static java.util.Arrays.asList;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.fail;
 import static org.mockito.Mockito.when;
@@ -65,7 +66,7 @@ public class BeanPopulatorTest {
 
         assertThat(person).isNotNull();
         assertThat(person.getEmail()).isNotEmpty();
-        assertThat(person.getGender()).isIn(Gender.values());
+        assertThat(person.getGender()).isIn(asList(Gender.values()));
         assertThat(person.getBirthDate()).isNotNull();
         assertThat(person.getPhoneNumber()).isNotEmpty();
         assertThat(person.getNicknames()).isNotEmpty();
@@ -119,8 +120,9 @@ public class BeanPopulatorTest {
 
     @Test
     public void generatedBeansWithCustomRandomizersShouldBeCorrectlyPopulated() {
+        FieldDefinition<?, ?> fieldDefinition = field().named("name").ofType(String.class).inClass(Human.class).get();
         populator = aNewPopulatorBuilder()
-                .randomize(field().named("name").ofType(String.class).inClass(Human.class).get(), randomizer)
+                .randomize(fieldDefinition, randomizer)
                 .build();
 
         Person person = populator.populate(Person.class);

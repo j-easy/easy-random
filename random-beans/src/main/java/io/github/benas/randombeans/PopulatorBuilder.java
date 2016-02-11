@@ -65,7 +65,7 @@ public class PopulatorBuilder {
      * @param randomizer the custom {@link Randomizer} to use
      * @return a pre configured {@link PopulatorBuilder} instance
      */
-    public <R> PopulatorBuilder randomize(FieldDefinition fieldDefinition, Randomizer<R> randomizer) {
+    public <T, F, R> PopulatorBuilder randomize(FieldDefinition<T, F> fieldDefinition, Randomizer<R> randomizer) {
         customRandomizerRegistry.registerRandomizer(fieldDefinition.getName(), fieldDefinition.getType(), fieldDefinition.getClazz(), randomizer);
         return this;
     }
@@ -76,7 +76,7 @@ public class PopulatorBuilder {
      * @param fieldDefinition definition of the field to exclude
      * @return a pre configured {@link PopulatorBuilder} instance
      */
-    public PopulatorBuilder exclude(FieldDefinition fieldDefinition) {
+    public <T, F> PopulatorBuilder exclude(FieldDefinition<T, F> fieldDefinition) {
         return randomize(fieldDefinition, new SkipRandomizer());
     }
 

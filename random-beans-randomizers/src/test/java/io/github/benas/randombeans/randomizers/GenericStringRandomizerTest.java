@@ -27,6 +27,7 @@ package io.github.benas.randombeans.randomizers;
 import org.junit.Before;
 import org.junit.Test;
 
+import static java.util.Arrays.asList;
 import static org.assertj.core.api.Assertions.assertThat;
 
 public class GenericStringRandomizerTest extends AbstractRandomizerTest<String> {
@@ -41,7 +42,7 @@ public class GenericStringRandomizerTest extends AbstractRandomizerTest<String> 
     @Test
     public void randomValueShouldBeGeneratedFromTheGivenWords() throws Exception {
         randomizer = new GenericStringRandomizer(words);
-        assertThat(randomizer.getRandomValue()).isIn(words);
+        assertThat(randomizer.getRandomValue()).isIn(asList(words));
     }
 
     @Test

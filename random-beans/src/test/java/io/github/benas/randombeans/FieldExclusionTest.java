@@ -68,8 +68,9 @@ public class FieldExclusionTest {
     @Test
     public void excludedFieldsUsingSkipRandomizerShouldNotBePopulated() {
         // given
+        FieldDefinition<?, ?> fieldDefinition = field().named("name").ofType(String.class).inClass(Human.class).get();
         populator = aNewPopulatorBuilder()
-                .exclude(field().named("name").ofType(String.class).inClass(Human.class).get())
+                .exclude(fieldDefinition)
                 .build();
 
         // when

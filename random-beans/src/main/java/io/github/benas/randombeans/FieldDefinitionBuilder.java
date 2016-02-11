@@ -86,7 +86,7 @@ public class FieldDefinitionBuilder {
      */
     public FieldDefinition get() {
         checkArguments();
-        return new FieldDefinition(name, type, clazz);
+        return new FieldDefinition<>(name, type, clazz);
     }
 
     private void checkArguments() {

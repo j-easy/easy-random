@@ -32,7 +32,7 @@ import io.github.benas.randombeans.api.Randomizer;
  *
  * @author Mahmoud Ben Hassine (mahmoud.benhassine@icloud.com)
  */
-public class SkipRandomizer implements Randomizer {
+public class SkipRandomizer implements Randomizer<Object> {
 
     @Override
     public Object getRandomValue() {
