@@ -56,8 +56,34 @@ public class IsbnRandomizer extends FakerBasedRandomizer<String> {
      * @param seed   the initial seed
      * @param locale the locale to use
      */
-    protected IsbnRandomizer(final long seed, final Locale locale) {
+    public IsbnRandomizer(final long seed, final Locale locale) {
         super(seed, locale);
+    }
+
+    /**
+     * Create a new {@link IsbnRandomizer}.
+     */
+    public static IsbnRandomizer aNewIsbnRandomizer() {
+        return new IsbnRandomizer();
+    }
+
+    /**
+     * Create a new {@link IsbnRandomizer}.
+     *
+     * @param seed the initial seed
+     */
+    public static IsbnRandomizer aNewIsbnRandomizer(final long seed) {
+        return new IsbnRandomizer(seed);
+    }
+
+    /**
+     * Create a new {@link IsbnRandomizer}.
+     *
+     * @param seed   the initial seed
+     * @param locale the locale to use
+     */
+    public static IsbnRandomizer aNewIsbnRandomizer(final long seed, final Locale locale) {
+        return new IsbnRandomizer(seed, locale);
     }
 
     @Override

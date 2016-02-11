@@ -56,8 +56,34 @@ public class ParagraphRandomizer extends FakerBasedRandomizer<String> {
      * @param seed   the initial seed
      * @param locale the locale to use
      */
-    protected ParagraphRandomizer(final long seed, final Locale locale) {
+    public ParagraphRandomizer(final long seed, final Locale locale) {
         super(seed, locale);
+    }
+
+    /**
+     * Create a new {@link ParagraphRandomizer}.
+     */
+    public static ParagraphRandomizer aNewParagraphRandomizer() {
+        return new ParagraphRandomizer();
+    }
+
+    /**
+     * Create a new {@link ParagraphRandomizer}.
+     *
+     * @param seed the initial seed
+     */
+    public static ParagraphRandomizer aNewParagraphRandomizer(final long seed) {
+        return new ParagraphRandomizer(seed);
+    }
+
+    /**
+     * Create a new {@link ParagraphRandomizer}.
+     *
+     * @param seed   the initial seed
+     * @param locale the locale to use
+     */
+    public static ParagraphRandomizer aNewParagraphRandomizer(final long seed, final Locale locale) {
+        return new ParagraphRandomizer(seed, locale);
     }
 
     @Override

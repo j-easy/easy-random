@@ -56,8 +56,34 @@ public class CreditCardNumberRandomizer extends FakerBasedRandomizer<String> {
      * @param seed   the initial seed
      * @param locale the locale to use
      */
-    protected CreditCardNumberRandomizer(final long seed, final Locale locale) {
+    public CreditCardNumberRandomizer(final long seed, final Locale locale) {
         super(seed, locale);
+    }
+
+    /**
+     * Create a new {@link CreditCardNumberRandomizer}.
+     */
+    public static CreditCardNumberRandomizer aNewCreditCardNumberRandomizer() {
+        return new CreditCardNumberRandomizer();
+    }
+
+    /**
+     * Create a new {@link CreditCardNumberRandomizer}.
+     *
+     * @param seed the initial seed
+     */
+    public static CreditCardNumberRandomizer aNewCreditCardNumberRandomizer(final long seed) {
+        return new CreditCardNumberRandomizer(seed);
+    }
+
+    /**
+     * Create a new {@link CreditCardNumberRandomizer}.
+     *
+     * @param seed   the initial seed
+     * @param locale the locale to use
+     */
+    public static CreditCardNumberRandomizer aNewCreditCardNumberRandomizer(final long seed, final Locale locale) {
+        return new CreditCardNumberRandomizer(seed, locale);
     }
 
     @Override

@@ -56,8 +56,34 @@ public class WordRandomizer extends FakerBasedRandomizer<String> {
      * @param seed   the initial seed
      * @param locale the locale to use
      */
-    protected WordRandomizer(final long seed, final Locale locale) {
+    public WordRandomizer(final long seed, final Locale locale) {
         super(seed, locale);
+    }
+
+    /**
+     * Create a new {@link WordRandomizer}.
+     */
+    public static WordRandomizer aNewWordRandomizer() {
+        return new WordRandomizer();
+    }
+
+    /**
+     * Create a new {@link WordRandomizer}.
+     *
+     * @param seed the initial seed
+     */
+    public static WordRandomizer aNewWordRandomizer(final long seed) {
+        return new WordRandomizer(seed);
+    }
+
+    /**
+     * Create a new {@link WordRandomizer}.
+     *
+     * @param seed   the initial seed
+     * @param locale the locale to use
+     */
+    public static WordRandomizer aNewWordRandomizer(final long seed, final Locale locale) {
+        return new WordRandomizer(seed, locale);
     }
 
     @Override

@@ -56,8 +56,34 @@ public class ZipCodeRandomizer extends FakerBasedRandomizer<String> {
      * @param seed   the initial seed
      * @param locale the locale to use
      */
-    protected ZipCodeRandomizer(final long seed, final Locale locale) {
+    public ZipCodeRandomizer(final long seed, final Locale locale) {
         super(seed, locale);
+    }
+
+    /**
+     * Create a new {@link ZipCodeRandomizer}.
+     */
+    public static ZipCodeRandomizer aNewZipCodeRandomizer() {
+        return new ZipCodeRandomizer();
+    }
+
+    /**
+     * Create a new {@link ZipCodeRandomizer}.
+     *
+     * @param seed the initial seed
+     */
+    public static ZipCodeRandomizer aNewZipCodeRandomizer(final long seed) {
+        return new ZipCodeRandomizer(seed);
+    }
+
+    /**
+     * Create a new {@link ZipCodeRandomizer}.
+     *
+     * @param seed   the initial seed
+     * @param locale the locale to use
+     */
+    public static ZipCodeRandomizer aNewZipCodeRandomizer(final long seed, final Locale locale) {
+        return new ZipCodeRandomizer(seed, locale);
     }
 
     @Override

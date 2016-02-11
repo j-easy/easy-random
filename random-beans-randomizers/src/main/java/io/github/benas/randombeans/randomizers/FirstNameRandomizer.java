@@ -56,8 +56,34 @@ public class FirstNameRandomizer extends FakerBasedRandomizer<String> {
      * @param seed   the initial seed
      * @param locale the locale to use
      */
-    protected FirstNameRandomizer(final long seed, final Locale locale) {
+    public FirstNameRandomizer(final long seed, final Locale locale) {
         super(seed, locale);
+    }
+
+    /**
+     * Create a new {@link FirstNameRandomizer}.
+     */
+    public static FirstNameRandomizer aNewFirstNameRandomizer() {
+        return new FirstNameRandomizer();
+    }
+
+    /**
+     * Create a new {@link FirstNameRandomizer}.
+     *
+     * @param seed the initial seed
+     */
+    public static FirstNameRandomizer aNewFirstNameRandomizer(final long seed) {
+        return new FirstNameRandomizer(seed);
+    }
+
+    /**
+     * Create a new {@link FirstNameRandomizer}.
+     *
+     * @param seed   the initial seed
+     * @param locale the locale to use
+     */
+    public static FirstNameRandomizer aNewFirstNameRandomizer(final long seed, final Locale locale) {
+        return new FirstNameRandomizer(seed, locale);
     }
 
     @Override

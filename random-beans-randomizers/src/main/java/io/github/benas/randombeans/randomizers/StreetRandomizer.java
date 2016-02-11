@@ -56,8 +56,34 @@ public class StreetRandomizer extends FakerBasedRandomizer<String> {
      * @param seed   the initial seed
      * @param locale the locale to use
      */
-    protected StreetRandomizer(final long seed, final Locale locale) {
+    public StreetRandomizer(final long seed, final Locale locale) {
         super(seed, locale);
+    }
+
+    /**
+     * Create a new {@link StreetRandomizer}.
+     */
+    public static StreetRandomizer aNewStreetRandomizer() {
+        return new StreetRandomizer();
+    }
+
+    /**
+     * Create a new {@link StreetRandomizer}.
+     *
+     * @param seed the initial seed
+     */
+    public static StreetRandomizer aNewStreetRandomizer(final long seed) {
+        return new StreetRandomizer(seed);
+    }
+
+    /**
+     * Create a new {@link StreetRandomizer}.
+     *
+     * @param seed   the initial seed
+     * @param locale the locale to use
+     */
+    public static StreetRandomizer aNewStreetRandomizer(final long seed, final Locale locale) {
+        return new StreetRandomizer(seed, locale);
     }
 
     @Override

@@ -54,7 +54,7 @@ public class MapRandomizer<K, V> implements Randomizer<Map<K, V>> {
      * @param keyRandomizer   the randomizer for keys
      * @param valueRandomizer the randomizer for values
      */
-    public MapRandomizer(Randomizer<K> keyRandomizer, Randomizer<V> valueRandomizer) {
+    public MapRandomizer(final Randomizer<K> keyRandomizer, final Randomizer<V> valueRandomizer) {
         this(keyRandomizer, valueRandomizer, abs(aNewByteRandomizer().getRandomValue()));
     }
 
@@ -70,6 +70,27 @@ public class MapRandomizer<K, V> implements Randomizer<Map<K, V>> {
         this.keyRandomizer = keyRandomizer;
         this.valueRandomizer = valueRandomizer;
         this.nbElements = nbEntries;
+    }
+
+    /**
+     * Create a new {@link MapRandomizer} with a random number of entries.
+     *
+     * @param keyRandomizer   the randomizer for keys
+     * @param valueRandomizer the randomizer for values
+     */
+    public static <K, V> MapRandomizer aNewMapRandomizer(final Randomizer<K> keyRandomizer, final Randomizer<V> valueRandomizer) {
+        return new MapRandomizer<>(keyRandomizer, valueRandomizer, abs(aNewByteRandomizer().getRandomValue()));
+    }
+
+    /**
+     * Create a new {@link MapRandomizer} with a fixed number of entries.
+     *
+     * @param keyRandomizer   the randomizer for keys
+     * @param valueRandomizer the randomizer for values
+     * @param nbEntries       the number of entries to generate
+     */
+    public static <K, V> MapRandomizer aNewMapRandomizer(final Randomizer<K> keyRandomizer, final Randomizer<V> valueRandomizer, final int nbEntries) {
+        return new MapRandomizer<>(keyRandomizer, valueRandomizer, nbEntries);
     }
 
     @Override

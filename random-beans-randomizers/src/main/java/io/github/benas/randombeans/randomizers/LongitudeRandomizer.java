@@ -56,8 +56,34 @@ public class LongitudeRandomizer extends FakerBasedRandomizer<String> {
      * @param seed   the initial seed
      * @param locale the locale to use
      */
-    protected LongitudeRandomizer(final long seed, final Locale locale) {
+    public LongitudeRandomizer(final long seed, final Locale locale) {
         super(seed, locale);
+    }
+
+    /**
+     * Create a new {@link LongitudeRandomizer}.
+     */
+    public static LongitudeRandomizer aNewLongitudeRandomizer() {
+        return new LongitudeRandomizer();
+    }
+
+    /**
+     * Create a new {@link LongitudeRandomizer}.
+     *
+     * @param seed the initial seed
+     */
+    public static LongitudeRandomizer aNewLongitudeRandomizer(final long seed) {
+        return new LongitudeRandomizer(seed);
+    }
+
+    /**
+     * Create a new {@link LongitudeRandomizer}.
+     *
+     * @param seed   the initial seed
+     * @param locale the locale to use
+     */
+    public static LongitudeRandomizer aNewLongitudeRandomizer(final long seed, final Locale locale) {
+        return new LongitudeRandomizer(seed, locale);
     }
 
     @Override

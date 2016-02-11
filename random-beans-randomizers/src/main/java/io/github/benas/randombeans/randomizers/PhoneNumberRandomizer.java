@@ -56,8 +56,34 @@ public class PhoneNumberRandomizer extends FakerBasedRandomizer<String> {
      * @param seed   the initial seed
      * @param locale the locale to use
      */
-    protected PhoneNumberRandomizer(final long seed, final Locale locale) {
+    public PhoneNumberRandomizer(final long seed, final Locale locale) {
         super(seed, locale);
+    }
+
+    /**
+     * Create a new {@link PhoneNumberRandomizer}.
+     */
+    public static PhoneNumberRandomizer aNewPhoneNumberRandomizer() {
+        return new PhoneNumberRandomizer();
+    }
+
+    /**
+     * Create a new {@link PhoneNumberRandomizer}.
+     *
+     * @param seed the initial seed
+     */
+    public static PhoneNumberRandomizer aNewPhoneNumberRandomizer(final long seed) {
+        return new PhoneNumberRandomizer(seed);
+    }
+
+    /**
+     * Create a new {@link PhoneNumberRandomizer}.
+     *
+     * @param seed   the initial seed
+     * @param locale the locale to use
+     */
+    public static PhoneNumberRandomizer aNewPhoneNumberRandomizer(final long seed, final Locale locale) {
+        return new PhoneNumberRandomizer(seed, locale);
     }
 
     @Override

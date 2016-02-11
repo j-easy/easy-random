@@ -56,8 +56,34 @@ public class SentenceRandomizer extends FakerBasedRandomizer<String> {
      * @param seed   the initial seed
      * @param locale the locale to use
      */
-    protected SentenceRandomizer(final long seed, final Locale locale) {
+    public SentenceRandomizer(final long seed, final Locale locale) {
         super(seed, locale);
+    }
+
+    /**
+     * Create a new {@link SentenceRandomizer}.
+     */
+    public static SentenceRandomizer aNewSentenceRandomizer() {
+        return new SentenceRandomizer();
+    }
+
+    /**
+     * Create a new {@link SentenceRandomizer}.
+     *
+     * @param seed the initial seed
+     */
+    public static SentenceRandomizer aNewSentenceRandomizer(final long seed) {
+        return new SentenceRandomizer(seed);
+    }
+
+    /**
+     * Create a new {@link SentenceRandomizer}.
+     *
+     * @param seed   the initial seed
+     * @param locale the locale to use
+     */
+    public static SentenceRandomizer aNewSentenceRandomizer(final long seed, final Locale locale) {
+        return new SentenceRandomizer(seed, locale);
     }
 
     @Override

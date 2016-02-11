@@ -56,8 +56,34 @@ public class CompanyRandomizer extends FakerBasedRandomizer<String> {
      * @param seed   the initial seed
      * @param locale the locale to use
      */
-    protected CompanyRandomizer(final long seed, final Locale locale) {
+    public CompanyRandomizer(final long seed, final Locale locale) {
         super(seed, locale);
+    }
+
+    /**
+     * Create a new {@link CompanyRandomizer}.
+     */
+    public static CompanyRandomizer aNewCompanyRandomizer() {
+        return new CompanyRandomizer();
+    }
+
+    /**
+     * Create a new {@link CompanyRandomizer}.
+     *
+     * @param seed the initial seed
+     */
+    public static CompanyRandomizer aNewCompanyRandomizer(final long seed) {
+        return new CompanyRandomizer(seed);
+    }
+
+    /**
+     * Create a new {@link CompanyRandomizer}.
+     *
+     * @param seed   the initial seed
+     * @param locale the locale to use
+     */
+    public static CompanyRandomizer aNewCompanyRandomizer(final long seed, final Locale locale) {
+        return new CompanyRandomizer(seed, locale);
     }
 
     @Override

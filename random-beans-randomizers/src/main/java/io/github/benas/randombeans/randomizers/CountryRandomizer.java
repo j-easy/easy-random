@@ -56,8 +56,34 @@ public class CountryRandomizer extends FakerBasedRandomizer<String> {
      * @param seed   the initial seed
      * @param locale the locale to use
      */
-    protected CountryRandomizer(final long seed, final Locale locale) {
+    public CountryRandomizer(final long seed, final Locale locale) {
         super(seed, locale);
+    }
+
+    /**
+     * Create a new {@link CountryRandomizer}.
+     */
+    public static CountryRandomizer aNewCountryRandomizer() {
+        return new CountryRandomizer();
+    }
+
+    /**
+     * Create a new {@link CountryRandomizer}.
+     *
+     * @param seed the initial seed
+     */
+    public static CountryRandomizer aNewCountryRandomizer(final long seed) {
+        return new CountryRandomizer(seed);
+    }
+
+    /**
+     * Create a new {@link CountryRandomizer}.
+     *
+     * @param seed   the initial seed
+     * @param locale the locale to use
+     */
+    public static CountryRandomizer aNewCountryRandomizer(final long seed, final Locale locale) {
+        return new CountryRandomizer(seed, locale);
     }
 
     @Override

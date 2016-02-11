@@ -56,8 +56,34 @@ public class CityRandomizer extends FakerBasedRandomizer<String> {
      * @param seed   the initial seed
      * @param locale the locale to use
      */
-    protected CityRandomizer(final long seed, final Locale locale) {
+    public CityRandomizer(final long seed, final Locale locale) {
         super(seed, locale);
+    }
+
+    /**
+     * Create a new {@link CityRandomizer}.
+     */
+    public static CityRandomizer aNewCityRandomizer() {
+        return new CityRandomizer();
+    }
+
+    /**
+     * Create a new {@link CityRandomizer}.
+     *
+     * @param seed the initial seed
+     */
+    public static CityRandomizer aNewCityRandomizer(final long seed) {
+        return new CityRandomizer(seed);
+    }
+
+    /**
+     * Create a new {@link CityRandomizer}.
+     *
+     * @param seed   the initial seed
+     * @param locale the locale to use
+     */
+    public static CityRandomizer aNewCityRandomizer(final long seed, final Locale locale) {
+        return new CityRandomizer(seed, locale);
     }
 
     @Override

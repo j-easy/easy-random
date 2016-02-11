@@ -56,8 +56,34 @@ public class StateRandomizer extends FakerBasedRandomizer<String> {
      * @param seed   the initial seed
      * @param locale the locale to use
      */
-    protected StateRandomizer(final long seed, final Locale locale) {
+    public StateRandomizer(final long seed, final Locale locale) {
         super(seed, locale);
+    }
+
+    /**
+     * Create a new {@link StateRandomizer}.
+     */
+    public static StateRandomizer aNewStateRandomizer() {
+        return new StateRandomizer();
+    }
+
+    /**
+     * Create a new {@link StateRandomizer}.
+     *
+     * @param seed the initial seed
+     */
+    public static StateRandomizer aNewStateRandomizer(final long seed) {
+        return new StateRandomizer(seed);
+    }
+
+    /**
+     * Create a new {@link StateRandomizer}.
+     *
+     * @param seed   the initial seed
+     * @param locale the locale to use
+     */
+    public static StateRandomizer aNewStateRandomizer(final long seed, final Locale locale) {
+        return new StateRandomizer(seed, locale);
     }
 
     @Override
