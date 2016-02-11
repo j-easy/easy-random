@@ -217,6 +217,18 @@ public class CollectionPopulationTest {
         assertContainsOnlyNonEmptyPersons(collectionsBean.getTypedConcurrentLinkedDeque());
     }
 
+    @Test
+    public void compositeCollectionTypesShouldBeEmpty() throws Exception {
+        CompositeCollectionBean compositeCollectionBean = populator.populate(CompositeCollectionBean.class);
+
+        assertThat(compositeCollectionBean.getListOfLists()).isEmpty();
+        assertThat(compositeCollectionBean.getTypedListOfLists()).isEmpty();
+        assertThat(compositeCollectionBean.getSetOfSets()).isEmpty();
+        assertThat(compositeCollectionBean.getTypedSetOfSets()).isEmpty();
+        assertThat(compositeCollectionBean.getQueueOfQueues()).isEmpty();
+        assertThat(compositeCollectionBean.getTypedQueueOdQueues()).isEmpty();
+    }
+
     @Test (expected = BeanPopulationException.class)
     public void synchronousQueueTypeMustBeRejected() {
         populator.populate(SynchronousQueueBean.class);

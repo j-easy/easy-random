@@ -48,7 +48,7 @@ class MapPopulator {
             ParameterizedType parameterizedType = (ParameterizedType) fieldGenericType;
             Type keyType = parameterizedType.getActualTypeArguments()[0];
             Type valueType = parameterizedType.getActualTypeArguments()[1];
-            if (!isWildcardType(keyType) && !isWildcardType(valueType)) {
+            if (isPopulatable(keyType) && isPopulatable(valueType)) {
                 for (int index = 0; index < randomSize; index++) {
                     Object randomKey = populator.populate((Class<?>) keyType);
                     Object randomValue = populator.populate((Class<?>) valueType);

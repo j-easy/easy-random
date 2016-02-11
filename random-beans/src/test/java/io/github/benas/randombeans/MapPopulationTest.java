@@ -28,13 +28,11 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 import java.util.Collection;
 
-import io.github.benas.randombeans.beans.RawMapBean;
+import io.github.benas.randombeans.beans.*;
 import org.junit.Before;
 import org.junit.Test;
 
 import io.github.benas.randombeans.api.Populator;
-import io.github.benas.randombeans.beans.MapBean;
-import io.github.benas.randombeans.beans.Person;
 
 public class MapPopulationTest {
 
@@ -154,6 +152,15 @@ public class MapPopulationTest {
 
         assertThat(rawMapBean).isNotNull();
         assertThat(rawMapBean.getMap()).isEmpty();
+    }
+
+    @Test
+    public void compositeMapTypesShouldBeEmpty() throws Exception {
+        CompositeMapBean compositeMapBean = populator.populate(CompositeMapBean.class);
+
+        assertThat(compositeMapBean.getPersonToNicknames()).isEmpty();
+        assertThat(compositeMapBean.getPersonToAccounts()).isEmpty();
+        assertThat(compositeMapBean.getReallyStrangeCompositeDataStructure()).isEmpty();
     }
 
     private void assertContainsOnlyNonEmptyPersons(Collection<Person> persons) {

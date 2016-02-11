@@ -153,6 +153,26 @@ public abstract class ReflectionUtils {
     }
 
     /**
+     * Check if a type is a collection type.
+     *
+     * @param type the type to check.
+     * @return true if the type is a collection type, false otherwise
+     */
+    public static boolean isCollectionType(final Type type) {
+        return isParameterizedType(type) && isCollectionType((Class<?>) ((ParameterizedType) type).getRawType());
+    }
+
+    /**
+     * Check if a type is populatable.
+     *
+     * @param type the type to check
+     * @return true if the type is populatable, false otherwise
+     */
+    public static boolean isPopulatable(final Type type) {
+        return !isWildcardType(type) && !isCollectionType(type);
+    }
+
+    /**
      * Check if a type is a map type.
      *
      * @param type the type to check

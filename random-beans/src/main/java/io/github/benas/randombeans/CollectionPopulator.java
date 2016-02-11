@@ -44,7 +44,7 @@ class CollectionPopulator {
         if (isParameterizedType(fieldGenericType)) { // populate only parametrized types, raw types will be empty
             ParameterizedType parameterizedType = (ParameterizedType) fieldGenericType;
             Type type = parameterizedType.getActualTypeArguments()[0];
-            if (!isWildcardType(type)) {
+            if (isPopulatable(type)) {
                 List items = populator.populate((Class<?>) type, randomSize);
                 collection.addAll(items);
             }
