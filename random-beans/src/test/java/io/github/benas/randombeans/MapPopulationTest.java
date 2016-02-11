@@ -147,11 +147,53 @@ public class MapPopulationTest {
 
 
     @Test
-    public void rawMapTypesMustBeEmpty() {
-        RawMapBean rawMapBean = populator.populate(RawMapBean.class);
+    public void wildcardTypedMapInterfacesShouldBeEmpty() {
+        final WildCardMapBean wildCardMapBean = populator.populate(WildCardMapBean.class);
 
-        assertThat(rawMapBean).isNotNull();
-        assertThat(rawMapBean.getMap()).isEmpty();
+        assertThat(wildCardMapBean).isNotNull();
+
+        assertThat(wildCardMapBean.getBoundedWildCardTypedMap()).isEmpty();
+        assertThat(wildCardMapBean.getUnboundedWildCardTypedMap()).isEmpty();
+
+        assertThat(wildCardMapBean.getBoundedWildCardTypedSortedMap()).isEmpty();
+        assertThat(wildCardMapBean.getUnboundedWildCardTypedSortedMap()).isEmpty();
+
+        assertThat(wildCardMapBean.getBoundedWildCardTypedNavigableMap()).isEmpty();
+        assertThat(wildCardMapBean.getUnboundedWildCardTypedNavigableMap()).isEmpty();
+
+        assertThat(wildCardMapBean.getBoundedWildCardTypedConcurrentMap()).isEmpty();
+        assertThat(wildCardMapBean.getUnboundedWildCardTypedConcurrentMap()).isEmpty();
+
+        assertThat(wildCardMapBean.getBoundedWildCardTypedConcurrentNavigableMap()).isEmpty();
+        assertThat(wildCardMapBean.getUnboundedWildCardTypedConcurrentNavigableMap()).isEmpty();
+    }
+
+    @Test
+    public void wildcardTypedMapClassesShouldBeEmpty() {
+        final WildCardMapBean wildCardMapBean = populator.populate(WildCardMapBean.class);
+
+        assertThat(wildCardMapBean).isNotNull();
+
+        assertThat(wildCardMapBean.getBoundedWildCardTypedHashMap()).isEmpty();
+        assertThat(wildCardMapBean.getUnboundedWildCardTypedHashMap()).isEmpty();
+
+        assertThat(wildCardMapBean.getBoundedWildCardTypedHashtable()).isEmpty();
+        assertThat(wildCardMapBean.getUnboundedWildCardTypedHashtable()).isEmpty();
+
+        assertThat(wildCardMapBean.getBoundedWildCardTypedLinkedHashMap()).isEmpty();
+        assertThat(wildCardMapBean.getUnboundedWildCardTypedHinkedHashMap()).isEmpty();
+
+        assertThat(wildCardMapBean.getBoundedWildCardTypedWeakHashMap()).isEmpty();
+        assertThat(wildCardMapBean.getUnboundedWildCardTypedWeakHashMap()).isEmpty();
+
+        assertThat(wildCardMapBean.getBoundedWildCardTypedIdentityHashMap()).isEmpty();
+        assertThat(wildCardMapBean.getUnboundedWildCardTypedIdentityHashMap()).isEmpty();
+
+        assertThat(wildCardMapBean.getBoundedWildCardTypedTreeMap()).isEmpty();
+        assertThat(wildCardMapBean.getUnboundedWildCardTypedTreeMap()).isEmpty();
+
+        assertThat(wildCardMapBean.getBoundedWildCardTypedConcurrentSkipListMap()).isEmpty();
+        assertThat(wildCardMapBean.getUnboundedWildCardTypedConcurrentSkipListMap()).isEmpty();
     }
 
     @Test
