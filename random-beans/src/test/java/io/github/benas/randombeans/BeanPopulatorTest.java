@@ -201,4 +201,11 @@ public class BeanPopulatorTest {
         assertThat(node.getLeft()).isNotNull();
         assertThat(node.getRight()).isNotNull();
     }
+
+    @Test
+    public void objectTypeMustBeCorrectlyPopulated() {
+        Object object = populator.populate(Object.class);
+
+        assertThat(object).isNotNull();
+    }
 }
