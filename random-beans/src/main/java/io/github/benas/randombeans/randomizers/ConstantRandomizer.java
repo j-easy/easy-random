@@ -44,6 +44,7 @@ public class ConstantRandomizer<T> implements Randomizer<T> {
 
     /**
      * Create a new {@link ConstantRandomizer}.
+     *
      * @return a new {@link ConstantRandomizer}.
      */
     public static <T> ConstantRandomizer<T> aNewConstantRandomizer(final T value) {

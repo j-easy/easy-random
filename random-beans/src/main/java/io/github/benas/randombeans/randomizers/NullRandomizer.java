@@ -35,6 +35,7 @@ public class NullRandomizer implements Randomizer<Void> {
 
     /**
      * Create a new {@link NullRandomizer}.
+     *
      * @return a new {@link NullRandomizer}.
      */
     public static NullRandomizer aNewNullRandomizer() {

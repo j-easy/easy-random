@@ -48,6 +48,7 @@ public class StringDelegatingRandomizer implements Randomizer<String> {
 
     /**
      * Create a new {@link StringDelegatingRandomizer}.
+     *
      * @param delegate the delegate {@link Randomizer}
      * @return a new {@link StringDelegatingRandomizer}.
      */

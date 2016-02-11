@@ -43,6 +43,7 @@ public class ZipCodeRandomizer extends FakerBasedRandomizer<String> {
 
     /**
      * Create a new {@link ZipCodeRandomizer}.
+     *
      * @param seed the initial seed
      */
     public ZipCodeRandomizer(final long seed) {
@@ -52,7 +53,7 @@ public class ZipCodeRandomizer extends FakerBasedRandomizer<String> {
     /**
      * Create a new {@link ZipCodeRandomizer}.
      *
-     * @param seed the initial seed
+     * @param seed   the initial seed
      * @param locale the locale to use
      */
     protected ZipCodeRandomizer(final long seed, final Locale locale) {

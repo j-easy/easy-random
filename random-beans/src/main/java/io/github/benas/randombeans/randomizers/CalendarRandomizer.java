@@ -39,6 +39,7 @@ public class CalendarRandomizer implements Randomizer<Calendar> {
 
     /**
      * Create a new {@link CalendarRandomizer}.
+     *
      * @return a new {@link CalendarRandomizer}.
      */
     public static CalendarRandomizer aNewCalendarRandomizer() {

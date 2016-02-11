@@ -47,6 +47,7 @@ public class UrlRandomizer implements Randomizer<URL> {
 
     /**
      * Create a new {@link UrlRandomizer}.
+     *
      * @return a new {@link UrlRandomizer}.
      */
     public static UrlRandomizer aNewUrlRandomizer() {

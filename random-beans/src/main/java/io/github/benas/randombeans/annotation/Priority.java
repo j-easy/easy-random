@@ -32,7 +32,7 @@ import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
 
 /**
- * Define the priority of a {@link io.github.benas.randombeans.api.Randomizer} or a {@link RandomizerRegistry}
+ * Define the priority of a {@link io.github.benas.randombeans.api.Randomizer} or a {@link RandomizerRegistry}.
  *
  * @author Rémi Alvergnat (toilal.dev@gmail.com)
  */

@@ -33,7 +33,7 @@ import io.github.benas.randombeans.randomizers.registry.CustomRandomizerRegistry
 import java.util.*;
 
 /**
- * A builder to create {@link Populator} instances.
+ * Builder to create {@link Populator} instances.
  *
  * @author Mahmoud Ben Hassine (mahmoud.benhassine@icloud.com)
  */
@@ -83,7 +83,7 @@ public class PopulatorBuilder {
     /**
      * Register a {@link RandomizerRegistry}.
      *
-     * @param registry the {@link RandomizerRegistry} to register in the {@link Populator}
+     * @param registry the {@link RandomizerRegistry} to register
      * @return a pre configured {@link PopulatorBuilder} instance
      */
     public PopulatorBuilder registerRandomizerRegistry(final RandomizerRegistry registry) {
@@ -97,7 +97,7 @@ public class PopulatorBuilder {
      * 
      * Deactivated by default.
      * 
-     * @param scanClasspathForConcreteClasses whether to scan the classpath
+     * @param scanClasspathForConcreteClasses whether to scan the classpath or not
      * @return a pre configured {@link PopulatorBuilder} instance
      */
     public PopulatorBuilder scanClasspathForConcreteClasses(boolean scanClasspathForConcreteClasses) {

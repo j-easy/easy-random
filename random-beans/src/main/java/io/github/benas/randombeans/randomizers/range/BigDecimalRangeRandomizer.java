@@ -46,6 +46,7 @@ public class BigDecimalRangeRandomizer implements Randomizer<BigDecimal> {
 
     /**
      * Create a new {@link BigDecimalRangeRandomizer}.
+     *
      * @return a new {@link BigDecimalRangeRandomizer}.
      */
     public static BigDecimalRangeRandomizer aNewBigDecimalRangeRandomizer(final Long min, final Long max) {

@@ -23,8 +23,8 @@
  */
 
 /**
- * This package contains range randomizers.
+ * This package contains collection randomizers.
  *
- * @author Rémi Alvergnat (toilal.dev@gmail.com)
+ * @author Mahmoud Ben Hassine (mahmoud.benhassine@icloud.com)
  */
-package io.github.benas.randombeans.randomizers.range;
+package io.github.benas.randombeans.randomizers.collection;

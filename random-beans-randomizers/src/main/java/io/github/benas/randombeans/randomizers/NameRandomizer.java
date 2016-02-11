@@ -43,6 +43,7 @@ public class NameRandomizer extends FakerBasedRandomizer<String> {
 
     /**
      * Create a new {@link NameRandomizer}.
+     *
      * @param seed the initial seed
      */
     public NameRandomizer(long seed) {
@@ -52,7 +53,7 @@ public class NameRandomizer extends FakerBasedRandomizer<String> {
     /**
      * Create a new {@link NameRandomizer}.
      *
-     * @param seed the initial seed
+     * @param seed   the initial seed
      * @param locale the locale to use
      */
     protected NameRandomizer(final long seed, final Locale locale) {

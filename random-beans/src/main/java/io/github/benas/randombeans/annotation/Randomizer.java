@@ -30,7 +30,7 @@ import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
 
 /**
- * Annotation to mark a field to be populated with a random value.
+ * Annotation to mark a field to be populated with a random value using the given randomizer.
  *
  * @author Mahmoud Ben Hassine (mahmoud.benhassine@icloud.com)
  */

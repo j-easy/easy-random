@@ -40,6 +40,7 @@ public class ShortRangeRandomizer extends AbstractRangeRandomizer<Short> {
 
     /**
      * Create a new {@link ShortRangeRandomizer}.
+     *
      * @return a new {@link ShortRangeRandomizer}.
      */
     public static ShortRangeRandomizer aNewShortRangeRandomizer(final Short min, final Short max) {

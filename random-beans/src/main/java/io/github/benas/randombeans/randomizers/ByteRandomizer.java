@@ -37,6 +37,7 @@ public class ByteRandomizer implements Randomizer<Byte> {
 
     /**
      * Create a new {@link ByteRandomizer}.
+     *
      * @return a new {@link ByteRandomizer}.
      */
     public static ByteRandomizer aNewByteRandomizer() {

@@ -43,6 +43,7 @@ public class SentenceRandomizer extends FakerBasedRandomizer<String> {
 
     /**
      * Create a new {@link SentenceRandomizer}.
+     *
      * @param seed the initial seed
      */
     public SentenceRandomizer(final long seed) {
@@ -52,7 +53,7 @@ public class SentenceRandomizer extends FakerBasedRandomizer<String> {
     /**
      * Create a new {@link SentenceRandomizer}.
      *
-     * @param seed the initial seed
+     * @param seed   the initial seed
      * @param locale the locale to use
      */
     protected SentenceRandomizer(final long seed, final Locale locale) {

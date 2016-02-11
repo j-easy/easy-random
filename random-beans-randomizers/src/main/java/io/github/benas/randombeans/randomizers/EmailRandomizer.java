@@ -43,6 +43,7 @@ public class EmailRandomizer extends FakerBasedRandomizer<String> {
 
     /**
      * Create a new {@link EmailRandomizer}.
+     *
      * @param seed the initial seed
      */
     public EmailRandomizer(long seed) {
@@ -52,7 +53,7 @@ public class EmailRandomizer extends FakerBasedRandomizer<String> {
     /**
      * Create a new {@link EmailRandomizer}.
      *
-     * @param seed the initial seed
+     * @param seed   the initial seed
      * @param locale the locale to use
      */
     protected EmailRandomizer(final long seed, final Locale locale) {

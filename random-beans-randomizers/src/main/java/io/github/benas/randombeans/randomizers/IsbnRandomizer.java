@@ -43,6 +43,7 @@ public class IsbnRandomizer extends FakerBasedRandomizer<String> {
 
     /**
      * Create a new {@link IsbnRandomizer}.
+     *
      * @param seed the initial seed
      */
     public IsbnRandomizer(final long seed) {
@@ -52,7 +53,7 @@ public class IsbnRandomizer extends FakerBasedRandomizer<String> {
     /**
      * Create a new {@link IsbnRandomizer}.
      *
-     * @param seed the initial seed
+     * @param seed   the initial seed
      * @param locale the locale to use
      */
     protected IsbnRandomizer(final long seed, final Locale locale) {

@@ -37,6 +37,7 @@ public class ShortRandomizer implements Randomizer<Short> {
 
     /**
      * Create a new {@link ShortRandomizer}.
+     *
      * @return a new {@link ShortRandomizer}.
      */
     public static ShortRandomizer aNewShortRandomizer() {

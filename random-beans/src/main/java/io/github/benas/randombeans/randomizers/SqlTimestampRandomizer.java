@@ -39,6 +39,7 @@ public class SqlTimestampRandomizer implements Randomizer<Timestamp> {
 
     /**
      * Create a new {@link SqlTimestampRandomizer}.
+     *
      * @return a new {@link SqlTimestampRandomizer}.
      */
     public static SqlTimestampRandomizer aNewSqlTimestampRandomizer() {

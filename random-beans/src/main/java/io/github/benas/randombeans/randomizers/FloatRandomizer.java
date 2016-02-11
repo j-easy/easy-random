@@ -33,6 +33,7 @@ public class FloatRandomizer extends AbstractRandomizer<Float> {
 
     /**
      * Create a new {@link FloatRandomizer}.
+     *
      * @return a new {@link FloatRandomizer}.
      */
     public static FloatRandomizer aNewFloatRandomizer() {

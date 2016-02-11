@@ -43,6 +43,7 @@ public class StreetRandomizer extends FakerBasedRandomizer<String> {
 
     /**
      * Create a new {@link StreetRandomizer}.
+     *
      * @param seed the initial seed
      */
     public StreetRandomizer(long seed) {
@@ -52,7 +53,7 @@ public class StreetRandomizer extends FakerBasedRandomizer<String> {
     /**
      * Create a new {@link StreetRandomizer}.
      *
-     * @param seed the initial seed
+     * @param seed   the initial seed
      * @param locale the locale to use
      */
     protected StreetRandomizer(final long seed, final Locale locale) {

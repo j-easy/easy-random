@@ -47,8 +47,9 @@ public class GenericStringRandomizer extends FakerBasedRandomizer<String> {
 
     /**
      * Create a new {@link GenericStringRandomizer}.
+     *
      * @param words the list of words from which this randomizer will generate random values.
-     * @param seed the initial seed
+     * @param seed  the initial seed
      */
     public GenericStringRandomizer(final String[] words, final long seed) {
         super(seed);

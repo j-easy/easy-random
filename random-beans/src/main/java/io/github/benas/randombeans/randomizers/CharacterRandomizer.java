@@ -36,6 +36,7 @@ public class CharacterRandomizer implements Randomizer<Character> {
 
     /**
      * Create a new {@link CharacterRandomizer}.
+     *
      * @return a new {@link CharacterRandomizer}.
      */
     public static CharacterRandomizer aNewCharacterRandomizer() {

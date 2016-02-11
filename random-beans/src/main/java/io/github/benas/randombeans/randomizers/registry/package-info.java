@@ -23,7 +23,7 @@
  */
 
 /**
- * Internal registries of Random Beans.
+ * This package contains internal registries.
  *
  * @author Mahmoud Ben Hassine (mahmoud.benhassine@icloud.com)
  */

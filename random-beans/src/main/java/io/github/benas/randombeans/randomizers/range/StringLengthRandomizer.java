@@ -45,6 +45,7 @@ public class StringLengthRandomizer implements Randomizer<String> {
 
     /**
      * Create a new {@link StringLengthRandomizer}.
+     *
      * @return a new {@link StringLengthRandomizer}.
      */
     public static StringLengthRandomizer aNewStringLengthRandomizer(final Integer min, final Integer max) {

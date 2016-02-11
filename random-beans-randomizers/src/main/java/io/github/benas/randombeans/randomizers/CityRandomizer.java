@@ -43,6 +43,7 @@ public class CityRandomizer extends FakerBasedRandomizer<String> {
 
     /**
      * Create a new {@link CityRandomizer}.
+     *
      * @param seed the initial seed
      */
     public CityRandomizer(final long seed) {
@@ -52,7 +53,7 @@ public class CityRandomizer extends FakerBasedRandomizer<String> {
     /**
      * Create a new {@link CityRandomizer}.
      *
-     * @param seed the initial seed
+     * @param seed   the initial seed
      * @param locale the locale to use
      */
     protected CityRandomizer(final long seed, final Locale locale) {

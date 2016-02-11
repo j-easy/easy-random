@@ -43,6 +43,7 @@ public class LatitudeRandomizer extends FakerBasedRandomizer<String> {
 
     /**
      * Create a new {@link LatitudeRandomizer}.
+     *
      * @param seed the initial seed
      */
     public LatitudeRandomizer(final long seed) {
@@ -52,7 +53,7 @@ public class LatitudeRandomizer extends FakerBasedRandomizer<String> {
     /**
      * Create a new {@link LatitudeRandomizer}.
      *
-     * @param seed the initial seed
+     * @param seed   the initial seed
      * @param locale the locale to use
      */
     protected LatitudeRandomizer(final long seed, final Locale locale) {

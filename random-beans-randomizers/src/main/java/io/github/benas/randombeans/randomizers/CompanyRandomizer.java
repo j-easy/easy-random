@@ -43,6 +43,7 @@ public class CompanyRandomizer extends FakerBasedRandomizer<String> {
 
     /**
      * Create a new {@link CompanyRandomizer}.
+     *
      * @param seed the initial seed
      */
     public CompanyRandomizer(final long seed) {
@@ -52,7 +53,7 @@ public class CompanyRandomizer extends FakerBasedRandomizer<String> {
     /**
      * Create a new {@link CompanyRandomizer}.
      *
-     * @param seed the initial seed
+     * @param seed   the initial seed
      * @param locale the locale to use
      */
     protected CompanyRandomizer(final long seed, final Locale locale) {

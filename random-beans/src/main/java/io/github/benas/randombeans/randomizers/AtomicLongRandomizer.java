@@ -39,6 +39,7 @@ public class AtomicLongRandomizer implements Randomizer<AtomicLong> {
 
     /**
      * Create a new {@link AtomicLongRandomizer}.
+     *
      * @return a new {@link AtomicLongRandomizer}.
      */
     public static AtomicLongRandomizer aNewAtomicLongRandomizer() {

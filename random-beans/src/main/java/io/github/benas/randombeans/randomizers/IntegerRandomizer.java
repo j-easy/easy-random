@@ -33,6 +33,7 @@ public class IntegerRandomizer extends AbstractRandomizer<Integer> {
 
     /**
      * Create a new {@link IntegerRandomizer}.
+     *
      * @return a new {@link IntegerRandomizer}.
      */
     public static IntegerRandomizer aNewIntegerRandomizer() {

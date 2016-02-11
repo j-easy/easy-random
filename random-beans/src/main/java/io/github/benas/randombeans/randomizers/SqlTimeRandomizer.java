@@ -39,6 +39,7 @@ public class SqlTimeRandomizer implements Randomizer<Time> {
 
     /**
      * Create a new {@link SqlTimeRandomizer}.
+     *
      * @return a new {@link SqlTimeRandomizer}.
      */
     public static SqlTimeRandomizer aNewSqlTimeRandomizer() {

@@ -27,7 +27,7 @@ package io.github.benas.randombeans.api;
 import java.lang.reflect.Field;
 
 /**
- * An interface for a registry of {@link Randomizer}s.
+ * Interface for a registry of {@link Randomizer}s.
  *
  * @author Rémi Alvergnat (toilal.dev@gmail.com)
  */

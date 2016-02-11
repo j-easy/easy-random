@@ -40,6 +40,7 @@ public class ByteRangeRandomizer extends AbstractRangeRandomizer<Byte> {
 
     /**
      * Create a new {@link ByteRangeRandomizer}.
+     *
      * @return a new {@link ByteRangeRandomizer}.
      */
     public static ByteRangeRandomizer aNewByteRangeRandomizer(final Byte min, final Byte max) {

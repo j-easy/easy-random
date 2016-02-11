@@ -42,6 +42,7 @@ public class DateRangeRandomizer extends AbstractRangeRandomizer<Date> {
 
     /**
      * Create a new {@link DateRangeRandomizer}.
+     *
      * @return a new {@link DateRangeRandomizer}.
      */
     public static DateRangeRandomizer aNewDateRangeRandomizer(final Date min, final Date max) {

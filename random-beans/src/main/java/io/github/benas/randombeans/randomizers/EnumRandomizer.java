@@ -29,7 +29,7 @@ import io.github.benas.randombeans.api.Randomizer;
 import static io.github.benas.randombeans.randomizers.range.IntegerRangeRandomizer.aNewIntegerRangeRandomizer;
 
 /**
- * A {@link Randomizer} that generates a random value from a given enumeration values.
+ * A {@link Randomizer} that generates a random value from a given enumeration values set.
  *
  * @author Mahmoud Ben Hassine (mahmoud.benhassine@icloud.com)
  */

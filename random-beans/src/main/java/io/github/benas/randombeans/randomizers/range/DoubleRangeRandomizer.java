@@ -44,6 +44,7 @@ public class DoubleRangeRandomizer implements Randomizer<Double> {
 
     /**
      * Create a new {@link DoubleRangeRandomizer}.
+     *
      * @return a new {@link DoubleRangeRandomizer}.
      */
     public static DoubleRangeRandomizer aNewDoubleRangeRandomizer(final Double min, final Double max) {

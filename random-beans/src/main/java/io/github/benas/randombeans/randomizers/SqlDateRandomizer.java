@@ -39,6 +39,7 @@ public class SqlDateRandomizer implements Randomizer<Date> {
 
     /**
      * Create a new {@link SqlDateRandomizer}.
+     *
      * @return a new {@link SqlDateRandomizer}.
      */
     public static SqlDateRandomizer aNewSqlDateRandomizer() {

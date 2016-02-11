@@ -41,6 +41,7 @@ public class BigIntegerRandomizer implements Randomizer<BigInteger> {
 
     /**
      * Create a new {@link BigIntegerRandomizer}.
+     *
      * @return a new {@link BigIntegerRandomizer}.
      */
     public static BigIntegerRandomizer aNewBigIntegerRandomizer() {

@@ -43,6 +43,7 @@ public class StateRandomizer extends FakerBasedRandomizer<String> {
 
     /**
      * Create a new {@link StateRandomizer}.
+     *
      * @param seed the initial seed
      */
     public StateRandomizer(final long seed) {
@@ -52,7 +53,7 @@ public class StateRandomizer extends FakerBasedRandomizer<String> {
     /**
      * Create a new {@link StateRandomizer}.
      *
-     * @param seed the initial seed
+     * @param seed   the initial seed
      * @param locale the locale to use
      */
     protected StateRandomizer(final long seed, final Locale locale) {

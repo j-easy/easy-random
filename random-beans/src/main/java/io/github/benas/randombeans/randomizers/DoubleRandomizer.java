@@ -33,6 +33,7 @@ public class DoubleRandomizer extends AbstractRandomizer<Double> {
 
     /**
      * Create a new {@link DoubleRandomizer}.
+     *
      * @return a new {@link DoubleRandomizer}.
      */
     public static DoubleRandomizer aNewDoubleRandomizer() {

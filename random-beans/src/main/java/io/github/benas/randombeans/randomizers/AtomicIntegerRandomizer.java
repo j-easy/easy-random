@@ -39,6 +39,7 @@ public class AtomicIntegerRandomizer implements Randomizer<AtomicInteger> {
 
     /**
      * Create a new {@link AtomicIntegerRandomizer}.
+     *
      * @return a new {@link AtomicIntegerRandomizer}.
      */
     public static AtomicIntegerRandomizer aNewAtomicIntegerRandomizer() {

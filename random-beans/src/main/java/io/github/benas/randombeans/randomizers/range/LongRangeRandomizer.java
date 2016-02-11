@@ -40,6 +40,7 @@ public class LongRangeRandomizer extends AbstractRangeRandomizer<Long> {
 
     /**
      * Create a new {@link LongRangeRandomizer}.
+     *
      * @return a new {@link LongRangeRandomizer}.
      */
     public static LongRangeRandomizer aNewLongRangeRandomizer(final Long min, final Long max) {

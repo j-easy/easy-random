@@ -39,6 +39,7 @@ public class BigDecimalRandomizer implements Randomizer<BigDecimal> {
 
     /**
      * Create a new {@link BigDecimalRandomizer}.
+     *
      * @return a new {@link BigDecimalRandomizer}.
      */
     public static BigDecimalRandomizer aNewBigDecimalRandomizer() {

@@ -41,6 +41,7 @@ public class DateRandomizer implements Randomizer<Date> {
 
     /**
      * Create a new {@link DateRandomizer}.
+     *
      * @return a new {@link DateRandomizer}.
      */
     public static DateRandomizer aNewDateRandomizer() {

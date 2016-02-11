@@ -40,6 +40,7 @@ public class IntegerRangeRandomizer extends AbstractRangeRandomizer<Integer> {
 
     /**
      * Create a new {@link IntegerRangeRandomizer}.
+     *
      * @return a new {@link IntegerRangeRandomizer}.
      */
     public static IntegerRangeRandomizer aNewIntegerRangeRandomizer(final Integer min, final Integer max) {

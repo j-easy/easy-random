@@ -44,6 +44,7 @@ public class FloatRangeRandomizer implements Randomizer<Float> {
 
     /**
      * Create a new {@link FloatRangeRandomizer}.
+     *
      * @return a new {@link FloatRangeRandomizer}.
      */
     public static FloatRangeRandomizer aNewFloatRangeRandomizer(final Float min, final Float max) {

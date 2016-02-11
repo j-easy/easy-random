@@ -29,7 +29,7 @@ import io.github.benas.randombeans.annotation.Priority;
 import java.util.Comparator;
 
 /**
- * Compare objects annotated with {@link Priority} annotation in the descending order.
+ * Compare objects annotated with {@link Priority} annotation in the ascending order.
  *
  * @author Rémi Alvergnat (toilal.dev@gmail.com)
  */

@@ -23,7 +23,7 @@
  */
 
 /**
- * Utility classes of Random Beans.
+ * Public utility classes.
  *
  * @author Mahmoud Ben Hassine (mahmoud.benhassine@icloud.com)
  */
