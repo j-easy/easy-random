@@ -36,7 +36,7 @@ import static io.github.benas.randombeans.util.ReflectionUtils.isStatic;
  *
  * @author Mahmoud Ben Hassine (mahmoud.benhassine@icloud.com)
  */
-public class FieldExclusionChecker {
+class FieldExclusionChecker {
 
     /**
      * Given the current population context, should the field be excluded from being populated ?

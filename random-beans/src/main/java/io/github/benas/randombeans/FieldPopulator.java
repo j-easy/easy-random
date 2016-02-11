@@ -40,7 +40,7 @@ import static io.github.benas.randombeans.util.ReflectionUtils.*;
  *
  * @author Mahmoud Ben Hassine (mahmoud.benhassine@icloud.com)
  */
-public class FieldPopulator {
+class FieldPopulator {
 
     private BeanPopulator beanPopulator;
 
