@@ -191,4 +191,14 @@ public class BeanPopulatorTest {
     public void whenUnableToInstantiateFieldThenShouldThrowABeanPopulationException() {
         populator.populate(AbstractBean.class);
     }
+
+    @Test
+    public void beansWithRecursiveStructureMustNotCauseStackOverflowException() {
+        Node node = populator.populate(Node.class);
+
+        assertThat(node).isNotNull();
+        assertThat(node.getValue()).isNotEmpty();
+        assertThat(node.getLeft()).isNotNull();
+        assertThat(node.getRight()).isNotNull();
+    }
 }
