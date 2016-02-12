@@ -24,16 +24,27 @@
 
 package io.github.benas.randombeans.randomizers;
 
-import io.github.benas.randombeans.api.Randomizer;
-
-import static io.github.benas.randombeans.randomizers.IntegerRandomizer.aNewIntegerRandomizer;
-
 /**
  * Generate a random {@link Short}.
  *
  * @author Mahmoud Ben Hassine (mahmoud.benhassine@icloud.com)
  */
-public class ShortRandomizer implements Randomizer<Short> {
+public class ShortRandomizer extends AbstractRandomizer<Short> {
+
+    /**
+     * Create a new {@link ShortRandomizer}.
+     */
+    public ShortRandomizer() {
+    }
+
+    /**
+     * Create a new {@link ShortRandomizer}.
+     *
+     * @param seed initial seed
+     */
+    public ShortRandomizer(long seed) {
+        super(seed);
+    }
 
     /**
      * Create a new {@link ShortRandomizer}.
@@ -44,8 +55,18 @@ public class ShortRandomizer implements Randomizer<Short> {
         return new ShortRandomizer();
     }
 
+    /**
+     * Create a new {@link ShortRandomizer}.
+     *
+     * @param seed initial seed
+     * @return a new {@link ShortRandomizer}.
+     */
+    public static ShortRandomizer aNewShortRandomizer(final long seed) {
+        return new ShortRandomizer(seed);
+    }
+
     @Override
     public Short getRandomValue() {
-        return aNewIntegerRandomizer().getRandomValue().shortValue();
+        return (short) random.nextInt();
     }
 }

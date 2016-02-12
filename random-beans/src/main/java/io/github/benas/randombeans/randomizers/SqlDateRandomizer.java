@@ -35,7 +35,23 @@ import java.sql.Date;
  */
 public class SqlDateRandomizer implements Randomizer<Date> {
 
-    private DateRandomizer delegate = new DateRandomizer();
+    private DateRandomizer delegate;
+
+    /**
+     * Create a new {@link SqlDateRandomizer}.
+     */
+    public SqlDateRandomizer() {
+        delegate = new DateRandomizer();
+    }
+
+    /**
+     * Create a new {@link SqlDateRandomizer}.
+     *
+     * @param seed initial seed
+     */
+    public SqlDateRandomizer(final long seed) {
+        delegate = new DateRandomizer(seed);
+    }
 
     /**
      * Create a new {@link SqlDateRandomizer}.
@@ -44,6 +60,16 @@ public class SqlDateRandomizer implements Randomizer<Date> {
      */
     public static SqlDateRandomizer aNewSqlDateRandomizer() {
         return new SqlDateRandomizer();
+    }
+
+    /**
+     * Create a new {@link SqlDateRandomizer}.
+     *
+     * @param seed initial seed
+     * @return a new {@link SqlDateRandomizer}.
+     */
+    public static SqlDateRandomizer aNewSqlDateRandomizer(final long seed) {
+        return new SqlDateRandomizer(seed);
     }
 
     @Override

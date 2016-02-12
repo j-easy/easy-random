@@ -22,57 +22,44 @@
  *   THE SOFTWARE.
  */
 
-package io.github.benas.randombeans.randomizers;
+package io.github.benas.randombeans.randomizers.range;
 
-import io.github.benas.randombeans.api.Randomizer;
-import io.github.benas.randombeans.randomizers.range.DateRangeRandomizer;
-import org.apache.commons.lang3.time.DateUtils;
 import org.junit.Before;
 import org.junit.Test;
 
-import java.util.Date;
-
 import static org.assertj.core.api.Assertions.assertThat;
 
-public class DateRangeRandomizerTest {
-
-    private Randomizer<Date> randomizer;
-
-    private Date today, tomorrow;
+public class ByteRangeRandomizerTest extends AbstractRangeRandomizerTest<Byte> {
 
     @Before
     public void setUp() {
-        today = new Date();
-        tomorrow = DateUtils.addDays(today, 1);
-        randomizer = new DateRangeRandomizer(today, tomorrow);
+        min = (byte) 1;
+        max = (byte) 10;
+        randomizer = new ByteRangeRandomizer(min, max);
     }
 
     @Test
-    public void generatedDateShouldBeWithinSpecifiedRange() {
-        Date randomDate = randomizer.getRandomValue();
-        assertThat(randomDate)
-                .isBetween(today, tomorrow);
+    public void generatedValueShouldBeWithinSpecifiedRange() {
+        Byte randomValue = randomizer.getRandomValue();
+        assertThat(randomValue).isBetween(min, max);
     }
 
     @Test(expected = IllegalArgumentException.class)
-    public void whenSpecifiedMinDateIsAfterMaxDateThenThrowIllegalArgumentException() {
-        new DateRangeRandomizer(tomorrow, today);
+    public void whenSpecifiedMinValueIsAfterMaxValueThenThrowIllegalArgumentException() {
+        new ByteRangeRandomizer(max, min);
     }
 
     @Test
-    public void whenSpecifiedMinDateIsNullThenShouldUseDefaultMinValue() {
-        randomizer = new DateRangeRandomizer(null, tomorrow);
-        Date randomDate = randomizer.getRandomValue();
-        assertThat(randomDate)
-                .isBefore(tomorrow);
+    public void whenSpecifiedMinValueIsNullThenShouldUseDefaultMinValue() {
+        randomizer = new ByteRangeRandomizer(null, max);
+        Byte randomDate = randomizer.getRandomValue();
+        assertThat(randomDate).isLessThanOrEqualTo(max);
     }
 
     @Test
-    public void whenSpecifiedMaxDateIsNullThenShouldUseDefaultMaxValue() {
-        randomizer = new DateRangeRandomizer(today, null);
-        Date randomDate = randomizer.getRandomValue();
-        assertThat(randomDate)
-                .isAfter(today);
+    public void whenSpecifiedMaxvalueIsNullThenShouldUseDefaultMaxValue() {
+        randomizer = new ByteRangeRandomizer(min, null);
+        Byte randomDate = randomizer.getRandomValue();
+        assertThat(randomDate).isGreaterThanOrEqualTo(min);
     }
-
 }

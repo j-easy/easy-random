@@ -117,8 +117,8 @@ public class BeanValidationRandomizerRegistry implements RandomizerRegistry {
             }
             if (fieldType.equals(BigInteger.class)) {
                 return new BigIntegerRangeRandomizer(
-                        minValue == null ? null : minValue,
-                        maxValue == null ? null : maxValue
+                        minValue == null ? null : minValue.intValue(),
+                        maxValue == null ? null : maxValue.intValue()
                 );
             }
             if (fieldType.equals(BigDecimal.class)) {
@@ -170,8 +170,8 @@ public class BeanValidationRandomizerRegistry implements RandomizerRegistry {
             }
             if (fieldType.equals(BigInteger.class)) {
                 return new BigIntegerRangeRandomizer(
-                        minValue == null ? null : minValue.longValue(),
-                        maxValue == null ? null : maxValue.longValue()
+                        minValue == null ? null : minValue.intValue(),
+                        maxValue == null ? null : maxValue.intValue()
                 );
             }
             if (fieldType.equals(BigDecimal.class)) {

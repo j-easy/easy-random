@@ -41,4 +41,8 @@ public abstract class AbstractRandomizer<T> implements Randomizer<T>  {
         random = new Random();
     }
 
+    protected AbstractRandomizer(final long seed) {
+        random = new Random(seed);
+    }
+
 }

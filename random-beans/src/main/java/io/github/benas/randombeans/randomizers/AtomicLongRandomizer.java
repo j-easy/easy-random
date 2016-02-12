@@ -35,7 +35,23 @@ import java.util.concurrent.atomic.AtomicLong;
  */
 public class AtomicLongRandomizer implements Randomizer<AtomicLong> {
 
-    private LongRandomizer delegate = new LongRandomizer();
+    private LongRandomizer delegate;
+
+    /**
+     * Create a new {@link AtomicLongRandomizer}.
+     */
+    public AtomicLongRandomizer() {
+        delegate = new LongRandomizer();
+    }
+
+    /**
+     * Create a new {@link AtomicLongRandomizer}.
+     *
+     * @param seed initial seed
+     */
+    public AtomicLongRandomizer(final long seed) {
+        delegate = new LongRandomizer(seed);
+    }
 
     /**
      * Create a new {@link AtomicLongRandomizer}.
@@ -44,6 +60,16 @@ public class AtomicLongRandomizer implements Randomizer<AtomicLong> {
      */
     public static AtomicLongRandomizer aNewAtomicLongRandomizer() {
         return new AtomicLongRandomizer();
+    }
+
+    /**
+     * Create a new {@link AtomicLongRandomizer}.
+     *
+     * @param seed initial seed
+     * @return a new {@link AtomicLongRandomizer}.
+     */
+    public static AtomicLongRandomizer aNewAtomicLongRandomizer(final long seed) {
+        return new AtomicLongRandomizer(seed);
     }
 
     @Override

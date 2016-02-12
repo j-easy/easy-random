@@ -21,10 +21,10 @@
  *   OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  *   THE SOFTWARE.
  */
+
 package io.github.benas.randombeans.randomizers;
 
 import io.github.benas.randombeans.api.Randomizer;
-
 import org.junit.Before;
 import org.junit.Test;
 
@@ -42,7 +42,7 @@ public class EnumRandomizerTest {
     @Test
     public void testGetRandomValue() {
         Enum<Gender> value = randomizer.getRandomValue();
-        assertThat(value).isIn((Object[]) Gender.values());
+        assertThat(value).isIn(Gender.values());
     }
 
     private enum Gender {

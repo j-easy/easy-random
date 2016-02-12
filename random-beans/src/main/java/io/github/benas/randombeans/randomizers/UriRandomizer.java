@@ -24,25 +24,36 @@
 
 package io.github.benas.randombeans.randomizers;
 
-import io.github.benas.randombeans.api.Randomizer;
-
 import java.net.URI;
 import java.net.URISyntaxException;
-
-import static org.apache.commons.lang3.RandomUtils.nextInt;
 
 /**
  * Generate a random {@link URI}.
  *
  * @author Mahmoud Ben Hassine (mahmoud.benhassine@icloud.com)
  */
-public class UriRandomizer implements Randomizer<URI> {
+public class UriRandomizer extends AbstractRandomizer<URI> {
 
     private final String[] uris = { "ftp://ftp.is.co.za/rfc/rfc1808.txt",
                                     "http://www.ietf.org/rfc/rfc2396.txt",
                                     "telnet://192.0.2.16:80/",
                                     "mailto:John.Doe@example.com",
                                     "http://www.wikipedia.org" };
+
+    /**
+     * Create a new {@link UriRandomizer}.
+     */
+    public UriRandomizer() {
+    }
+
+    /**
+     * Create a new {@link UriRandomizer}.
+     *
+     * @param seed initial seed
+     */
+    public UriRandomizer(long seed) {
+        super(seed);
+    }
 
     /**
      * Create a new {@link UriRandomizer}.
@@ -53,10 +64,20 @@ public class UriRandomizer implements Randomizer<URI> {
         return new UriRandomizer();
     }
 
+    /**
+     * Create a new {@link UriRandomizer}.
+     *
+     * @param seed initial seed
+     * @return a new {@link UriRandomizer}.
+     */
+    public static UriRandomizer aNewUriRandomizer(final long seed) {
+        return new UriRandomizer(seed);
+    }
+
     @Override
     public URI getRandomValue() {
         try {
-            int randomIndex = nextInt(0, uris.length);
+            int randomIndex = random.nextInt(uris.length);
             return new URI(uris[randomIndex]);
         } catch (URISyntaxException e) {
             // predefined URIs are valid

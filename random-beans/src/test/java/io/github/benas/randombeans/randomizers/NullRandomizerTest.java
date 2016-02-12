@@ -21,6 +21,7 @@
  *   OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  *   THE SOFTWARE.
  */
+
 package io.github.benas.randombeans.randomizers;
 
 import org.junit.Before;
@@ -38,7 +39,7 @@ public class NullRandomizerTest {
     }
 
     @Test
-    public void testGenerateNullValue() {
+    public void generatedValueShouldBeNull() {
         assertThat(nullRandomizer.getRandomValue()).isNull();
     }
 

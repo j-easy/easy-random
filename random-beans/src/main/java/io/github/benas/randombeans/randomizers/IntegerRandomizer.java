@@ -33,11 +33,36 @@ public class IntegerRandomizer extends AbstractRandomizer<Integer> {
 
     /**
      * Create a new {@link IntegerRandomizer}.
+     */
+    public IntegerRandomizer() {
+    }
+
+    /**
+     * Create a new {@link IntegerRandomizer}.
+     *
+     * @param seed initial seed
+     */
+    public IntegerRandomizer(final long seed) {
+        super(seed);
+    }
+
+    /**
+     * Create a new {@link IntegerRandomizer}.
      *
      * @return a new {@link IntegerRandomizer}.
      */
     public static IntegerRandomizer aNewIntegerRandomizer() {
         return new IntegerRandomizer();
+    }
+
+    /**
+     * Create a new {@link IntegerRandomizer}.
+     *
+     * @param seed initial seed
+     * @return a new {@link IntegerRandomizer}.
+     */
+    public static IntegerRandomizer aNewIntegerRandomizer(final long seed) {
+        return new IntegerRandomizer(seed);
     }
 
     @Override

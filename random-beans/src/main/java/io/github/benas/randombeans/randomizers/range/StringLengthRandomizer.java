@@ -25,7 +25,9 @@
 package io.github.benas.randombeans.randomizers.range;
 
 import io.github.benas.randombeans.api.Randomizer;
-import org.apache.commons.lang3.RandomStringUtils;
+import io.github.benas.randombeans.randomizers.StringRandomizer;
+
+import static java.lang.Math.abs;
 
 /**
  * Generate a random {@link String} having a length in the given range.
@@ -34,26 +36,63 @@ import org.apache.commons.lang3.RandomStringUtils;
  */
 public class StringLengthRandomizer implements Randomizer<String> {
 
-    private IntegerRangeRandomizer delegate;
+    private StringRandomizer stringRandomizer;
+    private IntegerRangeRandomizer integerRangeRandomizer;
 
     /**
      * Create a new {@link StringLengthRandomizer}.
+     *
+     * @param min min value
+     * @param max max value
      */
     public StringLengthRandomizer(final Integer min, final Integer max) {
-        delegate = new IntegerRangeRandomizer(min, max);
+        stringRandomizer = new StringRandomizer();
+        integerRangeRandomizer = new IntegerRangeRandomizer(min == null || min < 0 ? 0 : min, max);
     }
 
     /**
      * Create a new {@link StringLengthRandomizer}.
      *
+     * @param min  min value
+     * @param max  max value
+     * @param seed initial seed
+     */
+    public StringLengthRandomizer(final Integer min, final Integer max, final long seed) {
+        stringRandomizer = new StringRandomizer(seed);
+        integerRangeRandomizer = new IntegerRangeRandomizer(min == null || min < 0 ? 0 : min, max, seed);
+    }
+
+    /**
+     * Create a new {@link StringLengthRandomizer}.
+     *
+     * @param min min value
+     * @param max max value
      * @return a new {@link StringLengthRandomizer}.
      */
     public static StringLengthRandomizer aNewStringLengthRandomizer(final Integer min, final Integer max) {
         return new StringLengthRandomizer(min, max);
     }
 
+    /**
+     * Create a new {@link StringLengthRandomizer}.
+     *
+     * @param min  min value
+     * @param max  max value
+     * @param seed initial seed
+     * @return a new {@link StringLengthRandomizer}.
+     */
+    public static StringLengthRandomizer aNewStringLengthRandomizer(final Integer min, final Integer max, final long seed) {
+        return new StringLengthRandomizer(min, max, seed);
+    }
+
     @Override
     public String getRandomValue() {
-        return RandomStringUtils.randomAlphabetic(delegate.getRandomValue());
+        Integer randomLength = abs(integerRangeRandomizer.getRandomValue());
+        String randomValue = stringRandomizer.getRandomValue();
+        if (randomValue.length() > randomLength) {
+            return randomValue.substring(0, randomLength);
+        } else {
+            return randomValue;
+        }
     }
 }

@@ -37,7 +37,23 @@ import static java.lang.String.valueOf;
  */
 public class BigIntegerRandomizer implements Randomizer<BigInteger> {
 
-    private IntegerRandomizer delegate = new IntegerRandomizer();
+    private IntegerRandomizer delegate;
+
+    /**
+     * Create a new {@link BigIntegerRandomizer}.
+     */
+    public BigIntegerRandomizer() {
+        delegate = new IntegerRandomizer();
+    }
+
+    /**
+     * Create a new {@link BigIntegerRandomizer}.
+     *
+     * @param seed initial seed
+     */
+    public BigIntegerRandomizer(final long seed) {
+        delegate = new IntegerRandomizer(seed);
+    }
 
     /**
      * Create a new {@link BigIntegerRandomizer}.
@@ -48,6 +64,16 @@ public class BigIntegerRandomizer implements Randomizer<BigInteger> {
         return new BigIntegerRandomizer();
     }
 
+    /**
+     * Create a new {@link BigIntegerRandomizer}.
+     *
+     * @param seed initial seed
+     * @return a new {@link BigIntegerRandomizer}.
+     */
+    public static BigIntegerRandomizer aNewBigIntegerRandomizer(final long seed) {
+        return new BigIntegerRandomizer(seed);
+    }
+    
     @Override
     public BigInteger getRandomValue() {
         return new BigInteger(valueOf(delegate.getRandomValue()));

@@ -26,6 +26,8 @@ package io.github.benas.randombeans.randomizers.range;
 
 import io.github.benas.randombeans.api.Randomizer;
 
+import static java.lang.String.valueOf;
+
 /**
  * Generate a random {@link Double} in the given range.
  *
@@ -37,22 +39,50 @@ public class DoubleRangeRandomizer implements Randomizer<Double> {
 
     /**
      * Create a new {@link DoubleRangeRandomizer}.
+     *
+     * @param min min value
+     * @param max max value
      */
     public DoubleRangeRandomizer(final Double min, final Double max) {
-        delegate = new LongRangeRandomizer(min.longValue(), max.longValue());
+        delegate = new LongRangeRandomizer(min != null ? min.longValue() : null, max != null ? max.longValue() : null);
     }
 
     /**
      * Create a new {@link DoubleRangeRandomizer}.
      *
+     * @param min  min value
+     * @param max  max value
+     * @param seed initial seed
+     */
+    public DoubleRangeRandomizer(final Double min, final Double max, final long seed) {
+        delegate = new LongRangeRandomizer(min != null ? min.longValue() : null, max != null ? max.longValue() : null, seed);
+    }
+
+    /**
+     * Create a new {@link DoubleRangeRandomizer}.
+     *
+     * @param min min value
+     * @param max max value
      * @return a new {@link DoubleRangeRandomizer}.
      */
     public static DoubleRangeRandomizer aNewDoubleRangeRandomizer(final Double min, final Double max) {
         return new DoubleRangeRandomizer(min, max);
     }
 
+    /**
+     * Create a new {@link DoubleRangeRandomizer}.
+     *
+     * @param min  min value
+     * @param max  max value
+     * @param seed initial seed
+     * @return a new {@link DoubleRangeRandomizer}.
+     */
+    public static DoubleRangeRandomizer aNewDoubleRangeRandomizer(final Double min, final Double max, final long seed) {
+        return new DoubleRangeRandomizer(min, max, seed);
+    }
+
     @Override
     public Double getRandomValue() {
-        return new Double(String.valueOf(delegate.getRandomValue()));
+        return new Double(valueOf(delegate.getRandomValue()));
     }
 }

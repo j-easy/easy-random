@@ -34,6 +34,40 @@ import org.joda.time.LocalDate;
  */
 public class JodaTimeLocalDateRandomizer extends JodaTimeAbstractRandomizer<LocalDate> {
 
+    /**
+     * Create a new {@link JodaTimeLocalDateRandomizer}.
+     */
+    public JodaTimeLocalDateRandomizer() {
+    }
+
+    /**
+     * Create a new {@link JodaTimeLocalDateRandomizer}.
+     *
+     * @param seed the initial seed
+     */
+    public JodaTimeLocalDateRandomizer(long seed) {
+        super(seed);
+    }
+
+    /**
+     * Create a new {@link JodaTimeLocalDateRandomizer}.
+     *
+     * @return a new {@link JodaTimeLocalDateRandomizer}.
+     */
+    public static JodaTimeLocalDateRandomizer aNewJodaTimeLocalDateRandomizer() {
+        return new JodaTimeLocalDateRandomizer();
+    }
+
+    /**
+     * Create a new {@link JodaTimeLocalDateRandomizer}.
+     *
+     * @param seed the initial seed
+     * @return a new {@link JodaTimeLocalDateRandomizer}.
+     */
+    public static JodaTimeLocalDateRandomizer aNewJodaTimeLocalDateRandomizer(final long seed) {
+        return new JodaTimeLocalDateRandomizer(seed);
+    }
+    
     @Override
     public LocalDate getRandomValue() {
         return new LocalDate(getRandomDate().getTime());

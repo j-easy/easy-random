@@ -35,7 +35,23 @@ import java.sql.Time;
  */
 public class SqlTimeRandomizer implements Randomizer<Time> {
 
-    private DateRandomizer delegate = new DateRandomizer();
+    private DateRandomizer delegate;
+
+    /**
+     * Create a new {@link SqlTimeRandomizer}.
+     */
+    public SqlTimeRandomizer() {
+        delegate = new DateRandomizer();
+    }
+
+    /**
+     * Create a new {@link SqlTimeRandomizer}.
+     *
+     * @param seed initial seed
+     */
+    public SqlTimeRandomizer(final long seed) {
+        delegate = new DateRandomizer(seed);
+    }
 
     /**
      * Create a new {@link SqlTimeRandomizer}.
@@ -45,6 +61,17 @@ public class SqlTimeRandomizer implements Randomizer<Time> {
     public static SqlTimeRandomizer aNewSqlTimeRandomizer() {
         return new SqlTimeRandomizer();
     }
+
+    /**
+     * Create a new {@link SqlTimeRandomizer}.
+     *
+     * @param seed initial seed
+     * @return a new {@link SqlTimeRandomizer}.
+     */
+    public static SqlTimeRandomizer aNewSqlTimeRandomizer(final long seed) {
+        return new SqlTimeRandomizer(seed);
+    }
+
 
     @Override
     public Time getRandomValue() {

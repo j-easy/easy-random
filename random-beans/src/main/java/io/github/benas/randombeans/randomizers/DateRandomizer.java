@@ -25,10 +25,10 @@
 package io.github.benas.randombeans.randomizers;
 
 import io.github.benas.randombeans.api.Randomizer;
+import io.github.benas.randombeans.randomizers.range.DateRangeRandomizer;
 
 import java.util.Date;
 
-import static io.github.benas.randombeans.randomizers.range.DateRangeRandomizer.aNewDateRangeRandomizer;
 import static io.github.benas.randombeans.util.Constants.IN_TEN_YEARS;
 import static io.github.benas.randombeans.util.Constants.TEN_YEARS_AGO;
 
@@ -39,6 +39,24 @@ import static io.github.benas.randombeans.util.Constants.TEN_YEARS_AGO;
  */
 public class DateRandomizer implements Randomizer<Date> {
 
+    private DateRangeRandomizer delegate;
+
+    /**
+     * Create a new {@link DateRandomizer}.
+     */
+    public DateRandomizer() {
+        delegate = new DateRangeRandomizer(TEN_YEARS_AGO, IN_TEN_YEARS);
+    }
+
+    /**
+     * Create a new {@link DateRandomizer}.
+     *
+     * @param seed initial seed
+     */
+    public DateRandomizer(final long seed) {
+        delegate = new DateRangeRandomizer(TEN_YEARS_AGO, IN_TEN_YEARS, seed);
+    }
+
     /**
      * Create a new {@link DateRandomizer}.
      *
@@ -48,8 +66,18 @@ public class DateRandomizer implements Randomizer<Date> {
         return new DateRandomizer();
     }
 
+    /**
+     * Create a new {@link DateRandomizer}.
+     *
+     * @param seed initial seed
+     * @return a new {@link DateRandomizer}.
+     */
+    public static DateRandomizer aNewDateRandomizer(final long seed) {
+        return new DateRandomizer(seed);
+    }
+
     @Override
     public Date getRandomValue() {
-        return aNewDateRangeRandomizer(TEN_YEARS_AGO, IN_TEN_YEARS).getRandomValue();
+        return delegate.getRandomValue();
     }
 }

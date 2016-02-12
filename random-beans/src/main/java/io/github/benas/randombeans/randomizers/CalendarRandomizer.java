@@ -35,7 +35,23 @@ import java.util.Calendar;
  */
 public class CalendarRandomizer implements Randomizer<Calendar> {
 
-    private DateRandomizer delegate = new DateRandomizer();
+    private DateRandomizer delegate;
+
+    /**
+     * Create a new {@link CalendarRandomizer}.
+     */
+    public CalendarRandomizer() {
+        delegate = new DateRandomizer();
+    }
+
+    /**
+     * Create a new {@link CalendarRandomizer}.
+     *
+     * @param seed initial seed
+     */
+    public CalendarRandomizer(final long seed) {
+        delegate = new DateRandomizer(seed);
+    }
 
     /**
      * Create a new {@link CalendarRandomizer}.
@@ -46,6 +62,15 @@ public class CalendarRandomizer implements Randomizer<Calendar> {
         return new CalendarRandomizer();
     }
 
+    /**
+     * Create a new {@link CalendarRandomizer}.
+     *
+     * @param seed initial seed
+     * @return a new {@link CalendarRandomizer}.
+     */
+    public static CalendarRandomizer aNewCalendarRandomizer(final long seed) {
+        return new CalendarRandomizer(seed);
+    }
     @Override
     public Calendar getRandomValue() {
         Calendar calendar = Calendar.getInstance();

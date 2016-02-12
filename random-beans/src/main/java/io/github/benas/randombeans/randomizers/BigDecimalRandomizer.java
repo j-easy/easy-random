@@ -35,7 +35,23 @@ import java.math.BigDecimal;
  */
 public class BigDecimalRandomizer implements Randomizer<BigDecimal> {
 
-    private DoubleRandomizer delegate = new DoubleRandomizer();
+    private DoubleRandomizer delegate;
+
+    /**
+     * Create a new {@link BigDecimalRandomizer}.
+     */
+    public BigDecimalRandomizer() {
+        delegate = new DoubleRandomizer();
+    }
+
+    /**
+     * Create a new {@link BigDecimalRandomizer}.
+     *
+     * @param seed initial seed
+     */
+    public BigDecimalRandomizer(final long seed) {
+        delegate = new DoubleRandomizer(seed);
+    }
 
     /**
      * Create a new {@link BigDecimalRandomizer}.
@@ -46,6 +62,16 @@ public class BigDecimalRandomizer implements Randomizer<BigDecimal> {
         return new BigDecimalRandomizer();
     }
 
+    /**
+     * Create a new {@link BigDecimalRandomizer}.
+     *
+     * @param seed initial seed
+     * @return a new {@link BigDecimalRandomizer}.
+     */
+    public static BigDecimalRandomizer aNewBigDecimalRandomizer(final long seed) {
+        return new BigDecimalRandomizer(seed);
+    }
+    
     @Override
     public BigDecimal getRandomValue() {
         return new BigDecimal(delegate.getRandomValue());

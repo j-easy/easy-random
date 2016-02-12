@@ -46,9 +46,9 @@ public abstract class Constants {
     public static final int DEFAULT_DATE_RANGE = 10;
 
     /**
-     * Default generated strings length.
+     * Maximum string length.
      */
-    public static final int DEFAULT_STRING_LENGTH = 10;
+    public static final int MAX_STRING_LENGTH = 64;
 
     /**
      * The date of ten years ago form now.

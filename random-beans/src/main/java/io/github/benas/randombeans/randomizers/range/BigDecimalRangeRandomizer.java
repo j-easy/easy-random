@@ -39,6 +39,9 @@ public class BigDecimalRangeRandomizer implements Randomizer<BigDecimal> {
 
     /**
      * Create a new {@link BigDecimalRangeRandomizer}.
+     *
+     * @param min min value
+     * @param max max value
      */
     public BigDecimalRangeRandomizer(final Long min, final Long max) {
         delegate = new LongRangeRandomizer(min, max);
@@ -47,10 +50,35 @@ public class BigDecimalRangeRandomizer implements Randomizer<BigDecimal> {
     /**
      * Create a new {@link BigDecimalRangeRandomizer}.
      *
+     * @param min  min value
+     * @param max  max value
+     * @param seed initial seed
+     */
+    public BigDecimalRangeRandomizer(final Long min, final Long max, final long seed) {
+        delegate = new LongRangeRandomizer(min, max, seed);
+    }
+
+    /**
+     * Create a new {@link BigDecimalRangeRandomizer}.
+     *
+     * @param min min value
+     * @param max max value
      * @return a new {@link BigDecimalRangeRandomizer}.
      */
     public static BigDecimalRangeRandomizer aNewBigDecimalRangeRandomizer(final Long min, final Long max) {
         return new BigDecimalRangeRandomizer(min, max);
+    }
+
+    /**
+     * Create a new {@link BigDecimalRangeRandomizer}.
+     *
+     * @param min  min value
+     * @param max  max value
+     * @param seed initial seed
+     * @return a new {@link BigDecimalRangeRandomizer}.
+     */
+    public static BigDecimalRangeRandomizer aNewBigDecimalRangeRandomizer(final Long min, final Long max, final long seed) {
+        return new BigDecimalRangeRandomizer(min, max, seed);
     }
 
     @Override

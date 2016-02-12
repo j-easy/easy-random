@@ -24,27 +24,58 @@
 
 package io.github.benas.randombeans.randomizers;
 
-import io.github.benas.randombeans.api.Randomizer;
-import io.github.benas.randombeans.util.Constants;
-import org.apache.commons.lang3.RandomStringUtils;
+import java.math.BigInteger;
+
+import static io.github.benas.randombeans.util.Constants.MAX_STRING_LENGTH;
 
 /**
  * Generate a random {@link String}.
  *
  * @author Mahmoud Ben Hassine (mahmoud.benhassine@icloud.com)
  */
-public class StringRandomizer implements Randomizer<String> {
+public class StringRandomizer extends AbstractRandomizer<String> {
+
+    public static final int NUM_BITS = 128;
+
+    public static final int RADIX = 32;
 
     /**
      * Create a new {@link StringRandomizer}.
+     */
+    public StringRandomizer() {
+    }
+
+    /**
+     * Create a new {@link StringRandomizer}.
+     *
+     * @param seed initial seed
+     */
+    public StringRandomizer(long seed) {
+        super(seed);
+    }
+
+    /**
+     * Create a new {@link StringRandomizer}.
+     *
      * @return a new {@link StringRandomizer}.
      */
     public static StringRandomizer aNewStringRandomizer() {
         return new StringRandomizer();
     }
 
+    /**
+     * Create a new {@link StringRandomizer}.
+     *
+     * @param seed initial seed
+     * @return a new {@link StringRandomizer}.
+     */
+    public static StringRandomizer aNewStringRandomizer(final long seed) {
+        return new StringRandomizer(seed);
+    }
+
     @Override
     public String getRandomValue() {
-        return RandomStringUtils.randomAlphabetic(Constants.DEFAULT_STRING_LENGTH);
+        String randomString = new BigInteger(NUM_BITS, random).toString(RADIX);
+        return randomString.length() > MAX_STRING_LENGTH ? randomString.substring(0, MAX_STRING_LENGTH) : randomString;
     }
 }

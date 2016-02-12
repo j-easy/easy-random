@@ -27,17 +27,49 @@ package io.github.benas.randombeans.randomizers.jodatime;
 import io.github.benas.randombeans.api.Randomizer;
 import org.joda.time.Duration;
 
-import static io.github.benas.randombeans.randomizers.IntegerRandomizer.aNewIntegerRandomizer;
-import static java.lang.Math.abs;
-
 /**
  * A {@link Randomizer} that generates random {@link Duration}.
  *
  * @author Nikola Milivojevic (0dziga0@gmail.com)
  */
-public class JodaTimeDurationRandomizer implements Randomizer<Duration> {
+public class JodaTimeDurationRandomizer extends JodaTimeAbstractRandomizer<Duration> {
+
+    /**
+     * Create a new {@link JodaTimeDurationRandomizer}.
+     */
+    public JodaTimeDurationRandomizer() {
+    }
+
+    /**
+     * Create a new {@link JodaTimeDurationRandomizer}.
+     *
+     * @param seed the initial seed
+     */
+    public JodaTimeDurationRandomizer(long seed) {
+        super(seed);
+    }
+
+    /**
+     * Create a new {@link JodaTimeDurationRandomizer}.
+     *
+     * @return a new {@link JodaTimeDurationRandomizer}.
+     */
+    public static JodaTimeDurationRandomizer aNewJodaTimeDurationRandomizer() {
+        return new JodaTimeDurationRandomizer();
+    }
+
+    /**
+     * Create a new {@link JodaTimeDurationRandomizer}.
+     *
+     * @param seed the initial seed
+     * @return a new {@link JodaTimeDurationRandomizer}.
+     */
+    public static JodaTimeDurationRandomizer aNewJodaTimeDurationRandomizer(final long seed) {
+        return new JodaTimeDurationRandomizer(seed);
+    }
+    
     @Override
     public Duration getRandomValue() {
-        return new Duration(abs(aNewIntegerRandomizer().getRandomValue()));
+        return new Duration(getRandomDate().getTime());
     }
 }

@@ -25,10 +25,10 @@
 package io.github.benas.randombeans.randomizers.jodatime;
 
 import io.github.benas.randombeans.api.Randomizer;
+import io.github.benas.randombeans.randomizers.range.DateRangeRandomizer;
 
 import java.util.Date;
 
-import static io.github.benas.randombeans.randomizers.range.DateRangeRandomizer.aNewDateRangeRandomizer;
 import static io.github.benas.randombeans.util.Constants.IN_TEN_YEARS;
 import static io.github.benas.randombeans.util.Constants.TEN_YEARS_AGO;
 
@@ -39,7 +39,17 @@ import static io.github.benas.randombeans.util.Constants.TEN_YEARS_AGO;
  */
 public abstract class JodaTimeAbstractRandomizer<T> implements Randomizer<T> {
 
+    private DateRangeRandomizer delegate;
+
+    protected JodaTimeAbstractRandomizer() {
+        delegate = new DateRangeRandomizer(TEN_YEARS_AGO, IN_TEN_YEARS);
+    }
+
+    protected JodaTimeAbstractRandomizer(final long seed) {
+        delegate = new DateRangeRandomizer(TEN_YEARS_AGO, IN_TEN_YEARS, seed);
+    }
+
     protected Date getRandomDate() {
-        return aNewDateRangeRandomizer(TEN_YEARS_AGO, IN_TEN_YEARS).getRandomValue();
+        return delegate.getRandomValue();
     }
 }

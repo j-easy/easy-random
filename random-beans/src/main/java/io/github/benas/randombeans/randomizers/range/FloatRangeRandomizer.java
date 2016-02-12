@@ -26,6 +26,8 @@ package io.github.benas.randombeans.randomizers.range;
 
 import io.github.benas.randombeans.api.Randomizer;
 
+import static java.lang.String.valueOf;
+
 /**
  * Generate a random {@link Float} in the given range.
  *
@@ -37,22 +39,50 @@ public class FloatRangeRandomizer implements Randomizer<Float> {
 
     /**
      * Create a new {@link FloatRangeRandomizer}.
+     *
+     * @param min min value
+     * @param max max value
      */
     public FloatRangeRandomizer(final Float min, final Float max) {
-        delegate = new LongRangeRandomizer(min.longValue(), max.longValue());
+        delegate = new LongRangeRandomizer(min != null ? min.longValue() : null, max != null ? max.longValue() : null);
     }
 
     /**
      * Create a new {@link FloatRangeRandomizer}.
      *
+     * @param min  min value
+     * @param max  max value
+     * @param seed initial seed
+     */
+    public FloatRangeRandomizer(final Float min, final Float max, final long seed) {
+        delegate = new LongRangeRandomizer(min != null ? min.longValue() : null, max != null ? max.longValue() : null, seed);
+    }
+
+    /**
+     * Create a new {@link FloatRangeRandomizer}.
+     *
+     * @param min min value
+     * @param max max value
      * @return a new {@link FloatRangeRandomizer}.
      */
     public static FloatRangeRandomizer aNewFloatRangeRandomizer(final Float min, final Float max) {
         return new FloatRangeRandomizer(min, max);
     }
 
+    /**
+     * Create a new {@link FloatRangeRandomizer}.
+     *
+     * @param min  min value
+     * @param max  max value
+     * @param seed initial seed
+     * @return a new {@link FloatRangeRandomizer}.
+     */
+    public static FloatRangeRandomizer aNewFloatRangeRandomizer(final Float min, final Float max, final long seed) {
+        return new FloatRangeRandomizer(min, max, seed);
+    }
+
     @Override
     public Float getRandomValue() {
-        return new Float(String.valueOf(delegate.getRandomValue()));
+        return new Float(valueOf(delegate.getRandomValue()));
     }
 }

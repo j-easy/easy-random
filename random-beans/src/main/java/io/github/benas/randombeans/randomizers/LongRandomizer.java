@@ -33,6 +33,21 @@ public class LongRandomizer extends AbstractRandomizer<Long> {
 
     /**
      * Create a new {@link LongRandomizer}.
+     */
+    public LongRandomizer() {
+    }
+
+    /**
+     * Create a new {@link LongRandomizer}.
+     *
+     * @param seed initial seed
+     */
+    public LongRandomizer(final long seed) {
+        super(seed);
+    }
+
+    /**
+     * Create a new {@link LongRandomizer}.
      *
      * @return a new {@link LongRandomizer}.
      */
@@ -40,6 +55,16 @@ public class LongRandomizer extends AbstractRandomizer<Long> {
         return new LongRandomizer();
     }
 
+    /**
+     * Create a new {@link LongRandomizer}.
+     *
+     * @param seed initial seed
+     * @return a new {@link LongRandomizer}.
+     */
+    public static LongRandomizer aNewLongRandomizer(final long seed) {
+        return new LongRandomizer(seed);
+    }
+    
     @Override
     public Long getRandomValue() {
         return random.nextLong();

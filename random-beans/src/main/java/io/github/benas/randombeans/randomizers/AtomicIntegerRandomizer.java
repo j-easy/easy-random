@@ -35,7 +35,23 @@ import java.util.concurrent.atomic.AtomicInteger;
  */
 public class AtomicIntegerRandomizer implements Randomizer<AtomicInteger> {
 
-    private IntegerRandomizer delegate = new IntegerRandomizer();
+    private IntegerRandomizer delegate;
+
+    /**
+     * Create a new {@link AtomicIntegerRandomizer}.
+     */
+    public AtomicIntegerRandomizer() {
+        delegate = new IntegerRandomizer();
+    }
+
+    /**
+     * Create a new {@link AtomicIntegerRandomizer}.
+     *
+     * @param seed initial seed
+     */
+    public AtomicIntegerRandomizer(final long seed) {
+        delegate = new IntegerRandomizer(seed);
+    }
 
     /**
      * Create a new {@link AtomicIntegerRandomizer}.
@@ -44,6 +60,16 @@ public class AtomicIntegerRandomizer implements Randomizer<AtomicInteger> {
      */
     public static AtomicIntegerRandomizer aNewAtomicIntegerRandomizer() {
         return new AtomicIntegerRandomizer();
+    }
+
+    /**
+     * Create a new {@link AtomicIntegerRandomizer}.
+     *
+     * @param seed initial seed
+     * @return a new {@link AtomicIntegerRandomizer}.
+     */
+    public static AtomicIntegerRandomizer aNewAtomicIntegerRandomizer(final long seed) {
+        return new AtomicIntegerRandomizer(seed);
     }
 
     @Override

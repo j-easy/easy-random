@@ -35,7 +35,42 @@ import static java.lang.Math.abs;
  *
  * @author Nikola Milivojevic (0dziga0@gmail.com)
  */
-public class JodaTimePeriodRandomizer implements Randomizer<Period> {
+public class JodaTimePeriodRandomizer extends JodaTimeAbstractRandomizer<Period> {
+
+    /**
+     * Create a new {@link JodaTimePeriodRandomizer}.
+     */
+    public JodaTimePeriodRandomizer() {
+    }
+
+    /**
+     * Create a new {@link JodaTimePeriodRandomizer}.
+     *
+     * @param seed the initial seed
+     */
+    public JodaTimePeriodRandomizer(long seed) {
+        super(seed);
+    }
+
+    /**
+     * Create a new {@link JodaTimePeriodRandomizer}.
+     *
+     * @return a new {@link JodaTimePeriodRandomizer}.
+     */
+    public static JodaTimePeriodRandomizer aNewJodaTimePeriodRandomizer() {
+        return new JodaTimePeriodRandomizer();
+    }
+
+    /**
+     * Create a new {@link JodaTimePeriodRandomizer}.
+     *
+     * @param seed the initial seed
+     * @return a new {@link JodaTimePeriodRandomizer}.
+     */
+    public static JodaTimePeriodRandomizer aNewJodaTimePeriodRandomizer(final long seed) {
+        return new JodaTimePeriodRandomizer(seed);
+    }
+    
     @Override
     public Period getRandomValue() {
         return new Period(abs(aNewIntegerRandomizer().getRandomValue()));

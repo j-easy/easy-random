@@ -24,8 +24,7 @@
 
 package io.github.benas.randombeans.randomizers.range;
 
-import io.github.benas.randombeans.api.Randomizer;
-import org.apache.commons.math3.random.RandomDataGenerator;
+import io.github.benas.randombeans.randomizers.AbstractRandomizer;
 
 /**
  * Abstract class for range randomizers.
@@ -33,18 +32,34 @@ import org.apache.commons.math3.random.RandomDataGenerator;
  * @param <T> the type of objects in the defined range.
  * @author Rémi Alvergnat (toilal.dev@gmail.com)
  */
-public abstract class AbstractRangeRandomizer<T> implements Randomizer<T> {
-
-    protected RandomDataGenerator randomDataGenerator;
+public abstract class AbstractRangeRandomizer<T> extends AbstractRandomizer<T> {
 
     protected final T min;
     protected final T max;
 
-    public AbstractRangeRandomizer(final T min, final T max) {
-        randomDataGenerator = new RandomDataGenerator();
+    protected AbstractRangeRandomizer(final T min, final T max) {
+        super();
         this.min = min != null ? min : getDefaultMinValue();
         this.max = max != null ? max : getDefaultMaxValue();
         checkValues();
+    }
+
+    protected AbstractRangeRandomizer(final T min, final T max, final long seed) {
+        super(seed);
+        this.min = min != null ? min : getDefaultMinValue();
+        this.max = max != null ? max : getDefaultMaxValue();
+        checkValues();
+    }
+
+    protected long nextLong(final long min, final long max) {
+        long value = min + ((long) (random.nextDouble() * (max - min)));
+        if (value < min) {
+            return min;
+        } else if (value > max) {
+            return max;
+        } else {
+            return value;
+        }
     }
 
     protected abstract void checkValues();

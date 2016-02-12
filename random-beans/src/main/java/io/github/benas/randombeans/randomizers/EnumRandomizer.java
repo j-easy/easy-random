@@ -26,14 +26,12 @@ package io.github.benas.randombeans.randomizers;
 
 import io.github.benas.randombeans.api.Randomizer;
 
-import static org.apache.commons.lang3.RandomUtils.nextInt;
-
 /**
  * A {@link Randomizer} that generates a random value from a given enumeration values set.
  *
  * @author Mahmoud Ben Hassine (mahmoud.benhassine@icloud.com)
  */
-public class EnumRandomizer<T extends Enum<T>> implements Randomizer<Enum<T>> {
+public class EnumRandomizer<T extends Enum<T>> extends AbstractRandomizer<Enum<T>> {
 
     private Class<T> enumeration;
 
@@ -42,7 +40,19 @@ public class EnumRandomizer<T extends Enum<T>> implements Randomizer<Enum<T>> {
      *
      * @param enumeration the enumeration from which this randomizer will generate random values
      */
-    public EnumRandomizer(Class<T> enumeration) {
+    public EnumRandomizer(final Class<T> enumeration) {
+        super();
+        this.enumeration = enumeration;
+    }
+
+    /**
+     * Create a new {@link EnumRandomizer}.
+     *
+     * @param enumeration the enumeration from which this randomizer will generate random values
+     * @param seed        the initial seed
+     */
+    public EnumRandomizer(final Class<T> enumeration, final long seed) {
+        super(seed);
         this.enumeration = enumeration;
     }
 
@@ -52,14 +62,25 @@ public class EnumRandomizer<T extends Enum<T>> implements Randomizer<Enum<T>> {
      * @param enumeration the enumeration from which this randomizer will generate random values
      * @return a new {@link EnumRandomizer}.
      */
-    public static <R extends Enum<R>> EnumRandomizer<R> aNewEnumRandomizer(Class<R> enumeration) {
+    public static <R extends Enum<R>> EnumRandomizer<R> aNewEnumRandomizer(final Class<R> enumeration) {
+        return new EnumRandomizer<>(enumeration);
+    }
+
+    /**
+     * Create a new {@link EnumRandomizer}.
+     *
+     * @param enumeration the enumeration from which this randomizer will generate random values
+     * @param seed        the initial seed
+     * @return a new {@link EnumRandomizer}.
+     */
+    public static <R extends Enum<R>> EnumRandomizer<R> aNewEnumRandomizer(final Class<R> enumeration, final long seed) {
         return new EnumRandomizer<>(enumeration);
     }
 
     @Override
     public Enum<T> getRandomValue() {
         Enum<T>[] enumConstants = enumeration.getEnumConstants();
-        int randomIndex = nextInt(0, enumConstants.length);
+        int randomIndex = random.nextInt(enumConstants.length);
         return enumConstants[randomIndex];
     }
 }

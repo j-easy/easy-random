@@ -35,6 +35,9 @@ public class DateRangeRandomizer extends AbstractRangeRandomizer<Date> {
 
     /**
      * Create a new {@link DateRangeRandomizer}.
+     *
+     * @param min min value
+     * @param max max value
      */
     public DateRangeRandomizer(final Date min, final Date max) {
         super(min, max);
@@ -43,10 +46,36 @@ public class DateRangeRandomizer extends AbstractRangeRandomizer<Date> {
     /**
      * Create a new {@link DateRangeRandomizer}.
      *
+     * @param min  min value
+     * @param max  max value
+     * @param seed initial seed
+     */
+    public DateRangeRandomizer(final Date min, final Date max, final long seed) {
+        super(min, max, seed);
+    }
+
+    /**
+     * Create a new {@link DateRangeRandomizer}.
+     *
+     * @param min min value
+     * @param max max value
      * @return a new {@link DateRangeRandomizer}.
      */
     public static DateRangeRandomizer aNewDateRangeRandomizer(final Date min, final Date max) {
         return new DateRangeRandomizer(min, max);
+    }
+
+
+    /**
+     * Create a new {@link DateRangeRandomizer}.
+     *
+     * @param min  min value
+     * @param max  max value
+     * @param seed initial seed
+     * @return a new {@link DateRangeRandomizer}.
+     */
+    public static DateRangeRandomizer aNewDateRangeRandomizer(final Date min, final Date max, final long seed) {
+        return new DateRangeRandomizer(min, max, seed);
     }
 
     @Override
@@ -70,7 +99,7 @@ public class DateRangeRandomizer extends AbstractRangeRandomizer<Date> {
     public Date getRandomValue() {
         long minDateTime = min.getTime();
         long maxDateTime = max.getTime();
-        long randomDateTime = randomDataGenerator.nextLong(minDateTime, maxDateTime);
+        long randomDateTime = nextLong(minDateTime, maxDateTime);
         return new Date(randomDateTime);
     }
 

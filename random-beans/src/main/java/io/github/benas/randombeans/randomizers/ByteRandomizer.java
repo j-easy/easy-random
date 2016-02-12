@@ -26,14 +26,30 @@ package io.github.benas.randombeans.randomizers;
 
 import io.github.benas.randombeans.api.Randomizer;
 
-import static io.github.benas.randombeans.randomizers.IntegerRandomizer.aNewIntegerRandomizer;
-
 /**
  * Generate a random {@link Byte}.
  *
  * @author Mahmoud Ben Hassine (mahmoud.benhassine@icloud.com)
  */
 public class ByteRandomizer implements Randomizer<Byte> {
+
+    private IntegerRandomizer delegate;
+
+    /**
+     * Create a new {@link ByteRandomizer}.
+     */
+    public ByteRandomizer() {
+        delegate = new IntegerRandomizer();
+    }
+
+    /**
+     * Create a new {@link ByteRandomizer}.
+     *
+     * @param seed initial seed
+     */
+    public ByteRandomizer(final long seed) {
+        delegate = new IntegerRandomizer(seed);
+    }
 
     /**
      * Create a new {@link ByteRandomizer}.
@@ -44,8 +60,18 @@ public class ByteRandomizer implements Randomizer<Byte> {
         return new ByteRandomizer();
     }
 
+    /**
+     * Create a new {@link ByteRandomizer}.
+     *
+     * @param seed initial seed
+     * @return a new {@link ByteRandomizer}.
+     */
+    public static ByteRandomizer aNewByteRandomizer(final long seed) {
+        return new ByteRandomizer(seed);
+    }
+
     @Override
     public Byte getRandomValue() {
-        return aNewIntegerRandomizer().getRandomValue().byteValue();
+        return delegate.getRandomValue().byteValue();
     }
 }

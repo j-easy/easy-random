@@ -35,22 +35,50 @@ import java.math.BigInteger;
  */
 public class BigIntegerRangeRandomizer implements Randomizer<BigInteger> {
 
-    private final LongRangeRandomizer delegate;
+    private final IntegerRangeRandomizer delegate;
 
     /**
      * Create a new {@link BigIntegerRangeRandomizer}.
+     *
+     * @param min min value
+     * @param max max value
      */
-    public BigIntegerRangeRandomizer(final Long min, final Long max) {
-        delegate = new LongRangeRandomizer(min, max);
+    public BigIntegerRangeRandomizer(final Integer min, final Integer max) {
+        delegate = new IntegerRangeRandomizer(min, max);
     }
 
     /**
      * Create a new {@link BigIntegerRangeRandomizer}.
      *
+     * @param min  min value
+     * @param max  max value
+     * @param seed initial seed
+     */
+    public BigIntegerRangeRandomizer(final Integer min, final Integer max, final long seed) {
+        delegate = new IntegerRangeRandomizer(min, max, seed);
+    }
+
+    /**
+     * Create a new {@link BigIntegerRangeRandomizer}.
+     *
+     * @param min min value
+     * @param max max value
      * @return a new {@link BigIntegerRangeRandomizer}.
      */
-    public static BigIntegerRangeRandomizer aNewBigIntegerRangeRandomizer(final Long min, final Long max) {
+    public static BigIntegerRangeRandomizer aNewBigIntegerRangeRandomizer(final Integer min, final Integer max) {
         return new BigIntegerRangeRandomizer(min, max);
+    }
+
+    /**
+     * Create a new {@link BigIntegerRangeRandomizer}.
+     *
+     * @param min  min value
+     * @param max  max value
+     * @param seed initial seed
+     * @return a new {@link BigIntegerRangeRandomizer}.
+     */
+    public static BigIntegerRangeRandomizer aNewBigIntegerRangeRandomizer(final Integer min, final Integer max, final long seed) {
+        return new BigIntegerRangeRandomizer(min, max, seed);
     }
 
     @Override

@@ -33,6 +33,21 @@ public class FloatRandomizer extends AbstractRandomizer<Float> {
 
     /**
      * Create a new {@link FloatRandomizer}.
+     */
+    public FloatRandomizer() {
+    }
+
+    /**
+     * Create a new {@link FloatRandomizer}.
+     *
+     * @param seed initial seed
+     */
+    public FloatRandomizer(final long seed) {
+        super(seed);
+    }
+
+    /**
+     * Create a new {@link FloatRandomizer}.
      *
      * @return a new {@link FloatRandomizer}.
      */
@@ -40,6 +55,16 @@ public class FloatRandomizer extends AbstractRandomizer<Float> {
         return new FloatRandomizer();
     }
 
+    /**
+     * Create a new {@link FloatRandomizer}.
+     *
+     * @param seed initial seed
+     * @return a new {@link FloatRandomizer}.
+     */
+    public static FloatRandomizer aNewFloatRandomizer(final long seed) {
+        return new FloatRandomizer(seed);
+    }
+    
     @Override
     public Float getRandomValue() {
         return random.nextFloat();

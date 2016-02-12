@@ -35,7 +35,23 @@ import java.sql.Timestamp;
  */
 public class SqlTimestampRandomizer implements Randomizer<Timestamp> {
 
-    private DateRandomizer delegate = new DateRandomizer();
+    private DateRandomizer delegate;
+
+    /**
+     * Create a new {@link SqlTimestampRandomizer}.
+     */
+    public SqlTimestampRandomizer() {
+        delegate = new DateRandomizer();
+    }
+
+    /**
+     * Create a new {@link SqlTimestampRandomizer}.
+     *
+     * @param seed initial seed
+     */
+    public SqlTimestampRandomizer(final long seed) {
+        delegate = new DateRandomizer(seed);
+    }
 
     /**
      * Create a new {@link SqlTimestampRandomizer}.
@@ -44,6 +60,16 @@ public class SqlTimestampRandomizer implements Randomizer<Timestamp> {
      */
     public static SqlTimestampRandomizer aNewSqlTimestampRandomizer() {
         return new SqlTimestampRandomizer();
+    }
+
+    /**
+     * Create a new {@link SqlTimestampRandomizer}.
+     *
+     * @param seed initial seed
+     * @return a new {@link SqlTimestampRandomizer}.
+     */
+    public static SqlTimestampRandomizer aNewSqlTimestampRandomizer(final long seed) {
+        return new SqlTimestampRandomizer(seed);
     }
 
     @Override

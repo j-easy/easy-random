@@ -33,11 +33,36 @@ public class BooleanRandomizer extends AbstractRandomizer<Boolean> {
 
     /**
      * Create a new {@link BooleanRandomizer}.
+     */
+    public BooleanRandomizer() {
+    }
+
+    /**
+     * Create a new {@link BooleanRandomizer}.
+     *
+     * @param seed initial seed
+     */
+    public BooleanRandomizer(final long seed) {
+        super(seed);
+    }
+
+    /**
+     * Create a new {@link BooleanRandomizer}.
      *
      * @return a new {@link BooleanRandomizer}.
      */
     public static BooleanRandomizer aNewBooleanRandomizer() {
         return new BooleanRandomizer();
+    }
+
+    /**
+     * Create a new {@link BooleanRandomizer}.
+     *
+     * @param seed initial seed
+     * @return a new {@link BooleanRandomizer}.
+     */
+    public static BooleanRandomizer aNewBooleanRandomizer(final long seed) {
+        return new BooleanRandomizer(seed);
     }
 
     @Override

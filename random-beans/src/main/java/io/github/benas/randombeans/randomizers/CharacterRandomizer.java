@@ -25,7 +25,6 @@
 package io.github.benas.randombeans.randomizers;
 
 import io.github.benas.randombeans.api.Randomizer;
-import org.apache.commons.lang3.RandomStringUtils;
 
 /**
  * Generate a random {@link Character}.
@@ -33,6 +32,24 @@ import org.apache.commons.lang3.RandomStringUtils;
  * @author Mahmoud Ben Hassine (mahmoud.benhassine@icloud.com)
  */
 public class CharacterRandomizer implements Randomizer<Character> {
+
+    private StringRandomizer delegate;
+
+    /**
+     * Create a new {@link CharacterRandomizer}.
+     */
+    public CharacterRandomizer() {
+        delegate = new StringRandomizer();
+    }
+
+    /**
+     * Create a new {@link CharacterRandomizer}.
+     *
+     * @param seed initial seed
+     */
+    public CharacterRandomizer(final long seed) {
+        delegate = new StringRandomizer(seed);
+    }
 
     /**
      * Create a new {@link CharacterRandomizer}.
@@ -43,8 +60,18 @@ public class CharacterRandomizer implements Randomizer<Character> {
         return new CharacterRandomizer();
     }
 
+    /**
+     * Create a new {@link CharacterRandomizer}.
+     *
+     * @param seed initial seed
+     * @return a new {@link CharacterRandomizer}.
+     */
+    public static CharacterRandomizer aNewCharacterRandomizer(final long seed) {
+        return new CharacterRandomizer(seed);
+    }
+
     @Override
     public Character getRandomValue() {
-        return RandomStringUtils.randomAlphabetic(1).charAt(0);
+        return delegate.getRandomValue().charAt(0);
     }
 }

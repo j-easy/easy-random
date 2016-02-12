@@ -24,19 +24,15 @@
 
 package io.github.benas.randombeans.randomizers;
 
-import io.github.benas.randombeans.api.Randomizer;
-
 import java.net.MalformedURLException;
 import java.net.URL;
-
-import static org.apache.commons.lang3.RandomUtils.nextInt;
 
 /**
  * Generate a random {@link URL}.
  *
  * @author Mahmoud Ben Hassine (mahmoud.benhassine@icloud.com)
  */
-public class UrlRandomizer implements Randomizer<URL> {
+public class UrlRandomizer extends AbstractRandomizer<URL> {
 
     private final String[] urls = { "https://home.java.net",
                                     "http://www.oracle.com",
@@ -47,6 +43,21 @@ public class UrlRandomizer implements Randomizer<URL> {
 
     /**
      * Create a new {@link UrlRandomizer}.
+     */
+    public UrlRandomizer() {
+    }
+
+    /**
+     * Create a new {@link UrlRandomizer}.
+     *
+     * @param seed initial seed
+     */
+    public UrlRandomizer(long seed) {
+        super(seed);
+    }
+
+    /**
+     * Create a new {@link UrlRandomizer}.
      *
      * @return a new {@link UrlRandomizer}.
      */
@@ -54,10 +65,20 @@ public class UrlRandomizer implements Randomizer<URL> {
         return new UrlRandomizer();
     }
 
+    /**
+     * Create a new {@link UrlRandomizer}.
+     *
+     * @param seed initial seed
+     * @return a new {@link UrlRandomizer}.
+     */
+    public static UrlRandomizer aNewUrlRandomizer(final long seed) {
+        return new UrlRandomizer(seed);
+    }
+
     @Override
     public URL getRandomValue() {
         try {
-            int randomIndex = nextInt(0, urls.length);
+            int randomIndex = random.nextInt(urls.length);
             return new URL(urls[randomIndex]);
         } catch (MalformedURLException e) {
             // predefined URLs are valid

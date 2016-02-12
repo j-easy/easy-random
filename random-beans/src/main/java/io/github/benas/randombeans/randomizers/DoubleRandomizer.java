@@ -33,6 +33,21 @@ public class DoubleRandomizer extends AbstractRandomizer<Double> {
 
     /**
      * Create a new {@link DoubleRandomizer}.
+     */
+    public DoubleRandomizer() {
+    }
+
+    /**
+     * Create a new {@link DoubleRandomizer}.
+     *
+     * @param seed initial seed
+     */
+    public DoubleRandomizer(final long seed) {
+        super(seed);
+    }
+
+    /**
+     * Create a new {@link DoubleRandomizer}.
      *
      * @return a new {@link DoubleRandomizer}.
      */
@@ -40,6 +55,16 @@ public class DoubleRandomizer extends AbstractRandomizer<Double> {
         return new DoubleRandomizer();
     }
 
+    /**
+     * Create a new {@link DoubleRandomizer}.
+     *
+     * @param seed initial seed
+     * @return a new {@link DoubleRandomizer}.
+     */
+    public static DoubleRandomizer aNewDoubleRandomizer(final long seed) {
+        return new DoubleRandomizer(seed);
+    }
+    
     @Override
     public Double getRandomValue() {
         return random.nextDouble();

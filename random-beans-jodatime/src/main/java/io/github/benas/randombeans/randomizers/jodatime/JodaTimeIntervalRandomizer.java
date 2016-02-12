@@ -35,7 +35,42 @@ import static java.lang.Math.abs;
  *
  * @author Nikola Milivojevic (0dziga0@gmail.com)
  */
-public class JodaTimeIntervalRandomizer implements Randomizer<Interval> {
+public class JodaTimeIntervalRandomizer extends JodaTimeAbstractRandomizer<Interval> {
+
+    /**
+     * Create a new {@link JodaTimeIntervalRandomizer}.
+     */
+    public JodaTimeIntervalRandomizer() {
+    }
+
+    /**
+     * Create a new {@link JodaTimeIntervalRandomizer}.
+     *
+     * @param seed the initial seed
+     */
+    public JodaTimeIntervalRandomizer(long seed) {
+        super(seed);
+    }
+
+    /**
+     * Create a new {@link JodaTimeIntervalRandomizer}.
+     *
+     * @return a new {@link JodaTimeIntervalRandomizer}.
+     */
+    public static JodaTimeIntervalRandomizer aNewJodaTimeIntervalRandomizer() {
+        return new JodaTimeIntervalRandomizer();
+    }
+
+    /**
+     * Create a new {@link JodaTimeIntervalRandomizer}.
+     *
+     * @param seed the initial seed
+     * @return a new {@link JodaTimeIntervalRandomizer}.
+     */
+    public static JodaTimeIntervalRandomizer aNewJodaTimeIntervalRandomizer(final long seed) {
+        return new JodaTimeIntervalRandomizer(seed);
+    }
+    
     @Override
     public Interval getRandomValue() {
         long startDate = abs(aNewIntegerRandomizer().getRandomValue());

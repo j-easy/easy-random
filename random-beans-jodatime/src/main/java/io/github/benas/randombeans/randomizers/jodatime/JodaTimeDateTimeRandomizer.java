@@ -33,6 +33,42 @@ import org.joda.time.DateTime;
  * @author Nikola Milivojevic (0dziga0@gmail.com)
  */
 public class JodaTimeDateTimeRandomizer extends JodaTimeAbstractRandomizer<DateTime> {
+
+    /**
+     * Create a new {@link JodaTimeDateTimeRandomizer}.
+     */
+    public JodaTimeDateTimeRandomizer() {
+    }
+
+
+    /**
+     * Create a new {@link JodaTimeDateTimeRandomizer}.
+     *
+     * @param seed the initial seed
+     */
+    public JodaTimeDateTimeRandomizer(long seed) {
+        super(seed);
+    }
+
+    /**
+     * Create a new {@link JodaTimeDateTimeRandomizer}.
+     *
+     * @return a new {@link JodaTimeDateTimeRandomizer}.
+     */
+    public static JodaTimeDateTimeRandomizer aNewJodaTimeDateTimeRandomizer() {
+        return new JodaTimeDateTimeRandomizer();
+    }
+
+    /**
+     * Create a new {@link JodaTimeDateTimeRandomizer}.
+     *
+     * @param seed the initial seed
+     * @return a new {@link JodaTimeDateTimeRandomizer}.
+     */
+    public static JodaTimeDateTimeRandomizer aNewJodaTimeDateTimeRandomizer(final long seed) {
+        return new JodaTimeDateTimeRandomizer(seed);
+    }
+
     @Override
     public DateTime getRandomValue() {
         return new DateTime(getRandomDate().getTime());
