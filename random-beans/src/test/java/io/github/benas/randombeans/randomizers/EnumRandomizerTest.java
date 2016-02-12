@@ -28,6 +28,7 @@ import io.github.benas.randombeans.api.Randomizer;
 import org.junit.Before;
 import org.junit.Test;
 
+import static java.util.Arrays.asList;
 import static org.assertj.core.api.Assertions.assertThat;
 
 public class EnumRandomizerTest {
@@ -42,7 +43,7 @@ public class EnumRandomizerTest {
     @Test
     public void testGetRandomValue() {
         Enum<Gender> value = randomizer.getRandomValue();
-        assertThat(value).isIn(Gender.values());
+        assertThat(value).isIn(asList(Gender.values()));
     }
 
     private enum Gender {
