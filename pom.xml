@@ -49,18 +49,18 @@
         <assertj.version>2.3.0</assertj.version>
         <commons-beanutils.version>1.9.2</commons-beanutils.version>
         <commons-lang3.version>3.4</commons-lang3.version>
-        <commons-math3.version>3.5</commons-math3.version>
+        <commons-math3.version>3.6</commons-math3.version>
         <validation-api.version>1.1.0.Final</validation-api.version>
-        <joda-time.version>2.9.1</joda-time.version>
+        <joda-time.version>2.9.2</joda-time.version>
         <spring-context.version>4.2.4.RELEASE</spring-context.version>
         <objenesis.version>2.2</objenesis.version>
         <reflections.version>0.9.10</reflections.version>
-        <hibernate-validator.version>5.2.2.Final</hibernate-validator.version>
+        <hibernate-validator.version>5.2.3.Final</hibernate-validator.version>
         <javax.el.version>2.2.6</javax.el.version>
         <mockito-core.version>1.10.19</mockito-core.version>
         <maven-javadoc-plugin.version>2.10.3</maven-javadoc-plugin.version>
-        <maven-surefire-plugin.version>2.19</maven-surefire-plugin.version>
-        <maven-compiler-plugin.version>3.5</maven-compiler-plugin.version>
+        <maven-surefire-plugin.version>2.19.1</maven-surefire-plugin.version>
+        <maven-compiler-plugin.version>3.5.1</maven-compiler-plugin.version>
         <maven-cobertura-plugin.version>2.7</maven-cobertura-plugin.version>
         <maven-coveralls-plugin.version>4.1.0</maven-coveralls-plugin.version>
         <maven-release-plugin.version>2.5.3</maven-release-plugin.version>
