@@ -35,8 +35,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
 
-import static io.github.benas.randombeans.util.ReflectionUtils.getDeclaredFields;
-import static io.github.benas.randombeans.util.ReflectionUtils.getInheritedFields;
+import static io.github.benas.randombeans.util.ReflectionUtils.*;
 
 /**
  * The core implementation of the {@link Populator} interface.
@@ -48,6 +47,8 @@ final class BeanPopulator implements Populator {
 
     private FieldPopulator fieldPopulator;
 
+    private ArrayPopulator arrayPopulator;
+
     private RandomizerProvider randomizerProvider;
 
     private ObjectFactory objectFactory;
@@ -57,6 +58,7 @@ final class BeanPopulator implements Populator {
     BeanPopulator(final Set<RandomizerRegistry> registries) {
         objectFactory = new ObjectFactory();
         randomizerProvider = new RandomizerProvider(registries);
+        arrayPopulator = new ArrayPopulator(this);
         fieldPopulator = new FieldPopulator(this, randomizerProvider, objectFactory);
         fieldExclusionChecker = new FieldExclusionChecker();
     }
@@ -89,6 +91,11 @@ final class BeanPopulator implements Populator {
             //No instantiation needed for enum types.
             if (type.isEnum()) {
                 return (T) new EnumRandomizer(type).getRandomValue();
+            }
+
+            // Array types do not have fields, randomize the type without introspection
+            if (isArrayType(type)) {
+                return (T) arrayPopulator.getRandomArray(type);
             }
 
             // If the type has been already randomized, reuse the cached instance to avoid recursion.

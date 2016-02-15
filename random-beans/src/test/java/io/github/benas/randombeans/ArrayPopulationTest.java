@@ -21,13 +21,13 @@
  *   OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  *   THE SOFTWARE.
  */
+
 package io.github.benas.randombeans;
 
 import io.github.benas.randombeans.api.Populator;
 import io.github.benas.randombeans.beans.ArrayBean;
 import io.github.benas.randombeans.beans.Person;
 import org.junit.Before;
-import org.junit.Ignore;
 import org.junit.Test;
 
 import static io.github.benas.randombeans.PopulatorBuilder.aNewPopulatorBuilder;
@@ -43,7 +43,18 @@ public class ArrayPopulationTest {
         populator = aNewPopulatorBuilder().build();
     }
 
-    @Ignore
+    @Test
+    public void testArrayPopulation() {
+        final String[] strings = populator.populate(String[].class);
+        assertThat(strings).isNotNull();
+    }
+
+    @Test
+    public void testPrimitiveArrayPopulation() {
+        final int[] ints = populator.populate(int[].class);
+        assertThat(ints).isNotNull();
+    }
+
     @Test
     public void primitiveArraysShouldBeCorrectlyPopulated() {
         final ArrayBean bean = populator.populate(ArrayBean.class);
