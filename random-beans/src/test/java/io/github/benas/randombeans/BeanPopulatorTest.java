@@ -200,6 +200,7 @@ public class BeanPopulatorTest {
         assertThat(node.getValue()).isNotEmpty();
         assertThat(node.getLeft()).isNotNull();
         assertThat(node.getRight()).isNotNull();
+        assertThat(node.getParents()).isNotNull();
     }
 
     @Test
