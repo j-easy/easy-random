@@ -182,6 +182,16 @@ public abstract class ReflectionUtils {
     }
 
     /**
+     * Check if a type should be introspected for internal fields.
+     *
+     * @param type the type to check
+     * @return true if the type should be introspected, false otherwise
+     */
+    public static boolean isIntrospectable(final Class<?> type) {
+        return !isEnumType(type) && !isArrayType(type) && !isCollectionType(type) && !isMapType(type);
+    }
+
+    /**
      * Check if a type is a map type.
      *
      * @param type the type to check

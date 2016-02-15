@@ -21,6 +21,7 @@
  *   OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  *   THE SOFTWARE.
  */
+
 package io.github.benas.randombeans;
 
 import io.github.benas.randombeans.api.BeanPopulationException;
@@ -29,7 +30,7 @@ import io.github.benas.randombeans.beans.*;
 import org.junit.Before;
 import org.junit.Test;
 
-import java.util.Collection;
+import java.util.*;
 
 import static io.github.benas.randombeans.PopulatorBuilder.aNewPopulatorBuilder;
 import static org.assertj.core.api.Assertions.assertThat;
@@ -237,6 +238,34 @@ public class CollectionPopulationTest {
     @Test (expected = BeanPopulationException.class)
     public void delayedQueueTypeMustBeRejected() {
         populator.populate(DelayedQueueBean.class);
+    }
+
+    @Test
+    public void rawInterfaceCollectionTypesMustBeGeneratedEmpty() {
+        populator = aNewPopulatorBuilder().scanClasspathForConcreteClasses(true).build();
+        List list = populator.populate(List.class);
+        assertThat(list).isEmpty();
+    }
+
+    @Test
+    public void rawConcreteCollectionTypesMustBeGeneratedEmpty() {
+        populator = aNewPopulatorBuilder().scanClasspathForConcreteClasses(true).build();
+        ArrayList list = populator.populate(ArrayList.class);
+        assertThat(list).isEmpty();
+    }
+
+    @Test
+    public void rawInterfaceMapTypesMustBeGeneratedEmpty() {
+        populator = aNewPopulatorBuilder().scanClasspathForConcreteClasses(true).build();
+        Map map = populator.populate(Map.class);
+        assertThat(map).isEmpty();
+    }
+
+    @Test
+    public void rawConcreteMapTypesMustBeGeneratedEmpty() {
+        populator = aNewPopulatorBuilder().scanClasspathForConcreteClasses(true).build();
+        HashMap map = populator.populate(HashMap.class);
+        assertThat(map).isEmpty();
     }
 
     private void assertContainsOnlyNonEmptyPersons(Collection<Person> persons) {

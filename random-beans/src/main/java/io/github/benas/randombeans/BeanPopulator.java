@@ -88,14 +88,10 @@ final class BeanPopulator implements Populator {
     <T> T doPopulateBean(final Class<T> type, final PopulatorContext context) {
         T result;
         try {
-            //No instantiation needed for enum types.
-            if (isEnumType(type)) {
-                return (T) new EnumRandomizer(type).getRandomValue();
-            }
 
-            // Array types do not have fields, randomize the type without introspection
-            if (isArrayType(type)) {
-                return (T) arrayPopulator.getRandomArray(type);
+            // Collection types are randomized without introspection for internal fields
+            if (!isIntrospectable(type)) {
+                return randomize(type);
             }
 
             // If the type has been already randomized, reuse the cached instance to avoid recursion.
@@ -120,6 +116,22 @@ final class BeanPopulator implements Populator {
         } catch (InstantiationError | Exception e) {
             throw new BeanPopulationException("Unable to generate a random instance of type " + type, e);
         }
+    }
+
+    private <T> T randomize(Class<T> type) {
+        if (isEnumType(type)) {
+            return (T) new EnumRandomizer(type).getRandomValue();
+        }
+        if (isArrayType(type)) {
+            return (T) arrayPopulator.getRandomArray(type);
+        }
+        if (isCollectionType(type)) {
+            return (T) objectFactory.createEmptyImplementationForCollectionInterface(type);
+        }
+        if (isMapType(type)) {
+            return (T) objectFactory.createEmptyImplementationForMapInterface(type);
+        }
+        return null;
     }
 
     private <T> void populateFields(final List<Field> fields, final T result, final PopulatorContext context) throws IllegalAccessException {
