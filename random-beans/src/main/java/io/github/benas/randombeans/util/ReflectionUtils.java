@@ -142,6 +142,16 @@ public abstract class ReflectionUtils {
     }
 
     /**
+     * Check if a type is an enum type.
+     *
+     * @param type the type to check.
+     * @return true if the type is an enum type, false otherwise.
+     */
+    public static boolean isEnumType(final Class<?> type) {
+        return type.isEnum();
+    }
+
+    /**
      * Check if a type is a collection type.
      *
      * @param type the type to check.

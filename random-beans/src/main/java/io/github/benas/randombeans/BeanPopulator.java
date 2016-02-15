@@ -89,7 +89,7 @@ final class BeanPopulator implements Populator {
         T result;
         try {
             //No instantiation needed for enum types.
-            if (type.isEnum()) {
+            if (isEnumType(type)) {
                 return (T) new EnumRandomizer(type).getRandomValue();
             }
 
