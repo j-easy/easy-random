@@ -43,7 +43,7 @@ import static io.github.benas.randombeans.util.ReflectionUtils.*;
  * @author Mahmoud Ben Hassine (mahmoud.benhassine@icloud.com)
  */
 @SuppressWarnings({ "rawtypes", "unchecked" })
-final class BeanPopulator implements Populator {
+class BeanPopulator implements Populator {
 
     private FieldPopulator fieldPopulator;
 
@@ -91,7 +91,7 @@ final class BeanPopulator implements Populator {
 
             // Collection types are randomized without introspection for internal fields
             if (!isIntrospectable(type)) {
-                return randomize(type);
+                return randomize(type, context);
             }
 
             // If the type has been already randomized, reuse the cached instance to avoid recursion.
@@ -118,12 +118,12 @@ final class BeanPopulator implements Populator {
         }
     }
 
-    private <T> T randomize(Class<T> type) {
+    private <T> T randomize(final Class<T> type, final PopulatorContext context) {
         if (isEnumType(type)) {
             return (T) new EnumRandomizer(type).getRandomValue();
         }
         if (isArrayType(type)) {
-            return (T) arrayPopulator.getRandomArray(type);
+            return (T) arrayPopulator.getRandomArray(type, context);
         }
         if (isCollectionType(type)) {
             return (T) objectFactory.createEmptyImplementationForCollectionInterface(type);

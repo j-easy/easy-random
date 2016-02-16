@@ -1,30 +1,29 @@
 /*
  * The MIT License
  *
- *    Copyright (c) 2016, Mahmoud Ben Hassine (mahmoud.benhassine@icloud.com)
+ *   Copyright (c) 2016, Mahmoud Ben Hassine (mahmoud.benhassine@icloud.com)
  *
- *    Permission is hereby granted, free of charge, to any person obtaining a copy
- *    of this software and associated documentation files (the "Software"), to deal
- *    in the Software without restriction, including without limitation the rights
- *    to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
- *    copies of the Software, and to permit persons to whom the Software is
- *    furnished to do so, subject to the following conditions:
+ *   Permission is hereby granted, free of charge, to any person obtaining a copy
+ *   of this software and associated documentation files (the "Software"), to deal
+ *   in the Software without restriction, including without limitation the rights
+ *   to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+ *   copies of the Software, and to permit persons to whom the Software is
+ *   furnished to do so, subject to the following conditions:
  *
- *    The above copyright notice and this permission notice shall be included in
- *    all copies or substantial portions of the Software.
+ *   The above copyright notice and this permission notice shall be included in
+ *   all copies or substantial portions of the Software.
  *
- *    THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
- *    IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
- *    FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
- *    AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
- *    LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
- *    OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
- *    THE SOFTWARE.
+ *   THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+ *   IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+ *   FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+ *   AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+ *   LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+ *   OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
+ *   THE SOFTWARE.
  */
 
 package io.github.benas.randombeans;
 
-import io.github.benas.randombeans.api.Populator;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -44,7 +43,9 @@ public class ArrayPopulatorTest {
     public static final String STRING = "FOO";
 
     @Mock
-    private Populator populator;
+    private PopulatorContext context;
+    @Mock
+    private BeanPopulator populator;
 
     private ArrayPopulator arrayPopulator;
 
@@ -52,13 +53,13 @@ public class ArrayPopulatorTest {
     public void setUp() throws Exception {
         arrayPopulator = new ArrayPopulator(populator);
         when(populator.populate(Integer.TYPE)).thenReturn(INT);
-        when(populator.populate(String.class)).thenReturn(STRING);
+        when(populator.doPopulateBean(String.class, context)).thenReturn(STRING);
         when(populator.populate(any(Class.class), anyByte())).thenReturn(singletonList(STRING));
     }
 
     @Test
     public void getRandomArray() throws Exception {
-        Object array = arrayPopulator.getRandomArray(String[].class);
+        Object array = arrayPopulator.getRandomArray(String[].class, context);
 
         assertThat(array).isInstanceOf(String[].class);
         String[] strings = (String[]) array;

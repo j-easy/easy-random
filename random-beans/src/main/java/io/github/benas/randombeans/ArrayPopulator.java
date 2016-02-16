@@ -24,10 +24,7 @@
 
 package io.github.benas.randombeans;
 
-import io.github.benas.randombeans.api.Populator;
-
 import java.lang.reflect.Array;
-import java.util.List;
 
 import static io.github.benas.randombeans.randomizers.ByteRandomizer.aNewByteRandomizer;
 import static java.lang.Math.abs;
@@ -39,22 +36,24 @@ import static java.lang.Math.abs;
  */
 class ArrayPopulator {
 
-    private Populator populator;
+    private BeanPopulator populator;
 
-    ArrayPopulator(final Populator populator) {
+    ArrayPopulator(final BeanPopulator populator) {
         this.populator = populator;
     }
 
     @SuppressWarnings("unchecked")
-    <T> Object getRandomArray(final Class<?> fieldType) {
+    <T> Object getRandomArray(final Class<?> fieldType, final PopulatorContext context) {
         Class<?> componentType = fieldType.getComponentType();
         if (componentType.isPrimitive()) {
             return getRandomPrimitiveArray(componentType);
         }
         int randomSize = abs(aNewByteRandomizer().getRandomValue());
-        List<?> items = populator.populate(fieldType.getComponentType(), randomSize);
-        T[] itemsList = (T[]) Array.newInstance(componentType, items.size());
-        return items.toArray(itemsList);
+        T[] itemsList = (T[]) Array.newInstance(componentType, randomSize);
+        for (int i = 0; i < randomSize; i++) {
+            itemsList[i] = (T) populator.doPopulateBean(fieldType.getComponentType(), context);
+        }
+        return itemsList;
     }
 
     Object getRandomPrimitiveArray(final Class<?> primitiveType) {
