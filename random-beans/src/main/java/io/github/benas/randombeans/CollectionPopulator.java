@@ -24,13 +24,10 @@
 
 package io.github.benas.randombeans;
 
-import io.github.benas.randombeans.api.Populator;
-
 import java.lang.reflect.Field;
 import java.lang.reflect.ParameterizedType;
 import java.lang.reflect.Type;
 import java.util.Collection;
-import java.util.List;
 
 import static io.github.benas.randombeans.util.Constants.MAX_COLLECTION_SIZE;
 import static io.github.benas.randombeans.util.ReflectionUtils.*;
@@ -43,21 +40,21 @@ import static org.apache.commons.lang3.RandomUtils.nextInt;
  */
 class CollectionPopulator {
 
-    private Populator populator;
+    private BeanPopulator populator;
 
     private ObjectFactory objectFactory;
 
-    CollectionPopulator(final Populator populator, final ObjectFactory objectFactory) {
+    CollectionPopulator(final BeanPopulator populator, final ObjectFactory objectFactory) {
         this.populator = populator;
         this.objectFactory = objectFactory;
     }
 
     @SuppressWarnings({"unchecked", "rawtypes"})
-    Collection<?> getRandomCollection(final Field field) throws IllegalAccessException {
+    Collection<?> getRandomCollection(final Field field, final PopulatorContext context) throws IllegalAccessException {
         int randomSize = nextInt(1, MAX_COLLECTION_SIZE);
         Class<?> fieldType = field.getType();
         Type fieldGenericType = field.getGenericType();
-        Collection<?> collection;
+        Collection collection;
 
         if (isInterface(fieldType)) {
             collection = objectFactory.createEmptyImplementationForCollectionInterface(fieldType);
@@ -69,8 +66,11 @@ class CollectionPopulator {
             ParameterizedType parameterizedType = (ParameterizedType) fieldGenericType;
             Type type = parameterizedType.getActualTypeArguments()[0];
             if (isPopulatable(type)) {
-                List items = populator.populate((Class<?>) type, randomSize);
-                collection.addAll(items);
+                for (int i = 0; i < randomSize; i++) {
+                    Object item = populator.doPopulateBean((Class<?>) type, context);
+                    collection.add(item);
+                }
+
             }
         }
         return collection;

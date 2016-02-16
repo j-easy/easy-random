@@ -24,11 +24,23 @@
 
 package io.github.benas.randombeans.beans;
 
+import java.util.List;
+
 public class Node {
 
     private String value;
 
     private Node left, right;
+
+    private List<Node> parents;
+
+    public List<Node> getParents() {
+        return parents;
+    }
+
+    public void setParents(List<Node> parents) {
+        this.parents = parents;
+    }
 
     public String getValue() {
         return value;

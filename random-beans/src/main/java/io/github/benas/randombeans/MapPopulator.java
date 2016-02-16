@@ -24,8 +24,6 @@
 
 package io.github.benas.randombeans;
 
-import io.github.benas.randombeans.api.Populator;
-
 import java.lang.reflect.Field;
 import java.lang.reflect.ParameterizedType;
 import java.lang.reflect.Type;
@@ -42,17 +40,17 @@ import static org.apache.commons.lang3.RandomUtils.nextInt;
  */
 class MapPopulator {
 
-    private Populator populator;
+    private BeanPopulator populator;
 
     private ObjectFactory objectFactory;
 
-    MapPopulator(final Populator populator, final ObjectFactory objectFactory) {
+    MapPopulator(final BeanPopulator populator, final ObjectFactory objectFactory) {
         this.populator = populator;
         this.objectFactory = objectFactory;
     }
 
     @SuppressWarnings("unchecked")
-    Map<?, ?> getRandomMap(final Field field) throws IllegalAccessException {
+    Map<?, ?> getRandomMap(final Field field, final PopulatorContext context) throws IllegalAccessException {
         int randomSize = nextInt(1, MAX_COLLECTION_SIZE);
         Class<?> fieldType = field.getType();
         Type fieldGenericType = field.getGenericType();
@@ -74,8 +72,8 @@ class MapPopulator {
             Type valueType = parameterizedType.getActualTypeArguments()[1];
             if (isPopulatable(keyType) && isPopulatable(valueType)) {
                 for (int index = 0; index < randomSize; index++) {
-                    Object randomKey = populator.populate((Class<?>) keyType);
-                    Object randomValue = populator.populate((Class<?>) valueType);
+                    Object randomKey = populator.doPopulateBean((Class<?>) keyType, context);
+                    Object randomValue = populator.doPopulateBean((Class<?>) valueType, context);
                     map.put(randomKey, randomValue);
                 }
             }

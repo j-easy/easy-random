@@ -84,18 +84,18 @@ class FieldPopulator {
 
         Object value;
         if (isArrayType(fieldType)) {
-            value = arrayPopulator.getRandomArray(fieldType);
+            value = arrayPopulator.getRandomArray(fieldType, context);
         } else if (isCollectionType(fieldType)) {
-            value = collectionPopulator.getRandomCollection(field);
+            value = collectionPopulator.getRandomCollection(field, context);
         } else if (isMapType(fieldType)) {
-            value = mapPopulator.getRandomMap(field);
+            value = mapPopulator.getRandomMap(field, context);
         } else {
             if (scanClasspathForConcreteClasses && isAbstract(fieldType)) {
                 Class<?> randomConcreteSubType = randomElementOf(filterSameParameterizedTypes(getPublicConcreteSubTypesOf(fieldType), fieldGenericType));
                 if (randomConcreteSubType == null) {
                     throw new BeanPopulationException("Unable to find a matching concrete subtype of type: " + fieldType);
                 } else {
-                    value = beanPopulator.populate(randomConcreteSubType);
+                    value = beanPopulator.doPopulateBean(randomConcreteSubType, context);
                 }
             } else {
                 value = beanPopulator.doPopulateBean(fieldType, context);
