@@ -30,10 +30,7 @@ import org.junit.runner.RunWith;
 import org.mockito.Mock;
 import org.mockito.runners.MockitoJUnitRunner;
 
-import static java.util.Collections.singletonList;
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.mockito.Matchers.any;
-import static org.mockito.Matchers.anyByte;
 import static org.mockito.Mockito.when;
 
 @RunWith(MockitoJUnitRunner.class)
@@ -54,7 +51,6 @@ public class ArrayPopulatorTest {
         arrayPopulator = new ArrayPopulator(populator);
         when(populator.populate(Integer.TYPE)).thenReturn(INT);
         when(populator.doPopulateBean(String.class, context)).thenReturn(STRING);
-        when(populator.populate(any(Class.class), anyByte())).thenReturn(singletonList(STRING));
     }
 
     @Test

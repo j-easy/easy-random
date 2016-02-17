@@ -243,28 +243,28 @@ public class CollectionPopulationTest {
     @Test
     public void rawInterfaceCollectionTypesMustBeGeneratedEmpty() {
         populator = aNewPopulatorBuilder().scanClasspathForConcreteClasses(true).build();
-        List list = populator.populate(List.class);
+        List<?> list = populator.populate(List.class);
         assertThat(list).isEmpty();
     }
 
     @Test
     public void rawConcreteCollectionTypesMustBeGeneratedEmpty() {
         populator = aNewPopulatorBuilder().scanClasspathForConcreteClasses(true).build();
-        ArrayList list = populator.populate(ArrayList.class);
+        ArrayList<?> list = populator.populate(ArrayList.class);
         assertThat(list).isEmpty();
     }
 
     @Test
     public void rawInterfaceMapTypesMustBeGeneratedEmpty() {
         populator = aNewPopulatorBuilder().scanClasspathForConcreteClasses(true).build();
-        Map map = populator.populate(Map.class);
+        Map<?, ?> map = populator.populate(Map.class);
         assertThat(map).isEmpty();
     }
 
     @Test
     public void rawConcreteMapTypesMustBeGeneratedEmpty() {
         populator = aNewPopulatorBuilder().scanClasspathForConcreteClasses(true).build();
-        HashMap map = populator.populate(HashMap.class);
+        HashMap<?, ?> map = populator.populate(HashMap.class);
         assertThat(map).isEmpty();
     }
 
