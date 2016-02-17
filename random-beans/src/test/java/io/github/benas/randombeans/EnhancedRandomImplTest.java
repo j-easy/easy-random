@@ -143,15 +143,15 @@ public class EnhancedRandomImplTest {
     }
 
     @Test(expected = ObjectGenerationException.class)
-    public void failsToPopulateInterfacesAndAbstractClassesIfScanClasspathForConcreteClassesIsDisabled() {
-        enhancedRandom = aNewEnhancedRandomBuilder().scanClasspathForConcreteClasses(false).build();
+    public void failsToPopulateInterfacesAndAbstractClassesIfScanClasspathForConcreteTypesIsDisabled() {
+        enhancedRandom = aNewEnhancedRandomBuilder().scanClasspathForConcreteTypes(false).build();
 
         enhancedRandom.nextObject(Mamals.class);
     }
 
     @Test
-    public void generatesConcreteTypesForInterfacesAndAbstractClassesIfScanClasspathForConcreteClassesIsEnabled() {
-        enhancedRandom = aNewEnhancedRandomBuilder().scanClasspathForConcreteClasses(true).build();
+    public void generatesConcreteTypesForInterfacesAndAbstractClassesIfScanClasspathForConcreteTypesIsEnabled() {
+        enhancedRandom = aNewEnhancedRandomBuilder().scanClasspathForConcreteTypes(true).build();
 
         Mamals mamals = enhancedRandom.nextObject(Mamals.class);
 
@@ -160,8 +160,8 @@ public class EnhancedRandomImplTest {
     }
 
     @Test
-    public void generatesConcreteTypesForFieldsWithGenericParametersIfScanClasspathForConcreteClassesIsEnabled() {
-        enhancedRandom = aNewEnhancedRandomBuilder().scanClasspathForConcreteClasses(true).build();
+    public void generatesConcreteTypesForFieldsWithGenericParametersIfScanClasspathForConcreteTypesIsEnabled() {
+        enhancedRandom = aNewEnhancedRandomBuilder().scanClasspathForConcreteTypes(true).build();
 
         ComparableBean comparableBean = enhancedRandom.nextObject(ComparableBean.class);
 
@@ -169,9 +169,9 @@ public class EnhancedRandomImplTest {
     }
 
     @Test
-    public void generatedConcreteSubTypesMustBePopulatedWhenScanClasspathForConcreteClassesIsEnabled() throws Exception {
+    public void generatedConcreteSubTypesMustBePopulatedWhenScanClasspathForConcreteTypesIsEnabled() throws Exception {
         // Given
-        enhancedRandom = EnhancedRandomBuilder.aNewEnhancedRandomBuilder().scanClasspathForConcreteClasses(true).build();
+        enhancedRandom = EnhancedRandomBuilder.aNewEnhancedRandomBuilder().scanClasspathForConcreteTypes(true).build();
 
         // When
         Foo foo = enhancedRandom.nextObject(Foo.class);

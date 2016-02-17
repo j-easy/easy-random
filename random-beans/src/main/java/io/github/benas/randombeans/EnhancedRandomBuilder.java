@@ -43,12 +43,12 @@ public class EnhancedRandomBuilder {
 
     private Set<RandomizerRegistry> userRegistries;
 
-    private boolean scanClasspathForConcreteClasses;
+    private boolean scanClasspathForConcreteTypes;
 
     private EnhancedRandomBuilder() {
         customRandomizerRegistry = new CustomRandomizerRegistry();
         userRegistries = new LinkedHashSet<>();
-        scanClasspathForConcreteClasses = false;
+        scanClasspathForConcreteTypes = false;
     }
 
     /**
@@ -94,16 +94,16 @@ public class EnhancedRandomBuilder {
     }
 
     /**
-     * Should the classpath be scanned for concrete classes when a field with an interface or abstract 
+     * Should the classpath be scanned for concrete types when a field with an interface or abstract
      * class type is encountered?
      * 
      * Deactivated by default.
-     * 
-     * @param scanClasspathForConcreteClasses whether to scan the classpath or not
+     *
+     * @param scanClasspathForConcreteTypes whether to scan the classpath or not
      * @return a pre configured {@link EnhancedRandomBuilder} instance
      */
-    public EnhancedRandomBuilder scanClasspathForConcreteClasses(boolean scanClasspathForConcreteClasses) {
-        this.scanClasspathForConcreteClasses = scanClasspathForConcreteClasses;
+    public EnhancedRandomBuilder scanClasspathForConcreteTypes(boolean scanClasspathForConcreteTypes) {
+        this.scanClasspathForConcreteTypes = scanClasspathForConcreteTypes;
         return this;
     }
 
@@ -118,7 +118,7 @@ public class EnhancedRandomBuilder {
         registries.addAll(userRegistries); // programatically registered registries through registerRandomizerRegistry()
         registries.addAll(loadRegistries()); // registries added to classpath through the SPI
         EnhancedRandomImpl populator = new EnhancedRandomImpl(registries);
-        populator.setScanClasspathForConcreteClasses(scanClasspathForConcreteClasses);
+        populator.setScanClasspathForConcreteTypes(scanClasspathForConcreteTypes);
         return populator;
     }
 

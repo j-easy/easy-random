@@ -53,8 +53,8 @@ public class ObjectFactoryTest {
     }
 
     @Test(expected = InstantiationError.class)
-    public void whenNoConcreteClassIsFound_thenShouldThrowAnInstantiationError() {
-        objectFactory.setScanClasspathForConcreteClasses(true);
+    public void whenNoConcreteTypeIsFound_thenShouldThrowAnInstantiationError() {
+        objectFactory.setScanClasspathForConcreteTypes(true);
         objectFactory.createInstance(AbstractFoo.class);
     }
 

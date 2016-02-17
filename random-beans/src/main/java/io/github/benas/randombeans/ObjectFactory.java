@@ -47,11 +47,11 @@ class ObjectFactory {
 
     private final Objenesis objenesis = new ObjenesisStd();
 
-    private boolean scanClasspathForConcreteClasses;
+    private boolean scanClasspathForConcreteTypes;
 
     <T> T createInstance(final Class<T> type) {
         T result;
-        if (scanClasspathForConcreteClasses && isAbstract(type)) {
+        if (scanClasspathForConcreteTypes && isAbstract(type)) {
             Class<?> randomConcreteSubType = randomElementOf(getPublicConcreteSubTypesOf((type)));
             if (randomConcreteSubType == null) {
                 throw new InstantiationError("Unable to find a matching concrete subtype of type: " + type + " in the classpath");
@@ -81,8 +81,8 @@ class ObjectFactory {
         return collection;
     }
 
-    void setScanClasspathForConcreteClasses(boolean scanClasspathForConcreteClasses) {
-        this.scanClasspathForConcreteClasses = scanClasspathForConcreteClasses;
+    void setScanClasspathForConcreteTypes(boolean scanClasspathForConcreteTypes) {
+        this.scanClasspathForConcreteTypes = scanClasspathForConcreteTypes;
     }
 
     private void rejectUnsupportedTypes(Class<?> type) {

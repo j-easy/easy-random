@@ -242,28 +242,28 @@ public class CollectionPopulationTest {
 
     @Test
     public void rawInterfaceCollectionTypesMustBeGeneratedEmpty() {
-        enhancedRandom = aNewEnhancedRandomBuilder().scanClasspathForConcreteClasses(true).build();
+        enhancedRandom = aNewEnhancedRandomBuilder().scanClasspathForConcreteTypes(true).build();
         List<?> list = enhancedRandom.nextObject(List.class);
         assertThat(list).isEmpty();
     }
 
     @Test
     public void rawConcreteCollectionTypesMustBeGeneratedEmpty() {
-        enhancedRandom = aNewEnhancedRandomBuilder().scanClasspathForConcreteClasses(true).build();
+        enhancedRandom = aNewEnhancedRandomBuilder().scanClasspathForConcreteTypes(true).build();
         ArrayList<?> list = enhancedRandom.nextObject(ArrayList.class);
         assertThat(list).isEmpty();
     }
 
     @Test
     public void rawInterfaceMapTypesMustBeGeneratedEmpty() {
-        enhancedRandom = aNewEnhancedRandomBuilder().scanClasspathForConcreteClasses(true).build();
+        enhancedRandom = aNewEnhancedRandomBuilder().scanClasspathForConcreteTypes(true).build();
         Map<?, ?> map = enhancedRandom.nextObject(Map.class);
         assertThat(map).isEmpty();
     }
 
     @Test
     public void rawConcreteMapTypesMustBeGeneratedEmpty() {
-        enhancedRandom = aNewEnhancedRandomBuilder().scanClasspathForConcreteClasses(true).build();
+        enhancedRandom = aNewEnhancedRandomBuilder().scanClasspathForConcreteTypes(true).build();
         HashMap<?, ?> map = enhancedRandom.nextObject(HashMap.class);
         assertThat(map).isEmpty();
     }

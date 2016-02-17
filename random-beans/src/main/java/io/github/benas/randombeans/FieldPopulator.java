@@ -56,7 +56,7 @@ class FieldPopulator {
 
     private RandomizerProvider randomizerProvider;
 
-    private boolean scanClasspathForConcreteClasses;
+    private boolean scanClasspathForConcreteTypes;
 
     FieldPopulator(final EnhancedRandomImpl beanPopulator, final RandomizerProvider randomizerProvider,
                    final ArrayPopulator arrayPopulator, final CollectionPopulator collectionPopulator, final MapPopulator mapPopulator) {
@@ -95,7 +95,7 @@ class FieldPopulator {
         } else if (isMapType(fieldType)) {
             value = mapPopulator.getRandomMap(field, context);
         } else {
-            if (scanClasspathForConcreteClasses && isAbstract(fieldType)) {
+            if (scanClasspathForConcreteTypes && isAbstract(fieldType)) {
                 Class<?> randomConcreteSubType = randomElementOf(filterSameParameterizedTypes(getPublicConcreteSubTypesOf(fieldType), fieldGenericType));
                 if (randomConcreteSubType == null) {
                     throw new ObjectGenerationException("Unable to find a matching concrete subtype of type: " + fieldType);
@@ -109,7 +109,7 @@ class FieldPopulator {
         return value;
     }
 
-    void setScanClasspathForConcreteClasses(boolean scanClasspathForConcreteClasses) {
-        this.scanClasspathForConcreteClasses = scanClasspathForConcreteClasses;
+    void setScanClasspathForConcreteTypes(boolean scanClasspathForConcreteTypes) {
+        this.scanClasspathForConcreteTypes = scanClasspathForConcreteTypes;
     }
 }

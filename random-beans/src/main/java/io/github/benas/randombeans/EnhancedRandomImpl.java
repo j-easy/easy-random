@@ -151,8 +151,8 @@ class EnhancedRandomImpl extends EnhancedRandom {
      * Setters for optional parameters
      */
 
-    void setScanClasspathForConcreteClasses(final boolean scanClasspathForConcreteClasses) {
-        fieldPopulator.setScanClasspathForConcreteClasses(scanClasspathForConcreteClasses);
-        objectFactory.setScanClasspathForConcreteClasses(scanClasspathForConcreteClasses);
+    void setScanClasspathForConcreteTypes(final boolean scanClasspathForConcreteTypes) {
+        fieldPopulator.setScanClasspathForConcreteTypes(scanClasspathForConcreteTypes);
+        objectFactory.setScanClasspathForConcreteTypes(scanClasspathForConcreteTypes);
     }
 }
