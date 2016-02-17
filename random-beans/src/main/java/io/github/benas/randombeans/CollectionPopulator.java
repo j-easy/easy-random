@@ -41,12 +41,12 @@ import static org.apache.commons.lang3.RandomUtils.nextInt;
  */
 class CollectionPopulator {
 
-    private BeanPopulator populator;
+    private EnhancedRandomImpl enhancedRandom;
 
     private ObjectFactory objectFactory;
 
-    CollectionPopulator(final BeanPopulator populator, final ObjectFactory objectFactory) {
-        this.populator = populator;
+    CollectionPopulator(final EnhancedRandomImpl enhancedRandom, final ObjectFactory objectFactory) {
+        this.enhancedRandom = enhancedRandom;
         this.objectFactory = objectFactory;
     }
 
@@ -68,7 +68,7 @@ class CollectionPopulator {
             Type type = parameterizedType.getActualTypeArguments()[0];
             if (isPopulatable(type)) {
                 for (int i = 0; i < randomSize; i++) {
-                    Object item = populator.doPopulateBean((Class<?>) type, context);
+                    Object item = enhancedRandom.doPopulateBean((Class<?>) type, context);
                     collection.add(item);
                 }
 

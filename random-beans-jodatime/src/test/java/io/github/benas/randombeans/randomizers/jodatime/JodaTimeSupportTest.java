@@ -24,26 +24,26 @@
 
 package io.github.benas.randombeans.randomizers.jodatime;
 
-import io.github.benas.randombeans.api.Populator;
+import io.github.benas.randombeans.api.EnhancedRandom;
 import org.junit.Before;
 import org.junit.Test;
 
-import static io.github.benas.randombeans.PopulatorBuilder.aNewPopulatorBuilder;
+import static io.github.benas.randombeans.EnhancedRandomBuilder.aNewEnhancedRandomBuilder;
 import static org.assertj.core.api.Assertions.assertThat;
 
 public class JodaTimeSupportTest {
 
-    private Populator populator;
+    private EnhancedRandom enhancedRandom;
 
     @Before
     public void setUp() throws Exception {
-        populator = aNewPopulatorBuilder().build();
+        enhancedRandom = aNewEnhancedRandomBuilder().build();
     }
 
     @Test
     public void jodaTimeBeansShouldBeFilledIn() {
 
-        Organizer organizer = populator.populate(Organizer.class);
+        Organizer organizer = enhancedRandom.nextObject(Organizer.class);
 
         assertThat(organizer).isNotNull();
         assertThat(organizer.getAnniversary()).isNotNull();

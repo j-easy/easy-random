@@ -26,14 +26,14 @@ package io.github.benas.randombeans;
 
 import org.junit.Test;
 
-import static io.github.benas.randombeans.PopulatorBuilder.aNewPopulatorBuilder;
+import static io.github.benas.randombeans.EnhancedRandomBuilder.aNewEnhancedRandomBuilder;
 import static org.assertj.core.api.Assertions.assertThat;
 
 public class RandomizerAnnotationTest {
 
     @Test
     public void fieldAnnotatedWithRandomizerShouldBePopulatedWithValuesGeneratedByTheDeclaredRandomizer() {
-        Foo foo = aNewPopulatorBuilder().build().populate(Foo.class);
+        Foo foo = aNewEnhancedRandomBuilder().build().nextObject(Foo.class);
         assertThat(foo.getName()).isEqualTo("foo");
     }
 

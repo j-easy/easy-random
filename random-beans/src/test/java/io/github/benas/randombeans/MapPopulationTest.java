@@ -23,30 +23,32 @@
  */
 package io.github.benas.randombeans;
 
-import static io.github.benas.randombeans.PopulatorBuilder.aNewPopulatorBuilder;
-import static org.assertj.core.api.Assertions.assertThat;
-
-import java.util.Collection;
-
-import io.github.benas.randombeans.beans.*;
+import io.github.benas.randombeans.api.EnhancedRandom;
+import io.github.benas.randombeans.beans.CompositeMapBean;
+import io.github.benas.randombeans.beans.MapBean;
+import io.github.benas.randombeans.beans.Person;
+import io.github.benas.randombeans.beans.WildCardMapBean;
 import org.junit.Before;
 import org.junit.Test;
 
-import io.github.benas.randombeans.api.Populator;
+import java.util.Collection;
+
+import static io.github.benas.randombeans.EnhancedRandomBuilder.aNewEnhancedRandomBuilder;
+import static org.assertj.core.api.Assertions.assertThat;
 
 public class MapPopulationTest {
 
-    private Populator populator;
+    private EnhancedRandom enhancedRandom;
 
     @Before
     public void setUp() {
-        populator = aNewPopulatorBuilder().build();
+        enhancedRandom = aNewEnhancedRandomBuilder().build();
     }
 
     @Test
     @SuppressWarnings("unchecked")
     public void rawMapInterfacesShouldBeEmpty() {
-        final MapBean mapBean = populator.populate(MapBean.class);
+        final MapBean mapBean = enhancedRandom.nextObject(MapBean.class);
 
         assertThat(mapBean).isNotNull();
 
@@ -68,7 +70,7 @@ public class MapPopulationTest {
 
     @Test
     public void typedMapInterfacesShouldNotBeEmpty() {
-        final MapBean mapBean = populator.populate(MapBean.class);
+        final MapBean mapBean = enhancedRandom.nextObject(MapBean.class);
 
         assertThat(mapBean).isNotNull();
 
@@ -91,7 +93,7 @@ public class MapPopulationTest {
     @Test
     @SuppressWarnings("unchecked")
     public void rawMapClassesShouldBeEmpty() {
-        final MapBean mapBean = populator.populate(MapBean.class);
+        final MapBean mapBean = enhancedRandom.nextObject(MapBean.class);
 
         assertThat(mapBean).isNotNull();
 
@@ -119,7 +121,7 @@ public class MapPopulationTest {
 
     @Test
     public void typedMapClassesShouldNotBeEmpty() {
-        final MapBean mapBean = populator.populate(MapBean.class);
+        final MapBean mapBean = enhancedRandom.nextObject(MapBean.class);
 
         assertThat(mapBean).isNotNull();
 
@@ -148,7 +150,7 @@ public class MapPopulationTest {
 
     @Test
     public void wildcardTypedMapInterfacesShouldBeEmpty() {
-        final WildCardMapBean wildCardMapBean = populator.populate(WildCardMapBean.class);
+        final WildCardMapBean wildCardMapBean = enhancedRandom.nextObject(WildCardMapBean.class);
 
         assertThat(wildCardMapBean).isNotNull();
 
@@ -170,7 +172,7 @@ public class MapPopulationTest {
 
     @Test
     public void wildcardTypedMapClassesShouldBeEmpty() {
-        final WildCardMapBean wildCardMapBean = populator.populate(WildCardMapBean.class);
+        final WildCardMapBean wildCardMapBean = enhancedRandom.nextObject(WildCardMapBean.class);
 
         assertThat(wildCardMapBean).isNotNull();
 
@@ -198,7 +200,7 @@ public class MapPopulationTest {
 
     @Test
     public void compositeMapTypesShouldBeEmpty() throws Exception {
-        CompositeMapBean compositeMapBean = populator.populate(CompositeMapBean.class);
+        CompositeMapBean compositeMapBean = enhancedRandom.nextObject(CompositeMapBean.class);
 
         assertThat(compositeMapBean.getPersonToNicknames()).isEmpty();
         assertThat(compositeMapBean.getPersonToAccounts()).isEmpty();

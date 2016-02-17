@@ -24,7 +24,7 @@
 
 package io.github.benas.randombeans;
 
-import io.github.benas.randombeans.api.BeanPopulationException;
+import io.github.benas.randombeans.api.ObjectGenerationException;
 import io.github.benas.randombeans.api.Randomizer;
 import io.github.benas.randombeans.randomizers.SkipRandomizer;
 
@@ -36,13 +36,17 @@ import static io.github.benas.randombeans.util.ReflectionUtils.*;
 
 /**
  * Component that encapsulate the logic of generating a random value for a given field.
- * It collaborates with a {@link BeanPopulator} used whenever the field is a user defined type.
- *
+ * It collaborates with a:
+ * <ul>
+ *     <li>{@link EnhancedRandomImpl} whenever the field is a user defined type.</li>
+ *     <li>{@link ArrayPopulator} whenever the field is an array type.</li>
+ *     <li>{@link CollectionPopulator}, {@link MapPopulator} whenever the field is a collection type.</li>
+ * </ul>
  * @author Mahmoud Ben Hassine (mahmoud.benhassine@icloud.com)
  */
 class FieldPopulator {
 
-    private BeanPopulator beanPopulator;
+    private EnhancedRandomImpl beanPopulator;
 
     private ArrayPopulator arrayPopulator;
 
@@ -54,7 +58,7 @@ class FieldPopulator {
 
     private boolean scanClasspathForConcreteClasses;
 
-    FieldPopulator(final BeanPopulator beanPopulator, final RandomizerProvider randomizerProvider,
+    FieldPopulator(final EnhancedRandomImpl beanPopulator, final RandomizerProvider randomizerProvider,
                    final ArrayPopulator arrayPopulator, final CollectionPopulator collectionPopulator, final MapPopulator mapPopulator) {
         this.beanPopulator = beanPopulator;
         this.randomizerProvider = randomizerProvider;
@@ -94,7 +98,7 @@ class FieldPopulator {
             if (scanClasspathForConcreteClasses && isAbstract(fieldType)) {
                 Class<?> randomConcreteSubType = randomElementOf(filterSameParameterizedTypes(getPublicConcreteSubTypesOf(fieldType), fieldGenericType));
                 if (randomConcreteSubType == null) {
-                    throw new BeanPopulationException("Unable to find a matching concrete subtype of type: " + fieldType);
+                    throw new ObjectGenerationException("Unable to find a matching concrete subtype of type: " + fieldType);
                 } else {
                     value = beanPopulator.doPopulateBean(randomConcreteSubType, context);
                 }

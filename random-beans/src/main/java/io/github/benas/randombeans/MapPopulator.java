@@ -44,12 +44,12 @@ import static org.apache.commons.lang3.RandomUtils.nextInt;
  */
 class MapPopulator {
 
-    private BeanPopulator populator;
+    private EnhancedRandomImpl enhancedRandom;
 
     private ObjectFactory objectFactory;
 
-    MapPopulator(final BeanPopulator populator, final ObjectFactory objectFactory) {
-        this.populator = populator;
+    MapPopulator(final EnhancedRandomImpl enhancedRandom, final ObjectFactory objectFactory) {
+        this.enhancedRandom = enhancedRandom;
         this.objectFactory = objectFactory;
     }
 
@@ -76,8 +76,8 @@ class MapPopulator {
             Type valueType = parameterizedType.getActualTypeArguments()[1];
             if (isPopulatable(keyType) && isPopulatable(valueType)) {
                 for (int index = 0; index < randomSize; index++) {
-                    Object randomKey = populator.doPopulateBean((Class<?>) keyType, context);
-                    Object randomValue = populator.doPopulateBean((Class<?>) valueType, context);
+                    Object randomKey = enhancedRandom.doPopulateBean((Class<?>) keyType, context);
+                    Object randomValue = enhancedRandom.doPopulateBean((Class<?>) valueType, context);
                     map.put(randomKey, randomValue);
                 }
             }

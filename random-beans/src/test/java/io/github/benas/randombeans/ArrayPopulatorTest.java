@@ -42,15 +42,15 @@ public class ArrayPopulatorTest {
     @Mock
     private PopulatorContext context;
     @Mock
-    private BeanPopulator populator;
+    private EnhancedRandomImpl enhancedRandom;
 
     private ArrayPopulator arrayPopulator;
 
     @Before
     public void setUp() throws Exception {
-        arrayPopulator = new ArrayPopulator(populator);
-        when(populator.populate(Integer.TYPE)).thenReturn(INT);
-        when(populator.doPopulateBean(String.class, context)).thenReturn(STRING);
+        arrayPopulator = new ArrayPopulator(enhancedRandom);
+        when(enhancedRandom.nextObject(Integer.TYPE)).thenReturn(INT);
+        when(enhancedRandom.doPopulateBean(String.class, context)).thenReturn(STRING);
     }
 
     @Test

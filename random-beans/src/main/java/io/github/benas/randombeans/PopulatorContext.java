@@ -24,6 +24,8 @@
 
 package io.github.benas.randombeans;
 
+import io.github.benas.randombeans.api.EnhancedRandom;
+
 import java.lang.reflect.Field;
 import java.util.*;
 
@@ -31,7 +33,7 @@ import static java.util.Collections.singletonList;
 import static org.apache.commons.lang3.RandomUtils.nextInt;
 
 /**
- * Context object for a single call on {@link io.github.benas.randombeans.api.Populator#populate(Class, String...)}.
+ * Context object for a single call on {@link EnhancedRandom#nextObject(Class, String...)}.
  * It contains a map acting as a cache of populated beans to avoid infinite recursion.
  *
  * @author Rémi Alvergnat (toilal.dev@gmail.com)

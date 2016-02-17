@@ -24,10 +24,12 @@
 
 package io.github.benas.randombeans;
 
+import io.github.benas.randombeans.api.EnhancedRandom;
+
 import java.lang.reflect.Field;
 
 /**
- * Context object holding the data of a recursion step in {@link io.github.benas.randombeans.api.Populator#populate(Class, String...)}.
+ * Context object holding the data of a recursion step in {@link EnhancedRandom#nextObject(Class, String...)}.
  *
  * @author Rémi Alvergnat (toilal.dev@gmail.com)
  */

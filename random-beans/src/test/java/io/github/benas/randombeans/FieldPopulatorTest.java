@@ -49,7 +49,7 @@ public class FieldPopulatorTest {
     private static final String NAME = "foo";
 
     @Mock
-    private BeanPopulator beanPopulator;
+    private EnhancedRandomImpl enhancedRandom;
     @Mock
     private RandomizerProvider randomizerProvider;
     @Mock
@@ -67,7 +67,7 @@ public class FieldPopulatorTest {
 
     @Before
     public void setUp() throws Exception {
-        fieldPopulator = new FieldPopulator(beanPopulator, randomizerProvider, arrayPopulator, collectionPopulator, mapPopulator);
+        fieldPopulator = new FieldPopulator(enhancedRandom, randomizerProvider, arrayPopulator, collectionPopulator, mapPopulator);
     }
 
     @Test

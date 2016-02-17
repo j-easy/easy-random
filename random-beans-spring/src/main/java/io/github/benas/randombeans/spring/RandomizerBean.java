@@ -27,7 +27,7 @@ package io.github.benas.randombeans.spring;
 import io.github.benas.randombeans.api.Randomizer;
 
 /**
- * A bean used to register custom randomizers with the {@link PopulatorFactoryBean}.
+ * A bean used to register custom randomizers with the {@link EnhancedRandomFactoryBean}.
  *
  * @author Mahmoud Ben Hassine (mahmoud.benhassine@icloud.com)
  */

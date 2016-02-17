@@ -24,7 +24,7 @@
 
 package io.github.benas.randombeans;
 
-import io.github.benas.randombeans.api.Populator;
+import io.github.benas.randombeans.api.EnhancedRandom;
 import io.github.benas.randombeans.api.Randomizer;
 import io.github.benas.randombeans.beans.C;
 import io.github.benas.randombeans.beans.Human;
@@ -36,8 +36,8 @@ import org.junit.runner.RunWith;
 import org.mockito.Mock;
 import org.mockito.runners.MockitoJUnitRunner;
 
+import static io.github.benas.randombeans.EnhancedRandomBuilder.aNewEnhancedRandomBuilder;
 import static io.github.benas.randombeans.FieldDefinitionBuilder.field;
-import static io.github.benas.randombeans.PopulatorBuilder.aNewPopulatorBuilder;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.Mockito.when;
 
@@ -49,17 +49,17 @@ public class FieldExclusionTest {
     @Mock
     private Randomizer<String> randomizer;
 
-    private Populator populator;
+    private EnhancedRandom enhancedRandom;
 
     @Before
     public void setUp() {
-        populator = aNewPopulatorBuilder().build();
+        enhancedRandom = aNewEnhancedRandomBuilder().build();
         when(randomizer.getRandomValue()).thenReturn(NAME);
     }
 
     @Test
     public void excludedFieldsShouldNotBePopulated() {
-        Person person = populator.populate(Person.class, "name");
+        Person person = enhancedRandom.nextObject(Person.class, "name");
 
         assertThat(person).isNotNull();
         assertThat(person.getName()).isNull();
@@ -69,12 +69,12 @@ public class FieldExclusionTest {
     public void excludedFieldsUsingSkipRandomizerShouldNotBePopulated() {
         // given
         FieldDefinition<?, ?> fieldDefinition = field().named("name").ofType(String.class).inClass(Human.class).get();
-        populator = aNewPopulatorBuilder()
+        enhancedRandom = aNewEnhancedRandomBuilder()
                 .exclude(fieldDefinition)
                 .build();
 
         // when
-        Person person = populator.populate(Person.class);
+        Person person = enhancedRandom.nextObject(Person.class);
 
         // then
         assertThat(person).isNotNull();
@@ -83,7 +83,7 @@ public class FieldExclusionTest {
 
     @Test
     public void excludedDottedFieldsShouldNotBePopulated() {
-        Person person = populator.populate(Person.class, "address.street.name");
+        Person person = enhancedRandom.nextObject(Person.class, "address.street.name");
 
         assertThat(person).isNotNull();
         assertThat(person.getAddress()).isNotNull();
@@ -93,7 +93,7 @@ public class FieldExclusionTest {
 
     @Test
     public void fieldsExcludedWithAnnotationShouldNotBePopulated() {
-        Person person = populator.populate(Person.class);
+        Person person = enhancedRandom.nextObject(Person.class);
 
         assertThat(person).isNotNull();
         assertThat(person.getExcluded()).isNull();
@@ -101,7 +101,7 @@ public class FieldExclusionTest {
 
     @Test
     public void testFirstLevelExclusion() {
-        C c = populator.populate(C.class, "b2"); // please, confirm that it works
+        C c = enhancedRandom.nextObject(C.class, "b2"); // please, confirm that it works
 
         Assertions.assertThat(c).isNotNull();
 
@@ -120,7 +120,7 @@ public class FieldExclusionTest {
 
     @Test
     public void testSecondLevelExclusion() {
-        C c = populator.populate(C.class, "b2.a2"); // please, confirm that it works
+        C c = enhancedRandom.nextObject(C.class, "b2.a2"); // please, confirm that it works
 
         Assertions.assertThat(c).isNotNull();
 
@@ -143,7 +143,7 @@ public class FieldExclusionTest {
 
     @Test
     public void testThirdLevelExclusion() {
-        C c = populator.populate(C.class, "b2.a2.s2"); // please, confirm that it works
+        C c = enhancedRandom.nextObject(C.class, "b2.a2.s2"); // please, confirm that it works
 
         // B1 and its "children" must not be null
         Assertions.assertThat(c.getB1()).isNotNull();
@@ -165,7 +165,7 @@ public class FieldExclusionTest {
 
     @Test
     public void testFirstLevelCollectionExclusion() {
-        C c = populator.populate(C.class, "b3"); // please, confirm that it works
+        C c = enhancedRandom.nextObject(C.class, "b3"); // please, confirm that it works
 
         Assertions.assertThat(c).isNotNull();
 
@@ -193,7 +193,7 @@ public class FieldExclusionTest {
 
     @Test
     public void testSecondLevelCollectionExclusion() {
-        C c = populator.populate(C.class, "b3.a2"); // b3.a2 does not make sense, should be ignored
+        C c = enhancedRandom.nextObject(C.class, "b3.a2"); // b3.a2 does not make sense, should be ignored
 
         Assertions.assertThat(c).isNotNull();
 

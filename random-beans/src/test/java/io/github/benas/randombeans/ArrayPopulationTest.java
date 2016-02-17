@@ -24,40 +24,40 @@
 
 package io.github.benas.randombeans;
 
-import io.github.benas.randombeans.api.Populator;
+import io.github.benas.randombeans.api.EnhancedRandom;
 import io.github.benas.randombeans.beans.ArrayBean;
 import io.github.benas.randombeans.beans.Person;
 import org.junit.Before;
 import org.junit.Test;
 
-import static io.github.benas.randombeans.PopulatorBuilder.aNewPopulatorBuilder;
+import static io.github.benas.randombeans.EnhancedRandomBuilder.aNewEnhancedRandomBuilder;
 import static org.apache.commons.lang3.ArrayUtils.toObject;
 import static org.assertj.core.api.Assertions.assertThat;
 
 public class ArrayPopulationTest {
 
-    private Populator populator;
+    private EnhancedRandom enhancedRandom;
 
     @Before
     public void setUp() throws Exception {
-        populator = aNewPopulatorBuilder().build();
+        enhancedRandom = aNewEnhancedRandomBuilder().build();
     }
 
     @Test
     public void testArrayPopulation() {
-        final String[] strings = populator.populate(String[].class);
+        final String[] strings = enhancedRandom.nextObject(String[].class);
         assertThat(strings).isNotNull();
     }
 
     @Test
     public void testPrimitiveArrayPopulation() {
-        final int[] ints = populator.populate(int[].class);
+        final int[] ints = enhancedRandom.nextObject(int[].class);
         assertThat(ints).isNotNull();
     }
 
     @Test
     public void primitiveArraysShouldBeCorrectlyPopulated() {
-        final ArrayBean bean = populator.populate(ArrayBean.class);
+        final ArrayBean bean = enhancedRandom.nextObject(ArrayBean.class);
 
         // primitive types
         assertThat(toObject(bean.getByteArray())).hasOnlyElementsOfType(Byte.class);
@@ -72,7 +72,7 @@ public class ArrayPopulationTest {
 
     @Test
     public void wrapperTypeArraysShouldBeCorrectlyPopulated() {
-        final ArrayBean bean = populator.populate(ArrayBean.class);
+        final ArrayBean bean = enhancedRandom.nextObject(ArrayBean.class);
         
         // wrapper types
         assertThat(bean.getBytes()).hasOnlyElementsOfType(Byte.class);
@@ -87,7 +87,7 @@ public class ArrayPopulationTest {
 
     @Test
     public void arraysWithCustomTypesShouldBeCorrectlyPopulated() {
-        final ArrayBean bean = populator.populate(ArrayBean.class);
+        final ArrayBean bean = enhancedRandom.nextObject(ArrayBean.class);
 
         // custom types
         assertThat(bean.getStrings()).doesNotContain(null, "");

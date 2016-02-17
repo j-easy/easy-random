@@ -45,20 +45,20 @@ public class CollectionPopulatorTest {
     @Mock
     private PopulatorContext context;
     @Mock
-    private BeanPopulator beanPopulator;
+    private EnhancedRandomImpl enhancedRandom;
 
     private CollectionPopulator collectionPopulator;
 
     @Before
     public void setUp() throws Exception {
         ObjectFactory objectFactory = new ObjectFactory();
-        collectionPopulator = new CollectionPopulator(beanPopulator, objectFactory);
+        collectionPopulator = new CollectionPopulator(enhancedRandom, objectFactory);
     }
 
     @Test
     public void rawInterfaceCollectionTypesMustBeGeneratedEmpty() throws Exception {
         // Given
-        when(beanPopulator.doPopulateBean(List.class, context)).thenReturn(emptyList());
+        when(enhancedRandom.doPopulateBean(List.class, context)).thenReturn(emptyList());
         Field field = Foo.class.getDeclaredField("rawInterfaceList");
 
         // When
@@ -71,7 +71,7 @@ public class CollectionPopulatorTest {
     @Test
     public void rawConcreteCollectionTypesMustBeGeneratedEmpty() throws Exception {
         // Given
-        when(beanPopulator.doPopulateBean(ArrayList.class, context)).thenReturn(new ArrayList());
+        when(enhancedRandom.doPopulateBean(ArrayList.class, context)).thenReturn(new ArrayList());
         Field field = Foo.class.getDeclaredField("rawConcreteList");
 
         // When
@@ -84,7 +84,7 @@ public class CollectionPopulatorTest {
     @Test
     public void typedInterfaceCollectionTypesMustBePopulated() throws Exception {
         // Given
-        when(beanPopulator.doPopulateBean(List.class, context)).thenReturn(emptyList());
+        when(enhancedRandom.doPopulateBean(List.class, context)).thenReturn(emptyList());
         Field field = Foo.class.getDeclaredField("typedInterfaceList");
 
         // When
@@ -97,7 +97,7 @@ public class CollectionPopulatorTest {
     @Test
     public void typedConcreteCollectionTypesMustBePopulated() throws Exception {
         // Given
-        when(beanPopulator.doPopulateBean(ArrayList.class, context)).thenReturn(new ArrayList());
+        when(enhancedRandom.doPopulateBean(ArrayList.class, context)).thenReturn(new ArrayList());
         Field field = Foo.class.getDeclaredField("typedConcreteList");
 
         // When

@@ -24,8 +24,8 @@
 
 package io.github.benas.randombeans;
 
-import io.github.benas.randombeans.api.BeanPopulationException;
-import io.github.benas.randombeans.api.Populator;
+import io.github.benas.randombeans.api.EnhancedRandom;
+import io.github.benas.randombeans.api.ObjectGenerationException;
 import io.github.benas.randombeans.api.Randomizer;
 import io.github.benas.randombeans.api.RandomizerRegistry;
 import io.github.benas.randombeans.randomizers.EnumRandomizer;
@@ -38,12 +38,12 @@ import java.util.Set;
 import static io.github.benas.randombeans.util.ReflectionUtils.*;
 
 /**
- * The core implementation of the {@link Populator} interface.
+ * The core implementation of the {@link EnhancedRandom} abstract class.
  *
  * @author Mahmoud Ben Hassine (mahmoud.benhassine@icloud.com)
  */
 @SuppressWarnings({ "rawtypes", "unchecked" })
-class BeanPopulator implements Populator {
+class EnhancedRandomImpl extends EnhancedRandom {
 
     private FieldPopulator fieldPopulator;
 
@@ -59,7 +59,7 @@ class BeanPopulator implements Populator {
 
     private FieldExclusionChecker fieldExclusionChecker;
 
-    BeanPopulator(final Set<RandomizerRegistry> registries) {
+    EnhancedRandomImpl(final Set<RandomizerRegistry> registries) {
         objectFactory = new ObjectFactory();
         randomizerProvider = new RandomizerProvider(registries);
         arrayPopulator = new ArrayPopulator(this);
@@ -69,8 +69,7 @@ class BeanPopulator implements Populator {
         fieldExclusionChecker = new FieldExclusionChecker();
     }
 
-    @Override
-    public <T> T populate(final Class<T> type, final String... excludedFields) {
+    public <T> T nextObject(final Class<T> type, final String... excludedFields) {
         Randomizer<?> randomizer = randomizerProvider.getRandomizerByType(type);
         if (randomizer != null) {
             return (T) randomizer.getRandomValue();
@@ -79,13 +78,13 @@ class BeanPopulator implements Populator {
     }
 
     @Override
-    public <T> List<T> populate(final Class<T> type, final int size, final String... excludedFields) {
+    public <T> List<T> nextObjects(final Class<T> type, final int size, final String... excludedFields) {
         if (size < 0) {
             throw new IllegalArgumentException("The size must be positive");
         }
         List<T> beans = new ArrayList<>(size);
         for (int i = 0; i < size; i++) {
-            T bean = populate(type, excludedFields);
+            T bean = nextObject(type, excludedFields);
             beans.add(bean);
         }
         return beans;
@@ -120,7 +119,7 @@ class BeanPopulator implements Populator {
 
             return result;
         } catch (InstantiationError | Exception e) {
-            throw new BeanPopulationException("Unable to generate a random instance of type " + type, e);
+            throw new ObjectGenerationException("Unable to generate a random instance of type " + type, e);
         }
     }
 

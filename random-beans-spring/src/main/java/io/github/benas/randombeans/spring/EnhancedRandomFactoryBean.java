@@ -24,30 +24,30 @@
 
 package io.github.benas.randombeans.spring;
 
+import io.github.benas.randombeans.EnhancedRandomBuilder;
 import io.github.benas.randombeans.FieldDefinition;
-import io.github.benas.randombeans.PopulatorBuilder;
-import io.github.benas.randombeans.api.Populator;
+import io.github.benas.randombeans.api.EnhancedRandom;
 import io.github.benas.randombeans.api.Randomizer;
 import org.springframework.beans.factory.FactoryBean;
 
 import java.util.ArrayList;
 import java.util.List;
 
+import static io.github.benas.randombeans.EnhancedRandomBuilder.aNewEnhancedRandomBuilder;
 import static io.github.benas.randombeans.FieldDefinitionBuilder.field;
-import static io.github.benas.randombeans.PopulatorBuilder.aNewPopulatorBuilder;
 
 /**
- * Spring Factory Bean that creates {@link Populator} instances.
+ * Spring Factory Bean that creates {@link EnhancedRandom} instances.
  *
  * @author Mahmoud Ben Hassine (mahmoud.benhassine@icloud.com)
  */
-public class PopulatorFactoryBean implements FactoryBean<Populator> {
+public class EnhancedRandomFactoryBean implements FactoryBean<EnhancedRandom> {
 
     private List<RandomizerBean<?, ?>> randomizers = new ArrayList<>();
 
     @Override
-    public Populator getObject() throws Exception {
-        PopulatorBuilder populatorBuilder = aNewPopulatorBuilder();
+    public EnhancedRandom getObject() throws Exception {
+        EnhancedRandomBuilder enhancedRandomBuilder = aNewEnhancedRandomBuilder();
         for (RandomizerBean<?, ?> bean : randomizers) {
             FieldDefinition<?, ?> fieldDefinition = field()
                     .named(bean.getFieldName())
@@ -55,15 +55,15 @@ public class PopulatorFactoryBean implements FactoryBean<Populator> {
                     .inClass(bean.getType())
                     .get();
             Randomizer<?> randomizer = bean.getRandomizer();
-            populatorBuilder.randomize(fieldDefinition, randomizer);
+            enhancedRandomBuilder.randomize(fieldDefinition, randomizer);
         }
 
-        return populatorBuilder.build();
+        return enhancedRandomBuilder.build();
     }
 
     @Override
-    public Class<Populator> getObjectType() {
-        return Populator.class;
+    public Class<EnhancedRandom> getObjectType() {
+        return EnhancedRandom.class;
     }
 
     @Override

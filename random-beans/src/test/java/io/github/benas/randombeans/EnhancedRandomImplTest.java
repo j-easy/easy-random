@@ -24,8 +24,8 @@
 
 package io.github.benas.randombeans;
 
-import io.github.benas.randombeans.api.BeanPopulationException;
-import io.github.benas.randombeans.api.Populator;
+import io.github.benas.randombeans.api.EnhancedRandom;
+import io.github.benas.randombeans.api.ObjectGenerationException;
 import io.github.benas.randombeans.api.Randomizer;
 import io.github.benas.randombeans.beans.*;
 import org.junit.Before;
@@ -37,32 +37,32 @@ import org.mockito.runners.MockitoJUnitRunner;
 import java.util.Date;
 import java.util.List;
 
+import static io.github.benas.randombeans.EnhancedRandomBuilder.aNewEnhancedRandomBuilder;
 import static io.github.benas.randombeans.FieldDefinitionBuilder.field;
-import static io.github.benas.randombeans.PopulatorBuilder.aNewPopulatorBuilder;
 import static java.util.Arrays.asList;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.fail;
 import static org.mockito.Mockito.when;
 
 @RunWith(MockitoJUnitRunner.class)
-public class BeanPopulatorTest {
+public class EnhancedRandomImplTest {
 
     private static final String NAME = "foo";
 
     @Mock
     private Randomizer<String> randomizer;
 
-    private Populator populator;
+    private EnhancedRandom enhancedRandom;
 
     @Before
     public void setUp() {
-        populator = aNewPopulatorBuilder().build();
+        enhancedRandom = aNewEnhancedRandomBuilder().build();
         when(randomizer.getRandomValue()).thenReturn(NAME);
     }
 
     @Test
     public void generatedBeansShouldBeCorrectlyPopulated() {
-        Person person = populator.populate(Person.class);
+        Person person = enhancedRandom.nextObject(Person.class);
 
         assertThat(person).isNotNull();
         assertThat(person.getEmail()).isNotEmpty();
@@ -87,7 +87,7 @@ public class BeanPopulatorTest {
 
     @Test
     public void finalFieldsShouldBePopulated() {
-        Person person = populator.populate(Person.class);
+        Person person = enhancedRandom.nextObject(Person.class);
 
         assertThat(person).isNotNull();
         assertThat(person.getId()).isNotNull();
@@ -96,7 +96,7 @@ public class BeanPopulatorTest {
     @Test
     public void staticFieldsShouldNotBePopulated() {
         try {
-            Human human = populator.populate(Human.class);
+            Human human = enhancedRandom.nextObject(Human.class);
             assertThat(human).isNotNull();
         } catch (Exception e) {
             fail("Should be able to populate types with private static final fields.", e);
@@ -105,7 +105,7 @@ public class BeanPopulatorTest {
 
     @Test
     public void immutableBeansShouldBePopulated() {
-        final ImmutableBean immutableBean = populator.populate(ImmutableBean.class);
+        final ImmutableBean immutableBean = enhancedRandom.nextObject(ImmutableBean.class);
         assertThat(immutableBean).isNotNull();
         assertThat(immutableBean.getFinalValue()).isNotNull();
         assertThat(immutableBean.getFinalCollection()).isNotNull();
@@ -113,7 +113,7 @@ public class BeanPopulatorTest {
 
     @Test
     public void generatedBeansNumberShouldBeEqualToSpecifiedNumber() {
-        List<Person> persons = populator.populate(Person.class, 2);
+        List<Person> persons = enhancedRandom.nextObjects(Person.class, 2);
 
         assertThat(persons).hasSize(2);
     }
@@ -121,11 +121,11 @@ public class BeanPopulatorTest {
     @Test
     public void generatedBeansWithCustomRandomizersShouldBeCorrectlyPopulated() {
         FieldDefinition<?, ?> fieldDefinition = field().named("name").ofType(String.class).inClass(Human.class).get();
-        populator = aNewPopulatorBuilder()
+        enhancedRandom = aNewEnhancedRandomBuilder()
                 .randomize(fieldDefinition, randomizer)
                 .build();
 
-        Person person = populator.populate(Person.class);
+        Person person = enhancedRandom.nextObject(Person.class);
 
         assertThat(person).isNotNull();
         assertThat(person.getName()).isEqualTo(NAME);
@@ -134,7 +134,7 @@ public class BeanPopulatorTest {
     @Test
     public void javaNetTypesShouldBePopulated() {
 
-        Website website = populator.populate(Website.class);
+        Website website = enhancedRandom.nextObject(Website.class);
 
         assertThat(website).isNotNull();
         assertThat(website.getName()).isNotNull();
@@ -142,18 +142,18 @@ public class BeanPopulatorTest {
         assertThat(website.getUrl()).isNotNull();
     }
 
-    @Test(expected = BeanPopulationException.class)
+    @Test(expected = ObjectGenerationException.class)
     public void failsToPopulateInterfacesAndAbstractClassesIfScanClasspathForConcreteClassesIsDisabled() {
-        populator = aNewPopulatorBuilder().scanClasspathForConcreteClasses(false).build();
+        enhancedRandom = aNewEnhancedRandomBuilder().scanClasspathForConcreteClasses(false).build();
 
-        populator.populate(Mamals.class);
+        enhancedRandom.nextObject(Mamals.class);
     }
 
     @Test
     public void generatesConcreteTypesForInterfacesAndAbstractClassesIfScanClasspathForConcreteClassesIsEnabled() {
-        populator = aNewPopulatorBuilder().scanClasspathForConcreteClasses(true).build();
+        enhancedRandom = aNewEnhancedRandomBuilder().scanClasspathForConcreteClasses(true).build();
 
-        Mamals mamals = populator.populate(Mamals.class);
+        Mamals mamals = enhancedRandom.nextObject(Mamals.class);
 
         assertThat(mamals.getMamal()).isOfAnyClassIn(Human.class, Ape.class, Person.class, SocialPerson.class);
         assertThat(mamals.getMamalImpl()).isOfAnyClassIn(Human.class, Ape.class, Person.class, SocialPerson.class);
@@ -161,9 +161,9 @@ public class BeanPopulatorTest {
 
     @Test
     public void generatesConcreteTypesForFieldsWithGenericParametersIfScanClasspathForConcreteClassesIsEnabled() {
-        populator = aNewPopulatorBuilder().scanClasspathForConcreteClasses(true).build();
+        enhancedRandom = aNewEnhancedRandomBuilder().scanClasspathForConcreteClasses(true).build();
 
-        ComparableBean comparableBean = populator.populate(ComparableBean.class);
+        ComparableBean comparableBean = enhancedRandom.nextObject(ComparableBean.class);
 
         assertThat(comparableBean.getDateComparable()).isOfAnyClassIn(ComparableBean.AlwaysEqual.class, Date.class);
     }
@@ -171,10 +171,10 @@ public class BeanPopulatorTest {
     @Test
     public void generatedConcreteSubTypesMustBePopulatedWhenScanClasspathForConcreteClassesIsEnabled() throws Exception {
         // Given
-        populator = PopulatorBuilder.aNewPopulatorBuilder().scanClasspathForConcreteClasses(true).build();
+        enhancedRandom = EnhancedRandomBuilder.aNewEnhancedRandomBuilder().scanClasspathForConcreteClasses(true).build();
 
         // When
-        Foo foo = populator.populate(Foo.class);
+        Foo foo = enhancedRandom.nextObject(Foo.class);
 
         // Then
         assertThat(foo).isNotNull();
@@ -184,17 +184,17 @@ public class BeanPopulatorTest {
 
     @Test(expected = IllegalArgumentException.class)
     public void whenSpecifiedNumberOfBeansToGenerateIsNegativeThenShouldThrowAnIllegalArgumentException() {
-        populator.populate(Person.class, -2);
+        enhancedRandom.nextObjects(Person.class, -2);
     }
 
-    @Test(expected = BeanPopulationException.class)
+    @Test(expected = ObjectGenerationException.class)
     public void whenUnableToInstantiateFieldThenShouldThrowABeanPopulationException() {
-        populator.populate(AbstractBean.class);
+        enhancedRandom.nextObject(AbstractBean.class);
     }
 
     @Test
     public void beansWithRecursiveStructureMustNotCauseStackOverflowException() {
-        Node node = populator.populate(Node.class);
+        Node node = enhancedRandom.nextObject(Node.class);
 
         assertThat(node).isNotNull();
         assertThat(node.getValue()).isNotEmpty();
@@ -205,7 +205,7 @@ public class BeanPopulatorTest {
 
     @Test
     public void objectTypeMustBeCorrectlyPopulated() {
-        Object object = populator.populate(Object.class);
+        Object object = enhancedRandom.nextObject(Object.class);
 
         assertThat(object).isNotNull();
     }

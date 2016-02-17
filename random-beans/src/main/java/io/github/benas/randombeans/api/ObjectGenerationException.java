@@ -25,19 +25,19 @@
 package io.github.benas.randombeans.api;
 
 /**
- * Exception thrown when Random Beans is unable to populate an instance of a given type.
+ * Exception thrown when Random Beans is unable to generate an instance of a given type.
  *
  * @author Mahmoud Ben Hassine (mahmoud.benhassine@icloud.com)
  */
-public class BeanPopulationException extends RuntimeException {
+public class ObjectGenerationException extends RuntimeException {
 
     private static final long serialVersionUID = -9049778508557432869L;
 
-    public BeanPopulationException(String message) {
+    public ObjectGenerationException(String message) {
         super(message);
     }
 
-    public BeanPopulationException(String message, Throwable cause) {
+    public ObjectGenerationException(String message, Throwable cause) {
         super(message, cause);
     }
 }

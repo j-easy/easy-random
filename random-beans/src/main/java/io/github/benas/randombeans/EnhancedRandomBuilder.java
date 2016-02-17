@@ -24,7 +24,7 @@
 
 package io.github.benas.randombeans;
 
-import io.github.benas.randombeans.api.Populator;
+import io.github.benas.randombeans.api.EnhancedRandom;
 import io.github.benas.randombeans.api.Randomizer;
 import io.github.benas.randombeans.api.RandomizerRegistry;
 import io.github.benas.randombeans.randomizers.SkipRandomizer;
@@ -33,11 +33,11 @@ import io.github.benas.randombeans.randomizers.registry.CustomRandomizerRegistry
 import java.util.*;
 
 /**
- * Builder to create {@link Populator} instances.
+ * Builder to create {@link EnhancedRandom} instances.
  *
  * @author Mahmoud Ben Hassine (mahmoud.benhassine@icloud.com)
  */
-public class PopulatorBuilder {
+public class EnhancedRandomBuilder {
 
     private CustomRandomizerRegistry customRandomizerRegistry;
 
@@ -45,19 +45,19 @@ public class PopulatorBuilder {
 
     private boolean scanClasspathForConcreteClasses;
 
-    private PopulatorBuilder() {
+    private EnhancedRandomBuilder() {
         customRandomizerRegistry = new CustomRandomizerRegistry();
         userRegistries = new LinkedHashSet<>();
         scanClasspathForConcreteClasses = false;
     }
 
     /**
-     * Create a new {@link PopulatorBuilder}.
+     * Create a new {@link EnhancedRandomBuilder}.
      *
-     * @return a new {@link PopulatorBuilder}
+     * @return a new {@link EnhancedRandomBuilder}
      */
-    public static PopulatorBuilder aNewPopulatorBuilder() {
-        return new PopulatorBuilder();
+    public static EnhancedRandomBuilder aNewEnhancedRandomBuilder() {
+        return new EnhancedRandomBuilder();
     }
 
     /**
@@ -65,9 +65,9 @@ public class PopulatorBuilder {
      *
      * @param fieldDefinition definition of the field to randomize
      * @param randomizer the custom {@link Randomizer} to use
-     * @return a pre configured {@link PopulatorBuilder} instance
+     * @return a pre configured {@link EnhancedRandomBuilder} instance
      */
-    public <T, F, R> PopulatorBuilder randomize(FieldDefinition<T, F> fieldDefinition, Randomizer<R> randomizer) {
+    public <T, F, R> EnhancedRandomBuilder randomize(FieldDefinition<T, F> fieldDefinition, Randomizer<R> randomizer) {
         customRandomizerRegistry.registerRandomizer(fieldDefinition.getName(), fieldDefinition.getType(), fieldDefinition.getClazz(), randomizer);
         return this;
     }
@@ -76,9 +76,9 @@ public class PopulatorBuilder {
      * Exclude a field from being populated.
      *
      * @param fieldDefinition definition of the field to exclude
-     * @return a pre configured {@link PopulatorBuilder} instance
+     * @return a pre configured {@link EnhancedRandomBuilder} instance
      */
-    public <T, F> PopulatorBuilder exclude(FieldDefinition<T, F> fieldDefinition) {
+    public <T, F> EnhancedRandomBuilder exclude(FieldDefinition<T, F> fieldDefinition) {
         return randomize(fieldDefinition, new SkipRandomizer());
     }
 
@@ -86,9 +86,9 @@ public class PopulatorBuilder {
      * Register a {@link RandomizerRegistry}.
      *
      * @param registry the {@link RandomizerRegistry} to register
-     * @return a pre configured {@link PopulatorBuilder} instance
+     * @return a pre configured {@link EnhancedRandomBuilder} instance
      */
-    public PopulatorBuilder registerRandomizerRegistry(final RandomizerRegistry registry) {
+    public EnhancedRandomBuilder registerRandomizerRegistry(final RandomizerRegistry registry) {
         userRegistries.add(registry);
         return this;
     }
@@ -100,24 +100,24 @@ public class PopulatorBuilder {
      * Deactivated by default.
      * 
      * @param scanClasspathForConcreteClasses whether to scan the classpath or not
-     * @return a pre configured {@link PopulatorBuilder} instance
+     * @return a pre configured {@link EnhancedRandomBuilder} instance
      */
-    public PopulatorBuilder scanClasspathForConcreteClasses(boolean scanClasspathForConcreteClasses) {
+    public EnhancedRandomBuilder scanClasspathForConcreteClasses(boolean scanClasspathForConcreteClasses) {
         this.scanClasspathForConcreteClasses = scanClasspathForConcreteClasses;
         return this;
     }
 
     /**
-     * Build a {@link Populator} instance and reset the builder to its initial state.
+     * Build a {@link EnhancedRandom} instance.
      *
-     * @return a configured {@link Populator} instance
+     * @return a configured {@link EnhancedRandom} instance
      */
-    public Populator build() {
+    public EnhancedRandom build() {
         LinkedHashSet<RandomizerRegistry> registries = new LinkedHashSet<>();
         registries.add(customRandomizerRegistry); // programatically registered randomizers through randomize()
         registries.addAll(userRegistries); // programatically registered registries through registerRandomizerRegistry()
         registries.addAll(loadRegistries()); // registries added to classpath through the SPI
-        BeanPopulator populator = new BeanPopulator(registries);
+        EnhancedRandomImpl populator = new EnhancedRandomImpl(registries);
         populator.setScanClasspathForConcreteClasses(scanClasspathForConcreteClasses);
         return populator;
     }

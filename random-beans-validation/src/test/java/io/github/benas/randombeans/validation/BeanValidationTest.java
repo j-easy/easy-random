@@ -24,7 +24,7 @@
 
 package io.github.benas.randombeans.validation;
 
-import io.github.benas.randombeans.api.Populator;
+import io.github.benas.randombeans.api.EnhancedRandom;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -35,21 +35,21 @@ import javax.validation.ValidatorFactory;
 import java.math.BigDecimal;
 import java.util.Set;
 
-import static io.github.benas.randombeans.PopulatorBuilder.aNewPopulatorBuilder;
+import static io.github.benas.randombeans.EnhancedRandomBuilder.aNewEnhancedRandomBuilder;
 import static org.assertj.core.api.Assertions.assertThat;
 
 public class BeanValidationTest {
 
-    private Populator populator;
+    private EnhancedRandom enhancedRandom;
 
     @Before
     public void setUp() {
-        populator = aNewPopulatorBuilder().build();
+        enhancedRandom = aNewEnhancedRandomBuilder().build();
     }
 
     @Test
     public void generatedValuesShouldBeValidAccordingToValidationConstraints() {
-        BeanValidationAnnotatedBean bean = populator.populate(BeanValidationAnnotatedBean.class);
+        BeanValidationAnnotatedBean bean = enhancedRandom.nextObject(BeanValidationAnnotatedBean.class);
 
         assertThat(bean).isNotNull();
 
@@ -85,7 +85,7 @@ public class BeanValidationTest {
 
     @Test
     public void generatedBeanShouldBeValidUsingBeanValidationAPI() {
-        BeanValidationAnnotatedBean bean = populator.populate(BeanValidationAnnotatedBean.class);
+        BeanValidationAnnotatedBean bean = enhancedRandom.nextObject(BeanValidationAnnotatedBean.class);
 
         ValidatorFactory validatorFactory = Validation.buildDefaultValidatorFactory();
         Validator validator = validatorFactory.getValidator();

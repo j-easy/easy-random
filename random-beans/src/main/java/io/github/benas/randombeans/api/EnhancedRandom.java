@@ -25,35 +25,36 @@
 package io.github.benas.randombeans.api;
 
 import java.util.List;
+import java.util.Random;
 
 /**
- * Interface for java bean populator.
+ * Abstract class for random object generator.
  *
  * @author Mahmoud Ben Hassine (mahmoud.benhassine@icloud.com)
  */
-public interface Populator {
+public abstract class EnhancedRandom extends Random {
 
     /**
-     * Populate a random java bean instance for the given type.
+     * Generate a random instance of the given type.
      *
-     * @param type           the type for which an instance will be populated
+     * @param type           the type for which an instance will be generated
      * @param excludedFields the name of fields to exclude
-     * @param <T>            the actual type of the target java bean
-     * @return a populated random instance of the given type
-     * @throws BeanPopulationException when unable to populate an instance of the given type
+     * @param <T>            the actual type of the target object
+     * @return a random instance of the given type
+     * @throws ObjectGenerationException when unable to populate an instance of the given type
      */
-    <T> T populate(final Class<T> type, final String... excludedFields);
+    public abstract <T> T nextObject(final Class<T> type, final String... excludedFields);
 
     /**
-     * Populate a fixed number of random instances for the given type.
+     * Generate a fixed number of random instances of the given type.
      *
-     * @param type           the type for which instances will be populated
+     * @param type           the type for which instances will be generated
      * @param excludedFields the name of fields to exclude
-     * @param size           the number of instances to populate
-     * @param <T>            the actual type of the target java bean
-     * @return a list of populated instances of the given type
-     * @throws BeanPopulationException when unable to populate an instance of the given type
+     * @param size           the number of instances to generate
+     * @param <T>            the actual type of the target object
+     * @return a list of random instances of the given type
+     * @throws ObjectGenerationException when unable to populate an instance of the given type
      */
-    <T> List<T> populate(final Class<T> type, final int size, final String... excludedFields);
+    public abstract <T> List<T> nextObjects(final Class<T> type, final int size, final String... excludedFields);
 
 }

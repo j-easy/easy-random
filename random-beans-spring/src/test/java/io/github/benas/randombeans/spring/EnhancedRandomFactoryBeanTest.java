@@ -24,48 +24,48 @@
 
 package io.github.benas.randombeans.spring;
 
-import io.github.benas.randombeans.api.Populator;
+import io.github.benas.randombeans.api.EnhancedRandom;
 import org.junit.Test;
 import org.springframework.context.support.AbstractApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-public class PopulatorFactoryBeanTest {
+public class EnhancedRandomFactoryBeanTest {
 
     @Test
-    public void testJPopulatorFactoryBeanWithDefaultRandomizers() {
+    public void testEnhancedRandomFactoryBeanWithDefaultRandomizers() {
 
-        Populator populator = getPopulatorFromSpringContext("/application-context.xml");
+        EnhancedRandom enhancedRandom = getEnhancedRandomFromSpringContext("/application-context.xml");
 
-        // the populator managed by spring should be correctly configured
-        assertThat(populator).isNotNull();
+        // the enhancedRandom managed by spring should be correctly configured
+        assertThat(enhancedRandom).isNotNull();
 
-        // the populator should populate valid instances
-        Foo foo = populator.populate(Foo.class);
+        // the enhancedRandom should generate valid instances
+        Foo foo = enhancedRandom.nextObject(Foo.class);
 
         assertThat(foo).isNotNull();
         assertThat(foo.getName()).isNotEmpty();
     }
 
     @Test
-    public void testJPopulatorFactoryBeanWithCustomRandomizers() {
+    public void testEnhancedRandomFactoryBeanWithCustomRandomizers() {
 
-        Populator populator = getPopulatorFromSpringContext("/application-context-with-custom-randomizers.xml");
+        EnhancedRandom enhancedRandom = getEnhancedRandomFromSpringContext("/application-context-with-custom-randomizers.xml");
 
-        // the populator managed by spring should be correctly configured
-        assertThat(populator).isNotNull();
+        // the enhancedRandom managed by spring should be correctly configured
+        assertThat(enhancedRandom).isNotNull();
 
-        // the populator should populate valid instances
-        Foo foo = populator.populate(Foo.class);
+        // the enhancedRandom should generate valid instances
+        Foo foo = enhancedRandom.nextObject(Foo.class);
 
         assertThat(foo).isNotNull();
         assertThat(foo.getName()).isNotEmpty();
     }
 
-    private Populator getPopulatorFromSpringContext(String contextFileName) {
+    private EnhancedRandom getEnhancedRandomFromSpringContext(String contextFileName) {
         try (AbstractApplicationContext applicationContext = new ClassPathXmlApplicationContext(contextFileName)) {
-            return applicationContext.getBean(Populator.class);
+            return applicationContext.getBean(EnhancedRandom.class);
         }
     }
 

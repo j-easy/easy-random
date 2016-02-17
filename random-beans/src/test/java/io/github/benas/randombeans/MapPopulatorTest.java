@@ -46,20 +46,20 @@ public class MapPopulatorTest {
     @Mock
     private PopulatorContext context;
     @Mock
-    private BeanPopulator beanPopulator;
+    private EnhancedRandomImpl enhancedRandom;
 
     private MapPopulator mapPopulator;
     
     @Before
     public void setUp() throws Exception {
         ObjectFactory objectFactory = new ObjectFactory();
-        mapPopulator = new MapPopulator(beanPopulator, objectFactory);
+        mapPopulator = new MapPopulator(enhancedRandom, objectFactory);
     }
 
     @Test
     public void rawInterfaceMapTypesMustBeGeneratedEmpty() throws Exception {
         // Given
-        when(beanPopulator.doPopulateBean(Map.class, context)).thenReturn(emptyMap());
+        when(enhancedRandom.doPopulateBean(Map.class, context)).thenReturn(emptyMap());
         Field field = Foo.class.getDeclaredField("rawMap");
 
         // When
@@ -72,7 +72,7 @@ public class MapPopulatorTest {
     @Test
     public void rawConcreteMapTypesMustBeGeneratedEmpty() throws Exception {
         // Given
-        when(beanPopulator.doPopulateBean(HashMap.class, context)).thenReturn(new HashMap());
+        when(enhancedRandom.doPopulateBean(HashMap.class, context)).thenReturn(new HashMap());
         Field field = Foo.class.getDeclaredField("concreteMap");
 
         // When
@@ -85,7 +85,7 @@ public class MapPopulatorTest {
     @Test
     public void typedInterfaceMapTypesMustBePopulated() throws Exception {
         // Given
-        when(beanPopulator.doPopulateBean(Map.class, context)).thenReturn(emptyMap());
+        when(enhancedRandom.doPopulateBean(Map.class, context)).thenReturn(emptyMap());
         Field field = Foo.class.getDeclaredField("typedMap");
 
         // When
@@ -98,7 +98,7 @@ public class MapPopulatorTest {
     @Test
     public void typedConcreteMapTypesMustBePopulated() throws Exception {
         // Given
-        when(beanPopulator.doPopulateBean(HashMap.class, context)).thenReturn(new HashMap());
+        when(enhancedRandom.doPopulateBean(HashMap.class, context)).thenReturn(new HashMap());
         Field field = Foo.class.getDeclaredField("typedConcreteMap");
 
         // When

@@ -24,7 +24,7 @@
 
 package io.github.benas.randombeans;
 
-import io.github.benas.randombeans.api.Populator;
+import io.github.benas.randombeans.api.EnhancedRandom;
 import io.github.benas.randombeans.api.Randomizer;
 import io.github.benas.randombeans.api.RandomizerRegistry;
 import io.github.benas.randombeans.beans.Human;
@@ -34,14 +34,14 @@ import org.junit.runner.RunWith;
 import org.mockito.Mock;
 import org.mockito.runners.MockitoJUnitRunner;
 
+import static io.github.benas.randombeans.EnhancedRandomBuilder.aNewEnhancedRandomBuilder;
 import static io.github.benas.randombeans.FieldDefinitionBuilder.field;
-import static io.github.benas.randombeans.PopulatorBuilder.aNewPopulatorBuilder;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.Mockito.when;
 
 @RunWith(MockitoJUnitRunner.class)
 @SuppressWarnings("unchecked")
-public class PopulatorBuilderTest {
+public class EnhancedRandomBuilderTest {
 
     public static final String NAME = "TestName";
 
@@ -54,38 +54,38 @@ public class PopulatorBuilderTest {
     @Mock
     private Human human;
 
-    private PopulatorBuilder populatorBuilder;
+    private EnhancedRandomBuilder enhancedRandomBuilder;
 
     @Before
-    public void setUp() throws Exception {
+    public void setUp() {
         when(randomizer.getRandomValue()).thenReturn(NAME);
         when(humanRandomizer.getRandomValue()).thenReturn(human);
     }
 
     @Test
     public void builtInstancesShouldBeDistinct() {
-        populatorBuilder = aNewPopulatorBuilder();
+        enhancedRandomBuilder = aNewEnhancedRandomBuilder();
 
-        Populator populator1 = populatorBuilder.build();
-        Populator populator2 = populatorBuilder.build();
+        EnhancedRandom enhancedRandom1 = enhancedRandomBuilder.build();
+        EnhancedRandom enhancedRandom2 = enhancedRandomBuilder.build();
 
-        assertThat(populator1).isNotSameAs(populator2);
+        assertThat(enhancedRandom1).isNotSameAs(enhancedRandom2);
     }
 
     @Test
     public void customRandomizerShouldBeRegisteredInAllBuiltInstances() {
-        populatorBuilder = aNewPopulatorBuilder();
+        enhancedRandomBuilder = aNewEnhancedRandomBuilder();
 
         FieldDefinition<?, ?> fieldDefinition = field().named("name").ofType(String.class).inClass(Human.class).get();
-        populatorBuilder.randomize(fieldDefinition, randomizer);
+        enhancedRandomBuilder.randomize(fieldDefinition, randomizer);
 
-        Populator populator = populatorBuilder.build();
-        Human human = populator.populate(Human.class);
+        EnhancedRandom enhancedRandom = enhancedRandomBuilder.build();
+        Human human = enhancedRandom.nextObject(Human.class);
 
         assertThat(human.getName()).isEqualTo(NAME);
 
-        Populator populator2 = populatorBuilder.build();
-        Human human2 = populator2.populate(Human.class);
+        EnhancedRandom enhancedRandom2 = enhancedRandomBuilder.build();
+        Human human2 = enhancedRandom2.nextObject(Human.class);
 
         assertThat(human2.getName()).isEqualTo(NAME);
     }
@@ -93,15 +93,15 @@ public class PopulatorBuilderTest {
     @Test
     public void customRandomizerRegistryShouldBeRegisteredInAllBuiltInstances() {
         when(randomizerRegistry.getRandomizer(Human.class)).thenReturn(humanRandomizer);
-        populatorBuilder = aNewPopulatorBuilder().registerRandomizerRegistry(randomizerRegistry);
+        enhancedRandomBuilder = aNewEnhancedRandomBuilder().registerRandomizerRegistry(randomizerRegistry);
 
-        Populator populator = populatorBuilder.build();
-        Human actual = populator.populate(Human.class);
+        EnhancedRandom enhancedRandom = enhancedRandomBuilder.build();
+        Human actual = enhancedRandom.nextObject(Human.class);
 
         assertThat(actual).isEqualTo(human);
 
-        Populator populator2 = populatorBuilder.build();
-        actual = populator2.populate(Human.class);
+        EnhancedRandom enhancedRandom2 = enhancedRandomBuilder.build();
+        actual = enhancedRandom2.nextObject(Human.class);
 
         assertThat(actual).isEqualTo(human);
     }

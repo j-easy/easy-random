@@ -36,10 +36,10 @@ import static java.lang.Math.abs;
  */
 class ArrayPopulator {
 
-    private BeanPopulator populator;
+    private EnhancedRandomImpl enhancedRandom;
 
-    ArrayPopulator(final BeanPopulator populator) {
-        this.populator = populator;
+    ArrayPopulator(final EnhancedRandomImpl enhancedRandom) {
+        this.enhancedRandom = enhancedRandom;
     }
 
     @SuppressWarnings("unchecked")
@@ -51,7 +51,7 @@ class ArrayPopulator {
         int randomSize = abs(aNewByteRandomizer().getRandomValue());
         T[] itemsList = (T[]) Array.newInstance(componentType, randomSize);
         for (int i = 0; i < randomSize; i++) {
-            itemsList[i] = (T) populator.doPopulateBean(fieldType.getComponentType(), context);
+            itemsList[i] = (T) enhancedRandom.doPopulateBean(fieldType.getComponentType(), context);
         }
         return itemsList;
     }
@@ -62,56 +62,56 @@ class ArrayPopulator {
         if (primitiveType.equals(Byte.TYPE)) {
             byte[] result = new byte[size];
             for (int index = 0; index < size; index ++) {
-                result[index] = populator.populate(Byte.TYPE);
+                result[index] = enhancedRandom.nextObject(Byte.TYPE);
             }
             return result;
         }
         if (primitiveType.equals(Short.TYPE)) {
             short[] result = new short[size];
             for (int index = 0; index < size; index ++) {
-                result[index] = populator.populate(Short.TYPE);
+                result[index] = enhancedRandom.nextObject(Short.TYPE);
             }
             return result;
         }
         if (primitiveType.equals(Integer.TYPE)) {
             int[] result = new int[size];
             for (int index = 0; index < size; index ++) {
-                result[index] = populator.populate(Integer.TYPE);
+                result[index] = enhancedRandom.nextObject(Integer.TYPE);
             }
             return result;
         }
         if (primitiveType.equals(Long.TYPE)) {
             long[] result = new long[size];
             for (int index = 0; index < size; index ++) {
-                result[index] = populator.populate(Long.TYPE);
+                result[index] = enhancedRandom.nextObject(Long.TYPE);
             }
             return result;
         }
         if (primitiveType.equals(Float.TYPE)) {
             float[] result = new float[size];
             for (int index = 0; index < size; index ++) {
-                result[index] = populator.populate(Float.TYPE);
+                result[index] = enhancedRandom.nextObject(Float.TYPE);
             }
             return result;
         }
         if (primitiveType.equals(Double.TYPE)) {
             double[] result = new double[size];
             for (int index = 0; index < size; index ++) {
-                result[index] = populator.populate(Double.TYPE);
+                result[index] = enhancedRandom.nextObject(Double.TYPE);
             }
             return result;
         }
         if (primitiveType.equals(Character.TYPE)) {
             char[] result = new char[size];
             for (int index = 0; index < size; index ++) {
-                result[index] = populator.populate(Character.TYPE);
+                result[index] = enhancedRandom.nextObject(Character.TYPE);
             }
             return result;
         }
         if (primitiveType.equals(Boolean.TYPE)) {
             boolean[] result = new boolean[size];
             for (int index = 0; index < size; index ++) {
-                result[index] = populator.populate(Boolean.TYPE);
+                result[index] = enhancedRandom.nextObject(Boolean.TYPE);
             }
             return result;
         }
