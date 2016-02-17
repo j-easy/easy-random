@@ -32,6 +32,8 @@ import io.github.benas.randombeans.randomizers.registry.CustomRandomizerRegistry
 
 import java.util.*;
 
+import static io.github.benas.randombeans.util.Constants.DEFAULT_SEED;
+
 /**
  * Builder to create {@link EnhancedRandom} instances.
  *
@@ -45,10 +47,13 @@ public class EnhancedRandomBuilder {
 
     private boolean scanClasspathForConcreteTypes;
 
+    private long seed;
+
     private EnhancedRandomBuilder() {
         customRandomizerRegistry = new CustomRandomizerRegistry();
         userRegistries = new LinkedHashSet<>();
         scanClasspathForConcreteTypes = false;
+        seed = DEFAULT_SEED;
     }
 
     /**
@@ -80,6 +85,17 @@ public class EnhancedRandomBuilder {
      */
     public <T, F> EnhancedRandomBuilder exclude(FieldDefinition<T, F> fieldDefinition) {
         return randomize(fieldDefinition, new SkipRandomizer());
+    }
+
+    /**
+     * Set the initial random seed.
+     *
+     * @param seed the initial seed
+     * @return a pre configured {@link EnhancedRandomBuilder} instance
+     */
+    public EnhancedRandomBuilder seed(final long seed) {
+        this.seed = seed;
+        return this;
     }
 
     /**
@@ -117,9 +133,13 @@ public class EnhancedRandomBuilder {
         registries.add(customRandomizerRegistry); // programatically registered randomizers through randomize()
         registries.addAll(userRegistries); // programatically registered registries through registerRandomizerRegistry()
         registries.addAll(loadRegistries()); // registries added to classpath through the SPI
-        EnhancedRandomImpl populator = new EnhancedRandomImpl(registries);
-        populator.setScanClasspathForConcreteTypes(scanClasspathForConcreteTypes);
-        return populator;
+        for (RandomizerRegistry registry : registries) {
+            registry.setSeed(seed);
+        }
+        EnhancedRandomImpl enhancedRandom = new EnhancedRandomImpl(registries);
+        enhancedRandom.setSeed(seed);
+        enhancedRandom.setScanClasspathForConcreteTypes(scanClasspathForConcreteTypes);
+        return enhancedRandom;
     }
 
     private Collection<RandomizerRegistry> loadRegistries() {

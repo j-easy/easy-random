@@ -45,6 +45,8 @@ import static io.github.benas.randombeans.util.ReflectionUtils.*;
 @SuppressWarnings({ "rawtypes", "unchecked" })
 class EnhancedRandomImpl extends EnhancedRandom {
 
+    private long seed;
+
     private FieldPopulator fieldPopulator;
 
     private ArrayPopulator arrayPopulator;
@@ -125,7 +127,7 @@ class EnhancedRandomImpl extends EnhancedRandom {
 
     private <T> T randomize(final Class<T> type, final PopulatorContext context) {
         if (isEnumType(type)) {
-            return (T) new EnumRandomizer(type).getRandomValue();
+            return (T) new EnumRandomizer(type, seed).getRandomValue();
         }
         if (isArrayType(type)) {
             return (T) arrayPopulator.getRandomArray(type, context);
@@ -154,5 +156,11 @@ class EnhancedRandomImpl extends EnhancedRandom {
     void setScanClasspathForConcreteTypes(final boolean scanClasspathForConcreteTypes) {
         fieldPopulator.setScanClasspathForConcreteTypes(scanClasspathForConcreteTypes);
         objectFactory.setScanClasspathForConcreteTypes(scanClasspathForConcreteTypes);
+    }
+
+    @Override
+    public void setSeed(final long seed) {
+        super.setSeed(seed);
+        this.seed = seed;
     }
 }

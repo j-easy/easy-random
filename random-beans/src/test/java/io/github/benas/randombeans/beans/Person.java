@@ -116,4 +116,27 @@ public class Person extends Human implements Comparable<Person> {
     public int compareTo(Person person) {
         return name.compareTo(person.getName());
     }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        Person person = (Person) o;
+
+        if (email != null ? !email.equals(person.email) : person.email != null) return false;
+        if (gender != person.gender) return false;
+        if (address != null ? !address.equals(person.address) : person.address != null) return false;
+        return !(phoneNumber != null ? !phoneNumber.equals(person.phoneNumber) : person.phoneNumber != null);
+
+    }
+
+    @Override
+    public int hashCode() {
+        int result = email != null ? email.hashCode() : 0;
+        result = 31 * result + (gender != null ? gender.hashCode() : 0);
+        result = 31 * result + (address != null ? address.hashCode() : 0);
+        result = 31 * result + (phoneNumber != null ? phoneNumber.hashCode() : 0);
+        return result;
+    }
 }

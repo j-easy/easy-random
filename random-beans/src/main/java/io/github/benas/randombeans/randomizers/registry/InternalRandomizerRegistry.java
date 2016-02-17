@@ -24,6 +24,11 @@
 
 package io.github.benas.randombeans.randomizers.registry;
 
+import io.github.benas.randombeans.annotation.Priority;
+import io.github.benas.randombeans.api.Randomizer;
+import io.github.benas.randombeans.api.RandomizerRegistry;
+import io.github.benas.randombeans.randomizers.*;
+
 import java.lang.reflect.Field;
 import java.math.BigDecimal;
 import java.math.BigInteger;
@@ -36,30 +41,6 @@ import java.util.Map;
 import java.util.concurrent.atomic.AtomicInteger;
 import java.util.concurrent.atomic.AtomicLong;
 
-import io.github.benas.randombeans.annotation.Priority;
-import io.github.benas.randombeans.api.Randomizer;
-import io.github.benas.randombeans.api.RandomizerRegistry;
-import io.github.benas.randombeans.randomizers.AtomicIntegerRandomizer;
-import io.github.benas.randombeans.randomizers.AtomicLongRandomizer;
-import io.github.benas.randombeans.randomizers.BigDecimalRandomizer;
-import io.github.benas.randombeans.randomizers.BigIntegerRandomizer;
-import io.github.benas.randombeans.randomizers.BooleanRandomizer;
-import io.github.benas.randombeans.randomizers.ByteRandomizer;
-import io.github.benas.randombeans.randomizers.CalendarRandomizer;
-import io.github.benas.randombeans.randomizers.CharacterRandomizer;
-import io.github.benas.randombeans.randomizers.DateRandomizer;
-import io.github.benas.randombeans.randomizers.DoubleRandomizer;
-import io.github.benas.randombeans.randomizers.FloatRandomizer;
-import io.github.benas.randombeans.randomizers.IntegerRandomizer;
-import io.github.benas.randombeans.randomizers.LongRandomizer;
-import io.github.benas.randombeans.randomizers.ShortRandomizer;
-import io.github.benas.randombeans.randomizers.SqlDateRandomizer;
-import io.github.benas.randombeans.randomizers.SqlTimeRandomizer;
-import io.github.benas.randombeans.randomizers.SqlTimestampRandomizer;
-import io.github.benas.randombeans.randomizers.StringRandomizer;
-import io.github.benas.randombeans.randomizers.UriRandomizer;
-import io.github.benas.randombeans.randomizers.UrlRandomizer;
-
 /**
  * Registry for Java built-in types.
  *
@@ -70,35 +51,36 @@ public class InternalRandomizerRegistry implements RandomizerRegistry {
 
     private final Map<Class<?>, Randomizer<?>> randomizers = new HashMap<>();
 
-    public InternalRandomizerRegistry() {
-        randomizers.put(String.class, new StringRandomizer());
-        randomizers.put(Character.class, new CharacterRandomizer());
-        randomizers.put(char.class, new CharacterRandomizer());
-        randomizers.put(Boolean.class, new BooleanRandomizer());
-        randomizers.put(boolean.class, new BooleanRandomizer());
-        randomizers.put(Byte.class, new ByteRandomizer());
-        randomizers.put(byte.class, new ByteRandomizer());
-        randomizers.put(Short.class, new ShortRandomizer());
-        randomizers.put(short.class, new ShortRandomizer());
-        randomizers.put(Integer.class, new IntegerRandomizer());
-        randomizers.put(int.class, new IntegerRandomizer());
-        randomizers.put(Long.class, new LongRandomizer());
-        randomizers.put(long.class, new LongRandomizer());
-        randomizers.put(Double.class, new DoubleRandomizer());
-        randomizers.put(double.class, new DoubleRandomizer());
-        randomizers.put(Float.class, new FloatRandomizer());
-        randomizers.put(float.class, new FloatRandomizer());
-        randomizers.put(BigInteger.class, new BigIntegerRandomizer());
-        randomizers.put(BigDecimal.class, new BigDecimalRandomizer());
-        randomizers.put(AtomicLong.class, new AtomicLongRandomizer());
-        randomizers.put(AtomicInteger.class, new AtomicIntegerRandomizer());
-        randomizers.put(Date.class, new DateRandomizer());
-        randomizers.put(java.sql.Date.class, new SqlDateRandomizer());
-        randomizers.put(java.sql.Time.class, new SqlTimeRandomizer());
-        randomizers.put(java.sql.Timestamp.class, new SqlTimestampRandomizer());
-        randomizers.put(Calendar.class, new CalendarRandomizer());
-        randomizers.put(URL.class, new UrlRandomizer());
-        randomizers.put(URI.class, new UriRandomizer());
+    @Override
+    public void setSeed(final long seed) {
+        randomizers.put(String.class, new StringRandomizer(seed));
+        randomizers.put(Character.class, new CharacterRandomizer(seed));
+        randomizers.put(char.class, new CharacterRandomizer(seed));
+        randomizers.put(Boolean.class, new BooleanRandomizer(seed));
+        randomizers.put(boolean.class, new BooleanRandomizer(seed));
+        randomizers.put(Byte.class, new ByteRandomizer(seed));
+        randomizers.put(byte.class, new ByteRandomizer(seed));
+        randomizers.put(Short.class, new ShortRandomizer(seed));
+        randomizers.put(short.class, new ShortRandomizer(seed));
+        randomizers.put(Integer.class, new IntegerRandomizer(seed));
+        randomizers.put(int.class, new IntegerRandomizer(seed));
+        randomizers.put(Long.class, new LongRandomizer(seed));
+        randomizers.put(long.class, new LongRandomizer(seed));
+        randomizers.put(Double.class, new DoubleRandomizer(seed));
+        randomizers.put(double.class, new DoubleRandomizer(seed));
+        randomizers.put(Float.class, new FloatRandomizer(seed));
+        randomizers.put(float.class, new FloatRandomizer(seed));
+        randomizers.put(BigInteger.class, new BigIntegerRandomizer(seed));
+        randomizers.put(BigDecimal.class, new BigDecimalRandomizer(seed));
+        randomizers.put(AtomicLong.class, new AtomicLongRandomizer(seed));
+        randomizers.put(AtomicInteger.class, new AtomicIntegerRandomizer(seed));
+        randomizers.put(Date.class, new DateRandomizer(seed));
+        randomizers.put(java.sql.Date.class, new SqlDateRandomizer(seed));
+        randomizers.put(java.sql.Time.class, new SqlTimeRandomizer(seed));
+        randomizers.put(java.sql.Timestamp.class, new SqlTimestampRandomizer(seed));
+        randomizers.put(Calendar.class, new CalendarRandomizer(seed));
+        randomizers.put(URL.class, new UrlRandomizer(seed));
+        randomizers.put(URI.class, new UriRandomizer(seed));
     }
 
     @Override

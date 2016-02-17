@@ -43,14 +43,15 @@ public class JodaTimeRandomizerRegistry implements RandomizerRegistry {
 
     private Map<Class<?>, Randomizer<?>> randomizers = new HashMap<>();
 
-    public JodaTimeRandomizerRegistry() {
-        randomizers.put(org.joda.time.DateTime.class, new JodaTimeDateTimeRandomizer());
-        randomizers.put(org.joda.time.LocalDate.class, new JodaTimeLocalDateRandomizer());
-        randomizers.put(org.joda.time.LocalTime.class, new JodaTimeLocalTimeRandomizer());
-        randomizers.put(org.joda.time.LocalDateTime.class, new JodaTimeLocalDateTimeRandomizer());
-        randomizers.put(org.joda.time.Duration.class, new JodaTimeDurationRandomizer());
-        randomizers.put(org.joda.time.Period.class, new JodaTimePeriodRandomizer());
-        randomizers.put(org.joda.time.Interval.class, new JodaTimeIntervalRandomizer());
+    @Override
+    public void setSeed(final long seed) {
+        randomizers.put(org.joda.time.DateTime.class, new JodaTimeDateTimeRandomizer(seed));
+        randomizers.put(org.joda.time.LocalDate.class, new JodaTimeLocalDateRandomizer(seed));
+        randomizers.put(org.joda.time.LocalTime.class, new JodaTimeLocalTimeRandomizer(seed));
+        randomizers.put(org.joda.time.LocalDateTime.class, new JodaTimeLocalDateTimeRandomizer(seed));
+        randomizers.put(org.joda.time.Duration.class, new JodaTimeDurationRandomizer(seed));
+        randomizers.put(org.joda.time.Period.class, new JodaTimePeriodRandomizer(seed));
+        randomizers.put(org.joda.time.Interval.class, new JodaTimeIntervalRandomizer(seed));
     }
 
     @Override

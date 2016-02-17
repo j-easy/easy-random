@@ -43,6 +43,16 @@ public class CustomRandomizerRegistry implements RandomizerRegistry {
 
     private Map<FieldDefinition<?, ?>, Randomizer<?>> customRandomizersRegistry = new HashMap<>();
 
+    /**
+     * Set the initial seed for all randomizers of the registry
+     *
+     * @param seed the initial seed
+     */
+    @Override
+    public void setSeed(long seed) {
+        // no op
+    }
+
     @Override
     public Randomizer<?> getRandomizer(Field field) {
         return customRandomizersRegistry.get(new FieldDefinition<>(field.getName(), field.getType(), field.getDeclaringClass()));

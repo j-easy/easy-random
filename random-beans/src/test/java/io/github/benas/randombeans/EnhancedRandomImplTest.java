@@ -48,6 +48,7 @@ import static org.mockito.Mockito.when;
 public class EnhancedRandomImplTest {
 
     private static final String NAME = "foo";
+    private static final long SEED = 123L;
 
     @Mock
     private Randomizer<String> randomizer;
@@ -69,7 +70,7 @@ public class EnhancedRandomImplTest {
         assertThat(person.getGender()).isIn(asList(Gender.values()));
         assertThat(person.getBirthDate()).isNotNull();
         assertThat(person.getPhoneNumber()).isNotEmpty();
-        assertThat(person.getNicknames()).isNotEmpty();
+        assertThat(person.getNicknames()).isNotNull();
         assertThat(person.getName()).isNotEmpty();
 
         final Address address = person.getAddress();
@@ -208,5 +209,65 @@ public class EnhancedRandomImplTest {
         Object object = enhancedRandom.nextObject(Object.class);
 
         assertThat(object).isNotNull();
+    }
+
+    @Test
+    public void generatedObjectShouldBeAlwaysTheSameForTheSameSeed() {
+        // Given
+        enhancedRandom = aNewEnhancedRandomBuilder().seed(SEED).build();
+
+        String expectedString = "6tu4grj584ngud335bvmlf0cqd";
+        Person expectedPerson = buildExpectedPerson();
+        int[] expectedInts = buildExpectedInts();
+
+        // When
+        String actualString = enhancedRandom.nextObject(String.class);
+        Person actualPerson = enhancedRandom.nextObject(Person.class);
+        int[] actualInts = enhancedRandom.nextObject(int[].class);
+
+        // Then
+        assertThat(actualString).isEqualTo(expectedString);
+        assertThat(actualPerson).isEqualTo(expectedPerson);
+        assertThat(actualInts).isEqualTo(expectedInts);
+    }
+
+
+    private Person buildExpectedPerson() {
+        Person expectedPerson = new Person();
+
+        Street street = new Street();
+        street.setName("63ep6st2ksaeflu38rs3ud97kc");
+        street.setNumber(-1188957731);
+        street.setType((byte) -35);
+
+        Address address = new Address();
+        address.setCity("2oobbsm8nhgh209ip6ig0d26hu");
+        address.setCountry("5ktdtegaua5qd2ih0v4racat1n");
+        address.setZipCode("4guh7bfmnngoknm9r92blkf2te");
+        address.setStreet(street);
+
+        expectedPerson.setName("6iahpms0vt904iii4q2e29mmjg");
+        expectedPerson.setEmail("mq7bk0ch6va94aluqjct0uhi2");
+        expectedPerson.setPhoneNumber("6l0akfjip99hqt1pma2246higm");
+        expectedPerson.setGender(Gender.FEMALE);
+        expectedPerson.setAddress(address);
+
+        return expectedPerson;
+    }
+
+    private int[] buildExpectedInts() {
+        return new int[]{
+                -280909499, -305450209, 1517137588, -766944990, -303299446, 1813216367, 325318881,
+                -1060198264, -1824668377, 1809851834, -360253551, 1433633028, -2035540546, -255920749,
+                1377189917, -317881159, 2134924502, 873355137, -119545285, 516922700, 1035172885, 22154534,
+                -1230623669, -1485698138, 727117486, 1941917090, -852696847, -1234882568, -1273535721, 1835071289,
+                577483235, 588926463, 1031629823, -1290094798, -2115169277, 1331548553, 1113277567, -874755070,
+                -465715025, -781002953, -1978260593, -222018134, -725452712, -1789395581, 1315754683, -1643911076,
+                -980493743, 1687798276, 42236949, 894178660, -13539863, -1617498384, 488629101, -1666884027,
+                -1122633541, 509598947, 91520703, -1575770590, 1600216643, 1654754526, 22290924, 931657056,
+                -1371683659, 2073681553, -1416023635, -1515625592, 1371089673, -1188927780, 640586180,
+                -1456981135, -1982587814, -810308973, 2062271091, 836550045, 493898864, -1524973183, -1257184974,
+                1663378659, 2041833883, 817341871, 1639284891, -2045980338, 1064286146, -1162169626, -1019704408,
+                33602885, 2120435898};
     }
 }

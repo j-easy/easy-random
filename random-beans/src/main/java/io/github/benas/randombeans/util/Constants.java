@@ -36,6 +36,11 @@ import static org.apache.commons.lang3.time.DateUtils.addYears;
 public abstract class Constants {
 
     /**
+     * Default seed value.
+     */
+    public static final long DEFAULT_SEED = 1234567890L;
+
+    /**
      * Maximum collection size
      */
     public static final byte MAX_COLLECTION_SIZE = Byte.MAX_VALUE;
