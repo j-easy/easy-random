@@ -38,7 +38,7 @@ import static org.apache.commons.lang3.RandomUtils.nextInt;
  */
 class PopulatorContext {
 
-    private static final byte OBJECT_POOL_SIZE = 10;
+    static final byte OBJECT_POOL_SIZE = 10;
 
     private String[] excludedFields;
 
@@ -46,13 +46,13 @@ class PopulatorContext {
 
     private Stack<PopulatorContextStackItem> stack;
 
-    public PopulatorContext(final String... excludedFields) {
+    PopulatorContext(final String... excludedFields) {
         populatedBeans = new IdentityHashMap<>();
         stack = new Stack<>();
         this.excludedFields = excludedFields;
     }
 
-    public void addPopulatedBean(final Class<?> type, Object object) {
+    void addPopulatedBean(final Class<?> type, Object object) {
         List<Object> objects = populatedBeans.get(type);
         if (objects == null) {
             objects = new ArrayList<>(OBJECT_POOL_SIZE);
@@ -63,29 +63,29 @@ class PopulatorContext {
         populatedBeans.put(type, objects);
     }
 
-    public Object getPopulatedBean(final Class<?> type) {
+    Object getPopulatedBean(final Class<?> type) {
         int actualPoolSize = populatedBeans.get(type).size();
         int randomIndex = actualPoolSize > 1 ? nextInt(0, actualPoolSize) : 0;
         return populatedBeans.get(type).get(randomIndex);
     }
 
-    public boolean hasPopulatedBean(final Class<?> type) {
+    boolean hasRandomizedType(final Class<?> type) {
         return populatedBeans.containsKey(type) && populatedBeans.get(type).size() == OBJECT_POOL_SIZE;
     }
 
-    public String[] getExcludedFields() {
+    String[] getExcludedFields() {
         return excludedFields;
     }
 
-    public void pushStackItem(final PopulatorContextStackItem field) {
+    void pushStackItem(final PopulatorContextStackItem field) {
         stack.push(field);
     }
 
-    public PopulatorContextStackItem popStackItem() {
+    PopulatorContextStackItem popStackItem() {
         return stack.pop();
     }
 
-    public String getFieldFullName(final Field field) {
+    String getFieldFullName(final Field field) {
         StringBuilder builder = new StringBuilder();
         List<Field> stackedFields = getStackedFields();
         appendDottedName(builder, stackedFields);
@@ -93,7 +93,7 @@ class PopulatorContext {
         return builder.toString();
     }
 
-    private List<Field> getStackedFields() {
+    List<Field> getStackedFields() {
         List<Field> fields = new ArrayList<>();
         for (PopulatorContextStackItem stackItem : stack) {
             fields.add(stackItem.getField());
@@ -101,7 +101,7 @@ class PopulatorContext {
         return fields;
     }
 
-    private static void appendDottedName(final StringBuilder builder, final List<Field> fields) {
+    void appendDottedName(final StringBuilder builder, final List<Field> fields) {
         for (Field field : fields) {
             if (builder.length() > 0) {
                 builder.append(".");

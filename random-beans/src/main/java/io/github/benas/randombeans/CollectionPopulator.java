@@ -27,7 +27,8 @@ package io.github.benas.randombeans;
 import java.lang.reflect.Field;
 import java.lang.reflect.ParameterizedType;
 import java.lang.reflect.Type;
-import java.util.Collection;
+import java.util.*;
+import java.util.concurrent.*;
 
 import static io.github.benas.randombeans.util.Constants.MAX_COLLECTION_SIZE;
 import static io.github.benas.randombeans.util.ReflectionUtils.*;
@@ -50,14 +51,14 @@ class CollectionPopulator {
     }
 
     @SuppressWarnings({"unchecked", "rawtypes"})
-    Collection<?> getRandomCollection(final Field field, final PopulatorContext context) throws IllegalAccessException {
+    Collection<?> getRandomCollection(final Field field, final PopulatorContext context) {
         int randomSize = nextInt(1, MAX_COLLECTION_SIZE);
         Class<?> fieldType = field.getType();
         Type fieldGenericType = field.getGenericType();
         Collection collection;
 
         if (isInterface(fieldType)) {
-            collection = objectFactory.createEmptyImplementationForCollectionInterface(fieldType);
+            collection = getEmptyImplementationForCollectionInterface(fieldType);
         } else {
             collection = objectFactory.createEmptyCollectionForType(fieldType, randomSize);
         }
@@ -75,5 +76,29 @@ class CollectionPopulator {
         }
         return collection;
 
+    }
+
+    Collection<?> getEmptyImplementationForCollectionInterface(final Class<?> collectionInterface) {
+        Collection<?> collection = new ArrayList<>();
+        if (List.class.isAssignableFrom(collectionInterface)) {
+            collection = new ArrayList<>();
+        } else if (NavigableSet.class.isAssignableFrom(collectionInterface)) {
+            collection = new TreeSet<>();
+        } else if (SortedSet.class.isAssignableFrom(collectionInterface)) {
+            collection = new TreeSet<>();
+        } else if (Set.class.isAssignableFrom(collectionInterface)) {
+            collection = new HashSet<>();
+        } else if (BlockingDeque.class.isAssignableFrom(collectionInterface)) {
+            collection = new LinkedBlockingDeque<>();
+        } else if (Deque.class.isAssignableFrom(collectionInterface)) {
+            collection = new ArrayDeque<>();
+        } else if (TransferQueue.class.isAssignableFrom(collectionInterface)) {
+            collection = new LinkedTransferQueue<>();
+        } else if (BlockingQueue.class.isAssignableFrom(collectionInterface)) {
+            collection = new LinkedBlockingQueue<>();
+        } else if (Queue.class.isAssignableFrom(collectionInterface)) {
+            collection = new LinkedList<>();
+        }
+        return collection;
     }
 }

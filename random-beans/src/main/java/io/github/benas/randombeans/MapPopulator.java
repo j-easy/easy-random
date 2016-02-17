@@ -27,7 +27,11 @@ package io.github.benas.randombeans;
 import java.lang.reflect.Field;
 import java.lang.reflect.ParameterizedType;
 import java.lang.reflect.Type;
-import java.util.Map;
+import java.util.*;
+import java.util.concurrent.ConcurrentHashMap;
+import java.util.concurrent.ConcurrentMap;
+import java.util.concurrent.ConcurrentNavigableMap;
+import java.util.concurrent.ConcurrentSkipListMap;
 
 import static io.github.benas.randombeans.util.Constants.MAX_COLLECTION_SIZE;
 import static io.github.benas.randombeans.util.ReflectionUtils.*;
@@ -50,18 +54,18 @@ class MapPopulator {
     }
 
     @SuppressWarnings("unchecked")
-    Map<?, ?> getRandomMap(final Field field, final PopulatorContext context) throws IllegalAccessException {
+    Map<?, ?> getRandomMap(final Field field, final PopulatorContext context) {
         int randomSize = nextInt(1, MAX_COLLECTION_SIZE);
         Class<?> fieldType = field.getType();
         Type fieldGenericType = field.getGenericType();
         Map<Object, Object> map;
 
         if (isInterface(fieldType)) {
-            map = (Map<Object, Object>) objectFactory.createEmptyImplementationForMapInterface(fieldType);
+            map = (Map<Object, Object>) getEmptyImplementationForMapInterface(fieldType);
         } else {
             try {
                 map = (Map<Object, Object>) fieldType.newInstance();
-            } catch (InstantiationException e) {
+            } catch (InstantiationException | IllegalAccessException e) {
                 map = (Map<Object, Object>) objectFactory.createInstance(fieldType);
             }
         }
@@ -77,6 +81,20 @@ class MapPopulator {
                     map.put(randomKey, randomValue);
                 }
             }
+        }
+        return map;
+    }
+
+    Map<?, ?> getEmptyImplementationForMapInterface(final Class<?> mapInterface) {
+        Map<?, ?> map = new HashMap<>();
+        if (ConcurrentNavigableMap.class.isAssignableFrom(mapInterface)) {
+            map = new ConcurrentSkipListMap<>();
+        } else if (ConcurrentMap.class.isAssignableFrom(mapInterface)) {
+            map = new ConcurrentHashMap<>();
+        } else if (NavigableMap.class.isAssignableFrom(mapInterface)) {
+            map = new TreeMap<>();
+        } else if (SortedMap.class.isAssignableFrom(mapInterface)) {
+            map = new TreeMap<>();
         }
         return map;
     }

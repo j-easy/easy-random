@@ -21,10 +21,12 @@
  *   OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  *   THE SOFTWARE.
  */
+
 package io.github.benas.randombeans;
 
 import io.github.benas.randombeans.api.Populator;
 import io.github.benas.randombeans.api.Randomizer;
+import io.github.benas.randombeans.api.RandomizerRegistry;
 import io.github.benas.randombeans.beans.Human;
 import org.junit.Before;
 import org.junit.Test;
@@ -38,43 +40,69 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.Mockito.when;
 
 @RunWith(MockitoJUnitRunner.class)
+@SuppressWarnings("unchecked")
 public class PopulatorBuilderTest {
 
     public static final String NAME = "TestName";
 
     @Mock
     private Randomizer<String> randomizer;
+    @Mock
+    private Randomizer humanRandomizer;
+    @Mock
+    private RandomizerRegistry randomizerRegistry;
+    @Mock
+    private Human human;
+
+    private PopulatorBuilder populatorBuilder;
 
     @Before
     public void setUp() throws Exception {
         when(randomizer.getRandomValue()).thenReturn(NAME);
+        when(humanRandomizer.getRandomValue()).thenReturn(human);
     }
 
     @Test
     public void builtInstancesShouldBeDistinct() {
-        PopulatorBuilder builder = aNewPopulatorBuilder();
+        populatorBuilder = aNewPopulatorBuilder();
 
-        Populator populator1 = builder.build();
-        Populator populator2 = builder.build();
+        Populator populator1 = populatorBuilder.build();
+        Populator populator2 = populatorBuilder.build();
 
         assertThat(populator1).isNotSameAs(populator2);
     }
 
     @Test
     public void customRandomizerShouldBeRegisteredInAllBuiltInstances() {
-        PopulatorBuilder builder = aNewPopulatorBuilder();
+        populatorBuilder = aNewPopulatorBuilder();
 
         FieldDefinition<?, ?> fieldDefinition = field().named("name").ofType(String.class).inClass(Human.class).get();
-        builder.randomize(fieldDefinition, randomizer);
+        populatorBuilder.randomize(fieldDefinition, randomizer);
 
-        Populator populator = builder.build();
+        Populator populator = populatorBuilder.build();
         Human human = populator.populate(Human.class);
 
         assertThat(human.getName()).isEqualTo(NAME);
 
-        Populator populator2 = builder.build();
+        Populator populator2 = populatorBuilder.build();
         Human human2 = populator2.populate(Human.class);
 
-        assertThat(human2.getName()).isNotEqualTo(NAME);
+        assertThat(human2.getName()).isEqualTo(NAME);
+    }
+
+    @Test
+    public void customRandomizerRegistryShouldBeRegisteredInAllBuiltInstances() {
+        when(randomizerRegistry.getRandomizer(Human.class)).thenReturn(humanRandomizer);
+        populatorBuilder = aNewPopulatorBuilder().registerRandomizerRegistry(randomizerRegistry);
+
+        Populator populator = populatorBuilder.build();
+        Human actual = populator.populate(Human.class);
+
+        assertThat(actual).isEqualTo(human);
+
+        Populator populator2 = populatorBuilder.build();
+        actual = populator2.populate(Human.class);
+
+        assertThat(actual).isEqualTo(human);
     }
 }

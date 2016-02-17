@@ -46,7 +46,9 @@ public class PopulatorBuilder {
     private boolean scanClasspathForConcreteClasses;
 
     private PopulatorBuilder() {
-        reset();
+        customRandomizerRegistry = new CustomRandomizerRegistry();
+        userRegistries = new LinkedHashSet<>();
+        scanClasspathForConcreteClasses = false;
     }
 
     /**
@@ -117,14 +119,7 @@ public class PopulatorBuilder {
         registries.addAll(loadRegistries()); // registries added to classpath through the SPI
         BeanPopulator populator = new BeanPopulator(registries);
         populator.setScanClasspathForConcreteClasses(scanClasspathForConcreteClasses);
-        reset();
         return populator;
-    }
-
-    private void reset() {
-        customRandomizerRegistry = new CustomRandomizerRegistry();
-        userRegistries = new LinkedHashSet<>();
-        scanClasspathForConcreteClasses = false;
     }
 
     private Collection<RandomizerRegistry> loadRegistries() {

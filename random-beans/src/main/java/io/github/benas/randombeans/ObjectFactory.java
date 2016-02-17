@@ -27,8 +27,10 @@ package io.github.benas.randombeans;
 import org.objenesis.Objenesis;
 import org.objenesis.ObjenesisStd;
 
-import java.util.*;
-import java.util.concurrent.*;
+import java.util.Collection;
+import java.util.concurrent.ArrayBlockingQueue;
+import java.util.concurrent.DelayQueue;
+import java.util.concurrent.SynchronousQueue;
 
 import static io.github.benas.randombeans.util.CollectionUtils.randomElementOf;
 import static io.github.benas.randombeans.util.ReflectionUtils.getPublicConcreteSubTypesOf;
@@ -62,12 +64,12 @@ class ObjectFactory {
         return result;
     }
 
-    Collection<?> createEmptyCollectionForType(Class<?> fieldType, int initialSize) throws IllegalAccessException {
+    Collection<?> createEmptyCollectionForType(Class<?> fieldType, int initialSize) {
         rejectUnsupportedTypes(fieldType);
         Collection<?> collection;
         try {
             collection = (Collection<?>) fieldType.newInstance();
-        } catch (InstantiationException e) {
+        } catch (InstantiationException | IllegalAccessException e) {
             // Creating an ArrayBlockingQueue with objenesis by-passes the constructor.
             // This leads to inconsistent state of the collection (locks are not initialized) that causes NPE at elements insertion time..
             if (fieldType.equals(ArrayBlockingQueue.class)) {
@@ -77,44 +79,6 @@ class ObjectFactory {
             }
         }
         return collection;
-    }
-
-    Collection<?> createEmptyImplementationForCollectionInterface(final Class<?> collectionInterface) {
-        Collection<?> collection = new ArrayList<>();
-        if (List.class.isAssignableFrom(collectionInterface)) {
-            collection = new ArrayList<>();
-        } else if (NavigableSet.class.isAssignableFrom(collectionInterface)) {
-            collection = new TreeSet<>();
-        } else if (SortedSet.class.isAssignableFrom(collectionInterface)) {
-            collection = new TreeSet<>();
-        } else if (Set.class.isAssignableFrom(collectionInterface)) {
-            collection = new HashSet<>();
-        } else if (BlockingDeque.class.isAssignableFrom(collectionInterface)) {
-            collection = new LinkedBlockingDeque<>();
-        } else if (Deque.class.isAssignableFrom(collectionInterface)) {
-            collection = new ArrayDeque<>();
-        } else if (TransferQueue.class.isAssignableFrom(collectionInterface)) {
-            collection = new LinkedTransferQueue<>();
-        } else if (BlockingQueue.class.isAssignableFrom(collectionInterface)) {
-            collection = new LinkedBlockingQueue<>();
-        } else if (Queue.class.isAssignableFrom(collectionInterface)) {
-            collection = new LinkedList<>();
-        }
-        return collection;
-    }
-
-    Map<?, ?> createEmptyImplementationForMapInterface(final Class<?> mapInterface) {
-        Map<?, ?> map = new HashMap<>();
-        if (ConcurrentNavigableMap.class.isAssignableFrom(mapInterface)) {
-            map = new ConcurrentSkipListMap<>();
-        } else if (ConcurrentMap.class.isAssignableFrom(mapInterface)) {
-            map = new ConcurrentHashMap<>();
-        } else if (NavigableMap.class.isAssignableFrom(mapInterface)) {
-            map = new TreeMap<>();
-        } else if (SortedMap.class.isAssignableFrom(mapInterface)) {
-            map = new TreeMap<>();
-        }
-        return map;
     }
 
     void setScanClasspathForConcreteClasses(boolean scanClasspathForConcreteClasses) {

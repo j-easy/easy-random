@@ -54,12 +54,13 @@ class FieldPopulator {
 
     private boolean scanClasspathForConcreteClasses;
 
-    FieldPopulator(final BeanPopulator beanPopulator, final RandomizerProvider randomizerProvider, final ObjectFactory objectFactory) {
+    FieldPopulator(final BeanPopulator beanPopulator, final RandomizerProvider randomizerProvider,
+                   final ArrayPopulator arrayPopulator, final CollectionPopulator collectionPopulator, final MapPopulator mapPopulator) {
         this.beanPopulator = beanPopulator;
         this.randomizerProvider = randomizerProvider;
-        this.arrayPopulator = new ArrayPopulator(beanPopulator);
-        this.collectionPopulator = new CollectionPopulator(beanPopulator, objectFactory);
-        this.mapPopulator = new MapPopulator(beanPopulator, objectFactory);
+        this.arrayPopulator = arrayPopulator;
+        this.collectionPopulator = collectionPopulator;
+        this.mapPopulator = mapPopulator;
     }
 
     void populateField(final Object target, final Field field, final PopulatorContext context) throws IllegalAccessException {
@@ -78,7 +79,7 @@ class FieldPopulator {
         context.popStackItem();
     }
 
-    private Object generateRandomValue(final Field field, final PopulatorContext context) throws IllegalAccessException {
+    private Object generateRandomValue(final Field field, final PopulatorContext context) {
         Class<?> fieldType = field.getType();
         Type fieldGenericType = field.getGenericType();
 

@@ -49,6 +49,10 @@ class BeanPopulator implements Populator {
 
     private ArrayPopulator arrayPopulator;
 
+    private CollectionPopulator collectionPopulator;
+
+    private MapPopulator mapPopulator;
+
     private RandomizerProvider randomizerProvider;
 
     private ObjectFactory objectFactory;
@@ -59,7 +63,9 @@ class BeanPopulator implements Populator {
         objectFactory = new ObjectFactory();
         randomizerProvider = new RandomizerProvider(registries);
         arrayPopulator = new ArrayPopulator(this);
-        fieldPopulator = new FieldPopulator(this, randomizerProvider, objectFactory);
+        collectionPopulator = new CollectionPopulator(this, objectFactory);
+        mapPopulator = new MapPopulator(this, objectFactory);
+        fieldPopulator = new FieldPopulator(this, randomizerProvider, arrayPopulator, collectionPopulator, mapPopulator);
         fieldExclusionChecker = new FieldExclusionChecker();
     }
 
@@ -94,8 +100,8 @@ class BeanPopulator implements Populator {
                 return randomize(type, context);
             }
 
-            // If the type has been already randomized, reuse the cached instance to avoid recursion.
-            if (context.hasPopulatedBean(type)) {
+            // If the type has been already randomized, return one cached instance to avoid recursion.
+            if (context.hasRandomizedType(type)) {
                 return (T) context.getPopulatedBean(type);
             }
 
@@ -126,10 +132,10 @@ class BeanPopulator implements Populator {
             return (T) arrayPopulator.getRandomArray(type, context);
         }
         if (isCollectionType(type)) {
-            return (T) objectFactory.createEmptyImplementationForCollectionInterface(type);
+            return (T) collectionPopulator.getEmptyImplementationForCollectionInterface(type);
         }
         if (isMapType(type)) {
-            return (T) objectFactory.createEmptyImplementationForMapInterface(type);
+            return (T) mapPopulator.getEmptyImplementationForMapInterface(type);
         }
         return null;
     }

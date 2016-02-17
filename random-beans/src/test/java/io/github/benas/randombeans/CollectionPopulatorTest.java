@@ -107,6 +107,13 @@ public class CollectionPopulatorTest {
         assertThat(collection).isNotEmpty();
     }
 
+    @Test
+    public void createEmptyImplementationForCollectionInterface() {
+        Collection<?> collection = collectionPopulator.getEmptyImplementationForCollectionInterface(List.class);
+
+        assertThat(collection).isInstanceOf(ArrayList.class).isEmpty();
+    }
+
     class Foo {
         private List rawInterfaceList;
         private List<String> typedInterfaceList;

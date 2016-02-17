@@ -33,6 +33,8 @@ import org.mockito.runners.MockitoJUnitRunner;
 import java.lang.reflect.Field;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.SortedMap;
+import java.util.TreeMap;
 
 import static java.util.Collections.emptyMap;
 import static org.assertj.core.api.Assertions.assertThat;
@@ -104,6 +106,14 @@ public class MapPopulatorTest {
 
         // Then
         assertThat(collection).isNotEmpty();
+    }
+
+
+    @Test
+    public void createEmptyImplementationForMapInterface() {
+        Map<?, ?> map = mapPopulator.getEmptyImplementationForMapInterface(SortedMap.class);
+
+        assertThat(map).isInstanceOf(TreeMap.class).isEmpty();
     }
     
     class Foo {
