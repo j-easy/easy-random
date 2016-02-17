@@ -29,7 +29,7 @@ import java.util.Date;
 import static org.apache.commons.lang3.time.DateUtils.addYears;
 
 /**
- * Constants utilities class.
+ * Constants class.
  *
  * @author Mahmoud Ben Hassine (mahmoud.benhassine@icloud.com)
  */
@@ -44,11 +44,6 @@ public abstract class Constants {
      * Default date range in which dates will be generated: [now - 10 years, now + 10 years].
      */
     public static final int DEFAULT_DATE_RANGE = 10;
-
-    /**
-     * Maximum string length.
-     */
-    public static final int MAX_STRING_LENGTH = 64;
 
     /**
      * The date of ten years ago form now.

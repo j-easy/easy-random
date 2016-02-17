@@ -26,8 +26,6 @@ package io.github.benas.randombeans.randomizers;
 
 import java.math.BigInteger;
 
-import static io.github.benas.randombeans.util.Constants.MAX_STRING_LENGTH;
-
 /**
  * Generate a random {@link String}.
  *
@@ -75,7 +73,6 @@ public class StringRandomizer extends AbstractRandomizer<String> {
 
     @Override
     public String getRandomValue() {
-        String randomString = new BigInteger(NUM_BITS, random).toString(RADIX);
-        return randomString.length() > MAX_STRING_LENGTH ? randomString.substring(0, MAX_STRING_LENGTH) : randomString;
+        return new BigInteger(NUM_BITS, random).toString(RADIX);
     }
 }
