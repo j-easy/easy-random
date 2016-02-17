@@ -36,12 +36,19 @@ import java.util.Map;
 import java.util.SortedMap;
 import java.util.TreeMap;
 
+import static io.github.benas.randombeans.util.Constants.MAX_COLLECTION_SIZE;
 import static java.util.Collections.emptyMap;
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.entry;
 import static org.mockito.Mockito.when;
 
 @RunWith(MockitoJUnitRunner.class)
+@SuppressWarnings("unchecked")
 public class MapPopulatorTest {
+
+    public static final int SIZE = 1;
+    public static final String FOO = "foo";
+    public static final String BAR = "bar";
 
     @Mock
     private PopulatorContext context;
@@ -63,10 +70,10 @@ public class MapPopulatorTest {
         Field field = Foo.class.getDeclaredField("rawMap");
 
         // When
-        Map<?, ?> collection = mapPopulator.getRandomMap(field, context);
+        Map<?, ?> randomMap = mapPopulator.getRandomMap(field, context);
 
         // Then
-        assertThat(collection).isEmpty();
+        assertThat(randomMap).isEmpty();
     }
 
     @Test
@@ -76,41 +83,43 @@ public class MapPopulatorTest {
         Field field = Foo.class.getDeclaredField("concreteMap");
 
         // When
-        Map<?, ?> collection = mapPopulator.getRandomMap(field, context);
+        Map<?, ?> randomMap = mapPopulator.getRandomMap(field, context);
 
         // Then
-        assertThat(collection).isEmpty();
+        assertThat(randomMap).isEmpty();
     }
 
     @Test
-    public void typedInterfaceMapTypesMustBePopulated() throws Exception {
+    public void typedInterfaceMapTypesMightBePopulated() throws Exception {
         // Given
-        when(enhancedRandom.doPopulateBean(Map.class, context)).thenReturn(emptyMap());
+        when(enhancedRandom.nextInt(MAX_COLLECTION_SIZE)).thenReturn(SIZE);
+        when(enhancedRandom.doPopulateBean(String.class, context)).thenReturn(FOO, BAR);
         Field field = Foo.class.getDeclaredField("typedMap");
 
         // When
-        Map<?, ?> collection = mapPopulator.getRandomMap(field, context);
+        Map<String, String> randomMap = (Map<String, String>) mapPopulator.getRandomMap(field, context);
 
         // Then
-        assertThat(collection).isNotEmpty();
+        assertThat(randomMap).hasSize(SIZE).containsOnly(entry(FOO, BAR));
     }
 
     @Test
-    public void typedConcreteMapTypesMustBePopulated() throws Exception {
+    public void typedConcreteMapTypesMightBePopulated() throws Exception {
         // Given
-        when(enhancedRandom.doPopulateBean(HashMap.class, context)).thenReturn(new HashMap());
+        when(enhancedRandom.nextInt(MAX_COLLECTION_SIZE)).thenReturn(SIZE);
+        when(enhancedRandom.doPopulateBean(String.class, context)).thenReturn(FOO, BAR);
         Field field = Foo.class.getDeclaredField("typedConcreteMap");
 
         // When
-        Map<?, ?> collection = mapPopulator.getRandomMap(field, context);
+        Map<String, String> randomMap = (Map<String, String>) mapPopulator.getRandomMap(field, context);
 
         // Then
-        assertThat(collection).isNotEmpty();
+        assertThat(randomMap).hasSize(SIZE).containsOnly(entry(FOO, BAR));
     }
 
 
     @Test
-    public void createEmptyImplementationForMapInterface() {
+    public void getEmptyImplementationForMapInterface() {
         Map<?, ?> map = mapPopulator.getEmptyImplementationForMapInterface(SortedMap.class);
 
         assertThat(map).isInstanceOf(TreeMap.class).isEmpty();

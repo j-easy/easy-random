@@ -32,7 +32,6 @@ import java.util.concurrent.*;
 
 import static io.github.benas.randombeans.util.Constants.MAX_COLLECTION_SIZE;
 import static io.github.benas.randombeans.util.ReflectionUtils.*;
-import static org.apache.commons.lang3.RandomUtils.nextInt;
 
 /**
  * Random collection populator.
@@ -52,7 +51,7 @@ class CollectionPopulator {
 
     @SuppressWarnings({"unchecked", "rawtypes"})
     Collection<?> getRandomCollection(final Field field, final PopulatorContext context) {
-        int randomSize = nextInt(1, MAX_COLLECTION_SIZE);
+        int randomSize = enhancedRandom.nextInt(MAX_COLLECTION_SIZE);
         Class<?> fieldType = field.getType();
         Type fieldGenericType = field.getGenericType();
         Collection collection;

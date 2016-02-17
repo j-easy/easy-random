@@ -49,7 +49,7 @@ public class ArrayPopulatorTest {
     @Before
     public void setUp() throws Exception {
         arrayPopulator = new ArrayPopulator(enhancedRandom);
-        when(enhancedRandom.nextObject(Integer.TYPE)).thenReturn(INT);
+        when(enhancedRandom.nextInt()).thenReturn(INT);
         when(enhancedRandom.doPopulateBean(String.class, context)).thenReturn(STRING);
     }
 

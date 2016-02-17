@@ -35,12 +35,16 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
-import static java.util.Collections.emptyList;
+import static io.github.benas.randombeans.util.Constants.MAX_COLLECTION_SIZE;
+import static java.util.Collections.singletonList;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.Mockito.when;
 
 @RunWith(MockitoJUnitRunner.class)
 public class CollectionPopulatorTest {
+
+    public static final int SIZE = 2;
+    public static final String STRING = "foo";
 
     @Mock
     private PopulatorContext context;
@@ -58,7 +62,6 @@ public class CollectionPopulatorTest {
     @Test
     public void rawInterfaceCollectionTypesMustBeGeneratedEmpty() throws Exception {
         // Given
-        when(enhancedRandom.doPopulateBean(List.class, context)).thenReturn(emptyList());
         Field field = Foo.class.getDeclaredField("rawInterfaceList");
 
         // When
@@ -71,7 +74,6 @@ public class CollectionPopulatorTest {
     @Test
     public void rawConcreteCollectionTypesMustBeGeneratedEmpty() throws Exception {
         // Given
-        when(enhancedRandom.doPopulateBean(ArrayList.class, context)).thenReturn(new ArrayList());
         Field field = Foo.class.getDeclaredField("rawConcreteList");
 
         // When
@@ -82,33 +84,35 @@ public class CollectionPopulatorTest {
     }
 
     @Test
-    public void typedInterfaceCollectionTypesMustBePopulated() throws Exception {
+    public void typedInterfaceCollectionTypesMightBePopulated() throws Exception {
         // Given
-        when(enhancedRandom.doPopulateBean(List.class, context)).thenReturn(emptyList());
+        when(enhancedRandom.nextInt(MAX_COLLECTION_SIZE)).thenReturn(SIZE);
+        when(enhancedRandom.doPopulateBean(String.class, context)).thenReturn(STRING);
         Field field = Foo.class.getDeclaredField("typedInterfaceList");
 
         // When
         Collection<?> collection = collectionPopulator.getRandomCollection(field, context);
 
         // Then
-        assertThat(collection).isNotEmpty();
+        assertThat(collection).hasSize(SIZE).hasOnlyElementsOfType(String.class).containsOnlyElementsOf(singletonList(STRING));
     }
 
     @Test
-    public void typedConcreteCollectionTypesMustBePopulated() throws Exception {
+    public void typedConcreteCollectionTypesMightBePopulated() throws Exception {
         // Given
-        when(enhancedRandom.doPopulateBean(ArrayList.class, context)).thenReturn(new ArrayList());
+        when(enhancedRandom.nextInt(MAX_COLLECTION_SIZE)).thenReturn(SIZE);
+        when(enhancedRandom.doPopulateBean(String.class, context)).thenReturn(STRING);
         Field field = Foo.class.getDeclaredField("typedConcreteList");
 
         // When
         Collection<?> collection = collectionPopulator.getRandomCollection(field, context);
 
         // Then
-        assertThat(collection).isNotEmpty();
+        assertThat(collection).hasSize(SIZE).hasOnlyElementsOfType(String.class).containsOnlyElementsOf(singletonList(STRING));
     }
 
     @Test
-    public void createEmptyImplementationForCollectionInterface() {
+    public void getEmptyImplementationForCollectionInterface() {
         Collection<?> collection = collectionPopulator.getEmptyImplementationForCollectionInterface(List.class);
 
         assertThat(collection).isInstanceOf(ArrayList.class).isEmpty();

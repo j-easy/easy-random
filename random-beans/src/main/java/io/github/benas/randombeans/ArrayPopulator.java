@@ -26,7 +26,6 @@ package io.github.benas.randombeans;
 
 import java.lang.reflect.Array;
 
-import static io.github.benas.randombeans.randomizers.ByteRandomizer.aNewByteRandomizer;
 import static java.lang.Math.abs;
 
 /**
@@ -48,7 +47,7 @@ class ArrayPopulator {
         if (componentType.isPrimitive()) {
             return getRandomPrimitiveArray(componentType);
         }
-        int randomSize = abs(aNewByteRandomizer().getRandomValue());
+        int randomSize = abs((byte) enhancedRandom.nextInt());
         T[] itemsList = (T[]) Array.newInstance(componentType, randomSize);
         for (int i = 0; i < randomSize; i++) {
             itemsList[i] = (T) enhancedRandom.doPopulateBean(fieldType.getComponentType(), context);
@@ -57,61 +56,61 @@ class ArrayPopulator {
     }
 
     Object getRandomPrimitiveArray(final Class<?> primitiveType) {
-        int size = abs(aNewByteRandomizer().getRandomValue());
+        int randomSize = abs((byte) enhancedRandom.nextInt());
         // TODO A bounty will be offered to anybody that comes with a generic template method for that..
         if (primitiveType.equals(Byte.TYPE)) {
-            byte[] result = new byte[size];
-            for (int index = 0; index < size; index ++) {
-                result[index] = enhancedRandom.nextObject(Byte.TYPE);
+            byte[] result = new byte[randomSize];
+            for (int index = 0; index < randomSize; index++) {
+                result[index] = (byte) enhancedRandom.nextInt();
             }
             return result;
         }
         if (primitiveType.equals(Short.TYPE)) {
-            short[] result = new short[size];
-            for (int index = 0; index < size; index ++) {
-                result[index] = enhancedRandom.nextObject(Short.TYPE);
+            short[] result = new short[randomSize];
+            for (int index = 0; index < randomSize; index++) {
+                result[index] = (short) enhancedRandom.nextInt();
             }
             return result;
         }
         if (primitiveType.equals(Integer.TYPE)) {
-            int[] result = new int[size];
-            for (int index = 0; index < size; index ++) {
-                result[index] = enhancedRandom.nextObject(Integer.TYPE);
+            int[] result = new int[randomSize];
+            for (int index = 0; index < randomSize; index++) {
+                result[index] = enhancedRandom.nextInt();
             }
             return result;
         }
         if (primitiveType.equals(Long.TYPE)) {
-            long[] result = new long[size];
-            for (int index = 0; index < size; index ++) {
-                result[index] = enhancedRandom.nextObject(Long.TYPE);
+            long[] result = new long[randomSize];
+            for (int index = 0; index < randomSize; index++) {
+                result[index] = enhancedRandom.nextLong();
             }
             return result;
         }
         if (primitiveType.equals(Float.TYPE)) {
-            float[] result = new float[size];
-            for (int index = 0; index < size; index ++) {
-                result[index] = enhancedRandom.nextObject(Float.TYPE);
+            float[] result = new float[randomSize];
+            for (int index = 0; index < randomSize; index++) {
+                result[index] = enhancedRandom.nextFloat();
             }
             return result;
         }
         if (primitiveType.equals(Double.TYPE)) {
-            double[] result = new double[size];
-            for (int index = 0; index < size; index ++) {
-                result[index] = enhancedRandom.nextObject(Double.TYPE);
+            double[] result = new double[randomSize];
+            for (int index = 0; index < randomSize; index++) {
+                result[index] = enhancedRandom.nextDouble();
             }
             return result;
         }
         if (primitiveType.equals(Character.TYPE)) {
-            char[] result = new char[size];
-            for (int index = 0; index < size; index ++) {
-                result[index] = enhancedRandom.nextObject(Character.TYPE);
+            char[] result = new char[randomSize];
+            for (int index = 0; index < randomSize; index++) {
+                result[index] = (char) enhancedRandom.nextInt();
             }
             return result;
         }
         if (primitiveType.equals(Boolean.TYPE)) {
-            boolean[] result = new boolean[size];
-            for (int index = 0; index < size; index ++) {
-                result[index] = enhancedRandom.nextObject(Boolean.TYPE);
+            boolean[] result = new boolean[randomSize];
+            for (int index = 0; index < randomSize; index++) {
+                result[index] = enhancedRandom.nextBoolean();
             }
             return result;
         }
