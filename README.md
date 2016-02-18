@@ -4,26 +4,26 @@ Random Beans (formerly jPopulator) is a library that generates random Java beans
 Generating random data is a common requirement in software testing, and this task can quickly become tedious when the domain model
 involves many related classes. Random Beans tries to make this task easier.
 
-# How to use it?
+# Why Random Beans?
 
-Random Beans provides the `Populator` API that is able to generate random instances of a given type:
+The `java.util.Random` API provides 7 methods to generate random data: `nextInt()`, `nextLong()`, `nextDouble()`, `nextFloat()`, `nextBytes()`, `nextBoolean()` and `nextGaussian()`.
+What if you need to generate a random `String`? Or say a random instance of your domain object?
+Random Beans provides the `EnhancedRandom` API that extends `java.util.Random` with a method called `nextObject(Class type)` that is able to generate a random instance of any arbitrary Java bean:
 
 ```java
-Populator populator = new PopulatorBuilder().build();
-Person person = populator.populateBean(Person.class);
+EnhancedRandom enhancedRandom = new EnhancedRandomBuilder().build();
+Person person = enhancedRandom.nextObject(Person.class);
 ```
 
 This snippet will generate a random instance of the `Person` type.
 
-# Why Random Beans?
-
 Populating a Java object with random data can look easy at first glance, unless your domain model involves many related classes.
-Let's see a quick example, suppose you have the following classes:
+Let's see a quick example, suppose you have the following domain classes:
 
 ![](https://github.com/benas/random-beans/raw/master/site/person.png)
 
 With Random Beans, generating a random `Person` object is done with the previous snippet. The library will **recursively** populate
-all the object graph. Without Random Beans, you would write something like:
+all the object graph. **Without** Random Beans, you would write something like:
 
 ```java
 Street street = new Street(12, (byte) 1, "Oxford street");
