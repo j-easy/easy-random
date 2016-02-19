@@ -30,8 +30,9 @@ import io.github.benas.randombeans.api.Randomizer;
 import java.util.Locale;
 
 /**
- * Abstract {@link Randomizer} based on {@link com.github.javafaker.Faker}.
+ * Abstract {@link Randomizer} based on <a href="https://github.com/DiUS/java-faker">Faker</a>.
  *
+ * @param <T> the element type
  * @author Mahmoud Ben Hassine (mahmoud.benhassine@icloud.com)
  */
 public abstract class FakerBasedRandomizer<T> extends AbstractRandomizer<T> {

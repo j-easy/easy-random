@@ -23,7 +23,7 @@
  */
 
 /**
- * Built-in {@link io.github.benas.randombeans.api.Randomizer}s of Random Beans.
+ * Built-in {@link io.github.benas.randombeans.api.Randomizer}s.
  *
  * @author Mahmoud Ben Hassine (mahmoud.benhassine@icloud.com)
  */

@@ -23,7 +23,7 @@
  */
 
 /**
- * Public API of Random Beans.
+ * Public API.
  *
  * @author Mahmoud Ben Hassine (mahmoud.benhassine@icloud.com)
  */
