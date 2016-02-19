@@ -63,7 +63,7 @@ As you can see, Random Beans can tremendously reduce the code of generating rand
 |Continuous integration| [Build job @ Travis CI](https://travis-ci.org/benas/random-beans)                        |
 |Agile Board           | [Backlog items @ waffle.io](https://waffle.io/benas/random-beans)                        |
 |Code coverage         | [![Coverage Status](https://coveralls.io/repos/benas/random-beans/badge.svg?branch=master&service=github)](https://coveralls.io/github/benas/random-beans?branch=master) |
-|Dependencies          | [![Dependency Status](https://www.versioneye.com/user/projects/56920ec1daa0bf0039000161/badge.svg?style=flat)](https://www.versioneye.com/user/projects/56920ec1daa0bf0039000161) |
+|Dependencies          | [![Dependency Status](https://www.versioneye.com/user/projects/56c6d7fa19f173000c237adc/badge.svg?style=flat)](https://www.versioneye.com/user/projects/56c6d7fa19f173000c237adc) |
 
 ## Current version
 
