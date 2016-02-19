@@ -33,7 +33,7 @@
 
     <name>Random Beans Spring</name>
     <artifactId>random-beans-spring</artifactId>
-  <version>3.0.0.-SNAPSHOT</version>
+    <version>3.0.0-SNAPSHOT</version>
     <description>Random Beans module for Spring support</description>
     <url>https://github.com/benas/random-beans</url>
 
