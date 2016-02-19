@@ -42,10 +42,10 @@
 
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-        <java.version>1.7</java.version>
+        <java.version>1.8</java.version>
         <junit.version>4.12</junit.version>
         <faker.version>0.7</faker.version>
-        <assertj.version>2.3.0</assertj.version>
+        <assertj.version>3.3.0</assertj.version>
         <commons-beanutils.version>1.9.2</commons-beanutils.version>
         <commons-lang3.version>3.4</commons-lang3.version>
         <commons-math3.version>3.6</commons-math3.version>
@@ -68,7 +68,7 @@
     <modules>
         <module>random-beans</module>
         <module>random-beans-spring</module>
-        <!--<module>random-beans-java8</module>-->
+        <module>random-beans-java8</module>
         <module>random-beans-validation</module>
         <module>random-beans-jodatime</module>
         <module>random-beans-randomizers</module>
