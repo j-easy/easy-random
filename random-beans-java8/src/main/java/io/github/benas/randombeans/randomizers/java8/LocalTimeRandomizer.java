@@ -36,9 +36,19 @@ import java.time.LocalTime;
  */
 public class LocalTimeRandomizer implements Randomizer<LocalTime> {
 
-    private HourRandomizer hourRandomizer = new HourRandomizer();
-    private MinuteRandomizer minuteRandomizer = new MinuteRandomizer();
-    
+    private HourRandomizer hourRandomizer;
+    private MinuteRandomizer minuteRandomizer;
+
+    public LocalTimeRandomizer() {
+        hourRandomizer = new HourRandomizer();
+        minuteRandomizer = new MinuteRandomizer();
+    }
+
+    public LocalTimeRandomizer(final long seed) {
+        hourRandomizer = new HourRandomizer(seed);
+        minuteRandomizer = new MinuteRandomizer(seed);
+    }
+
     @Override
     public LocalTime getRandomValue() {
         int randomHour = hourRandomizer.getRandomValue();

@@ -24,8 +24,8 @@
 
 package io.github.benas.randombeans.randomizers.java8;
 
-import io.github.benas.randombeans.PopulatorBuilder;
-import io.github.benas.randombeans.api.Populator;
+import io.github.benas.randombeans.EnhancedRandomBuilder;
+import io.github.benas.randombeans.api.EnhancedRandom;
 import io.github.benas.randombeans.randomizers.java8.beans.ThreeTenBean;
 import org.junit.Before;
 import org.junit.Test;
@@ -34,16 +34,16 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 public class ThreeTenSupportTest {
 
-    private Populator populator;
+    private EnhancedRandom enhancedRandom;
 
     @Before
     public void setUp() throws Exception {
-        populator = PopulatorBuilder.aNewPopulatorBuilder().build();
+        enhancedRandom = EnhancedRandomBuilder.aNewEnhancedRandomBuilder().build();
     }
 
     @Test
     public void threeTenTypesShouldBePopulated() throws Exception {
-        ThreeTenBean threeTenBean = populator.populateBean(ThreeTenBean.class);
+        ThreeTenBean threeTenBean = enhancedRandom.nextObject(ThreeTenBean.class);
 
         assertThat(threeTenBean.getDuration()).isNotNull();
         assertThat(threeTenBean.getInstant()).isNotNull();

@@ -24,7 +24,7 @@
 package io.github.benas.randombeans.randomizers.java8;
 
 import io.github.benas.randombeans.api.Randomizer;
-import io.github.benas.randombeans.randomizers.internal.DateRandomizer;
+import io.github.benas.randombeans.randomizers.DateRandomizer;
 
 import java.time.Instant;
 import java.util.Date;
@@ -36,7 +36,15 @@ import java.util.Date;
  */
 public class InstantRandomizer implements Randomizer<Instant> {
 
-    DateRandomizer dateRandomizer = new DateRandomizer();
+    DateRandomizer dateRandomizer;
+
+    public InstantRandomizer() {
+        dateRandomizer = new DateRandomizer();
+    }
+
+    public InstantRandomizer(final long seed) {
+        dateRandomizer = new DateRandomizer(seed);
+    }
 
     @Override
     public Instant getRandomValue() {

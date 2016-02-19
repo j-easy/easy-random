@@ -36,9 +36,19 @@ import java.time.MonthDay;
  */
 public class MonthDayRandomizer implements Randomizer<MonthDay> {
 
-    private MonthRandomizer monthRandomizer = new MonthRandomizer();
-    private DayRandomizer dayRandomizer = new DayRandomizer();
-    
+    private MonthRandomizer monthRandomizer;
+    private DayRandomizer dayRandomizer;
+
+    public MonthDayRandomizer() {
+        monthRandomizer = new MonthRandomizer();
+        dayRandomizer = new DayRandomizer();
+    }
+
+    public MonthDayRandomizer(final long seed) {
+        monthRandomizer = new MonthRandomizer(seed);
+        dayRandomizer = new DayRandomizer(seed);
+    }
+
     @Override
     public MonthDay getRandomValue() {
         Month randomMonth = monthRandomizer.getRandomValue();

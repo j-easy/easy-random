@@ -36,9 +36,19 @@ import java.time.YearMonth;
  */
 public class YearMonthRandomizer implements Randomizer<YearMonth> {
 
-    private YearRandomizer yearRandomizer = new YearRandomizer();
-    private MonthRandomizer monthRandomizer = new MonthRandomizer();
-    
+    private YearRandomizer yearRandomizer;
+    private MonthRandomizer monthRandomizer;
+
+    public YearMonthRandomizer() {
+        yearRandomizer = new YearRandomizer();
+        monthRandomizer = new MonthRandomizer();
+    }
+
+    public YearMonthRandomizer(final long seed) {
+        yearRandomizer = new YearRandomizer(seed);
+        monthRandomizer = new MonthRandomizer(seed);
+    }
+
     @Override
     public YearMonth getRandomValue() {
         Year randomYear = yearRandomizer.getRandomValue();

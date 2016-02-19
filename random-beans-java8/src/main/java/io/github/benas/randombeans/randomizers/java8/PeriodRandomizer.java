@@ -37,10 +37,22 @@ import java.time.Year;
  */
 public class PeriodRandomizer implements Randomizer<Period> {
 
-    private YearRandomizer yearRandomizer = new YearRandomizer();
-    private MonthRandomizer monthRandomizer = new MonthRandomizer();
-    private DayRandomizer dayRandomizer = new DayRandomizer();
-    
+    private YearRandomizer yearRandomizer;
+    private MonthRandomizer monthRandomizer;
+    private DayRandomizer dayRandomizer;
+
+    public PeriodRandomizer() {
+        yearRandomizer = new YearRandomizer();
+        monthRandomizer = new MonthRandomizer();
+        dayRandomizer = new DayRandomizer();
+    }
+
+    public PeriodRandomizer(final long seed) {
+        yearRandomizer = new YearRandomizer(seed);
+        monthRandomizer = new MonthRandomizer(seed);
+        dayRandomizer = new DayRandomizer(seed);
+    }
+
     @Override
     public Period getRandomValue() {
         Year randomYear = yearRandomizer.getRandomValue();

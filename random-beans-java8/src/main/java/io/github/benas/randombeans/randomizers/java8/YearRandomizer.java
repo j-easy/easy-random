@@ -38,8 +38,16 @@ import static io.github.benas.randombeans.util.Constants.TEN_YEARS_AGO;
  */
 public class YearRandomizer implements Randomizer<Year> {
 
-    private IntegerRangeRandomizer yearRandomizer = new IntegerRangeRandomizer(TEN_YEARS_AGO.getYear(), IN_TEN_YEARS.getYear());
-    
+    private IntegerRangeRandomizer yearRandomizer;
+
+    public YearRandomizer() {
+        yearRandomizer = new IntegerRangeRandomizer(TEN_YEARS_AGO.getYear(), IN_TEN_YEARS.getYear());
+    }
+
+    public YearRandomizer(final long seed) {
+        yearRandomizer = new IntegerRangeRandomizer(TEN_YEARS_AGO.getYear(), IN_TEN_YEARS.getYear(), seed);
+    }
+
     @Override
     public Year getRandomValue() {
         int randomYear = yearRandomizer.getRandomValue();

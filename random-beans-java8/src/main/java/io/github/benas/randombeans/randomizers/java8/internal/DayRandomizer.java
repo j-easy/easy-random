@@ -36,8 +36,16 @@ public class DayRandomizer implements Randomizer<Integer> {
     public static final int MIN_DAY = 1;
     public static final int MAX_DAY = 28; // 31 may break some LocalDateTime instances when the dayOfMonth is invalid
 
-    private IntegerRangeRandomizer dayRandomizer = new IntegerRangeRandomizer(MIN_DAY, MAX_DAY);
-    
+    private IntegerRangeRandomizer dayRandomizer;
+
+    public DayRandomizer() {
+        dayRandomizer = new IntegerRangeRandomizer(MIN_DAY, MAX_DAY);
+    }
+
+    public DayRandomizer(final long seed) {
+        dayRandomizer = new IntegerRangeRandomizer(MIN_DAY, MAX_DAY, seed);
+    }
+
     @Override
     public Integer getRandomValue() {
         return dayRandomizer.getRandomValue();

@@ -37,9 +37,17 @@ public class MonthRandomizer implements Randomizer<Month> {
 
     public static final int MIN_MONTH = 1;
     public static final int MAX_MONTH = 12;
-    
-    private IntegerRangeRandomizer monthRandomizer = new IntegerRangeRandomizer(MIN_MONTH, MAX_MONTH);
-    
+
+    private IntegerRangeRandomizer monthRandomizer;
+
+    public MonthRandomizer() {
+        monthRandomizer = new IntegerRangeRandomizer(MIN_MONTH, MAX_MONTH);
+    }
+
+    public MonthRandomizer(final long seed) {
+        monthRandomizer = new IntegerRangeRandomizer(MIN_MONTH, MAX_MONTH, seed);
+    }
+
     @Override
     public Month getRandomValue() {
         int randomMonth = monthRandomizer.getRandomValue();

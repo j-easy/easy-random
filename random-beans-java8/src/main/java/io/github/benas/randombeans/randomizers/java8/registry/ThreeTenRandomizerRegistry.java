@@ -40,21 +40,22 @@ public class ThreeTenRandomizerRegistry implements RandomizerRegistry {
 
     private Map<Class<?>, Randomizer<?>> randomizers = new HashMap<>();
 
-    public ThreeTenRandomizerRegistry() {
-        randomizers.put(java.time.Duration.class, new DurationRandomizer());
-        randomizers.put(java.time.Instant.class, new InstantRandomizer());
-        randomizers.put(java.time.LocalDate.class, new LocalDateRandomizer());
-        randomizers.put(java.time.LocalDateTime.class, new LocalDateTimeRandomizer());
-        randomizers.put(java.time.LocalTime.class, new LocalTimeRandomizer());
-        randomizers.put(java.time.MonthDay.class, new MonthDayRandomizer());
-        randomizers.put(java.time.Month.class, new MonthRandomizer());
-        randomizers.put(java.time.OffsetDateTime.class, new OffsetDateTimeRandomizer());
-        randomizers.put(java.time.OffsetTime.class, new OffsetTimeRandomizer());
-        randomizers.put(java.time.Period.class, new PeriodRandomizer());
-        randomizers.put(java.time.YearMonth.class, new YearMonthRandomizer());
-        randomizers.put(java.time.Year.class, new YearRandomizer());
-        randomizers.put(java.time.ZonedDateTime.class, new ZonedDateTimeRandomizer());
-        randomizers.put(java.time.ZoneOffset.class, new ZoneOffsetRandomizer());
+    @Override
+    public void setSeed(long seed) {
+        randomizers.put(java.time.Duration.class, new DurationRandomizer(seed));
+        randomizers.put(java.time.Instant.class, new InstantRandomizer(seed));
+        randomizers.put(java.time.LocalDate.class, new LocalDateRandomizer(seed));
+        randomizers.put(java.time.LocalDateTime.class, new LocalDateTimeRandomizer(seed));
+        randomizers.put(java.time.LocalTime.class, new LocalTimeRandomizer(seed));
+        randomizers.put(java.time.MonthDay.class, new MonthDayRandomizer(seed));
+        randomizers.put(java.time.Month.class, new MonthRandomizer(seed));
+        randomizers.put(java.time.OffsetDateTime.class, new OffsetDateTimeRandomizer(seed));
+        randomizers.put(java.time.OffsetTime.class, new OffsetTimeRandomizer(seed));
+        randomizers.put(java.time.Period.class, new PeriodRandomizer(seed));
+        randomizers.put(java.time.YearMonth.class, new YearMonthRandomizer(seed));
+        randomizers.put(java.time.Year.class, new YearRandomizer(seed));
+        randomizers.put(java.time.ZonedDateTime.class, new ZonedDateTimeRandomizer(seed));
+        randomizers.put(java.time.ZoneOffset.class, new ZoneOffsetRandomizer(seed));
     }
 
     @Override
@@ -63,8 +64,7 @@ public class ThreeTenRandomizerRegistry implements RandomizerRegistry {
     }
 
     @Override
-    @SuppressWarnings("unchecked")
-    public <T> Randomizer<T> getRandomizer(Class<T> type) {
-        return (Randomizer<T>) randomizers.get(type);
+    public Randomizer<?> getRandomizer(Class<?> type) {
+        return randomizers.get(type);
     }
 }

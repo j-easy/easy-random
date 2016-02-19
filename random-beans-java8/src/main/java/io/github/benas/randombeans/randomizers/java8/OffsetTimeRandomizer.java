@@ -36,8 +36,18 @@ import java.time.ZoneOffset;
  */
 public class OffsetTimeRandomizer implements Randomizer<OffsetTime> {
 
-    private LocalTimeRandomizer localTimeRandomizer = new LocalTimeRandomizer();
-    private ZoneOffsetRandomizer zoneOffsetRandomizer = new ZoneOffsetRandomizer();
+    private LocalTimeRandomizer localTimeRandomizer;
+    private ZoneOffsetRandomizer zoneOffsetRandomizer;
+
+    public OffsetTimeRandomizer() {
+        localTimeRandomizer = new LocalTimeRandomizer();
+        zoneOffsetRandomizer = new ZoneOffsetRandomizer();
+    }
+
+    public OffsetTimeRandomizer(final long seed) {
+        localTimeRandomizer = new LocalTimeRandomizer(seed);
+        zoneOffsetRandomizer = new ZoneOffsetRandomizer(seed);
+    }
 
     @Override
     public OffsetTime getRandomValue() {

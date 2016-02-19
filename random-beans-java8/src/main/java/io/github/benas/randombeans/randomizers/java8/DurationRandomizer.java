@@ -38,8 +38,16 @@ public class DurationRandomizer implements Randomizer<Duration> {
 
     public static final int MIN_AMOUNT = 0;
     public static final int MAX_AMOUNT = 100;
-    
-    IntegerRangeRandomizer amountRandomizer = new IntegerRangeRandomizer(MIN_AMOUNT, MAX_AMOUNT);
+
+    IntegerRangeRandomizer amountRandomizer;
+
+    public DurationRandomizer() {
+        amountRandomizer = new IntegerRangeRandomizer(MIN_AMOUNT, MAX_AMOUNT);
+    }
+
+    public DurationRandomizer(final long seed) {
+        amountRandomizer = new IntegerRangeRandomizer(MIN_AMOUNT, MAX_AMOUNT, seed);
+    }
 
     @Override
     public Duration getRandomValue() {

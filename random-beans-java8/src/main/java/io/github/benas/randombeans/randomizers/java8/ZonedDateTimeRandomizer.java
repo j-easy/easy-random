@@ -24,7 +24,7 @@
 package io.github.benas.randombeans.randomizers.java8;
 
 import io.github.benas.randombeans.api.Randomizer;
-import io.github.benas.randombeans.util.Constants;
+import io.github.benas.randombeans.randomizers.AbstractRandomizer;
 
 import java.time.LocalDateTime;
 import java.time.ZoneId;
@@ -39,10 +39,18 @@ import java.util.Set;
  *
  * @author Mahmoud Ben Hassine (mahmoud.benhassine@icloud.com)
  */
-public class ZonedDateTimeRandomizer implements Randomizer<ZonedDateTime> {
+public class ZonedDateTimeRandomizer extends AbstractRandomizer<ZonedDateTime> {
 
-    private LocalDateTimeRandomizer localDateTimeRandomizer = new LocalDateTimeRandomizer();
-    
+    private LocalDateTimeRandomizer localDateTimeRandomizer;
+
+    public ZonedDateTimeRandomizer() {
+        localDateTimeRandomizer = new LocalDateTimeRandomizer();
+    }
+
+    public ZonedDateTimeRandomizer(final long seed) {
+        localDateTimeRandomizer = new LocalDateTimeRandomizer(seed);
+    }
+
     @Override
     public ZonedDateTime getRandomValue() {
         LocalDateTime randomLocalDateTime = localDateTimeRandomizer.getRandomValue();
@@ -52,8 +60,8 @@ public class ZonedDateTimeRandomizer implements Randomizer<ZonedDateTime> {
 
     private ZoneId getRandomZoneId() {
         Set<String> availableZoneIds = ZoneOffset.getAvailableZoneIds();
-        List<String> ids = new ArrayList<String>(availableZoneIds);
-        return ZoneId.of(ids.get(Constants.RANDOM.nextInt(ids.size())));
+        List<String> ids = new ArrayList<>(availableZoneIds);
+        return ZoneId.of(ids.get(random.nextInt(ids.size())));
     }
 
 }

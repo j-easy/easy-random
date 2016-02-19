@@ -34,9 +34,18 @@ import java.time.ZoneOffset;
  */
 public class ZoneOffsetRandomizer implements Randomizer<ZoneOffset> {
 
+    private long seed;
+
+    public ZoneOffsetRandomizer() {
+    }
+
+    public ZoneOffsetRandomizer(final long seed) {
+        this.seed = seed;
+    }
+
     @Override
     public ZoneOffset getRandomValue() {
-        return ZoneOffset.of(ZoneOffset.UTC.getId());
+        return ZoneOffset.of(ZoneOffset.UTC.getId()); // TODO use seed?
     }
     
 }

@@ -36,8 +36,16 @@ public class MinuteRandomizer implements Randomizer<Integer> {
     public static final int MIN_MINUTE = 0;
     public static final int MAX_MINUTE = 59;
 
-    private IntegerRangeRandomizer minuteRandomizer = new IntegerRangeRandomizer(MIN_MINUTE, MAX_MINUTE);
-    
+    private IntegerRangeRandomizer minuteRandomizer;
+
+    public MinuteRandomizer() {
+        minuteRandomizer = new IntegerRangeRandomizer(MIN_MINUTE, MAX_MINUTE);
+    }
+
+    public MinuteRandomizer(final long seed) {
+        minuteRandomizer = new IntegerRangeRandomizer(MIN_MINUTE, MAX_MINUTE, seed);
+    }
+
     @Override
     public Integer getRandomValue() {
         return minuteRandomizer.getRandomValue();

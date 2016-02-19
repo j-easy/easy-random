@@ -37,10 +37,22 @@ import java.time.Year;
  */
 public class LocalDateRandomizer implements Randomizer<LocalDate> {
 
-    private YearRandomizer yearRandomizer = new YearRandomizer();
-    private MonthRandomizer monthRandomizer = new MonthRandomizer();
-    private DayRandomizer dayRandomizer = new DayRandomizer();
-    
+    private YearRandomizer yearRandomizer;
+    private MonthRandomizer monthRandomizer;
+    private DayRandomizer dayRandomizer;
+
+    public LocalDateRandomizer() {
+        yearRandomizer = new YearRandomizer();
+        monthRandomizer = new MonthRandomizer();
+        dayRandomizer = new DayRandomizer();
+    }
+
+    public LocalDateRandomizer(final long seed) {
+        yearRandomizer = new YearRandomizer(seed);
+        monthRandomizer = new MonthRandomizer(seed);
+        dayRandomizer = new DayRandomizer(seed);
+    }
+
     @Override
     public LocalDate getRandomValue() {
         Year randomYear = yearRandomizer.getRandomValue();
