@@ -27,12 +27,13 @@
     <parent>
         <artifactId>random-beans-parent</artifactId>
         <groupId>io.github.benas</groupId>
-        <version>2.0.0</version>
+        <version>3.0.0-SNAPSHOT</version>
     </parent>
     <modelVersion>4.0.0</modelVersion>
 
     <name>Random Beans Spring</name>
     <artifactId>random-beans-spring</artifactId>
+  <version>3.0.0.-SNAPSHOT</version>
     <description>Random Beans module for Spring support</description>
     <url>https://github.com/benas/random-beans</url>
 
@@ -40,7 +41,7 @@
         <url>git@github.com:benas/random-beans.git</url>
         <connection>scm:git:git@github.com:benas/random-beans.git</connection>
         <developerConnection>scm:git:git@github.com:benas/random-beans.git</developerConnection>
-        <tag>random-beans-parent-2.0.0</tag>
+        <tag>HEAD</tag>
     </scm>
 
     <ciManagement>
