@@ -1,6 +1,6 @@
 # What is Random Beans ?
 
-Random Beans (formerly jPopulator) is a library that generates random Java beans.
+Random Beans is a library that generates random Java beans.
 Generating random data is a common requirement in software testing, and this task can quickly become tedious when the domain model
 involves many related classes. Random Beans tries to make this task easier.
 
@@ -8,7 +8,7 @@ involves many related classes. Random Beans tries to make this task easier.
 
 The `java.util.Random` API provides 7 methods to generate random data: `nextInt()`, `nextLong()`, `nextDouble()`, `nextFloat()`, `nextBytes()`, `nextBoolean()` and `nextGaussian()`.
 What if you need to generate a random `String`? Or say a random instance of your domain object?
-Random Beans provides the `EnhancedRandom` API that extends `java.util.Random` with a method called `nextObject(Class type)` that is able to generate a random instance of any arbitrary Java bean:
+Random Beans provides the `EnhancedRandom` API that extends `java.util.Random` with a method called `nextObject(Class type)`. This method is able to generate a random instance of any arbitrary Java bean:
 
 ```java
 EnhancedRandom enhancedRandom = new EnhancedRandomBuilder().build();
@@ -67,17 +67,10 @@ As you can see, Random Beans can tremendously reduce the code of generating rand
 
 ## Current version
 
-* The current stable version is `1.2.0` : [![Maven Central](https://maven-badges.herokuapp.com/maven-central/io.github.benas/jpopulator/badge.svg?style=flat)](http://search.maven.org/#artifactdetails|io.github.benas|jpopulator|1.2.0|) 
-* The current development version is `2.0.0-SNAPSHOT` : [![Build Status](https://travis-ci.org/benas/random-beans.svg?branch=master)](https://travis-ci.org/benas/random-beans)
+* The current stable version is `2.0.0` : [![Maven Central](https://maven-badges.herokuapp.com/maven-central/io.github.benas/random-beans/badge.svg?style=flat)](http://search.maven.org/#artifactdetails|io.github.benas|random-beans|2.0.0|) 
+* The current development version is `3.0.0-SNAPSHOT` : [![Build Status](https://travis-ci.org/benas/random-beans.svg?branch=master)](https://travis-ci.org/benas/random-beans)
 
-In order to use snapshot versions, you need to add the following maven repository in your `pom.xml`:
-
-```xml
-<repository>
-    <id>ossrh</id>
-    <url>https://oss.sonatype.org/content/repositories/snapshots</url>
-</repository>
-```
+You can find more details on how to get started [here](https://github.com/benas/random-beans/wiki/Getting-Started).
 
 ## Contribution
 
