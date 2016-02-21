@@ -24,6 +24,7 @@
 package io.github.benas.randombeans.randomizers.java8;
 
 import io.github.benas.randombeans.api.Randomizer;
+import io.github.benas.randombeans.randomizers.range.IntegerRangeRandomizer;
 
 import java.time.ZoneOffset;
 
@@ -34,18 +35,27 @@ import java.time.ZoneOffset;
  */
 public class ZoneOffsetRandomizer implements Randomizer<ZoneOffset> {
 
-    private long seed;
+    /**
+     * Upper bound for ZoneOffset seconds
+     *
+     * @see java.time.ZoneOffset#ofTotalSeconds
+     */
+    private static final int MAX_SECONDS = 64800;
+
+    private IntegerRangeRandomizer integerRangeRandomizer;
 
     public ZoneOffsetRandomizer() {
+        integerRangeRandomizer = new IntegerRangeRandomizer(-MAX_SECONDS, MAX_SECONDS);
     }
 
     public ZoneOffsetRandomizer(final long seed) {
-        this.seed = seed;
+        integerRangeRandomizer = new IntegerRangeRandomizer(-MAX_SECONDS, MAX_SECONDS, seed);
     }
 
     @Override
     public ZoneOffset getRandomValue() {
-        return ZoneOffset.of(ZoneOffset.UTC.getId()); // TODO use seed?
+        Integer randomValue = integerRangeRandomizer.getRandomValue();
+        return ZoneOffset.ofTotalSeconds(randomValue);
     }
     
 }
