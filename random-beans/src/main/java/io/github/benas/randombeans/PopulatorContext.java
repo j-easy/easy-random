@@ -30,6 +30,7 @@ import java.lang.reflect.Field;
 import java.util.*;
 
 import static java.util.Collections.singletonList;
+import static java.util.stream.Collectors.toList;
 import static org.apache.commons.lang3.RandomUtils.nextInt;
 
 /**
@@ -96,11 +97,7 @@ class PopulatorContext {
     }
 
     List<Field> getStackedFields() {
-        List<Field> fields = new ArrayList<>();
-        for (PopulatorContextStackItem stackItem : stack) {
-            fields.add(stackItem.getField());
-        }
-        return fields;
+        return stack.stream().map(PopulatorContextStackItem::getField).collect(toList());
     }
 
     void appendDottedName(final StringBuilder builder, final List<Field> fields) {

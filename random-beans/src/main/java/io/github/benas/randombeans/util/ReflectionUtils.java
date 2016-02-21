@@ -32,6 +32,7 @@ import java.util.*;
 import java.util.concurrent.ConcurrentHashMap;
 
 import static java.util.Arrays.asList;
+import static java.util.stream.Collectors.toList;
 import static org.reflections.util.ClasspathHelper.forJavaClassPath;
 
 /**
@@ -249,11 +250,7 @@ public abstract class ReflectionUtils {
             List<Class<?>> typesWithSameParameterizedTypes = new ArrayList<>();
             for (Class<?> currentConcreteType : types) {
                 List<Type[]> actualTypeArguments = getActualTypeArgumentsOfGenericInterfaces(currentConcreteType);
-                for (Type[] currentTypeArguments : actualTypeArguments) {
-                    if (Arrays.equals(fieldArugmentTypes, currentTypeArguments)) {
-                        typesWithSameParameterizedTypes.add(currentConcreteType);
-                    }
-                }
+                typesWithSameParameterizedTypes.addAll(actualTypeArguments.stream().filter(currentTypeArguments -> Arrays.equals(fieldArugmentTypes, currentTypeArguments)).map(currentTypeArguments -> currentConcreteType).collect(toList()));
             }
             return typesWithSameParameterizedTypes;
         }
@@ -262,13 +259,7 @@ public abstract class ReflectionUtils {
 
     private static <T> List<Class<?>> searchForPublicConcreteSubTypesOf(final Class<T> type) {
         Set<Class<? extends T>> subTypes = reflections.getSubTypesOf(type);
-        List<Class<?>> concreteSubTypes = new ArrayList<>();
-        for (Class<? extends T> currentSubType : subTypes) {
-            if (isPublic(currentSubType) && !(isAbstract(currentSubType))) {
-                concreteSubTypes.add(currentSubType);
-            }
-        }
-        return concreteSubTypes;
+        return subTypes.stream().filter(currentSubType -> isPublic(currentSubType) && !(isAbstract(currentSubType))).collect(toList());
     }
 
     private static List<Type[]> getActualTypeArgumentsOfGenericInterfaces(final Class<?> type) {
