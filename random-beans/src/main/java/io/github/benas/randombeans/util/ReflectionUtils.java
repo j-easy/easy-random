@@ -25,7 +25,6 @@
 package io.github.benas.randombeans.util;
 
 import org.reflections.Reflections;
-import org.reflections.util.ConfigurationBuilder;
 
 import java.lang.reflect.*;
 import java.util.*;
@@ -34,6 +33,7 @@ import java.util.concurrent.ConcurrentHashMap;
 import static java.util.Arrays.asList;
 import static java.util.stream.Collectors.toList;
 import static org.reflections.util.ClasspathHelper.forJavaClassPath;
+import static org.reflections.util.ConfigurationBuilder.build;
 
 /**
  * Reflection utility methods.
@@ -48,7 +48,7 @@ public abstract class ReflectionUtils {
 
     static {
         typeToConcreteSubTypes = new ConcurrentHashMap<>();
-        reflections = new Reflections(new ConfigurationBuilder().setUrls(forJavaClassPath()));
+        reflections = new Reflections(build().setUrls(forJavaClassPath()));
     }
 
     /**
