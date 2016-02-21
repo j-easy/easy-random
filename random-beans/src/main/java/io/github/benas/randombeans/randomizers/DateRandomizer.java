@@ -31,6 +31,7 @@ import java.util.Date;
 
 import static io.github.benas.randombeans.util.Constants.IN_TEN_YEARS;
 import static io.github.benas.randombeans.util.Constants.TEN_YEARS_AGO;
+import static io.github.benas.randombeans.util.DateUtils.toDate;
 
 /**
  * Generate a random {@link Date}.
@@ -45,7 +46,7 @@ public class DateRandomizer implements Randomizer<Date> {
      * Create a new {@link DateRandomizer}.
      */
     public DateRandomizer() {
-        delegate = new DateRangeRandomizer(TEN_YEARS_AGO, IN_TEN_YEARS);
+        delegate = new DateRangeRandomizer(toDate(TEN_YEARS_AGO), toDate(IN_TEN_YEARS));
     }
 
     /**
@@ -54,7 +55,7 @@ public class DateRandomizer implements Randomizer<Date> {
      * @param seed initial seed
      */
     public DateRandomizer(final long seed) {
-        delegate = new DateRangeRandomizer(TEN_YEARS_AGO, IN_TEN_YEARS, seed);
+        delegate = new DateRangeRandomizer(toDate(TEN_YEARS_AGO), toDate(IN_TEN_YEARS), seed);
     }
 
     /**
