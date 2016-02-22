@@ -24,16 +24,11 @@
 
 package io.github.benas.randombeans.util;
 
-import org.reflections.Reflections;
-
 import java.lang.reflect.*;
 import java.util.*;
-import java.util.concurrent.ConcurrentHashMap;
 
 import static java.util.Arrays.asList;
 import static java.util.stream.Collectors.toList;
-import static org.reflections.util.ClasspathHelper.forJavaClassPath;
-import static org.reflections.util.ConfigurationBuilder.build;
 
 /**
  * Reflection utility methods.
@@ -41,15 +36,6 @@ import static org.reflections.util.ConfigurationBuilder.build;
  * @author Mahmoud Ben Hassine (mahmoud.benhassine@icloud.com)
  */
 public abstract class ReflectionUtils {
-
-    private static final ConcurrentHashMap<Class<?>, List<Class<?>>> typeToConcreteSubTypes;
-
-    private static final Reflections reflections;
-
-    static {
-        typeToConcreteSubTypes = new ConcurrentHashMap<>();
-        reflections = new Reflections(build().setUrls(forJavaClassPath()));
-    }
 
     /**
      * Get declared fields of a given type.
@@ -229,12 +215,7 @@ public abstract class ReflectionUtils {
      * @return a list of all concrete subtypes found
      */
     public static <T> List<Class<?>> getPublicConcreteSubTypesOf(final Class<T> type) {
-        List<Class<?>> concreteSubTypes = typeToConcreteSubTypes.get(type);
-        if (concreteSubTypes == null) {
-            concreteSubTypes = searchForPublicConcreteSubTypesOf(type);
-            typeToConcreteSubTypes.putIfAbsent(type, Collections.unmodifiableList(concreteSubTypes));
-        }
-        return concreteSubTypes;
+        return ReflectionsFacade.getPublicConcreteSubTypesOf(type);
     }
 
     /**
@@ -255,11 +236,6 @@ public abstract class ReflectionUtils {
             return typesWithSameParameterizedTypes;
         }
         return types;
-    }
-
-    private static <T> List<Class<?>> searchForPublicConcreteSubTypesOf(final Class<T> type) {
-        Set<Class<? extends T>> subTypes = reflections.getSubTypesOf(type);
-        return subTypes.stream().filter(currentSubType -> isPublic(currentSubType) && !(isAbstract(currentSubType))).collect(toList());
     }
 
     private static List<Type[]> getActualTypeArgumentsOfGenericInterfaces(final Class<?> type) {
