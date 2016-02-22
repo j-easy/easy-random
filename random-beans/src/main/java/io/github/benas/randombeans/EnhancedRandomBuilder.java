@@ -49,7 +49,7 @@ public class EnhancedRandomBuilder {
 
     private long seed;
 
-    private EnhancedRandomBuilder() {
+    public EnhancedRandomBuilder() {
         customRandomizerRegistry = new CustomRandomizerRegistry();
         userRegistries = new LinkedHashSet<>();
         scanClasspathForConcreteTypes = false;
