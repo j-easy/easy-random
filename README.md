@@ -11,7 +11,7 @@ What if you need to generate a random `String`? Or say a random instance of your
 Random Beans provides the `EnhancedRandom` API that extends `java.util.Random` with a method called `nextObject(Class type)`. This method is able to generate a random instance of any arbitrary Java bean:
 
 ```java
-EnhancedRandom enhancedRandom = new EnhancedRandomBuilder().build();
+EnhancedRandom enhancedRandom = aNewEnhancedRandomBuilder().build();
 Person person = enhancedRandom.nextObject(Person.class);
 ```
 
