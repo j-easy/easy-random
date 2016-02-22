@@ -188,6 +188,7 @@
                 <groupId>org.reflections</groupId>
                 <artifactId>reflections</artifactId>
                 <version>${reflections.version}</version>
+                <optional>true</optional>
             </dependency>
             <dependency>
                 <groupId>org.hibernate</groupId>
