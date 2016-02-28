@@ -43,7 +43,7 @@ import static org.assertj.core.api.Assertions.entry;
 import static org.mockito.Mockito.when;
 
 @RunWith(MockitoJUnitRunner.class)
-@SuppressWarnings("unchecked")
+@SuppressWarnings({"unchecked", "rawtypes"})
 public class MapPopulatorTest {
 
     public static final int SIZE = 1;
@@ -117,14 +117,13 @@ public class MapPopulatorTest {
         assertThat(randomMap).hasSize(SIZE).containsOnly(entry(FOO, BAR));
     }
 
-
     @Test
     public void getEmptyImplementationForMapInterface() {
         Map<?, ?> map = mapPopulator.getEmptyImplementationForMapInterface(SortedMap.class);
 
         assertThat(map).isInstanceOf(TreeMap.class).isEmpty();
     }
-    
+
     class Foo {
         private Map rawMap;
         private HashMap concreteMap;

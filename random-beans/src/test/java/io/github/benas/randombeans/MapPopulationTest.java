@@ -52,20 +52,11 @@ public class MapPopulationTest {
 
         assertThat(mapBean).isNotNull();
 
-        assertThat(mapBean.getMap().values()).isEmpty();
-        assertThat(mapBean.getMap().keySet()).isEmpty();
-
-        assertThat(mapBean.getSortedMap().values()).isEmpty();
-        assertThat(mapBean.getSortedMap().keySet()).isEmpty();
-
-        assertThat(mapBean.getNavigableMap().values()).isEmpty();
-        assertThat(mapBean.getNavigableMap().keySet()).isEmpty();
-
-        assertThat(mapBean.getConcurrentMap().values()).isEmpty();
-        assertThat(mapBean.getConcurrentMap().keySet()).isEmpty();
-
-        assertThat(mapBean.getConcurrentNavigableMap().values()).isEmpty();
-        assertThat(mapBean.getConcurrentNavigableMap().keySet()).isEmpty();
+        assertThat(mapBean.getMap()).isEmpty();
+        assertThat(mapBean.getSortedMap()).isEmpty();
+        assertThat(mapBean.getNavigableMap()).isEmpty();
+        assertThat(mapBean.getConcurrentMap()).isEmpty();
+        assertThat(mapBean.getConcurrentNavigableMap()).isEmpty();
     }
 
     @Test
@@ -97,26 +88,13 @@ public class MapPopulationTest {
 
         assertThat(mapBean).isNotNull();
 
-        assertThat(mapBean.getHashMap().values()).isEmpty();
-        assertThat(mapBean.getHashMap().keySet()).isEmpty();
-
-        assertThat(mapBean.getHashtable().values()).isEmpty();
-        assertThat(mapBean.getHashtable().keySet()).isEmpty();
-
-        assertThat(mapBean.getLinkedHashMap().values()).isEmpty();
-        assertThat(mapBean.getLinkedHashMap().keySet()).isEmpty();
-
-        assertThat(mapBean.getWeakHashMap().values()).isEmpty();
-        assertThat(mapBean.getWeakHashMap().keySet()).isEmpty();
-
-        assertThat(mapBean.getIdentityHashMap().values()).isEmpty();
-        assertThat(mapBean.getIdentityHashMap().keySet()).isEmpty();
-
-        assertThat(mapBean.getTreeMap().values()).isEmpty();
-        assertThat(mapBean.getTreeMap().keySet()).isEmpty();
-
-        assertThat(mapBean.getConcurrentSkipListMap().values()).isEmpty();
-        assertThat(mapBean.getConcurrentSkipListMap().keySet()).isEmpty();
+        assertThat(mapBean.getHashMap()).isEmpty();
+        assertThat(mapBean.getHashtable()).isEmpty();
+        assertThat(mapBean.getLinkedHashMap()).isEmpty();
+        assertThat(mapBean.getWeakHashMap()).isEmpty();
+        assertThat(mapBean.getIdentityHashMap()).isEmpty();
+        assertThat(mapBean.getTreeMap()).isEmpty();
+        assertThat(mapBean.getConcurrentSkipListMap()).isEmpty();
     }
 
     @Test
@@ -146,7 +124,6 @@ public class MapPopulationTest {
         assertContainsNonZeroIntegers(mapBean.getTypedConcurrentSkipListMap().keySet());
         assertContainsOnlyNonEmptyPersons(mapBean.getTypedConcurrentSkipListMap().values());
     }
-
 
     @Test
     public void wildcardTypedMapInterfacesShouldBeEmpty() {
