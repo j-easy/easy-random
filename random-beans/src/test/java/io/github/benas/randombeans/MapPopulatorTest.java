@@ -100,7 +100,7 @@ public class MapPopulatorTest {
         Map<String, String> randomMap = (Map<String, String>) mapPopulator.getRandomMap(field, context);
 
         // Then
-        assertThat(randomMap).hasSize(SIZE).containsOnly(entry(FOO, BAR));
+        assertThat(randomMap).containsExactly(entry(FOO, BAR));
     }
 
     @Test
@@ -114,7 +114,7 @@ public class MapPopulatorTest {
         Map<String, String> randomMap = (Map<String, String>) mapPopulator.getRandomMap(field, context);
 
         // Then
-        assertThat(randomMap).hasSize(SIZE).containsOnly(entry(FOO, BAR));
+        assertThat(randomMap).containsExactly(entry(FOO, BAR));
     }
 
     @Test

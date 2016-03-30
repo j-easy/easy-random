@@ -97,6 +97,6 @@ public class PopulatorContextTest {
         populatorContext.appendDottedName(stringBuilder, asList(address, street));
 
         // Then
-        assertThat(stringBuilder.toString()).isEqualTo("address.street");
+        assertThat(stringBuilder).hasToString("address.street");
     }
 }
