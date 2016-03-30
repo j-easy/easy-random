@@ -52,15 +52,15 @@ public class FloatRangeRandomizerTest extends AbstractRangeRandomizerTest<Float>
     @Test
     public void whenSpecifiedMinValueIsNullThenShouldUseDefaultMinValue() {
         randomizer = new FloatRangeRandomizer(null, max);
-        Float randomDate = randomizer.getRandomValue();
-        assertThat(randomDate).isLessThanOrEqualTo(max);
+        Float randomFloat = randomizer.getRandomValue();
+        assertThat(randomFloat).isLessThanOrEqualTo(max);
     }
 
     @Test
     public void whenSpecifiedMaxvalueIsNullThenShouldUseDefaultMaxValue() {
         randomizer = new FloatRangeRandomizer(min, null);
-        Float randomDate = randomizer.getRandomValue();
-        assertThat(randomDate).isGreaterThanOrEqualTo(min);
+        Float randomFloat = randomizer.getRandomValue();
+        assertThat(randomFloat).isGreaterThanOrEqualTo(min);
     }
 
 }

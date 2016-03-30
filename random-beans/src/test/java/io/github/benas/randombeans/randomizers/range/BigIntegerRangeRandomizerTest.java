@@ -56,15 +56,15 @@ public class BigIntegerRangeRandomizerTest extends AbstractRangeRandomizerTest<B
     @Test
     public void whenSpecifiedMinValueIsNullThenShouldUseDefaultMinValue() {
         randomizer = new BigIntegerRangeRandomizer(null, max);
-        BigInteger randomDate = randomizer.getRandomValue();
-        assertThat(randomDate.intValue()).isLessThanOrEqualTo(max);
+        BigInteger radomBigInteger = randomizer.getRandomValue();
+        assertThat(radomBigInteger.intValue()).isLessThanOrEqualTo(max);
     }
 
     @Test
     public void whenSpecifiedMaxvalueIsNullThenShouldUseDefaultMaxValue() {
         randomizer = new BigIntegerRangeRandomizer(min, null);
-        BigInteger randomDate = randomizer.getRandomValue();
-        assertThat(randomDate.intValue()).isGreaterThanOrEqualTo(min);
+        BigInteger radomBigInteger = randomizer.getRandomValue();
+        assertThat(radomBigInteger.intValue()).isGreaterThanOrEqualTo(min);
     }
 
 }

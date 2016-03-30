@@ -54,15 +54,15 @@ public class StringLengthRandomizerTest extends AbstractRangeRandomizerTest<Stri
     @Test
     public void whenSpecifiedMinLengthIsNullThenShouldUseDefaultMinValue() {
         randomizer = new StringLengthRandomizer(null, max);
-        String randomDate = randomizer.getRandomValue();
-        assertThat(randomDate.length()).isLessThanOrEqualTo(max);
+        String randomString = randomizer.getRandomValue();
+        assertThat(randomString.length()).isLessThanOrEqualTo(max);
     }
 
     @Test
     public void whenSpecifiedMaxLengthIsNullThenShouldUseDefaultMaxValue() {
         randomizer = new StringLengthRandomizer(min, null);
-        String randomDate = randomizer.getRandomValue();
-        assertThat(randomDate.length()).isGreaterThanOrEqualTo(min);
+        String randomString = randomizer.getRandomValue();
+        assertThat(randomString.length()).isGreaterThanOrEqualTo(min);
     }
 
 }

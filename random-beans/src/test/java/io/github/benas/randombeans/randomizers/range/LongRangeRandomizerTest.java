@@ -52,15 +52,15 @@ public class LongRangeRandomizerTest extends AbstractRangeRandomizerTest<Long> {
     @Test
     public void whenSpecifiedMinValueIsNullThenShouldUseDefaultMinValue() {
         randomizer = new LongRangeRandomizer(null, max);
-        Long randomDate = randomizer.getRandomValue();
-        assertThat(randomDate).isLessThanOrEqualTo(max);
+        Long randomLong = randomizer.getRandomValue();
+        assertThat(randomLong).isLessThanOrEqualTo(max);
     }
 
     @Test
     public void whenSpecifiedMaxvalueIsNullThenShouldUseDefaultMaxValue() {
         randomizer = new LongRangeRandomizer(min, null);
-        Long randomDate = randomizer.getRandomValue();
-        assertThat(randomDate).isGreaterThanOrEqualTo(min);
+        Long randomLong = randomizer.getRandomValue();
+        assertThat(randomLong).isGreaterThanOrEqualTo(min);
     }
 
 }

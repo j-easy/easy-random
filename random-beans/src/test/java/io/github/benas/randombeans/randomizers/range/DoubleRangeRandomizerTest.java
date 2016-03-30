@@ -52,15 +52,15 @@ public class DoubleRangeRandomizerTest extends AbstractRangeRandomizerTest<Doubl
     @Test
     public void whenSpecifiedMinValueIsNullThenShouldUseDefaultMinValue() {
         randomizer = new DoubleRangeRandomizer(null, max);
-        Double randomDate = randomizer.getRandomValue();
-        assertThat(randomDate).isLessThanOrEqualTo(max);
+        Double randomDouble = randomizer.getRandomValue();
+        assertThat(randomDouble).isLessThanOrEqualTo(max);
     }
 
     @Test
     public void whenSpecifiedMaxvalueIsNullThenShouldUseDefaultMaxValue() {
         randomizer = new DoubleRangeRandomizer(min, null);
-        Double randomDate = randomizer.getRandomValue();
-        assertThat(randomDate).isGreaterThanOrEqualTo(min);
+        Double randomDouble = randomizer.getRandomValue();
+        assertThat(randomDouble).isGreaterThanOrEqualTo(min);
     }
 
 }
