@@ -215,7 +215,7 @@ public abstract class ReflectionUtils {
      * @return a list of all concrete subtypes found
      */
     public static <T> List<Class<?>> getPublicConcreteSubTypesOf(final Class<T> type) {
-        return ReflectionsFacade.getPublicConcreteSubTypesOf(type);
+        return FastClasspathScannerFacade.getPublicConcreteSubTypesOf(type);
     }
 
     /**
