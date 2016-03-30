@@ -52,15 +52,15 @@ public class ShortRangeRandomizerTest extends AbstractRangeRandomizerTest<Short>
     @Test
     public void whenSpecifiedMinValueIsNullThenShouldUseDefaultMinValue() {
         randomizer = new ShortRangeRandomizer(null, max);
-        Short randomDate = randomizer.getRandomValue();
-        assertThat(randomDate).isLessThanOrEqualTo(max);
+        Short randomShort = randomizer.getRandomValue();
+        assertThat(randomShort).isLessThanOrEqualTo(max);
     }
 
     @Test
     public void whenSpecifiedMaxvalueIsNullThenShouldUseDefaultMaxValue() {
         randomizer = new ShortRangeRandomizer(min, null);
-        Short randomDate = randomizer.getRandomValue();
-        assertThat(randomDate).isGreaterThanOrEqualTo(min);
+        Short randomShort = randomizer.getRandomValue();
+        assertThat(randomShort).isGreaterThanOrEqualTo(min);
     }
 
 }

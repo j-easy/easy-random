@@ -52,15 +52,15 @@ public class IntegerRangeRandomizerTest extends AbstractRangeRandomizerTest<Inte
     @Test
     public void whenSpecifiedMinValueIsNullThenShouldUseDefaultMinValue() {
         randomizer = new IntegerRangeRandomizer(null, max);
-        Integer randomDate = randomizer.getRandomValue();
-        assertThat(randomDate).isLessThanOrEqualTo(max);
+        Integer randomInteger = randomizer.getRandomValue();
+        assertThat(randomInteger).isLessThanOrEqualTo(max);
     }
 
     @Test
     public void whenSpecifiedMaxvalueIsNullThenShouldUseDefaultMaxValue() {
         randomizer = new IntegerRangeRandomizer(min, null);
-        Integer randomDate = randomizer.getRandomValue();
-        assertThat(randomDate).isGreaterThanOrEqualTo(min);
+        Integer randomInteger = randomizer.getRandomValue();
+        assertThat(randomInteger).isGreaterThanOrEqualTo(min);
     }
 
 }

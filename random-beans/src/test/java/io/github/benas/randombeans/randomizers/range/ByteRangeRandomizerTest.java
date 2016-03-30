@@ -52,14 +52,14 @@ public class ByteRangeRandomizerTest extends AbstractRangeRandomizerTest<Byte> {
     @Test
     public void whenSpecifiedMinValueIsNullThenShouldUseDefaultMinValue() {
         randomizer = new ByteRangeRandomizer(null, max);
-        Byte randomDate = randomizer.getRandomValue();
-        assertThat(randomDate).isLessThanOrEqualTo(max);
+        Byte randomByte = randomizer.getRandomValue();
+        assertThat(randomByte).isLessThanOrEqualTo(max);
     }
 
     @Test
     public void whenSpecifiedMaxvalueIsNullThenShouldUseDefaultMaxValue() {
         randomizer = new ByteRangeRandomizer(min, null);
-        Byte randomDate = randomizer.getRandomValue();
-        assertThat(randomDate).isGreaterThanOrEqualTo(min);
+        Byte randomByte = randomizer.getRandomValue();
+        assertThat(randomByte).isGreaterThanOrEqualTo(min);
     }
 }

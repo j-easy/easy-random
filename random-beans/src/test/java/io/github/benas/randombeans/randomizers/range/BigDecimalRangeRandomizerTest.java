@@ -56,15 +56,15 @@ public class BigDecimalRangeRandomizerTest extends AbstractRangeRandomizerTest<B
     @Test
     public void whenSpecifiedMinValueIsNullThenShouldUseDefaultMinValue() {
         randomizer = new BigDecimalRangeRandomizer(null, max);
-        BigDecimal randomDate = randomizer.getRandomValue();
-        assertThat(randomDate.longValue()).isLessThanOrEqualTo(max);
+        BigDecimal randomBigDecimal = randomizer.getRandomValue();
+        assertThat(randomBigDecimal.longValue()).isLessThanOrEqualTo(max);
     }
 
     @Test
     public void whenSpecifiedMaxvalueIsNullThenShouldUseDefaultMaxValue() {
         randomizer = new BigDecimalRangeRandomizer(min, null);
-        BigDecimal randomDate = randomizer.getRandomValue();
-        assertThat(randomDate.longValue()).isGreaterThanOrEqualTo(min);
+        BigDecimal randomBigDecimal = randomizer.getRandomValue();
+        assertThat(randomBigDecimal.longValue()).isGreaterThanOrEqualTo(min);
     }
 
 }
