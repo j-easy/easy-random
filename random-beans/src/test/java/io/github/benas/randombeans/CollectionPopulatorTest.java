@@ -118,6 +118,7 @@ public class CollectionPopulatorTest {
         assertThat(collection).isInstanceOf(ArrayList.class).isEmpty();
     }
 
+    @SuppressWarnings("rawtypes")
     class Foo {
         private List rawInterfaceList;
         private List<String> typedInterfaceList;

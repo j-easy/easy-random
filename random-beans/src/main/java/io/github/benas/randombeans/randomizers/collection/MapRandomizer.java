@@ -78,7 +78,7 @@ public class MapRandomizer<K, V> implements Randomizer<Map<K, V>> {
      * @param keyRandomizer   the randomizer for keys
      * @param valueRandomizer the randomizer for values
      */
-    public static <K, V> MapRandomizer aNewMapRandomizer(final Randomizer<K> keyRandomizer, final Randomizer<V> valueRandomizer) {
+    public static <K, V> MapRandomizer<K, V> aNewMapRandomizer(final Randomizer<K> keyRandomizer, final Randomizer<V> valueRandomizer) {
         return new MapRandomizer<>(keyRandomizer, valueRandomizer, abs(aNewByteRandomizer().getRandomValue()));
     }
 
@@ -89,7 +89,7 @@ public class MapRandomizer<K, V> implements Randomizer<Map<K, V>> {
      * @param valueRandomizer the randomizer for values
      * @param nbEntries       the number of entries to generate
      */
-    public static <K, V> MapRandomizer aNewMapRandomizer(final Randomizer<K> keyRandomizer, final Randomizer<V> valueRandomizer, final int nbEntries) {
+    public static <K, V> MapRandomizer<K, V> aNewMapRandomizer(final Randomizer<K> keyRandomizer, final Randomizer<V> valueRandomizer, final int nbEntries) {
         return new MapRandomizer<>(keyRandomizer, valueRandomizer, nbEntries);
     }
 
