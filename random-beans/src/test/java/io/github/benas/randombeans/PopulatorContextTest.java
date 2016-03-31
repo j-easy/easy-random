@@ -32,7 +32,6 @@ import org.mockito.Mock;
 
 import java.lang.reflect.Field;
 
-import static java.util.Arrays.asList;
 import static org.assertj.core.api.Assertions.assertThat;
 
 public class PopulatorContextTest {
@@ -90,13 +89,13 @@ public class PopulatorContextTest {
     public void stackedFieldNamesShouldBeCorrectlyEncoded() throws NoSuchFieldException {
         // Given
         Field address = Person.class.getDeclaredField("address");
+        populatorContext.pushStackItem(new PopulatorContextStackItem(null, address));
         Field street = Address.class.getDeclaredField("street");
-        StringBuilder stringBuilder = new StringBuilder();
 
         // When
-        populatorContext.appendDottedName(stringBuilder, asList(address, street));
+        String fullFieldName = populatorContext.getFieldFullName(street);
 
         // Then
-        assertThat(stringBuilder.toString()).isEqualTo("address.street");
+        assertThat(fullFieldName).isEqualTo("address.street");
     }
 }

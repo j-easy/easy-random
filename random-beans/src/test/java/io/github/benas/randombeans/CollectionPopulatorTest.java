@@ -36,7 +36,6 @@ import java.util.Collection;
 import java.util.List;
 
 import static io.github.benas.randombeans.util.Constants.MAX_COLLECTION_SIZE;
-import static java.util.Collections.singletonList;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.Mockito.when;
 
@@ -91,10 +90,11 @@ public class CollectionPopulatorTest {
         Field field = Foo.class.getDeclaredField("typedInterfaceList");
 
         // When
-        Collection<?> collection = collectionPopulator.getRandomCollection(field, context);
+        @SuppressWarnings("unchecked")
+        Collection<String> collection = (Collection<String>) collectionPopulator.getRandomCollection(field, context);
 
         // Then
-        assertThat(collection).hasSize(SIZE).hasOnlyElementsOfType(String.class).containsOnlyElementsOf(singletonList(STRING));
+        assertThat(collection).containsExactly(STRING, STRING);
     }
 
     @Test
@@ -105,10 +105,11 @@ public class CollectionPopulatorTest {
         Field field = Foo.class.getDeclaredField("typedConcreteList");
 
         // When
-        Collection<?> collection = collectionPopulator.getRandomCollection(field, context);
+        @SuppressWarnings("unchecked")
+        Collection<String> collection = (Collection<String>) collectionPopulator.getRandomCollection(field, context);
 
         // Then
-        assertThat(collection).hasSize(SIZE).hasOnlyElementsOfType(String.class).containsOnlyElementsOf(singletonList(STRING));
+        assertThat(collection).containsExactly(STRING, STRING);
     }
 
     @Test
@@ -118,6 +119,7 @@ public class CollectionPopulatorTest {
         assertThat(collection).isInstanceOf(ArrayList.class).isEmpty();
     }
 
+    @SuppressWarnings("rawtypes")
     class Foo {
         private List rawInterfaceList;
         private List<String> typedInterfaceList;

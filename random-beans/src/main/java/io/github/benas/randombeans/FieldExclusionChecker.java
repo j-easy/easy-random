@@ -27,6 +27,7 @@ package io.github.benas.randombeans;
 import io.github.benas.randombeans.annotation.Exclude;
 
 import java.lang.reflect.Field;
+import java.util.Set;
 
 import static io.github.benas.randombeans.util.ReflectionUtils.isStatic;
 
@@ -52,15 +53,10 @@ class FieldExclusionChecker {
         if (isStatic(field)) {
             return true;
         }
-        if (context.getExcludedFields().length == 0) {
+        Set<String> excludedFields = context.getExcludedFields();
+        if (excludedFields.isEmpty()) {
             return false;
         }
-        String fieldFullName = context.getFieldFullName(field);
-        for (String excludedFieldName : context.getExcludedFields()) {
-            if (fieldFullName.equalsIgnoreCase(excludedFieldName)) {
-                return true;
-            }
-        }
-        return false;
+        return excludedFields.contains(context.getFieldFullName(field));
     }
 }

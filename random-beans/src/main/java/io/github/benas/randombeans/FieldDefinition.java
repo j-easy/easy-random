@@ -77,7 +77,7 @@ public class FieldDefinition<T, F> {
             return false;
         }
 
-        FieldDefinition that = (FieldDefinition) o;
+        FieldDefinition<?, ?> that = (FieldDefinition<?, ?>) o;
 
         if (!name.equals(that.name)) {
             return false;

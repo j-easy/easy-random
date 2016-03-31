@@ -29,7 +29,6 @@ import io.github.benas.randombeans.api.Randomizer;
 import io.github.benas.randombeans.beans.C;
 import io.github.benas.randombeans.beans.Human;
 import io.github.benas.randombeans.beans.Person;
-import org.assertj.core.api.Assertions;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -101,122 +100,122 @@ public class FieldExclusionTest {
 
     @Test
     public void testFirstLevelExclusion() {
-        C c = enhancedRandom.nextObject(C.class, "b2"); // please, confirm that it works
+        C c = enhancedRandom.nextObject(C.class, "b2");
 
-        Assertions.assertThat(c).isNotNull();
+        assertThat(c).isNotNull();
 
         // B1 and its "children" must not be null
-        Assertions.assertThat(c.getB1()).isNotNull();
-        Assertions.assertThat(c.getB1().getA1()).isNotNull();
-        Assertions.assertThat(c.getB1().getA1().getS1()).isNotNull();
-        Assertions.assertThat(c.getB1().getA1().getS2()).isNotNull();
-        Assertions.assertThat(c.getB1().getA2()).isNotNull();
-        Assertions.assertThat(c.getB1().getA2().getS1()).isNotNull();
-        Assertions.assertThat(c.getB1().getA2().getS2()).isNotNull();
+        assertThat(c.getB1()).isNotNull();
+        assertThat(c.getB1().getA1()).isNotNull();
+        assertThat(c.getB1().getA1().getS1()).isNotNull();
+        assertThat(c.getB1().getA1().getS2()).isNotNull();
+        assertThat(c.getB1().getA2()).isNotNull();
+        assertThat(c.getB1().getA2().getS1()).isNotNull();
+        assertThat(c.getB1().getA2().getS2()).isNotNull();
 
         // B2 must be null
-        Assertions.assertThat(c.getB2()).isNull();
+        assertThat(c.getB2()).isNull();
     }
 
     @Test
     public void testSecondLevelExclusion() {
-        C c = enhancedRandom.nextObject(C.class, "b2.a2"); // please, confirm that it works
+        C c = enhancedRandom.nextObject(C.class, "b2.a2");
 
-        Assertions.assertThat(c).isNotNull();
+        assertThat(c).isNotNull();
 
         // B1 and its "children" must not be null
-        Assertions.assertThat(c.getB1()).isNotNull();
-        Assertions.assertThat(c.getB1().getA1()).isNotNull();
-        Assertions.assertThat(c.getB1().getA1().getS1()).isNotNull();
-        Assertions.assertThat(c.getB1().getA1().getS2()).isNotNull();
-        Assertions.assertThat(c.getB1().getA2()).isNotNull();
-        Assertions.assertThat(c.getB1().getA2().getS1()).isNotNull();
-        Assertions.assertThat(c.getB1().getA2().getS2()).isNotNull();
+        assertThat(c.getB1()).isNotNull();
+        assertThat(c.getB1().getA1()).isNotNull();
+        assertThat(c.getB1().getA1().getS1()).isNotNull();
+        assertThat(c.getB1().getA1().getS2()).isNotNull();
+        assertThat(c.getB1().getA2()).isNotNull();
+        assertThat(c.getB1().getA2().getS1()).isNotNull();
+        assertThat(c.getB1().getA2().getS2()).isNotNull();
 
         // Only B2.A2 must be null
-        Assertions.assertThat(c.getB2()).isNotNull();
-        Assertions.assertThat(c.getB2().getA1()).isNotNull();
-        Assertions.assertThat(c.getB2().getA1().getS1()).isNotNull();
-        Assertions.assertThat(c.getB2().getA1().getS2()).isNotNull();
-        Assertions.assertThat(c.getB2().getA2()).isNull();
+        assertThat(c.getB2()).isNotNull();
+        assertThat(c.getB2().getA1()).isNotNull();
+        assertThat(c.getB2().getA1().getS1()).isNotNull();
+        assertThat(c.getB2().getA1().getS2()).isNotNull();
+        assertThat(c.getB2().getA2()).isNull();
     }
 
     @Test
     public void testThirdLevelExclusion() {
-        C c = enhancedRandom.nextObject(C.class, "b2.a2.s2"); // please, confirm that it works
+        C c = enhancedRandom.nextObject(C.class, "b2.a2.s2");
 
         // B1 and its "children" must not be null
-        Assertions.assertThat(c.getB1()).isNotNull();
-        Assertions.assertThat(c.getB1().getA1()).isNotNull();
-        Assertions.assertThat(c.getB1().getA1().getS1()).isNotNull();
-        Assertions.assertThat(c.getB1().getA1().getS2()).isNotNull();
-        Assertions.assertThat(c.getB1().getA2()).isNotNull();
-        Assertions.assertThat(c.getB1().getA2().getS1()).isNotNull();
-        Assertions.assertThat(c.getB1().getA2().getS2()).isNotNull();
+        assertThat(c.getB1()).isNotNull();
+        assertThat(c.getB1().getA1()).isNotNull();
+        assertThat(c.getB1().getA1().getS1()).isNotNull();
+        assertThat(c.getB1().getA1().getS2()).isNotNull();
+        assertThat(c.getB1().getA2()).isNotNull();
+        assertThat(c.getB1().getA2().getS1()).isNotNull();
+        assertThat(c.getB1().getA2().getS2()).isNotNull();
 
         // Only B2.A2.S2 must be null
-        Assertions.assertThat(c.getB2()).isNotNull();
-        Assertions.assertThat(c.getB2().getA1()).isNotNull();
-        Assertions.assertThat(c.getB2().getA1().getS1()).isNotNull();
-        Assertions.assertThat(c.getB2().getA1().getS2()).isNotNull();
-        Assertions.assertThat(c.getB2().getA2().getS1()).isNotNull();
-        Assertions.assertThat(c.getB2().getA2().getS2()).isNull();
+        assertThat(c.getB2()).isNotNull();
+        assertThat(c.getB2().getA1()).isNotNull();
+        assertThat(c.getB2().getA1().getS1()).isNotNull();
+        assertThat(c.getB2().getA1().getS2()).isNotNull();
+        assertThat(c.getB2().getA2().getS1()).isNotNull();
+        assertThat(c.getB2().getA2().getS2()).isNull();
     }
 
     @Test
     public void testFirstLevelCollectionExclusion() {
-        C c = enhancedRandom.nextObject(C.class, "b3"); // please, confirm that it works
+        C c = enhancedRandom.nextObject(C.class, "b3");
 
-        Assertions.assertThat(c).isNotNull();
-
-        // B1 and its "children" must not be null
-        Assertions.assertThat(c.getB1()).isNotNull();
-        Assertions.assertThat(c.getB1().getA1()).isNotNull();
-        Assertions.assertThat(c.getB1().getA1().getS1()).isNotNull();
-        Assertions.assertThat(c.getB1().getA1().getS2()).isNotNull();
-        Assertions.assertThat(c.getB1().getA2()).isNotNull();
-        Assertions.assertThat(c.getB1().getA2().getS1()).isNotNull();
-        Assertions.assertThat(c.getB1().getA2().getS2()).isNotNull();
+        assertThat(c).isNotNull();
 
         // B1 and its "children" must not be null
-        Assertions.assertThat(c.getB2()).isNotNull();
-        Assertions.assertThat(c.getB2().getA1()).isNotNull();
-        Assertions.assertThat(c.getB2().getA1().getS1()).isNotNull();
-        Assertions.assertThat(c.getB2().getA1().getS2()).isNotNull();
-        Assertions.assertThat(c.getB2().getA2()).isNotNull();
-        Assertions.assertThat(c.getB2().getA2().getS1()).isNotNull();
-        Assertions.assertThat(c.getB2().getA2().getS2()).isNotNull();
+        assertThat(c.getB1()).isNotNull();
+        assertThat(c.getB1().getA1()).isNotNull();
+        assertThat(c.getB1().getA1().getS1()).isNotNull();
+        assertThat(c.getB1().getA1().getS2()).isNotNull();
+        assertThat(c.getB1().getA2()).isNotNull();
+        assertThat(c.getB1().getA2().getS1()).isNotNull();
+        assertThat(c.getB1().getA2().getS2()).isNotNull();
+
+        // B1 and its "children" must not be null
+        assertThat(c.getB2()).isNotNull();
+        assertThat(c.getB2().getA1()).isNotNull();
+        assertThat(c.getB2().getA1().getS1()).isNotNull();
+        assertThat(c.getB2().getA1().getS2()).isNotNull();
+        assertThat(c.getB2().getA2()).isNotNull();
+        assertThat(c.getB2().getA2().getS1()).isNotNull();
+        assertThat(c.getB2().getA2().getS2()).isNotNull();
 
         // B3 must be null
-        Assertions.assertThat(c.getB3()).isNull();
+        assertThat(c.getB3()).isNull();
     }
 
     @Test
     public void testSecondLevelCollectionExclusion() {
         C c = enhancedRandom.nextObject(C.class, "b3.a2"); // b3.a2 does not make sense, should be ignored
 
-        Assertions.assertThat(c).isNotNull();
+        assertThat(c).isNotNull();
 
         // B1 and its "children" must not be null
-        Assertions.assertThat(c.getB1()).isNotNull();
-        Assertions.assertThat(c.getB1().getA1()).isNotNull();
-        Assertions.assertThat(c.getB1().getA1().getS1()).isNotNull();
-        Assertions.assertThat(c.getB1().getA1().getS2()).isNotNull();
-        Assertions.assertThat(c.getB1().getA2()).isNotNull();
-        Assertions.assertThat(c.getB1().getA2().getS1()).isNotNull();
-        Assertions.assertThat(c.getB1().getA2().getS2()).isNotNull();
+        assertThat(c.getB1()).isNotNull();
+        assertThat(c.getB1().getA1()).isNotNull();
+        assertThat(c.getB1().getA1().getS1()).isNotNull();
+        assertThat(c.getB1().getA1().getS2()).isNotNull();
+        assertThat(c.getB1().getA2()).isNotNull();
+        assertThat(c.getB1().getA2().getS1()).isNotNull();
+        assertThat(c.getB1().getA2().getS2()).isNotNull();
 
         // B1 and its "children" must not be null
-        Assertions.assertThat(c.getB2()).isNotNull();
-        Assertions.assertThat(c.getB2().getA1()).isNotNull();
-        Assertions.assertThat(c.getB2().getA1().getS1()).isNotNull();
-        Assertions.assertThat(c.getB2().getA1().getS2()).isNotNull();
-        Assertions.assertThat(c.getB2().getA2()).isNotNull();
-        Assertions.assertThat(c.getB2().getA2().getS1()).isNotNull();
-        Assertions.assertThat(c.getB2().getA2().getS2()).isNotNull();
+        assertThat(c.getB2()).isNotNull();
+        assertThat(c.getB2().getA1()).isNotNull();
+        assertThat(c.getB2().getA1().getS1()).isNotNull();
+        assertThat(c.getB2().getA1().getS2()).isNotNull();
+        assertThat(c.getB2().getA2()).isNotNull();
+        assertThat(c.getB2().getA2().getS1()).isNotNull();
+        assertThat(c.getB2().getA2().getS2()).isNotNull();
 
         // B3 must not be null
-        Assertions.assertThat(c.getB3()).isNotNull();
+        assertThat(c.getB3()).isNotNull();
     }
 
 }

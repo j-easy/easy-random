@@ -64,7 +64,7 @@ public class ListRandomizer<T> extends CollectionRandomizer<T> {
      * @param elementRandomizer the {@link Randomizer} to use to generate elements
      * @return a new {@link ListRandomizer}.
      */
-    public static <T> ListRandomizer aNewListRandomizer(final Randomizer<T> elementRandomizer) {
+    public static <T> ListRandomizer<T> aNewListRandomizer(final Randomizer<T> elementRandomizer) {
         return new ListRandomizer<>(elementRandomizer);
     }
 
@@ -75,7 +75,7 @@ public class ListRandomizer<T> extends CollectionRandomizer<T> {
      * @param elementRandomizer The {@link Randomizer} used to generate each element
      * @param nbElements        The number of elements to generate
      */
-    public static <T> ListRandomizer aNewListRandomizer(final Randomizer<T> elementRandomizer, final int nbElements) {
+    public static <T> ListRandomizer<T> aNewListRandomizer(final Randomizer<T> elementRandomizer, final int nbElements) {
         return new ListRandomizer<>(elementRandomizer, nbElements);
     }
 

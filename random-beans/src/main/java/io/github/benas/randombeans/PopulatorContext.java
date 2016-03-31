@@ -29,7 +29,6 @@ import io.github.benas.randombeans.api.EnhancedRandom;
 import java.lang.reflect.Field;
 import java.util.*;
 
-import static java.util.Collections.singletonList;
 import static java.util.stream.Collectors.toList;
 import static org.apache.commons.lang3.RandomUtils.nextInt;
 
@@ -43,7 +42,7 @@ class PopulatorContext {
 
     static final byte OBJECT_POOL_SIZE = 10;
 
-    private String[] excludedFields;
+    private Set<String> excludedFields;
 
     private Map<Class<?>, List<Object>> populatedBeans;
 
@@ -52,7 +51,7 @@ class PopulatorContext {
     PopulatorContext(final String... excludedFields) {
         populatedBeans = new IdentityHashMap<>();
         stack = new Stack<>();
-        this.excludedFields = excludedFields;
+        this.excludedFields = new HashSet<>(toLowerCase(Arrays.asList(excludedFields)));
     }
 
     void addPopulatedBean(final Class<?> type, Object object) {
@@ -76,7 +75,7 @@ class PopulatorContext {
         return populatedBeans.containsKey(type) && populatedBeans.get(type).size() == OBJECT_POOL_SIZE;
     }
 
-    String[] getExcludedFields() {
+    Set<String> getExcludedFields() {
         return excludedFields;
     }
 
@@ -89,24 +88,16 @@ class PopulatorContext {
     }
 
     String getFieldFullName(final Field field) {
-        StringBuilder builder = new StringBuilder();
-        List<Field> stackedFields = getStackedFields();
-        appendDottedName(builder, stackedFields);
-        appendDottedName(builder, singletonList(field));
-        return builder.toString();
+        List<String> pathToField = getStackedFieldNames();
+        pathToField.add(field.getName());
+        return String.join(".", toLowerCase(pathToField));
     }
 
-    List<Field> getStackedFields() {
-        return stack.stream().map(PopulatorContextStackItem::getField).collect(toList());
+    List<String> getStackedFieldNames() {
+        return stack.stream().map(i -> i.getField().getName()).collect(toList());
     }
 
-    void appendDottedName(final StringBuilder builder, final List<Field> fields) {
-        for (Field field : fields) {
-            if (builder.length() > 0) {
-                builder.append(".");
-            }
-            builder.append(field.getName());
-        }
+    private List<String> toLowerCase(final List<String> strings) {
+      return strings.stream().map(String::toLowerCase).collect(toList());
     }
-
 }
