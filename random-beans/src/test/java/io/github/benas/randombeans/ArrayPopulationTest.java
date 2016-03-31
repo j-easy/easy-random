@@ -31,8 +31,9 @@ import org.junit.Before;
 import org.junit.Test;
 
 import static io.github.benas.randombeans.EnhancedRandomBuilder.aNewEnhancedRandomBuilder;
-import static org.apache.commons.lang3.ArrayUtils.toObject;
 import static org.assertj.core.api.Assertions.assertThat;
+
+import java.lang.reflect.Array;
 
 public class ArrayPopulationTest {
 
@@ -60,14 +61,14 @@ public class ArrayPopulationTest {
         final ArrayBean bean = enhancedRandom.nextObject(ArrayBean.class);
 
         // primitive types
-        assertThat(toObject(bean.getByteArray())).hasOnlyElementsOfType(Byte.class);
-        assertThat(toObject(bean.getShortArray())).hasOnlyElementsOfType(Short.class);
-        assertThat(toObject(bean.getIntArray())).hasOnlyElementsOfType(Integer.class);
-        assertThat(toObject(bean.getLongArray())).hasOnlyElementsOfType(Long.class);
-        assertThat(toObject(bean.getFloatArray())).hasOnlyElementsOfType(Float.class);
-        assertThat(toObject(bean.getDoubleArray())).hasOnlyElementsOfType(Double.class);
-        assertThat(toObject(bean.getCharArray())).hasOnlyElementsOfType(Character.class);
-        assertThat(toObject(bean.getBooleanArray())).hasOnlyElementsOfType(Boolean.class);
+        assertThat(toObjectArray(bean.getByteArray())).hasOnlyElementsOfType(Byte.class);
+        assertThat(toObjectArray(bean.getShortArray())).hasOnlyElementsOfType(Short.class);
+        assertThat(toObjectArray(bean.getIntArray())).hasOnlyElementsOfType(Integer.class);
+        assertThat(toObjectArray(bean.getLongArray())).hasOnlyElementsOfType(Long.class);
+        assertThat(toObjectArray(bean.getFloatArray())).hasOnlyElementsOfType(Float.class);
+        assertThat(toObjectArray(bean.getDoubleArray())).hasOnlyElementsOfType(Double.class);
+        assertThat(toObjectArray(bean.getCharArray())).hasOnlyElementsOfType(Character.class);
+        assertThat(toObjectArray(bean.getBooleanArray())).hasOnlyElementsOfType(Boolean.class);
     }
 
     @Test
@@ -103,5 +104,14 @@ public class ArrayPopulationTest {
             assertThat(person.getAddress().getZipCode()).isNotEmpty();
             assertThat(person.getName()).isNotEmpty();
         }
+    }
+
+    private Object[] toObjectArray(Object primitiveArray) {
+        int length = Array.getLength(primitiveArray);
+        Object[] objectArray = new Object[length];
+        for (int i = 0; i < length; ++i) {
+           objectArray[i] = Array.get(primitiveArray, i);
+        }
+        return objectArray;
     }
 }

@@ -26,8 +26,6 @@ package io.github.benas.randombeans.util;
 
 import java.util.*;
 
-import static org.apache.commons.lang3.RandomUtils.nextInt;
-
 /**
  * Collection utility methods.
  *
@@ -47,5 +45,9 @@ public abstract class CollectionUtils {
             return null;
         }
         return list.get(nextInt(0, list.size()));
+    }
+
+    private static int nextInt(int startInclusive, int endExclusive) {
+        return startInclusive + new Random().nextInt(endExclusive - startInclusive);
     }
 }

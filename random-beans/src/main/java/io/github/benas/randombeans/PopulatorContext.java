@@ -30,7 +30,6 @@ import java.lang.reflect.Field;
 import java.util.*;
 
 import static java.util.stream.Collectors.toList;
-import static org.apache.commons.lang3.RandomUtils.nextInt;
 
 /**
  * Context object for a single call on {@link EnhancedRandom#nextObject(Class, String...)}.
@@ -99,5 +98,9 @@ class PopulatorContext {
 
     private List<String> toLowerCase(final List<String> strings) {
       return strings.stream().map(String::toLowerCase).collect(toList());
+    }
+
+    private int nextInt(int startInclusive, int endExclusive) {
+      return startInclusive + new Random().nextInt(endExclusive - startInclusive);
     }
 }
