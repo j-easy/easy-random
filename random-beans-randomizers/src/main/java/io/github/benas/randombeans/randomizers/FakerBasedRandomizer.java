@@ -40,11 +40,11 @@ public abstract class FakerBasedRandomizer<T> extends AbstractRandomizer<T> {
     protected Faker faker;
 
     protected FakerBasedRandomizer() {
-        faker = new Faker();
+        faker = new Faker(Locale.ENGLISH);
     }
 
     protected FakerBasedRandomizer(final long seed) {
-        this(seed, Locale.getDefault());
+        this(seed, Locale.ENGLISH);
     }
 
     protected FakerBasedRandomizer(final long seed, final Locale locale) {
