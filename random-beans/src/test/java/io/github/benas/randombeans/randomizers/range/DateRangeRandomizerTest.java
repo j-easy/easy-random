@@ -24,10 +24,10 @@
 
 package io.github.benas.randombeans.randomizers.range;
 
-import org.apache.commons.lang3.time.DateUtils;
 import org.junit.Before;
 import org.junit.Test;
 
+import java.util.Calendar;
 import java.util.Date;
 
 import static org.assertj.core.api.Assertions.assertThat;
@@ -39,7 +39,7 @@ public class DateRangeRandomizerTest extends AbstractRangeRandomizerTest<Date> {
     @Before
     public void setUp() {
         today = new Date();
-        tomorrow = DateUtils.addDays(today, 1);
+        tomorrow = addDays(today, 1);
         randomizer = new DateRangeRandomizer(today, tomorrow);
     }
 
@@ -76,4 +76,10 @@ public class DateRangeRandomizerTest extends AbstractRangeRandomizerTest<Date> {
         assertThat(randomDate).isAfterOrEqualsTo(today);
     }
 
+    private Date addDays(Date date, int days) {
+        Calendar calendar = Calendar.getInstance();
+        calendar.setTime(date);
+        calendar.add(Calendar.DAY_OF_MONTH, days);
+        return calendar.getTime();
+    }
 }

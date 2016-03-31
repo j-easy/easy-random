@@ -46,7 +46,6 @@
         <junit.version>4.12</junit.version>
         <faker.version>0.7</faker.version>
         <assertj.version>3.4.0</assertj.version>
-        <commons-lang3.version>3.4</commons-lang3.version>
         <validation-api.version>1.1.0.Final</validation-api.version>
         <joda-time.version>2.9.2</joda-time.version>
         <spring-context.version>4.2.4.RELEASE</spring-context.version>
@@ -141,11 +140,6 @@
                 <groupId>io.github.benas</groupId>
                 <artifactId>random-beans</artifactId>
                 <version>${project.version}</version>
-            </dependency>
-            <dependency>
-                <groupId>org.apache.commons</groupId>
-                <artifactId>commons-lang3</artifactId>
-                <version>${commons-lang3.version}</version>
             </dependency>
             <dependency>
                 <groupId>javax.validation</groupId>
