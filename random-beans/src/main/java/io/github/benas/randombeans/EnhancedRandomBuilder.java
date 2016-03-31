@@ -31,6 +31,7 @@ import io.github.benas.randombeans.randomizers.misc.SkipRandomizer;
 import io.github.benas.randombeans.randomizers.registry.CustomRandomizerRegistry;
 
 import java.util.*;
+import java.util.function.Supplier;
 
 import static io.github.benas.randombeans.util.Constants.DEFAULT_SEED;
 
@@ -74,6 +75,18 @@ public class EnhancedRandomBuilder {
      */
     public <T, F, R> EnhancedRandomBuilder randomize(FieldDefinition<T, F> fieldDefinition, Randomizer<R> randomizer) {
         customRandomizerRegistry.registerRandomizer(fieldDefinition.getName(), fieldDefinition.getType(), fieldDefinition.getClazz(), randomizer);
+        return this;
+    }
+
+    /**
+     * Register a {@code Supplier} of custom {@link Randomizer}s for a given field.
+     *
+     * @param fieldDefinition definition of the field to randomize
+     * @param randomizerSupplier the custom Supplier of {@link Randomizer}s to use
+     * @return a pre configured {@link EnhancedRandomBuilder} instance
+     */
+    public <T, F, R> EnhancedRandomBuilder randomize(FieldDefinition<T, F> fieldDefinition, Supplier<Randomizer<R>> randomizerSupplier) {
+        customRandomizerRegistry.registerRandomizerSupplier(fieldDefinition.getName(), fieldDefinition.getType(), fieldDefinition.getClazz(), randomizerSupplier);
         return this;
     }
 
