@@ -50,7 +50,7 @@
         <joda-time.version>2.9.2</joda-time.version>
         <spring-context.version>4.2.4.RELEASE</spring-context.version>
         <objenesis.version>2.2</objenesis.version>
-        <reflections.version>0.9.10</reflections.version>
+        <fast-classpath-scanner.version>1.9.18</fast-classpath-scanner.version>
         <hibernate-validator.version>5.2.3.Final</hibernate-validator.version>
         <javax.el.version>2.2.6</javax.el.version>
         <mockito-core.version>1.10.19</mockito-core.version>
@@ -162,9 +162,9 @@
                 <version>${objenesis.version}</version>
             </dependency>
             <dependency>
-                <groupId>org.reflections</groupId>
-                <artifactId>reflections</artifactId>
-                <version>${reflections.version}</version>
+                <groupId>io.github.lukehutch</groupId>
+                <artifactId>fast-classpath-scanner</artifactId>
+                <version>${fast-classpath-scanner.version}</version>
                 <optional>true</optional>
             </dependency>
             <dependency>

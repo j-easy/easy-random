@@ -78,8 +78,8 @@
             <artifactId>objenesis</artifactId>
         </dependency>
         <dependency>
-            <groupId>org.reflections</groupId>
-            <artifactId>reflections</artifactId>
+            <groupId>io.github.lukehutch</groupId>
+            <artifactId>fast-classpath-scanner</artifactId>
         </dependency>
         <dependency>
             <groupId>junit</groupId>

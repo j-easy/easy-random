@@ -27,29 +27,26 @@ package io.github.benas.randombeans.util;
 import static io.github.benas.randombeans.util.ReflectionUtils.isAbstract;
 import static io.github.benas.randombeans.util.ReflectionUtils.isPublic;
 import static java.util.stream.Collectors.toList;
-import static org.reflections.util.ClasspathHelper.forJavaClassPath;
-import static org.reflections.util.ConfigurationBuilder.build;
 
 import java.util.Collections;
 import java.util.List;
-import java.util.Set;
 import java.util.concurrent.ConcurrentHashMap;
 
-import org.reflections.Reflections;
+import io.github.lukehutch.fastclasspathscanner.FastClasspathScanner;
 
 /**
- * Facade for {@link org.reflections.Reflections}. It is a separate class from {@link ReflectionUtils},
+ * Facade for {@link io.github.lukehutch.fastclasspathscanner.FastClasspathScanner}. It is a separate class from {@link ReflectionUtils},
  * so that the classpath scanning - which can take a few seconds - is only done when necessary.
  */
-abstract class ReflectionsFacade {
+abstract class FastClasspathScannerFacade {
 
     private static final ConcurrentHashMap<Class<?>, List<Class<?>>> typeToConcreteSubTypes;
-
-    private static final Reflections reflections;
+    private static final FastClasspathScanner classpathScanner;
 
     static {
         typeToConcreteSubTypes = new ConcurrentHashMap<>();
-        reflections = new Reflections(build().setUrls(forJavaClassPath()));
+        classpathScanner = new FastClasspathScanner();
+        classpathScanner.scan();
     }
 
     /**
@@ -68,7 +65,15 @@ abstract class ReflectionsFacade {
     }
 
     private static <T> List<Class<?>> searchForPublicConcreteSubTypesOf(final Class<T> type) {
-        Set<Class<? extends T>> subTypes = reflections.getSubTypesOf(type);
-        return subTypes.stream().filter(currentSubType -> isPublic(currentSubType) && !(isAbstract(currentSubType))).collect(toList());
+        List<String> subTypes = type.isInterface() ? classpathScanner.getNamesOfClassesImplementing(type) : classpathScanner.getNamesOfSubclassesOf(type);
+        return subTypes.stream().map(className -> { 
+                try {
+                    ClassLoader classloader = Thread.currentThread().getContextClassLoader();
+                    if (classloader == null) classloader = FastClasspathScannerFacade.class.getClassLoader();
+                    return classloader.loadClass(className);
+                } catch (ClassNotFoundException ignored) {
+                    return null;
+                }
+            }).filter(currentSubType -> isPublic(currentSubType) && !(isAbstract(currentSubType))).collect(toList());
     }
 }
