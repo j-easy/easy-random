@@ -50,18 +50,24 @@ class ObjectFactory {
     private boolean scanClasspathForConcreteTypes;
 
     <T> T createInstance(final Class<T> type) {
-        T result;
         if (scanClasspathForConcreteTypes && isAbstract(type)) {
             Class<?> randomConcreteSubType = randomElementOf(getPublicConcreteSubTypesOf((type)));
             if (randomConcreteSubType == null) {
                 throw new InstantiationError("Unable to find a matching concrete subtype of type: " + type + " in the classpath");
             } else {
-                result = (T) objenesis.newInstance(randomConcreteSubType);
+                return (T) createNewInstance(randomConcreteSubType);
             }
         } else {
-            result = objenesis.newInstance(type);
+            return createNewInstance(type);
         }
-        return result;
+    }
+
+    private <T> T createNewInstance(final Class<T> type) {
+        try {
+            return type.newInstance();
+        } catch (Exception exception) {
+            return objenesis.newInstance(type);
+        }
     }
 
     Collection<?> createEmptyCollectionForType(Class<?> fieldType, int initialSize) {

@@ -40,6 +40,9 @@ import static io.github.benas.randombeans.FieldDefinitionBuilder.field;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.Mockito.when;
 
+import java.util.ArrayList;
+import java.util.List;
+
 @RunWith(MockitoJUnitRunner.class)
 public class FieldExclusionTest {
 
@@ -216,6 +219,30 @@ public class FieldExclusionTest {
 
         // B3 must not be null
         assertThat(c.getB3()).isNotNull();
+    }
+
+    @Test
+    public void whenFieldIsExcluded_thenItsInlineInitializationShouldBeUsedAsIs() {
+        enhancedRandom = aNewEnhancedRandomBuilder()
+            .exclude(new FieldDefinition<>("myList", List.class, InlineInitializationBean.class))
+            .build();
+
+        InlineInitializationBean bean = enhancedRandom.nextObject(InlineInitializationBean.class);
+
+        assertThat(bean).isNotNull();
+        assertThat(bean.getMyList()).isEmpty();
+    }
+
+    public static class InlineInitializationBean {
+        private List<String> myList = new ArrayList<>();
+
+        public List<String> getMyList() {
+            return myList;
+        }
+
+        public void setMyList(List<String> myList) {
+            this.myList = myList;
+        }
     }
 
 }
