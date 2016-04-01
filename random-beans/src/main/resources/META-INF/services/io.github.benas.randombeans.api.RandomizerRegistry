@@ -23,4 +23,5 @@
 #
 
 io.github.benas.randombeans.randomizers.registry.InternalRandomizerRegistry
+io.github.benas.randombeans.randomizers.registry.TimeRandomizerRegistry
 io.github.benas.randombeans.randomizers.registry.AnnotationRandomizerRegistry
