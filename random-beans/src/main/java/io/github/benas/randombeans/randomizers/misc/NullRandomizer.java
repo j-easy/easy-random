@@ -22,47 +22,29 @@
  *   THE SOFTWARE.
  */
 
-package io.github.benas.randombeans.randomizers.collection;
+package io.github.benas.randombeans.randomizers.misc;
 
 import io.github.benas.randombeans.api.Randomizer;
 
-import java.util.Collection;
-import java.util.Objects;
-
-import static io.github.benas.randombeans.randomizers.number.ByteRandomizer.aNewByteRandomizer;
-import static java.lang.Math.abs;
-
 /**
- * A base class for collection randomizers.
+ * A {@link Randomizer} that generates null values.
  *
- * @param <T> the type of elements in the collection
  * @author Mahmoud Ben Hassine (mahmoud.benhassine@icloud.com)
  */
-public abstract class CollectionRandomizer<T> implements Randomizer<Collection<T>> {
+public class NullRandomizer implements Randomizer<Void> {
 
-    protected int nbElements;
-
-    protected Randomizer<T> delegate;
-
-    protected CollectionRandomizer(final Randomizer<T> delegate) {
-        this(delegate, abs(aNewByteRandomizer().getRandomValue()));
+    /**
+     * Create a new {@link NullRandomizer}.
+     *
+     * @return a new {@link NullRandomizer}.
+     */
+    public static NullRandomizer aNewNullRandomizer() {
+        return new NullRandomizer();
     }
 
-    protected CollectionRandomizer(final Randomizer<T> delegate, final int nbElements) {
-        checkArguments(delegate, nbElements);
-        this.nbElements = nbElements;
-        this.delegate = delegate;
-    }
-
-    protected void checkArguments(final Randomizer<T> delegate, final int nbElements) {
-        Objects.requireNonNull(delegate, "The delegate randomizer must not be null");
-        if (nbElements < 1) {
-            throw new IllegalArgumentException("The number of elements to generate must be >= 1");
-        }
-    }
-
-    protected T getRandomElement() {
-        return delegate.getRandomValue();
+    @Override
+    public Void getRandomValue() {
+        return null;
     }
 
 }

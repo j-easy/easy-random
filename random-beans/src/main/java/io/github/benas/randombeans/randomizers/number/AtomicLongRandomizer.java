@@ -22,57 +22,58 @@
  *   THE SOFTWARE.
  */
 
-package io.github.benas.randombeans.randomizers.jodatime;
+package io.github.benas.randombeans.randomizers.number;
 
 import io.github.benas.randombeans.api.Randomizer;
-import org.joda.time.Period;
 
-import static io.github.benas.randombeans.randomizers.number.IntegerRandomizer.aNewIntegerRandomizer;
-import static java.lang.Math.abs;
+import java.util.concurrent.atomic.AtomicLong;
 
 /**
- * A {@link Randomizer} that generates random {@link Period}.
+ * Generate a random {@link AtomicLong}.
  *
- * @author Nikola Milivojevic (0dziga0@gmail.com)
+ * @author Mahmoud Ben Hassine (mahmoud.benhassine@icloud.com)
  */
-public class JodaTimePeriodRandomizer extends JodaTimeAbstractRandomizer<Period> {
+public class AtomicLongRandomizer implements Randomizer<AtomicLong> {
+
+    private LongRandomizer delegate;
 
     /**
-     * Create a new {@link JodaTimePeriodRandomizer}.
+     * Create a new {@link AtomicLongRandomizer}.
      */
-    public JodaTimePeriodRandomizer() {
+    public AtomicLongRandomizer() {
+        delegate = new LongRandomizer();
     }
 
     /**
-     * Create a new {@link JodaTimePeriodRandomizer}.
+     * Create a new {@link AtomicLongRandomizer}.
      *
-     * @param seed the initial seed
+     * @param seed initial seed
      */
-    public JodaTimePeriodRandomizer(long seed) {
-        super(seed);
+    public AtomicLongRandomizer(final long seed) {
+        delegate = new LongRandomizer(seed);
     }
 
     /**
-     * Create a new {@link JodaTimePeriodRandomizer}.
+     * Create a new {@link AtomicLongRandomizer}.
      *
-     * @return a new {@link JodaTimePeriodRandomizer}.
+     * @return a new {@link AtomicLongRandomizer}.
      */
-    public static JodaTimePeriodRandomizer aNewJodaTimePeriodRandomizer() {
-        return new JodaTimePeriodRandomizer();
+    public static AtomicLongRandomizer aNewAtomicLongRandomizer() {
+        return new AtomicLongRandomizer();
     }
 
     /**
-     * Create a new {@link JodaTimePeriodRandomizer}.
+     * Create a new {@link AtomicLongRandomizer}.
      *
-     * @param seed the initial seed
-     * @return a new {@link JodaTimePeriodRandomizer}.
+     * @param seed initial seed
+     * @return a new {@link AtomicLongRandomizer}.
      */
-    public static JodaTimePeriodRandomizer aNewJodaTimePeriodRandomizer(final long seed) {
-        return new JodaTimePeriodRandomizer(seed);
+    public static AtomicLongRandomizer aNewAtomicLongRandomizer(final long seed) {
+        return new AtomicLongRandomizer(seed);
     }
-    
+
     @Override
-    public Period getRandomValue() {
-        return new Period(abs(aNewIntegerRandomizer().getRandomValue()));
+    public AtomicLong getRandomValue() {
+        return new AtomicLong(delegate.getRandomValue());
     }
 }

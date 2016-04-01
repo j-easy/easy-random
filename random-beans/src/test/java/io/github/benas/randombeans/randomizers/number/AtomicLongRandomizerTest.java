@@ -21,33 +21,31 @@
  *   OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  *   THE SOFTWARE.
  */
-package io.github.benas.randombeans.randomizers.time;
 
-import io.github.benas.randombeans.api.Randomizer;
+package io.github.benas.randombeans.randomizers.number;
 
-import java.time.Instant;
-import java.util.Date;
+import io.github.benas.randombeans.randomizers.AbstractRandomizerTest;
+import org.junit.Before;
+import org.junit.Ignore;
+import org.junit.Test;
 
-/**
- * A {@link Randomizer} that generates random {@link Instant}.
- *
- * @author Mahmoud Ben Hassine (mahmoud.benhassine@icloud.com)
- */
-public class InstantRandomizer implements Randomizer<Instant> {
+import java.util.concurrent.atomic.AtomicLong;
 
-    DateRandomizer dateRandomizer;
+import static org.assertj.core.api.Assertions.assertThat;
 
-    public InstantRandomizer() {
-        dateRandomizer = new DateRandomizer();
+public class AtomicLongRandomizerTest extends AbstractRandomizerTest<AtomicLong> {
+
+    @Before
+    public void setUp() throws Exception {
+        randomizer = AtomicLongRandomizer.aNewAtomicLongRandomizer(SEED);
     }
 
-    public InstantRandomizer(final long seed) {
-        dateRandomizer = new DateRandomizer(seed);
-    }
+    @Ignore("AtomicLong are not intended to be comparable, see http://stackoverflow.com/questions/7567502/why-are-two-atomicintegers-never-equal")
+    @Test
+    public void shouldGenerateTheSameValueForTheSameSeed() {
+        AtomicLong actual = randomizer.getRandomValue();
+        AtomicLong expected = new AtomicLong(-5106534569952410475L);
 
-    @Override
-    public Instant getRandomValue() {
-        Date randomDate = dateRandomizer.getRandomValue();
-        return Instant.ofEpochMilli(randomDate.getTime());
+        assertThat(actual).isEqualTo(expected);
     }
 }

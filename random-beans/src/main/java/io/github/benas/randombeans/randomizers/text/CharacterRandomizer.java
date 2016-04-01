@@ -22,57 +22,56 @@
  *   THE SOFTWARE.
  */
 
-package io.github.benas.randombeans.randomizers.jodatime;
+package io.github.benas.randombeans.randomizers.text;
 
 import io.github.benas.randombeans.api.Randomizer;
-import org.joda.time.Period;
-
-import static io.github.benas.randombeans.randomizers.number.IntegerRandomizer.aNewIntegerRandomizer;
-import static java.lang.Math.abs;
 
 /**
- * A {@link Randomizer} that generates random {@link Period}.
+ * Generate a random {@link Character}.
  *
- * @author Nikola Milivojevic (0dziga0@gmail.com)
+ * @author Mahmoud Ben Hassine (mahmoud.benhassine@icloud.com)
  */
-public class JodaTimePeriodRandomizer extends JodaTimeAbstractRandomizer<Period> {
+public class CharacterRandomizer implements Randomizer<Character> {
+
+    private StringRandomizer delegate;
 
     /**
-     * Create a new {@link JodaTimePeriodRandomizer}.
+     * Create a new {@link CharacterRandomizer}.
      */
-    public JodaTimePeriodRandomizer() {
+    public CharacterRandomizer() {
+        delegate = new StringRandomizer();
     }
 
     /**
-     * Create a new {@link JodaTimePeriodRandomizer}.
+     * Create a new {@link CharacterRandomizer}.
      *
-     * @param seed the initial seed
+     * @param seed initial seed
      */
-    public JodaTimePeriodRandomizer(long seed) {
-        super(seed);
+    public CharacterRandomizer(final long seed) {
+        delegate = new StringRandomizer(seed);
     }
 
     /**
-     * Create a new {@link JodaTimePeriodRandomizer}.
+     * Create a new {@link CharacterRandomizer}.
      *
-     * @return a new {@link JodaTimePeriodRandomizer}.
+     * @return a new {@link CharacterRandomizer}.
      */
-    public static JodaTimePeriodRandomizer aNewJodaTimePeriodRandomizer() {
-        return new JodaTimePeriodRandomizer();
+    public static CharacterRandomizer aNewCharacterRandomizer() {
+        return new CharacterRandomizer();
     }
 
     /**
-     * Create a new {@link JodaTimePeriodRandomizer}.
+     * Create a new {@link CharacterRandomizer}.
      *
-     * @param seed the initial seed
-     * @return a new {@link JodaTimePeriodRandomizer}.
+     * @param seed initial seed
+     * @return a new {@link CharacterRandomizer}.
      */
-    public static JodaTimePeriodRandomizer aNewJodaTimePeriodRandomizer(final long seed) {
-        return new JodaTimePeriodRandomizer(seed);
+    public static CharacterRandomizer aNewCharacterRandomizer(final long seed) {
+        return new CharacterRandomizer(seed);
     }
-    
+
     @Override
-    public Period getRandomValue() {
-        return new Period(abs(aNewIntegerRandomizer().getRandomValue()));
+    public Character getRandomValue() {
+        return delegate.getRandomValue().charAt(0);
     }
 }

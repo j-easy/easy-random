@@ -21,33 +21,64 @@
  *   OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  *   THE SOFTWARE.
  */
+
 package io.github.benas.randombeans.randomizers.time;
 
 import io.github.benas.randombeans.api.Randomizer;
+import io.github.benas.randombeans.randomizers.range.DateRangeRandomizer;
 
-import java.time.Instant;
 import java.util.Date;
 
+import static io.github.benas.randombeans.util.Constants.IN_TEN_YEARS;
+import static io.github.benas.randombeans.util.Constants.TEN_YEARS_AGO;
+import static io.github.benas.randombeans.util.DateUtils.toDate;
+
 /**
- * A {@link Randomizer} that generates random {@link Instant}.
+ * Generate a random {@link Date}.
  *
  * @author Mahmoud Ben Hassine (mahmoud.benhassine@icloud.com)
  */
-public class InstantRandomizer implements Randomizer<Instant> {
+public class DateRandomizer implements Randomizer<Date> {
 
-    DateRandomizer dateRandomizer;
+    private DateRangeRandomizer delegate;
 
-    public InstantRandomizer() {
-        dateRandomizer = new DateRandomizer();
+    /**
+     * Create a new {@link DateRandomizer}.
+     */
+    public DateRandomizer() {
+        delegate = new DateRangeRandomizer(toDate(TEN_YEARS_AGO), toDate(IN_TEN_YEARS));
     }
 
-    public InstantRandomizer(final long seed) {
-        dateRandomizer = new DateRandomizer(seed);
+    /**
+     * Create a new {@link DateRandomizer}.
+     *
+     * @param seed initial seed
+     */
+    public DateRandomizer(final long seed) {
+        delegate = new DateRangeRandomizer(toDate(TEN_YEARS_AGO), toDate(IN_TEN_YEARS), seed);
+    }
+
+    /**
+     * Create a new {@link DateRandomizer}.
+     *
+     * @return a new {@link DateRandomizer}.
+     */
+    public static DateRandomizer aNewDateRandomizer() {
+        return new DateRandomizer();
+    }
+
+    /**
+     * Create a new {@link DateRandomizer}.
+     *
+     * @param seed initial seed
+     * @return a new {@link DateRandomizer}.
+     */
+    public static DateRandomizer aNewDateRandomizer(final long seed) {
+        return new DateRandomizer(seed);
     }
 
     @Override
-    public Instant getRandomValue() {
-        Date randomDate = dateRandomizer.getRandomValue();
-        return Instant.ofEpochMilli(randomDate.getTime());
+    public Date getRandomValue() {
+        return delegate.getRandomValue();
     }
 }

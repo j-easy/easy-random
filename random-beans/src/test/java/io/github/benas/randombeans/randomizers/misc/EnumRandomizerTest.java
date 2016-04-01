@@ -21,33 +21,32 @@
  *   OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  *   THE SOFTWARE.
  */
-package io.github.benas.randombeans.randomizers.time;
+
+package io.github.benas.randombeans.randomizers.misc;
 
 import io.github.benas.randombeans.api.Randomizer;
+import org.junit.Before;
+import org.junit.Test;
 
-import java.time.Instant;
-import java.util.Date;
+import static java.util.Arrays.asList;
+import static org.assertj.core.api.Assertions.assertThat;
 
-/**
- * A {@link Randomizer} that generates random {@link Instant}.
- *
- * @author Mahmoud Ben Hassine (mahmoud.benhassine@icloud.com)
- */
-public class InstantRandomizer implements Randomizer<Instant> {
+public class EnumRandomizerTest {
 
-    DateRandomizer dateRandomizer;
+    private Randomizer<Enum<Gender>> randomizer;
 
-    public InstantRandomizer() {
-        dateRandomizer = new DateRandomizer();
+    @Before
+    public void setUp() {
+        randomizer = new EnumRandomizer<>(Gender.class);
     }
 
-    public InstantRandomizer(final long seed) {
-        dateRandomizer = new DateRandomizer(seed);
+    @Test
+    public void testGetRandomValue() {
+        Enum<Gender> value = randomizer.getRandomValue();
+        assertThat(value).isIn(asList(Gender.values()));
     }
 
-    @Override
-    public Instant getRandomValue() {
-        Date randomDate = dateRandomizer.getRandomValue();
-        return Instant.ofEpochMilli(randomDate.getTime());
+    private enum Gender {
+        MALE, FEMALE
     }
 }

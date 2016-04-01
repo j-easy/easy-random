@@ -27,9 +27,9 @@ package io.github.benas.randombeans.validation;
 import io.github.benas.randombeans.annotation.Priority;
 import io.github.benas.randombeans.api.Randomizer;
 import io.github.benas.randombeans.api.RandomizerRegistry;
-import io.github.benas.randombeans.randomizers.ConstantRandomizer;
-import io.github.benas.randombeans.randomizers.NullRandomizer;
-import io.github.benas.randombeans.randomizers.StringDelegatingRandomizer;
+import io.github.benas.randombeans.randomizers.misc.ConstantRandomizer;
+import io.github.benas.randombeans.randomizers.misc.NullRandomizer;
+import io.github.benas.randombeans.randomizers.text.StringDelegatingRandomizer;
 import io.github.benas.randombeans.randomizers.range.*;
 import io.github.benas.randombeans.util.Constants;
 

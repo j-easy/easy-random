@@ -26,7 +26,7 @@ package io.github.benas.randombeans;
 
 import io.github.benas.randombeans.api.ObjectGenerationException;
 import io.github.benas.randombeans.api.Randomizer;
-import io.github.benas.randombeans.randomizers.SkipRandomizer;
+import io.github.benas.randombeans.randomizers.misc.SkipRandomizer;
 
 import java.lang.reflect.Field;
 import java.lang.reflect.Type;

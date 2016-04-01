@@ -21,33 +21,26 @@
  *   OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  *   THE SOFTWARE.
  */
-package io.github.benas.randombeans.randomizers.time;
 
-import io.github.benas.randombeans.api.Randomizer;
+package io.github.benas.randombeans.randomizers.misc;
 
-import java.time.Instant;
-import java.util.Date;
+import org.junit.Before;
+import org.junit.Test;
 
-/**
- * A {@link Randomizer} that generates random {@link Instant}.
- *
- * @author Mahmoud Ben Hassine (mahmoud.benhassine@icloud.com)
- */
-public class InstantRandomizer implements Randomizer<Instant> {
+import static org.assertj.core.api.Assertions.assertThat;
 
-    DateRandomizer dateRandomizer;
+public class SkipRandomizerTest {
 
-    public InstantRandomizer() {
-        dateRandomizer = new DateRandomizer();
+    private SkipRandomizer skipRandomizer;
+
+    @Before
+    public void setUp() {
+        skipRandomizer = new SkipRandomizer();
     }
 
-    public InstantRandomizer(final long seed) {
-        dateRandomizer = new DateRandomizer(seed);
+    @Test
+    public void generatedValueShouldBeNull() {
+        assertThat(skipRandomizer.getRandomValue()).isNull();
     }
 
-    @Override
-    public Instant getRandomValue() {
-        Date randomDate = dateRandomizer.getRandomValue();
-        return Instant.ofEpochMilli(randomDate.getTime());
-    }
 }

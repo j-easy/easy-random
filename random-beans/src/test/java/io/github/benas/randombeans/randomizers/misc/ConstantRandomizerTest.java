@@ -21,33 +21,33 @@
  *   OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  *   THE SOFTWARE.
  */
-package io.github.benas.randombeans.randomizers.time;
 
-import io.github.benas.randombeans.api.Randomizer;
+package io.github.benas.randombeans.randomizers.misc;
 
-import java.time.Instant;
-import java.util.Date;
+import io.github.benas.randombeans.randomizers.AbstractRandomizerTest;
+import org.junit.Before;
+import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.mockito.Mock;
+import org.mockito.runners.MockitoJUnitRunner;
 
-/**
- * A {@link Randomizer} that generates random {@link Instant}.
- *
- * @author Mahmoud Ben Hassine (mahmoud.benhassine@icloud.com)
- */
-public class InstantRandomizer implements Randomizer<Instant> {
+import static org.assertj.core.api.Assertions.assertThat;
 
-    DateRandomizer dateRandomizer;
+@RunWith(MockitoJUnitRunner.class)
+public class ConstantRandomizerTest extends AbstractRandomizerTest<Object> {
 
-    public InstantRandomizer() {
-        dateRandomizer = new DateRandomizer();
+    @Mock
+    private Object object;
+
+    @Before
+    public void setUp() throws Exception {
+        randomizer = ConstantRandomizer.aNewConstantRandomizer(object);
     }
 
-    public InstantRandomizer(final long seed) {
-        dateRandomizer = new DateRandomizer(seed);
-    }
+    @Test
+    public void shouldAlwaysGenerateTheSameValue() {
+        Object actual = randomizer.getRandomValue();
 
-    @Override
-    public Instant getRandomValue() {
-        Date randomDate = dateRandomizer.getRandomValue();
-        return Instant.ofEpochMilli(randomDate.getTime());
+        assertThat(actual).isEqualTo(object);
     }
 }

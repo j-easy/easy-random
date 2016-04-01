@@ -22,57 +22,58 @@
  *   THE SOFTWARE.
  */
 
-package io.github.benas.randombeans.randomizers.jodatime;
+package io.github.benas.randombeans.randomizers.number;
 
 import io.github.benas.randombeans.api.Randomizer;
-import org.joda.time.Period;
 
-import static io.github.benas.randombeans.randomizers.number.IntegerRandomizer.aNewIntegerRandomizer;
-import static java.lang.Math.abs;
+import java.math.BigDecimal;
 
 /**
- * A {@link Randomizer} that generates random {@link Period}.
+ * Generate a random {@link BigDecimal}.
  *
- * @author Nikola Milivojevic (0dziga0@gmail.com)
+ * @author Mahmoud Ben Hassine (mahmoud.benhassine@icloud.com)
  */
-public class JodaTimePeriodRandomizer extends JodaTimeAbstractRandomizer<Period> {
+public class BigDecimalRandomizer implements Randomizer<BigDecimal> {
+
+    private DoubleRandomizer delegate;
 
     /**
-     * Create a new {@link JodaTimePeriodRandomizer}.
+     * Create a new {@link BigDecimalRandomizer}.
      */
-    public JodaTimePeriodRandomizer() {
+    public BigDecimalRandomizer() {
+        delegate = new DoubleRandomizer();
     }
 
     /**
-     * Create a new {@link JodaTimePeriodRandomizer}.
+     * Create a new {@link BigDecimalRandomizer}.
      *
-     * @param seed the initial seed
+     * @param seed initial seed
      */
-    public JodaTimePeriodRandomizer(long seed) {
-        super(seed);
+    public BigDecimalRandomizer(final long seed) {
+        delegate = new DoubleRandomizer(seed);
     }
 
     /**
-     * Create a new {@link JodaTimePeriodRandomizer}.
+     * Create a new {@link BigDecimalRandomizer}.
      *
-     * @return a new {@link JodaTimePeriodRandomizer}.
+     * @return a new {@link BigDecimalRandomizer}.
      */
-    public static JodaTimePeriodRandomizer aNewJodaTimePeriodRandomizer() {
-        return new JodaTimePeriodRandomizer();
+    public static BigDecimalRandomizer aNewBigDecimalRandomizer() {
+        return new BigDecimalRandomizer();
     }
 
     /**
-     * Create a new {@link JodaTimePeriodRandomizer}.
+     * Create a new {@link BigDecimalRandomizer}.
      *
-     * @param seed the initial seed
-     * @return a new {@link JodaTimePeriodRandomizer}.
+     * @param seed initial seed
+     * @return a new {@link BigDecimalRandomizer}.
      */
-    public static JodaTimePeriodRandomizer aNewJodaTimePeriodRandomizer(final long seed) {
-        return new JodaTimePeriodRandomizer(seed);
+    public static BigDecimalRandomizer aNewBigDecimalRandomizer(final long seed) {
+        return new BigDecimalRandomizer(seed);
     }
     
     @Override
-    public Period getRandomValue() {
-        return new Period(abs(aNewIntegerRandomizer().getRandomValue()));
+    public BigDecimal getRandomValue() {
+        return new BigDecimal(delegate.getRandomValue());
     }
 }

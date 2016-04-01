@@ -21,33 +21,31 @@
  *   OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  *   THE SOFTWARE.
  */
-package io.github.benas.randombeans.randomizers.time;
 
-import io.github.benas.randombeans.api.Randomizer;
+package io.github.benas.randombeans.randomizers.net;
 
-import java.time.Instant;
-import java.util.Date;
+import io.github.benas.randombeans.randomizers.AbstractRandomizerTest;
+import org.junit.Before;
+import org.junit.Test;
 
-/**
- * A {@link Randomizer} that generates random {@link Instant}.
- *
- * @author Mahmoud Ben Hassine (mahmoud.benhassine@icloud.com)
- */
-public class InstantRandomizer implements Randomizer<Instant> {
+import java.net.MalformedURLException;
+import java.net.URL;
 
-    DateRandomizer dateRandomizer;
+import static org.assertj.core.api.Assertions.assertThat;
 
-    public InstantRandomizer() {
-        dateRandomizer = new DateRandomizer();
+public class UrlRandomizerTest extends AbstractRandomizerTest<URL> {
+
+    @Before
+    public void setUp() throws Exception {
+        randomizer = UrlRandomizer.aNewUrlRandomizer(SEED);
     }
 
-    public InstantRandomizer(final long seed) {
-        dateRandomizer = new DateRandomizer(seed);
+    @Test
+    public void shouldGenerateTheSameValueForTheSameSeed() throws MalformedURLException {
+        URL actual = randomizer.getRandomValue();
+        URL expected = new URL("http://www.google.com");
+
+        assertThat(actual).isEqualTo(expected);
     }
 
-    @Override
-    public Instant getRandomValue() {
-        Date randomDate = dateRandomizer.getRandomValue();
-        return Instant.ofEpochMilli(randomDate.getTime());
-    }
 }

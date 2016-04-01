@@ -22,57 +22,56 @@
  *   THE SOFTWARE.
  */
 
-package io.github.benas.randombeans.randomizers.jodatime;
+package io.github.benas.randombeans.randomizers.number;
 
 import io.github.benas.randombeans.api.Randomizer;
-import org.joda.time.Period;
-
-import static io.github.benas.randombeans.randomizers.number.IntegerRandomizer.aNewIntegerRandomizer;
-import static java.lang.Math.abs;
 
 /**
- * A {@link Randomizer} that generates random {@link Period}.
+ * Generate a random {@link Byte}.
  *
- * @author Nikola Milivojevic (0dziga0@gmail.com)
+ * @author Mahmoud Ben Hassine (mahmoud.benhassine@icloud.com)
  */
-public class JodaTimePeriodRandomizer extends JodaTimeAbstractRandomizer<Period> {
+public class ByteRandomizer implements Randomizer<Byte> {
+
+    private IntegerRandomizer delegate;
 
     /**
-     * Create a new {@link JodaTimePeriodRandomizer}.
+     * Create a new {@link ByteRandomizer}.
      */
-    public JodaTimePeriodRandomizer() {
+    public ByteRandomizer() {
+        delegate = new IntegerRandomizer();
     }
 
     /**
-     * Create a new {@link JodaTimePeriodRandomizer}.
+     * Create a new {@link ByteRandomizer}.
      *
-     * @param seed the initial seed
+     * @param seed initial seed
      */
-    public JodaTimePeriodRandomizer(long seed) {
-        super(seed);
+    public ByteRandomizer(final long seed) {
+        delegate = new IntegerRandomizer(seed);
     }
 
     /**
-     * Create a new {@link JodaTimePeriodRandomizer}.
+     * Create a new {@link ByteRandomizer}.
      *
-     * @return a new {@link JodaTimePeriodRandomizer}.
+     * @return a new {@link ByteRandomizer}.
      */
-    public static JodaTimePeriodRandomizer aNewJodaTimePeriodRandomizer() {
-        return new JodaTimePeriodRandomizer();
+    public static ByteRandomizer aNewByteRandomizer() {
+        return new ByteRandomizer();
     }
 
     /**
-     * Create a new {@link JodaTimePeriodRandomizer}.
+     * Create a new {@link ByteRandomizer}.
      *
-     * @param seed the initial seed
-     * @return a new {@link JodaTimePeriodRandomizer}.
+     * @param seed initial seed
+     * @return a new {@link ByteRandomizer}.
      */
-    public static JodaTimePeriodRandomizer aNewJodaTimePeriodRandomizer(final long seed) {
-        return new JodaTimePeriodRandomizer(seed);
+    public static ByteRandomizer aNewByteRandomizer(final long seed) {
+        return new ByteRandomizer(seed);
     }
-    
+
     @Override
-    public Period getRandomValue() {
-        return new Period(abs(aNewIntegerRandomizer().getRandomValue()));
+    public Byte getRandomValue() {
+        return delegate.getRandomValue().byteValue();
     }
 }

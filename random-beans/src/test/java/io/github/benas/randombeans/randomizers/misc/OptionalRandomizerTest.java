@@ -21,33 +21,39 @@
  *   OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  *   THE SOFTWARE.
  */
-package io.github.benas.randombeans.randomizers.time;
+
+package io.github.benas.randombeans.randomizers.misc;
 
 import io.github.benas.randombeans.api.Randomizer;
+import org.junit.Before;
+import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.mockito.Mock;
+import org.mockito.runners.MockitoJUnitRunner;
 
-import java.time.Instant;
-import java.util.Date;
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.mockito.Mockito.when;
 
-/**
- * A {@link Randomizer} that generates random {@link Instant}.
- *
- * @author Mahmoud Ben Hassine (mahmoud.benhassine@icloud.com)
- */
-public class InstantRandomizer implements Randomizer<Instant> {
+@RunWith(MockitoJUnitRunner.class)
+public class OptionalRandomizerTest {
 
-    DateRandomizer dateRandomizer;
+    public static final String NAME = "foo";
 
-    public InstantRandomizer() {
-        dateRandomizer = new DateRandomizer();
+    @Mock
+    private Randomizer<String> randomizer;
+
+    private OptionalRandomizer<String> optionalRandomizer;
+
+    @Before
+    public void setUp() {
+        when(randomizer.getRandomValue()).thenReturn(NAME);
+        optionalRandomizer = new OptionalRandomizer<>(randomizer, 100);
     }
 
-    public InstantRandomizer(final long seed) {
-        dateRandomizer = new DateRandomizer(seed);
+    @Test
+    public void whenOptionalPercentIsOneHundredThenShouldGenerateValue()  {
+        assertThat(optionalRandomizer.getRandomValue())
+                .isEqualTo(NAME);
     }
 
-    @Override
-    public Instant getRandomValue() {
-        Date randomDate = dateRandomizer.getRandomValue();
-        return Instant.ofEpochMilli(randomDate.getTime());
-    }
 }

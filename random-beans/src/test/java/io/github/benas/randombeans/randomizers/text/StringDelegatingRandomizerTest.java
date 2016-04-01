@@ -21,33 +21,39 @@
  *   OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  *   THE SOFTWARE.
  */
-package io.github.benas.randombeans.randomizers.time;
+package io.github.benas.randombeans.randomizers.text;
 
 import io.github.benas.randombeans.api.Randomizer;
+import org.junit.Before;
+import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.mockito.Mock;
+import org.mockito.runners.MockitoJUnitRunner;
 
-import java.time.Instant;
-import java.util.Date;
+import static java.lang.String.valueOf;
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.mockito.Mockito.when;
 
-/**
- * A {@link Randomizer} that generates random {@link Instant}.
- *
- * @author Mahmoud Ben Hassine (mahmoud.benhassine@icloud.com)
- */
-public class InstantRandomizer implements Randomizer<Instant> {
+@RunWith(MockitoJUnitRunner.class)
+public class StringDelegatingRandomizerTest {
 
-    DateRandomizer dateRandomizer;
+    @Mock
+    private Randomizer<Object> delegate;
+    @Mock
+    private Object object;
 
-    public InstantRandomizer() {
-        dateRandomizer = new DateRandomizer();
+    private StringDelegatingRandomizer stringDelegatingRandomizer;
+
+    @Before
+    public void setUp() {
+        stringDelegatingRandomizer = new StringDelegatingRandomizer(delegate);
+        when(delegate.getRandomValue()).thenReturn(object);
     }
 
-    public InstantRandomizer(final long seed) {
-        dateRandomizer = new DateRandomizer(seed);
-    }
+    @Test
+    public void testGetRandomValue() {
+        String actual = stringDelegatingRandomizer.getRandomValue();
 
-    @Override
-    public Instant getRandomValue() {
-        Date randomDate = dateRandomizer.getRandomValue();
-        return Instant.ofEpochMilli(randomDate.getTime());
+        assertThat(actual).isEqualTo(valueOf(object));
     }
 }

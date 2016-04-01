@@ -30,7 +30,7 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
 
-import static io.github.benas.randombeans.randomizers.ByteRandomizer.aNewByteRandomizer;
+import static io.github.benas.randombeans.randomizers.number.ByteRandomizer.aNewByteRandomizer;
 import static java.lang.Math.abs;
 
 /**

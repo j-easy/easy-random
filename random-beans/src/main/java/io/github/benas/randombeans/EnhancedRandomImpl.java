@@ -28,7 +28,7 @@ import io.github.benas.randombeans.api.EnhancedRandom;
 import io.github.benas.randombeans.api.ObjectGenerationException;
 import io.github.benas.randombeans.api.Randomizer;
 import io.github.benas.randombeans.api.RandomizerRegistry;
-import io.github.benas.randombeans.randomizers.EnumRandomizer;
+import io.github.benas.randombeans.randomizers.misc.EnumRandomizer;
 
 import java.lang.reflect.Field;
 import java.util.ArrayList;

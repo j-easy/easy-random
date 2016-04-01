@@ -22,47 +22,29 @@
  *   THE SOFTWARE.
  */
 
-package io.github.benas.randombeans.randomizers.collection;
+package io.github.benas.randombeans.randomizers.misc;
 
 import io.github.benas.randombeans.api.Randomizer;
 
-import java.util.Collection;
-import java.util.Objects;
-
-import static io.github.benas.randombeans.randomizers.number.ByteRandomizer.aNewByteRandomizer;
-import static java.lang.Math.abs;
-
 /**
- * A base class for collection randomizers.
+ * A randomizer used to skip fields from being populated.
+ * This is an implementation of the Null Object Pattern
  *
- * @param <T> the type of elements in the collection
  * @author Mahmoud Ben Hassine (mahmoud.benhassine@icloud.com)
  */
-public abstract class CollectionRandomizer<T> implements Randomizer<Collection<T>> {
+public class SkipRandomizer implements Randomizer<Object> {
 
-    protected int nbElements;
-
-    protected Randomizer<T> delegate;
-
-    protected CollectionRandomizer(final Randomizer<T> delegate) {
-        this(delegate, abs(aNewByteRandomizer().getRandomValue()));
+    /**
+     * Create a new {@link SkipRandomizer}.
+     *
+     * @return a new {@link SkipRandomizer}.
+     */
+    public static SkipRandomizer aNewSkipRandomizer() {
+        return new SkipRandomizer();
     }
 
-    protected CollectionRandomizer(final Randomizer<T> delegate, final int nbElements) {
-        checkArguments(delegate, nbElements);
-        this.nbElements = nbElements;
-        this.delegate = delegate;
+    @Override
+    public Object getRandomValue() {
+        return null;
     }
-
-    protected void checkArguments(final Randomizer<T> delegate, final int nbElements) {
-        Objects.requireNonNull(delegate, "The delegate randomizer must not be null");
-        if (nbElements < 1) {
-            throw new IllegalArgumentException("The number of elements to generate must be >= 1");
-        }
-    }
-
-    protected T getRandomElement() {
-        return delegate.getRandomValue();
-    }
-
 }

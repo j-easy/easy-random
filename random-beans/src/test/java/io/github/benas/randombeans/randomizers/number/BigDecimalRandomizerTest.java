@@ -21,33 +21,29 @@
  *   OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  *   THE SOFTWARE.
  */
-package io.github.benas.randombeans.randomizers.time;
 
-import io.github.benas.randombeans.api.Randomizer;
+package io.github.benas.randombeans.randomizers.number;
 
-import java.time.Instant;
-import java.util.Date;
+import io.github.benas.randombeans.randomizers.AbstractRandomizerTest;
+import org.junit.Before;
+import org.junit.Test;
 
-/**
- * A {@link Randomizer} that generates random {@link Instant}.
- *
- * @author Mahmoud Ben Hassine (mahmoud.benhassine@icloud.com)
- */
-public class InstantRandomizer implements Randomizer<Instant> {
+import java.math.BigDecimal;
 
-    DateRandomizer dateRandomizer;
+import static org.assertj.core.api.Assertions.assertThat;
 
-    public InstantRandomizer() {
-        dateRandomizer = new DateRandomizer();
+public class BigDecimalRandomizerTest extends AbstractRandomizerTest<BigDecimal> {
+
+    @Before
+    public void setUp() throws Exception {
+        randomizer = BigDecimalRandomizer.aNewBigDecimalRandomizer(SEED);
     }
 
-    public InstantRandomizer(final long seed) {
-        dateRandomizer = new DateRandomizer(seed);
-    }
+    @Test
+    public void shouldGenerateTheSameValueForTheSameSeed() {
+        BigDecimal actual = randomizer.getRandomValue();
+        BigDecimal expected = new BigDecimal(0.723174202997146853277854461339302361011505126953125);
 
-    @Override
-    public Instant getRandomValue() {
-        Date randomDate = dateRandomizer.getRandomValue();
-        return Instant.ofEpochMilli(randomDate.getTime());
+        assertThat(actual).isEqualTo(expected);
     }
 }

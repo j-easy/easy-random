@@ -21,33 +21,31 @@
  *   OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  *   THE SOFTWARE.
  */
+
 package io.github.benas.randombeans.randomizers.time;
 
-import io.github.benas.randombeans.api.Randomizer;
+import io.github.benas.randombeans.randomizers.AbstractRandomizerTest;
+import org.junit.Before;
+import org.junit.Test;
 
-import java.time.Instant;
+import java.util.Calendar;
 import java.util.Date;
 
-/**
- * A {@link Randomizer} that generates random {@link Instant}.
- *
- * @author Mahmoud Ben Hassine (mahmoud.benhassine@icloud.com)
- */
-public class InstantRandomizer implements Randomizer<Instant> {
+import static org.assertj.core.api.Assertions.assertThat;
 
-    DateRandomizer dateRandomizer;
+public class CalendarRandomizerTest extends AbstractRandomizerTest<Calendar> {
 
-    public InstantRandomizer() {
-        dateRandomizer = new DateRandomizer();
+    @Before
+    public void setUp() throws Exception {
+        randomizer = CalendarRandomizer.aNewCalendarRandomizer(SEED);
     }
 
-    public InstantRandomizer(final long seed) {
-        dateRandomizer = new DateRandomizer(seed);
-    }
+    @Test
+    public void shouldGenerateTheSameValueForTheSameSeed() {
+        Calendar actual = randomizer.getRandomValue();
+        Calendar expected = Calendar.getInstance();
+        expected.setTime(new Date(actual.getTime().getTime()));
 
-    @Override
-    public Instant getRandomValue() {
-        Date randomDate = dateRandomizer.getRandomValue();
-        return Instant.ofEpochMilli(randomDate.getTime());
+        assertThat(actual).isEqualTo(expected);
     }
 }

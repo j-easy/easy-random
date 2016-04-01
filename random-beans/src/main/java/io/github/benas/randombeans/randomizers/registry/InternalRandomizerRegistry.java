@@ -27,7 +27,13 @@ package io.github.benas.randombeans.randomizers.registry;
 import io.github.benas.randombeans.annotation.Priority;
 import io.github.benas.randombeans.api.Randomizer;
 import io.github.benas.randombeans.api.RandomizerRegistry;
-import io.github.benas.randombeans.randomizers.*;
+import io.github.benas.randombeans.randomizers.misc.BooleanRandomizer;
+import io.github.benas.randombeans.randomizers.net.UriRandomizer;
+import io.github.benas.randombeans.randomizers.net.UrlRandomizer;
+import io.github.benas.randombeans.randomizers.number.*;
+import io.github.benas.randombeans.randomizers.text.CharacterRandomizer;
+import io.github.benas.randombeans.randomizers.text.StringRandomizer;
+import io.github.benas.randombeans.randomizers.time.*;
 
 import java.lang.reflect.Field;
 import java.math.BigDecimal;

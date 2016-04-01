@@ -27,7 +27,7 @@ package io.github.benas.randombeans;
 import io.github.benas.randombeans.api.EnhancedRandom;
 import io.github.benas.randombeans.api.Randomizer;
 import io.github.benas.randombeans.api.RandomizerRegistry;
-import io.github.benas.randombeans.randomizers.SkipRandomizer;
+import io.github.benas.randombeans.randomizers.misc.SkipRandomizer;
 import io.github.benas.randombeans.randomizers.registry.CustomRandomizerRegistry;
 
 import java.util.*;

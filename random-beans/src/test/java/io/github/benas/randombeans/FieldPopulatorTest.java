@@ -26,7 +26,7 @@ package io.github.benas.randombeans;
 
 import io.github.benas.randombeans.api.Randomizer;
 import io.github.benas.randombeans.beans.*;
-import io.github.benas.randombeans.randomizers.SkipRandomizer;
+import io.github.benas.randombeans.randomizers.misc.SkipRandomizer;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;

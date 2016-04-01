@@ -25,7 +25,7 @@
 package io.github.benas.randombeans.randomizers.range;
 
 import io.github.benas.randombeans.api.Randomizer;
-import io.github.benas.randombeans.randomizers.StringRandomizer;
+import io.github.benas.randombeans.randomizers.text.StringRandomizer;
 
 import static java.lang.Math.abs;
 
