@@ -22,7 +22,7 @@
  *   THE SOFTWARE.
  */
 
-package io.github.benas.randombeans.randomizers.time.beans;
+package io.github.benas.randombeans.beans;
 
 import java.time.*;
 

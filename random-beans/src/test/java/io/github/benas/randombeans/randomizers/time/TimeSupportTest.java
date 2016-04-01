@@ -26,7 +26,7 @@ package io.github.benas.randombeans.randomizers.time;
 
 import io.github.benas.randombeans.EnhancedRandomBuilder;
 import io.github.benas.randombeans.api.EnhancedRandom;
-import io.github.benas.randombeans.randomizers.time.beans.TimeBean;
+import io.github.benas.randombeans.beans.TimeBean;
 import org.junit.Before;
 import org.junit.Test;
 
