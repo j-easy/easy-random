@@ -28,6 +28,8 @@ import io.github.benas.randombeans.api.EnhancedRandom;
 import io.github.benas.randombeans.api.ObjectGenerationException;
 import io.github.benas.randombeans.api.Randomizer;
 import io.github.benas.randombeans.beans.*;
+import io.github.benas.randombeans.randomizers.misc.ConstantRandomizer;
+
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -36,6 +38,7 @@ import org.mockito.runners.MockitoJUnitRunner;
 
 import java.util.Date;
 import java.util.List;
+import java.util.function.Supplier;
 
 import static io.github.benas.randombeans.EnhancedRandomBuilder.aNewEnhancedRandomBuilder;
 import static io.github.benas.randombeans.FieldDefinitionBuilder.field;
@@ -130,6 +133,49 @@ public class EnhancedRandomImplTest {
 
         assertThat(person).isNotNull();
         assertThat(person.getName()).isEqualTo(NAME);
+    }
+
+    @Test
+    public void generatedBeansWithCustomRandomizerSupplierShouldBeCorrectlyPopulated() {
+        FieldDefinition<?, ?> nameFieldDefinition = field().named("name").ofType(String.class).inClass(Human.class).get();
+        enhancedRandom = aNewEnhancedRandomBuilder().randomize(nameFieldDefinition, new Supplier<Randomizer<String>>() {
+                    private boolean firstCall = true;
+
+                    public Randomizer<String> get() {
+                        if (firstCall) {
+                            firstCall = false;
+                            return new ConstantRandomizer<String>(NAME);
+                        }
+                        return new ConstantRandomizer<String>(NAME + NAME);
+                    }
+                }).build();
+
+        Human firstHuman = enhancedRandom.nextObject(Human.class);
+
+        assertThat(firstHuman).isNotNull();
+        assertThat(firstHuman.getName()).isEqualTo(NAME);
+
+        Person secondHuman = enhancedRandom.nextObject(Person.class);
+
+        assertThat(secondHuman).isNotNull();
+        assertThat(secondHuman.getName()).isEqualTo(NAME + NAME);
+    }
+
+    @Test
+    public void customRandomizerSupplierShouldHavePrecedenceOverCustomRandomizer() {
+        FieldDefinition<?, ?> nameFieldDefinition = field().named("name").ofType(String.class).inClass(Human.class).get();
+        enhancedRandom = aNewEnhancedRandomBuilder()
+            .randomize(nameFieldDefinition, new Supplier<Randomizer<String>>() {
+                    public Randomizer<String> get() {
+                        return new ConstantRandomizer<String>(NAME);
+                    }
+                })
+            .randomize(nameFieldDefinition, new ConstantRandomizer<String>("abc")).build();
+
+        Human firstHuman = enhancedRandom.nextObject(Human.class);
+
+        assertThat(firstHuman).isNotNull();
+        assertThat(firstHuman.getName()).isEqualTo(NAME);
     }
 
     @Test

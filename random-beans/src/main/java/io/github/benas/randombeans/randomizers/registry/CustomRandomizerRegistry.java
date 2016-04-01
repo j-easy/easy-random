@@ -32,6 +32,7 @@ import io.github.benas.randombeans.api.RandomizerRegistry;
 import java.lang.reflect.Field;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.function.Supplier;
 
 /**
  * Registry of user defined randomizers.
@@ -42,6 +43,7 @@ import java.util.Map;
 public class CustomRandomizerRegistry implements RandomizerRegistry {
 
     private Map<FieldDefinition<?, ?>, Randomizer<?>> customRandomizersRegistry = new HashMap<>();
+    private Map<FieldDefinition<?, ?>, Supplier<?>> customRandomizersSupplierRegistry = new HashMap<>();
 
     /**
      * Set the initial seed for all randomizers of the registry
@@ -55,7 +57,13 @@ public class CustomRandomizerRegistry implements RandomizerRegistry {
 
     @Override
     public Randomizer<?> getRandomizer(Field field) {
-        return customRandomizersRegistry.get(new FieldDefinition<>(field.getName(), field.getType(), field.getDeclaringClass()));
+        FieldDefinition<?, ?> fieldDefinition = new FieldDefinition<>(field.getName(), field.getType(), field.getDeclaringClass());
+        @SuppressWarnings("unchecked")
+        Supplier<Randomizer<?>> randomizerSupplier = (Supplier<Randomizer<?>>) customRandomizersSupplierRegistry.get(fieldDefinition);
+        if (randomizerSupplier != null) {
+          return randomizerSupplier.get();
+        }
+        return customRandomizersRegistry.get(fieldDefinition);
     }
 
     @Override
@@ -66,5 +74,9 @@ public class CustomRandomizerRegistry implements RandomizerRegistry {
     public <T, F, R> void registerRandomizer(final String fieldName, final Class<F> fieldType, final Class<T> type, final Randomizer<R> randomizer) {
         customRandomizersRegistry.put(new FieldDefinition<>(fieldName, fieldType, type), randomizer);
     }
+
+    public <T, F, R> void registerRandomizerSupplier(final String fieldName, final Class<F> fieldType, final Class<T> type, final Supplier<Randomizer<R>> randomizerSupplier) {
+        customRandomizersSupplierRegistry.put(new FieldDefinition<>(fieldName, fieldType, type), randomizerSupplier);
+   }
 
 }
