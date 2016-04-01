@@ -78,6 +78,18 @@ public class EnhancedRandomBuilder {
     }
 
     /**
+     * Register a custom randomizer for a given type.
+     *
+     * @param type class of the type to randomize
+     * @param randomizer the custom {@link Randomizer} to use
+     * @return a pre configured {@link EnhancedRandomBuilder} instance
+     */
+    public <T, R> EnhancedRandomBuilder randomize(Class<T> type, Randomizer<R> randomizer) {
+        customRandomizerRegistry.registerRandomizer(type, randomizer);
+        return this;
+    }
+
+    /**
      * Exclude a field from being populated.
      *
      * @param fieldDefinition definition of the field to exclude
