@@ -28,6 +28,8 @@ import io.github.benas.randombeans.api.EnhancedRandom;
 import io.github.benas.randombeans.api.ObjectGenerationException;
 import io.github.benas.randombeans.api.Randomizer;
 import io.github.benas.randombeans.beans.*;
+import io.github.benas.randombeans.randomizers.misc.ConstantRandomizer;
+
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -130,6 +132,28 @@ public class EnhancedRandomImplTest {
 
         assertThat(person).isNotNull();
         assertThat(person.getName()).isEqualTo(NAME);
+    }
+
+    @Test
+    public void customRandomzierForTypesShouldBeUsedToPopulateObjects() {
+        enhancedRandom = aNewEnhancedRandomBuilder()
+                .randomize(String.class, new ConstantRandomizer<>("name"))
+                .build();
+
+        String string = enhancedRandom.nextObject(String.class);
+
+        assertThat(string).isEqualTo("name");
+    }
+
+    @Test
+    public void customRandomzierForTypesShouldBeUsedToPopulateFields() {
+        enhancedRandom = aNewEnhancedRandomBuilder()
+                .randomize(String.class, new ConstantRandomizer<>("name"))
+                .build();
+
+        Human human = enhancedRandom.nextObject(Human.class);
+
+        assertThat(human.getName()).isEqualTo("name");
     }
 
     @Test

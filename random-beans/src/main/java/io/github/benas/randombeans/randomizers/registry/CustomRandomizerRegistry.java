@@ -41,7 +41,8 @@ import java.util.Map;
 @Priority(-254)
 public class CustomRandomizerRegistry implements RandomizerRegistry {
 
-    private Map<FieldDefinition<?, ?>, Randomizer<?>> customRandomizersRegistry = new HashMap<>();
+    private Map<FieldDefinition<?, ?>, Randomizer<?>> customFieldRandomizersRegistry = new HashMap<>();
+    private Map<Class<?>, Randomizer<?>> customTypeRandomizersRegistry = new HashMap<>();
 
     /**
      * Set the initial seed for all randomizers of the registry
@@ -55,16 +56,22 @@ public class CustomRandomizerRegistry implements RandomizerRegistry {
 
     @Override
     public Randomizer<?> getRandomizer(Field field) {
-        return customRandomizersRegistry.get(new FieldDefinition<>(field.getName(), field.getType(), field.getDeclaringClass()));
+        Class<?> type = field.getType();
+        Randomizer<?> randomizer = customFieldRandomizersRegistry.get(new FieldDefinition<>(field.getName(), type, field.getDeclaringClass()));
+        return randomizer != null ? randomizer : customTypeRandomizersRegistry.get(type);
     }
 
     @Override
     public Randomizer<?> getRandomizer(Class<?> type) {
-        return null;
+        return customTypeRandomizersRegistry.get(type);
     }
 
     public <T, F, R> void registerRandomizer(final String fieldName, final Class<F> fieldType, final Class<T> type, final Randomizer<R> randomizer) {
-        customRandomizersRegistry.put(new FieldDefinition<>(fieldName, fieldType, type), randomizer);
+        customFieldRandomizersRegistry.put(new FieldDefinition<>(fieldName, fieldType, type), randomizer);
+    }
+
+    public <T, R> void registerRandomizer(final Class<T> type, final Randomizer<R> randomizer) {
+        customTypeRandomizersRegistry.put(type, randomizer);
     }
 
 }
