@@ -86,7 +86,6 @@ public class FieldDefinition<T, F> {
             return false;
         }
         return clazz.equals(that.clazz);
-
     }
 
     @Override
@@ -95,5 +94,10 @@ public class FieldDefinition<T, F> {
         result = 31 * result + type.hashCode();
         result = 31 * result + clazz.hashCode();
         return result;
+    }
+
+    @Override
+    public String toString() {
+        return "FieldDefinition [name=" + name + ", type=" + type + ", clazz=" + clazz + "]";
     }
 }
