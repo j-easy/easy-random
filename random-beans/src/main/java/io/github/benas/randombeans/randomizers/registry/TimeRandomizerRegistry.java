@@ -29,6 +29,7 @@ import io.github.benas.randombeans.randomizers.time.*;
 
 import java.lang.reflect.Field;
 import java.time.*;
+import java.util.GregorianCalendar;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -44,6 +45,7 @@ public class TimeRandomizerRegistry implements RandomizerRegistry {
     @Override
     public void setSeed(long seed) {
         randomizers.put(Duration.class, new DurationRandomizer(seed));
+        randomizers.put(GregorianCalendar.class, new GregorianCalendarRandomizer(seed));
         randomizers.put(Instant.class, new InstantRandomizer(seed));
         randomizers.put(LocalDate.class, new LocalDateRandomizer(seed));
         randomizers.put(LocalDateTime.class, new LocalDateTimeRandomizer(seed));
