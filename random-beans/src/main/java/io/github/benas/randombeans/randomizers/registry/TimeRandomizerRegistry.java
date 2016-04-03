@@ -32,6 +32,7 @@ import java.time.*;
 import java.util.GregorianCalendar;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.TimeZone;
 
 /**
  * A registry of randomizers for Java 8 JSR 310 types.
@@ -55,6 +56,7 @@ public class TimeRandomizerRegistry implements RandomizerRegistry {
         randomizers.put(OffsetDateTime.class, new OffsetDateTimeRandomizer(seed));
         randomizers.put(OffsetTime.class, new OffsetTimeRandomizer(seed));
         randomizers.put(Period.class, new PeriodRandomizer(seed));
+        randomizers.put(TimeZone.class, new TimeZoneRandomizer(seed));
         randomizers.put(YearMonth.class, new YearMonthRandomizer(seed));
         randomizers.put(Year.class, new YearRandomizer(seed));
         randomizers.put(ZonedDateTime.class, new ZonedDateTimeRandomizer(seed));
