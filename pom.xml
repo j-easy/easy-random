@@ -131,6 +131,14 @@
             <name>Rémi Alvergnat</name>
             <url>http://www.pragmasphere.com</url>
         </contributor>
+        <contributor>
+            <name>Fred Eckertson</name>
+            <url>https://github.com/feckertson</url>
+        </contributor>
+        <contributor>
+            <name>Pascal Schumacher</name>
+            <url>https://github.com/PascalSchumacher</url>
+        </contributor>
     </contributors>
 
     <dependencyManagement>
