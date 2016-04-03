@@ -31,7 +31,9 @@ import io.github.benas.randombeans.randomizers.misc.SkipRandomizer;
 import io.github.benas.randombeans.randomizers.registry.CustomRandomizerRegistry;
 
 import java.util.*;
+import java.util.function.Supplier;
 
+import static io.github.benas.randombeans.RandomizerProxy.asRandomizer;
 import static io.github.benas.randombeans.util.Constants.DEFAULT_SEED;
 
 /**
@@ -78,6 +80,18 @@ public class EnhancedRandomBuilder {
     }
 
     /**
+     * Register a supplier as randomizer for a given field.
+     *
+     * @param fieldDefinition definition of the field to randomize
+     * @param supplier the custom {@link Supplier} to use
+     * @return a pre configured {@link EnhancedRandomBuilder} instance
+     */
+    public <T, F, R> EnhancedRandomBuilder randomize(FieldDefinition<T, F> fieldDefinition, Supplier<R> supplier) {
+        customRandomizerRegistry.registerRandomizer(fieldDefinition.getName(), fieldDefinition.getType(), fieldDefinition.getClazz(), asRandomizer(supplier));
+        return this;
+    }
+
+    /**
      * Register a custom randomizer for a given type.
      *
      * @param type class of the type to randomize
@@ -86,6 +100,18 @@ public class EnhancedRandomBuilder {
      */
     public <T, R> EnhancedRandomBuilder randomize(Class<T> type, Randomizer<R> randomizer) {
         customRandomizerRegistry.registerRandomizer(type, randomizer);
+        return this;
+    }
+
+    /**
+     * Register a supplier as randomizer for a given type.
+     *
+     * @param type class of the type to randomize
+     * @param supplier the custom {@link Supplier} to use
+     * @return a pre configured {@link EnhancedRandomBuilder} instance
+     */
+    public <T, R> EnhancedRandomBuilder randomize(Class<T> type, Supplier<R> supplier) {
+        customRandomizerRegistry.registerRandomizer(type, asRandomizer(supplier));
         return this;
     }
 

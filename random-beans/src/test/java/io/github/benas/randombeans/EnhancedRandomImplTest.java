@@ -30,6 +30,7 @@ import io.github.benas.randombeans.api.Randomizer;
 import io.github.benas.randombeans.beans.*;
 import io.github.benas.randombeans.randomizers.misc.ConstantRandomizer;
 
+import org.assertj.core.api.Assertions;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -38,6 +39,7 @@ import org.mockito.runners.MockitoJUnitRunner;
 
 import java.util.Date;
 import java.util.List;
+import java.util.function.Supplier;
 
 import static io.github.benas.randombeans.EnhancedRandomBuilder.aNewEnhancedRandomBuilder;
 import static io.github.benas.randombeans.FieldDefinitionBuilder.field;
@@ -49,18 +51,22 @@ import static org.mockito.Mockito.when;
 @RunWith(MockitoJUnitRunner.class)
 public class EnhancedRandomImplTest {
 
-    private static final String NAME = "foo";
+    private static final String FOO = "foo";
     private static final long SEED = 123L;
 
     @Mock
     private Randomizer<String> randomizer;
+
+    @Mock
+    private Supplier<String> supplier;
 
     private EnhancedRandom enhancedRandom;
 
     @Before
     public void setUp() {
         enhancedRandom = aNewEnhancedRandomBuilder().build();
-        when(randomizer.getRandomValue()).thenReturn(NAME);
+        when(randomizer.getRandomValue()).thenReturn(FOO);
+        when(supplier.get()).thenReturn(FOO);
     }
 
     @Test
@@ -131,7 +137,7 @@ public class EnhancedRandomImplTest {
         Person person = enhancedRandom.nextObject(Person.class);
 
         assertThat(person).isNotNull();
-        assertThat(person.getName()).isEqualTo(NAME);
+        assertThat(person.getName()).isEqualTo(FOO);
     }
 
     @Test
@@ -253,6 +259,23 @@ public class EnhancedRandomImplTest {
         assertThat(actualString).isEqualTo(expectedString);
         assertThat(actualPerson).isEqualTo(expectedPerson);
         assertThat(actualInts).isEqualTo(expectedInts);
+    }
+
+    @Test
+    public void supplierShouldBehaveLikeRandomizer() throws Exception {
+        // Given
+        enhancedRandom = aNewEnhancedRandomBuilder().randomize(String.class, supplier).build(); // All string fields should be equal to FOO
+
+        // When
+        Person actual = enhancedRandom.nextObject(Person.class);
+
+        // Then
+        assertThat(actual).isNotNull();
+        assertThat(actual.getPhoneNumber()).isEqualTo(FOO);
+        assertThat(actual.getName()).isEqualTo(FOO);
+        assertThat(actual.getEmail()).isEqualTo(FOO);
+        assertThat(actual.getEmail()).isEqualTo(FOO);
+        assertThat(actual.getExcluded()).isNull();
     }
 
 
