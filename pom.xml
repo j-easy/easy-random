@@ -47,11 +47,11 @@
         <faker.version>0.7</faker.version>
         <assertj.version>3.4.0</assertj.version>
         <validation-api.version>1.1.0.Final</validation-api.version>
-        <joda-time.version>2.9.2</joda-time.version>
-        <spring-context.version>4.2.4.RELEASE</spring-context.version>
+        <joda-time.version>2.9.3</joda-time.version>
+        <spring-context.version>4.2.5.RELEASE</spring-context.version>
         <objenesis.version>2.2</objenesis.version>
         <fast-classpath-scanner.version>1.9.18</fast-classpath-scanner.version>
-        <hibernate-validator.version>5.2.3.Final</hibernate-validator.version>
+        <hibernate-validator.version>5.2.4.Final</hibernate-validator.version>
         <javax.el.version>2.2.6</javax.el.version>
         <mockito-core.version>1.10.19</mockito-core.version>
         <maven-javadoc-plugin.version>2.10.3</maven-javadoc-plugin.version>
