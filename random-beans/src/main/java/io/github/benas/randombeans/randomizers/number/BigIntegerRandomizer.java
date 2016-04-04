@@ -24,26 +24,22 @@
 
 package io.github.benas.randombeans.randomizers.number;
 
-import io.github.benas.randombeans.api.Randomizer;
+import io.github.benas.randombeans.randomizers.AbstractRandomizer;
 
 import java.math.BigInteger;
-
-import static java.lang.String.valueOf;
 
 /**
  * Generate a random {@link BigInteger}.
  *
  * @author Mahmoud Ben Hassine (mahmoud.benhassine@icloud.com)
  */
-public class BigIntegerRandomizer implements Randomizer<BigInteger> {
-
-    private IntegerRandomizer delegate;
+public class BigIntegerRandomizer extends AbstractRandomizer<BigInteger> {
 
     /**
      * Create a new {@link BigIntegerRandomizer}.
      */
     public BigIntegerRandomizer() {
-        delegate = new IntegerRandomizer();
+        super();
     }
 
     /**
@@ -52,7 +48,7 @@ public class BigIntegerRandomizer implements Randomizer<BigInteger> {
      * @param seed initial seed
      */
     public BigIntegerRandomizer(final long seed) {
-        delegate = new IntegerRandomizer(seed);
+        super(seed);
     }
 
     /**
@@ -73,9 +69,11 @@ public class BigIntegerRandomizer implements Randomizer<BigInteger> {
     public static BigIntegerRandomizer aNewBigIntegerRandomizer(final long seed) {
         return new BigIntegerRandomizer(seed);
     }
-    
+
     @Override
     public BigInteger getRandomValue() {
-        return new BigInteger(valueOf(delegate.getRandomValue()));
+        return new BigInteger(128, random);
     }
+
+
 }

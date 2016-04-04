@@ -42,7 +42,7 @@ public class BigIntegerRandomizerTest extends AbstractRandomizerTest<BigInteger>
     @Test
     public void shouldGenerateTheSameValueForTheSameSeed() {
         BigInteger actual = randomizer.getRandomValue();
-        BigInteger expected = new BigInteger("-1188957731");
+        BigInteger expected = new BigInteger("295011414634219278107705585431435293517");
 
         assertThat(actual).isEqualTo(expected);
     }
