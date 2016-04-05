@@ -24,6 +24,7 @@
 package io.github.benas.randombeans.randomizers.time;
 
 import io.github.benas.randombeans.api.Randomizer;
+import io.github.benas.randombeans.randomizers.misc.EnumRandomizer;
 import io.github.benas.randombeans.randomizers.time.internal.DayRandomizer;
 
 import java.time.LocalDate;
@@ -38,18 +39,18 @@ import java.time.Year;
 public class LocalDateRandomizer implements Randomizer<LocalDate> {
 
     private YearRandomizer yearRandomizer;
-    private MonthRandomizer monthRandomizer;
+    private EnumRandomizer<Month> monthRandomizer;
     private DayRandomizer dayRandomizer;
 
     public LocalDateRandomizer() {
         yearRandomizer = new YearRandomizer();
-        monthRandomizer = new MonthRandomizer();
+        monthRandomizer = new EnumRandomizer<>(Month.class);
         dayRandomizer = new DayRandomizer();
     }
 
     public LocalDateRandomizer(final long seed) {
         yearRandomizer = new YearRandomizer(seed);
-        monthRandomizer = new MonthRandomizer(seed);
+        monthRandomizer = new EnumRandomizer<>(Month.class, seed);
         dayRandomizer = new DayRandomizer(seed);
     }
 

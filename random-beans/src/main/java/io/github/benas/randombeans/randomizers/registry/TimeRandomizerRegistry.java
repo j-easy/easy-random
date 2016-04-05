@@ -52,7 +52,6 @@ public class TimeRandomizerRegistry implements RandomizerRegistry {
         randomizers.put(LocalDateTime.class, new LocalDateTimeRandomizer(seed));
         randomizers.put(LocalTime.class, new LocalTimeRandomizer(seed));
         randomizers.put(MonthDay.class, new MonthDayRandomizer(seed));
-        randomizers.put(Month.class, new MonthRandomizer(seed));
         randomizers.put(OffsetDateTime.class, new OffsetDateTimeRandomizer(seed));
         randomizers.put(OffsetTime.class, new OffsetTimeRandomizer(seed));
         randomizers.put(Period.class, new PeriodRandomizer(seed));

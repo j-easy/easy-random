@@ -33,7 +33,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 public class EnumRandomizerTest {
 
-    private Randomizer<Enum<Gender>> randomizer;
+    private Randomizer<Gender> randomizer;
 
     @Before
     public void setUp() {
@@ -42,7 +42,7 @@ public class EnumRandomizerTest {
 
     @Test
     public void testGetRandomValue() {
-        Enum<Gender> value = randomizer.getRandomValue();
+        Gender value = randomizer.getRandomValue();
         assertThat(value).isIn(asList(Gender.values()));
     }
 
