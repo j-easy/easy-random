@@ -37,7 +37,7 @@ public class LocaleRandomizerTest extends AbstractRandomizerTest<Locale> {
 
     @Test
     public void shouldGenerateRandomLocale() {
-        assertThat(aNewLocaleRandomizer().getRandomValue()).isNotNull();
+        assertThat(aNewLocaleRandomizer().getRandomValue()).isIn(Locale.getAvailableLocales());
     }
 
     @Test

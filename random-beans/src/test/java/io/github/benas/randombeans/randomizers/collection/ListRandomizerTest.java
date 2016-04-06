@@ -24,40 +24,35 @@
 
 package io.github.benas.randombeans.randomizers.collection;
 
-import io.github.benas.randombeans.api.Randomizer;
-import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.Mock;
 import org.mockito.runners.MockitoJUnitRunner;
 
-import java.util.List;
+import io.github.benas.randombeans.api.Randomizer;
 
+import static io.github.benas.randombeans.randomizers.collection.ListRandomizer.aNewListRandomizer;
 import static org.assertj.core.api.Assertions.assertThat;
 
 @RunWith(MockitoJUnitRunner.class)
 public class ListRandomizerTest {
 
     @Mock
-    private Randomizer<String> randomizer;
-
-    private ListRandomizer<String> listRandomizer;
-
-    @Before
-    public void setUp() throws Exception {
-        listRandomizer = new ListRandomizer<>(randomizer, 3);
-    }
+    private Randomizer<String> elementRandomizer;
 
     @Test
     public void generatedListShouldNotBeEmpty() {
-        List<String> names = listRandomizer.getRandomValue();
+        assertThat(aNewListRandomizer(elementRandomizer).getRandomValue()).isNotEmpty();
+    }
 
-        assertThat(names).hasSize(3);
+    @Test
+    public void generatedListSizeShouldBeEqualToTheSpecifiedSize() {
+        assertThat(aNewListRandomizer(elementRandomizer, 3).getRandomValue()).hasSize(3);
     }
 
     @Test(expected = IllegalArgumentException.class)
-    public void nbElementsShouldBePositive() {
-        listRandomizer = new ListRandomizer<>(randomizer, -3);
+    public void specifiedSizeShouldBePositive() {
+        aNewListRandomizer(elementRandomizer, -3);
     }
 
 }

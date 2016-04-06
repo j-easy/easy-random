@@ -24,40 +24,42 @@
 
 package io.github.benas.randombeans.randomizers.collection;
 
-import io.github.benas.randombeans.api.Randomizer;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.Mock;
 import org.mockito.runners.MockitoJUnitRunner;
 
-import java.util.Collection;
+import io.github.benas.randombeans.api.Randomizer;
 
+import static io.github.benas.randombeans.randomizers.collection.QueueRandomizer.aNewQueueRandomizer;
+import static io.github.benas.randombeans.randomizers.collection.SetRandomizer.aNewSetRandomizer;
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.mockito.Mockito.when;
 
 @RunWith(MockitoJUnitRunner.class)
 public class SetRandomizerTest {
 
     @Mock
-    private Randomizer<String> randomizer;
-
-    private SetRandomizer<String> setRandomizer;
+    private Randomizer<String> elementRandomizer;
 
     @Before
     public void setUp() throws Exception {
-        setRandomizer = new SetRandomizer<>(randomizer, 3);
+        when(elementRandomizer.getRandomValue()).thenReturn("a", "b", "c");
+    }
+
+    @Test
+    public void generatedSetSizeShouldBeEqualToTheSpecifiedSize() {
+        assertThat(aNewQueueRandomizer(elementRandomizer, 3).getRandomValue()).hasSize(3);
     }
 
     @Test
     public void generatedSetShouldNotBeEmpty() {
-        Collection<String> names = setRandomizer.getRandomValue();
-
-        assertThat(names.size()).isLessThanOrEqualTo(3);// duplicate random values are not inserted in the set
+        assertThat(aNewSetRandomizer(elementRandomizer).getRandomValue()).isNotEmpty();
     }
 
     @Test(expected = IllegalArgumentException.class)
-    public void nbElementsShouldBePositive() {
-        setRandomizer = new SetRandomizer<>(randomizer, -3);
+    public void specifiedSizeShouldBePositive() {
+        aNewSetRandomizer(elementRandomizer, -3);
     }
-
 }

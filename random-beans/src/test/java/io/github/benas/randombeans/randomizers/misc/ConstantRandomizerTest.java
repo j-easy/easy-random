@@ -24,30 +24,15 @@
 
 package io.github.benas.randombeans.randomizers.misc;
 
-import io.github.benas.randombeans.randomizers.AbstractRandomizerTest;
-import org.junit.Before;
 import org.junit.Test;
-import org.junit.runner.RunWith;
-import org.mockito.Mock;
-import org.mockito.runners.MockitoJUnitRunner;
 
+import static io.github.benas.randombeans.randomizers.misc.ConstantRandomizer.aNewConstantRandomizer;
 import static org.assertj.core.api.Assertions.assertThat;
 
-@RunWith(MockitoJUnitRunner.class)
-public class ConstantRandomizerTest extends AbstractRandomizerTest<Object> {
-
-    @Mock
-    private Object object;
-
-    @Before
-    public void setUp() throws Exception {
-        randomizer = ConstantRandomizer.aNewConstantRandomizer(object);
-    }
+public class ConstantRandomizerTest {
 
     @Test
     public void shouldAlwaysGenerateTheSameValue() {
-        Object actual = randomizer.getRandomValue();
-
-        assertThat(actual).isEqualTo(object);
+        assertThat(aNewConstantRandomizer("a").getRandomValue()).isEqualTo("a");
     }
 }

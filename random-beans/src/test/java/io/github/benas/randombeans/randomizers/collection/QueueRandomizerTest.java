@@ -24,40 +24,34 @@
 
 package io.github.benas.randombeans.randomizers.collection;
 
-import io.github.benas.randombeans.api.Randomizer;
-import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.Mock;
 import org.mockito.runners.MockitoJUnitRunner;
 
-import java.util.Queue;
+import io.github.benas.randombeans.api.Randomizer;
 
+import static io.github.benas.randombeans.randomizers.collection.QueueRandomizer.aNewQueueRandomizer;
 import static org.assertj.core.api.Assertions.assertThat;
 
 @RunWith(MockitoJUnitRunner.class)
 public class QueueRandomizerTest {
 
     @Mock
-    private Randomizer<String> randomizer;
+    private Randomizer<String> elementRandomizer;
 
-    private QueueRandomizer<String> queueRandomizer;
-
-    @Before
-    public void setUp() throws Exception {
-        queueRandomizer = new QueueRandomizer<>(randomizer, 3);
+    @Test
+    public void generatedMapShouldNotBeEmpty() {
+        assertThat(aNewQueueRandomizer(elementRandomizer).getRandomValue()).isNotEmpty();
     }
 
     @Test
-    public void generatedQueueShouldNotBeEmpty() {
-        Queue<String> names = queueRandomizer.getRandomValue();
-
-        assertThat(names).hasSize(3);
+    public void generatedQueueSizeShouldBeEqualToTheSpecifiedSize() {
+        assertThat(aNewQueueRandomizer(elementRandomizer, 3).getRandomValue()).hasSize(3);
     }
 
     @Test(expected = IllegalArgumentException.class)
-    public void nbElementsShouldBePositive() {
-        queueRandomizer = new QueueRandomizer<>(randomizer, -3);
+    public void specifiedSizeShouldBePositive() {
+        new QueueRandomizer<>(elementRandomizer, -3);
     }
-
 }

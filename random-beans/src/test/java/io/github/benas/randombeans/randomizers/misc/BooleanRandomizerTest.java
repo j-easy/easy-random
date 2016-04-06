@@ -25,23 +25,20 @@
 package io.github.benas.randombeans.randomizers.misc;
 
 import io.github.benas.randombeans.randomizers.AbstractRandomizerTest;
-import org.junit.Before;
 import org.junit.Test;
 
+import static io.github.benas.randombeans.randomizers.misc.BooleanRandomizer.aNewBooleanRandomizer;
 import static org.assertj.core.api.Assertions.assertThat;
 
 public class BooleanRandomizerTest extends AbstractRandomizerTest<Boolean> {
 
-    @Before
-    public void setUp() throws Exception {
-        randomizer = BooleanRandomizer.aNewBooleanRandomizer(SEED);
+    @Test
+    public void generatedBooleanShouldNotBeNull() {
+        assertThat(aNewBooleanRandomizer().getRandomValue()).isNotNull();
     }
 
     @Test
     public void shouldGenerateTheSameValueForTheSameSeed() {
-        Boolean actual = randomizer.getRandomValue();
-        Boolean expected = true;
-
-        assertThat(actual).isEqualTo(expected);
+        assertThat(aNewBooleanRandomizer(SEED).getRandomValue()).isEqualTo(true);
     }
 }
