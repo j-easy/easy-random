@@ -24,29 +24,27 @@
 
 package io.github.benas.randombeans.randomizers.misc;
 
-import io.github.benas.randombeans.api.Randomizer;
-import org.junit.Before;
 import org.junit.Test;
 
-import static java.util.Arrays.asList;
+import io.github.benas.randombeans.randomizers.AbstractRandomizerTest;
+
+import static io.github.benas.randombeans.randomizers.misc.EnumRandomizer.aNewEnumRandomizer;
+import static io.github.benas.randombeans.randomizers.misc.EnumRandomizerTest.Gender.FEMALE;
 import static org.assertj.core.api.Assertions.assertThat;
 
-public class EnumRandomizerTest {
+public class EnumRandomizerTest extends AbstractRandomizerTest<EnumRandomizerTest.Gender> {
 
-    private Randomizer<Gender> randomizer;
-
-    @Before
-    public void setUp() {
-        randomizer = new EnumRandomizer<>(Gender.class);
+    @Test
+    public void generatedValueShouldBeOfTheSpecifiedEnum() {
+        assertThat(aNewEnumRandomizer(Gender.class).getRandomValue()).isIn(Gender.values());
     }
 
     @Test
-    public void testGetRandomValue() {
-        Gender value = randomizer.getRandomValue();
-        assertThat(value).isIn(asList(Gender.values()));
+    public void shouldAlwaysGenerateTheSameValueForTheSameSeed() {
+        assertThat(aNewEnumRandomizer(Gender.class, SEED).getRandomValue()).isEqualTo(FEMALE);
     }
 
-    private enum Gender {
+    public static enum Gender {
         MALE, FEMALE
     }
 }

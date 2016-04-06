@@ -75,7 +75,7 @@ public class EnumRandomizer<E extends Enum<E>> extends AbstractRandomizer<E> {
      * @return a new {@link EnumRandomizer}.
      */
     public static <E extends Enum<E>> EnumRandomizer<E> aNewEnumRandomizer(final Class<E> enumeration, final long seed) {
-        return new EnumRandomizer<>(enumeration);
+        return new EnumRandomizer<>(enumeration, seed);
     }
 
     @Override
