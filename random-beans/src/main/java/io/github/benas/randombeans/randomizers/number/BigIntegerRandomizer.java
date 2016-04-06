@@ -35,6 +35,8 @@ import java.math.BigInteger;
  */
 public class BigIntegerRandomizer extends AbstractRandomizer<BigInteger> {
 
+    public static final int NUM_BITS = 128;
+
     /**
      * Create a new {@link BigIntegerRandomizer}.
      */
@@ -72,7 +74,7 @@ public class BigIntegerRandomizer extends AbstractRandomizer<BigInteger> {
 
     @Override
     public BigInteger getRandomValue() {
-        return new BigInteger(128, random);
+        return new BigInteger(NUM_BITS, random);
     }
 
 
