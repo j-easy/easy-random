@@ -43,12 +43,39 @@ public class ZonedDateTimeRandomizer extends AbstractRandomizer<ZonedDateTime> {
 
     private LocalDateTimeRandomizer localDateTimeRandomizer;
 
+    /**
+     * Create a new {@link ZonedDateTimeRandomizer}.
+     */
     public ZonedDateTimeRandomizer() {
         localDateTimeRandomizer = new LocalDateTimeRandomizer();
     }
 
+    /**
+     * Create a new {@link ZonedDateTimeRandomizer}.
+     *
+     * @param seed initial seed
+     */
     public ZonedDateTimeRandomizer(final long seed) {
         localDateTimeRandomizer = new LocalDateTimeRandomizer(seed);
+    }
+
+    /**
+     * Create a new {@link ZonedDateTimeRandomizer}.
+     *
+     * @return a new {@link ZonedDateTimeRandomizer}.
+     */
+    public static ZonedDateTimeRandomizer aNewZonedDateTimeRandomizer() {
+        return new ZonedDateTimeRandomizer();
+    }
+
+    /**
+     * Create a new {@link ZonedDateTimeRandomizer}.
+     *
+     * @param seed initial seed
+     * @return a new {@link ZonedDateTimeRandomizer}.
+     */
+    public static ZonedDateTimeRandomizer aNewZonedDateTimeRandomizer(final long seed) {
+        return new ZonedDateTimeRandomizer(seed);
     }
 
     @Override

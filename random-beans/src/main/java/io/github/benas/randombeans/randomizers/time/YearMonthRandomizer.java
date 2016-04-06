@@ -40,14 +40,41 @@ public class YearMonthRandomizer implements Randomizer<YearMonth> {
     private YearRandomizer yearRandomizer;
     private EnumRandomizer<Month> monthRandomizer;
 
+    /**
+     * Create a new {@link YearMonthRandomizer}.
+     */
     public YearMonthRandomizer() {
         yearRandomizer = new YearRandomizer();
         monthRandomizer = new EnumRandomizer<>(Month.class);
     }
 
+    /**
+     * Create a new {@link YearMonthRandomizer}.
+     *
+     * @param seed initial seed
+     */
     public YearMonthRandomizer(final long seed) {
         yearRandomizer = new YearRandomizer(seed);
         monthRandomizer = new EnumRandomizer<>(Month.class, seed);
+    }
+
+    /**
+     * Create a new {@link YearMonthRandomizer}.
+     *
+     * @return a new {@link YearMonthRandomizer}.
+     */
+    public static YearMonthRandomizer aNewYearMonthRandomizer() {
+        return new YearMonthRandomizer();
+    }
+
+    /**
+     * Create a new {@link YearMonthRandomizer}.
+     *
+     * @param seed initial seed
+     * @return a new {@link YearMonthRandomizer}.
+     */
+    public static YearMonthRandomizer aNewYearMonthRandomizer(final long seed) {
+        return new YearMonthRandomizer(seed);
     }
 
     @Override

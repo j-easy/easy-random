@@ -39,14 +39,41 @@ public class LocalDateTimeRandomizer implements Randomizer<LocalDateTime> {
     private LocalDateRandomizer localDateRandomizer;
     private LocalTimeRandomizer localTimeRandomizer;
 
+    /**
+     * Create a new {@link LocalDateTimeRandomizer}.
+     */
     public LocalDateTimeRandomizer() {
         localDateRandomizer = new LocalDateRandomizer();
         localTimeRandomizer = new LocalTimeRandomizer();
     }
 
+    /**
+     * Create a new {@link LocalDateTimeRandomizer}.
+     *
+     * @param seed initial seed
+     */
     public LocalDateTimeRandomizer(final long seed) {
         localDateRandomizer = new LocalDateRandomizer(seed);
         localTimeRandomizer = new LocalTimeRandomizer(seed);
+    }
+
+    /**
+     * Create a new {@link LocalDateTimeRandomizer}.
+     *
+     * @return a new {@link LocalDateTimeRandomizer}.
+     */
+    public static LocalDateTimeRandomizer aNewLocalDateTimeRandomizer() {
+        return new LocalDateTimeRandomizer();
+    }
+
+    /**
+     * Create a new {@link LocalDateTimeRandomizer}.
+     *
+     * @param seed initial seed
+     * @return a new {@link LocalDateTimeRandomizer}.
+     */
+    public static LocalDateTimeRandomizer aNewLocalDateTimeRandomizer(final long seed) {
+        return new LocalDateTimeRandomizer(seed);
     }
 
     @Override

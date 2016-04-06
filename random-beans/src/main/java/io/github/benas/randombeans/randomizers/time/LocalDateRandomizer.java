@@ -42,16 +42,43 @@ public class LocalDateRandomizer implements Randomizer<LocalDate> {
     private EnumRandomizer<Month> monthRandomizer;
     private DayRandomizer dayRandomizer;
 
+    /**
+     * Create a new {@link LocalDateRandomizer}.
+     */
     public LocalDateRandomizer() {
         yearRandomizer = new YearRandomizer();
         monthRandomizer = new EnumRandomizer<>(Month.class);
         dayRandomizer = new DayRandomizer();
     }
 
+    /**
+     * Create a new {@link LocalDateRandomizer}.
+     *
+     * @param seed initial seed
+     */
     public LocalDateRandomizer(final long seed) {
         yearRandomizer = new YearRandomizer(seed);
         monthRandomizer = new EnumRandomizer<>(Month.class, seed);
         dayRandomizer = new DayRandomizer(seed);
+    }
+
+    /**
+     * Create a new {@link LocalDateRandomizer}.
+     *
+     * @return a new {@link LocalDateRandomizer}.
+     */
+    public static LocalDateRandomizer aNewLocalDateRandomizer() {
+        return new LocalDateRandomizer();
+    }
+
+    /**
+     * Create a new {@link LocalDateRandomizer}.
+     *
+     * @param seed initial seed
+     * @return a new {@link LocalDateRandomizer}.
+     */
+    public static LocalDateRandomizer aNewLocalDateRandomizer(final long seed) {
+        return new LocalDateRandomizer(seed);
     }
 
     @Override

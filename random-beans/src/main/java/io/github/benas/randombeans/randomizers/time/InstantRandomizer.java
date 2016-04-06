@@ -37,12 +37,39 @@ public class InstantRandomizer implements Randomizer<Instant> {
 
     DateRandomizer dateRandomizer;
 
+    /**
+     * Create a new {@link InstantRandomizer}.
+     */
     public InstantRandomizer() {
         dateRandomizer = new DateRandomizer();
     }
 
+    /**
+     * Create a new {@link InstantRandomizer}.
+     *
+     * @param seed initial seed
+     */
     public InstantRandomizer(final long seed) {
         dateRandomizer = new DateRandomizer(seed);
+    }
+
+    /**
+     * Create a new {@link InstantRandomizer}.
+     *
+     * @return a new {@link InstantRandomizer}.
+     */
+    public static InstantRandomizer aNewInstantRandomizer() {
+        return new InstantRandomizer();
+    }
+
+    /**
+     * Create a new {@link InstantRandomizer}.
+     *
+     * @param seed initial seed
+     * @return a new {@link InstantRandomizer}.
+     */
+    public static InstantRandomizer aNewInstantRandomizer(final long seed) {
+        return new InstantRandomizer(seed);
     }
 
     @Override

@@ -39,14 +39,41 @@ public class OffsetTimeRandomizer implements Randomizer<OffsetTime> {
     private LocalTimeRandomizer localTimeRandomizer;
     private ZoneOffsetRandomizer zoneOffsetRandomizer;
 
+    /**
+     * Create a new {@link OffsetTimeRandomizer}.
+     */
     public OffsetTimeRandomizer() {
         localTimeRandomizer = new LocalTimeRandomizer();
         zoneOffsetRandomizer = new ZoneOffsetRandomizer();
     }
 
+    /**
+     * Create a new {@link OffsetTimeRandomizer}.
+     *
+     * @param seed initial seed
+     */
     public OffsetTimeRandomizer(final long seed) {
         localTimeRandomizer = new LocalTimeRandomizer(seed);
         zoneOffsetRandomizer = new ZoneOffsetRandomizer(seed);
+    }
+
+    /**
+     * Create a new {@link OffsetTimeRandomizer}.
+     *
+     * @return a new {@link OffsetTimeRandomizer}.
+     */
+    public static OffsetTimeRandomizer aNewOffsetTimeRandomizer() {
+        return new OffsetTimeRandomizer();
+    }
+
+    /**
+     * Create a new {@link OffsetTimeRandomizer}.
+     *
+     * @param seed initial seed
+     * @return a new {@link OffsetTimeRandomizer}.
+     */
+    public static OffsetTimeRandomizer aNewOffsetTimeRandomizer(final long seed) {
+        return new OffsetTimeRandomizer(seed);
     }
 
     @Override

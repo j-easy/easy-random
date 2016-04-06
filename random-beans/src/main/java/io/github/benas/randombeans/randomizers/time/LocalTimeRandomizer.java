@@ -39,14 +39,41 @@ public class LocalTimeRandomizer implements Randomizer<LocalTime> {
     private HourRandomizer hourRandomizer;
     private MinuteRandomizer minuteRandomizer;
 
+    /**
+     * Create a new {@link LocalTimeRandomizer}.
+     */
     public LocalTimeRandomizer() {
         hourRandomizer = new HourRandomizer();
         minuteRandomizer = new MinuteRandomizer();
     }
 
+    /**
+     * Create a new {@link LocalTimeRandomizer}.
+     *
+     * @param seed initial seed
+     */
     public LocalTimeRandomizer(final long seed) {
         hourRandomizer = new HourRandomizer(seed);
         minuteRandomizer = new MinuteRandomizer(seed);
+    }
+
+    /**
+     * Create a new {@link LocalTimeRandomizer}.
+     *
+     * @return a new {@link LocalTimeRandomizer}.
+     */
+    public static LocalTimeRandomizer aNewLocalTimeRandomizer() {
+        return new LocalTimeRandomizer();
+    }
+
+    /**
+     * Create a new {@link LocalTimeRandomizer}.
+     *
+     * @param seed initial seed
+     * @return a new {@link LocalTimeRandomizer}.
+     */
+    public static LocalTimeRandomizer aNewLocalTimeRandomizer(final long seed) {
+        return new LocalTimeRandomizer(seed);
     }
 
     @Override

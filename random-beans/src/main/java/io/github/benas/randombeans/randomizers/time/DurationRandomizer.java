@@ -41,12 +41,39 @@ public class DurationRandomizer implements Randomizer<Duration> {
 
     IntegerRangeRandomizer amountRandomizer;
 
+    /**
+     * Create a new {@link DurationRandomizer}.
+     */
     public DurationRandomizer() {
         amountRandomizer = new IntegerRangeRandomizer(MIN_AMOUNT, MAX_AMOUNT);
     }
 
+    /**
+     * Create a new {@link DurationRandomizer}.
+     *
+     * @param seed initial seed
+     */
     public DurationRandomizer(final long seed) {
         amountRandomizer = new IntegerRangeRandomizer(MIN_AMOUNT, MAX_AMOUNT, seed);
+    }
+
+    /**
+     * Create a new {@link DurationRandomizer}.
+     *
+     * @return a new {@link DurationRandomizer}.
+     */
+    public static DurationRandomizer aNewDurationRandomizer() {
+        return new DurationRandomizer();
+    }
+
+    /**
+     * Create a new {@link DurationRandomizer}.
+     *
+     * @param seed initial seed
+     * @return a new {@link DurationRandomizer}.
+     */
+    public static DurationRandomizer aNewDurationRandomizer(final long seed) {
+        return new DurationRandomizer(seed);
     }
 
     @Override

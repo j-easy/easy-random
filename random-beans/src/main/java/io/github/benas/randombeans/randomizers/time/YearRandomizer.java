@@ -40,12 +40,39 @@ public class YearRandomizer implements Randomizer<Year> {
 
     private IntegerRangeRandomizer yearRandomizer;
 
+    /**
+     * Create a new {@link YearRandomizer}.
+     */
     public YearRandomizer() {
         yearRandomizer = new IntegerRangeRandomizer(TEN_YEARS_AGO.getYear(), IN_TEN_YEARS.getYear());
     }
 
+    /**
+     * Create a new {@link YearRandomizer}.
+     *
+     * @param seed initial seed
+     */
     public YearRandomizer(final long seed) {
         yearRandomizer = new IntegerRangeRandomizer(TEN_YEARS_AGO.getYear(), IN_TEN_YEARS.getYear(), seed);
+    }
+
+    /**
+     * Create a new {@link YearRandomizer}.
+     *
+     * @return a new {@link YearRandomizer}.
+     */
+    public static YearRandomizer aNewYearRandomizer() {
+        return new YearRandomizer();
+    }
+
+    /**
+     * Create a new {@link YearRandomizer}.
+     *
+     * @param seed initial seed
+     * @return a new {@link YearRandomizer}.
+     */
+    public static YearRandomizer aNewYearRandomizer(final long seed) {
+        return new YearRandomizer(seed);
     }
 
     @Override

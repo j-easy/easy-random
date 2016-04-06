@@ -44,12 +44,39 @@ public class ZoneOffsetRandomizer implements Randomizer<ZoneOffset> {
 
     private IntegerRangeRandomizer integerRangeRandomizer;
 
+    /**
+     * Create a new {@link ZoneOffsetRandomizer}.
+     */
     public ZoneOffsetRandomizer() {
         integerRangeRandomizer = new IntegerRangeRandomizer(-MAX_SECONDS, MAX_SECONDS);
     }
 
+    /**
+     * Create a new {@link ZoneOffsetRandomizer}.
+     *
+     * @param seed initial seed
+     */
     public ZoneOffsetRandomizer(final long seed) {
         integerRangeRandomizer = new IntegerRangeRandomizer(-MAX_SECONDS, MAX_SECONDS, seed);
+    }
+
+    /**
+     * Create a new {@link ZoneOffsetRandomizer}.
+     *
+     * @return a new {@link ZoneOffsetRandomizer}.
+     */
+    public static ZoneOffsetRandomizer aNewZoneOffsetRandomizer() {
+        return new ZoneOffsetRandomizer();
+    }
+
+    /**
+     * Create a new {@link ZoneOffsetRandomizer}.
+     *
+     * @param seed initial seed
+     * @return a new {@link ZoneOffsetRandomizer}.
+     */
+    public static ZoneOffsetRandomizer aNewZoneOffsetRandomizer(final long seed) {
+        return new ZoneOffsetRandomizer(seed);
     }
 
     @Override

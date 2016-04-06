@@ -41,16 +41,43 @@ public class OffsetDateTimeRandomizer implements Randomizer<OffsetDateTime> {
     private LocalTimeRandomizer localTimeRandomizer;
     private ZoneOffsetRandomizer zoneOffsetRandomizer;
 
+    /**
+     * Create a new {@link OffsetDateTimeRandomizer}.
+     */
     public OffsetDateTimeRandomizer() {
         localDateRandomizer = new LocalDateRandomizer();
         localTimeRandomizer = new LocalTimeRandomizer();
         zoneOffsetRandomizer = new ZoneOffsetRandomizer();
     }
 
+    /**
+     * Create a new {@link OffsetDateTimeRandomizer}.
+     *
+     * @param seed initial seed
+     */
     public OffsetDateTimeRandomizer(final long seed) {
         localDateRandomizer = new LocalDateRandomizer(seed);
         localTimeRandomizer = new LocalTimeRandomizer(seed);
         zoneOffsetRandomizer = new ZoneOffsetRandomizer(seed);
+    }
+
+    /**
+     * Create a new {@link OffsetDateTimeRandomizer}.
+     *
+     * @return a new {@link OffsetDateTimeRandomizer}.
+     */
+    public static OffsetDateTimeRandomizer aNewOffsetDateTimeRandomizer() {
+        return new OffsetDateTimeRandomizer();
+    }
+
+    /**
+     * Create a new {@link OffsetDateTimeRandomizer}.
+     *
+     * @param seed initial seed
+     * @return a new {@link OffsetDateTimeRandomizer}.
+     */
+    public static OffsetDateTimeRandomizer aNewOffsetDateTimeRandomizer(final long seed) {
+        return new OffsetDateTimeRandomizer(seed);
     }
 
     @Override
