@@ -24,25 +24,25 @@
 
 package io.github.benas.randombeans.randomizers.time;
 
+import io.github.benas.randombeans.randomizers.AbstractRandomizerTest;
 import org.junit.Before;
 import org.junit.Test;
 
 import java.time.MonthDay;
 
+import static io.github.benas.randombeans.randomizers.time.MonthDayRandomizer.aNewMonthDayRandomizer;
 import static org.assertj.core.api.Assertions.assertThat;
 
-public class MonthDayRandomizerTest {
+public class MonthDayRandomizerTest extends AbstractRandomizerTest<MonthDay> {
 
-    private MonthDayRandomizer monthDayRandomizer;
-    
     @Before
     public void setUp() {
-        monthDayRandomizer = new MonthDayRandomizer();
+        randomizer = aNewMonthDayRandomizer(SEED);
     }
 
     @Test
     public void getRandomValue() {
-        MonthDay monthDay = monthDayRandomizer.getRandomValue();
+        MonthDay monthDay = randomizer.getRandomValue();
         assertThat(monthDay).isNotNull();
     }
 }

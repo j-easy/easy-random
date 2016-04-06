@@ -29,15 +29,21 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 import java.util.TimeZone;
 
+import org.junit.Before;
 import org.junit.Test;
 
 import io.github.benas.randombeans.randomizers.AbstractRandomizerTest;
 
 public class TimeZoneRandomizerTest extends AbstractRandomizerTest<TimeZone> {
 
+    @Before
+    public void setUp() throws Exception {
+        randomizer = aNewTimeZoneRandomizer(SEED);
+    }
+
     @Test
     public void shouldGenerateRandomTimeZone() {
-        assertThat(aNewTimeZoneRandomizer().getRandomValue()).isNotNull();
+        assertThat(randomizer.getRandomValue()).isNotNull();
     }
 
     @Test

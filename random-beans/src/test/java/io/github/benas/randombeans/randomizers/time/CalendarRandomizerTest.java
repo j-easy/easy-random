@@ -31,13 +31,14 @@ import org.junit.Test;
 import java.util.Calendar;
 import java.util.Date;
 
+import static io.github.benas.randombeans.randomizers.time.CalendarRandomizer.aNewCalendarRandomizer;
 import static org.assertj.core.api.Assertions.assertThat;
 
 public class CalendarRandomizerTest extends AbstractRandomizerTest<Calendar> {
 
     @Before
     public void setUp() throws Exception {
-        randomizer = CalendarRandomizer.aNewCalendarRandomizer(SEED);
+        randomizer = aNewCalendarRandomizer(SEED);
     }
 
     @Test

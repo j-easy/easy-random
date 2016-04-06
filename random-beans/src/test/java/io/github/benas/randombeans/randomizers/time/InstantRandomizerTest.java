@@ -24,25 +24,25 @@
 
 package io.github.benas.randombeans.randomizers.time;
 
+import io.github.benas.randombeans.randomizers.AbstractRandomizerTest;
 import org.junit.Before;
 import org.junit.Test;
 
 import java.time.Instant;
 
+import static io.github.benas.randombeans.randomizers.time.InstantRandomizer.aNewInstantRandomizer;
 import static org.assertj.core.api.Assertions.assertThat;
 
-public class InstantRandomizerTest {
+public class InstantRandomizerTest extends AbstractRandomizerTest<Instant> {
 
-    private InstantRandomizer instantRandomizer;
-    
     @Before
     public void setUp() {
-        instantRandomizer = new InstantRandomizer();
+        randomizer = aNewInstantRandomizer(SEED);
     }
 
     @Test
     public void getRandomValue() {
-        Instant instant = instantRandomizer.getRandomValue();
+        Instant instant = randomizer.getRandomValue();
         assertThat(instant).isNotNull();
     }
 }

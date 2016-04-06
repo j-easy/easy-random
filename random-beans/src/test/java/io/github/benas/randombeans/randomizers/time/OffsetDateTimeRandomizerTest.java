@@ -24,25 +24,25 @@
 
 package io.github.benas.randombeans.randomizers.time;
 
+import io.github.benas.randombeans.randomizers.AbstractRandomizerTest;
 import org.junit.Before;
 import org.junit.Test;
 
 import java.time.OffsetDateTime;
 
+import static io.github.benas.randombeans.randomizers.time.OffsetDateTimeRandomizer.aNewOffsetDateTimeRandomizer;
 import static org.assertj.core.api.Assertions.assertThat;
 
-public class OffsetDateTimeRandomizerTest {
+public class OffsetDateTimeRandomizerTest extends AbstractRandomizerTest<OffsetDateTime> {
 
-    private OffsetDateTimeRandomizer offsetDateTimeRandomizer;
-    
     @Before
     public void setUp() {
-        offsetDateTimeRandomizer = new OffsetDateTimeRandomizer();
+        randomizer = aNewOffsetDateTimeRandomizer(SEED);
     }
 
     @Test
     public void getRandomValue() {
-        OffsetDateTime offsetDateTime = offsetDateTimeRandomizer.getRandomValue();
+        OffsetDateTime offsetDateTime = randomizer.getRandomValue();
         assertThat(offsetDateTime).isNotNull();
     }
 }

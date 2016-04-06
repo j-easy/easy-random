@@ -24,25 +24,28 @@
 
 package io.github.benas.randombeans.randomizers.time;
 
+import io.github.benas.randombeans.randomizers.AbstractRandomizerTest;
 import org.junit.Before;
 import org.junit.Test;
 
 import java.time.Duration;
+import java.time.temporal.ChronoUnit;
 
+import static io.github.benas.randombeans.randomizers.time.DurationRandomizer.aNewDurationRandomizer;
 import static org.assertj.core.api.Assertions.assertThat;
 
-public class DurationRandomizerTest {
+public class DurationRandomizerTest extends AbstractRandomizerTest<Duration> {
 
-    private DurationRandomizer durationRandomizer;
-    
     @Before
     public void setUp() {
-        durationRandomizer = new DurationRandomizer();
+        randomizer = aNewDurationRandomizer(SEED);
     }
 
     @Test
     public void getRandomValue() {
-        Duration duration = durationRandomizer.getRandomValue();
-        assertThat(duration).isNotNull();
+        Duration actual = randomizer.getRandomValue();
+        Duration expected = Duration.of(72L, ChronoUnit.HOURS);
+
+        assertThat(actual).isEqualTo(expected);
     }
 }

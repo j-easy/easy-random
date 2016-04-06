@@ -29,15 +29,21 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 import java.util.GregorianCalendar;
 
+import org.junit.Before;
 import org.junit.Test;
 
 import io.github.benas.randombeans.randomizers.AbstractRandomizerTest;
 
 public class GregorianCalendarRandomizerTest extends AbstractRandomizerTest<GregorianCalendar> {
 
+    @Before
+    public void setUp() throws Exception {
+        randomizer = aNewGregorianCalendarRandomizer(SEED);
+    }
+
     @Test
     public void shouldGenerateRandomGregorianCalendar() {
-        assertThat(aNewGregorianCalendarRandomizer().getRandomValue()).isNotNull();
+        assertThat(randomizer.getRandomValue()).isNotNull();
     }
 
     @Test
@@ -45,6 +51,6 @@ public class GregorianCalendarRandomizerTest extends AbstractRandomizerTest<Greg
         GregorianCalendar expected = new GregorianCalendar();
         expected.setTimeInMillis(5106534569952410475L);
 
-        assertThat(aNewGregorianCalendarRandomizer(SEED).getRandomValue()).isEqualTo(expected);
+        assertThat(randomizer.getRandomValue()).isEqualTo(expected);
     }
 }

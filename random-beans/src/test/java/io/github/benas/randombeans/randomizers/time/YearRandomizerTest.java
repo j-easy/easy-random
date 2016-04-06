@@ -24,26 +24,26 @@
 
 package io.github.benas.randombeans.randomizers.time;
 
+import io.github.benas.randombeans.randomizers.AbstractRandomizerTest;
 import io.github.benas.randombeans.util.Constants;
 import org.junit.Before;
 import org.junit.Test;
 
 import java.time.Year;
 
+import static io.github.benas.randombeans.randomizers.time.YearRandomizer.aNewYearRandomizer;
 import static org.assertj.core.api.Assertions.assertThat;
 
-public class YearRandomizerTest {
+public class YearRandomizerTest extends AbstractRandomizerTest<Year> {
 
-    private YearRandomizer yearRandomizer;
-    
     @Before
     public void setUp() {
-        yearRandomizer = new YearRandomizer();
+        randomizer = aNewYearRandomizer(SEED);
     }
 
     @Test
     public void getRandomValue() {
-        Year year = yearRandomizer.getRandomValue();
+        Year year = randomizer.getRandomValue();
         assertThat(year).isNotNull();
         assertThat(year.getValue())
                 .isBetween(Constants.TEN_YEARS_AGO.getYear(), Constants.IN_TEN_YEARS.getYear());

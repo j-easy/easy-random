@@ -30,13 +30,14 @@ import org.junit.Test;
 
 import java.util.Date;
 
+import static io.github.benas.randombeans.randomizers.time.DateRandomizer.aNewDateRandomizer;
 import static org.assertj.core.api.Assertions.assertThat;
 
 public class DateRandomizerTest extends AbstractRandomizerTest<Date> {
 
     @Before
     public void setUp() throws Exception {
-        randomizer = DateRandomizer.aNewDateRandomizer(SEED);
+        randomizer = aNewDateRandomizer(SEED);
     }
 
     @Test

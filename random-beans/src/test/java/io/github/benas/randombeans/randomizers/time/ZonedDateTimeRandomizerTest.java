@@ -24,25 +24,25 @@
 
 package io.github.benas.randombeans.randomizers.time;
 
+import io.github.benas.randombeans.randomizers.AbstractRandomizerTest;
 import org.junit.Before;
 import org.junit.Test;
 
 import java.time.ZonedDateTime;
 
+import static io.github.benas.randombeans.randomizers.time.ZonedDateTimeRandomizer.aNewZonedDateTimeRandomizer;
 import static org.assertj.core.api.Assertions.assertThat;
 
-public class ZonedDateTimeRandomizerTest {
+public class ZonedDateTimeRandomizerTest extends AbstractRandomizerTest<ZonedDateTime> {
 
-    private ZonedDateTimeRandomizer zonedDateTimeRandomizer;
-    
     @Before
     public void setUp() {
-        zonedDateTimeRandomizer = new ZonedDateTimeRandomizer();
+        randomizer = aNewZonedDateTimeRandomizer(SEED);
     }
 
     @Test
     public void getRandomValue() {
-        ZonedDateTime zonedDateTime = zonedDateTimeRandomizer.getRandomValue();
+        ZonedDateTime zonedDateTime = randomizer.getRandomValue();
         assertThat(zonedDateTime).isNotNull();
     }
 }

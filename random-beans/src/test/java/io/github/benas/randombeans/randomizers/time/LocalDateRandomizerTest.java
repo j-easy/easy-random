@@ -24,25 +24,25 @@
 
 package io.github.benas.randombeans.randomizers.time;
 
+import io.github.benas.randombeans.randomizers.AbstractRandomizerTest;
 import org.junit.Before;
 import org.junit.Test;
 
 import java.time.LocalDate;
 
+import static io.github.benas.randombeans.randomizers.time.LocalDateRandomizer.aNewLocalDateRandomizer;
 import static org.assertj.core.api.Assertions.assertThat;
 
-public class LocalDateRandomizerTest {
+public class LocalDateRandomizerTest extends AbstractRandomizerTest<LocalDate> {
 
-    private LocalDateRandomizer localDateRandomizer;
-    
     @Before
     public void setUp() {
-        localDateRandomizer = new LocalDateRandomizer();
+        randomizer = aNewLocalDateRandomizer(SEED);
     }
 
     @Test
     public void getRandomValue() {
-        LocalDate localDate = localDateRandomizer.getRandomValue();
+        LocalDate localDate = randomizer.getRandomValue();
         assertThat(localDate).isNotNull();
     }
 }

@@ -24,25 +24,25 @@
 
 package io.github.benas.randombeans.randomizers.time;
 
+import io.github.benas.randombeans.randomizers.AbstractRandomizerTest;
 import org.junit.Before;
 import org.junit.Test;
 
 import java.time.Period;
 
+import static io.github.benas.randombeans.randomizers.time.PeriodRandomizer.aNewPeriodRandomizer;
 import static org.assertj.core.api.Assertions.assertThat;
 
-public class PeriodRandomizerTest {
+public class PeriodRandomizerTest extends AbstractRandomizerTest<Period> {
 
-    private PeriodRandomizer periodRandomizer;
-    
     @Before
     public void setUp() {
-        periodRandomizer = new PeriodRandomizer();
+        randomizer = aNewPeriodRandomizer(SEED);
     }
 
     @Test
     public void getRandomValue() {
-        Period period = periodRandomizer.getRandomValue();
+        Period period = randomizer.getRandomValue();
         assertThat(period).isNotNull();
     }
 }
