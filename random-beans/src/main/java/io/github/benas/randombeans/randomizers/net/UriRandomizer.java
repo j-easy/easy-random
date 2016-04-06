@@ -29,6 +29,8 @@ import io.github.benas.randombeans.randomizers.AbstractRandomizer;
 import java.net.URI;
 import java.net.URISyntaxException;
 
+import static java.util.ResourceBundle.getBundle;
+
 /**
  * Generate a random {@link URI}.
  *
@@ -36,11 +38,7 @@ import java.net.URISyntaxException;
  */
 public class UriRandomizer extends AbstractRandomizer<URI> {
 
-    private final String[] uris = { "ftp://ftp.is.co.za/rfc/rfc1808.txt",
-                                    "http://www.ietf.org/rfc/rfc2396.txt",
-                                    "telnet://192.0.2.16:80/",
-                                    "mailto:John.Doe@example.com",
-                                    "http://www.wikipedia.org" };
+    private final String[] uris = getBundle("data").getString("uris").split(",");
 
     /**
      * Create a new {@link UriRandomizer}.

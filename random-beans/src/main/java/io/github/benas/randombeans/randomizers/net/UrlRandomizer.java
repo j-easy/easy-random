@@ -29,6 +29,8 @@ import io.github.benas.randombeans.randomizers.AbstractRandomizer;
 import java.net.MalformedURLException;
 import java.net.URL;
 
+import static java.util.ResourceBundle.getBundle;
+
 /**
  * Generate a random {@link URL}.
  *
@@ -36,12 +38,7 @@ import java.net.URL;
  */
 public class UrlRandomizer extends AbstractRandomizer<URL> {
 
-    private final String[] urls = { "https://home.java.net",
-                                    "http://www.oracle.com",
-                                    "http://www.google.com",
-                                    "https://www.github.com",
-                                    "http://www.yahoo.com",
-                                    "http://www.wikipedia.org" };
+    private final String[] urls = getBundle("data").getString("urls").split(",");
 
     /**
      * Create a new {@link UrlRandomizer}.
