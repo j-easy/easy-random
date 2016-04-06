@@ -143,9 +143,13 @@ class EnhancedRandomImpl extends EnhancedRandom {
 
     private <T> void populateFields(final List<Field> fields, final T result, final PopulatorContext context) throws IllegalAccessException {
         for (final Field field : fields) {
-            if (!fieldExclusionChecker.shouldBeExcluded(field, context)) {
-                fieldPopulator.populateField(result, field, context);
-            }
+            populateField(field, result, context);
+        }
+    }
+
+    private <T> void populateField(final Field field, final T result, final PopulatorContext context) throws IllegalAccessException {
+        if (!fieldExclusionChecker.shouldBeExcluded(field, context)) {
+            fieldPopulator.populateField(result, field, context);
         }
     }
 
@@ -153,7 +157,7 @@ class EnhancedRandomImpl extends EnhancedRandom {
      * Setters for optional parameters
      */
 
-    void setScanClasspathForConcreteTypes(final boolean scanClasspathForConcreteTypes) {
+    public void setScanClasspathForConcreteTypes(final boolean scanClasspathForConcreteTypes) {
         fieldPopulator.setScanClasspathForConcreteTypes(scanClasspathForConcreteTypes);
         objectFactory.setScanClasspathForConcreteTypes(scanClasspathForConcreteTypes);
     }

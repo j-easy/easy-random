@@ -66,8 +66,8 @@ public class CustomRandomizerRegistry implements RandomizerRegistry {
         return customTypeRandomizersRegistry.get(type);
     }
 
-    public <T, F, R> void registerRandomizer(final String fieldName, final Class<F> fieldType, final Class<T> type, final Randomizer<R> randomizer) {
-        customFieldRandomizersRegistry.put(new FieldDefinition<>(fieldName, fieldType, type), randomizer);
+    public <T, F, R> void registerRandomizer(final FieldDefinition<T,F> fieldDefinition, final Randomizer<R> randomizer) {
+        customFieldRandomizersRegistry.put(fieldDefinition, randomizer);
     }
 
     public <T, R> void registerRandomizer(final Class<T> type, final Randomizer<R> randomizer) {

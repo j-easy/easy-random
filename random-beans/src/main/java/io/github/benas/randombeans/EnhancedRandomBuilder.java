@@ -51,6 +51,9 @@ public class EnhancedRandomBuilder {
 
     private long seed;
 
+    /**
+     * Create a new {@link EnhancedRandomBuilder}.
+     */
     public EnhancedRandomBuilder() {
         customRandomizerRegistry = new CustomRandomizerRegistry();
         userRegistries = new LinkedHashSet<>();
@@ -75,7 +78,7 @@ public class EnhancedRandomBuilder {
      * @return a pre configured {@link EnhancedRandomBuilder} instance
      */
     public <T, F, R> EnhancedRandomBuilder randomize(FieldDefinition<T, F> fieldDefinition, Randomizer<R> randomizer) {
-        customRandomizerRegistry.registerRandomizer(fieldDefinition.getName(), fieldDefinition.getType(), fieldDefinition.getClazz(), randomizer);
+        customRandomizerRegistry.registerRandomizer(fieldDefinition, randomizer);
         return this;
     }
 
@@ -87,8 +90,7 @@ public class EnhancedRandomBuilder {
      * @return a pre configured {@link EnhancedRandomBuilder} instance
      */
     public <T, F, R> EnhancedRandomBuilder randomize(FieldDefinition<T, F> fieldDefinition, Supplier<R> supplier) {
-        customRandomizerRegistry.registerRandomizer(fieldDefinition.getName(), fieldDefinition.getType(), fieldDefinition.getClazz(), asRandomizer(supplier));
-        return this;
+        return randomize(fieldDefinition, asRandomizer(supplier));
     }
 
     /**
@@ -111,8 +113,7 @@ public class EnhancedRandomBuilder {
      * @return a pre configured {@link EnhancedRandomBuilder} instance
      */
     public <T, R> EnhancedRandomBuilder randomize(Class<T> type, Supplier<R> supplier) {
-        customRandomizerRegistry.registerRandomizer(type, asRandomizer(supplier));
-        return this;
+        return randomize(type, asRandomizer(supplier));
     }
 
     /**
@@ -167,15 +168,24 @@ public class EnhancedRandomBuilder {
      * @return a configured {@link EnhancedRandom} instance
      */
     public EnhancedRandom build() {
+        LinkedHashSet<RandomizerRegistry> registries = setupRandomizerRegistries();
+        return setupEnhancedRandom(registries);
+    }
+
+    private EnhancedRandomImpl setupEnhancedRandom(LinkedHashSet<RandomizerRegistry> registries) {
+        EnhancedRandomImpl enhancedRandom = new EnhancedRandomImpl(registries);
+        enhancedRandom.setSeed(seed);
+        enhancedRandom.setScanClasspathForConcreteTypes(scanClasspathForConcreteTypes);
+        return enhancedRandom;
+    }
+
+    private LinkedHashSet<RandomizerRegistry> setupRandomizerRegistries() {
         LinkedHashSet<RandomizerRegistry> registries = new LinkedHashSet<>();
         registries.add(customRandomizerRegistry); // programatically registered randomizers through randomize()
         registries.addAll(userRegistries); // programatically registered registries through registerRandomizerRegistry()
         registries.addAll(loadRegistries()); // registries added to classpath through the SPI
         registries.forEach(registry -> registry.setSeed(seed));
-        EnhancedRandomImpl enhancedRandom = new EnhancedRandomImpl(registries);
-        enhancedRandom.setSeed(seed);
-        enhancedRandom.setScanClasspathForConcreteTypes(scanClasspathForConcreteTypes);
-        return enhancedRandom;
+        return registries;
     }
 
     private Collection<RandomizerRegistry> loadRegistries() {
