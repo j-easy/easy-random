@@ -28,6 +28,8 @@ import io.github.benas.randombeans.annotation.Priority;
 import io.github.benas.randombeans.api.Randomizer;
 import io.github.benas.randombeans.api.RandomizerRegistry;
 import io.github.benas.randombeans.randomizers.misc.BooleanRandomizer;
+import io.github.benas.randombeans.randomizers.misc.LocaleRandomizer;
+import io.github.benas.randombeans.randomizers.misc.UUIDRandomizer;
 import io.github.benas.randombeans.randomizers.net.UriRandomizer;
 import io.github.benas.randombeans.randomizers.net.UrlRandomizer;
 import io.github.benas.randombeans.randomizers.number.*;
@@ -43,7 +45,9 @@ import java.net.URL;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.Locale;
 import java.util.Map;
+import java.util.UUID;
 import java.util.concurrent.atomic.AtomicInteger;
 import java.util.concurrent.atomic.AtomicLong;
 
@@ -87,6 +91,8 @@ public class InternalRandomizerRegistry implements RandomizerRegistry {
         randomizers.put(Calendar.class, new CalendarRandomizer(seed));
         randomizers.put(URL.class, new UrlRandomizer(seed));
         randomizers.put(URI.class, new UriRandomizer(seed));
+        randomizers.put(Locale.class, new LocaleRandomizer(seed));
+        randomizers.put(UUID.class, new UUIDRandomizer(seed));
     }
 
     @Override

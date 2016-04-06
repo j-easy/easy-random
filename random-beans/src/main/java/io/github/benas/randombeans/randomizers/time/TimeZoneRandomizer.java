@@ -21,44 +21,55 @@
  *   OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  *   THE SOFTWARE.
  */
+
 package io.github.benas.randombeans.randomizers.time;
 
-import io.github.benas.randombeans.api.Randomizer;
-import io.github.benas.randombeans.randomizers.misc.EnumRandomizer;
-import io.github.benas.randombeans.randomizers.time.internal.DayRandomizer;
+import java.util.TimeZone;
 
-import java.time.Month;
-import java.time.Period;
-import java.time.Year;
+import io.github.benas.randombeans.randomizers.AbstractRandomizer;
 
 /**
- * A {@link Randomizer} that generates random {@link Period}.
- *
- * @author Mahmoud Ben Hassine (mahmoud.benhassine@icloud.com)
+ * Generate a random {@link TimeZone}.
  */
-public class PeriodRandomizer implements Randomizer<Period> {
+public class TimeZoneRandomizer extends AbstractRandomizer<TimeZone> {
 
-    private YearRandomizer yearRandomizer;
-    private EnumRandomizer<Month> monthRandomizer;
-    private DayRandomizer dayRandomizer;
-
-    public PeriodRandomizer() {
-        yearRandomizer = new YearRandomizer();
-        monthRandomizer = new EnumRandomizer<>(Month.class);
-        dayRandomizer = new DayRandomizer();
+    /**
+     * Create a new {@link TimeZoneRandomizer}.
+     */
+    public TimeZoneRandomizer() {
     }
 
-    public PeriodRandomizer(final long seed) {
-        yearRandomizer = new YearRandomizer(seed);
-        monthRandomizer = new EnumRandomizer<>(Month.class, seed);
-        dayRandomizer = new DayRandomizer(seed);
+    /**
+     * Create a new {@link TimeZoneRandomizer}.
+     *
+     * @param seed initial seed
+     */
+    public TimeZoneRandomizer(final long seed) {
+        super(seed);
+    }
+
+    /**
+     * Create a new {@link TimeZoneRandomizer}.
+     *
+     * @return a new {@link TimeZoneRandomizer}.
+     */
+    public static TimeZoneRandomizer aNewTimeZoneRandomizer() {
+        return new TimeZoneRandomizer();
+    }
+
+    /**
+     * Create a new {@link TimeZoneRandomizer}.
+     *
+     * @param seed initial seed
+     * @return a new {@link TimeZoneRandomizer}.
+     */
+    public static TimeZoneRandomizer aNewTimeZoneRandomizer(final long seed) {
+        return new TimeZoneRandomizer(seed);
     }
 
     @Override
-    public Period getRandomValue() {
-        Year randomYear = yearRandomizer.getRandomValue();
-        Month randomMonth = monthRandomizer.getRandomValue();
-        int randomDay = dayRandomizer.getRandomValue();
-        return Period.of(randomYear.getValue(), randomMonth.getValue(), randomDay);
+    public TimeZone getRandomValue() {
+        String[] timeZoneIds = TimeZone.getAvailableIDs();
+        return TimeZone.getTimeZone(timeZoneIds[random.nextInt(timeZoneIds.length)]);
     }
 }

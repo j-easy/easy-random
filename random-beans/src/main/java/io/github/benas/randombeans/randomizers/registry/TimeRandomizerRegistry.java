@@ -29,8 +29,10 @@ import io.github.benas.randombeans.randomizers.time.*;
 
 import java.lang.reflect.Field;
 import java.time.*;
+import java.util.GregorianCalendar;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.TimeZone;
 
 /**
  * A registry of randomizers for Java 8 JSR 310 types.
@@ -44,15 +46,16 @@ public class TimeRandomizerRegistry implements RandomizerRegistry {
     @Override
     public void setSeed(long seed) {
         randomizers.put(Duration.class, new DurationRandomizer(seed));
+        randomizers.put(GregorianCalendar.class, new GregorianCalendarRandomizer(seed));
         randomizers.put(Instant.class, new InstantRandomizer(seed));
         randomizers.put(LocalDate.class, new LocalDateRandomizer(seed));
         randomizers.put(LocalDateTime.class, new LocalDateTimeRandomizer(seed));
         randomizers.put(LocalTime.class, new LocalTimeRandomizer(seed));
         randomizers.put(MonthDay.class, new MonthDayRandomizer(seed));
-        randomizers.put(Month.class, new MonthRandomizer(seed));
         randomizers.put(OffsetDateTime.class, new OffsetDateTimeRandomizer(seed));
         randomizers.put(OffsetTime.class, new OffsetTimeRandomizer(seed));
         randomizers.put(Period.class, new PeriodRandomizer(seed));
+        randomizers.put(TimeZone.class, new TimeZoneRandomizer(seed));
         randomizers.put(YearMonth.class, new YearMonthRandomizer(seed));
         randomizers.put(Year.class, new YearRandomizer(seed));
         randomizers.put(ZonedDateTime.class, new ZonedDateTimeRandomizer(seed));

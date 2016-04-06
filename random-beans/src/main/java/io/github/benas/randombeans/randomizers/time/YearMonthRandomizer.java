@@ -24,6 +24,7 @@
 package io.github.benas.randombeans.randomizers.time;
 
 import io.github.benas.randombeans.api.Randomizer;
+import io.github.benas.randombeans.randomizers.misc.EnumRandomizer;
 
 import java.time.Month;
 import java.time.Year;
@@ -37,16 +38,16 @@ import java.time.YearMonth;
 public class YearMonthRandomizer implements Randomizer<YearMonth> {
 
     private YearRandomizer yearRandomizer;
-    private MonthRandomizer monthRandomizer;
+    private EnumRandomizer<Month> monthRandomizer;
 
     public YearMonthRandomizer() {
         yearRandomizer = new YearRandomizer();
-        monthRandomizer = new MonthRandomizer();
+        monthRandomizer = new EnumRandomizer<>(Month.class);
     }
 
     public YearMonthRandomizer(final long seed) {
         yearRandomizer = new YearRandomizer(seed);
-        monthRandomizer = new MonthRandomizer(seed);
+        monthRandomizer = new EnumRandomizer<>(Month.class, seed);
     }
 
     @Override

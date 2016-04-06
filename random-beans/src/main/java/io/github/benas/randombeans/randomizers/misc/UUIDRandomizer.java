@@ -21,39 +21,54 @@
  *   OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  *   THE SOFTWARE.
  */
-package io.github.benas.randombeans.randomizers.time;
 
-import io.github.benas.randombeans.api.Randomizer;
-import io.github.benas.randombeans.randomizers.misc.EnumRandomizer;
-import io.github.benas.randombeans.randomizers.time.internal.DayRandomizer;
+package io.github.benas.randombeans.randomizers.misc;
 
-import java.time.Month;
-import java.time.MonthDay;
+import java.util.UUID;
+
+import io.github.benas.randombeans.randomizers.AbstractRandomizer;
 
 /**
- * A {@link Randomizer} that generates random {@link MonthDay}.
- *
- * @author Mahmoud Ben Hassine (mahmoud.benhassine@icloud.com)
+ * Generate a random {@link UUID}.
  */
-public class MonthDayRandomizer implements Randomizer<MonthDay> {
+public class UUIDRandomizer extends AbstractRandomizer<UUID> {
 
-    private EnumRandomizer<Month> monthRandomizer;
-    private DayRandomizer dayRandomizer;
-
-    public MonthDayRandomizer() {
-        monthRandomizer = new EnumRandomizer<>(Month.class);
-        dayRandomizer = new DayRandomizer();
+    /**
+     * Create a new {@link UUIDRandomizer}.
+     */
+    public UUIDRandomizer() {
     }
 
-    public MonthDayRandomizer(final long seed) {
-        monthRandomizer = new EnumRandomizer<>(Month.class, seed);
-        dayRandomizer = new DayRandomizer(seed);
+    /**
+     * Create a new {@link UUIDRandomizer}.
+     *
+     * @param seed initial seed
+     */
+    public UUIDRandomizer(final long seed) {
+        super(seed);
+    }
+
+    /**
+     * Create a new {@link UUIDRandomizer}.
+     *
+     * @return a new {@link UUIDRandomizer}.
+     */
+    public static UUIDRandomizer aNewUUIDRandomizer() {
+        return new UUIDRandomizer();
+    }
+
+    /**
+     * Create a new {@link UUIDRandomizer}.
+     *
+     * @param seed initial seed
+     * @return a new {@link UUIDRandomizer}.
+     */
+    public static UUIDRandomizer aNewUUIDRandomizer(final long seed) {
+        return new UUIDRandomizer(seed);
     }
 
     @Override
-    public MonthDay getRandomValue() {
-        Month randomMonth = monthRandomizer.getRandomValue();
-        int randomDay = dayRandomizer.getRandomValue();
-        return MonthDay.of(randomMonth, randomDay);
+    public UUID getRandomValue() {
+        return new UUID(random.nextLong(), random.nextLong());
     }
 }

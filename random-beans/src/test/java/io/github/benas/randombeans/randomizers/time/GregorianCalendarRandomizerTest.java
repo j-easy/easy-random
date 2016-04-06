@@ -24,25 +24,27 @@
 
 package io.github.benas.randombeans.randomizers.time;
 
-import org.junit.Before;
-import org.junit.Test;
-
-import java.time.Month;
-
+import static io.github.benas.randombeans.randomizers.time.GregorianCalendarRandomizer.aNewGregorianCalendarRandomizer;
 import static org.assertj.core.api.Assertions.assertThat;
 
-public class MonthRandomizerTest {
+import java.util.GregorianCalendar;
 
-    private MonthRandomizer monthRandomizer;
-    
-    @Before
-    public void setUp() {
-        monthRandomizer = new MonthRandomizer();
+import org.junit.Test;
+
+import io.github.benas.randombeans.randomizers.AbstractRandomizerTest;
+
+public class GregorianCalendarRandomizerTest extends AbstractRandomizerTest<GregorianCalendar> {
+
+    @Test
+    public void shouldGenerateRandomGregorianCalendar() {
+        assertThat(aNewGregorianCalendarRandomizer().getRandomValue()).isNotNull();
     }
 
     @Test
-    public void getRandomValue() {
-        Month month = monthRandomizer.getRandomValue();
-        assertThat(month).isNotNull();
+    public void shouldGenerateTheSameValueForTheSameSeed() {
+        GregorianCalendar expected = new GregorianCalendar();
+        expected.setTimeInMillis(5106534569952410475L);
+
+        assertThat(aNewGregorianCalendarRandomizer(SEED).getRandomValue()).isEqualTo(expected);
     }
 }

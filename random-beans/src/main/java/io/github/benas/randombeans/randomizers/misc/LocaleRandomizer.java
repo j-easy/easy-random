@@ -21,39 +21,55 @@
  *   OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  *   THE SOFTWARE.
  */
-package io.github.benas.randombeans.randomizers.time;
 
-import io.github.benas.randombeans.api.Randomizer;
-import io.github.benas.randombeans.randomizers.misc.EnumRandomizer;
-import io.github.benas.randombeans.randomizers.time.internal.DayRandomizer;
+package io.github.benas.randombeans.randomizers.misc;
 
-import java.time.Month;
-import java.time.MonthDay;
+import java.util.Locale;
+
+import io.github.benas.randombeans.randomizers.AbstractRandomizer;
 
 /**
- * A {@link Randomizer} that generates random {@link MonthDay}.
- *
- * @author Mahmoud Ben Hassine (mahmoud.benhassine@icloud.com)
+ * Generate a random {@link Locale}.
  */
-public class MonthDayRandomizer implements Randomizer<MonthDay> {
+public class LocaleRandomizer extends AbstractRandomizer<Locale> {
 
-    private EnumRandomizer<Month> monthRandomizer;
-    private DayRandomizer dayRandomizer;
-
-    public MonthDayRandomizer() {
-        monthRandomizer = new EnumRandomizer<>(Month.class);
-        dayRandomizer = new DayRandomizer();
+    /**
+     * Create a new {@link LocaleRandomizer}.
+     */
+    public LocaleRandomizer() {
     }
 
-    public MonthDayRandomizer(final long seed) {
-        monthRandomizer = new EnumRandomizer<>(Month.class, seed);
-        dayRandomizer = new DayRandomizer(seed);
+    /**
+     * Create a new {@link LocaleRandomizer}.
+     *
+     * @param seed initial seed
+     */
+    public LocaleRandomizer(final long seed) {
+        super(seed);
+    }
+
+    /**
+     * Create a new {@link LocaleRandomizer}.
+     *
+     * @return a new {@link LocaleRandomizer}.
+     */
+    public static LocaleRandomizer aNewLocaleRandomizer() {
+        return new LocaleRandomizer();
+    }
+
+    /**
+     * Create a new {@link LocaleRandomizer}.
+     *
+     * @param seed initial seed
+     * @return a new {@link LocaleRandomizer}.
+     */
+    public static LocaleRandomizer aNewLocaleRandomizer(final long seed) {
+        return new LocaleRandomizer(seed);
     }
 
     @Override
-    public MonthDay getRandomValue() {
-        Month randomMonth = monthRandomizer.getRandomValue();
-        int randomDay = dayRandomizer.getRandomValue();
-        return MonthDay.of(randomMonth, randomDay);
+    public Locale getRandomValue() {
+        Locale[] availableLocales = Locale.getAvailableLocales();
+        return availableLocales[random.nextInt(availableLocales.length)];
     }
 }

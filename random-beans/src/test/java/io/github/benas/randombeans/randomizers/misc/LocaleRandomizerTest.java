@@ -21,39 +21,27 @@
  *   OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  *   THE SOFTWARE.
  */
-package io.github.benas.randombeans.randomizers.time;
 
-import io.github.benas.randombeans.api.Randomizer;
-import io.github.benas.randombeans.randomizers.misc.EnumRandomizer;
-import io.github.benas.randombeans.randomizers.time.internal.DayRandomizer;
+package io.github.benas.randombeans.randomizers.misc;
 
-import java.time.Month;
-import java.time.MonthDay;
+import static io.github.benas.randombeans.randomizers.misc.LocaleRandomizer.aNewLocaleRandomizer;
+import static org.assertj.core.api.Assertions.assertThat;
 
-/**
- * A {@link Randomizer} that generates random {@link MonthDay}.
- *
- * @author Mahmoud Ben Hassine (mahmoud.benhassine@icloud.com)
- */
-public class MonthDayRandomizer implements Randomizer<MonthDay> {
+import java.util.Locale;
 
-    private EnumRandomizer<Month> monthRandomizer;
-    private DayRandomizer dayRandomizer;
+import org.junit.Test;
 
-    public MonthDayRandomizer() {
-        monthRandomizer = new EnumRandomizer<>(Month.class);
-        dayRandomizer = new DayRandomizer();
+import io.github.benas.randombeans.randomizers.AbstractRandomizerTest;
+
+public class LocaleRandomizerTest extends AbstractRandomizerTest<Locale> {
+
+    @Test
+    public void shouldGenerateRandomLocale() {
+        assertThat(aNewLocaleRandomizer().getRandomValue()).isNotNull();
     }
 
-    public MonthDayRandomizer(final long seed) {
-        monthRandomizer = new EnumRandomizer<>(Month.class, seed);
-        dayRandomizer = new DayRandomizer(seed);
-    }
-
-    @Override
-    public MonthDay getRandomValue() {
-        Month randomMonth = monthRandomizer.getRandomValue();
-        int randomDay = dayRandomizer.getRandomValue();
-        return MonthDay.of(randomMonth, randomDay);
+    @Test
+    public void shouldGenerateTheSameValueForTheSameSeed() {
+        assertThat(aNewLocaleRandomizer(SEED).getRandomValue()).isEqualTo(new Locale("nl", "be"));
     }
 }

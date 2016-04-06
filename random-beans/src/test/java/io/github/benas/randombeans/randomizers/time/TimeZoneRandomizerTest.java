@@ -21,36 +21,33 @@
  *   OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  *   THE SOFTWARE.
  */
+
 package io.github.benas.randombeans.randomizers.time;
 
-import io.github.benas.randombeans.api.Randomizer;
-import io.github.benas.randombeans.randomizers.range.IntegerRangeRandomizer;
+import static io.github.benas.randombeans.randomizers.time.TimeZoneRandomizer.aNewTimeZoneRandomizer;
+import static org.assertj.core.api.Assertions.assertThat;
 
-import java.time.Month;
+import java.util.TimeZone;
 
-/**
- * A {@link Randomizer} that generates random {@link Month}.
- *
- * @author Mahmoud Ben Hassine (mahmoud.benhassine@icloud.com)
- */
-public class MonthRandomizer implements Randomizer<Month> {
+import org.junit.Test;
 
-    public static final int MIN_MONTH = 1;
-    public static final int MAX_MONTH = 12;
+import io.github.benas.randombeans.randomizers.AbstractRandomizerTest;
 
-    private IntegerRangeRandomizer monthRandomizer;
+public class TimeZoneRandomizerTest extends AbstractRandomizerTest<TimeZone> {
 
-    public MonthRandomizer() {
-        monthRandomizer = new IntegerRangeRandomizer(MIN_MONTH, MAX_MONTH);
+    @Test
+    public void shouldGenerateRandomTimeZone() {
+        assertThat(aNewTimeZoneRandomizer().getRandomValue()).isNotNull();
     }
 
-    public MonthRandomizer(final long seed) {
-        monthRandomizer = new IntegerRangeRandomizer(MIN_MONTH, MAX_MONTH, seed);
-    }
-
-    @Override
-    public Month getRandomValue() {
-        int randomMonth = monthRandomizer.getRandomValue();
-        return Month.of(randomMonth);
+    @Test
+    public void shouldGenerateTheSameValueForTheSameSeed() {
+        // we can not use a canned value, because the available TimeZones differ between locales/jdks
+        TimeZone firstTimeZone = aNewTimeZoneRandomizer(SEED).getRandomValue();
+        TimeZone secondTimeZone = aNewTimeZoneRandomizer(SEED).getRandomValue();
+        
+        assertThat(firstTimeZone).isNotNull();
+        assertThat(secondTimeZone).isNotNull();
+        assertThat(firstTimeZone).isEqualTo(secondTimeZone);
     }
 }
