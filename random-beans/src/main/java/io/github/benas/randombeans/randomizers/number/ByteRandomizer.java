@@ -74,4 +74,9 @@ public class ByteRandomizer implements Randomizer<Byte> {
     public Byte getRandomValue() {
         return delegate.getRandomValue().byteValue();
     }
+
+    @Override
+    public String toString() {
+        return "ByteRandomizer";
+    }
 }

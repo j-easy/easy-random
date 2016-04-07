@@ -71,4 +71,9 @@ public class IntegerRandomizer extends AbstractRandomizer<Integer> {
     public Integer getRandomValue() {
         return random.nextInt();
     }
+
+    @Override
+    public String toString() {
+        return "IntegerRandomizer";
+    }
 }

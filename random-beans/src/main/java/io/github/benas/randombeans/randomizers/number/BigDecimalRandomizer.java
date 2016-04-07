@@ -76,4 +76,9 @@ public class BigDecimalRandomizer implements Randomizer<BigDecimal> {
     public BigDecimal getRandomValue() {
         return new BigDecimal(delegate.getRandomValue());
     }
+
+    @Override
+    public String toString() {
+        return "BigDecimalRandomizer";
+    }
 }
