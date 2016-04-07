@@ -26,7 +26,6 @@ package io.github.benas.randombeans.randomizers.number;
 
 import io.github.benas.randombeans.randomizers.AbstractRandomizerTest;
 import org.junit.Before;
-import org.junit.Ignore;
 import org.junit.Test;
 
 import java.util.concurrent.atomic.AtomicInteger;
@@ -40,12 +39,10 @@ public class AtomicIntegerRandomizerTest extends AbstractRandomizerTest<AtomicIn
         randomizer = AtomicIntegerRandomizer.aNewAtomicIntegerRandomizer(SEED);
     }
 
-    @Ignore("AtomicInteger are not intended to be comparable, see http://stackoverflow.com/questions/7567502/why-are-two-atomicintegers-never-equal")
     @Test
     public void shouldGenerateTheSameValueForTheSameSeed() {
         AtomicInteger actual = randomizer.getRandomValue();
-        AtomicInteger expected = new AtomicInteger(-1188957731);
 
-        assertThat(actual).isEqualTo(expected);
+        assertThat(actual.get()).isEqualTo(-1188957731);
     }
 }
