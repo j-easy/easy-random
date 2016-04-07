@@ -84,4 +84,8 @@ public class SetRandomizer<T> extends CollectionRandomizer<T> {
         return result;
     }
 
+    @Override
+    public String toString() {
+        return "SetRandomizer [delegate=" + delegate + ", nbElements=" + nbElements + "]";
+    }
 }
