@@ -76,9 +76,4 @@ public class BigIntegerRandomizer extends AbstractRandomizer<BigInteger> {
     public BigInteger getRandomValue() {
         return new BigInteger(NUM_BITS, random);
     }
-
-    @Override
-    public String toString() {
-        return "BigIntegerRandomizer";
-    }
 }

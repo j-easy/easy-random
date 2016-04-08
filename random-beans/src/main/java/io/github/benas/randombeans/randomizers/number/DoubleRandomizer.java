@@ -71,9 +71,4 @@ public class DoubleRandomizer extends AbstractRandomizer<Double> {
     public Double getRandomValue() {
         return random.nextDouble();
     }
-
-    @Override
-    public String toString() {
-        return "DoubleRandomizer";
-    }
 }
