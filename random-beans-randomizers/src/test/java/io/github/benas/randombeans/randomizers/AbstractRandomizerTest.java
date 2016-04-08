@@ -23,11 +23,14 @@
  */
 package io.github.benas.randombeans.randomizers;
 
+import java.util.Locale;
+
 import io.github.benas.randombeans.api.Randomizer;
 
 public class AbstractRandomizerTest<T> {
 
     protected static final long SEED = 123L;
+    protected static final Locale LOCALE = Locale.FRANCE;
 
     protected Randomizer<T> randomizer;
 

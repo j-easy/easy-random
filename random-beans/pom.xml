@@ -99,7 +99,6 @@
         <dependency>
             <groupId>com.tngtech.java</groupId>
             <artifactId>junit-dataprovider</artifactId>
-            <version>1.10.4</version>
             <scope>test</scope>
         </dependency>
     </dependencies>

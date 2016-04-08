@@ -27,27 +27,38 @@ package io.github.benas.randombeans.randomizers;
 import org.junit.Before;
 import org.junit.Test;
 
+import static io.github.benas.randombeans.randomizers.GenericStringRandomizer.aNewGenericStringRandomizer;
 import static java.util.Arrays.asList;
-import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.BDDAssertions.then;
 
 public class GenericStringRandomizerTest extends AbstractRandomizerTest<String> {
 
     private String[] words;
 
     @Before
-    public void setUp() throws Exception {
+    public void setUp() {
         words = new String[]{"foo", "bar"};
     }
 
     @Test
-    public void randomValueShouldBeGeneratedFromTheGivenWords() throws Exception {
-        randomizer = new GenericStringRandomizer(words);
-        assertThat(randomizer.getRandomValue()).isIn(asList(words));
+    public void randomValueShouldBeGeneratedFromTheGivenWords() {
+        // given
+        randomizer = aNewGenericStringRandomizer(words);
+
+        // when
+        String randomWord = randomizer.getRandomValue();
+
+        then(randomWord).isIn(asList(words));
     }
 
     @Test
-    public void randomValueShouldBeAlwaysTheSameForTheSameSeed() throws Exception {
-        randomizer = new GenericStringRandomizer(words, SEED);
-        assertThat(randomizer.getRandomValue()).isEqualTo("bar");
+    public void randomValueShouldBeAlwaysTheSameForTheSameSeed() {
+        // given
+        randomizer = aNewGenericStringRandomizer(words, SEED);
+
+        // when
+        String randomWord = randomizer.getRandomValue();
+
+        then(randomWord).isEqualTo("bar");
     }
 }
