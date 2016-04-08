@@ -50,7 +50,7 @@ import static org.assertj.core.api.BDDAssertions.then;
 public class NumberRandomizersTest extends AbstractRandomizerTest<Object> {
 
     @DataProvider
-    public static Object[] generatedNumberShouldNotBeNull() {
+    public static Object[] generateRandomizers() {
         return new Object[] { 
                 aNewByteRandomizer(),
                 aNewShortRandomizer(),
@@ -64,7 +64,7 @@ public class NumberRandomizersTest extends AbstractRandomizerTest<Object> {
     }
 
     @Test
-    @UseDataProvider
+    @UseDataProvider("generateRandomizers")
     public void generatedNumberShouldNotBeNull(Randomizer<?> randomizer) {
         // when
         Object randomNumber = randomizer.getRandomValue();
@@ -73,7 +73,7 @@ public class NumberRandomizersTest extends AbstractRandomizerTest<Object> {
     }
 
     @DataProvider
-    public static Object[][] shouldGenerateTheSameValueForTheSameSeed() {
+    public static Object[][] generateSeededRandomizersAndTheirExpectedValues() {
         return new Object[][] { 
                 { aNewByteRandomizer(SEED), (byte) -35 },
                 { aNewShortRandomizer(SEED), (short) -3619 },
@@ -87,7 +87,7 @@ public class NumberRandomizersTest extends AbstractRandomizerTest<Object> {
     }
 
     @Test
-    @UseDataProvider
+    @UseDataProvider("generateSeededRandomizersAndTheirExpectedValues")
     public void shouldGenerateTheSameValueForTheSameSeed(Randomizer<?> randomizer, Object expected) {
         //when
         Object actual = randomizer.getRandomValue();
