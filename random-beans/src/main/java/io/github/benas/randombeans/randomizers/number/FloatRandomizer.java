@@ -71,4 +71,9 @@ public class FloatRandomizer extends AbstractRandomizer<Float> {
     public Float getRandomValue() {
         return random.nextFloat();
     }
+
+    @Override
+    public String toString() {
+        return "FloatRandomizer";
+    }
 }

@@ -24,23 +24,16 @@
 
 package io.github.benas.randombeans.randomizers.misc;
 
-import org.junit.Before;
 import org.junit.Test;
 
+import static io.github.benas.randombeans.randomizers.misc.NullRandomizer.aNewNullRandomizer;
 import static org.assertj.core.api.Assertions.assertThat;
 
 public class NullRandomizerTest {
 
-    private NullRandomizer nullRandomizer;
-
-    @Before
-    public void setUp() {
-        nullRandomizer = new NullRandomizer();
-    }
-
     @Test
     public void generatedValueShouldBeNull() {
-        assertThat(nullRandomizer.getRandomValue()).isNull();
+        assertThat(aNewNullRandomizer().getRandomValue()).isNull();
     }
 
 }

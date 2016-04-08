@@ -83,4 +83,9 @@ public class QueueRandomizer<T> extends CollectionRandomizer<T> {
         }
         return result;
     }
+
+    @Override
+    public String toString() {
+        return "QueueRandomizer [delegate=" + delegate + ", nbElements=" + nbElements + "]";
+    }
 }

@@ -24,23 +24,15 @@
 
 package io.github.benas.randombeans.randomizers.misc;
 
-import org.junit.Before;
 import org.junit.Test;
 
+import static io.github.benas.randombeans.randomizers.misc.SkipRandomizer.aNewSkipRandomizer;
 import static org.assertj.core.api.Assertions.assertThat;
 
 public class SkipRandomizerTest {
 
-    private SkipRandomizer skipRandomizer;
-
-    @Before
-    public void setUp() {
-        skipRandomizer = new SkipRandomizer();
-    }
-
     @Test
     public void generatedValueShouldBeNull() {
-        assertThat(skipRandomizer.getRandomValue()).isNull();
+        assertThat(aNewSkipRandomizer().getRandomValue()).isNull();
     }
-
 }

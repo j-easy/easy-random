@@ -24,15 +24,15 @@
 
 package io.github.benas.randombeans.randomizers.collection;
 
-import io.github.benas.randombeans.api.Randomizer;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.Mock;
 import org.mockito.runners.MockitoJUnitRunner;
 
-import java.util.Map;
+import io.github.benas.randombeans.api.Randomizer;
 
+import static io.github.benas.randombeans.randomizers.collection.MapRandomizer.aNewMapRandomizer;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.Mockito.when;
 
@@ -40,26 +40,28 @@ import static org.mockito.Mockito.when;
 public class MapRandomizerTest {
 
     @Mock
-    private Randomizer<Integer> randomizer;
-    
-    private MapRandomizer<Integer, Integer> mapRandomizer;
+    private Randomizer<Integer> keyRandomizer;
+    @Mock
+    private Randomizer<String> valueRandomizer;
 
     @Before
     public void setUp() throws Exception {
-        when(randomizer.getRandomValue()).thenReturn(0, 1, 2, 3, 4, 5, 6);
-        mapRandomizer = new MapRandomizer<>(randomizer, randomizer, 3);
+        when(keyRandomizer.getRandomValue()).thenReturn(1, 2, 3);
+        when(valueRandomizer.getRandomValue()).thenReturn("a", "b", "c");
+    }
+
+    @Test
+    public void generatedMapShouldNotBeEmpty() {
+        assertThat(aNewMapRandomizer(keyRandomizer, valueRandomizer).getRandomValue()).isNotEmpty();
     }
 
     @Test
     public void generatedMapSizeShouldBeEqualToTheSpecifiedSize() {
-        Map<Integer, Integer> names = mapRandomizer.getRandomValue();
-
-        assertThat(names).hasSize(3);
+        assertThat(aNewMapRandomizer(keyRandomizer, valueRandomizer, 3).getRandomValue()).hasSize(3);
     }
 
     @Test(expected = IllegalArgumentException.class)
-    public void nbEntriesShouldBePositive() {
-        mapRandomizer = new MapRandomizer<>(randomizer, randomizer, -3);
+    public void specifiedSizeShouldBePositive() {
+        aNewMapRandomizer(keyRandomizer, valueRandomizer, -3);
     }
-
 }
