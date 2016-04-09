@@ -71,9 +71,4 @@ public class ShortRandomizer extends AbstractRandomizer<Short> {
     public Short getRandomValue() {
         return (short) random.nextInt();
     }
-
-    @Override
-    public String toString() {
-        return "ShortRandomizer";
-    }
 }

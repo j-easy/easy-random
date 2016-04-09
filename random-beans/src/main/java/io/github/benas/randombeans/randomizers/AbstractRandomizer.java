@@ -45,4 +45,8 @@ public abstract class AbstractRandomizer<T> implements Randomizer<T>  {
         random = new Random(seed);
     }
 
+    @Override
+    public String toString() {
+        return this.getClass().getSimpleName();
+    }
 }

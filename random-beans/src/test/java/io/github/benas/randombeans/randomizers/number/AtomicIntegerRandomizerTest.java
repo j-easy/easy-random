@@ -25,24 +25,34 @@
 package io.github.benas.randombeans.randomizers.number;
 
 import io.github.benas.randombeans.randomizers.AbstractRandomizerTest;
-import org.junit.Before;
 import org.junit.Test;
 
 import java.util.concurrent.atomic.AtomicInteger;
 
-import static org.assertj.core.api.Assertions.assertThat;
+import static io.github.benas.randombeans.randomizers.number.AtomicIntegerRandomizer.aNewAtomicIntegerRandomizer;
+import static org.assertj.core.api.BDDAssertions.then;
 
 public class AtomicIntegerRandomizerTest extends AbstractRandomizerTest<AtomicInteger> {
 
-    @Before
-    public void setUp() throws Exception {
-        randomizer = AtomicIntegerRandomizer.aNewAtomicIntegerRandomizer(SEED);
+    @Test
+    public void generateValueShouldNotBeNull() {
+        // given
+        AtomicIntegerRandomizer atomicIntegerRandomizer = aNewAtomicIntegerRandomizer();
+        
+        // when
+        AtomicInteger atomicInteger = atomicIntegerRandomizer.getRandomValue();
+
+        then(atomicInteger).isNotNull();
     }
 
     @Test
     public void shouldGenerateTheSameValueForTheSameSeed() {
-        AtomicInteger actual = randomizer.getRandomValue();
+        // given
+        AtomicIntegerRandomizer atomicIntegerRandomizer = aNewAtomicIntegerRandomizer(SEED);
+        
+        // when
+        AtomicInteger atomicInteger = atomicIntegerRandomizer.getRandomValue();
 
-        assertThat(actual.get()).isEqualTo(-1188957731);
+        then(atomicInteger.get()).isEqualTo(-1188957731);
     }
 }

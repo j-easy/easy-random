@@ -71,9 +71,4 @@ public class LongRandomizer extends AbstractRandomizer<Long> {
     public Long getRandomValue() {
         return random.nextLong();
     }
-
-    @Override
-    public String toString() {
-        return "LongRandomizer";
-    }
 }
