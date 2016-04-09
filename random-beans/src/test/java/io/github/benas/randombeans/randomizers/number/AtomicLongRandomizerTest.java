@@ -25,24 +25,34 @@
 package io.github.benas.randombeans.randomizers.number;
 
 import io.github.benas.randombeans.randomizers.AbstractRandomizerTest;
-import org.junit.Before;
 import org.junit.Test;
 
 import java.util.concurrent.atomic.AtomicLong;
 
-import static org.assertj.core.api.Assertions.assertThat;
+import static io.github.benas.randombeans.randomizers.number.AtomicLongRandomizer.aNewAtomicLongRandomizer;
+import static org.assertj.core.api.BDDAssertions.then;
 
 public class AtomicLongRandomizerTest extends AbstractRandomizerTest<AtomicLong> {
 
-    @Before
-    public void setUp() throws Exception {
-        randomizer = AtomicLongRandomizer.aNewAtomicLongRandomizer(SEED);
+    @Test
+    public void generateValueShouldNotBeNull() {
+        // given
+        AtomicLongRandomizer atomicLongRandomizer = aNewAtomicLongRandomizer();
+        
+        // when
+        AtomicLong atomicLong = atomicLongRandomizer.getRandomValue();
+
+        then(atomicLong).isNotNull();
     }
 
     @Test
     public void shouldGenerateTheSameValueForTheSameSeed() {
-        AtomicLong actual = randomizer.getRandomValue();
+        // given
+        AtomicLongRandomizer atomicLongRandomizer = aNewAtomicLongRandomizer(SEED);
+        
+        // when
+        AtomicLong atomicLong = atomicLongRandomizer.getRandomValue();
 
-        assertThat(actual.get()).isEqualTo(-5106534569952410475L);
+        then(atomicLong.get()).isEqualTo(-5106534569952410475L);
     }
 }
