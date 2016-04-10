@@ -30,6 +30,7 @@ import org.junit.Test;
 import java.util.Calendar;
 import java.util.Date;
 
+import static io.github.benas.randombeans.randomizers.range.DateRangeRandomizer.aNewDateRangeRandomizer;
 import static org.assertj.core.api.Assertions.assertThat;
 
 public class DateRangeRandomizerTest extends AbstractRangeRandomizerTest<Date> {
@@ -40,7 +41,7 @@ public class DateRangeRandomizerTest extends AbstractRangeRandomizerTest<Date> {
     public void setUp() {
         today = new Date();
         tomorrow = addDays(today, 1);
-        randomizer = new DateRangeRandomizer(today, tomorrow);
+        randomizer = aNewDateRangeRandomizer(today, tomorrow);
     }
 
     @Test
@@ -51,7 +52,7 @@ public class DateRangeRandomizerTest extends AbstractRangeRandomizerTest<Date> {
 
     @Test
     public void generatedDateShouldBeAlwaysTheSameForTheSameSeed() {
-        randomizer = new DateRangeRandomizer(today, tomorrow, SEED);
+        randomizer = aNewDateRangeRandomizer(today, tomorrow, SEED);
         Date randomDate = randomizer.getRandomValue();
 
         assertThat(randomDate).isEqualTo(new Date(randomDate.getTime()));
@@ -59,19 +60,19 @@ public class DateRangeRandomizerTest extends AbstractRangeRandomizerTest<Date> {
 
     @Test(expected = IllegalArgumentException.class)
     public void whenSpecifiedMinDateIsAfterMaxDateThenThrowIllegalArgumentException() {
-        new DateRangeRandomizer(tomorrow, today);
+        aNewDateRangeRandomizer(tomorrow, today);
     }
 
     @Test
     public void whenSpecifiedMinDateIsNullThenShouldUseDefaultMinValue() {
-        randomizer = new DateRangeRandomizer(null, tomorrow);
+        randomizer = aNewDateRangeRandomizer(null, tomorrow);
         Date randomDate = randomizer.getRandomValue();
         assertThat(randomDate).isBeforeOrEqualsTo(tomorrow);
     }
 
     @Test
     public void whenSpecifiedMaxDateIsNullThenShouldUseDefaultMaxValue() {
-        randomizer = new DateRangeRandomizer(today, null);
+        randomizer = aNewDateRangeRandomizer(today, null);
         Date randomDate = randomizer.getRandomValue();
         assertThat(randomDate).isAfterOrEqualsTo(today);
     }

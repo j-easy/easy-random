@@ -27,7 +27,9 @@ package io.github.benas.randombeans.randomizers.range;
 import org.junit.Before;
 import org.junit.Test;
 
+import static io.github.benas.randombeans.randomizers.range.FloatRangeRandomizer.aNewFloatRangeRandomizer;
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.BDDAssertions.then;
 
 public class FloatRangeRandomizerTest extends AbstractRangeRandomizerTest<Float> {
 
@@ -35,7 +37,7 @@ public class FloatRangeRandomizerTest extends AbstractRangeRandomizerTest<Float>
     public void setUp() {
         min = 1f;
         max = 10f;
-        randomizer = new FloatRangeRandomizer(min, max);
+        randomizer = aNewFloatRangeRandomizer(min, max);
     }
 
     @Test
@@ -46,21 +48,31 @@ public class FloatRangeRandomizerTest extends AbstractRangeRandomizerTest<Float>
 
     @Test(expected = IllegalArgumentException.class)
     public void whenSpecifiedMinValueIsAfterMaxValueThenThrowIllegalArgumentException() {
-        new FloatRangeRandomizer(max, min);
+        aNewFloatRangeRandomizer(max, min);
     }
 
     @Test
     public void whenSpecifiedMinValueIsNullThenShouldUseDefaultMinValue() {
-        randomizer = new FloatRangeRandomizer(null, max);
+        randomizer = aNewFloatRangeRandomizer(null, max);
         Float randomFloat = randomizer.getRandomValue();
         assertThat(randomFloat).isLessThanOrEqualTo(max);
     }
 
     @Test
     public void whenSpecifiedMaxvalueIsNullThenShouldUseDefaultMaxValue() {
-        randomizer = new FloatRangeRandomizer(min, null);
+        randomizer = aNewFloatRangeRandomizer(min, null);
         Float randomFloat = randomizer.getRandomValue();
         assertThat(randomFloat).isGreaterThanOrEqualTo(min);
     }
 
+    @Test
+    public void shouldAlwaysGenerateTheSameValueForTheSameSeed() {
+        // given
+        FloatRangeRandomizer floatRangeRandomizer = aNewFloatRangeRandomizer(min, max, SEED);
+        
+        // when
+        Float f = floatRangeRandomizer.getRandomValue();
+
+        then(f).isEqualTo(7F);
+    }
 }

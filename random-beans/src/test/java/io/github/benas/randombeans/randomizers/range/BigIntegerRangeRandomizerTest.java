@@ -29,7 +29,9 @@ import org.junit.Test;
 
 import java.math.BigInteger;
 
+import static io.github.benas.randombeans.randomizers.range.BigIntegerRangeRandomizer.aNewBigIntegerRangeRandomizer;
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.BDDAssertions.then;
 
 public class BigIntegerRangeRandomizerTest extends AbstractRangeRandomizerTest<BigInteger> {
 
@@ -39,7 +41,7 @@ public class BigIntegerRangeRandomizerTest extends AbstractRangeRandomizerTest<B
     public void setUp() {
         min = 1;
         max = 10;
-        randomizer = new BigIntegerRangeRandomizer(min, max);
+        randomizer = aNewBigIntegerRangeRandomizer(min, max);
     }
 
     @Test
@@ -50,21 +52,31 @@ public class BigIntegerRangeRandomizerTest extends AbstractRangeRandomizerTest<B
 
     @Test(expected = IllegalArgumentException.class)
     public void whenSpecifiedMinValueIsAfterMaxValueThenThrowIllegalArgumentException() {
-        new BigIntegerRangeRandomizer(max, min);
+        aNewBigIntegerRangeRandomizer(max, min);
     }
 
     @Test
     public void whenSpecifiedMinValueIsNullThenShouldUseDefaultMinValue() {
-        randomizer = new BigIntegerRangeRandomizer(null, max);
+        randomizer = aNewBigIntegerRangeRandomizer(null, max);
         BigInteger radomBigInteger = randomizer.getRandomValue();
         assertThat(radomBigInteger.intValue()).isLessThanOrEqualTo(max);
     }
 
     @Test
     public void whenSpecifiedMaxvalueIsNullThenShouldUseDefaultMaxValue() {
-        randomizer = new BigIntegerRangeRandomizer(min, null);
+        randomizer = aNewBigIntegerRangeRandomizer(min, null);
         BigInteger radomBigInteger = randomizer.getRandomValue();
         assertThat(radomBigInteger.intValue()).isGreaterThanOrEqualTo(min);
     }
 
+    @Test
+    public void shouldAlwaysGenerateTheSameValueForTheSameSeed() {
+        // given
+        BigIntegerRangeRandomizer bigIntegerRangeRandomizer = aNewBigIntegerRangeRandomizer(min, max, SEED);
+        
+        // when
+        BigInteger bigInteger = bigIntegerRangeRandomizer.getRandomValue();
+
+        then(bigInteger).isEqualTo(new BigInteger("7"));
+    }
 }

@@ -27,7 +27,9 @@ package io.github.benas.randombeans.randomizers.range;
 import org.junit.Before;
 import org.junit.Test;
 
+import static io.github.benas.randombeans.randomizers.range.IntegerRangeRandomizer.aNewIntegerRangeRandomizer;
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.BDDAssertions.then;
 
 public class IntegerRangeRandomizerTest extends AbstractRangeRandomizerTest<Integer> {
 
@@ -35,7 +37,7 @@ public class IntegerRangeRandomizerTest extends AbstractRangeRandomizerTest<Inte
     public void setUp() {
         min = 1;
         max = 10;
-        randomizer = new IntegerRangeRandomizer(min, max);
+        randomizer = aNewIntegerRangeRandomizer(min, max);
     }
 
     @Test
@@ -46,21 +48,31 @@ public class IntegerRangeRandomizerTest extends AbstractRangeRandomizerTest<Inte
 
     @Test(expected = IllegalArgumentException.class)
     public void whenSpecifiedMinValueIsAfterMaxValueThenThrowIllegalArgumentException() {
-        new IntegerRangeRandomizer(max, min);
+        aNewIntegerRangeRandomizer(max, min);
     }
 
     @Test
     public void whenSpecifiedMinValueIsNullThenShouldUseDefaultMinValue() {
-        randomizer = new IntegerRangeRandomizer(null, max);
+        randomizer = aNewIntegerRangeRandomizer(null, max);
         Integer randomInteger = randomizer.getRandomValue();
         assertThat(randomInteger).isLessThanOrEqualTo(max);
     }
 
     @Test
     public void whenSpecifiedMaxvalueIsNullThenShouldUseDefaultMaxValue() {
-        randomizer = new IntegerRangeRandomizer(min, null);
+        randomizer = aNewIntegerRangeRandomizer(min, null);
         Integer randomInteger = randomizer.getRandomValue();
         assertThat(randomInteger).isGreaterThanOrEqualTo(min);
     }
 
+    @Test
+    public void shouldAlwaysGenerateTheSameValueForTheSameSeed() {
+        // given
+        IntegerRangeRandomizer integerRangeRandomizer = aNewIntegerRangeRandomizer(min, max, SEED);
+        
+        // when
+        Integer i = integerRangeRandomizer.getRandomValue();
+
+        then(i).isEqualTo(7);
+    }
 }

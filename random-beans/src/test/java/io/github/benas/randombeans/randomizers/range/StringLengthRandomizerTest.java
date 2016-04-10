@@ -27,7 +27,9 @@ package io.github.benas.randombeans.randomizers.range;
 import org.junit.Before;
 import org.junit.Test;
 
+import static io.github.benas.randombeans.randomizers.range.StringLengthRandomizer.aNewStringLengthRandomizer;
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.BDDAssertions.then;
 
 public class StringLengthRandomizerTest extends AbstractRangeRandomizerTest<String> {
 
@@ -37,7 +39,7 @@ public class StringLengthRandomizerTest extends AbstractRangeRandomizerTest<Stri
     public void setUp() {
         min = 1;
         max = 10;
-        randomizer = new StringLengthRandomizer(min, max);
+        randomizer = aNewStringLengthRandomizer(min, max);
     }
 
     @Test
@@ -48,21 +50,31 @@ public class StringLengthRandomizerTest extends AbstractRangeRandomizerTest<Stri
 
     @Test(expected = IllegalArgumentException.class)
     public void whenSpecifiedMinLengthIsAfterMaxLengthThenThrowIllegalArgumentException() {
-        new StringLengthRandomizer(max, min);
+        aNewStringLengthRandomizer(max, min);
     }
 
     @Test
     public void whenSpecifiedMinLengthIsNullThenShouldUseDefaultMinValue() {
-        randomizer = new StringLengthRandomizer(null, max);
+        randomizer = aNewStringLengthRandomizer(null, max);
         String randomString = randomizer.getRandomValue();
         assertThat(randomString.length()).isLessThanOrEqualTo(max);
     }
 
     @Test
     public void whenSpecifiedMaxLengthIsNullThenShouldUseDefaultMaxValue() {
-        randomizer = new StringLengthRandomizer(min, null);
+        randomizer = aNewStringLengthRandomizer(min, null);
         String randomString = randomizer.getRandomValue();
         assertThat(randomString.length()).isGreaterThanOrEqualTo(min);
     }
 
+    @Test
+    public void shouldAlwaysGenerateTheSameValueForTheSameSeed() {
+        // given
+        StringLengthRandomizer stringLengthRandomizer = aNewStringLengthRandomizer(min, max, SEED);
+        
+        // when
+        String string = stringLengthRandomizer.getRandomValue();
+
+        then(string).isEqualTo("6tu4grj");
+    }
 }

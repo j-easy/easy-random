@@ -27,7 +27,9 @@ package io.github.benas.randombeans.randomizers.range;
 import org.junit.Before;
 import org.junit.Test;
 
+import static io.github.benas.randombeans.randomizers.range.LongRangeRandomizer.aNewLongRangeRandomizer;
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.BDDAssertions.then;
 
 public class LongRangeRandomizerTest extends AbstractRangeRandomizerTest<Long> {
 
@@ -35,7 +37,7 @@ public class LongRangeRandomizerTest extends AbstractRangeRandomizerTest<Long> {
     public void setUp() {
         min = 1L;
         max = 10L;
-        randomizer = new LongRangeRandomizer(min, max);
+        randomizer = aNewLongRangeRandomizer(min, max);
     }
 
     @Test
@@ -46,21 +48,31 @@ public class LongRangeRandomizerTest extends AbstractRangeRandomizerTest<Long> {
 
     @Test(expected = IllegalArgumentException.class)
     public void whenSpecifiedMinValueIsAfterMaxValueThenThrowIllegalArgumentException() {
-        new LongRangeRandomizer(max, min);
+        aNewLongRangeRandomizer(max, min);
     }
 
     @Test
     public void whenSpecifiedMinValueIsNullThenShouldUseDefaultMinValue() {
-        randomizer = new LongRangeRandomizer(null, max);
+        randomizer = aNewLongRangeRandomizer(null, max);
         Long randomLong = randomizer.getRandomValue();
         assertThat(randomLong).isLessThanOrEqualTo(max);
     }
 
     @Test
     public void whenSpecifiedMaxvalueIsNullThenShouldUseDefaultMaxValue() {
-        randomizer = new LongRangeRandomizer(min, null);
+        randomizer = aNewLongRangeRandomizer(min, null);
         Long randomLong = randomizer.getRandomValue();
         assertThat(randomLong).isGreaterThanOrEqualTo(min);
     }
 
+    @Test
+    public void shouldAlwaysGenerateTheSameValueForTheSameSeed() {
+        // given
+        LongRangeRandomizer longRangeRandomizer = aNewLongRangeRandomizer(min, max, SEED);
+        
+        // when
+        Long l = longRangeRandomizer.getRandomValue();
+
+        then(l).isEqualTo(7L);
+    }
 }
