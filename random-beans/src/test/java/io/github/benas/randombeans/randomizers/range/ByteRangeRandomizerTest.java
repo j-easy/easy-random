@@ -27,7 +27,9 @@ package io.github.benas.randombeans.randomizers.range;
 import org.junit.Before;
 import org.junit.Test;
 
+import static io.github.benas.randombeans.randomizers.range.ByteRangeRandomizer.aNewByteRangeRandomizer;
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.BDDAssertions.then;
 
 public class ByteRangeRandomizerTest extends AbstractRangeRandomizerTest<Byte> {
 
@@ -35,7 +37,7 @@ public class ByteRangeRandomizerTest extends AbstractRangeRandomizerTest<Byte> {
     public void setUp() {
         min = (byte) 1;
         max = (byte) 10;
-        randomizer = new ByteRangeRandomizer(min, max);
+        randomizer = aNewByteRangeRandomizer(min, max);
     }
 
     @Test
@@ -46,20 +48,31 @@ public class ByteRangeRandomizerTest extends AbstractRangeRandomizerTest<Byte> {
 
     @Test(expected = IllegalArgumentException.class)
     public void whenSpecifiedMinValueIsAfterMaxValueThenThrowIllegalArgumentException() {
-        new ByteRangeRandomizer(max, min);
+        aNewByteRangeRandomizer(max, min);
     }
 
     @Test
     public void whenSpecifiedMinValueIsNullThenShouldUseDefaultMinValue() {
-        randomizer = new ByteRangeRandomizer(null, max);
+        randomizer = aNewByteRangeRandomizer(null, max);
         Byte randomByte = randomizer.getRandomValue();
         assertThat(randomByte).isLessThanOrEqualTo(max);
     }
 
     @Test
     public void whenSpecifiedMaxvalueIsNullThenShouldUseDefaultMaxValue() {
-        randomizer = new ByteRangeRandomizer(min, null);
+        randomizer = aNewByteRangeRandomizer(min, null);
         Byte randomByte = randomizer.getRandomValue();
         assertThat(randomByte).isGreaterThanOrEqualTo(min);
+    }
+
+    @Test
+    public void shouldAlwaysGenerateTheSameValueForTheSameSeed() {
+        // given
+        ByteRangeRandomizer byteRangeRandomizer = aNewByteRangeRandomizer(min, max, SEED);
+        
+        // when
+        Byte b = byteRangeRandomizer.getRandomValue();
+
+        then(b).isEqualTo((byte) 7);
     }
 }

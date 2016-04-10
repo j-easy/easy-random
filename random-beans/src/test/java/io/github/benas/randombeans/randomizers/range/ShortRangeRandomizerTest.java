@@ -27,7 +27,9 @@ package io.github.benas.randombeans.randomizers.range;
 import org.junit.Before;
 import org.junit.Test;
 
+import static io.github.benas.randombeans.randomizers.range.ShortRangeRandomizer.aNewShortRangeRandomizer;
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.BDDAssertions.then;
 
 public class ShortRangeRandomizerTest extends AbstractRangeRandomizerTest<Short> {
 
@@ -35,7 +37,7 @@ public class ShortRangeRandomizerTest extends AbstractRangeRandomizerTest<Short>
     public void setUp() {
         min = (short) 1;
         max = (short) 10;
-        randomizer = new ShortRangeRandomizer(min, max);
+        randomizer = aNewShortRangeRandomizer(min, max);
     }
 
     @Test
@@ -46,21 +48,31 @@ public class ShortRangeRandomizerTest extends AbstractRangeRandomizerTest<Short>
 
     @Test(expected = IllegalArgumentException.class)
     public void whenSpecifiedMinValueIsAfterMaxValueThenThrowIllegalArgumentException() {
-        new ShortRangeRandomizer(max, min);
+        aNewShortRangeRandomizer(max, min);
     }
 
     @Test
     public void whenSpecifiedMinValueIsNullThenShouldUseDefaultMinValue() {
-        randomizer = new ShortRangeRandomizer(null, max);
+        randomizer = aNewShortRangeRandomizer(null, max);
         Short randomShort = randomizer.getRandomValue();
         assertThat(randomShort).isLessThanOrEqualTo(max);
     }
 
     @Test
     public void whenSpecifiedMaxvalueIsNullThenShouldUseDefaultMaxValue() {
-        randomizer = new ShortRangeRandomizer(min, null);
+        randomizer = aNewShortRangeRandomizer(min, null);
         Short randomShort = randomizer.getRandomValue();
         assertThat(randomShort).isGreaterThanOrEqualTo(min);
     }
 
+    @Test
+    public void shouldAlwaysGenerateTheSameValueForTheSameSeed() {
+        // given
+        ShortRangeRandomizer shortRangeRandomizer = aNewShortRangeRandomizer(min, max, SEED);
+        
+        // when
+        Short s = shortRangeRandomizer.getRandomValue();
+
+        then(s).isEqualTo((short) 7);
+    }
 }

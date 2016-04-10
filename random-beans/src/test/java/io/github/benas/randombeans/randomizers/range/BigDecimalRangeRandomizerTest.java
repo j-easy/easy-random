@@ -29,7 +29,9 @@ import org.junit.Test;
 
 import java.math.BigDecimal;
 
+import static io.github.benas.randombeans.randomizers.range.BigDecimalRangeRandomizer.aNewBigDecimalRangeRandomizer;
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.BDDAssertions.then;
 
 public class BigDecimalRangeRandomizerTest extends AbstractRangeRandomizerTest<BigDecimal> {
 
@@ -39,7 +41,7 @@ public class BigDecimalRangeRandomizerTest extends AbstractRangeRandomizerTest<B
     public void setUp() {
         min = 1L;
         max = 10L;
-        randomizer = new BigDecimalRangeRandomizer(min, max);
+        randomizer = aNewBigDecimalRangeRandomizer(min, max);
     }
 
     @Test
@@ -50,21 +52,31 @@ public class BigDecimalRangeRandomizerTest extends AbstractRangeRandomizerTest<B
 
     @Test(expected = IllegalArgumentException.class)
     public void whenSpecifiedMinValueIsAfterMaxValueThenThrowIllegalArgumentException() {
-        new BigDecimalRangeRandomizer(max, min);
+        aNewBigDecimalRangeRandomizer(max, min);
     }
 
     @Test
     public void whenSpecifiedMinValueIsNullThenShouldUseDefaultMinValue() {
-        randomizer = new BigDecimalRangeRandomizer(null, max);
+        randomizer = aNewBigDecimalRangeRandomizer(null, max);
         BigDecimal randomBigDecimal = randomizer.getRandomValue();
         assertThat(randomBigDecimal.longValue()).isLessThanOrEqualTo(max);
     }
 
     @Test
     public void whenSpecifiedMaxvalueIsNullThenShouldUseDefaultMaxValue() {
-        randomizer = new BigDecimalRangeRandomizer(min, null);
+        randomizer = aNewBigDecimalRangeRandomizer(min, null);
         BigDecimal randomBigDecimal = randomizer.getRandomValue();
         assertThat(randomBigDecimal.longValue()).isGreaterThanOrEqualTo(min);
     }
 
+    @Test
+    public void shouldAlwaysGenerateTheSameValueForTheSameSeed() {
+        // given
+        BigDecimalRangeRandomizer bigDecimalRangeRandomizer = aNewBigDecimalRangeRandomizer(min, max, SEED);
+        
+        // when
+        BigDecimal bigDecimal = bigDecimalRangeRandomizer.getRandomValue();
+
+        then(bigDecimal).isEqualTo(new BigDecimal("7"));
+    }
 }

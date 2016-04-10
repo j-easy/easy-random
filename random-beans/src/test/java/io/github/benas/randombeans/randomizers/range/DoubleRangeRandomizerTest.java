@@ -27,7 +27,9 @@ package io.github.benas.randombeans.randomizers.range;
 import org.junit.Before;
 import org.junit.Test;
 
+import static io.github.benas.randombeans.randomizers.range.DoubleRangeRandomizer.aNewDoubleRangeRandomizer;
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.BDDAssertions.then;
 
 public class DoubleRangeRandomizerTest extends AbstractRangeRandomizerTest<Double> {
 
@@ -35,7 +37,7 @@ public class DoubleRangeRandomizerTest extends AbstractRangeRandomizerTest<Doubl
     public void setUp() {
         min = 1d;
         max = 10d;
-        randomizer = new DoubleRangeRandomizer(min, max);
+        randomizer = aNewDoubleRangeRandomizer(min, max);
     }
 
     @Test
@@ -46,21 +48,32 @@ public class DoubleRangeRandomizerTest extends AbstractRangeRandomizerTest<Doubl
 
     @Test(expected = IllegalArgumentException.class)
     public void whenSpecifiedMinValueIsAfterMaxValueThenThrowIllegalArgumentException() {
-        new DoubleRangeRandomizer(max, min);
+        aNewDoubleRangeRandomizer(max, min);
     }
 
     @Test
     public void whenSpecifiedMinValueIsNullThenShouldUseDefaultMinValue() {
-        randomizer = new DoubleRangeRandomizer(null, max);
+        randomizer = aNewDoubleRangeRandomizer(null, max);
         Double randomDouble = randomizer.getRandomValue();
         assertThat(randomDouble).isLessThanOrEqualTo(max);
     }
 
     @Test
     public void whenSpecifiedMaxvalueIsNullThenShouldUseDefaultMaxValue() {
-        randomizer = new DoubleRangeRandomizer(min, null);
+        randomizer = aNewDoubleRangeRandomizer(min, null);
         Double randomDouble = randomizer.getRandomValue();
         assertThat(randomDouble).isGreaterThanOrEqualTo(min);
+    }
+
+    @Test
+    public void shouldAlwaysGenerateTheSameValueForTheSameSeed() {
+        // given
+        DoubleRangeRandomizer doubleRangeRandomizer = aNewDoubleRangeRandomizer(min, max, SEED);
+        
+        // when
+        Double d = doubleRangeRandomizer.getRandomValue();
+
+        then(d).isEqualTo(7.0);
     }
 
 }
