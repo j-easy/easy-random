@@ -25,23 +25,37 @@
 package io.github.benas.randombeans.randomizers.jodatime;
 
 import org.joda.time.DateTime;
-import org.junit.Before;
 import org.junit.Test;
 
+import static io.github.benas.randombeans.randomizers.jodatime.JodaTimeDateTimeRandomizer.aNewJodaTimeDateTimeRandomizer;
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.BDDAssertions.then;
 
 public class JodaTimeDateTimeRandomizerTest extends AbstractJodaTimeRandomizerTest<DateTime> {
 
-    @Before
-    public void setUp() throws Exception {
-        randomizer = new JodaTimeDateTimeRandomizer(SEED);
+    @Test
+    public void generatedValueShouldNotBeNull() {
+        // given
+        JodaTimeDateTimeRandomizer randomizer = aNewJodaTimeDateTimeRandomizer();
+
+        // when
+        DateTime randomDateTime = randomizer.getRandomValue();
+
+        then(randomDateTime).isNotNull();
     }
 
     @Test
-    public void shouldGenerateTheSameValueForTheSameSeed() throws Exception {
-        DateTime actual = randomizer.getRandomValue();
-        DateTime expected = new DateTime(actual.toDate().getTime());
+    public void shouldGenerateTheSameValueForTheSameSeed() {
+        // given
+        JodaTimeDateTimeRandomizer firstSeededDateTimeRandomizer = aNewJodaTimeDateTimeRandomizer(SEED);
+        JodaTimeDateTimeRandomizer secondSeededDateTimeRandomizer = aNewJodaTimeDateTimeRandomizer(SEED);
 
-        assertThat(actual).isEqualTo(expected);
+        // we can not use a canned value, because timezone depends on the current locale
+        DateTime firstDateTime = firstSeededDateTimeRandomizer.getRandomValue();
+        DateTime secondDateTime = secondSeededDateTimeRandomizer.getRandomValue();
+        
+        assertThat(firstDateTime).isNotNull();
+        assertThat(secondDateTime).isNotNull();
+        assertThat(firstDateTime).isEqualTo(secondDateTime);
     }
 }
