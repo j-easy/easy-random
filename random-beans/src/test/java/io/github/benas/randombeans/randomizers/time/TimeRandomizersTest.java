@@ -42,7 +42,6 @@ import static io.github.benas.randombeans.randomizers.time.SqlTimestampRandomize
 import static io.github.benas.randombeans.randomizers.time.YearMonthRandomizer.aNewYearMonthRandomizer;
 import static io.github.benas.randombeans.randomizers.time.YearRandomizer.aNewYearRandomizer;
 import static io.github.benas.randombeans.randomizers.time.ZoneOffsetRandomizer.aNewZoneOffsetRandomizer;
-import static io.github.benas.randombeans.randomizers.time.ZonedDateTimeRandomizer.aNewZonedDateTimeRandomizer;
 import static java.time.LocalDateTime.of;
 import static java.time.ZoneOffset.ofTotalSeconds;
 import static org.assertj.core.api.BDDAssertions.then;
@@ -88,8 +87,7 @@ public class TimeRandomizersTest extends AbstractRandomizerTest<Randomizer<?>> {
                 aNewOffsetTimeRandomizer(),
                 aNewSqlDateRandomizer(),
                 aNewSqlTimeRandomizer(),
-                aNewSqlTimestampRandomizer(),
-                aNewZonedDateTimeRandomizer()
+                aNewSqlTimestampRandomizer()
         };
     }
 
@@ -128,8 +126,7 @@ public class TimeRandomizersTest extends AbstractRandomizerTest<Randomizer<?>> {
                 { aNewOffsetTimeRandomizer(SEED), OffsetTime.of(LocalTime.of(16, 42, 58, 0), ofTotalSeconds(28923)) },
                 { aNewSqlDateRandomizer(SEED), new java.sql.Date(1718733244570L) },
                 { aNewSqlTimeRandomizer(SEED), new Time(1718733244570L) },
-                { aNewSqlTimestampRandomizer(SEED), new Timestamp(1718733244570L) },
-                { aNewZonedDateTimeRandomizer(SEED), ZonedDateTime.of(of(2024, Month.MARCH, 20, 16, 42, 58, 0), ZoneId.of("Mexico/BajaNorte")) },
+                { aNewSqlTimestampRandomizer(SEED), new Timestamp(1718733244570L) }
         };
     }
 
