@@ -42,7 +42,7 @@ public class TimeZoneRandomizerTest extends AbstractRandomizerTest<TimeZone> {
     }
 
     @Test
-    public void shouldGenerateRandomTimeZone() {
+    public void generatedValueShouldNotBeNull() {
         assertThat(randomizer.getRandomValue()).isNotNull();
     }
 

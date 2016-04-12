@@ -31,6 +31,8 @@ import org.junit.Test;
 import java.time.OffsetTime;
 
 import static io.github.benas.randombeans.randomizers.time.OffsetTimeRandomizer.aNewOffsetTimeRandomizer;
+import static java.time.LocalTime.of;
+import static java.time.ZoneOffset.ofTotalSeconds;
 import static org.assertj.core.api.Assertions.assertThat;
 
 public class OffsetTimeRandomizerTest extends AbstractRandomizerTest<OffsetTime> {
@@ -41,8 +43,20 @@ public class OffsetTimeRandomizerTest extends AbstractRandomizerTest<OffsetTime>
     }
 
     @Test
-    public void getRandomValue() {
-        OffsetTime offsetTime = randomizer.getRandomValue();
-        assertThat(offsetTime).isNotNull();
+    public void generatedValueShouldNotBeNull() {
+        assertThat(randomizer.getRandomValue()).isNotNull();
+    }
+
+    @Test
+    public void shouldGenerateTheSameValueForTheSameSeed() {
+        // Given
+        randomizer = aNewOffsetTimeRandomizer(SEED);
+        OffsetTime expected = OffsetTime.of(of(16, 42, 58, 0), ofTotalSeconds(28923));
+
+        // When
+        OffsetTime randomValue = randomizer.getRandomValue();
+
+        // Then
+        assertThat(randomValue).isEqualTo(expected);
     }
 }

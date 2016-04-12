@@ -36,15 +36,25 @@ import static org.assertj.core.api.Assertions.assertThat;
 public class DateRandomizerTest extends AbstractRandomizerTest<Date> {
 
     @Before
-    public void setUp() throws Exception {
-        randomizer = aNewDateRandomizer(SEED);
+    public void setUp() {
+        randomizer = aNewDateRandomizer();
+    }
+
+    @Test
+    public void generatedDateShouldNotBeNull() {
+        assertThat(randomizer.getRandomValue()).isNotNull();
     }
 
     @Test
     public void shouldGenerateTheSameValueForTheSameSeed() {
-        Date actual = randomizer.getRandomValue();
-        Date expected = new Date(actual.getTime());
+        // Given
+        randomizer = aNewDateRandomizer(SEED);
+        Date expected = new Date(1718733244570L);
 
+        // When
+        Date actual = randomizer.getRandomValue();
+
+        // Then
         assertThat(actual).isEqualTo(expected);
     }
 }

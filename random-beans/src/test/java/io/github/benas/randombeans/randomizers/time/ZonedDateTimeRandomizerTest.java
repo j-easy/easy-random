@@ -28,21 +28,36 @@ import io.github.benas.randombeans.randomizers.AbstractRandomizerTest;
 import org.junit.Before;
 import org.junit.Test;
 
+import java.time.Month;
 import java.time.ZonedDateTime;
 
 import static io.github.benas.randombeans.randomizers.time.ZonedDateTimeRandomizer.aNewZonedDateTimeRandomizer;
+import static java.time.LocalDateTime.of;
+import static java.time.ZoneId.of;
 import static org.assertj.core.api.Assertions.assertThat;
 
 public class ZonedDateTimeRandomizerTest extends AbstractRandomizerTest<ZonedDateTime> {
 
     @Before
     public void setUp() {
-        randomizer = aNewZonedDateTimeRandomizer(SEED);
+        randomizer = aNewZonedDateTimeRandomizer();
     }
 
     @Test
-    public void getRandomValue() {
-        ZonedDateTime zonedDateTime = randomizer.getRandomValue();
-        assertThat(zonedDateTime).isNotNull();
+    public void generatedValueShouldNotBeNull() {
+        assertThat(randomizer.getRandomValue()).isNotNull();
+    }
+
+    @Test
+    public void shouldGenerateTheSameValueForTheSameSeed() {
+        // Given
+        randomizer = aNewZonedDateTimeRandomizer(SEED);
+        ZonedDateTime expected = ZonedDateTime.of(of(2024, Month.MARCH, 20, 16, 42, 58, 0), of("Mexico/BajaNorte"));
+
+        // When
+        ZonedDateTime actual = randomizer.getRandomValue();
+
+        // Then
+        assertThat(actual).isEqualTo(expected);
     }
 }

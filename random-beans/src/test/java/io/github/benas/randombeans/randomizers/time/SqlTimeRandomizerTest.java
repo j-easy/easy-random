@@ -30,20 +30,31 @@ import org.junit.Test;
 
 import java.sql.Time;
 
+import static io.github.benas.randombeans.randomizers.time.SqlTimeRandomizer.aNewSqlTimeRandomizer;
 import static org.assertj.core.api.Assertions.assertThat;
 
 public class SqlTimeRandomizerTest extends AbstractRandomizerTest<Time> {
 
     @Before
     public void setUp() throws Exception {
-        randomizer = SqlTimeRandomizer.aNewSqlTimeRandomizer(SEED);
+        randomizer = aNewSqlTimeRandomizer();
+    }
+
+    @Test
+    public void generatedValueShouldNotBeNull() {
+        assertThat(randomizer.getRandomValue()).isNotNull();
     }
 
     @Test
     public void shouldGenerateTheSameValueForTheSameSeed() {
-        Time actual = randomizer.getRandomValue();
-        Time expected = new Time(actual.getTime());
+        // Given
+        randomizer = aNewSqlTimeRandomizer(SEED);
+        Time expected = new Time(1718733244570L);
 
+        // When
+        Time actual = randomizer.getRandomValue();
+
+        // Then
         assertThat(actual).isEqualTo(expected);
     }
 }

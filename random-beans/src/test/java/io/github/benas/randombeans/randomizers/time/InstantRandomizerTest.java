@@ -37,12 +37,24 @@ public class InstantRandomizerTest extends AbstractRandomizerTest<Instant> {
 
     @Before
     public void setUp() {
-        randomizer = aNewInstantRandomizer(SEED);
+        randomizer = aNewInstantRandomizer();
     }
 
     @Test
-    public void getRandomValue() {
-        Instant instant = randomizer.getRandomValue();
-        assertThat(instant).isNotNull();
+    public void generatedValueShouldNotBeNull() {
+        assertThat(randomizer.getRandomValue()).isNotNull();
+    }
+
+    @Test
+    public void shouldGenerateTheSameValueForTheSameSeed() {
+        // Given
+        randomizer = aNewInstantRandomizer(SEED);
+        Instant expected = Instant.ofEpochSecond(1718733244L, 570000000);
+
+        // When
+        Instant randomValue = randomizer.getRandomValue();
+
+        // Then
+        assertThat(randomValue).isEqualTo(expected);
     }
 }

@@ -27,7 +27,6 @@ package io.github.benas.randombeans.randomizers.range;
 import org.junit.Before;
 import org.junit.Test;
 
-import java.util.Calendar;
 import java.util.Date;
 
 import static io.github.benas.randombeans.randomizers.range.DateRangeRandomizer.aNewDateRangeRandomizer;
@@ -35,52 +34,65 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 public class DateRangeRandomizerTest extends AbstractRangeRandomizerTest<Date> {
 
-    private Date today, tomorrow;
+    private Date minDate, maxDate;
 
     @Before
     public void setUp() {
-        today = new Date();
-        tomorrow = addDays(today, 1);
-        randomizer = aNewDateRangeRandomizer(today, tomorrow);
+        minDate = new Date(1460448795091L);
+        maxDate = new Date(1460448795179L);
+        randomizer = aNewDateRangeRandomizer(minDate, maxDate);
+    }
+
+    @Test
+    public void generatedDateShouldNotBeNull() {
+        assertThat(randomizer.getRandomValue()).isNotNull();
     }
 
     @Test
     public void generatedDateShouldBeWithinSpecifiedRange() {
-        Date randomDate = randomizer.getRandomValue();
-        assertThat(randomDate).isBetween(today, tomorrow);
+        assertThat(randomizer.getRandomValue()).isBetween(minDate, maxDate);
     }
 
     @Test
     public void generatedDateShouldBeAlwaysTheSameForTheSameSeed() {
-        randomizer = aNewDateRangeRandomizer(today, tomorrow, SEED);
+        // Given
+        randomizer = aNewDateRangeRandomizer(minDate, maxDate, SEED);
+        Date expected = new Date(1460448795154L);
+
+        // When
         Date randomDate = randomizer.getRandomValue();
 
-        assertThat(randomDate).isEqualTo(new Date(randomDate.getTime()));
+        // Then
+        assertThat(randomDate).isEqualTo(expected);
     }
 
     @Test(expected = IllegalArgumentException.class)
-    public void whenSpecifiedMinDateIsAfterMaxDateThenThrowIllegalArgumentException() {
-        aNewDateRangeRandomizer(tomorrow, today);
+    public void whenSpecifiedMinDateIsAfterMaxDate_thenShouldThrowIllegalArgumentException() {
+        aNewDateRangeRandomizer(maxDate, minDate);
     }
 
     @Test
-    public void whenSpecifiedMinDateIsNullThenShouldUseDefaultMinValue() {
-        randomizer = aNewDateRangeRandomizer(null, tomorrow);
+    public void whenSpecifiedMinDateIsNull_thenShouldUseDefaultMinValue() {
+        // Given
+        randomizer = aNewDateRangeRandomizer(null, maxDate);
+
+        // When
         Date randomDate = randomizer.getRandomValue();
-        assertThat(randomDate).isBeforeOrEqualsTo(tomorrow);
+
+        // Then
+        assertThat(randomDate).isBeforeOrEqualsTo(maxDate);
     }
 
     @Test
-    public void whenSpecifiedMaxDateIsNullThenShouldUseDefaultMaxValue() {
-        randomizer = aNewDateRangeRandomizer(today, null);
+    public void whenSpecifiedMaxDateIsNull_thenShouldUseDefaultMaxValue() {
+        // Given
+        randomizer = aNewDateRangeRandomizer(minDate, null);
+
+        // when
         Date randomDate = randomizer.getRandomValue();
-        assertThat(randomDate).isAfterOrEqualsTo(today);
+
+        // Then
+        assertThat(randomDate).isAfterOrEqualsTo(minDate);
     }
 
-    private Date addDays(Date date, int days) {
-        Calendar calendar = Calendar.getInstance();
-        calendar.setTime(date);
-        calendar.add(Calendar.DAY_OF_MONTH, days);
-        return calendar.getTime();
-    }
 }

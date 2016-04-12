@@ -29,6 +29,7 @@ import org.junit.Before;
 import org.junit.Test;
 
 import java.time.LocalDateTime;
+import java.time.Month;
 
 import static io.github.benas.randombeans.randomizers.time.LocalDateTimeRandomizer.aNewLocalDateTimeRandomizer;
 import static org.assertj.core.api.Assertions.assertThat;
@@ -37,12 +38,24 @@ public class LocalDateTimeRandomizerTest extends AbstractRandomizerTest<LocalDat
 
     @Before
     public void setUp() {
-        randomizer = aNewLocalDateTimeRandomizer(SEED);
+        randomizer = aNewLocalDateTimeRandomizer();
     }
 
     @Test
-    public void getRandomValue() {
-        LocalDateTime localDateTime = randomizer.getRandomValue();
-        assertThat(localDateTime).isNotNull();
+    public void generatedValueShouldNotBeNull() {
+        assertThat(randomizer.getRandomValue()).isNotNull();
+    }
+
+    @Test
+    public void shouldGenerateTheSameValueForTheSameSeed() {
+        // Given
+        randomizer = aNewLocalDateTimeRandomizer(SEED);
+        LocalDateTime expected = LocalDateTime.of(2024, Month.MARCH, 20, 16, 42, 58, 0);
+
+        // When
+        LocalDateTime randomValue = randomizer.getRandomValue();
+
+        // Then
+        assertThat(randomValue).isEqualTo(expected);
     }
 }

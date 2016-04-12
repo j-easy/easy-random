@@ -30,20 +30,31 @@ import org.junit.Test;
 
 import java.sql.Date;
 
+import static io.github.benas.randombeans.randomizers.time.SqlDateRandomizer.aNewSqlDateRandomizer;
 import static org.assertj.core.api.Assertions.assertThat;
 
 public class SqlDateRandomizerTest extends AbstractRandomizerTest<Date> {
 
     @Before
     public void setUp() throws Exception {
-        randomizer = SqlDateRandomizer.aNewSqlDateRandomizer(SEED);
+        randomizer = aNewSqlDateRandomizer();
+    }
+
+    @Test
+    public void generatedValueShouldNotBeNull() {
+        assertThat(randomizer.getRandomValue()).isNotNull();
     }
 
     @Test
     public void shouldGenerateTheSameValueForTheSameSeed() {
-        Date actual = randomizer.getRandomValue();
-        Date expected = new Date(actual.getTime());
+        // Given
+        randomizer = aNewSqlDateRandomizer(SEED);
+        Date expected = new Date(1718733244570L);
 
+        // When
+        Date actual = randomizer.getRandomValue();
+
+        // Then
         assertThat(actual).isEqualTo(expected);
     }
 }

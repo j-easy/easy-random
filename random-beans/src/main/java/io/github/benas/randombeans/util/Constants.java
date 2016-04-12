@@ -26,7 +26,7 @@ package io.github.benas.randombeans.util;
 
 import java.time.LocalDateTime;
 
-import static java.time.LocalDateTime.now;
+import static java.time.LocalDateTime.of;
 
 /**
  * Constants class.
@@ -51,14 +51,19 @@ public abstract class Constants {
     public static final int DEFAULT_DATE_RANGE = 10;
 
     /**
-     * The date of ten years ago form now.
+     * Reference date around which random dates will be generated.
      */
-    public static final LocalDateTime TEN_YEARS_AGO = now().minusYears(DEFAULT_DATE_RANGE);
+    public static final LocalDateTime REFERENCE_DATE = of(2020, 1, 1, 0, 0, 0, 0);
 
     /**
-     * The date of ten years in the future.
+     * The date of ten years before {@link Constants#REFERENCE_DATE}.
      */
-    public static final LocalDateTime IN_TEN_YEARS = now().plusYears(DEFAULT_DATE_RANGE);
+    public static final LocalDateTime TEN_YEARS_AGO = REFERENCE_DATE.minusYears(DEFAULT_DATE_RANGE);
+
+    /**
+     * The date of ten years after the {@link Constants#REFERENCE_DATE}.
+     */
+    public static final LocalDateTime IN_TEN_YEARS = REFERENCE_DATE.plusYears(DEFAULT_DATE_RANGE);
 
     private Constants() { }
 

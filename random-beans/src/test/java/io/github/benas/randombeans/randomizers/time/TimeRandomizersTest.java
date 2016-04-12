@@ -85,12 +85,12 @@ public class TimeRandomizersTest extends AbstractRandomizerTest<Randomizer<?>> {
     public static Object[][] generateSeededRandomizersAndTheirExpectedValues() {
         return new Object[][] {
                 { aNewDurationRandomizer(SEED), Duration.of(72L, ChronoUnit.HOURS) },
-                { aNewLocalDateRandomizer(SEED), LocalDate.of(2020, Month.MARCH, 20) },
+                { aNewLocalDateRandomizer(SEED), LocalDate.of(2024, Month.MARCH, 20) },
                 { aNewMonthDayRandomizer(SEED), MonthDay.of(Month.MARCH, 20) },
                 { aNewLocalTimeRandomizer(SEED), LocalTime.of(16, 42, 58) },
-                { aNewPeriodRandomizer(SEED), Period.of(2020, 3, 20) },
-                { aNewYearRandomizer(SEED), Year.of(2020) },
-                { aNewYearMonthRandomizer(SEED), YearMonth.of(2020, Month.MARCH) },
+                { aNewPeriodRandomizer(SEED), Period.of(2024, 3, 20) },
+                { aNewYearRandomizer(SEED), Year.of(2024) },
+                { aNewYearMonthRandomizer(SEED), YearMonth.of(2024, Month.MARCH) },
                 { aNewZoneOffsetRandomizer(SEED), ZoneOffset.ofTotalSeconds(28923) },
         };
     }

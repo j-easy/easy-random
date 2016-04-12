@@ -24,6 +24,7 @@
 
 package io.github.benas.randombeans.randomizers.time.internal;
 
+import io.github.benas.randombeans.randomizers.AbstractRandomizerTest;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -31,20 +32,33 @@ import static io.github.benas.randombeans.randomizers.time.internal.DayRandomize
 import static io.github.benas.randombeans.randomizers.time.internal.DayRandomizer.MIN_DAY;
 import static org.assertj.core.api.Assertions.assertThat;
 
-public class DayRandomizerTest {
+public class DayRandomizerTest extends AbstractRandomizerTest<Integer> {
 
-    private DayRandomizer dayRandomizer;
-    
     @Before
     public void setUp() {
-        dayRandomizer = new DayRandomizer();
+        randomizer = new DayRandomizer();
     }
 
     @Test
-    public void getRandomValue() {
-        int day = dayRandomizer.getRandomValue();
+    public void generatedValueShouldNotBeNull() throws Exception {
+        assertThat(randomizer.getRandomValue()).isNotNull();
+    }
 
-        assertThat(day)
-                .isBetween(MIN_DAY, MAX_DAY);
+    @Test
+    public void generatedValueShouldBeWithinRange() {
+        assertThat(randomizer.getRandomValue()).isBetween(MIN_DAY, MAX_DAY);
+    }
+
+    @Test
+    public void shouldGenerateTheSameValueForTheSameSeed() {
+        // Given
+        randomizer = new DayRandomizer(SEED);
+        Integer expected = 20;
+
+        // When
+        Integer actual = randomizer.getRandomValue();
+
+        // Then
+        assertThat(actual).isEqualTo(expected);
     }
 }

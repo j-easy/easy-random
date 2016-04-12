@@ -42,7 +42,7 @@ public class GregorianCalendarRandomizerTest extends AbstractRandomizerTest<Greg
     }
 
     @Test
-    public void shouldGenerateRandomGregorianCalendar() {
+    public void generatedValueShouldNotBeNull() {
         assertThat(randomizer.getRandomValue()).isNotNull();
     }
 

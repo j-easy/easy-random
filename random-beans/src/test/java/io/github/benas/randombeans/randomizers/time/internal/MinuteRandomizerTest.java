@@ -24,6 +24,7 @@
 
 package io.github.benas.randombeans.randomizers.time.internal;
 
+import io.github.benas.randombeans.randomizers.AbstractRandomizerTest;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -31,20 +32,33 @@ import static io.github.benas.randombeans.randomizers.time.internal.MinuteRandom
 import static io.github.benas.randombeans.randomizers.time.internal.MinuteRandomizer.MIN_MINUTE;
 import static org.assertj.core.api.Assertions.assertThat;
 
-public class MinuteRandomizerTest {
+public class MinuteRandomizerTest extends AbstractRandomizerTest<Integer> {
 
-    private MinuteRandomizer minuteRandomizer;
-    
     @Before
     public void setUp() {
-        minuteRandomizer = new MinuteRandomizer();
+        randomizer = new MinuteRandomizer();
     }
 
     @Test
-    public void getRandomValue() {
-        int minute = minuteRandomizer.getRandomValue();
+    public void generatedValueShouldNotBeNull() {
+        assertThat(randomizer.getRandomValue()).isNotNull();
+    }
 
-        assertThat(minute)
-                .isBetween(MIN_MINUTE, MAX_MINUTE);
+    @Test
+    public void generatedValueShouldBeWithinRange() {
+        assertThat(randomizer.getRandomValue()).isBetween(MIN_MINUTE, MAX_MINUTE);
+    }
+
+    @Test
+    public void shouldGenerateTheSameValueForTheSameSeed() {
+        // Given
+        randomizer = new MinuteRandomizer(SEED);
+        Integer expected = 42;
+
+        // When
+        Integer actual = randomizer.getRandomValue();
+
+        // Then
+        assertThat(actual).isEqualTo(expected);
     }
 }

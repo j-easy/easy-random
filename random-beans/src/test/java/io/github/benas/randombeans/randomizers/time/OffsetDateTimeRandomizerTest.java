@@ -28,21 +28,36 @@ import io.github.benas.randombeans.randomizers.AbstractRandomizerTest;
 import org.junit.Before;
 import org.junit.Test;
 
+import java.time.Month;
 import java.time.OffsetDateTime;
 
 import static io.github.benas.randombeans.randomizers.time.OffsetDateTimeRandomizer.aNewOffsetDateTimeRandomizer;
+import static java.time.LocalDateTime.of;
+import static java.time.ZoneOffset.ofTotalSeconds;
 import static org.assertj.core.api.Assertions.assertThat;
 
 public class OffsetDateTimeRandomizerTest extends AbstractRandomizerTest<OffsetDateTime> {
 
     @Before
     public void setUp() {
-        randomizer = aNewOffsetDateTimeRandomizer(SEED);
+        randomizer = aNewOffsetDateTimeRandomizer();
     }
 
     @Test
-    public void getRandomValue() {
-        OffsetDateTime offsetDateTime = randomizer.getRandomValue();
-        assertThat(offsetDateTime).isNotNull();
+    public void generatedValueShouldNotBeNull() {
+        assertThat(randomizer.getRandomValue()).isNotNull();
+    }
+
+    @Test
+    public void shouldGenerateTheSameValueForTheSameSeed() {
+        // Given
+        randomizer = aNewOffsetDateTimeRandomizer(SEED);
+        OffsetDateTime expected = OffsetDateTime.of(of(2024, Month.MARCH, 20, 16, 42, 58, 0), ofTotalSeconds(28923));
+
+        // When
+        OffsetDateTime randomValue = randomizer.getRandomValue();
+
+        // Then
+        assertThat(randomValue).isEqualTo(expected);
     }
 }

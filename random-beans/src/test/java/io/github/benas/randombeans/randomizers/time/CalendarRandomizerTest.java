@@ -38,15 +38,25 @@ public class CalendarRandomizerTest extends AbstractRandomizerTest<Calendar> {
 
     @Before
     public void setUp() throws Exception {
-        randomizer = aNewCalendarRandomizer(SEED);
+        randomizer = aNewCalendarRandomizer();
+    }
+
+    @Test
+    public void generatedValueShouldNotBeNull() throws Exception {
+        assertThat(randomizer.getRandomValue()).isNotNull();
     }
 
     @Test
     public void shouldGenerateTheSameValueForTheSameSeed() {
-        Calendar actual = randomizer.getRandomValue();
+        // Given
+        randomizer = aNewCalendarRandomizer(SEED);
         Calendar expected = Calendar.getInstance();
-        expected.setTime(new Date(actual.getTime().getTime()));
+        expected.setTime(new Date(1718733244570L));
 
+        // When
+        Calendar actual = randomizer.getRandomValue();
+
+        // Then
         assertThat(actual).isEqualTo(expected);
     }
 }

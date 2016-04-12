@@ -30,20 +30,31 @@ import org.junit.Test;
 
 import java.sql.Timestamp;
 
+import static io.github.benas.randombeans.randomizers.time.SqlTimestampRandomizer.aNewSqlTimestampRandomizer;
 import static org.assertj.core.api.Assertions.assertThat;
 
 public class SqlTimestampRandomizerTest extends AbstractRandomizerTest<Timestamp> {
 
     @Before
     public void setUp() throws Exception {
-        randomizer = SqlTimestampRandomizer.aNewSqlTimestampRandomizer(SEED);
+        randomizer = aNewSqlTimestampRandomizer();
+    }
+
+    @Test
+    public void generatedValueShouldNotBeNull() {
+        assertThat(randomizer.getRandomValue()).isNotNull();
     }
 
     @Test
     public void shouldGenerateTheSameValueForTheSameSeed() {
-        Timestamp actual = randomizer.getRandomValue();
-        Timestamp expected = new Timestamp(actual.getTime());
+        // Given
+        randomizer = aNewSqlTimestampRandomizer(SEED);
+        Timestamp expected = new Timestamp(1718733244570L);
 
+        // When
+        Timestamp actual = randomizer.getRandomValue();
+
+        // Then
         assertThat(actual).isEqualTo(expected);
     }
 }
