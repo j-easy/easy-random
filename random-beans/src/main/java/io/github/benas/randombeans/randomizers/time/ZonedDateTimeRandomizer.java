@@ -56,6 +56,7 @@ public class ZonedDateTimeRandomizer extends AbstractRandomizer<ZonedDateTime> {
      * @param seed initial seed
      */
     public ZonedDateTimeRandomizer(final long seed) {
+        super(seed);
         localDateTimeRandomizer = new LocalDateTimeRandomizer(seed);
     }
 
