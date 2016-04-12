@@ -24,10 +24,9 @@
 
 package io.github.benas.randombeans.util;
 
-import java.time.LocalDateTime;
+import java.time.ZonedDateTime;
 import java.util.Date;
 
-import static java.time.ZoneId.systemDefault;
 import static java.util.Date.from;
 
 /**
@@ -38,13 +37,13 @@ import static java.util.Date.from;
 public abstract class DateUtils {
 
     /**
-     * Convert a {@link LocalDateTime} to {@link Date}.
+     * Convert a {@link ZonedDateTime} to {@link Date}.
      *
-     * @param localDateTime to convert
+     * @param zonedDateTime to convert
      * @return the corresponding {@link Date} object
      */
-    public static Date toDate(LocalDateTime localDateTime) {
-        return from(localDateTime.atZone(systemDefault()).toInstant());
+    public static Date toDate(ZonedDateTime zonedDateTime) {
+        return from(zonedDateTime.toInstant());
     }
 
     private DateUtils() {
