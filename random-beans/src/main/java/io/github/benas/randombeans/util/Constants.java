@@ -24,9 +24,10 @@
 
 package io.github.benas.randombeans.util;
 
-import java.time.LocalDateTime;
+import java.time.ZonedDateTime;
+import java.time.ZoneId;
 
-import static java.time.LocalDateTime.of;
+import static java.time.ZonedDateTime.of;
 
 /**
  * Constants class.
@@ -53,17 +54,17 @@ public abstract class Constants {
     /**
      * Reference date around which random dates will be generated.
      */
-    public static final LocalDateTime REFERENCE_DATE = of(2020, 1, 1, 0, 0, 0, 0);
+    public static final ZonedDateTime REFERENCE_DATE = of(2020, 1, 1, 0, 0, 0, 0, ZoneId.of("UTC+1"));
 
     /**
      * The date of ten years before {@link Constants#REFERENCE_DATE}.
      */
-    public static final LocalDateTime TEN_YEARS_AGO = REFERENCE_DATE.minusYears(DEFAULT_DATE_RANGE);
+    public static final ZonedDateTime TEN_YEARS_AGO = REFERENCE_DATE.minusYears(DEFAULT_DATE_RANGE);
 
     /**
      * The date of ten years after the {@link Constants#REFERENCE_DATE}.
      */
-    public static final LocalDateTime IN_TEN_YEARS = REFERENCE_DATE.plusYears(DEFAULT_DATE_RANGE);
+    public static final ZonedDateTime IN_TEN_YEARS = REFERENCE_DATE.plusYears(DEFAULT_DATE_RANGE);
 
     private Constants() { }
 
