@@ -25,9 +25,10 @@
 package io.github.benas.randombeans.randomizers.jodatime;
 
 import io.github.benas.randombeans.api.Randomizer;
+import io.github.benas.randombeans.randomizers.number.IntegerRandomizer;
+
 import org.joda.time.Interval;
 
-import static io.github.benas.randombeans.randomizers.number.IntegerRandomizer.aNewIntegerRandomizer;
 import static java.lang.Math.abs;
 
 /**
@@ -37,10 +38,13 @@ import static java.lang.Math.abs;
  */
 public class JodaTimeIntervalRandomizer extends JodaTimeAbstractRandomizer<Interval> {
 
+    private IntegerRandomizer delegate;
+    
     /**
      * Create a new {@link JodaTimeIntervalRandomizer}.
      */
     public JodaTimeIntervalRandomizer() {
+        delegate = new IntegerRandomizer();
     }
 
     /**
@@ -50,6 +54,7 @@ public class JodaTimeIntervalRandomizer extends JodaTimeAbstractRandomizer<Inter
      */
     public JodaTimeIntervalRandomizer(long seed) {
         super(seed);
+        delegate = new IntegerRandomizer(seed);
     }
 
     /**
@@ -73,8 +78,8 @@ public class JodaTimeIntervalRandomizer extends JodaTimeAbstractRandomizer<Inter
     
     @Override
     public Interval getRandomValue() {
-        long startDate = abs(aNewIntegerRandomizer().getRandomValue());
-        long endDate = startDate + abs(aNewIntegerRandomizer().getRandomValue());
+        long startDate = abs(delegate.getRandomValue());
+        long endDate = startDate + abs(delegate.getRandomValue());
         return new Interval(startDate, endDate);
     }
 }
