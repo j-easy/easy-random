@@ -24,26 +24,36 @@
 
 package io.github.benas.randombeans.randomizers.time;
 
+import static io.github.benas.randombeans.randomizers.time.CalendarRandomizer.aNewCalendarRandomizer;
+import static io.github.benas.randombeans.randomizers.time.DateRandomizer.aNewDateRandomizer;
 import static io.github.benas.randombeans.randomizers.time.DurationRandomizer.aNewDurationRandomizer;
+import static io.github.benas.randombeans.randomizers.time.GregorianCalendarRandomizer.aNewGregorianCalendarRandomizer;
+import static io.github.benas.randombeans.randomizers.time.InstantRandomizer.aNewInstantRandomizer;
 import static io.github.benas.randombeans.randomizers.time.LocalDateRandomizer.aNewLocalDateRandomizer;
+import static io.github.benas.randombeans.randomizers.time.LocalDateTimeRandomizer.aNewLocalDateTimeRandomizer;
 import static io.github.benas.randombeans.randomizers.time.LocalTimeRandomizer.aNewLocalTimeRandomizer;
 import static io.github.benas.randombeans.randomizers.time.MonthDayRandomizer.aNewMonthDayRandomizer;
+import static io.github.benas.randombeans.randomizers.time.OffsetDateTimeRandomizer.aNewOffsetDateTimeRandomizer;
+import static io.github.benas.randombeans.randomizers.time.OffsetTimeRandomizer.aNewOffsetTimeRandomizer;
 import static io.github.benas.randombeans.randomizers.time.PeriodRandomizer.aNewPeriodRandomizer;
+import static io.github.benas.randombeans.randomizers.time.SqlDateRandomizer.aNewSqlDateRandomizer;
+import static io.github.benas.randombeans.randomizers.time.SqlTimeRandomizer.aNewSqlTimeRandomizer;
+import static io.github.benas.randombeans.randomizers.time.SqlTimestampRandomizer.aNewSqlTimestampRandomizer;
 import static io.github.benas.randombeans.randomizers.time.YearMonthRandomizer.aNewYearMonthRandomizer;
 import static io.github.benas.randombeans.randomizers.time.YearRandomizer.aNewYearRandomizer;
 import static io.github.benas.randombeans.randomizers.time.ZoneOffsetRandomizer.aNewZoneOffsetRandomizer;
+import static io.github.benas.randombeans.randomizers.time.ZonedDateTimeRandomizer.aNewZonedDateTimeRandomizer;
+import static java.time.LocalDateTime.of;
+import static java.time.ZoneOffset.ofTotalSeconds;
 import static org.assertj.core.api.BDDAssertions.then;
 
-import java.time.Duration;
-import java.time.LocalDate;
-import java.time.LocalTime;
-import java.time.Month;
-import java.time.MonthDay;
-import java.time.Period;
-import java.time.Year;
-import java.time.YearMonth;
-import java.time.ZoneOffset;
+import java.sql.Time;
+import java.sql.Timestamp;
+import java.time.*;
 import java.time.temporal.ChronoUnit;
+import java.util.Calendar;
+import java.util.Date;
+import java.util.GregorianCalendar;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -69,6 +79,17 @@ public class TimeRandomizersTest extends AbstractRandomizerTest<Randomizer<?>> {
                 aNewYearRandomizer(),
                 aNewYearMonthRandomizer(),
                 aNewZoneOffsetRandomizer(),
+                aNewCalendarRandomizer(),
+                aNewDateRandomizer(),
+                aNewGregorianCalendarRandomizer(),
+                aNewInstantRandomizer(),
+                aNewLocalDateTimeRandomizer(),
+                aNewOffsetDateTimeRandomizer(),
+                aNewOffsetTimeRandomizer(),
+                aNewSqlDateRandomizer(),
+                aNewSqlTimeRandomizer(),
+                aNewSqlTimestampRandomizer(),
+                aNewZonedDateTimeRandomizer()
         };
     }
 
@@ -83,6 +104,12 @@ public class TimeRandomizersTest extends AbstractRandomizerTest<Randomizer<?>> {
 
     @DataProvider
     public static Object[][] generateSeededRandomizersAndTheirExpectedValues() {
+        Calendar expectedCalendar = Calendar.getInstance();
+        expectedCalendar.setTime(new Date(1718733244570L));
+
+        GregorianCalendar expectedGregorianCalendar = new GregorianCalendar();
+        expectedGregorianCalendar.setTimeInMillis(5106534569952410475L);
+
         return new Object[][] {
                 { aNewDurationRandomizer(SEED), Duration.of(72L, ChronoUnit.HOURS) },
                 { aNewLocalDateRandomizer(SEED), LocalDate.of(2024, Month.MARCH, 20) },
@@ -92,6 +119,17 @@ public class TimeRandomizersTest extends AbstractRandomizerTest<Randomizer<?>> {
                 { aNewYearRandomizer(SEED), Year.of(2024) },
                 { aNewYearMonthRandomizer(SEED), YearMonth.of(2024, Month.MARCH) },
                 { aNewZoneOffsetRandomizer(SEED), ZoneOffset.ofTotalSeconds(28923) },
+                { aNewCalendarRandomizer(SEED), expectedCalendar },
+                { aNewDateRandomizer(SEED), new Date(1718733244570L) },
+                { aNewGregorianCalendarRandomizer(SEED), expectedGregorianCalendar },
+                { aNewInstantRandomizer(SEED), Instant.ofEpochSecond(1718733244L, 570000000) },
+                { aNewLocalDateTimeRandomizer(SEED), LocalDateTime.of(2024, Month.MARCH, 20, 16, 42, 58, 0) },
+                { aNewOffsetDateTimeRandomizer(SEED), OffsetDateTime.of(of(2024, Month.MARCH, 20, 16, 42, 58, 0), ofTotalSeconds(28923)) },
+                { aNewOffsetTimeRandomizer(SEED), OffsetTime.of(LocalTime.of(16, 42, 58, 0), ofTotalSeconds(28923)) },
+                { aNewSqlDateRandomizer(SEED), new java.sql.Date(1718733244570L) },
+                { aNewSqlTimeRandomizer(SEED), new Time(1718733244570L) },
+                { aNewSqlTimestampRandomizer(SEED), new Timestamp(1718733244570L) },
+                { aNewZonedDateTimeRandomizer(SEED), ZonedDateTime.of(of(2024, Month.MARCH, 20, 16, 42, 58, 0), ZoneId.of("Mexico/BajaNorte")) },
         };
     }
 
