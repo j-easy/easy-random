@@ -96,18 +96,18 @@ public class RandomizersTest extends AbstractRandomizerTest<FakerBasedRandomizer
     @DataProvider
     public static Object[][] generateSeededRandomizersAndTheirExpectedValues() {
         return new Object[][] {
-                { aNewCityRandomizer(SEED), "Weissnatmouth" },
-                { aNewCompanyRandomizer(SEED), "Monk Home Loans" },
+                { aNewCityRandomizer(SEED), "Candacemouth" },
+                { aNewCompanyRandomizer(SEED), "Weissnat, Weissnat and Weissnat" },
                 { aNewCountryRandomizer(SEED), "Antarctica (the territory South of 60 deg S)" },
                 { aNewCreditCardNumberRandomizer(SEED), "1211-1221-1234-2201" },
-                { aNewEmailRandomizer(SEED), "chelsie.weissnat@hotmail.com" }, 
-                { aNewFirstNameRandomizer(SEED), "Chelsie" },
-                { aNewFullNameRandomizer(SEED), "Javon Crona" },
+                { aNewEmailRandomizer(SEED), "jayne.weissnat@hotmail.com" }, 
+                { aNewFirstNameRandomizer(SEED), "Jayne" },
+                { aNewFullNameRandomizer(SEED), "Candace Crona" },
                 { aNewIsbnRandomizer(SEED), "206-9-57-475-3963" },
                 { aNewLastNameRandomizer(SEED), "Hyatt" },
                 { aNewLatitudeRandomizer(SEED), "40" + new DecimalFormatSymbols().getDecimalSeparator() + "171357" },
                 { aNewLongitudeRandomizer(SEED), "80" + new DecimalFormatSymbols().getDecimalSeparator() + "342713" },
-                { aNewNameRandomizer(SEED), "Javon Crona" },
+                { aNewNameRandomizer(SEED), "Candace Crona" },
                 { aNewParagraphRandomizer(SEED), "Totam assumenda eius autem similique. Aut voluptatem enim praesentium. Suscipit cupiditate doloribus debitis dolor. Cumque sapiente occaecati. Quos maiores quae." },
                 { aNewPhoneNumberRandomizer(SEED), "1-069-574-7539" },
                 { aNewSentenceRandomizer(SEED), "Dolor totam assumenda eius autem." },
@@ -130,23 +130,23 @@ public class RandomizersTest extends AbstractRandomizerTest<FakerBasedRandomizer
     @DataProvider
     public static Object[][] generateSeededRandomizersWithLocaleAndTheirExpectedValues() {
         return new Object[][] {
-                { aNewCityRandomizer(SEED, LOCALE), "Massonde France" },
-//              { aNewCompanyRandomizer(SEED, LOCALE), "" }, Faker 0.7 does not supply french company names https://github.com/DiUS/java-faker/issues/58
-                { aNewCountryRandomizer(SEED, LOCALE), "Australie" },
+//              { aNewCityRandomizer(SEED, LOCALE), "Massonde France" }, does no work in faker 0.8 see, https://github.com/DiUS/java-faker/issues/65
+                { aNewCompanyRandomizer(SEED, LOCALE), "Masson et Masson" },
+                { aNewCountryRandomizer(SEED, LOCALE), "Antarctica (the territory South of 60 deg S)" },
                 { aNewCreditCardNumberRandomizer(SEED, LOCALE), "1211-1221-1234-2201" },
                 { aNewEmailRandomizer(SEED, LOCALE), "alice.masson@hotmail.fr" }, 
                 { aNewFirstNameRandomizer(SEED, LOCALE), "Alice" },
-                { aNewFullNameRandomizer(SEED, LOCALE), "Louise Lambert" },
+                { aNewFullNameRandomizer(SEED, LOCALE), "Masson Emilie" },
                 { aNewIsbnRandomizer(SEED, LOCALE), "206-9-57-475-3963" },
                 { aNewLastNameRandomizer(SEED, LOCALE), "Faure" },
                 { aNewLatitudeRandomizer(SEED, LOCALE), "40" + new DecimalFormatSymbols().getDecimalSeparator() + "171357" }, // should really be "40.171357", seems like a bug in Faker 0.7
                 { aNewLongitudeRandomizer(SEED, LOCALE), "80" + new DecimalFormatSymbols().getDecimalSeparator() + "342713" }, // should really be "80.342713", seems like a bug in Faker 0.7
-                { aNewNameRandomizer(SEED, LOCALE), "Louise Lambert" },
+                { aNewNameRandomizer(SEED, LOCALE), "Masson Emilie" },
                 { aNewParagraphRandomizer(SEED, LOCALE), "Totam assumenda eius autem similique. Aut voluptatem enim praesentium. Suscipit cupiditate doloribus debitis dolor. Cumque sapiente occaecati. Quos maiores quae." },
                 { aNewPhoneNumberRandomizer(SEED, LOCALE), "0106957475" },
                 { aNewSentenceRandomizer(SEED, LOCALE), "Dolor totam assumenda eius autem." },
                 { aNewStateRandomizer(SEED, LOCALE), "Haute-Normandie" },
-                { aNewStreetRandomizer(SEED, LOCALE), "Masson de Presbourg" },
+                { aNewStreetRandomizer(SEED, LOCALE), "Emilie Saint-Denis" },
                 { aNewWordRandomizer(SEED, LOCALE), "repellat" },
                 { aNewZipCodeRandomizer(SEED, LOCALE), "06957" }
         };
