@@ -35,7 +35,6 @@ import static io.github.benas.randombeans.randomizers.IsbnRandomizer.aNewIsbnRan
 import static io.github.benas.randombeans.randomizers.LastNameRandomizer.aNewLastNameRandomizer;
 import static io.github.benas.randombeans.randomizers.LatitudeRandomizer.aNewLatitudeRandomizer;
 import static io.github.benas.randombeans.randomizers.LongitudeRandomizer.aNewLongitudeRandomizer;
-import static io.github.benas.randombeans.randomizers.NameRandomizer.aNewNameRandomizer;
 import static io.github.benas.randombeans.randomizers.ParagraphRandomizer.aNewParagraphRandomizer;
 import static io.github.benas.randombeans.randomizers.PhoneNumberRandomizer.aNewPhoneNumberRandomizer;
 import static io.github.benas.randombeans.randomizers.SentenceRandomizer.aNewSentenceRandomizer;
@@ -73,7 +72,6 @@ public class RandomizersTest extends AbstractRandomizerTest<FakerBasedRandomizer
                 aNewLastNameRandomizer(),
                 aNewLatitudeRandomizer(),
                 aNewLongitudeRandomizer(),
-                aNewNameRandomizer(),
                 aNewPhoneNumberRandomizer(),
                 aNewParagraphRandomizer(),
                 aNewSentenceRandomizer(),
@@ -107,7 +105,6 @@ public class RandomizersTest extends AbstractRandomizerTest<FakerBasedRandomizer
                 { aNewLastNameRandomizer(SEED), "Hyatt" },
                 { aNewLatitudeRandomizer(SEED), "40" + new DecimalFormatSymbols().getDecimalSeparator() + "171357" },
                 { aNewLongitudeRandomizer(SEED), "80" + new DecimalFormatSymbols().getDecimalSeparator() + "342713" },
-                { aNewNameRandomizer(SEED), "Candace Crona" },
                 { aNewParagraphRandomizer(SEED), "Totam assumenda eius autem similique. Aut voluptatem enim praesentium. Suscipit cupiditate doloribus debitis dolor. Cumque sapiente occaecati. Quos maiores quae." },
                 { aNewPhoneNumberRandomizer(SEED), "1-069-574-7539" },
                 { aNewSentenceRandomizer(SEED), "Dolor totam assumenda eius autem." },
@@ -141,7 +138,6 @@ public class RandomizersTest extends AbstractRandomizerTest<FakerBasedRandomizer
                 { aNewLastNameRandomizer(SEED, LOCALE), "Faure" },
                 { aNewLatitudeRandomizer(SEED, LOCALE), "40" + new DecimalFormatSymbols().getDecimalSeparator() + "171357" }, // should really be "40.171357", seems like a bug in Faker 0.7
                 { aNewLongitudeRandomizer(SEED, LOCALE), "80" + new DecimalFormatSymbols().getDecimalSeparator() + "342713" }, // should really be "80.342713", seems like a bug in Faker 0.7
-                { aNewNameRandomizer(SEED, LOCALE), "Masson Emilie" },
                 { aNewParagraphRandomizer(SEED, LOCALE), "Totam assumenda eius autem similique. Aut voluptatem enim praesentium. Suscipit cupiditate doloribus debitis dolor. Cumque sapiente occaecati. Quos maiores quae." },
                 { aNewPhoneNumberRandomizer(SEED, LOCALE), "0106957475" },
                 { aNewSentenceRandomizer(SEED, LOCALE), "Dolor totam assumenda eius autem." },
