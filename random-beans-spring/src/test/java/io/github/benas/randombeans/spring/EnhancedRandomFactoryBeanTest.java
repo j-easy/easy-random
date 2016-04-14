@@ -60,7 +60,9 @@ public class EnhancedRandomFactoryBeanTest {
         Foo foo = enhancedRandom.nextObject(Foo.class);
 
         assertThat(foo).isNotNull();
-        assertThat(foo.getName()).isNotEmpty();
+        assertThat(foo.getName()).isIn(NameRandomizer.NAMES);
+        assertThat(foo.getAge()).isEqualTo(10);
+        assertThat(foo.getWeight()).isEqualTo(10);
     }
 
     private EnhancedRandom getEnhancedRandomFromSpringContext(String contextFileName) {

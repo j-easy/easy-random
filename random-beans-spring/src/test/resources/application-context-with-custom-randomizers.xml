@@ -34,6 +34,16 @@
                 <ref bean="nameRandomizer"/>
             </list>
         </property>
+        <property name="mappings">
+            <map key-type="java.lang.Class">
+                <entry>
+                    <key><value>java.lang.Integer</value></key>
+                    <bean class="io.github.benas.randombeans.spring.DummyIntegerRandomizer">
+                        <constructor-arg value="10"/>
+                    </bean>
+                </entry>
+            </map>
+        </property>
     </bean>
 
     <bean id="nameRandomizer" class="io.github.benas.randombeans.spring.RandomizerBean">
@@ -44,6 +54,5 @@
             <bean class="io.github.benas.randombeans.spring.NameRandomizer"/>
         </constructor-arg>
     </bean>
-
 
 </beans>

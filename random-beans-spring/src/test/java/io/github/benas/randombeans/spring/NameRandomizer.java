@@ -31,11 +31,11 @@ import java.util.Random;
 
 public class NameRandomizer implements Randomizer<String> {
 
-    private List<String> names = Arrays.asList("foo", "bar", "baz");
+    public static final List<String> NAMES = Arrays.asList("foo", "bar", "baz");
 
     @Override
     public String getRandomValue() {
-        return names.get(new Random().nextInt(2));
+        return NAMES.get(new Random().nextInt(2));
     }
 
 }

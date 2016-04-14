@@ -31,7 +31,9 @@ import io.github.benas.randombeans.api.Randomizer;
 import org.springframework.beans.factory.FactoryBean;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import static io.github.benas.randombeans.EnhancedRandomBuilder.aNewEnhancedRandomBuilder;
 import static io.github.benas.randombeans.FieldDefinitionBuilder.field;
@@ -45,6 +47,8 @@ public class EnhancedRandomFactoryBean implements FactoryBean<EnhancedRandom> {
 
     private List<RandomizerBean<?, ?>> randomizers = new ArrayList<>();
 
+    private Map<Class<?>, Randomizer<?>> mappings = new HashMap<>();
+
     @Override
     public EnhancedRandom getObject() throws Exception {
         EnhancedRandomBuilder enhancedRandomBuilder = aNewEnhancedRandomBuilder();
@@ -56,6 +60,9 @@ public class EnhancedRandomFactoryBean implements FactoryBean<EnhancedRandom> {
                     .get();
             Randomizer<?> randomizer = bean.getRandomizer();
             enhancedRandomBuilder.randomize(fieldDefinition, randomizer);
+        }
+        for (Map.Entry<Class<?>, Randomizer<?>> entry : mappings.entrySet()) {
+            enhancedRandomBuilder.randomize(entry.getKey(), entry.getValue());
         }
 
         return enhancedRandomBuilder.build();
@@ -75,4 +82,7 @@ public class EnhancedRandomFactoryBean implements FactoryBean<EnhancedRandom> {
         this.randomizers = randomizers;
     }
 
+    public void setMappings(Map<Class<?>, Randomizer<?>> mappings) {
+        this.mappings = mappings;
+    }
 }
