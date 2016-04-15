@@ -34,6 +34,8 @@ import org.junit.runner.RunWith;
 import org.mockito.Mock;
 import org.mockito.runners.MockitoJUnitRunner;
 
+import java.util.function.Supplier;
+
 import static io.github.benas.randombeans.EnhancedRandomBuilder.aNewEnhancedRandomBuilder;
 import static io.github.benas.randombeans.FieldDefinitionBuilder.field;
 import static org.assertj.core.api.Assertions.assertThat;
@@ -48,6 +50,8 @@ public class EnhancedRandomBuilderTest {
     @Mock
     private Randomizer<String> randomizer;
     @Mock
+    private Supplier<String> supplier;
+    @Mock
     private Randomizer humanRandomizer;
     @Mock
     private RandomizerRegistry randomizerRegistry;
@@ -59,6 +63,7 @@ public class EnhancedRandomBuilderTest {
     @Before
     public void setUp() {
         when(randomizer.getRandomValue()).thenReturn(NAME);
+        when(supplier.get()).thenReturn(NAME);
         when(humanRandomizer.getRandomValue()).thenReturn(human);
     }
 
@@ -78,6 +83,24 @@ public class EnhancedRandomBuilderTest {
 
         FieldDefinition<?, ?> fieldDefinition = field().named("name").ofType(String.class).inClass(Human.class).get();
         enhancedRandomBuilder.randomize(fieldDefinition, randomizer);
+
+        EnhancedRandom enhancedRandom = enhancedRandomBuilder.build();
+        Human human = enhancedRandom.nextObject(Human.class);
+
+        assertThat(human.getName()).isEqualTo(NAME);
+
+        EnhancedRandom enhancedRandom2 = enhancedRandomBuilder.build();
+        Human human2 = enhancedRandom2.nextObject(Human.class);
+
+        assertThat(human2.getName()).isEqualTo(NAME);
+    }
+
+    @Test
+    public void customSupplierShouldBeRegisteredInAllBuiltInstances() {
+        enhancedRandomBuilder = aNewEnhancedRandomBuilder();
+
+        FieldDefinition<?, ?> fieldDefinition = field().named("name").ofType(String.class).inClass(Human.class).get();
+        enhancedRandomBuilder.randomize(fieldDefinition, supplier);
 
         EnhancedRandom enhancedRandom = enhancedRandomBuilder.build();
         Human human = enhancedRandom.nextObject(Human.class);
