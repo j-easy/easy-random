@@ -40,7 +40,7 @@ public class CollectionPopulationTest {
     private EnhancedRandom enhancedRandom;
 
     @Before
-    public void setUp() throws Exception {
+    public void setUp() {
         enhancedRandom = aNewEnhancedRandomBuilder().build();
     }
 
@@ -219,7 +219,7 @@ public class CollectionPopulationTest {
     }
 
     @Test
-    public void compositeCollectionTypesShouldBeEmpty() throws Exception {
+    public void compositeCollectionTypesShouldBeEmpty() {
         CompositeCollectionBean compositeCollectionBean = enhancedRandom.nextObject(CompositeCollectionBean.class);
 
         assertThat(compositeCollectionBean.getListOfLists()).isEmpty();

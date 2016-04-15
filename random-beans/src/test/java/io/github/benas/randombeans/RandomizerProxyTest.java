@@ -12,7 +12,7 @@ public class RandomizerProxyTest {
     public static final String FOO = "foo";
 
     @Test
-    public void theRandomizerProxyShouldBehaveLikeTheSupplier() throws Exception {
+    public void theRandomizerProxyShouldBehaveLikeTheSupplier() {
         // Given
         MySupplier supplier = new MySupplier();
 

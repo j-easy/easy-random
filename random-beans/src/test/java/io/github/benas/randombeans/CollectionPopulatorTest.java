@@ -53,7 +53,7 @@ public class CollectionPopulatorTest {
     private CollectionPopulator collectionPopulator;
 
     @Before
-    public void setUp() throws Exception {
+    public void setUp() {
         ObjectFactory objectFactory = new ObjectFactory();
         collectionPopulator = new CollectionPopulator(enhancedRandom, objectFactory);
     }

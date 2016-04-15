@@ -42,12 +42,12 @@ public class PopulatorContextTest {
     private PopulatorContext populatorContext;
 
     @Before
-    public void setUp() throws Exception {
+    public void setUp() {
         populatorContext = new PopulatorContext();
     }
 
     @Test
-    public void whenATypeHasBeenRandomized_thenHasPopulatedBeanShouldReturnTrueOnlyWhenTheObjectPoolIsFilled() throws Exception {
+    public void whenATypeHasBeenRandomized_thenHasPopulatedBeanShouldReturnTrueOnlyWhenTheObjectPoolIsFilled() {
 
         // Only one instance has been randomized => should be considered as not randomized yet
         populatorContext.addPopulatedBean(String.class, "bean" + 0);
@@ -61,7 +61,7 @@ public class PopulatorContextTest {
     }
 
     @Test
-    public void whenATypeHasNotBeenRandomizedYet_thenHasPopulatedBeanShouldReturnFalse() throws Exception {
+    public void whenATypeHasNotBeenRandomizedYet_thenHasPopulatedBeanShouldReturnFalse() {
         // Given
         populatorContext.addPopulatedBean(String.class, bean1);
 
@@ -73,7 +73,7 @@ public class PopulatorContextTest {
     }
 
     @Test
-    public void whenATypeHasBeenRandomized_thenTheRandomizedBeanShouldBeRetrievedFromTheObjectPool() throws Exception {
+    public void whenATypeHasBeenRandomized_thenTheRandomizedBeanShouldBeRetrievedFromTheObjectPool() {
         // Given
         populatorContext.addPopulatedBean(String.class, bean1);
         populatorContext.addPopulatedBean(String.class, bean2);

@@ -58,7 +58,7 @@ public class MapPopulatorTest {
     private MapPopulator mapPopulator;
     
     @Before
-    public void setUp() throws Exception {
+    public void setUp() {
         ObjectFactory objectFactory = new ObjectFactory();
         mapPopulator = new MapPopulator(enhancedRandom, objectFactory);
     }

@@ -34,7 +34,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 public class StringRandomizerTest extends AbstractRandomizerTest<String> {
 
     @Before
-    public void setUp() throws Exception {
+    public void setUp() {
         randomizer = aNewStringRandomizer();
     }
 

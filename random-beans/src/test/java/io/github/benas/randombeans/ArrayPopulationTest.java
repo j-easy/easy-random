@@ -40,7 +40,7 @@ public class ArrayPopulationTest {
     private EnhancedRandom enhancedRandom;
 
     @Before
-    public void setUp() throws Exception {
+    public void setUp() {
         enhancedRandom = aNewEnhancedRandomBuilder().build();
     }
 

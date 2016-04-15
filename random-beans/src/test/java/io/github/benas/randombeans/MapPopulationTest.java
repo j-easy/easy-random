@@ -176,7 +176,7 @@ public class MapPopulationTest {
     }
 
     @Test
-    public void compositeMapTypesShouldBeEmpty() throws Exception {
+    public void compositeMapTypesShouldBeEmpty() {
         CompositeMapBean compositeMapBean = enhancedRandom.nextObject(CompositeMapBean.class);
 
         assertThat(compositeMapBean.getPersonToNicknames()).isEmpty();

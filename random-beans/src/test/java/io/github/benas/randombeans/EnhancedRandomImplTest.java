@@ -30,7 +30,6 @@ import io.github.benas.randombeans.api.Randomizer;
 import io.github.benas.randombeans.beans.*;
 import io.github.benas.randombeans.randomizers.misc.ConstantRandomizer;
 
-import org.assertj.core.api.Assertions;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -200,7 +199,7 @@ public class EnhancedRandomImplTest {
     }
 
     @Test
-    public void generatedConcreteSubTypesMustBePopulatedWhenScanClasspathForConcreteTypesIsEnabled() throws Exception {
+    public void generatedConcreteSubTypesMustBePopulatedWhenScanClasspathForConcreteTypesIsEnabled() {
         // Given
         enhancedRandom = EnhancedRandomBuilder.aNewEnhancedRandomBuilder().scanClasspathForConcreteTypes(true).build();
 
@@ -262,7 +261,7 @@ public class EnhancedRandomImplTest {
     }
 
     @Test
-    public void supplierShouldBehaveLikeRandomizer() throws Exception {
+    public void supplierShouldBehaveLikeRandomizer() {
         // Given
         enhancedRandom = aNewEnhancedRandomBuilder().randomize(String.class, supplier).build(); // All string fields should be equal to FOO
 

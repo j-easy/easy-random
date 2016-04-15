@@ -51,7 +51,7 @@ public class RandomizerProviderTest {
     private RandomizerProvider randomizerProvider;
 
     @Before
-    public void setUp() throws Exception {
+    public void setUp() {
         randomizerProvider = new RandomizerProvider(singleton(randomizerRegistry));
     }
 

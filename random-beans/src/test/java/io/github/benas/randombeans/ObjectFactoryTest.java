@@ -59,7 +59,7 @@ public class ObjectFactoryTest {
     }
 
     @Test
-    public void createEmptyCollectionForArrayBlockingQueue() throws IllegalAccessException {
+    public void createEmptyCollectionForArrayBlockingQueue() {
         Collection<?> collection = objectFactory.createEmptyCollectionForType(ArrayBlockingQueue.class, INITIAL_CAPACITY);
 
         assertThat(collection).isInstanceOf(ArrayBlockingQueue.class).isEmpty();
@@ -67,12 +67,12 @@ public class ObjectFactoryTest {
     }
 
     @Test(expected = UnsupportedOperationException.class)
-    public void synchronousQueueShouldBeRejected() throws Exception {
+    public void synchronousQueueShouldBeRejected() {
         objectFactory.createEmptyCollectionForType(SynchronousQueue.class, INITIAL_CAPACITY);
     }
 
     @Test(expected = UnsupportedOperationException.class)
-    public void delayQueueShouldBeRejected() throws Exception {
+    public void delayQueueShouldBeRejected() {
         objectFactory.createEmptyCollectionForType(DelayQueue.class, INITIAL_CAPACITY);
     }
 

@@ -66,7 +66,7 @@ public class FieldPopulatorTest {
     private FieldPopulator fieldPopulator;
 
     @Before
-    public void setUp() throws Exception {
+    public void setUp() {
         fieldPopulator = new FieldPopulator(enhancedRandom, randomizerProvider, arrayPopulator, collectionPopulator, mapPopulator);
     }
 

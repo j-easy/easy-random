@@ -43,7 +43,7 @@ public class PriorityComparatorTest {
     Bar bar;
 
     @Before
-    public void setUp() throws Exception {
+    public void setUp() {
         priorityComparator = new PriorityComparator();
         foo = new Foo();
         bar = new Bar();

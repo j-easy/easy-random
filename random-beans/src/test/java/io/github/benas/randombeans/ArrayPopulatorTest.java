@@ -47,14 +47,14 @@ public class ArrayPopulatorTest {
     private ArrayPopulator arrayPopulator;
 
     @Before
-    public void setUp() throws Exception {
+    public void setUp() {
         arrayPopulator = new ArrayPopulator(enhancedRandom);
         when(enhancedRandom.nextInt()).thenReturn(INT);
         when(enhancedRandom.doPopulateBean(String.class, context)).thenReturn(STRING);
     }
 
     @Test
-    public void getRandomArray() throws Exception {
+    public void getRandomArray() {
         Object array = arrayPopulator.getRandomArray(String[].class, context);
 
         assertThat(array).isInstanceOf(String[].class);
@@ -65,7 +65,7 @@ public class ArrayPopulatorTest {
     }
 
     @Test
-    public void getRandomPrimitiveArray() throws Exception {
+    public void getRandomPrimitiveArray() {
         Object array = arrayPopulator.getRandomPrimitiveArray(Integer.TYPE);
 
         assertThat(array).isInstanceOf(int[].class);
