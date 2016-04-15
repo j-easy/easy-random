@@ -24,12 +24,8 @@
 
 package io.github.benas.randombeans.randomizers.jodatime;
 
-import io.github.benas.randombeans.api.Randomizer;
-
-public abstract class AbstractJodaTimeRandomizerTest<T> {
+public abstract class AbstractJodaTimeRandomizerTest {
 
     protected static final long SEED = 123L;
-
-    protected Randomizer<T> randomizer;
 
 }

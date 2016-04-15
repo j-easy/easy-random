@@ -31,7 +31,7 @@ import static io.github.benas.randombeans.randomizers.jodatime.JodaTimeDateTimeR
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.BDDAssertions.then;
 
-public class JodaTimeDateTimeRandomizerTest extends AbstractJodaTimeRandomizerTest<DateTime> {
+public class JodaTimeDateTimeRandomizerTest extends AbstractJodaTimeRandomizerTest {
 
     @Test
     public void generatedValueShouldNotBeNull() {

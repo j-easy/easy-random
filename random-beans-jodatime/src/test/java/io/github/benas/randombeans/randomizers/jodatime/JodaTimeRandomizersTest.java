@@ -48,7 +48,7 @@ import com.tngtech.java.junit.dataprovider.UseDataProvider;
 import io.github.benas.randombeans.api.Randomizer;
 
 @RunWith(DataProviderRunner.class)
-public class JodaTimeRandomizersTest extends AbstractJodaTimeRandomizerTest<Randomizer<?>> {
+public class JodaTimeRandomizersTest extends AbstractJodaTimeRandomizerTest {
 
     @DataProvider
     public static Object[] generateRandomizers() {
