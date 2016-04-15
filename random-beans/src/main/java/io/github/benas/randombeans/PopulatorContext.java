@@ -82,8 +82,8 @@ class PopulatorContext {
         stack.push(field);
     }
 
-    PopulatorContextStackItem popStackItem() {
-        return stack.pop();
+    void popStackItem() {
+        stack.pop();
     }
 
     String getFieldFullName(final Field field) {
