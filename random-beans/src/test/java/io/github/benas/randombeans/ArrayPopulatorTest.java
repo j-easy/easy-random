@@ -74,4 +74,13 @@ public class ArrayPopulatorTest {
             assertThat(i).isEqualTo(INT);
         }
     }
+
+    @Test
+    public void charArraysShouldBeFilledWithOnlyAlphabeticLetters() {
+        char[] chars = (char[]) arrayPopulator.getRandomArray(char[].class, context);
+
+        for (char c : chars) {
+            assertThat(c).isGreaterThanOrEqualTo('A').isLessThanOrEqualTo('z');
+        }
+    }
 }

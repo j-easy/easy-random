@@ -35,6 +35,8 @@ import static java.lang.Math.abs;
  */
 class ArrayPopulator {
 
+    private static final String ALPHABET = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz";
+
     private EnhancedRandomImpl enhancedRandom;
 
     ArrayPopulator(final EnhancedRandomImpl enhancedRandom) {
@@ -103,7 +105,7 @@ class ArrayPopulator {
         if (primitiveType.equals(Character.TYPE)) {
             char[] result = new char[randomSize];
             for (int index = 0; index < randomSize; index++) {
-                result[index] = (char) enhancedRandom.nextInt();
+                result[index] = ALPHABET.charAt(enhancedRandom.nextInt(ALPHABET.length()));
             }
             return result;
         }
