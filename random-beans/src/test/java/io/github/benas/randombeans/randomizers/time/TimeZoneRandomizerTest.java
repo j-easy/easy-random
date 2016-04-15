@@ -37,7 +37,7 @@ import io.github.benas.randombeans.randomizers.AbstractRandomizerTest;
 public class TimeZoneRandomizerTest extends AbstractRandomizerTest<TimeZone> {
 
     @Before
-    public void setUp() throws Exception {
+    public void setUp() {
         randomizer = aNewTimeZoneRandomizer(SEED);
     }
 

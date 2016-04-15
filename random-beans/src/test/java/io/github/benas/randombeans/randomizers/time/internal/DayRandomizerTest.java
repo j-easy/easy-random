@@ -40,7 +40,7 @@ public class DayRandomizerTest extends AbstractRandomizerTest<Integer> {
     }
 
     @Test
-    public void generatedValueShouldNotBeNull() throws Exception {
+    public void generatedValueShouldNotBeNull() {
         assertThat(randomizer.getRandomValue()).isNotNull();
     }
 

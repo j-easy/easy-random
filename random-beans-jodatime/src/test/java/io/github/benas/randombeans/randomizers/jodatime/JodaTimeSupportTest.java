@@ -36,7 +36,7 @@ public class JodaTimeSupportTest {
     private EnhancedRandom enhancedRandom;
 
     @Before
-    public void setUp() throws Exception {
+    public void setUp() {
         enhancedRandom = aNewEnhancedRandomBuilder().build();
     }
 

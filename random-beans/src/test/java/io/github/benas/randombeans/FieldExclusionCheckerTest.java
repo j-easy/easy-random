@@ -45,7 +45,7 @@ public class FieldExclusionCheckerTest {
     private FieldExclusionChecker checker;
 
     @Before
-    public void setUp() throws Exception {
+    public void setUp() {
         checker = new FieldExclusionChecker();
     }
 

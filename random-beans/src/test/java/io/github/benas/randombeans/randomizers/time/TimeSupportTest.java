@@ -37,12 +37,12 @@ public class TimeSupportTest {
     private EnhancedRandom enhancedRandom;
 
     @Before
-    public void setUp() throws Exception {
+    public void setUp() {
         enhancedRandom = EnhancedRandomBuilder.aNewEnhancedRandomBuilder().build();
     }
 
     @Test
-    public void threeTenTypesShouldBePopulated() throws Exception {
+    public void threeTenTypesShouldBePopulated() {
         TimeBean timeBean = enhancedRandom.nextObject(TimeBean.class);
 
         assertThat(timeBean.getDuration()).isNotNull();

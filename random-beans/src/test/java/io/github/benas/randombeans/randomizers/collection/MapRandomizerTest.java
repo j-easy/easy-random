@@ -45,7 +45,7 @@ public class MapRandomizerTest {
     private Randomizer<String> valueRandomizer;
 
     @Before
-    public void setUp() throws Exception {
+    public void setUp() {
         when(keyRandomizer.getRandomValue()).thenReturn(1, 2, 3);
         when(valueRandomizer.getRandomValue()).thenReturn("a", "b", "c");
     }
