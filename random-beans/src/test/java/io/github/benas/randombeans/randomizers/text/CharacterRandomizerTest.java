@@ -28,20 +28,31 @@ import io.github.benas.randombeans.randomizers.AbstractRandomizerTest;
 import org.junit.Before;
 import org.junit.Test;
 
+import static io.github.benas.randombeans.randomizers.text.CharacterRandomizer.aNewCharacterRandomizer;
 import static org.assertj.core.api.Assertions.assertThat;
 
 public class CharacterRandomizerTest extends AbstractRandomizerTest<Character> {
 
     @Before
-    public void setUp() throws Exception {
-        randomizer = CharacterRandomizer.aNewCharacterRandomizer(SEED);
+    public void setUp() {
+        randomizer = aNewCharacterRandomizer();
+    }
+
+    @Test
+    public void generatedValueMustNotBeNull() {
+        assertThat(randomizer.getRandomValue()).isNotNull();
     }
 
     @Test
     public void shouldGenerateTheSameValueForTheSameSeed() {
-        Character actual = randomizer.getRandomValue();
+        // Given
+        randomizer = aNewCharacterRandomizer(SEED);
         char expected = '6';
 
+        // When
+        Character actual = randomizer.getRandomValue();
+
+        // Then
         assertThat(actual).isEqualTo(expected);
     }
 

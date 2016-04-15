@@ -30,6 +30,7 @@ import org.junit.runner.RunWith;
 import org.mockito.Mock;
 import org.mockito.runners.MockitoJUnitRunner;
 
+import static io.github.benas.randombeans.randomizers.text.StringDelegatingRandomizer.aNewStringDelegatingRandomizer;
 import static java.lang.String.valueOf;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.Mockito.when;
@@ -46,12 +47,12 @@ public class StringDelegatingRandomizerTest {
 
     @Before
     public void setUp() {
-        stringDelegatingRandomizer = new StringDelegatingRandomizer(delegate);
+        stringDelegatingRandomizer = aNewStringDelegatingRandomizer(delegate);
         when(delegate.getRandomValue()).thenReturn(object);
     }
 
     @Test
-    public void testGetRandomValue() {
+    public void generatedValueShouldTheSameAs() {
         String actual = stringDelegatingRandomizer.getRandomValue();
 
         assertThat(actual).isEqualTo(valueOf(object));
