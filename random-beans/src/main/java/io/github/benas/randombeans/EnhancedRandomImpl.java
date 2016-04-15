@@ -72,10 +72,6 @@ class EnhancedRandomImpl extends EnhancedRandom {
     }
 
     public <T> T nextObject(final Class<T> type, final String... excludedFields) {
-        Randomizer<?> randomizer = randomizerProvider.getRandomizerByType(type);
-        if (randomizer != null) {
-            return (T) randomizer.getRandomValue();
-        }
         return doPopulateBean(type, new PopulatorContext(excludedFields));
     }
 
@@ -95,6 +91,11 @@ class EnhancedRandomImpl extends EnhancedRandom {
     <T> T doPopulateBean(final Class<T> type, final PopulatorContext context) {
         T result;
         try {
+
+            Randomizer<?> randomizer = randomizerProvider.getRandomizerByType(type);
+            if (randomizer != null) {
+                return (T) randomizer.getRandomValue();
+            }
 
             // Collection types are randomized without introspection for internal fields
             if (!isIntrospectable(type)) {
