@@ -40,9 +40,9 @@ import static java.lang.Math.abs;
  */
 public abstract class CollectionRandomizer<T> implements Randomizer<Collection<T>> {
 
-    protected int nbElements;
+    protected final int nbElements;
 
-    protected Randomizer<T> delegate;
+    protected final Randomizer<T> delegate;
 
     protected CollectionRandomizer(final Randomizer<T> delegate) {
         this(delegate, abs(aNewByteRandomizer().getRandomValue()));

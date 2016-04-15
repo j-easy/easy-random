@@ -35,7 +35,7 @@ import java.util.Calendar;
  */
 public class CalendarRandomizer implements Randomizer<Calendar> {
 
-    private DateRandomizer delegate;
+    private final DateRandomizer delegate;
 
     /**
      * Create a new {@link CalendarRandomizer}.

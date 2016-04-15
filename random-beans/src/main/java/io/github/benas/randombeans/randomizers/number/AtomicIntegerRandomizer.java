@@ -35,7 +35,7 @@ import java.util.concurrent.atomic.AtomicInteger;
  */
 public class AtomicIntegerRandomizer implements Randomizer<AtomicInteger> {
 
-    private IntegerRandomizer delegate;
+    private final IntegerRandomizer delegate;
 
     /**
      * Create a new {@link AtomicIntegerRandomizer}.

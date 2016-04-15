@@ -41,7 +41,7 @@ import java.util.TimeZone;
  */
 public class TimeRandomizerRegistry implements RandomizerRegistry {
 
-    private Map<Class<?>, Randomizer<?>> randomizers = new HashMap<>();
+    private final Map<Class<?>, Randomizer<?>> randomizers = new HashMap<>();
 
     @Override
     public void setSeed(long seed) {

@@ -34,7 +34,7 @@ import io.github.benas.randombeans.randomizers.AbstractRandomizer;
  */
 public class EnumRandomizer<E extends Enum<E>> extends AbstractRandomizer<E> {
 
-    private Class<E> enumeration;
+    private final Class<E> enumeration;
 
     /**
      * Create a new {@link EnumRandomizer}.

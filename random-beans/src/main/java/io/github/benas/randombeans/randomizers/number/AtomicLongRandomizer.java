@@ -35,7 +35,7 @@ import java.util.concurrent.atomic.AtomicLong;
  */
 public class AtomicLongRandomizer implements Randomizer<AtomicLong> {
 
-    private LongRandomizer delegate;
+    private final LongRandomizer delegate;
 
     /**
      * Create a new {@link AtomicLongRandomizer}.

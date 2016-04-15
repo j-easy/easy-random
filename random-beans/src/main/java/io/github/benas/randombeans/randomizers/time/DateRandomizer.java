@@ -40,7 +40,7 @@ import static io.github.benas.randombeans.util.DateUtils.toDate;
  */
 public class DateRandomizer implements Randomizer<Date> {
 
-    private DateRangeRandomizer delegate;
+    private final DateRangeRandomizer delegate;
 
     /**
      * Create a new {@link DateRandomizer}.

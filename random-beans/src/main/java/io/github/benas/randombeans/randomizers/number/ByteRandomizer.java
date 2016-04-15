@@ -33,7 +33,7 @@ import io.github.benas.randombeans.api.Randomizer;
  */
 public class ByteRandomizer implements Randomizer<Byte> {
 
-    private IntegerRandomizer delegate;
+    private final IntegerRandomizer delegate;
 
     /**
      * Create a new {@link ByteRandomizer}.

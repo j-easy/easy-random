@@ -41,8 +41,8 @@ import java.util.Map;
 @Priority(-254)
 public class CustomRandomizerRegistry implements RandomizerRegistry {
 
-    private Map<FieldDefinition<?, ?>, Randomizer<?>> customFieldRandomizersRegistry = new HashMap<>();
-    private Map<Class<?>, Randomizer<?>> customTypeRandomizersRegistry = new HashMap<>();
+    private final Map<FieldDefinition<?, ?>, Randomizer<?>> customFieldRandomizersRegistry = new HashMap<>();
+    private final Map<Class<?>, Randomizer<?>> customTypeRandomizersRegistry = new HashMap<>();
 
     /**
      * Set the initial seed for all randomizers of the registry

@@ -38,9 +38,9 @@ import java.time.Year;
  */
 public class PeriodRandomizer implements Randomizer<Period> {
 
-    private YearRandomizer yearRandomizer;
-    private EnumRandomizer<Month> monthRandomizer;
-    private DayRandomizer dayRandomizer;
+    private final YearRandomizer yearRandomizer;
+    private final EnumRandomizer<Month> monthRandomizer;
+    private final DayRandomizer dayRandomizer;
 
     /**
      * Create a new {@link PeriodRandomizer}.

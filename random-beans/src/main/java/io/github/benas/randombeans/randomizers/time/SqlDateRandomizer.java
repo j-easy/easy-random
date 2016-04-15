@@ -35,7 +35,7 @@ import java.sql.Date;
  */
 public class SqlDateRandomizer implements Randomizer<Date> {
 
-    private DateRandomizer delegate;
+    private final DateRandomizer delegate;
 
     /**
      * Create a new {@link SqlDateRandomizer}.

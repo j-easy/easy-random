@@ -40,9 +40,9 @@ import static io.github.benas.randombeans.util.ReflectionUtils.*;
  */
 class CollectionPopulator {
 
-    private EnhancedRandomImpl enhancedRandom;
+    private final EnhancedRandomImpl enhancedRandom;
 
-    private ObjectFactory objectFactory;
+    private final ObjectFactory objectFactory;
 
     CollectionPopulator(final EnhancedRandomImpl enhancedRandom, final ObjectFactory objectFactory) {
         this.enhancedRandom = enhancedRandom;

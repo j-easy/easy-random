@@ -35,7 +35,7 @@ import java.util.Random;
  */
 public abstract class AbstractRandomizer<T> implements Randomizer<T>  {
 
-    protected Random random;
+    protected final Random random;
 
     protected AbstractRandomizer() {
         random = new Random();

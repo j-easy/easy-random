@@ -33,7 +33,7 @@ import io.github.benas.randombeans.api.Randomizer;
  */
 public class CharacterRandomizer implements Randomizer<Character> {
 
-    private StringRandomizer delegate;
+    private final StringRandomizer delegate;
 
     /**
      * Create a new {@link CharacterRandomizer}.

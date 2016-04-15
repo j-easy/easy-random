@@ -35,7 +35,7 @@ import java.math.BigDecimal;
  */
 public class BigDecimalRandomizer implements Randomizer<BigDecimal> {
 
-    private DoubleRandomizer delegate;
+    private final DoubleRandomizer delegate;
 
     /**
      * Create a new {@link BigDecimalRandomizer}.

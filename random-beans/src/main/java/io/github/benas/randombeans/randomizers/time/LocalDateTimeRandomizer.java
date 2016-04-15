@@ -36,8 +36,8 @@ import java.time.LocalTime;
  */
 public class LocalDateTimeRandomizer implements Randomizer<LocalDateTime> {
 
-    private LocalDateRandomizer localDateRandomizer;
-    private LocalTimeRandomizer localTimeRandomizer;
+    private final LocalDateRandomizer localDateRandomizer;
+    private final LocalTimeRandomizer localTimeRandomizer;
 
     /**
      * Create a new {@link LocalDateTimeRandomizer}.

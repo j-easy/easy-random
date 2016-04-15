@@ -77,7 +77,7 @@ class RandomizerProvider {
 
     private class ByTypeProvider implements Provider {
 
-        private Class<?> type;
+        private final Class<?> type;
 
         public ByTypeProvider(final Class<?> type) {
             this.type = type;
@@ -91,7 +91,7 @@ class RandomizerProvider {
 
     private class ByFieldProvider implements Provider {
 
-        private Field field;
+        private final Field field;
 
         public ByFieldProvider(final Field field) {
             this.field = field;

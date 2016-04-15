@@ -34,7 +34,7 @@ import java.util.GregorianCalendar;
  */
 public class GregorianCalendarRandomizer implements Randomizer<GregorianCalendar> {
 
-    private LongRandomizer delegate;
+    private final LongRandomizer delegate;
 
     /**
      * Create a new {@link GregorianCalendarRandomizer}.

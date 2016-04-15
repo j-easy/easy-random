@@ -41,11 +41,11 @@ class PopulatorContext {
 
     static final byte OBJECT_POOL_SIZE = 10;
 
-    private Set<String> excludedFields;
+    private final Set<String> excludedFields;
 
-    private Map<Class<?>, List<Object>> populatedBeans;
+    private final Map<Class<?>, List<Object>> populatedBeans;
 
-    private Stack<PopulatorContextStackItem> stack;
+    private final Stack<PopulatorContextStackItem> stack;
 
     PopulatorContext(final String... excludedFields) {
         populatedBeans = new IdentityHashMap<>();

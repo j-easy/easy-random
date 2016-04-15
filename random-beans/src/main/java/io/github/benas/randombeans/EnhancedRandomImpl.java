@@ -47,19 +47,19 @@ class EnhancedRandomImpl extends EnhancedRandom {
 
     private long seed;
 
-    private FieldPopulator fieldPopulator;
+    private final FieldPopulator fieldPopulator;
 
-    private ArrayPopulator arrayPopulator;
+    private final ArrayPopulator arrayPopulator;
 
-    private CollectionPopulator collectionPopulator;
+    private final CollectionPopulator collectionPopulator;
 
-    private MapPopulator mapPopulator;
+    private final MapPopulator mapPopulator;
 
-    private RandomizerProvider randomizerProvider;
+    private final RandomizerProvider randomizerProvider;
 
-    private ObjectFactory objectFactory;
+    private final ObjectFactory objectFactory;
 
-    private FieldExclusionChecker fieldExclusionChecker;
+    private final FieldExclusionChecker fieldExclusionChecker;
 
     EnhancedRandomImpl(final Set<RandomizerRegistry> registries) {
         objectFactory = new ObjectFactory();

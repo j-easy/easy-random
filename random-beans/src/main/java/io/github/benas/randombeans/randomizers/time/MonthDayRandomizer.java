@@ -37,8 +37,8 @@ import java.time.MonthDay;
  */
 public class MonthDayRandomizer implements Randomizer<MonthDay> {
 
-    private EnumRandomizer<Month> monthRandomizer;
-    private DayRandomizer dayRandomizer;
+    private final EnumRandomizer<Month> monthRandomizer;
+    private final DayRandomizer dayRandomizer;
 
     /**
      * Create a new {@link MonthDayRandomizer}.

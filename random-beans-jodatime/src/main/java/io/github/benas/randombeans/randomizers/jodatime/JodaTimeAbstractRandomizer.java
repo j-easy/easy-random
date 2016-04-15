@@ -40,7 +40,7 @@ import static io.github.benas.randombeans.util.DateUtils.toDate;
  */
 public abstract class JodaTimeAbstractRandomizer<T> implements Randomizer<T> {
 
-    private DateRangeRandomizer delegate;
+    private final DateRangeRandomizer delegate;
 
     protected JodaTimeAbstractRandomizer() {
         delegate = new DateRangeRandomizer(toDate(TEN_YEARS_AGO), toDate(IN_TEN_YEARS));

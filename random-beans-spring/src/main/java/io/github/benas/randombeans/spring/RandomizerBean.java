@@ -36,22 +36,22 @@ public class RandomizerBean<T, F> {
     /**
      * The class type for which the randomizer will be used.
      */
-    private Class<T> type;
+    private final Class<T> type;
 
     /**
      * The field type within the class for which the randomizer will be used.
      */
-    private Class<F> fieldType;
+    private final Class<F> fieldType;
 
     /**
      * The field name within the class for which the randomizer will be used.
      */
-    private String fieldName;
+    private final String fieldName;
 
     /**
      * The randomizer to register.
      */
-    private Randomizer<T> randomizer;
+    private final Randomizer<T> randomizer;
 
     public RandomizerBean(Class<T> type, Class<F> fieldType, String fieldName, Randomizer<T> randomizer) {
         this.type = type;

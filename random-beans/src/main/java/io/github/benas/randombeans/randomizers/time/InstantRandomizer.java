@@ -35,7 +35,7 @@ import java.util.Date;
  */
 public class InstantRandomizer implements Randomizer<Instant> {
 
-    DateRandomizer dateRandomizer;
+    private final DateRandomizer dateRandomizer;
 
     /**
      * Create a new {@link InstantRandomizer}.

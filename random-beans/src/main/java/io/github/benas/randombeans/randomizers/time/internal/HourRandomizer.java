@@ -36,7 +36,7 @@ public class HourRandomizer implements Randomizer<Integer> {
     public static final int MIN_HOUR = 0;
     public static final int MAX_HOUR = 23;
 
-    private IntegerRangeRandomizer hourRandomizer;
+    private final IntegerRangeRandomizer hourRandomizer;
 
     public HourRandomizer() {
         hourRandomizer = new IntegerRangeRandomizer(MIN_HOUR, MAX_HOUR);

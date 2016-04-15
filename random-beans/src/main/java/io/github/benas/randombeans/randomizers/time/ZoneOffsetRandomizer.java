@@ -42,7 +42,7 @@ public class ZoneOffsetRandomizer implements Randomizer<ZoneOffset> {
      */
     private static final int MAX_SECONDS = 64800;
 
-    private IntegerRangeRandomizer integerRangeRandomizer;
+    private final IntegerRangeRandomizer integerRangeRandomizer;
 
     /**
      * Create a new {@link ZoneOffsetRandomizer}.

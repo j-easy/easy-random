@@ -37,7 +37,7 @@ import java.util.Locale;
  */
 public abstract class FakerBasedRandomizer<T> extends AbstractRandomizer<T> {
 
-    protected Faker faker;
+    protected final Faker faker;
 
     protected FakerBasedRandomizer() {
         faker = new Faker(Locale.ENGLISH);

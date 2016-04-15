@@ -42,9 +42,9 @@ import static io.github.benas.randombeans.RandomizerProxy.asRandomizer;
  */
 public class EnhancedRandomBuilder {
 
-    private CustomRandomizerRegistry customRandomizerRegistry;
+    private final CustomRandomizerRegistry customRandomizerRegistry;
 
-    private Set<RandomizerRegistry> userRegistries;
+    private final Set<RandomizerRegistry> userRegistries;
 
     private boolean scanClasspathForConcreteTypes;
 

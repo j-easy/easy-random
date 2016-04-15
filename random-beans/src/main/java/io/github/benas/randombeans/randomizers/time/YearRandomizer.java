@@ -38,7 +38,7 @@ import static io.github.benas.randombeans.util.Constants.TEN_YEARS_AGO;
  */
 public class YearRandomizer implements Randomizer<Year> {
 
-    private IntegerRangeRandomizer yearRandomizer;
+    private final IntegerRangeRandomizer yearRandomizer;
 
     /**
      * Create a new {@link YearRandomizer}.

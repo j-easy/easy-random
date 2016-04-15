@@ -46,15 +46,15 @@ import static io.github.benas.randombeans.util.ReflectionUtils.*;
  */
 class FieldPopulator {
 
-    private EnhancedRandomImpl beanPopulator;
+    private final EnhancedRandomImpl beanPopulator;
 
-    private ArrayPopulator arrayPopulator;
+    private final ArrayPopulator arrayPopulator;
 
-    private CollectionPopulator collectionPopulator;
+    private final CollectionPopulator collectionPopulator;
 
-    private MapPopulator mapPopulator;
+    private final MapPopulator mapPopulator;
 
-    private RandomizerProvider randomizerProvider;
+    private final RandomizerProvider randomizerProvider;
 
     private boolean scanClasspathForConcreteTypes;
 

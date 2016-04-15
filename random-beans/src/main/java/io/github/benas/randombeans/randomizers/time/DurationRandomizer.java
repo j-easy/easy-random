@@ -39,7 +39,7 @@ public class DurationRandomizer implements Randomizer<Duration> {
     public static final int MIN_AMOUNT = 0;
     public static final int MAX_AMOUNT = 100;
 
-    IntegerRangeRandomizer amountRandomizer;
+    private final IntegerRangeRandomizer amountRandomizer;
 
     /**
      * Create a new {@link DurationRandomizer}.

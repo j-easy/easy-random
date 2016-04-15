@@ -14,7 +14,7 @@ import java.util.function.Supplier;
  */
 class RandomizerProxy implements InvocationHandler {
 
-    private Supplier<?> target;
+    private final Supplier<?> target;
 
     RandomizerProxy(final Supplier<?> target) {
         this.target = target;

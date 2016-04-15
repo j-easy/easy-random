@@ -36,8 +36,9 @@ import io.github.benas.randombeans.randomizers.AbstractRandomizer;
 public class OptionalRandomizer<T> extends AbstractRandomizer<T> {
 
     private static final int MAX_PERCENT = 100;
-    private Randomizer<T> delegate;
-    private int optionalPercent;
+
+    private final Randomizer<T> delegate;
+    private final int optionalPercent;
 
     /**
      * Create a new {@link OptionalRandomizer} with a delegate randomizer and an optional percent threshold.

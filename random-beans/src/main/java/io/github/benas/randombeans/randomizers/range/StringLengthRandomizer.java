@@ -36,8 +36,8 @@ import static java.lang.Math.abs;
  */
 public class StringLengthRandomizer implements Randomizer<String> {
 
-    private StringRandomizer stringRandomizer;
-    private IntegerRangeRandomizer integerRangeRandomizer;
+    private final StringRandomizer stringRandomizer;
+    private final IntegerRangeRandomizer integerRangeRandomizer;
 
     /**
      * Create a new {@link StringLengthRandomizer}.

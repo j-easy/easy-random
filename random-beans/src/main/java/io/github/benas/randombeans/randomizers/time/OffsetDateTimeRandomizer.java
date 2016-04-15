@@ -37,9 +37,9 @@ import java.time.ZoneOffset;
  */
 public class OffsetDateTimeRandomizer implements Randomizer<OffsetDateTime> {
 
-    private LocalDateRandomizer localDateRandomizer;
-    private LocalTimeRandomizer localTimeRandomizer;
-    private ZoneOffsetRandomizer zoneOffsetRandomizer;
+    private final LocalDateRandomizer localDateRandomizer;
+    private final LocalTimeRandomizer localTimeRandomizer;
+    private final ZoneOffsetRandomizer zoneOffsetRandomizer;
 
     /**
      * Create a new {@link OffsetDateTimeRandomizer}.

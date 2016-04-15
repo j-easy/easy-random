@@ -42,11 +42,11 @@ import static java.lang.Math.abs;
  */
 public class MapRandomizer<K, V> implements Randomizer<Map<K, V>> {
 
-    private int nbElements;
+    private final int nbElements;
 
-    private Randomizer<K> keyRandomizer;
+    private final Randomizer<K> keyRandomizer;
 
-    private Randomizer<V> valueRandomizer;
+    private final Randomizer<V> valueRandomizer;
 
     /**
      * Create a new {@link MapRandomizer} with a random number of entries.

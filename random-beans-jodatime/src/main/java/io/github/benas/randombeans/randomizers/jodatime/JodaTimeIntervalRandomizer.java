@@ -38,7 +38,7 @@ import static java.lang.Math.abs;
  */
 public class JodaTimeIntervalRandomizer extends JodaTimeAbstractRandomizer<Interval> {
 
-    private IntegerRandomizer delegate;
+    private final IntegerRandomizer delegate;
     
     /**
      * Create a new {@link JodaTimeIntervalRandomizer}.

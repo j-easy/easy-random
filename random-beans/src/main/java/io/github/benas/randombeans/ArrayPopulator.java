@@ -37,7 +37,7 @@ class ArrayPopulator {
 
     private static final String ALPHABET = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz";
 
-    private EnhancedRandomImpl enhancedRandom;
+    private final EnhancedRandomImpl enhancedRandom;
 
     ArrayPopulator(final EnhancedRandomImpl enhancedRandom) {
         this.enhancedRandom = enhancedRandom;
