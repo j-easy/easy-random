@@ -79,15 +79,7 @@ public class DurationRandomizer implements Randomizer<Duration> {
     @Override
     public Duration getRandomValue() {
         int randomAmount = amountRandomizer.getRandomValue();
-        ChronoUnit randomUnit = getRandomChronoUnit();
-        return Duration.of(randomAmount, randomUnit);
+        return Duration.of(randomAmount, ChronoUnit.HOURS);
     }
 
-    private ChronoUnit getRandomChronoUnit() {
-        return ChronoUnit.HOURS;
-        // Returning a random unit leads to java.time.temporal.UnsupportedTemporalTypeException: Unit must not have an estimated duration
-        // see javadoc of java.time.temporal.TemporalUnit.isDurationEstimated()
-        /* ChronoUnit[] chronoUnits = ChronoUnit.values();
-        return chronoUnits[Constants.RANDOM.nextInt(chronoUnits.length)]; */
-    }
 }
