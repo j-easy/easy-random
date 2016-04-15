@@ -34,7 +34,6 @@ import java.util.*;
 import java.util.function.Supplier;
 
 import static io.github.benas.randombeans.RandomizerProxy.asRandomizer;
-import static io.github.benas.randombeans.util.Constants.DEFAULT_SEED;
 
 /**
  * Builder to create {@link EnhancedRandom} instances.
@@ -58,7 +57,7 @@ public class EnhancedRandomBuilder {
         customRandomizerRegistry = new CustomRandomizerRegistry();
         userRegistries = new LinkedHashSet<>();
         scanClasspathForConcreteTypes = false;
-        seed = DEFAULT_SEED;
+        seed = new Random().nextLong();
     }
 
     /**
