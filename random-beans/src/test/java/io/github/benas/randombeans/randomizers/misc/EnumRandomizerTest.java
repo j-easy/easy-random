@@ -44,7 +44,7 @@ public class EnumRandomizerTest extends AbstractRandomizerTest<EnumRandomizerTes
         assertThat(aNewEnumRandomizer(Gender.class, SEED).getRandomValue()).isEqualTo(FEMALE);
     }
 
-    public static enum Gender {
+    public enum Gender {
         MALE, FEMALE
     }
 }
