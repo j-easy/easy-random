@@ -50,7 +50,7 @@ public class DelayedQueueBean {
         this.typedDelayQueue = typedDelayQueue;
     }
 
-    class DummyDelayed implements Delayed {
+    private class DummyDelayed implements Delayed {
 
         @Override
         public long getDelay(TimeUnit timeUnit) {

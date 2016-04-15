@@ -36,11 +36,11 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 public class PriorityComparatorTest {
 
-    PriorityComparator priorityComparator;
+    private PriorityComparator priorityComparator;
 
-    Foo foo;
+    private Foo foo;
 
-    Bar bar;
+    private Bar bar;
 
     @Before
     public void setUp() {

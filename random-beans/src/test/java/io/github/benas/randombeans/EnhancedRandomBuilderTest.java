@@ -43,7 +43,7 @@ import static org.mockito.Mockito.when;
 @SuppressWarnings("unchecked")
 public class EnhancedRandomBuilderTest {
 
-    public static final String NAME = "TestName";
+    private static final String NAME = "TestName";
 
     @Mock
     private Randomizer<String> randomizer;

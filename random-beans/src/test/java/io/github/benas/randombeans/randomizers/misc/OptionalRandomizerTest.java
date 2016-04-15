@@ -37,7 +37,7 @@ import static org.mockito.Mockito.when;
 @RunWith(MockitoJUnitRunner.class)
 public class OptionalRandomizerTest {
 
-    public static final String NAME = "foo";
+    private static final String NAME = "foo";
 
     @Mock
     private Randomizer<String> randomizer;

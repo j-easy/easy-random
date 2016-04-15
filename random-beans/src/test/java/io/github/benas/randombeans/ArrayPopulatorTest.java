@@ -36,8 +36,8 @@ import static org.mockito.Mockito.when;
 @RunWith(MockitoJUnitRunner.class)
 public class ArrayPopulatorTest {
 
-    public static final int INT = 10;
-    public static final String STRING = "FOO";
+    private static final int INT = 10;
+    private static final String STRING = "FOO";
 
     @Mock
     private PopulatorContext context;

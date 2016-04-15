@@ -32,9 +32,9 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 public class FieldDefinitionBuilderTest {
 
-    public static final String NAME = "name";
-    public static final Class<String> TYPE = String.class;
-    public static final Class<Human> CLASS = Human.class;
+    private static final String NAME = "name";
+    private static final Class<String> TYPE = String.class;
+    private static final Class<Human> CLASS = Human.class;
 
     private FieldDefinitionBuilder builder;
 

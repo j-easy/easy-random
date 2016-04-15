@@ -38,19 +38,19 @@ import static io.github.benas.randombeans.util.DateUtils.toDate;
  *
  * @author Mahmoud Ben Hassine (mahmoud.benhassine@icloud.com)
  */
-public abstract class JodaTimeAbstractRandomizer<T> implements Randomizer<T> {
+abstract class JodaTimeAbstractRandomizer<T> implements Randomizer<T> {
 
     private final DateRangeRandomizer delegate;
 
-    protected JodaTimeAbstractRandomizer() {
+    JodaTimeAbstractRandomizer() {
         delegate = new DateRangeRandomizer(toDate(TEN_YEARS_AGO), toDate(IN_TEN_YEARS));
     }
 
-    protected JodaTimeAbstractRandomizer(final long seed) {
+    JodaTimeAbstractRandomizer(final long seed) {
         delegate = new DateRangeRandomizer(toDate(TEN_YEARS_AGO), toDate(IN_TEN_YEARS), seed);
     }
 
-    protected Date getRandomDate() {
+    Date getRandomDate() {
         return delegate.getRandomValue();
     }
 }

@@ -23,7 +23,7 @@
  */
 package io.github.benas.randombeans.spring;
 
-public class Foo {
+class Foo {
 
     private String name;
 

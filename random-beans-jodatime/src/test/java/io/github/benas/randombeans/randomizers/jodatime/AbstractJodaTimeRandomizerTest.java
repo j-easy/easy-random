@@ -26,6 +26,6 @@ package io.github.benas.randombeans.randomizers.jodatime;
 
 public abstract class AbstractJodaTimeRandomizerTest {
 
-    protected static final long SEED = 123L;
+    static final long SEED = 123L;
 
 }

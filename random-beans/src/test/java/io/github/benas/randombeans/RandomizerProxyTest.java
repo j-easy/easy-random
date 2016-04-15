@@ -9,7 +9,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 public class RandomizerProxyTest {
 
-    public static final String FOO = "foo";
+    private  static final String FOO = "foo";
 
     @Test
     public void theRandomizerProxyShouldBehaveLikeTheSupplier() {
@@ -23,7 +23,7 @@ public class RandomizerProxyTest {
         assertThat(randomizer.getRandomValue()).isInstanceOf(String.class).isEqualTo(FOO);
     }
 
-    class MySupplier implements Supplier<String> {
+    private class MySupplier implements Supplier<String> {
 
         @Override
         public String get() {

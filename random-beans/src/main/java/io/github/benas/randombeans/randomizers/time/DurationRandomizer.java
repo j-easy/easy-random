@@ -36,8 +36,8 @@ import java.time.temporal.ChronoUnit;
  */
 public class DurationRandomizer implements Randomizer<Duration> {
 
-    public static final int MIN_AMOUNT = 0;
-    public static final int MAX_AMOUNT = 100;
+    private static final int MIN_AMOUNT = 0;
+    private static final int MAX_AMOUNT = 100;
 
     private final IntegerRangeRandomizer amountRandomizer;
 

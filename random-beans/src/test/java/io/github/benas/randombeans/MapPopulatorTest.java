@@ -46,9 +46,9 @@ import static org.mockito.Mockito.when;
 @SuppressWarnings({"unchecked", "rawtypes"})
 public class MapPopulatorTest {
 
-    public static final int SIZE = 1;
-    public static final String FOO = "foo";
-    public static final String BAR = "bar";
+    private static final int SIZE = 1;
+    private static final String FOO = "foo";
+    private static final String BAR = "bar";
 
     @Mock
     private PopulatorContext context;

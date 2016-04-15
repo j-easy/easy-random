@@ -26,7 +26,7 @@ package io.github.benas.randombeans.randomizers.jodatime;
 
 import org.joda.time.*;
 
-public class Organizer {
+class Organizer {
 
     private DateTime anniversary;
 

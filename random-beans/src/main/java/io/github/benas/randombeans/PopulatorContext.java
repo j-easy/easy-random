@@ -92,7 +92,7 @@ class PopulatorContext {
         return String.join(".", toLowerCase(pathToField));
     }
 
-    List<String> getStackedFieldNames() {
+    private List<String> getStackedFieldNames() {
         return stack.stream().map(i -> i.getField().getName()).collect(toList());
     }
 

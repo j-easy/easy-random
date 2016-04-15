@@ -16,7 +16,7 @@ class RandomizerProxy implements InvocationHandler {
 
     private final Supplier<?> target;
 
-    RandomizerProxy(final Supplier<?> target) {
+    private RandomizerProxy(final Supplier<?> target) {
         this.target = target;
     }
 

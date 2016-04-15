@@ -32,26 +32,26 @@ import io.github.benas.randombeans.randomizers.AbstractRandomizer;
  * @param <T> the type of objects in the defined range.
  * @author Rémi Alvergnat (toilal.dev@gmail.com)
  */
-public abstract class AbstractRangeRandomizer<T> extends AbstractRandomizer<T> {
+abstract class AbstractRangeRandomizer<T> extends AbstractRandomizer<T> {
 
-    protected final T min;
-    protected final T max;
+    final T min;
+    final T max;
 
-    protected AbstractRangeRandomizer(final T min, final T max) {
+    AbstractRangeRandomizer(final T min, final T max) {
         super();
         this.min = min != null ? min : getDefaultMinValue();
         this.max = max != null ? max : getDefaultMaxValue();
         checkValues();
     }
 
-    protected AbstractRangeRandomizer(final T min, final T max, final long seed) {
+    AbstractRangeRandomizer(final T min, final T max, final long seed) {
         super(seed);
         this.min = min != null ? min : getDefaultMinValue();
         this.max = max != null ? max : getDefaultMaxValue();
         checkValues();
     }
 
-    protected long nextLong(final long min, final long max) {
+    long nextLong(final long min, final long max) {
         long value = min + ((long) (random.nextDouble() * (max - min)));
         if (value < min) {
             return min;

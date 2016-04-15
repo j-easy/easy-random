@@ -37,6 +37,11 @@ import static java.time.ZonedDateTime.of;
 public abstract class Constants {
 
     /**
+     * Reference date around which random dates will be generated.
+     */
+    private static final ZonedDateTime REFERENCE_DATE = of(2020, 1, 1, 0, 0, 0, 0, ZoneId.of("UTC+1"));
+
+    /**
      * Maximum collection size
      */
     public static final byte MAX_COLLECTION_SIZE = Byte.MAX_VALUE;
@@ -45,12 +50,6 @@ public abstract class Constants {
      * Default date range in which dates will be generated: [now - 10 years, now + 10 years].
      */
     public static final int DEFAULT_DATE_RANGE = 10;
-
-    /**
-     * Reference date around which random dates will be generated.
-     */
-    public static final ZonedDateTime REFERENCE_DATE = of(2020, 1, 1, 0, 0, 0, 0, ZoneId.of("UTC+1"));
-
     /**
      * The date of ten years before {@link Constants#REFERENCE_DATE}.
      */

@@ -38,30 +38,30 @@ import static java.lang.Math.abs;
  * @param <T> the type of elements in the collection
  * @author Mahmoud Ben Hassine (mahmoud.benhassine@icloud.com)
  */
-public abstract class CollectionRandomizer<T> implements Randomizer<Collection<T>> {
+abstract class CollectionRandomizer<T> implements Randomizer<Collection<T>> {
 
-    protected final int nbElements;
+    final int nbElements;
 
-    protected final Randomizer<T> delegate;
+    final Randomizer<T> delegate;
 
-    protected CollectionRandomizer(final Randomizer<T> delegate) {
+    CollectionRandomizer(final Randomizer<T> delegate) {
         this(delegate, abs(aNewByteRandomizer().getRandomValue()));
     }
 
-    protected CollectionRandomizer(final Randomizer<T> delegate, final int nbElements) {
+    CollectionRandomizer(final Randomizer<T> delegate, final int nbElements) {
         checkArguments(delegate, nbElements);
         this.nbElements = nbElements;
         this.delegate = delegate;
     }
 
-    protected void checkArguments(final Randomizer<T> delegate, final int nbElements) {
+    private void checkArguments(final Randomizer<T> delegate, final int nbElements) {
         Objects.requireNonNull(delegate, "The delegate randomizer must not be null");
         if (nbElements < 1) {
             throw new IllegalArgumentException("The number of elements to generate must be >= 1");
         }
     }
 
-    protected T getRandomElement() {
+    T getRandomElement() {
         return delegate.getRandomValue();
     }
 

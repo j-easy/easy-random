@@ -28,6 +28,6 @@ import io.github.benas.randombeans.randomizers.AbstractRandomizerTest;
 
 public abstract class AbstractRangeRandomizerTest<T> extends AbstractRandomizerTest<T> {
 
-    protected T min, max;
+    T min, max;
 
 }

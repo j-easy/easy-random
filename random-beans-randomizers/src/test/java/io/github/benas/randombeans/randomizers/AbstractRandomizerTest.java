@@ -29,9 +29,9 @@ import io.github.benas.randombeans.api.Randomizer;
 
 public class AbstractRandomizerTest<T> {
 
-    protected static final long SEED = 123L;
-    protected static final Locale LOCALE = Locale.FRANCE;
+    static final long SEED = 123L;
+    static final Locale LOCALE = Locale.FRANCE;
 
-    protected Randomizer<T> randomizer;
+    Randomizer<T> randomizer;
 
 }

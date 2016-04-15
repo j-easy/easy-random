@@ -42,8 +42,8 @@ import static org.mockito.Mockito.when;
 @RunWith(MockitoJUnitRunner.class)
 public class CollectionPopulatorTest {
 
-    public static final int SIZE = 2;
-    public static final String STRING = "foo";
+    private static final int SIZE = 2;
+    private static final String STRING = "foo";
 
     @Mock
     private PopulatorContext context;

@@ -36,7 +36,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 public class ObjectFactoryTest {
 
-    public static final int INITIAL_CAPACITY = 10;
+    private static final int INITIAL_CAPACITY = 10;
 
     private ObjectFactory objectFactory;
 
@@ -76,7 +76,7 @@ public class ObjectFactoryTest {
         objectFactory.createEmptyCollectionForType(DelayQueue.class, INITIAL_CAPACITY);
     }
 
-    abstract class AbstractFoo {
+    private abstract class AbstractFoo {
 
     }
 }

@@ -28,40 +28,40 @@ import javax.validation.constraints.*;
 import java.math.BigDecimal;
 import java.util.Date;
 
-public class BeanValidationAnnotatedBean {
+class BeanValidationAnnotatedBean {
 
     @AssertFalse
-    boolean unsupported;
+    private boolean unsupported;
 
     @AssertTrue
-    boolean active;
+    private boolean active;
 
     @DecimalMax("30.00")
-    BigDecimal maxDiscount;
+    private BigDecimal maxDiscount;
 
     @DecimalMin("5.00")
-    BigDecimal minDiscount;
+    private BigDecimal minDiscount;
 
     @Future
-    Date eventDate;
+    private Date eventDate;
 
     @Past
-    Date birthday;
+    private Date birthday;
 
     @Max(10)
-    int maxQuantity;
+    private int maxQuantity;
 
     @Min(5)
-    int minQuantity;
+    private int minQuantity;
 
     @NotNull
-    String username;
+    private String username;
 
     @Null
-    String unusedString;
+    private String unusedString;
 
     @Size(min=2, max=10)
-    String briefMessage;
+    private String briefMessage;
 
     public BeanValidationAnnotatedBean() {
     }
