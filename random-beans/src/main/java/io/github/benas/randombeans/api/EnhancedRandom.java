@@ -27,6 +27,8 @@ package io.github.benas.randombeans.api;
 import java.util.List;
 import java.util.Random;
 
+import static io.github.benas.randombeans.EnhancedRandomBuilder.aNewEnhancedRandomBuilder;
+
 /**
  * Abstract class for random object generator.
  *
@@ -56,5 +58,16 @@ public abstract class EnhancedRandom extends Random {
      * @throws ObjectGenerationException when unable to populate an instance of the given type
      */
     public abstract <T> List<T> nextObjects(final Class<T> type, final int size, final String... excludedFields);
+
+    /**
+     * Generate a random instance of the given type.
+     *
+     * @param type the target class type
+     * @param <T>  the target type
+     * @return a random instance of the given type
+     */
+    public static <T> T random(final Class<T> type) {
+        return aNewEnhancedRandomBuilder().build().nextObject(type);
+    }
 
 }
