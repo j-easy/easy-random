@@ -42,6 +42,7 @@ import java.util.function.Supplier;
 
 import static io.github.benas.randombeans.EnhancedRandomBuilder.aNewEnhancedRandomBuilder;
 import static io.github.benas.randombeans.FieldDefinitionBuilder.field;
+import static io.github.benas.randombeans.api.EnhancedRandom.random;
 import static java.util.Arrays.asList;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.fail;
@@ -277,6 +278,15 @@ public class EnhancedRandomImplTest {
         assertThat(actual.getExcluded()).isNull();
     }
 
+    @Test
+    public void generatedBeanWithStaticMethodMustBeValid() {
+        Person person = random(Person.class, "address", "phoneNumber");
+
+        assertThat(person).isNotNull();
+        assertThat(person.getId()).isNotNull();
+        assertThat(person.getAddress()).isNull();
+        assertThat(person.getPhoneNumber()).isNull();
+    }
 
     private Person buildExpectedPerson() {
         Person expectedPerson = new Person();
