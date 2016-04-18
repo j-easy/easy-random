@@ -31,9 +31,9 @@ import io.github.benas.randombeans.api.RandomizerRegistry;
 import io.github.benas.randombeans.randomizers.misc.EnumRandomizer;
 
 import java.lang.reflect.Field;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
+import java.util.stream.Stream;
 
 import static io.github.benas.randombeans.util.ReflectionUtils.*;
 
@@ -71,21 +71,27 @@ class EnhancedRandomImpl extends EnhancedRandom {
         fieldExclusionChecker = new FieldExclusionChecker();
     }
 
+    @Override
     public <T> T nextObject(final Class<T> type, final String... excludedFields) {
         return doPopulateBean(type, new PopulatorContext(excludedFields));
     }
 
     @Override
-    public <T> List<T> nextObjects(final Class<T> type, final int size, final String... excludedFields) {
-        if (size < 0) {
-            throw new IllegalArgumentException("The size must be positive");
+    public <T> Stream<T> objects(final Class<T> type, final String... excludedFields) {
+        return Stream.generate(() -> nextObject(type, excludedFields));
+    }
+
+    @Override
+    public <T> Stream<T> objects(final Class<T> type, final int streamSize, final String... excludedFields) {
+        if (streamSize < 0) {
+            throw new IllegalArgumentException("The stream size must be positive");
         }
-        List<T> beans = new ArrayList<>(size);
-        for (int i = 0; i < size; i++) {
+        Stream.Builder<T> streamBuilder = Stream.builder();
+        for (int i = 0; i < streamSize; i++) {
             T bean = nextObject(type, excludedFields);
-            beans.add(bean);
+            streamBuilder.add(bean);
         }
-        return beans;
+        return streamBuilder.build();
     }
 
     <T> T doPopulateBean(final Class<T> type, final PopulatorContext context) {

@@ -29,7 +29,6 @@ import io.github.benas.randombeans.api.ObjectGenerationException;
 import io.github.benas.randombeans.api.Randomizer;
 import io.github.benas.randombeans.beans.*;
 import io.github.benas.randombeans.randomizers.misc.ConstantRandomizer;
-
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -37,13 +36,14 @@ import org.mockito.Mock;
 import org.mockito.runners.MockitoJUnitRunner;
 
 import java.util.Date;
-import java.util.List;
 import java.util.function.Supplier;
+import java.util.stream.Stream;
 
 import static io.github.benas.randombeans.EnhancedRandomBuilder.aNewEnhancedRandomBuilder;
 import static io.github.benas.randombeans.FieldDefinitionBuilder.field;
 import static io.github.benas.randombeans.api.EnhancedRandom.random;
 import static java.util.Arrays.asList;
+import static java.util.stream.Collectors.toList;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.fail;
 import static org.mockito.Mockito.when;
@@ -122,9 +122,17 @@ public class EnhancedRandomImplTest {
 
     @Test
     public void generatedBeansNumberShouldBeEqualToSpecifiedNumber() {
-        List<Person> persons = enhancedRandom.nextObjects(Person.class, 2);
+        Stream<Person> persons = enhancedRandom.objects(Person.class, 2);
 
-        assertThat(persons).hasSize(2);
+        assertThat(persons).hasSize(2).hasOnlyElementsOfType(Person.class);
+    }
+
+    @Test
+    public void generatedInfiniteBeanStreamShouldBeValid() {
+        Stream<Person> persons = enhancedRandom.objects(Person.class);
+
+        assertThat(persons.limit(10).collect(toList()))
+                .hasSize(10).hasOnlyElementsOfType(Person.class);
     }
 
     @Test
@@ -215,7 +223,7 @@ public class EnhancedRandomImplTest {
 
     @Test(expected = IllegalArgumentException.class)
     public void whenSpecifiedNumberOfBeansToGenerateIsNegativeThenShouldThrowAnIllegalArgumentException() {
-        enhancedRandom.nextObjects(Person.class, -2);
+        enhancedRandom.objects(Person.class, -2);
     }
 
     @Test(expected = ObjectGenerationException.class)
