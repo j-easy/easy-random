@@ -63,11 +63,12 @@ public abstract class EnhancedRandom extends Random {
      * Generate a random instance of the given type.
      *
      * @param type the target class type
+     * @param excludedFields the name of fields to exclude
      * @param <T>  the target type
      * @return a random instance of the given type
      */
-    public static <T> T random(final Class<T> type) {
-        return aNewEnhancedRandomBuilder().build().nextObject(type);
+    public static <T> T random(final Class<T> type, final String... excludedFields) {
+        return aNewEnhancedRandomBuilder().build().nextObject(type, excludedFields);
     }
 
 }

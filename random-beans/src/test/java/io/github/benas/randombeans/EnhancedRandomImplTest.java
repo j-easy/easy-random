@@ -280,10 +280,12 @@ public class EnhancedRandomImplTest {
 
     @Test
     public void generatedBeanWithStaticMethodMustBeValid() {
-        Person person = random(Person.class);
+        Person person = random(Person.class, "address", "phoneNumber");
 
         assertThat(person).isNotNull();
         assertThat(person.getId()).isNotNull();
+        assertThat(person.getAddress()).isNull();
+        assertThat(person.getPhoneNumber()).isNull();
     }
 
     private Person buildExpectedPerson() {
