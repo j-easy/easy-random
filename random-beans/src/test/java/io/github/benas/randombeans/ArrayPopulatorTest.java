@@ -24,6 +24,7 @@
 
 package io.github.benas.randombeans;
 
+import io.github.benas.randombeans.api.Randomizer;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -37,19 +38,28 @@ import static org.mockito.Mockito.when;
 public class ArrayPopulatorTest {
 
     private static final int INT = 10;
+    private static final char CHAR = 'R';
     private static final String STRING = "FOO";
 
     @Mock
     private PopulatorContext context;
     @Mock
     private EnhancedRandomImpl enhancedRandom;
+    @Mock
+    private RandomizerProvider randomizerProvider;
+    @Mock
+    private Randomizer integerRandomizer, characterRandomizer;
 
     private ArrayPopulator arrayPopulator;
 
     @Before
     public void setUp() {
-        arrayPopulator = new ArrayPopulator(enhancedRandom);
+        arrayPopulator = new ArrayPopulator(enhancedRandom, randomizerProvider);
         when(enhancedRandom.nextInt()).thenReturn(INT);
+        when(randomizerProvider.getRandomizerByType(Integer.TYPE)).thenReturn(integerRandomizer);
+        when(randomizerProvider.getRandomizerByType(Character.TYPE)).thenReturn(characterRandomizer);
+        when(integerRandomizer.getRandomValue()).thenReturn(INT);
+        when(characterRandomizer.getRandomValue()).thenReturn(CHAR);
         when(enhancedRandom.doPopulateBean(String.class, context)).thenReturn(STRING);
     }
 
@@ -80,7 +90,7 @@ public class ArrayPopulatorTest {
         char[] chars = (char[]) arrayPopulator.getRandomArray(char[].class, context);
 
         for (char c : chars) {
-            assertThat(c).isGreaterThanOrEqualTo('A').isLessThanOrEqualTo('z');
+            assertThat(c).isEqualTo(CHAR);
         }
     }
 }

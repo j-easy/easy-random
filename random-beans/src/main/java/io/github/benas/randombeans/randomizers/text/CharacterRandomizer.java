@@ -24,22 +24,22 @@
 
 package io.github.benas.randombeans.randomizers.text;
 
-import io.github.benas.randombeans.api.Randomizer;
+import io.github.benas.randombeans.randomizers.AbstractRandomizer;
 
 /**
  * Generate a random {@link Character}.
  *
  * @author Mahmoud Ben Hassine (mahmoud.benhassine@icloud.com)
  */
-public class CharacterRandomizer implements Randomizer<Character> {
+public class CharacterRandomizer extends AbstractRandomizer<Character> {
 
-    private final StringRandomizer delegate;
+    private static final String ALPHABET = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz";
 
     /**
      * Create a new {@link CharacterRandomizer}.
      */
     public CharacterRandomizer() {
-        delegate = new StringRandomizer();
+        super();
     }
 
     /**
@@ -48,7 +48,7 @@ public class CharacterRandomizer implements Randomizer<Character> {
      * @param seed initial seed
      */
     public CharacterRandomizer(final long seed) {
-        delegate = new StringRandomizer(seed);
+        super(seed);
     }
 
     /**
@@ -72,6 +72,6 @@ public class CharacterRandomizer implements Randomizer<Character> {
 
     @Override
     public Character getRandomValue() {
-        return delegate.getRandomValue().charAt(0);
+        return ALPHABET.charAt(random.nextInt(ALPHABET.length()));
     }
 }

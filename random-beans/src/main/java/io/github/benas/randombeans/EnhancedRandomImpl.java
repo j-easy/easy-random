@@ -64,7 +64,7 @@ class EnhancedRandomImpl extends EnhancedRandom {
     EnhancedRandomImpl(final Set<RandomizerRegistry> registries) {
         objectFactory = new ObjectFactory();
         randomizerProvider = new RandomizerProvider(registries);
-        arrayPopulator = new ArrayPopulator(this);
+        arrayPopulator = new ArrayPopulator(this, randomizerProvider);
         collectionPopulator = new CollectionPopulator(this, objectFactory);
         mapPopulator = new MapPopulator(this, objectFactory);
         fieldPopulator = new FieldPopulator(this, randomizerProvider, arrayPopulator, collectionPopulator, mapPopulator);

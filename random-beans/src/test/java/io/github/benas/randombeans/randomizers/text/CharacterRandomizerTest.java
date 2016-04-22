@@ -47,13 +47,18 @@ public class CharacterRandomizerTest extends AbstractRandomizerTest<Character> {
     public void shouldGenerateTheSameValueForTheSameSeed() {
         // Given
         randomizer = aNewCharacterRandomizer(SEED);
-        char expected = '6';
+        char expected = 'e';
 
         // When
         Character actual = randomizer.getRandomValue();
 
         // Then
         assertThat(actual).isEqualTo(expected);
+    }
+
+    @Test
+    public void shouldGenerateOnlyAlphabeticLetters() {
+        assertThat(randomizer.getRandomValue()).isGreaterThanOrEqualTo('A').isLessThanOrEqualTo('z');
     }
 
 }

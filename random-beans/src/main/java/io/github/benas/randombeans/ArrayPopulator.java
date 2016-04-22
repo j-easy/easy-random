@@ -24,6 +24,8 @@
 
 package io.github.benas.randombeans;
 
+import io.github.benas.randombeans.api.Randomizer;
+
 import java.lang.reflect.Array;
 
 import static java.lang.Math.abs;
@@ -35,12 +37,13 @@ import static java.lang.Math.abs;
  */
 class ArrayPopulator {
 
-    private static final String ALPHABET = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz";
-
     private final EnhancedRandomImpl enhancedRandom;
 
-    ArrayPopulator(final EnhancedRandomImpl enhancedRandom) {
+    private final RandomizerProvider randomizerProvider;
+
+    ArrayPopulator(final EnhancedRandomImpl enhancedRandom, final RandomizerProvider randomizerProvider) {
         this.enhancedRandom = enhancedRandom;
+        this.randomizerProvider = randomizerProvider;
     }
 
     @SuppressWarnings("unchecked")
@@ -60,59 +63,60 @@ class ArrayPopulator {
     Object getRandomPrimitiveArray(final Class<?> primitiveType) {
         int randomSize = abs((byte) enhancedRandom.nextInt());
         // TODO A bounty will be offered to anybody that comes with a generic template method for that..
+        Randomizer randomizer = randomizerProvider.getRandomizerByType(primitiveType);
         if (primitiveType.equals(Byte.TYPE)) {
             byte[] result = new byte[randomSize];
             for (int index = 0; index < randomSize; index++) {
-                result[index] = (byte) enhancedRandom.nextInt();
+                result[index] = (byte) randomizer.getRandomValue();
             }
             return result;
         }
         if (primitiveType.equals(Short.TYPE)) {
             short[] result = new short[randomSize];
             for (int index = 0; index < randomSize; index++) {
-                result[index] = (short) enhancedRandom.nextInt();
+                result[index] = (short) randomizer.getRandomValue();
             }
             return result;
         }
         if (primitiveType.equals(Integer.TYPE)) {
             int[] result = new int[randomSize];
             for (int index = 0; index < randomSize; index++) {
-                result[index] = enhancedRandom.nextInt();
+                result[index] = (int) randomizer.getRandomValue();
             }
             return result;
         }
         if (primitiveType.equals(Long.TYPE)) {
             long[] result = new long[randomSize];
             for (int index = 0; index < randomSize; index++) {
-                result[index] = enhancedRandom.nextLong();
+                result[index] = (long) randomizer.getRandomValue();
             }
             return result;
         }
         if (primitiveType.equals(Float.TYPE)) {
             float[] result = new float[randomSize];
             for (int index = 0; index < randomSize; index++) {
-                result[index] = enhancedRandom.nextFloat();
+                result[index] = (float) randomizer.getRandomValue();
             }
             return result;
         }
         if (primitiveType.equals(Double.TYPE)) {
             double[] result = new double[randomSize];
             for (int index = 0; index < randomSize; index++) {
-                result[index] = enhancedRandom.nextDouble();
+                result[index] = (double) randomizer.getRandomValue();
             }
             return result;
         }
         if (primitiveType.equals(Character.TYPE)) {
             char[] result = new char[randomSize];
             for (int index = 0; index < randomSize; index++) {
-                result[index] = ALPHABET.charAt(enhancedRandom.nextInt(ALPHABET.length()));
+                result[index] = (char) randomizer.getRandomValue();
             }
             return result;
         }
         if (primitiveType.equals(Boolean.TYPE)) {
             boolean[] result = new boolean[randomSize];
             for (int index = 0; index < randomSize; index++) {
-                result[index] = enhancedRandom.nextBoolean();
+                result[index] = (boolean) randomizer.getRandomValue();
             }
             return result;
         }
