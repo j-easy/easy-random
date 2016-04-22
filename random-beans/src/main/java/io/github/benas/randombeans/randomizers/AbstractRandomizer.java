@@ -28,6 +28,8 @@ import io.github.benas.randombeans.api.Randomizer;
 
 import java.util.Random;
 
+import static java.util.ResourceBundle.getBundle;
+
 /**
  * Base class for {@link io.github.benas.randombeans.api.Randomizer} implementations.
  *
@@ -43,6 +45,10 @@ public abstract class AbstractRandomizer<T> implements Randomizer<T>  {
 
     protected AbstractRandomizer(final long seed) {
         random = new Random(seed);
+    }
+
+    protected String[] getPredefinedValuesOf(final String key) {
+        return getBundle("data").getString(key).split(",");
     }
 
     @Override
