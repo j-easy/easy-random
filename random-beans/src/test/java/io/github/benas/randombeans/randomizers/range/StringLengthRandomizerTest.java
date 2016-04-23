@@ -75,6 +75,6 @@ public class StringLengthRandomizerTest extends AbstractRangeRandomizerTest<Stri
         // when
         String string = stringLengthRandomizer.getRandomValue();
 
-        then(string).isEqualTo("6tu4grj");
+        then(string).isEqualTo("eOMtThy");
     }
 }

@@ -26,6 +26,13 @@ package io.github.benas.randombeans.randomizers.text;
 
 import io.github.benas.randombeans.randomizers.AbstractRandomizer;
 
+import java.nio.charset.Charset;
+import java.nio.charset.StandardCharsets;
+import java.util.List;
+
+import static io.github.benas.randombeans.util.CharacterUtils.collectPrintableCharactersOf;
+import static io.github.benas.randombeans.util.CharacterUtils.filterLetters;
+
 /**
  * Generate a random {@link Character}.
  *
@@ -33,13 +40,26 @@ import io.github.benas.randombeans.randomizers.AbstractRandomizer;
  */
 public class CharacterRandomizer extends AbstractRandomizer<Character> {
 
-    private static final String ALPHABET = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz";
+    private Charset charset = StandardCharsets.US_ASCII;
+
+    private List<Character> characters = collectPrintableCharactersOf(charset);
 
     /**
      * Create a new {@link CharacterRandomizer}.
      */
     public CharacterRandomizer() {
         super();
+        characters = filterLetters(characters);
+    }
+
+    /**
+     * Create a new {@link CharacterRandomizer}.
+     *
+     * @param charset to use
+     */
+    public CharacterRandomizer(final Charset charset) {
+        super();
+        this.charset = charset;
     }
 
     /**
@@ -49,6 +69,18 @@ public class CharacterRandomizer extends AbstractRandomizer<Character> {
      */
     public CharacterRandomizer(final long seed) {
         super(seed);
+        characters = filterLetters(characters);
+    }
+
+    /**
+     * Create a new {@link CharacterRandomizer}.
+     *
+     * @param charset to use
+     * @param seed    initial seed
+     */
+    public CharacterRandomizer(final Charset charset, final long seed) {
+        super(seed);
+        this.charset = charset;
     }
 
     /**
@@ -63,6 +95,16 @@ public class CharacterRandomizer extends AbstractRandomizer<Character> {
     /**
      * Create a new {@link CharacterRandomizer}.
      *
+     * @param charset to use
+     * @return a new {@link CharacterRandomizer}.
+     */
+    public static CharacterRandomizer aNewCharacterRandomizer(final Charset charset) {
+        return new CharacterRandomizer(charset);
+    }
+
+    /**
+     * Create a new {@link CharacterRandomizer}.
+     *
      * @param seed initial seed
      * @return a new {@link CharacterRandomizer}.
      */
@@ -70,8 +112,19 @@ public class CharacterRandomizer extends AbstractRandomizer<Character> {
         return new CharacterRandomizer(seed);
     }
 
+    /**
+     * Create a new {@link CharacterRandomizer}.
+     *
+     * @param charset to use
+     * @param seed    initial seed
+     * @return a new {@link CharacterRandomizer}.
+     */
+    public static CharacterRandomizer aNewCharacterRandomizer(final Charset charset, final long seed) {
+        return new CharacterRandomizer(charset, seed);
+    }
+
     @Override
     public Character getRandomValue() {
-        return ALPHABET.charAt(random.nextInt(ALPHABET.length()));
+        return characters.get(random.nextInt(characters.size()));
     }
 }

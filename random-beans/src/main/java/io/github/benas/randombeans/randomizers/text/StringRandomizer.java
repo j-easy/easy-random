@@ -25,8 +25,9 @@
 package io.github.benas.randombeans.randomizers.text;
 
 import io.github.benas.randombeans.randomizers.AbstractRandomizer;
+import io.github.benas.randombeans.util.Constants;
 
-import java.math.BigInteger;
+import java.nio.charset.Charset;
 
 /**
  * Generate a random {@link String}.
@@ -35,14 +36,23 @@ import java.math.BigInteger;
  */
 public class StringRandomizer extends AbstractRandomizer<String> {
 
-    public static final int NUM_BITS = 128;
-
-    public static final int RADIX = 32;
+    private CharacterRandomizer characterRandomizer;
 
     /**
      * Create a new {@link StringRandomizer}.
      */
     public StringRandomizer() {
+        super();
+        characterRandomizer = new CharacterRandomizer();
+    }
+
+    /**
+     * Create a new {@link StringRandomizer}.
+     *
+     * @param charset to use
+     */
+    public StringRandomizer(final Charset charset) {
+        characterRandomizer = new CharacterRandomizer(charset);
     }
 
     /**
@@ -52,6 +62,18 @@ public class StringRandomizer extends AbstractRandomizer<String> {
      */
     public StringRandomizer(long seed) {
         super(seed);
+        characterRandomizer = new CharacterRandomizer(seed);
+    }
+
+    /**
+     * Create a new {@link StringRandomizer}.
+     *
+     * @param charset to use
+     * @param seed    initial seed
+     */
+    public StringRandomizer(final Charset charset, final long seed) {
+        super(seed);
+        characterRandomizer = new CharacterRandomizer(charset, seed);
     }
 
     /**
@@ -66,6 +88,16 @@ public class StringRandomizer extends AbstractRandomizer<String> {
     /**
      * Create a new {@link StringRandomizer}.
      *
+     * @param charset to use
+     * @return a new {@link StringRandomizer}.
+     */
+    public static StringRandomizer aNewStringRandomizer(final Charset charset) {
+        return new StringRandomizer(charset);
+    }
+
+    /**
+     * Create a new {@link StringRandomizer}.
+     *
      * @param seed initial seed
      * @return a new {@link StringRandomizer}.
      */
@@ -73,8 +105,23 @@ public class StringRandomizer extends AbstractRandomizer<String> {
         return new StringRandomizer(seed);
     }
 
+    /**
+     * Create a new {@link StringRandomizer}.
+     *
+     * @param charset to use
+     * @param seed    initial seed
+     * @return a new {@link StringRandomizer}.
+     */
+    public static StringRandomizer aNewStringRandomizer(final Charset charset, final long seed) {
+        return new StringRandomizer(charset, seed);
+    }
+
     @Override
     public String getRandomValue() {
-        return new BigInteger(NUM_BITS, random).toString(RADIX);
+        StringBuilder stringBuilder = new StringBuilder();
+        for (int i = 0; i < Constants.MAX_STRING_LENGTH; i++) {
+            stringBuilder.append(characterRandomizer.getRandomValue());
+        }
+        return stringBuilder.toString();
     }
 }

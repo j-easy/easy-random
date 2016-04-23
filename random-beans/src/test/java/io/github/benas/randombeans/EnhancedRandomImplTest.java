@@ -254,7 +254,7 @@ public class EnhancedRandomImplTest {
         // Given
         enhancedRandom = aNewEnhancedRandomBuilder().seed(SEED).build();
 
-        String expectedString = "6tu4grj584ngud335bvmlf0cqd";
+        String expectedString = "eOMtThyhVNLWUZNRcBaQKxIyedUsFwdk";
         Person expectedPerson = buildExpectedPerson();
         int[] expectedInts = buildExpectedInts();
 
@@ -300,19 +300,19 @@ public class EnhancedRandomImplTest {
         Person expectedPerson = new Person();
 
         Street street = new Street();
-        street.setName("63ep6st2ksaeflu38rs3ud97kc");
+        street.setName("tGKbgicZaHCBRQDSxVLhpfQGTMDYpsBZ");
         street.setNumber(-1188957731);
         street.setType((byte) -35);
 
         Address address = new Address();
-        address.setCity("2oobbsm8nhgh209ip6ig0d26hu");
-        address.setCountry("5ktdtegaua5qd2ih0v4racat1n");
-        address.setZipCode("4guh7bfmnngoknm9r92blkf2te");
+        address.setCity("HeWKEJdpHYZGhtgdntugzvvKAXLhMLlN");
+        address.setCountry("gNfZBdyFGRajVfJNonEnOinZjUfzQhdg");
+        address.setZipCode("xvfBoeygjbUMaAIKKIkknjWEXJUfPxxQ");
         address.setStreet(street);
 
         expectedPerson.setName("6iahpms0vt904iii4q2e29mmjg");
-        expectedPerson.setEmail("mq7bk0ch6va94aluqjct0uhi2");
-        expectedPerson.setPhoneNumber("6l0akfjip99hqt1pma2246higm");
+        expectedPerson.setEmail("elQbxeTeQOvaScfqIOOmaaJxkyvRnLRY");
+        expectedPerson.setPhoneNumber("LLfDTDGspDbQvBQYuxiXXVytGCxzVllp");
         expectedPerson.setGender(Gender.FEMALE);
         expectedPerson.setAddress(address);
 

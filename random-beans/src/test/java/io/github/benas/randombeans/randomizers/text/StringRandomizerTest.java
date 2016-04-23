@@ -47,7 +47,7 @@ public class StringRandomizerTest extends AbstractRandomizerTest<String> {
     public void shouldGenerateTheSameValueForTheSameSeed() {
         // Given
         randomizer = aNewStringRandomizer(SEED);
-        String expected = "6tu4grj584ngud335bvmlf0cqd";
+        String expected = "eOMtThyhVNLWUZNRcBaQKxIyedUsFwdk";
 
         // When
         String actual = randomizer.getRandomValue();

@@ -4,6 +4,8 @@ import java.nio.charset.Charset;
 import java.util.ArrayList;
 import java.util.List;
 
+import static java.util.stream.Collectors.toList;
+
 public abstract class CharacterUtils {
 
     /**
@@ -27,6 +29,15 @@ public abstract class CharacterUtils {
             }
         }
         return chars;
+    }
+
+    /**
+     * Keep only letters from a list of characters.
+     * @param characters to filter
+     * @return only letters
+     */
+    public static List<Character> filterLetters(List<Character> characters) {
+        return characters.stream().filter(Character::isLetter).collect(toList());
     }
 
     private static boolean isPrintable(char character) {
