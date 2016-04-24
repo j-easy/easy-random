@@ -29,8 +29,9 @@ import io.github.benas.randombeans.api.Randomizer;
 import io.github.benas.randombeans.api.RandomizerRegistry;
 import io.github.benas.randombeans.randomizers.misc.ConstantRandomizer;
 import io.github.benas.randombeans.randomizers.misc.NullRandomizer;
-import io.github.benas.randombeans.randomizers.text.StringDelegatingRandomizer;
 import io.github.benas.randombeans.randomizers.range.*;
+import io.github.benas.randombeans.randomizers.text.StringDelegatingRandomizer;
+import io.github.benas.randombeans.randomizers.text.StringRandomizer;
 import io.github.benas.randombeans.util.Constants;
 
 import javax.validation.constraints.*;
@@ -39,6 +40,8 @@ import java.math.BigDecimal;
 import java.math.BigInteger;
 import java.util.Calendar;
 import java.util.Date;
+
+import static io.github.benas.randombeans.randomizers.range.IntegerRangeRandomizer.aNewIntegerRangeRandomizer;
 
 /**
  * A registry of randomizers to support fields annotated with the <a href="http://beanvalidation.org/">JSR 349</a> annotations.
@@ -215,7 +218,8 @@ public class BeanValidationRandomizerRegistry implements RandomizerRegistry {
             int min = sizeAnnotation.min();
             int max = sizeAnnotation.max();
             if (fieldType.equals(String.class)) {
-                return new StringLengthRandomizer(min, max, seed);
+                int randomLength = aNewIntegerRangeRandomizer(min, max).getRandomValue();
+                return new StringRandomizer(randomLength, seed);
             }
         }
 

@@ -56,4 +56,18 @@ public class StringRandomizerTest extends AbstractRandomizerTest<String> {
         assertThat(actual).isEqualTo(expected);
     }
 
+    @Test
+    public void generatedValueShouldHaveTheSpecifiedLength() {
+        // Given
+        final int expectedLength = 10;
+        randomizer = aNewStringRandomizer(expectedLength, SEED);
+        String expectedValue = "eOMtThyhVN";
+
+        // When
+        String actual = randomizer.getRandomValue();
+
+        // Then
+        assertThat(actual).isEqualTo(expectedValue).hasSize(expectedLength);
+    }
+
 }

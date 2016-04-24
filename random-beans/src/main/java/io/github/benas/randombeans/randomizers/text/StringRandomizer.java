@@ -38,6 +38,8 @@ public class StringRandomizer extends AbstractRandomizer<String> {
 
     private CharacterRandomizer characterRandomizer;
 
+    private int length = Constants.MAX_STRING_LENGTH;
+
     /**
      * Create a new {@link StringRandomizer}.
      */
@@ -73,6 +75,31 @@ public class StringRandomizer extends AbstractRandomizer<String> {
      */
     public StringRandomizer(final Charset charset, final long seed) {
         super(seed);
+        characterRandomizer = new CharacterRandomizer(charset, seed);
+    }
+
+    /**
+     * Create a new {@link StringRandomizer}.
+     *
+     * @param length  of the String to generate
+     * @param seed    initial seed
+     */
+    public StringRandomizer(final int length, final long seed) {
+        super(seed);
+        this.length = length;
+        characterRandomizer = new CharacterRandomizer(seed);
+    }
+
+    /**
+     * Create a new {@link StringRandomizer}.
+     *
+     * @param charset to use
+     * @param length  of the String to generate
+     * @param seed    initial seed
+     */
+    public StringRandomizer(final Charset charset, final int length, final long seed) {
+        super(seed);
+        this.length = length;
         characterRandomizer = new CharacterRandomizer(charset, seed);
     }
 
@@ -116,10 +143,33 @@ public class StringRandomizer extends AbstractRandomizer<String> {
         return new StringRandomizer(charset, seed);
     }
 
+    /**
+     * Create a new {@link StringRandomizer}.
+     *
+     * @param length  of the String to generate
+     * @param seed    initial seed
+     * @return a new {@link StringRandomizer}.
+     */
+    public static StringRandomizer aNewStringRandomizer(final int length, final long seed) {
+        return new StringRandomizer(length, seed);
+    }
+
+    /**
+     * Create a new {@link StringRandomizer}.
+     *
+     * @param charset to use
+     * @param length  of the String to generate
+     * @param seed    initial seed
+     * @return a new {@link StringRandomizer}.
+     */
+    public static StringRandomizer aNewStringRandomizer(final Charset charset, final int length, final long seed) {
+        return new StringRandomizer(charset, length, seed);
+    }
+
     @Override
     public String getRandomValue() {
         StringBuilder stringBuilder = new StringBuilder();
-        for (int i = 0; i < Constants.MAX_STRING_LENGTH; i++) {
+        for (int i = 0; i < length; i++) {
             stringBuilder.append(characterRandomizer.getRandomValue());
         }
         return stringBuilder.toString();
