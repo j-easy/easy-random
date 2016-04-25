@@ -29,13 +29,16 @@ import io.github.benas.randombeans.api.ObjectGenerationException;
 import io.github.benas.randombeans.api.Randomizer;
 import io.github.benas.randombeans.beans.*;
 import io.github.benas.randombeans.randomizers.misc.ConstantRandomizer;
+import io.github.benas.randombeans.util.ReflectionUtils;
 import org.junit.Before;
+import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.Mock;
 import org.mockito.runners.MockitoJUnitRunner;
 
 import java.util.Date;
+import java.util.List;
 import java.util.function.Supplier;
 import java.util.stream.Stream;
 
@@ -294,6 +297,29 @@ public class EnhancedRandomImplTest {
         assertThat(person.getId()).isNotNull();
         assertThat(person.getAddress()).isNull();
         assertThat(person.getPhoneNumber()).isNull();
+    }
+
+    @Ignore("Dummy test to see possible reasons of randomization failures")
+    @Test
+    public void tryToRandomizeAllPublicConcreteTypesInTheClasspath() throws Exception {
+        int success = 0;
+        int failure = 0;
+        List<Class<?>> publicConcreteTypes = ReflectionUtils.getPublicConcreteSubTypesOf(Object.class);
+        System.out.println("Found " + publicConcreteTypes.size() + " public concrete types in the classpath");
+        for (Class<?> aClass : publicConcreteTypes) {
+            try {
+                enhancedRandom.nextObject(aClass);
+                System.out.println(aClass.getName() + " has been successfully randomized");
+                success++;
+            } catch (Throwable e) {
+                System.err.println("Unable to populate a random instance of type: " + aClass.getName());
+                e.printStackTrace();
+                System.err.println("----------------------------------------------");
+                failure++;
+            }
+        }
+        System.out.println("Success: " + success);
+        System.out.println("Failure: " + failure);
     }
 
     private Person buildExpectedPerson() {
