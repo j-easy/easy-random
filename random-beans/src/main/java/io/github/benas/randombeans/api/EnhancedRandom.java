@@ -73,13 +73,28 @@ public abstract class EnhancedRandom extends Random {
     /**
      * Generate a random instance of the given type.
      *
-     * @param type the target class type
+     * @param type           the target class type
      * @param excludedFields the name of fields to exclude
-     * @param <T>  the target type
+     * @param <T>            the target type
      * @return a random instance of the given type
      */
     public static <T> T random(final Class<T> type, final String... excludedFields) {
         return aNewEnhancedRandomBuilder().build().nextObject(type, excludedFields);
+    }
+
+    /**
+     * Provides static access to {@link EnhancedRandom#objects(Class, String...)}
+     */
+    public static <T> Stream<T> randoms(final Class<T> type, final String... excludedFields) {
+        EnhancedRandom enhancedRandom = aNewEnhancedRandomBuilder().build();
+        return enhancedRandom.objects(type, enhancedRandom.nextInt(100), excludedFields);
+    }
+
+    /**
+     * Provides static access to {@link EnhancedRandom#objects(Class, int, String...)}
+     */
+    public static <T> Stream<T> randoms(final Class<T> type, final int streamSize, final String... excludedFields) {
+        return aNewEnhancedRandomBuilder().build().objects(type, streamSize, excludedFields);
     }
 
 }

@@ -40,11 +40,13 @@ import org.mockito.runners.MockitoJUnitRunner;
 import java.util.Date;
 import java.util.List;
 import java.util.function.Supplier;
+import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 import static io.github.benas.randombeans.EnhancedRandomBuilder.aNewEnhancedRandomBuilder;
 import static io.github.benas.randombeans.FieldDefinitionBuilder.field;
 import static io.github.benas.randombeans.api.EnhancedRandom.random;
+import static io.github.benas.randombeans.api.EnhancedRandom.randoms;
 import static java.util.Arrays.asList;
 import static java.util.stream.Collectors.toList;
 import static org.assertj.core.api.Assertions.assertThat;
@@ -293,6 +295,22 @@ public class EnhancedRandomImplTest {
     public void generatedBeanWithStaticMethodMustBeValid() {
         Person person = random(Person.class, "address", "phoneNumber");
 
+        validatePerson(person);
+    }
+
+    @Test
+    public void generatedBeansWithStaticMethodMustBeValid() {
+        randoms(Person.class, "address", "phoneNumber").forEach(this::validatePerson);
+    }
+
+    @Test
+    public void generatedBeansWithStreamSizeWithStaticMethodMustBeValid() {
+        List<Person> persons = randoms(Person.class, 5, "address", "phoneNumber").collect(Collectors.toList());
+        assertThat(persons.size()).isEqualTo(5);
+        persons.stream().forEach(this::validatePerson);
+    }
+
+    void validatePerson(Person person) {
         assertThat(person).isNotNull();
         assertThat(person.getId()).isNotNull();
         assertThat(person.getAddress()).isNull();
