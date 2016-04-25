@@ -101,6 +101,12 @@
             <artifactId>junit-dataprovider</artifactId>
             <scope>test</scope>
         </dependency>
+        <dependency>
+            <groupId>org.projectlombok</groupId>
+            <artifactId>lombok</artifactId>
+            <version>1.16.8</version>
+            <scope>test</scope>
+        </dependency>
     </dependencies>
 
     <build>

@@ -24,6 +24,9 @@
 
 package io.github.benas.randombeans.beans;
 
+import lombok.Data;
+
+@Data
 public class Street {
 
     private int number;
@@ -32,67 +35,5 @@ public class Street {
 
     private String name;
 
-    public Street() {
-    }
 
-    public Street(int number, byte type, String name) {
-        this.number = number;
-        this.type = type;
-        this.name = name;
-    }
-
-    public int getNumber() {
-        return number;
-    }
-
-    public void setNumber(int number) {
-        this.number = number;
-    }
-
-    public byte getType() {
-        return type;
-    }
-
-    public void setType(byte type) {
-        this.type = type;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    @Override
-    public String toString() {
-        final StringBuilder sb = new StringBuilder("Street{");
-        sb.append("number=").append(number);
-        sb.append(", type=").append(type);
-        sb.append(", name='").append(name).append('\'');
-        sb.append('}');
-        return sb.toString();
-    }
-
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-
-        Street street = (Street) o;
-
-        if (number != street.number) return false;
-        if (type != street.type) return false;
-        return !(name != null ? !name.equals(street.name) : street.name != null);
-
-    }
-
-    @Override
-    public int hashCode() {
-        int result = number;
-        result = 31 * result + (int) type;
-        result = 31 * result + (name != null ? name.hashCode() : 0);
-        return result;
-    }
 }

@@ -24,8 +24,11 @@
 
 package io.github.benas.randombeans.beans;
 
+import lombok.Data;
+
 import java.util.List;
 
+@Data
 public class Node {
 
     private String value;
@@ -33,36 +36,4 @@ public class Node {
     private Node left, right;
 
     private List<Node> parents;
-
-    public List<Node> getParents() {
-        return parents;
-    }
-
-    public void setParents(List<Node> parents) {
-        this.parents = parents;
-    }
-
-    public String getValue() {
-        return value;
-    }
-
-    public void setValue(String value) {
-        this.value = value;
-    }
-
-    public Node getLeft() {
-        return left;
-    }
-
-    public void setLeft(Node left) {
-        this.left = left;
-    }
-
-    public Node getRight() {
-        return right;
-    }
-
-    public void setRight(Node right) {
-        this.right = right;
-    }
 }

@@ -24,19 +24,14 @@
 
 package io.github.benas.randombeans.beans;
 
+import lombok.Data;
+
 import java.util.Date;
 
+@Data
 public class ComparableBean {
 
     private Comparable<Date> dateComparable;
-    
-    public Comparable<Date> getDateComparable() {
-        return dateComparable;
-    }
-
-    public void setDateComparable(Comparable<Date> dateComparable) {
-        this.dateComparable = dateComparable;
-    }
 
     public static class AlwaysEqual implements Comparable<Date> {
         @Override

@@ -24,6 +24,9 @@
 
 package io.github.benas.randombeans.beans;
 
+import lombok.Data;
+
+@Data
 public class Human implements Mammal {
 
     @SuppressWarnings("unused")
@@ -33,25 +36,8 @@ public class Human implements Mammal {
 
     protected String name;
 
-    public Human() {
-    }
-
-    public Human(String name) {
-        this.name = name;
-    }
-
     public Long getId() {
         return id;
-    }
-
-    @Override
-    public String getName() {
-        return name;
-    }
-
-    @Override
-    public void setName(String name) {
-        this.name = name;
     }
 
 }
