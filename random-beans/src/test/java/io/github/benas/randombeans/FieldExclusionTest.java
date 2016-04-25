@@ -26,7 +26,7 @@ package io.github.benas.randombeans;
 
 import io.github.benas.randombeans.api.EnhancedRandom;
 import io.github.benas.randombeans.api.Randomizer;
-import io.github.benas.randombeans.beans.C;
+import io.github.benas.randombeans.beans.exclusion.C;
 import io.github.benas.randombeans.beans.Human;
 import io.github.benas.randombeans.beans.Person;
 import org.junit.Before;
