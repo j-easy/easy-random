@@ -30,6 +30,7 @@ import static java.util.stream.Collectors.toList;
 
 import java.util.Collections;
 import java.util.List;
+import java.util.Objects;
 import java.util.concurrent.ConcurrentHashMap;
 
 import io.github.lukehutch.fastclasspathscanner.FastClasspathScanner;
@@ -66,14 +67,16 @@ abstract class FastClasspathScannerFacade {
 
     private static <T> List<Class<?>> searchForPublicConcreteSubTypesOf(final Class<T> type) {
         List<String> subTypes = type.isInterface() ? classpathScanner.getNamesOfClassesImplementing(type) : classpathScanner.getNamesOfSubclassesOf(type);
-        return subTypes.stream().map(className -> { 
-                try {
-                    ClassLoader classloader = Thread.currentThread().getContextClassLoader();
-                    if (classloader == null) classloader = FastClasspathScannerFacade.class.getClassLoader();
-                    return classloader.loadClass(className);
-                } catch (ClassNotFoundException ignored) {
-                    return null;
+        return subTypes.stream().map(className -> {
+            try {
+                ClassLoader classloader = Thread.currentThread().getContextClassLoader();
+                if (classloader == null) {
+                    classloader = FastClasspathScannerFacade.class.getClassLoader();
                 }
-            }).filter(currentSubType -> isPublic(currentSubType) && !(isAbstract(currentSubType))).collect(toList());
+                return classloader.loadClass(className);
+            } catch (ClassNotFoundException | NoClassDefFoundError ignored) {
+                return null;
+            }
+        }).filter(Objects::nonNull).filter(currentSubType -> isPublic(currentSubType) && !(isAbstract(currentSubType))).collect(toList());
     }
 }
