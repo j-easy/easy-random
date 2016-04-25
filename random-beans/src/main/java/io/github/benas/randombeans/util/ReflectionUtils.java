@@ -175,7 +175,10 @@ public abstract class ReflectionUtils {
      * @return true if the type should be introspected, false otherwise
      */
     public static boolean isIntrospectable(final Class<?> type) {
-        return !isEnumType(type) && !isArrayType(type) && !isCollectionType(type) && !isMapType(type);
+        return !isEnumType(type)
+                && !isArrayType(type)
+                && !(isCollectionType(type) && isJdkBuiltIn(type))
+                && !(isMapType(type) && isJdkBuiltIn(type));
     }
 
     /**
@@ -186,6 +189,16 @@ public abstract class ReflectionUtils {
      */
     public static boolean isMapType(final Class<?> type) {
         return Map.class.isAssignableFrom(type);
+    }
+
+    /**
+     * Check if a type is a JDK built-in collection/map.
+     *
+     * @param type the type to check
+     * @return true if the type is a built-in collection/map type, false otherwise.
+     */
+    public static boolean isJdkBuiltIn(final Class<?> type) {
+        return type.getName().startsWith("java.util");
     }
 
     /**

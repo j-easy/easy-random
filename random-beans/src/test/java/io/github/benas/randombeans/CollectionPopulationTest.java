@@ -268,6 +268,14 @@ public class CollectionPopulationTest {
         assertThat(map).isEmpty();
     }
 
+    @Test
+    public void userDefinedCollectionTypeShouldBePopulated() throws Exception {
+        CustomList customList = enhancedRandom.nextObject(CustomList.class);
+
+        assertThat(customList).isNotNull();
+        assertThat(customList.getName()).isNotNull();
+    }
+
     private void assertContainsOnlyNonEmptyPersons(Collection<Person> persons) {
         for (Person Person : persons) {
             assertThat(Person).isNotNull();

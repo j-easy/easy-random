@@ -24,10 +24,7 @@
 package io.github.benas.randombeans;
 
 import io.github.benas.randombeans.api.EnhancedRandom;
-import io.github.benas.randombeans.beans.CompositeMapBean;
-import io.github.benas.randombeans.beans.MapBean;
-import io.github.benas.randombeans.beans.Person;
-import io.github.benas.randombeans.beans.WildCardMapBean;
+import io.github.benas.randombeans.beans.*;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -182,6 +179,14 @@ public class MapPopulationTest {
         assertThat(compositeMapBean.getPersonToNicknames()).isEmpty();
         assertThat(compositeMapBean.getPersonToAccounts()).isEmpty();
         assertThat(compositeMapBean.getReallyStrangeCompositeDataStructure()).isEmpty();
+    }
+
+    @Test
+    public void userDefinedMapTypeShouldBePopulated() throws Exception {
+        CustomMap customMap = enhancedRandom.nextObject(CustomMap.class);
+
+        assertThat(customMap).isNotNull();
+        assertThat(customMap.getName()).isNotNull();
     }
 
     private void assertContainsOnlyNonEmptyPersons(Collection<Person> persons) {
