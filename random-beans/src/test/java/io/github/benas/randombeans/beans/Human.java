@@ -27,7 +27,7 @@ package io.github.benas.randombeans.beans;
 public class Human implements Mammal {
 
     @SuppressWarnings("unused")
-    private static final long SERIAL_VERSION_UID = 593716507559065802L;
+    public static final long SERIAL_VERSION_UID = 593716507559065802L;
 
     protected final Long id = null;
 
