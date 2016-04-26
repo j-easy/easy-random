@@ -77,11 +77,6 @@ class EnhancedRandomImpl extends EnhancedRandom {
     }
 
     @Override
-    public <T> Stream<T> objects(final Class<T> type, final String... excludedFields) {
-        return Stream.generate(() -> nextObject(type, excludedFields));
-    }
-
-    @Override
     public <T> Stream<T> objects(final Class<T> type, final int streamSize, final String... excludedFields) {
         if (streamSize < 0) {
             throw new IllegalArgumentException("The stream size must be positive");
