@@ -24,6 +24,8 @@
 
 package io.github.benas.randombeans.util;
 
+import lombok.experimental.UtilityClass;
+
 import java.time.ZonedDateTime;
 import java.util.Date;
 
@@ -34,7 +36,8 @@ import static java.util.Date.from;
  *
  * @author Mahmoud Ben Hassine (mahmoud.benhassine@icloud.com)
  */
-public abstract class DateUtils {
+@UtilityClass
+public class DateUtils {
 
     /**
      * Convert a {@link ZonedDateTime} to {@link Date}.
@@ -46,7 +49,5 @@ public abstract class DateUtils {
         return from(zonedDateTime.toInstant());
     }
 
-    private DateUtils() {
-    }
 
 }

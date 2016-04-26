@@ -24,13 +24,12 @@
 
 package io.github.benas.randombeans.randomizers.collection;
 
+import io.github.benas.randombeans.api.Randomizer;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.Mock;
 import org.mockito.runners.MockitoJUnitRunner;
-
-import io.github.benas.randombeans.api.Randomizer;
 
 import static io.github.benas.randombeans.randomizers.collection.MapRandomizer.aNewMapRandomizer;
 import static org.assertj.core.api.Assertions.assertThat;
@@ -63,5 +62,15 @@ public class MapRandomizerTest {
     @Test(expected = IllegalArgumentException.class)
     public void specifiedSizeShouldBePositive() {
         aNewMapRandomizer(keyRandomizer, valueRandomizer, -3);
+    }
+
+    @Test(expected = NullPointerException.class)
+    public void nullKeyRandomizer() {
+        aNewMapRandomizer(null, valueRandomizer, 3);
+    }
+
+    @Test(expected = NullPointerException.class)
+    public void nullValueRandomizer() {
+        aNewMapRandomizer(keyRandomizer, null, 3);
     }
 }

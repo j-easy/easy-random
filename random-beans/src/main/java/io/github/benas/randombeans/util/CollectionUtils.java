@@ -24,14 +24,18 @@
 
 package io.github.benas.randombeans.util;
 
-import java.util.*;
+import lombok.experimental.UtilityClass;
+
+import java.util.List;
+import java.util.Random;
 
 /**
  * Collection utility methods.
  *
  * @author Mahmoud Ben Hassine (mahmoud.benhassine@icloud.com)
  */
-public abstract class CollectionUtils {
+@UtilityClass
+public class CollectionUtils {
 
     /**
      * Get a random element from the list.

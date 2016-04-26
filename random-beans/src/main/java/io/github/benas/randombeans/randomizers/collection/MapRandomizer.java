@@ -25,10 +25,10 @@
 package io.github.benas.randombeans.randomizers.collection;
 
 import io.github.benas.randombeans.api.Randomizer;
+import lombok.NonNull;
 
 import java.util.HashMap;
 import java.util.Map;
-import java.util.Objects;
 
 import static io.github.benas.randombeans.randomizers.number.ByteRandomizer.aNewByteRandomizer;
 import static java.lang.Math.abs;
@@ -65,8 +65,8 @@ public class MapRandomizer<K, V> implements Randomizer<Map<K, V>> {
      * @param valueRandomizer the randomizer for values
      * @param nbEntries       the number of entries to generate
      */
-    public MapRandomizer(final Randomizer<K> keyRandomizer, final Randomizer<V> valueRandomizer, final int nbEntries) {
-        checkArguments(keyRandomizer, valueRandomizer, nbEntries);
+    public MapRandomizer(@NonNull final Randomizer<K> keyRandomizer, @NonNull final Randomizer<V> valueRandomizer, final int nbEntries) {
+        checkArguments(nbEntries);
         this.keyRandomizer = keyRandomizer;
         this.valueRandomizer = valueRandomizer;
         this.nbElements = nbEntries;
@@ -102,9 +102,7 @@ public class MapRandomizer<K, V> implements Randomizer<Map<K, V>> {
         return result;
     }
 
-    private void checkArguments(final Randomizer<K> keyRandomizer, final Randomizer<V> valueRandomizer, final int nbEntries) {
-        Objects.requireNonNull(keyRandomizer, "The randomizer of keys must not be null");
-        Objects.requireNonNull(valueRandomizer, "The randomizer of values must not be null");
+    private void checkArguments(final int nbEntries) {
         if (nbEntries < 1) {
             throw new IllegalArgumentException("The number of entries to generate must be >= 1");
         }

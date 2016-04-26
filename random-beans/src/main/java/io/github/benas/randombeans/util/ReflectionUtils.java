@@ -24,6 +24,8 @@
 
 package io.github.benas.randombeans.util;
 
+import lombok.experimental.UtilityClass;
+
 import java.lang.reflect.*;
 import java.util.*;
 
@@ -35,7 +37,8 @@ import static java.util.stream.Collectors.toList;
  *
  * @author Mahmoud Ben Hassine (mahmoud.benhassine@icloud.com)
  */
-public abstract class ReflectionUtils {
+@UtilityClass
+public class ReflectionUtils {
 
     /**
      * Get declared fields of a given type.

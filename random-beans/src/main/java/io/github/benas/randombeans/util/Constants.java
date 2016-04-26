@@ -24,8 +24,8 @@
 
 package io.github.benas.randombeans.util;
 
-import java.time.ZonedDateTime;
 import java.time.ZoneId;
+import java.time.ZonedDateTime;
 
 import static java.time.ZonedDateTime.of;
 
@@ -34,37 +34,34 @@ import static java.time.ZonedDateTime.of;
  *
  * @author Mahmoud Ben Hassine (mahmoud.benhassine@icloud.com)
  */
-public abstract class Constants {
+public interface Constants {
 
     /**
      * Reference date around which random dates will be generated.
      */
-    private static final ZonedDateTime REFERENCE_DATE = of(2020, 1, 1, 0, 0, 0, 0, ZoneId.of("UTC+1"));
+    ZonedDateTime REFERENCE_DATE = of(2020, 1, 1, 0, 0, 0, 0, ZoneId.of("UTC+1"));
 
     /**
      * Maximum collection size.
      */
-    public static final byte MAX_COLLECTION_SIZE = Byte.MAX_VALUE;
+    byte MAX_COLLECTION_SIZE = Byte.MAX_VALUE;
 
     /**
      * Maximum string size.
      */
-    public static final byte MAX_STRING_LENGTH = 32;
+    byte MAX_STRING_LENGTH = 32;
 
     /**
      * Default date range in which dates will be generated: [now - 10 years, now + 10 years].
      */
-    public static final int DEFAULT_DATE_RANGE = 10;
+    int DEFAULT_DATE_RANGE = 10;
     /**
      * The date of ten years before {@link Constants#REFERENCE_DATE}.
      */
-    public static final ZonedDateTime TEN_YEARS_AGO = REFERENCE_DATE.minusYears(DEFAULT_DATE_RANGE);
+    ZonedDateTime TEN_YEARS_AGO = REFERENCE_DATE.minusYears(DEFAULT_DATE_RANGE);
 
     /**
      * The date of ten years after the {@link Constants#REFERENCE_DATE}.
      */
-    public static final ZonedDateTime IN_TEN_YEARS = REFERENCE_DATE.plusYears(DEFAULT_DATE_RANGE);
-
-    private Constants() { }
-
+    ZonedDateTime IN_TEN_YEARS = REFERENCE_DATE.plusYears(DEFAULT_DATE_RANGE);
 }

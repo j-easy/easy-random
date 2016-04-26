@@ -1,12 +1,15 @@
 package io.github.benas.randombeans.util;
 
+import lombok.experimental.UtilityClass;
+
 import java.nio.charset.Charset;
 import java.util.ArrayList;
 import java.util.List;
 
 import static java.util.stream.Collectors.toList;
 
-public abstract class CharacterUtils {
+@UtilityClass
+public class CharacterUtils {
 
     /**
      * Returns a list of all printable charaters of the given charset.
@@ -45,6 +48,4 @@ public abstract class CharacterUtils {
         return (!Character.isISOControl(character)) && block != null && block != Character.UnicodeBlock.SPECIALS;
     }
 
-    private CharacterUtils() {
-    }
 }

@@ -25,9 +25,9 @@
 package io.github.benas.randombeans.randomizers.collection;
 
 import io.github.benas.randombeans.api.Randomizer;
+import lombok.NonNull;
 
 import java.util.Collection;
-import java.util.Objects;
 
 import static io.github.benas.randombeans.randomizers.number.ByteRandomizer.aNewByteRandomizer;
 import static java.lang.Math.abs;
@@ -48,14 +48,13 @@ abstract class CollectionRandomizer<T> implements Randomizer<Collection<T>> {
         this(delegate, abs(aNewByteRandomizer().getRandomValue()));
     }
 
-    CollectionRandomizer(final Randomizer<T> delegate, final int nbElements) {
-        checkArguments(delegate, nbElements);
+    CollectionRandomizer(@NonNull final Randomizer<T> delegate, final int nbElements) {
+        checkArguments(nbElements);
         this.nbElements = nbElements;
         this.delegate = delegate;
     }
 
-    private void checkArguments(final Randomizer<T> delegate, final int nbElements) {
-        Objects.requireNonNull(delegate, "The delegate randomizer must not be null");
+    private void checkArguments(final int nbElements) {
         if (nbElements < 1) {
             throw new IllegalArgumentException("The number of elements to generate must be >= 1");
         }

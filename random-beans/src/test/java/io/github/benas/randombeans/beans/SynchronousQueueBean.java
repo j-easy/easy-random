@@ -32,19 +32,4 @@ public class SynchronousQueueBean {
     private SynchronousQueue synchronousQueue;
     private SynchronousQueue<Person> typedSynchronousQueue;
 
-    public SynchronousQueue getSynchronousQueue() {
-        return synchronousQueue;
-    }
-
-    public void setSynchronousQueue(SynchronousQueue synchronousQueue) {
-        this.synchronousQueue = synchronousQueue;
-    }
-
-    public SynchronousQueue<Person> getTypedSynchronousQueue() {
-        return typedSynchronousQueue;
-    }
-
-    public void setTypedSynchronousQueue(SynchronousQueue<Person> typedSynchronousQueue) {
-        this.typedSynchronousQueue = typedSynchronousQueue;
-    }
 }
