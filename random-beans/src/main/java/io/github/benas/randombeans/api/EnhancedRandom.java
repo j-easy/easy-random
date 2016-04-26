@@ -86,8 +86,8 @@ public abstract class EnhancedRandom extends Random {
      * Provides static access to {@link EnhancedRandom#objects(Class, String...)}
      */
     public static <T> Stream<T> randoms(final Class<T> type, final String... excludedFields) {
-        EnhancedRandom enhancedRandom = aNewEnhancedRandomBuilder().build();
-        return enhancedRandom.objects(type, enhancedRandom.nextInt(100), excludedFields);
+        return aNewEnhancedRandomBuilder().build().objects(type, excludedFields);
+
     }
 
     /**

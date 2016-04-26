@@ -300,7 +300,7 @@ public class EnhancedRandomImplTest {
 
     @Test
     public void generatedBeansWithStaticMethodMustBeValid() {
-        randoms(Person.class, "address", "phoneNumber").forEach(this::validatePerson);
+        randoms(Person.class, "address", "phoneNumber").limit(10).forEach(this::validatePerson);
     }
 
     @Test
