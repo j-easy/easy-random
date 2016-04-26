@@ -140,6 +140,10 @@
             <name>Pascal Schumacher</name>
             <url>https://github.com/PascalSchumacher</url>
         </contributor>
+        <contributor>
+            <name>Vincent Potucek</name>
+            <url>https://github.com/punkratz312</url>
+        </contributor>
     </contributors>
 
     <dependencyManagement>

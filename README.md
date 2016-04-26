@@ -90,6 +90,7 @@ If you have any question, suggestion, or feedback, do not hesitate to use the [G
 * [Rémi Alvergnat](http://www.pragmasphere.com)
 * [Fred Eckertson](https://github.com/feckertson)
 * [Pascal Schumacher](https://github.com/PascalSchumacher)
+* [Vincent Potucek](https://github.com/punkratz312)
 
 Thank you all for your contributions!
 
