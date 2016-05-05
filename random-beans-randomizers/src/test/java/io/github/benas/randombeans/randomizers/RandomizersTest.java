@@ -127,7 +127,7 @@ public class RandomizersTest extends AbstractRandomizerTest<FakerBasedRandomizer
     @DataProvider
     public static Object[][] generateSeededRandomizersWithLocaleAndTheirExpectedValues() {
         return new Object[][] {
-//              { aNewCityRandomizer(SEED, LOCALE), "Massonde France" }, does no work in faker 0.8 see, https://github.com/DiUS/java-faker/issues/65
+                { aNewCityRandomizer(SEED, LOCALE), "Versailles" },
                 { aNewCompanyRandomizer(SEED, LOCALE), "Masson et Masson" },
                 { aNewCountryRandomizer(SEED, LOCALE), "Antarctica (the territory South of 60 deg S)" },
                 { aNewCreditCardNumberRandomizer(SEED, LOCALE), "1211-1221-1234-2201" },
@@ -136,8 +136,8 @@ public class RandomizersTest extends AbstractRandomizerTest<FakerBasedRandomizer
                 { aNewFullNameRandomizer(SEED, LOCALE), "Masson Emilie" },
                 { aNewIsbnRandomizer(SEED, LOCALE), "206-9-57-475-3963" },
                 { aNewLastNameRandomizer(SEED, LOCALE), "Faure" },
-                { aNewLatitudeRandomizer(SEED, LOCALE), "40" + new DecimalFormatSymbols().getDecimalSeparator() + "171357" }, // should really be "40.171357", seems like a bug in Faker 0.7
-                { aNewLongitudeRandomizer(SEED, LOCALE), "80" + new DecimalFormatSymbols().getDecimalSeparator() + "342713" }, // should really be "80.342713", seems like a bug in Faker 0.7
+                { aNewLatitudeRandomizer(SEED, LOCALE), "40" + new DecimalFormatSymbols().getDecimalSeparator() + "171357" }, // should really be "40.171357", seems like a bug in java-faker
+                { aNewLongitudeRandomizer(SEED, LOCALE), "80" + new DecimalFormatSymbols().getDecimalSeparator() + "342713" }, // should really be "80.342713", seems like a bug in java-faker
                 { aNewParagraphRandomizer(SEED, LOCALE), "Totam assumenda eius autem similique. Aut voluptatem enim praesentium. Suscipit cupiditate doloribus debitis dolor. Cumque sapiente occaecati. Quos maiores quae." },
                 { aNewPhoneNumberRandomizer(SEED, LOCALE), "0106957475" },
                 { aNewSentenceRandomizer(SEED, LOCALE), "Dolor totam assumenda eius autem." },
