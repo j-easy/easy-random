@@ -1,6 +1,74 @@
-JPOPULATOR CHANGELOG
+RANDOM BEANS CHANGELOG
 ===================================
-https://github.com/benas/jPopulator
+https://github.com/benas/random-beans
+
+Changes in version 3.0.0 (2016-05-07)
+-------------------------------------
+
+# Major Changes
+
+* Random Beans now requires a Java 1.8+ runtime.
+* Module `random-beans-java8` has been merged into the core module `random-beans` (#88)
+
+# New features
+
+#28: add ability to use Java 8 `Supplier` as randomizer
+#41: add support for Java 8 Date and Time API (JSR 310) types
+#118: Allow more controll over generated values
+#102: Added more randomizers: `LocaleRandomizer`, `UUIDRandomizer`, `GregorianCalendarRandomizer`, `TimeZoneRandomizer`, `RegularExpressionRandomizer`
+#124: Integrate Lombok to reduce boilerplate code
+
+# API changes and improvements
+
+#78: Make the constructor of `EnhancedRandomBuilder` public
+#82: Add support to register a `Randomizer` for a given type
+#112: Add Spring support to register a custom randomizer for a given type
+#116: Add static factory method to generate random beans with default configuration parameters
+#117: rename `nextObjects` method into `objects` to conform with the standard `java.util.Random` API naming pattern
+#120: Merge `StringLengthRandomizer` and `StringRandomizer`
+#110: Merge `NameRandomizer` and `FullNameRandomzier`
+
+# Fixed Bugs
+
+#84: "Pre-initialized" Bean Fields are nulled
+#86: Exception if java-faker does not support default locale
+#113: Empty first Collection when no seed is provided
+#121 User defined Collection/Map types are not populated
+
+Changes in version 2.0.0 (2016-02-19)
+-------------------------------------
+
+# Major changes
+
+* The project has been renamed from `jPopulator` to `Random Beans`
+* The `Populator` interface has been renamed to `EnhancedRandom`
+* The `PopulatorBuilder` class has been renamed to `EnhancedRandomBuilder`
+* The `Populator.populateBean(Class type)` method has been renamed to `EnhancedRandom.nextObject(Class type)`
+* Java 7 is the minimum Java version required for v2.x line
+
+# Features
+
+* issue #19: Add support to populate arrays and collection types
+* issue #24: Add support to exclude subfields using the dotted notation
+* issue #25: Add support to populate immutable objects
+* issue #30: Add random seed parameter
+* issue #32: Add the `RandomizerRegistry` API as a SPI to register custom randomizers
+* issue #33: Add support for recursive data structures
+* issue #36: Add support to register randomizers using the `@Randomizer` annotation
+* issue #59: Add support to scan the classpath for concrete types when the field is an abstract or interface type
+* issue #61: Add support to skip fields using the `SkipRandomizer` API
+
+# Bug fixes
+
+* issue #37: Fix incorrect error message in `MapRandomizer`
+* issue #44: Fix `StackOverflowError` when a field is of the same type as declaring class (infinite recursion)
+* issue #56: Fix regression of #1 , Random Beans should not try to populate static final fields
+
+# Enhancements
+
+* issue #39: Throw an `ObjectGenerationException` when unable to randomize a field instead of silently ignoring it
+* issue #26: Modularisation of the code base
+* issues #45 #48 #52: Several test improvements
 
 Changes in version 1.2.0 (2015-03-20)
 -------------------------------------
