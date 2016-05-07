@@ -37,6 +37,7 @@ import static io.github.benas.randombeans.randomizers.LatitudeRandomizer.aNewLat
 import static io.github.benas.randombeans.randomizers.LongitudeRandomizer.aNewLongitudeRandomizer;
 import static io.github.benas.randombeans.randomizers.ParagraphRandomizer.aNewParagraphRandomizer;
 import static io.github.benas.randombeans.randomizers.PhoneNumberRandomizer.aNewPhoneNumberRandomizer;
+import static io.github.benas.randombeans.randomizers.RegularExpressionRandomizer.aNewRegularExpressionRandomizer;
 import static io.github.benas.randombeans.randomizers.SentenceRandomizer.aNewSentenceRandomizer;
 import static io.github.benas.randombeans.randomizers.StateRandomizer.aNewStateRandomizer;
 import static io.github.benas.randombeans.randomizers.StreetRandomizer.aNewStreetRandomizer;
@@ -73,6 +74,7 @@ public class RandomizersTest extends AbstractRandomizerTest<FakerBasedRandomizer
                 aNewLatitudeRandomizer(),
                 aNewLongitudeRandomizer(),
                 aNewPhoneNumberRandomizer(),
+                aNewRegularExpressionRandomizer("\\d+[A-Z]{5}"),
                 aNewParagraphRandomizer(),
                 aNewSentenceRandomizer(),
                 aNewStateRandomizer(),
@@ -107,6 +109,7 @@ public class RandomizersTest extends AbstractRandomizerTest<FakerBasedRandomizer
                 { aNewLongitudeRandomizer(SEED), "80" + new DecimalFormatSymbols().getDecimalSeparator() + "342713" },
                 { aNewParagraphRandomizer(SEED), "Totam assumenda eius autem similique. Aut voluptatem enim praesentium. Suscipit cupiditate doloribus debitis dolor. Cumque sapiente occaecati. Quos maiores quae." },
                 { aNewPhoneNumberRandomizer(SEED), "1-069-574-7539" },
+                { aNewRegularExpressionRandomizer("\\d+[A-Z]{5}", SEED), "8UYSMT" },
                 { aNewSentenceRandomizer(SEED), "Dolor totam assumenda eius autem." },
                 { aNewStateRandomizer(SEED), "North Carolina" },
                 { aNewStreetRandomizer(SEED), "Weissnat Locks" },
