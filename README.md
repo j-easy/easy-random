@@ -15,6 +15,13 @@ EnhancedRandom enhancedRandom = EnhancedRandomBuilder.aNewEnhancedRandomBuilder(
 Person person = enhancedRandom.nextObject(Person.class);
 ```
 
+The `EnhancedRandomBuilder` is the main entry point to configure `EnhancedRandom` instances with a fluent API. It allows you to set all
+parameters to control how random data is generated. In most cases, default options are enough and you can use a static import of the `EnhancedRandom.random(Class object)` method:
+
+```java
+Person person = random(Person.class);
+```
+
 This snippet will generate a random instance of the `Person` type.
 
 Populating a Java object with random data can look easy at first glance, unless your domain model involves many related classes.
@@ -53,7 +60,7 @@ person.setGender(Gender.MALE);
 person.setAddress(address);
 ```
 
-As you can see, Random Beans can tremendously reduce the code of generating random test data than doing it by hand.
+As you can see, Random Beans can tremendously reduce the code of generating random data than doing it by hand.
 
 ## Quick links
 
@@ -67,8 +74,8 @@ As you can see, Random Beans can tremendously reduce the code of generating rand
 
 ## Current version
 
-* The current stable version is `2.0.0` : [![Maven Central](https://maven-badges.herokuapp.com/maven-central/io.github.benas/random-beans/badge.svg?style=flat)](http://search.maven.org/#artifactdetails|io.github.benas|random-beans|2.0.0|) 
-* The current development version is `3.0.0-SNAPSHOT` : [![Build Status](https://travis-ci.org/benas/random-beans.svg?branch=master)](https://travis-ci.org/benas/random-beans)
+* The current stable version is `3.0.0` : [![Maven Central](https://maven-badges.herokuapp.com/maven-central/io.github.benas/random-beans/badge.svg?style=flat)](http://search.maven.org/#artifactdetails|io.github.benas|random-beans|3.0.0|)
+* The current development version is `3.1.0-SNAPSHOT` : [![Build Status](https://travis-ci.org/benas/random-beans.svg?branch=master)](https://travis-ci.org/benas/random-beans)
 
 You can find more details on how to get started [here](https://github.com/benas/random-beans/wiki/Getting-Started).
 
