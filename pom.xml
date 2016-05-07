@@ -33,7 +33,7 @@
 
     <groupId>io.github.benas</groupId>
     <artifactId>random-beans-parent</artifactId>
-    <version>3.0.0-SNAPSHOT</version>
+    <version>3.0.0</version>
     <packaging>pom</packaging>
 
     <name>Random Beans</name>
@@ -75,7 +75,7 @@
         <url>git@github.com:benas/random-beans.git</url>
         <connection>scm:git:git@github.com:benas/random-beans.git</connection>
         <developerConnection>scm:git:git@github.com:benas/random-beans.git</developerConnection>
-        <tag>HEAD</tag>
+        <tag>random-beans-parent-3.0.0</tag>
     </scm>
 
     <ciManagement>
