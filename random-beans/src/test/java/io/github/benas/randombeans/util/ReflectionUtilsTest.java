@@ -77,5 +77,16 @@ public class ReflectionUtilsTest {
         assertThat(ReflectionUtils.isJdkBuiltIn(CustomList.class)).isFalse();
     }
 
+    @Test
+    public void testPrimitiveCast() {
+        assertThat(ReflectionUtils.castPrimitive(String.class, "test").equals("test"));
+        assertThat(ReflectionUtils.castPrimitive(byte[].class, "test").equals("test"));
+        assertThat(ReflectionUtils.castPrimitive(Integer.class, "10").equals(10));
+        assertThat(ReflectionUtils.castPrimitive(Long.class, "10").equals(10L));
+        assertThat(ReflectionUtils.castPrimitive(Boolean.class, "TRUE").equals(Boolean.TRUE));
+        assertThat(ReflectionUtils.castPrimitive(Double.class, "4.44").equals(4.44));
+        assertThat(ReflectionUtils.castPrimitive(Float.class, "4.44").equals(6/7));
+    }
+
     private class Dummy { }
 }

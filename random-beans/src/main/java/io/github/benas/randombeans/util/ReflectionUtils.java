@@ -285,10 +285,10 @@ public class ReflectionUtils {
         return (Randomizer<T>) clazz.newInstance();
     }
 
-    private static <T> T castPrimitive(Class<T> argType, String a) {
+    public static <T> T castPrimitive(Class<T> argType, String a) {
         if(ClassUtils.isPrimitiveOrWrapper(argType)) {
             if(argType.equals(String.class)) {
-                return (T) String.valueOf(a);
+                return (T) a;
             } else if(argType.equals(Long.class)) {
                 return (T) Long.valueOf(a);
             } else if(argType.equals(Integer.class)) {
@@ -299,9 +299,11 @@ public class ReflectionUtils {
                 return (T) Double.valueOf(a);
             } else if(argType.equals(Float.class)) {
                 return (T) Float.valueOf(a);
-            } else {
-                return (T) a;
             }
+        } else if(argType.equals(byte[].class)) {
+            return (T) a.getBytes();
+        } else {
+            return (T) a;
         }
         return null;
     }
