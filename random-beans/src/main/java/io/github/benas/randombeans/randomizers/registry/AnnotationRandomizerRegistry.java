@@ -67,6 +67,7 @@ public class AnnotationRandomizerRegistry implements RandomizerRegistry {
             Class<?> type = randomizer.value();
             String[] args = randomizer.args();
             try {
+                //return (Randomizer<?>) type.newInstance();
                 return ReflectionUtils.newInstance(type, args);
             } catch (Exception e) {
                 LOGGER.log(Level.WARNING, "Unable to create an instance of " + type.getName(), e);

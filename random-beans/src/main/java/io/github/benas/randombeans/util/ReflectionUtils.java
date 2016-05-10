@@ -281,9 +281,8 @@ public class ReflectionUtils {
                     return (Randomizer<T>) c.newInstance(nArgs);
                 }
             }
-            return (Randomizer<T>) clazz.newInstance();
         }
-        return null;
+        return (Randomizer<T>) clazz.newInstance();
     }
 
     private static <T> T castPrimitive(Class<T> argType, String a) {
