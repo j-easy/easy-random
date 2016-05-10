@@ -27,6 +27,7 @@ package io.github.benas.randombeans.randomizers.registry;
 import io.github.benas.randombeans.annotation.Priority;
 import io.github.benas.randombeans.api.Randomizer;
 import io.github.benas.randombeans.api.RandomizerRegistry;
+import io.github.benas.randombeans.util.ReflectionUtils;
 
 import java.lang.reflect.Field;
 import java.util.logging.Level;
@@ -59,12 +60,14 @@ public class AnnotationRandomizerRegistry implements RandomizerRegistry {
      * @return the randomizer registered for the given field
      */
     @Override
+    @SuppressWarnings(value = "unchecked")
     public Randomizer<?> getRandomizer(Field field) {
         if (field.isAnnotationPresent(io.github.benas.randombeans.annotation.Randomizer.class)) {
             io.github.benas.randombeans.annotation.Randomizer randomizer = field.getAnnotation(io.github.benas.randombeans.annotation.Randomizer.class);
             Class<?> type = randomizer.value();
+            String[] args = randomizer.args();
             try {
-                return (Randomizer<?>) type.newInstance();
+                return ReflectionUtils.newInstance(type, args);
             } catch (Exception e) {
                 LOGGER.log(Level.WARNING, "Unable to create an instance of " + type.getName(), e);
             }

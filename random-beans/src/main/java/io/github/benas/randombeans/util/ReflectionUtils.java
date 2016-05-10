@@ -24,7 +24,9 @@
 
 package io.github.benas.randombeans.util;
 
+import io.github.benas.randombeans.api.Randomizer;
 import lombok.experimental.UtilityClass;
+import org.apache.commons.lang3.ClassUtils;
 
 import java.lang.reflect.*;
 import java.util.*;
@@ -263,6 +265,46 @@ public class ReflectionUtils {
             }
         }
         return actualTypeArguments;
+    }
+
+    public static <T> Randomizer<T> newInstance(Class<T> clazz, String[] args) throws IllegalAccessException, InvocationTargetException, InstantiationException {
+        if(args != null && args.length > 0) {
+            for(Constructor c : clazz.getConstructors()) {
+                if(c.getParameterCount() > 0 && c.getParameterCount() == args.length) {
+                    Object[] nArgs = new Object[args.length];
+                    Class[] argTypes = c.getParameterTypes();
+                    for(int x=0; x < args.length; x++) {
+                        Class<?> argType = argTypes[x];
+                        String a = args[x];
+                        nArgs[x] = castPrimitive(argType, a);
+                    }
+                    return (Randomizer<T>) c.newInstance(nArgs);
+                }
+            }
+            return (Randomizer<T>) clazz.newInstance();
+        }
+        return null;
+    }
+
+    private static <T> T castPrimitive(Class<T> argType, String a) {
+        if(ClassUtils.isPrimitiveOrWrapper(argType)) {
+            if(argType.equals(String.class)) {
+                return (T) String.valueOf(a);
+            } else if(argType.equals(Long.class)) {
+                return (T) Long.valueOf(a);
+            } else if(argType.equals(Integer.class)) {
+                return (T) Integer.valueOf(a);
+            } else if(argType.equals(Boolean.class)) {
+                return (T) Boolean.valueOf(a);
+            } else if(argType.equals(Double.class)) {
+                return (T) Double.valueOf(a);
+            } else if(argType.equals(Float.class)) {
+                return (T) Float.valueOf(a);
+            } else {
+                return (T) a;
+            }
+        }
+        return null;
     }
 
 }
