@@ -27,11 +27,18 @@ package io.github.benas.randombeans.randomizers.range;
 import io.github.benas.randombeans.EnhancedRandomBuilder;
 import io.github.benas.randombeans.annotation.Randomizer;
 import io.github.benas.randombeans.annotation.RandomizerArgument;
+import io.github.benas.randombeans.api.EnhancedRandom;
 import io.github.benas.randombeans.util.DateUtils;
 import org.junit.Before;
 import org.junit.Test;
 
+import java.time.LocalDate;
+import java.time.ZoneOffset;
+import java.time.ZonedDateTime;
+import java.time.temporal.TemporalField;
+import java.time.temporal.TemporalUnit;
 import java.util.Date;
+import java.util.Locale;
 
 import static io.github.benas.randombeans.randomizers.range.DateRangeRandomizer.aNewDateRangeRandomizer;
 import static org.assertj.core.api.Assertions.assertThat;
@@ -107,9 +114,9 @@ public class DateRangeRandomizerTest extends AbstractRangeRandomizerTest<Date> {
 
         @Randomizer(value=DateRangeRandomizer.class, args={
                 // 2016-01-10
-                @RandomizerArgument(value="1452384000000", type=Date.class),
+                @RandomizerArgument(value="2016-01-10", type=Date.class),
                 // 2016-01-30
-                @RandomizerArgument(value="1454112000000", type=Date.class)
+                @RandomizerArgument(value="2016-01-30", type=Date.class)
         })
         private Date date;
 
@@ -123,14 +130,14 @@ public class DateRangeRandomizerTest extends AbstractRangeRandomizerTest<Date> {
     }
 
     @Test
-    public void annotationShouldWorkWithRange() {
+    public void annotationShouldWorkWithRange() throws Exception {
         DateRangeRandomizerTest.TestData data = null;
         for(int x=0; x < 10; x++) {
-            data = new EnhancedRandomBuilder().build().nextObject(DateRangeRandomizerTest.TestData.class);
-            System.out.println(data.getDate().toString());
+            data = EnhancedRandom.random(DateRangeRandomizerTest.TestData.class);
+
             then(data.getDate().getTime()).isBetween(
-                    1452384000000L,
-                    1454112000000L
+                    LocalDate.parse("2016-01-10").atStartOfDay().toEpochSecond(ZoneOffset.UTC)*1000,
+                    LocalDate.parse("2016-01-30").atStartOfDay().toEpochSecond(ZoneOffset.UTC)*1000
             );
         }
     }

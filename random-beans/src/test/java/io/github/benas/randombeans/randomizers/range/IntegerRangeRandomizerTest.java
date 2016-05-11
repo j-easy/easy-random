@@ -27,6 +27,7 @@ package io.github.benas.randombeans.randomizers.range;
 import io.github.benas.randombeans.EnhancedRandomBuilder;
 import io.github.benas.randombeans.annotation.Randomizer;
 import io.github.benas.randombeans.annotation.RandomizerArgument;
+import io.github.benas.randombeans.api.EnhancedRandom;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -103,7 +104,7 @@ public class IntegerRangeRandomizerTest extends AbstractRangeRandomizerTest<Inte
     public void annotationShouldWorkWithRange() {
         TestData data = null;
         for(int x=0; x < 10; x++) {
-            data = new EnhancedRandomBuilder().build().nextObject(TestData.class);
+            data = EnhancedRandom.random(TestData.class);
             then(data.getPrice()).isBetween(200, 500);
         }
     }
