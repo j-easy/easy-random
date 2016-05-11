@@ -24,6 +24,10 @@
 
 package io.github.benas.randombeans.randomizers.range;
 
+import io.github.benas.randombeans.EnhancedRandomBuilder;
+import io.github.benas.randombeans.annotation.Randomizer;
+import io.github.benas.randombeans.annotation.RandomizerArgument;
+import io.github.benas.randombeans.util.DateUtils;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -31,6 +35,7 @@ import java.util.Date;
 
 import static io.github.benas.randombeans.randomizers.range.DateRangeRandomizer.aNewDateRangeRandomizer;
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.BDDAssertions.then;
 
 public class DateRangeRandomizerTest extends AbstractRangeRandomizerTest<Date> {
 
@@ -93,6 +98,41 @@ public class DateRangeRandomizerTest extends AbstractRangeRandomizerTest<Date> {
 
         // Then
         assertThat(randomDate).isAfterOrEqualsTo(minDate);
+    }
+
+    public static class TestData {
+        public TestData(Date date) {
+            this.date = date;
+        }
+
+        @Randomizer(value=DateRangeRandomizer.class, args={
+                // 2016-01-10
+                @RandomizerArgument(value="1452384000000", type=Date.class),
+                // 2016-01-30
+                @RandomizerArgument(value="1454112000000", type=Date.class)
+        })
+        private Date date;
+
+        public Date getDate() {
+            return date;
+        }
+
+        public void setDate(Date date) {
+            this.date = date;
+        }
+    }
+
+    @Test
+    public void annotationShouldWorkWithRange() {
+        DateRangeRandomizerTest.TestData data = null;
+        for(int x=0; x < 10; x++) {
+            data = new EnhancedRandomBuilder().build().nextObject(DateRangeRandomizerTest.TestData.class);
+            System.out.println(data.getDate().toString());
+            then(data.getDate().getTime()).isBetween(
+                    1452384000000L,
+                    1454112000000L
+            );
+        }
     }
 
 }
