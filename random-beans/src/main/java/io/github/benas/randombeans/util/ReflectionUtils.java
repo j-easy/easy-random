@@ -27,7 +27,6 @@ package io.github.benas.randombeans.util;
 import io.github.benas.randombeans.annotation.RandomizerArgument;
 import io.github.benas.randombeans.api.Randomizer;
 import lombok.experimental.UtilityClass;
-import org.apache.commons.lang3.ClassUtils;
 
 import java.lang.reflect.*;
 import java.util.*;
