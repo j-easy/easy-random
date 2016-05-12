@@ -146,6 +146,10 @@
             <name>Vincent Potucek</name>
             <url>https://github.com/punkratz312</url>
         </contributor>
+        <contributor>
+            <name>Dovid Kopel</name>
+            <url>https://github.com/dovidkopel</url>
+        </contributor>
     </contributors>
 
     <dependencyManagement>

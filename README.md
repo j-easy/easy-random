@@ -98,6 +98,7 @@ If you have any question, suggestion, or feedback, do not hesitate to use the [G
 * [Fred Eckertson](https://github.com/feckertson)
 * [Pascal Schumacher](https://github.com/PascalSchumacher)
 * [Vincent Potucek](https://github.com/punkratz312)
+* [Dovid Kopel](https://github.com/dovidkopel)
 
 Thank you all for your contributions!
 
