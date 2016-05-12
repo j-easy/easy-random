@@ -51,7 +51,6 @@
         <spring-context.version>4.2.6.RELEASE</spring-context.version>
         <objenesis.version>2.2</objenesis.version>
         <fast-classpath-scanner.version>1.9.18</fast-classpath-scanner.version>
-        <commons-lang3.version>3.4</commons-lang3.version>
         <hibernate-validator.version>5.2.4.Final</hibernate-validator.version>
         <javax.el.version>2.2.6</javax.el.version>
         <jackson.version>2.7.4</jackson.version>
@@ -178,11 +177,6 @@
                 <groupId>com.fasterxml.jackson.core</groupId>
                 <artifactId>jackson-databind</artifactId>
                 <version>${jackson.version}</version>
-            </dependency>
-            <dependency>
-                <groupId>org.apache.commons</groupId>
-                <artifactId>commons-lang3</artifactId>
-                <version>${commons-lang3.version}</version>
             </dependency>
             <dependency>
                 <groupId>org.objenesis</groupId>
