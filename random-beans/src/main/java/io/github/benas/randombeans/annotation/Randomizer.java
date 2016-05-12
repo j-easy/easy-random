@@ -45,4 +45,6 @@ public @interface Randomizer {
      * @return the randomizer's class
      */
     Class<? extends io.github.benas.randombeans.api.Randomizer<?>> value();
+
+    @RandomizerArgument RandomizerArgument[] args() default {};
 }

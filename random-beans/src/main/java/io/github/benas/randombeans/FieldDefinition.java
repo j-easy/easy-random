@@ -43,4 +43,9 @@ public class FieldDefinition<T, F> {
     private final Class<T> clazz;
 
 
+    public FieldDefinition(String name, Class<F> type, Class<T> clazz) {
+        this.name = name;
+        this.type = type;
+        this.clazz = clazz;
+    }
 }

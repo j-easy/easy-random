@@ -24,7 +24,10 @@
 
 package io.github.benas.randombeans.util;
 
+import io.github.benas.randombeans.annotation.RandomizerArgument;
+import io.github.benas.randombeans.api.Randomizer;
 import lombok.experimental.UtilityClass;
+import org.apache.commons.lang3.ClassUtils;
 
 import java.lang.reflect.*;
 import java.util.*;
@@ -265,4 +268,29 @@ public class ReflectionUtils {
         return actualTypeArguments;
     }
 
-}
+    public static <T> Randomizer<T> newInstance(Class<T> clazz, RandomizerArgument[] args) throws IllegalAccessException, InvocationTargetException, InstantiationException {
+        if(args != null && args.length > 0) {
+            for(Constructor c : clazz.getConstructors()) {
+                if(c.getParameterCount() > 0 && c.getParameterCount() == args.length) {
+                    Object[] nArgs = new Object[args.length];
+                    Class[] argTypes = c.getParameterTypes();
+                    for(int x=0; x < args.length; x++) {
+                        Class<?> argType = argTypes[x];
+                        RandomizerArgument arg = args[x];
+                        String val = arg.value();
+                        Class type = arg.type();
+
+                        if(argType.isAssignableFrom(arg.type())) {
+                            nArgs[x] = Mapper.INSTANCE.convertValue(val, type);
+                        } else {
+                            // Can't be a valid input for this constructor
+                            break;
+                        }
+                    }
+                    return (Randomizer<T>) c.newInstance(nArgs);
+                }
+            }
+        }
+        return (Randomizer<T>) clazz.newInstance();
+    }
+    }
