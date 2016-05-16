@@ -50,6 +50,8 @@ public class EnhancedRandomBuilder {
 
     private long seed;
 
+    private int maxCollectionSize;
+
     /**
      * Create a new {@link EnhancedRandomBuilder}.
      */
@@ -136,6 +138,11 @@ public class EnhancedRandomBuilder {
         return this;
     }
 
+    public EnhancedRandomBuilder maxCollectionSize(final int maxSize) {
+        this.maxCollectionSize = maxSize;
+        return this;
+    }
+
     /**
      * Register a {@link RandomizerRegistry}.
      *
@@ -174,6 +181,7 @@ public class EnhancedRandomBuilder {
     private EnhancedRandomImpl setupEnhancedRandom(LinkedHashSet<RandomizerRegistry> registries) {
         EnhancedRandomImpl enhancedRandom = new EnhancedRandomImpl(registries);
         enhancedRandom.setSeed(seed);
+        enhancedRandom.setMaxCollectionSize(maxCollectionSize);
         enhancedRandom.setScanClasspathForConcreteTypes(scanClasspathForConcreteTypes);
         return enhancedRandom;
     }
