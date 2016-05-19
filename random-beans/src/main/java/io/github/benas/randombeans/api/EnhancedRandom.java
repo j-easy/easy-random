@@ -24,10 +24,15 @@
 
 package io.github.benas.randombeans.api;
 
+import java.util.Collection;
+import java.util.List;
 import java.util.Random;
+import java.util.Set;
 import java.util.stream.Stream;
 
 import static io.github.benas.randombeans.EnhancedRandomBuilder.aNewEnhancedRandomBuilder;
+import static java.util.stream.Collectors.toList;
+import static java.util.stream.Collectors.toSet;
 
 /**
  * Abstract class for random object generator.
@@ -76,6 +81,48 @@ public abstract class EnhancedRandom extends Random {
      */
     public static <T> Stream<T> randomStreamOf(final Class<T> type, final int streamSize, final String... excludedFields) {
         return aNewEnhancedRandomBuilder().build().objects(type, streamSize, excludedFields);
+    }
+
+    /**
+     * Generate a {@link List} of random instances of the given type.
+     *
+     * @param type           the type for which instances will be generated
+     * @param streamSize     the number of instances to generate
+     * @param excludedFields the name of fields to exclude
+     * @param <T>            the actual type of the target objects
+     * @return a list of random instances of the given type
+     * @throws ObjectGenerationException when unable to populate an instance of the given type
+     */
+    public static <T> List<T> randomListOf(final Class<T> type, final int streamSize, final String... excludedFields) {
+        return randomStreamOf(type, streamSize, excludedFields).collect(toList());
+    }
+
+    /**
+     * Generate a {@link Set} of random instances of the given type.
+     *
+     * @param type           the type for which instances will be generated
+     * @param streamSize     the number of instances to generate
+     * @param excludedFields the name of fields to exclude
+     * @param <T>            the actual type of the target objects
+     * @return a list of random instances of the given type
+     * @throws ObjectGenerationException when unable to populate an instance of the given type
+     */
+    public static <T> Set<T> randomSetOf(final Class<T> type, final int streamSize, final String... excludedFields) {
+        return randomStreamOf(type, streamSize, excludedFields).collect(toSet());
+    }
+
+    /**
+     * Generate a {@link Collection} of random instances of the given type.
+     *
+     * @param type           the type for which instances will be generated
+     * @param streamSize     the number of instances to generate
+     * @param excludedFields the name of fields to exclude
+     * @param <T>            the actual type of the target objects
+     * @return a list of random instances of the given type
+     * @throws ObjectGenerationException when unable to populate an instance of the given type
+     */
+    public static <T> Collection<T> randomCollectionOf(final Class<T> type, final int streamSize, final String... excludedFields) {
+        return randomStreamOf(type, streamSize, excludedFields).collect(toList());
     }
 
     /**
