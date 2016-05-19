@@ -46,7 +46,7 @@ import java.util.stream.Stream;
 import static io.github.benas.randombeans.EnhancedRandomBuilder.aNewEnhancedRandomBuilder;
 import static io.github.benas.randombeans.FieldDefinitionBuilder.field;
 import static io.github.benas.randombeans.api.EnhancedRandom.random;
-import static io.github.benas.randombeans.api.EnhancedRandom.random;
+import static io.github.benas.randombeans.api.EnhancedRandom.randomStreamOf;
 import static java.util.Arrays.asList;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.fail;
@@ -290,8 +290,16 @@ public class EnhancedRandomImplTest {
     }
 
     @Test
-    public void generatedBeansWithStreamSizeWithStaticMethodMustBeValid() {
+    @Deprecated
+    public void testRandomStream_deprecatedAPI() {
         List<Person> persons = random(Person.class, 5, "address", "phoneNumber").collect(Collectors.toList());
+        assertThat(persons.size()).isEqualTo(5);
+        persons.stream().forEach(this::validatePerson);
+    }
+
+    @Test
+    public void testRandomStream() {
+        List<Person> persons = randomStreamOf(Person.class, 5, "address", "phoneNumber").collect(Collectors.toList());
         assertThat(persons.size()).isEqualTo(5);
         persons.stream().forEach(this::validatePerson);
     }

@@ -39,6 +39,48 @@ public abstract class EnhancedRandom extends Random {
     /**
      * Generate a random instance of the given type.
      *
+     * @param type           the target class type
+     * @param excludedFields the name of fields to exclude
+     * @param <T>            the target type
+     * @return a random instance of the given type
+     */
+    public static <T> T random(final Class<T> type, final String... excludedFields) {
+        return aNewEnhancedRandomBuilder().build().nextObject(type, excludedFields);
+    }
+
+    /**
+     * Generate a stream of random instances of the given type.
+     *
+     * @param type           the type for which instances will be generated
+     * @param streamSize     the number of instances to generate
+     * @param excludedFields the name of fields to exclude
+     * @param <T>            the actual type of the target objects
+     * @return a stream of random instances of the given type
+     * @throws ObjectGenerationException when unable to populate an instance of the given type
+     * @deprecated please use {@link #randomStreamOf(Class, int, String...)}
+     */
+    @Deprecated
+    public static <T> Stream<T> random(final Class<T> type, final int streamSize, final String... excludedFields) {
+        return randomStreamOf(type, streamSize, excludedFields);
+    }
+
+    /**
+     * Generate a stream of random instances of the given type.
+     *
+     * @param type           the type for which instances will be generated
+     * @param streamSize     the number of instances to generate
+     * @param excludedFields the name of fields to exclude
+     * @param <T>            the actual type of the target objects
+     * @return a stream of random instances of the given type
+     * @throws ObjectGenerationException when unable to populate an instance of the given type
+     */
+    public static <T> Stream<T> randomStreamOf(final Class<T> type, final int streamSize, final String... excludedFields) {
+        return aNewEnhancedRandomBuilder().build().objects(type, streamSize, excludedFields);
+    }
+
+    /**
+     * Generate a random instance of the given type.
+     *
      * @param type           the type for which an instance will be generated
      * @param excludedFields the name of fields to exclude
      * @param <T>            the actual type of the target object
@@ -58,31 +100,5 @@ public abstract class EnhancedRandom extends Random {
      * @throws ObjectGenerationException when unable to populate an instance of the given type
      */
     public abstract <T> Stream<T> objects(final Class<T> type, final int streamSize, final String... excludedFields);
-
-    /**
-     * Generate a random instance of the given type.
-     *
-     * @param type           the target class type
-     * @param excludedFields the name of fields to exclude
-     * @param <T>            the target type
-     * @return a random instance of the given type
-     */
-    public static <T> T random(final Class<T> type, final String... excludedFields) {
-        return aNewEnhancedRandomBuilder().build().nextObject(type, excludedFields);
-    }
-
-    /**
-     * Generate a stream of random instances of the given type.
-     *
-     * @param type           the type for which instances will be generated
-     * @param streamSize     the number of instances to generate
-     * @param excludedFields the name of fields to exclude
-     * @param <T>            the actual type of the target objects
-     * @return a stream of random instances of the given type
-     * @throws ObjectGenerationException when unable to populate an instance of the given type
-     */
-    public static <T> Stream<T> random(final Class<T> type, final int streamSize, final String... excludedFields) {
-        return aNewEnhancedRandomBuilder().build().objects(type, streamSize, excludedFields);
-    }
 
 }
