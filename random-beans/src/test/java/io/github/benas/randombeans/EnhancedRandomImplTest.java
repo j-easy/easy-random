@@ -293,35 +293,35 @@ public class EnhancedRandomImplTest {
     @Test
     @Deprecated
     public void testRandomStream_deprecatedAPI() {
-        List<Person> persons = random(Person.class, 5, "address", "phoneNumber").collect(Collectors.toList());
+        List<Person> persons = random(5, Person.class, "address", "phoneNumber").collect(Collectors.toList());
         assertThat(persons.size()).isEqualTo(5);
         persons.stream().forEach(this::validatePerson);
     }
 
     @Test
     public void testRandomStream() {
-        List<Person> persons = randomStreamOf(Person.class, 5, "address", "phoneNumber").collect(Collectors.toList());
+        List<Person> persons = randomStreamOf(5, Person.class, "address", "phoneNumber").collect(Collectors.toList());
         assertThat(persons.size()).isEqualTo(5);
         persons.stream().forEach(this::validatePerson);
     }
 
     @Test
     public void test_randomListOf() {
-        List<Person> persons = randomListOf(Person.class, 5, "address", "phoneNumber");
+        List<Person> persons = randomListOf(5, Person.class, "address", "phoneNumber");
         assertThat(persons.size()).isEqualTo(5);
         persons.stream().forEach(this::validatePerson);
     }
 
     @Test
     public void test_randomSetOf() {
-        Set<Person> persons = randomSetOf(Person.class, 5, "address", "phoneNumber");
+        Set<Person> persons = randomSetOf(5, Person.class, "address", "phoneNumber");
         assertThat(persons.size()).isEqualTo(5);
         persons.stream().forEach(this::validatePerson);
     }
 
     @Test
     public void test_randomCollectionOf() {
-        Collection<Person> persons = randomCollectionOf(Person.class, 5, "address", "phoneNumber");
+        Collection<Person> persons = randomCollectionOf(5, Person.class, "address", "phoneNumber");
         assertThat(persons.size()).isEqualTo(5);
         persons.stream().forEach(this::validatePerson);
     }
