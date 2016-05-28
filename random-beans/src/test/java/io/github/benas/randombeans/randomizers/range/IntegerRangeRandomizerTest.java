@@ -24,7 +24,6 @@
 
 package io.github.benas.randombeans.randomizers.range;
 
-import io.github.benas.randombeans.EnhancedRandomBuilder;
 import io.github.benas.randombeans.annotation.Randomizer;
 import io.github.benas.randombeans.annotation.RandomizerArgument;
 import io.github.benas.randombeans.api.EnhancedRandom;

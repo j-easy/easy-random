@@ -24,7 +24,6 @@
 
 package io.github.benas.randombeans;
 
-import io.github.benas.randombeans.annotation.RandomizerArgument;
 import org.junit.Test;
 
 import static io.github.benas.randombeans.EnhancedRandomBuilder.aNewEnhancedRandomBuilder;
