@@ -101,39 +101,36 @@ public class DateRangeRandomizerTest extends AbstractRangeRandomizerTest<Date> {
         assertThat(randomDate).isAfterOrEqualsTo(minDate);
     }
 
+    @Test
+    public void annotationShouldWorkWithRange() throws Exception {
+        DateRangeRandomizerTest.TestData data = null;
+        for (int x = 0; x < 10; x++) {
+            data = EnhancedRandom.random(DateRangeRandomizerTest.TestData.class);
+
+            then(data.getDate().getTime()).isBetween(
+                    LocalDate.parse("2016-01-10").atStartOfDay().toEpochSecond(ZoneOffset.UTC) * 1000,
+                    LocalDate.parse("2016-01-30").atStartOfDay().toEpochSecond(ZoneOffset.UTC) * 1000
+            );
+        }
+    }
+
     public static class TestData {
+        @Randomizer(value = DateRangeRandomizer.class, args = {
+                // 2016-01-10
+                @RandomizerArgument(value = "2016-01-10", type = Date.class),
+                // 2016-01-30
+                @RandomizerArgument(value = "2016-01-30", type = Date.class)
+        })
+        private final Date date;
+
         public TestData(Date date) {
             this.date = date;
         }
-
-        @Randomizer(value=DateRangeRandomizer.class, args={
-                // 2016-01-10
-                @RandomizerArgument(value="2016-01-10", type=Date.class),
-                // 2016-01-30
-                @RandomizerArgument(value="2016-01-30", type=Date.class)
-        })
-        private Date date;
 
         public Date getDate() {
             return date;
         }
 
-        public void setDate(Date date) {
-            this.date = date;
-        }
-    }
-
-    @Test
-    public void annotationShouldWorkWithRange() throws Exception {
-        DateRangeRandomizerTest.TestData data = null;
-        for(int x=0; x < 10; x++) {
-            data = EnhancedRandom.random(DateRangeRandomizerTest.TestData.class);
-
-            then(data.getDate().getTime()).isBetween(
-                    LocalDate.parse("2016-01-10").atStartOfDay().toEpochSecond(ZoneOffset.UTC)*1000,
-                    LocalDate.parse("2016-01-30").atStartOfDay().toEpochSecond(ZoneOffset.UTC)*1000
-            );
-        }
     }
 
 }

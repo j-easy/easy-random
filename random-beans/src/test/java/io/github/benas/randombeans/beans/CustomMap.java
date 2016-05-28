@@ -12,10 +12,6 @@ public class CustomMap implements Map<String, Object> {
         return name;
     }
 
-    public void setName(String name) {
-        this.name = name;
-    }
-
     @Override
     public int size() {
         return 0;

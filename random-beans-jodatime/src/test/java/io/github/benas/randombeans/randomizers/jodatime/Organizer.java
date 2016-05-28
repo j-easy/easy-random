@@ -44,48 +44,24 @@ class Organizer {
         return anniversary;
     }
 
-    public void setAnniversary(DateTime anniversary) {
-        this.anniversary = anniversary;
-    }
-
     public LocalTime getBirthday() {
         return birthday;
-    }
-
-    public void setBirthday(LocalTime birthday) {
-        this.birthday = birthday;
     }
 
     public LocalDateTime getTraining() {
         return training;
     }
 
-    public void setTraining(LocalDateTime training) {
-        this.training = training;
-    }
-
     public Duration getHiking() {
         return hiking;
-    }
-
-    public void setHiking(Duration hiking) {
-        this.hiking = hiking;
     }
 
     public Period getClasses() {
         return classes;
     }
 
-    public void setClasses(Period classes) {
-        this.classes = classes;
-    }
-
     public Interval getWorkDuration() {
         return workDuration;
-    }
-
-    public void setWorkDuration(Interval workDuration) {
-        this.workDuration = workDuration;
     }
 
 }

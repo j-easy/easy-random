@@ -70,88 +70,44 @@ class BeanValidationAnnotatedBean {
         return unsupported;
     }
 
-    public void setUnsupported(boolean unsupported) {
-        this.unsupported = unsupported;
-    }
-
     public boolean isActive() {
         return active;
-    }
-
-    public void setActive(boolean active) {
-        this.active = active;
     }
 
     public BigDecimal getMaxDiscount() {
         return maxDiscount;
     }
 
-    public void setMaxDiscount(BigDecimal maxDiscount) {
-        this.maxDiscount = maxDiscount;
-    }
-
     public BigDecimal getMinDiscount() {
         return minDiscount;
-    }
-
-    public void setMinDiscount(BigDecimal minDiscount) {
-        this.minDiscount = minDiscount;
     }
 
     public Date getEventDate() {
         return eventDate;
     }
 
-    public void setEventDate(Date eventDate) {
-        this.eventDate = eventDate;
-    }
-
     public Date getBirthday() {
         return birthday;
-    }
-
-    public void setBirthday(Date birthday) {
-        this.birthday = birthday;
     }
 
     public int getMaxQuantity() {
         return maxQuantity;
     }
 
-    public void setMaxQuantity(int maxQuantity) {
-        this.maxQuantity = maxQuantity;
-    }
-
     public int getMinQuantity() {
         return minQuantity;
-    }
-
-    public void setMinQuantity(int minQuantity) {
-        this.minQuantity = minQuantity;
     }
 
     public String getUsername() {
         return username;
     }
 
-    public void setUsername(String username) {
-        this.username = username;
-    }
-
     public String getUnusedString() {
         return unusedString;
     }
 
-    public void setUnusedString(String unusedString) {
-        this.unusedString = unusedString;
-    }
-
     public String getBriefMessage() {
         return briefMessage;
-    }
-
-    public void setBriefMessage(String briefMessage) {
-        this.briefMessage = briefMessage;
     }
 
 

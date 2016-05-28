@@ -45,7 +45,6 @@ public class CollectionPopulationTest {
     }
 
     @Test
-    @SuppressWarnings("unchecked")
     public void rawCollectionInterfacesShouldBeEmpty() {
         final CollectionBean collectionsBean = enhancedRandom.nextObject(CollectionBean.class);
 
@@ -118,7 +117,6 @@ public class CollectionPopulationTest {
     }
 
     @Test
-    @SuppressWarnings("unchecked")
     public void rawCollectionClassesShouldBeEmpty() {
         final CollectionBean collectionsBean = enhancedRandom.nextObject(CollectionBean.class);
 
@@ -228,11 +226,6 @@ public class CollectionPopulationTest {
         assertThat(compositeCollectionBean.getTypedSetOfSets()).isEmpty();
         assertThat(compositeCollectionBean.getQueueOfQueues()).isEmpty();
         assertThat(compositeCollectionBean.getTypedQueueOdQueues()).isEmpty();
-    }
-
-    @Test(expected = ObjectGenerationException.class)
-    public void synchronousQueueTypeMustBeRejected() {
-        enhancedRandom.nextObject(SynchronousQueueBean.class);
     }
 
     @Test(expected = ObjectGenerationException.class)
