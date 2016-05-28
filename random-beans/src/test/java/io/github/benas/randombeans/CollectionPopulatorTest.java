@@ -35,14 +35,12 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
-import static io.github.benas.randombeans.util.Constants.MAX_COLLECTION_SIZE;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.Mockito.when;
 
 @RunWith(MockitoJUnitRunner.class)
 public class CollectionPopulatorTest {
 
-    private static final int SIZE = 2;
     private static final String STRING = "foo";
 
     @Mock
@@ -85,7 +83,7 @@ public class CollectionPopulatorTest {
     @Test
     public void typedInterfaceCollectionTypesMightBePopulated() throws Exception {
         // Given
-        when(enhancedRandom.nextInt(MAX_COLLECTION_SIZE)).thenReturn(SIZE);
+        when(enhancedRandom.nextInt(0)).thenReturn(1); // there will be 2 items (one always is generated, and we ensure "random" will return 1 when asked)
         when(enhancedRandom.doPopulateBean(String.class, context)).thenReturn(STRING);
         Field field = Foo.class.getDeclaredField("typedInterfaceList");
 
@@ -100,7 +98,7 @@ public class CollectionPopulatorTest {
     @Test
     public void typedConcreteCollectionTypesMightBePopulated() throws Exception {
         // Given
-        when(enhancedRandom.nextInt(MAX_COLLECTION_SIZE)).thenReturn(SIZE);
+        when(enhancedRandom.nextInt(0)).thenReturn(1); // there will be 2 items (one always is generated, and we ensure "random" will return 1 when asked)
         when(enhancedRandom.doPopulateBean(String.class, context)).thenReturn(STRING);
         Field field = Foo.class.getDeclaredField("typedConcreteList");
 
