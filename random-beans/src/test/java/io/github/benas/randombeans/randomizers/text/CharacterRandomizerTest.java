@@ -58,7 +58,7 @@ public class CharacterRandomizerTest extends AbstractRandomizerTest<Character> {
 
     @Test
     public void shouldGenerateOnlyAlphabeticLetters() {
-        assertThat(randomizer.getRandomValue()).isGreaterThanOrEqualTo('A').isLessThanOrEqualTo('z');;
+        assertThat(randomizer.getRandomValue()).isGreaterThanOrEqualTo('A').isLessThanOrEqualTo('z');
     }
 
 }
