@@ -29,6 +29,7 @@ import io.github.benas.randombeans.api.Randomizer;
 import io.github.benas.randombeans.api.RandomizerRegistry;
 import io.github.benas.randombeans.randomizers.misc.SkipRandomizer;
 import io.github.benas.randombeans.randomizers.registry.CustomRandomizerRegistry;
+import io.github.benas.randombeans.util.Constants;
 
 import java.util.*;
 import java.util.function.Supplier;
@@ -50,7 +51,7 @@ public class EnhancedRandomBuilder {
 
     private long seed;
 
-    private int maxCollectionSize;
+    private int maxCollectionSize = Constants.MAX_COLLECTION_SIZE;
 
     /**
      * Create a new {@link EnhancedRandomBuilder}.
