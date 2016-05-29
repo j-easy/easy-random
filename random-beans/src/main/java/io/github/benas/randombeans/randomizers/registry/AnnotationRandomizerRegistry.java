@@ -31,8 +31,6 @@ import io.github.benas.randombeans.api.RandomizerRegistry;
 import io.github.benas.randombeans.util.ReflectionUtils;
 
 import java.lang.reflect.Field;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
 /**
  * A {@link RandomizerRegistry} for fields annotated with {@link io.github.benas.randombeans.annotation.Randomizer}.
@@ -41,8 +39,6 @@ import java.util.logging.Logger;
  */
 @Priority(-253)
 public class AnnotationRandomizerRegistry implements RandomizerRegistry {
-
-    private static final Logger LOGGER = Logger.getLogger(AnnotationRandomizerRegistry.class.getName());
 
     /**
      * Set the initial seed for all randomizers of the registry
@@ -61,19 +57,12 @@ public class AnnotationRandomizerRegistry implements RandomizerRegistry {
      * @return the randomizer registered for the given field
      */
     @Override
-    @SuppressWarnings(value = "unchecked")
     public Randomizer<?> getRandomizer(Field field) {
         if (field.isAnnotationPresent(io.github.benas.randombeans.annotation.Randomizer.class)) {
             io.github.benas.randombeans.annotation.Randomizer randomizer = field.getAnnotation(io.github.benas.randombeans.annotation.Randomizer.class);
             Class<?> type = randomizer.value();
             RandomizerArgument[] arguments = randomizer.args();
-
-            try {
-                //return (Randomizer<?>) type.newInstance();
-                return ReflectionUtils.newInstance(type, arguments);
-            } catch (Exception e) {
-                LOGGER.log(Level.WARNING, "Unable to create an instance of " + type.getName(), e);
-            }
+            return ReflectionUtils.newInstance(type, arguments);
         }
         return null;
     }

@@ -24,8 +24,10 @@
 
 package io.github.benas.randombeans;
 
-import io.github.benas.randombeans.annotation.RandomizerArgument;
 import org.junit.Test;
+
+import io.github.benas.randombeans.api.ObjectGenerationException;
+import io.github.benas.randombeans.api.Randomizer;
 
 import static io.github.benas.randombeans.EnhancedRandomBuilder.aNewEnhancedRandomBuilder;
 import static org.assertj.core.api.Assertions.assertThat;
@@ -36,6 +38,28 @@ public class RandomizerAnnotationTest {
     public void fieldAnnotatedWithRandomizerShouldBePopulatedWithValuesGeneratedByTheDeclaredRandomizer() {
         Foo foo = aNewEnhancedRandomBuilder().build().nextObject(Foo.class);
         assertThat(foo.getName()).isEqualTo("foo");
+    }
+
+    @Test(expected=ObjectGenerationException.class)
+    // https://github.com/benas/random-beans/issues/131
+    public void shouldThrowObjectGenerationExceptionWhenRandomizerUsedInRandomizerAnnotationHasNoDefaultConstructor() {
+        aNewEnhancedRandomBuilder().build().nextObject(Bar.class);
+    }
+
+    private class Bar {
+        @io.github.benas.randombeans.annotation.Randomizer(RandomizerWithoutDefaultConstrcutor.class)
+        private String name;
+    }
+
+    public static class RandomizerWithoutDefaultConstrcutor implements Randomizer<String> {
+
+        public RandomizerWithoutDefaultConstrcutor(int d) {
+        }
+
+        @Override
+        public String getRandomValue() {
+            return null;
+        }
     }
 
     private class Foo {
