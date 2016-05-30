@@ -2,6 +2,8 @@ package io.github.benas.randombeans.api;
 
 import io.github.benas.randombeans.util.Constants;
 
+import java.nio.charset.Charset;
+import java.nio.charset.StandardCharsets;
 import java.util.Random;
 
 /**
@@ -17,6 +19,8 @@ public class EnhancedRandomParameters {
 
     private int maxStringLength;
 
+    private Charset charset;
+
     private boolean scanClasspathForConcreteTypes;
 
     public EnhancedRandomParameters() {
@@ -24,6 +28,7 @@ public class EnhancedRandomParameters {
         seed = new Random().nextLong();
         maxCollectionSize = Constants.MAX_COLLECTION_SIZE;
         maxStringLength = Constants.MAX_STRING_LENGTH;
+        charset = StandardCharsets.US_ASCII;
     }
 
     public long getSeed() {
@@ -56,5 +61,13 @@ public class EnhancedRandomParameters {
 
     public void setMaxStringLength(int maxStringLength) {
         this.maxStringLength = maxStringLength;
+    }
+
+    public Charset getCharset() {
+        return charset;
+    }
+
+    public void setCharset(Charset charset) {
+        this.charset = charset;
     }
 }

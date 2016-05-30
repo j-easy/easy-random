@@ -43,6 +43,7 @@ import java.math.BigDecimal;
 import java.math.BigInteger;
 import java.net.URI;
 import java.net.URL;
+import java.nio.charset.Charset;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.HashMap;
@@ -65,9 +66,11 @@ public class InternalRandomizerRegistry implements RandomizerRegistry {
     @Override
     public void init(EnhancedRandomParameters parameters) {
         long seed = parameters.getSeed();
-        randomizers.put(String.class, new StringRandomizer(parameters.getMaxStringLength(), seed));
-        randomizers.put(Character.class, new CharacterRandomizer(seed));
-        randomizers.put(char.class, new CharacterRandomizer(seed));
+        Charset charset = parameters.getCharset();
+        randomizers.put(String.class, new StringRandomizer(charset, parameters.getMaxStringLength(), seed));
+        CharacterRandomizer characterRandomizer = new CharacterRandomizer(charset, seed);
+        randomizers.put(Character.class, characterRandomizer);
+        randomizers.put(char.class, characterRandomizer);
         randomizers.put(Boolean.class, new BooleanRandomizer(seed));
         randomizers.put(boolean.class, new BooleanRandomizer(seed));
         randomizers.put(Byte.class, new ByteRandomizer(seed));

@@ -37,6 +37,7 @@ import org.junit.runner.RunWith;
 import org.mockito.Mock;
 import org.mockito.runners.MockitoJUnitRunner;
 
+import java.nio.charset.Charset;
 import java.util.Collection;
 import java.util.Date;
 import java.util.List;
@@ -48,6 +49,8 @@ import java.util.stream.Stream;
 import static io.github.benas.randombeans.EnhancedRandomBuilder.aNewEnhancedRandomBuilder;
 import static io.github.benas.randombeans.FieldDefinitionBuilder.field;
 import static io.github.benas.randombeans.api.EnhancedRandom.*;
+import static io.github.benas.randombeans.util.CharacterUtils.collectPrintableCharactersOf;
+import static io.github.benas.randombeans.util.CharacterUtils.filterLetters;
 import static java.util.Arrays.asList;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.fail;
@@ -344,6 +347,24 @@ public class EnhancedRandomImplTest {
         assertThat(person.getAddress().getZipCode().length()).isLessThanOrEqualTo(maxStringLength);
         assertThat(person.getAddress().getStreet().getName().length()).isLessThanOrEqualTo(maxStringLength);
     }
+
+    @Test
+    public void testCharset() throws Exception {
+        // Given
+        Charset charset = Charset.forName("UTF-8");
+        List<Character> letters = filterLetters(collectPrintableCharactersOf(charset));
+        enhancedRandom = aNewEnhancedRandomBuilder().charset(charset).build();
+
+        // When
+        Person person = random(Person.class);
+
+        // Then
+        char[] chars = person.getName().toCharArray();
+        for (char c : chars) {
+            assertThat(letters.contains(c));
+        }
+    }
+
 
     void validatePerson(Person person) {
         assertThat(person).isNotNull();

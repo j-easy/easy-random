@@ -31,6 +31,7 @@ import io.github.benas.randombeans.api.RandomizerRegistry;
 import io.github.benas.randombeans.randomizers.misc.SkipRandomizer;
 import io.github.benas.randombeans.randomizers.registry.CustomRandomizerRegistry;
 
+import java.nio.charset.Charset;
 import java.util.*;
 import java.util.function.Supplier;
 
@@ -153,6 +154,17 @@ public class EnhancedRandomBuilder {
      */
     public EnhancedRandomBuilder maxStringLength(final int maxStringLength) {
         parameters.setMaxStringLength(maxStringLength);
+        return this;
+    }
+
+    /**
+     * Set the charset to use for character based fields.
+     *
+     * @param charset the charset to use
+     * @return a pre configured {@link EnhancedRandomBuilder} instance
+     */
+    public EnhancedRandomBuilder charset(final Charset charset) {
+        parameters.setCharset(charset);
         return this;
     }
 

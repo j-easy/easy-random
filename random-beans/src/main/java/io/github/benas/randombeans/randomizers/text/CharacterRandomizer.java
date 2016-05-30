@@ -60,6 +60,7 @@ public class CharacterRandomizer extends AbstractRandomizer<Character> {
     public CharacterRandomizer(final Charset charset) {
         super();
         this.charset = charset;
+        characters = filterLetters(characters);
     }
 
     /**
@@ -81,6 +82,7 @@ public class CharacterRandomizer extends AbstractRandomizer<Character> {
     public CharacterRandomizer(final Charset charset, final long seed) {
         super(seed);
         this.charset = charset;
+        characters = filterLetters(characters);
     }
 
     /**
