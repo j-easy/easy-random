@@ -25,8 +25,12 @@
 package io.github.benas.randombeans.randomizers.time;
 
 import io.github.benas.randombeans.EnhancedRandomBuilder;
+import io.github.benas.randombeans.FieldDefinitionBuilder;
 import io.github.benas.randombeans.api.EnhancedRandom;
 import io.github.benas.randombeans.beans.TimeBean;
+
+import java.time.Instant;
+
 import org.junit.Before;
 import org.junit.Test;
 
@@ -59,5 +63,17 @@ public class TimeSupportTest {
         assertThat(timeBean.getYear()).isNotNull();
         assertThat(timeBean.getZonedDateTime()).isNotNull();
         assertThat(timeBean.getZoneOffset()).isNotNull();
+    }
+
+    @Test
+    @SuppressWarnings("unchecked")
+    // https://github.com/benas/random-beans/issues/135
+    public void threeTenRandomizersCanBeOverridenByCustomRandomizers() {
+        EnhancedRandom customEnhancedRandom = EnhancedRandomBuilder.aNewEnhancedRandomBuilder()
+                .exclude(FieldDefinitionBuilder.field().named("instant").ofType(Instant.class).inClass(TimeBean.class).get()).build();
+
+        TimeBean timeBean = customEnhancedRandom.nextObject(TimeBean.class);
+
+        assertThat(timeBean.getInstant()).isNull();
     }
 }

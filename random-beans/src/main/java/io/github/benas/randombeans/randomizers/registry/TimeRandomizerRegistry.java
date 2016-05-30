@@ -23,6 +23,7 @@
  */
 package io.github.benas.randombeans.randomizers.registry;
 
+import io.github.benas.randombeans.annotation.Priority;
 import io.github.benas.randombeans.api.Randomizer;
 import io.github.benas.randombeans.api.RandomizerRegistry;
 import io.github.benas.randombeans.randomizers.time.*;
@@ -39,6 +40,7 @@ import java.util.TimeZone;
  *
  * @author Mahmoud Ben Hassine (mahmoud.benhassine@icloud.com)
  */
+@Priority(-255)
 public class TimeRandomizerRegistry implements RandomizerRegistry {
 
     private final Map<Class<?>, Randomizer<?>> randomizers = new HashMap<>();
