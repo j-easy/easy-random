@@ -29,6 +29,7 @@ import io.github.benas.randombeans.api.Randomizer;
 import io.github.benas.randombeans.api.RandomizerRegistry;
 import io.github.benas.randombeans.randomizers.misc.SkipRandomizer;
 import io.github.benas.randombeans.randomizers.registry.CustomRandomizerRegistry;
+import io.github.benas.randombeans.util.Constants;
 
 import java.util.*;
 import java.util.function.Supplier;
@@ -49,6 +50,8 @@ public class EnhancedRandomBuilder {
     private boolean scanClasspathForConcreteTypes;
 
     private long seed;
+
+    private int maxCollectionSize = Constants.MAX_COLLECTION_SIZE;
 
     /**
      * Create a new {@link EnhancedRandomBuilder}.
@@ -136,6 +139,11 @@ public class EnhancedRandomBuilder {
         return this;
     }
 
+    public EnhancedRandomBuilder maxCollectionSize(final int maxSize) {
+        this.maxCollectionSize = maxSize;
+        return this;
+    }
+
     /**
      * Register a {@link RandomizerRegistry}.
      *
@@ -174,6 +182,7 @@ public class EnhancedRandomBuilder {
     private EnhancedRandomImpl setupEnhancedRandom(LinkedHashSet<RandomizerRegistry> registries) {
         EnhancedRandomImpl enhancedRandom = new EnhancedRandomImpl(registries);
         enhancedRandom.setSeed(seed);
+        enhancedRandom.setMaxCollectionSize(maxCollectionSize);
         enhancedRandom.setScanClasspathForConcreteTypes(scanClasspathForConcreteTypes);
         return enhancedRandom;
     }

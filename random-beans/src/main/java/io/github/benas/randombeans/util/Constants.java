@@ -44,7 +44,7 @@ public abstract class Constants {
     /**
      * Maximum collection size.
      */
-    public static final byte MAX_COLLECTION_SIZE = Byte.MAX_VALUE;
+    public static final int MAX_COLLECTION_SIZE = Byte.MAX_VALUE;
 
     /**
      * Maximum string size.

@@ -54,7 +54,7 @@ class MapPopulator {
 
     @SuppressWarnings("unchecked")
     Map<?, ?> getRandomMap(final Field field, final PopulatorContext context) {
-        int randomSize = enhancedRandom.nextInt(MAX_COLLECTION_SIZE);
+        int randomSize = collectionSize();
         Class<?> fieldType = field.getType();
         Type fieldGenericType = field.getGenericType();
         Map<Object, Object> map;
@@ -82,6 +82,12 @@ class MapPopulator {
             }
         }
         return map;
+    }
+
+    /** make collections contain at least one item */
+    int collectionSize() {
+        int randomSize = 1 + enhancedRandom.nextInt(enhancedRandom.getMaxCollectionSize());
+        return randomSize;
     }
 
     Map<?, ?> getEmptyImplementationForMapInterface(final Class<?> mapInterface) {

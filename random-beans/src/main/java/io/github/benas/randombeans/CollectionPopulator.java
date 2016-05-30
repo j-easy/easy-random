@@ -51,7 +51,7 @@ class CollectionPopulator {
 
     @SuppressWarnings({"unchecked", "rawtypes"})
     Collection<?> getRandomCollection(final Field field, final PopulatorContext context) {
-        int randomSize = enhancedRandom.nextInt(MAX_COLLECTION_SIZE);
+        int randomSize = collectionSize();
         Class<?> fieldType = field.getType();
         Type fieldGenericType = field.getGenericType();
         Collection collection;
@@ -75,6 +75,12 @@ class CollectionPopulator {
         }
         return collection;
 
+    }
+
+    /** make collections contain at least one item */
+    int collectionSize() {
+        int randomSize = 1 + enhancedRandom.nextInt(enhancedRandom.getMaxCollectionSize());
+        return randomSize;
     }
 
     Collection<?> getEmptyImplementationForCollectionInterface(final Class<?> collectionInterface) {

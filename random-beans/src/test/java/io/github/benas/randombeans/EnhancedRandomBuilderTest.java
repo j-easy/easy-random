@@ -128,4 +128,14 @@ public class EnhancedRandomBuilderTest {
 
         assertThat(actual).isEqualTo(human);
     }
+
+    @Test
+    public void shouldConfigureCollectionSizeFromBuilder() {
+        enhancedRandomBuilder = aNewEnhancedRandomBuilder();
+
+        EnhancedRandom enhancedRandom = enhancedRandomBuilder.maxCollectionSize(42).build();
+
+        assertThat(((EnhancedRandomImpl)enhancedRandom).getMaxCollectionSize()).isEqualTo(42);
+    }
+
 }
