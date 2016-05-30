@@ -25,11 +25,11 @@
 package io.github.benas.randombeans;
 
 import io.github.benas.randombeans.api.EnhancedRandom;
+import io.github.benas.randombeans.api.EnhancedRandomParameters;
 import io.github.benas.randombeans.api.Randomizer;
 import io.github.benas.randombeans.api.RandomizerRegistry;
 import io.github.benas.randombeans.randomizers.misc.SkipRandomizer;
 import io.github.benas.randombeans.randomizers.registry.CustomRandomizerRegistry;
-import io.github.benas.randombeans.util.Constants;
 
 import java.util.*;
 import java.util.function.Supplier;
@@ -47,11 +47,7 @@ public class EnhancedRandomBuilder {
 
     private final Set<RandomizerRegistry> userRegistries;
 
-    private boolean scanClasspathForConcreteTypes;
-
-    private long seed;
-
-    private int maxCollectionSize;
+    private EnhancedRandomParameters parameters;
 
     /**
      * Create a new {@link EnhancedRandomBuilder}.
@@ -59,9 +55,7 @@ public class EnhancedRandomBuilder {
     public EnhancedRandomBuilder() {
         customRandomizerRegistry = new CustomRandomizerRegistry();
         userRegistries = new LinkedHashSet<>();
-        scanClasspathForConcreteTypes = false;
-        seed = new Random().nextLong();
-        maxCollectionSize = Constants.MAX_COLLECTION_SIZE;
+        parameters = new EnhancedRandomParameters();
     }
 
     /**
@@ -136,7 +130,7 @@ public class EnhancedRandomBuilder {
      * @return a pre configured {@link EnhancedRandomBuilder} instance
      */
     public EnhancedRandomBuilder seed(final long seed) {
-        this.seed = seed;
+        parameters.setSeed(seed);
         return this;
     }
 
@@ -146,7 +140,7 @@ public class EnhancedRandomBuilder {
      * @return a pre configured {@link EnhancedRandomBuilder} instance
      */
     public EnhancedRandomBuilder maxCollectionSize(final int maxCollectionSize) {
-        this.maxCollectionSize = maxCollectionSize;
+        parameters.setMaxCollectionSize(maxCollectionSize);
         return this;
     }
 
@@ -171,7 +165,7 @@ public class EnhancedRandomBuilder {
      * @return a pre configured {@link EnhancedRandomBuilder} instance
      */
     public EnhancedRandomBuilder scanClasspathForConcreteTypes(boolean scanClasspathForConcreteTypes) {
-        this.scanClasspathForConcreteTypes = scanClasspathForConcreteTypes;
+        parameters.setScanClasspathForConcreteTypes(scanClasspathForConcreteTypes);
         return this;
     }
 
@@ -187,9 +181,7 @@ public class EnhancedRandomBuilder {
 
     private EnhancedRandomImpl setupEnhancedRandom(LinkedHashSet<RandomizerRegistry> registries) {
         EnhancedRandomImpl enhancedRandom = new EnhancedRandomImpl(registries);
-        enhancedRandom.setSeed(seed);
-        enhancedRandom.setMaxCollectionSize(maxCollectionSize);
-        enhancedRandom.setScanClasspathForConcreteTypes(scanClasspathForConcreteTypes);
+        enhancedRandom.setParameters(parameters);
         return enhancedRandom;
     }
 
@@ -198,7 +190,7 @@ public class EnhancedRandomBuilder {
         registries.add(customRandomizerRegistry); // programatically registered randomizers through randomize()
         registries.addAll(userRegistries); // programatically registered registries through registerRandomizerRegistry()
         registries.addAll(loadRegistries()); // registries added to classpath through the SPI
-        registries.forEach(registry -> registry.setSeed(seed));
+        registries.forEach(registry -> registry.setSeed(parameters.getSeed()));
         return registries;
     }
 
