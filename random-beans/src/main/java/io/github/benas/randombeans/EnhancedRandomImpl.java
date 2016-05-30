@@ -29,7 +29,6 @@ import io.github.benas.randombeans.api.ObjectGenerationException;
 import io.github.benas.randombeans.api.Randomizer;
 import io.github.benas.randombeans.api.RandomizerRegistry;
 import io.github.benas.randombeans.randomizers.misc.EnumRandomizer;
-import io.github.benas.randombeans.util.Constants;
 
 import java.lang.reflect.Field;
 import java.util.List;
@@ -48,7 +47,7 @@ class EnhancedRandomImpl extends EnhancedRandom {
 
     private long seed;
 
-    private int maxCollectionSize = Constants.MAX_COLLECTION_SIZE;
+    private int maxCollectionSize;
 
     private final FieldPopulator fieldPopulator;
 
@@ -158,6 +157,10 @@ class EnhancedRandomImpl extends EnhancedRandom {
         }
     }
 
+    int getRandomCollectionSize() {
+        return 1 + nextInt(maxCollectionSize);
+    }
+
     /*
      * Setters for optional parameters
      */
@@ -173,11 +176,7 @@ class EnhancedRandomImpl extends EnhancedRandom {
         this.seed = seed;
     }
 
-    public int getMaxCollectionSize() {
-        return maxCollectionSize;
-    }
-
-    public void setMaxCollectionSize( int maxCollectionSize ) {
+    public void setMaxCollectionSize(final int maxCollectionSize ) {
         this.maxCollectionSize = maxCollectionSize;
     }
 }

@@ -51,7 +51,7 @@ public class EnhancedRandomBuilder {
 
     private long seed;
 
-    private int maxCollectionSize = Constants.MAX_COLLECTION_SIZE;
+    private int maxCollectionSize;
 
     /**
      * Create a new {@link EnhancedRandomBuilder}.
@@ -61,6 +61,7 @@ public class EnhancedRandomBuilder {
         userRegistries = new LinkedHashSet<>();
         scanClasspathForConcreteTypes = false;
         seed = new Random().nextLong();
+        maxCollectionSize = Constants.MAX_COLLECTION_SIZE;
     }
 
     /**
@@ -139,8 +140,13 @@ public class EnhancedRandomBuilder {
         return this;
     }
 
-    public EnhancedRandomBuilder maxCollectionSize(final int maxSize) {
-        this.maxCollectionSize = maxSize;
+    /**
+     * Set the maximum collection size.
+     * @param maxCollectionSize the maximum collection size
+     * @return a pre configured {@link EnhancedRandomBuilder} instance
+     */
+    public EnhancedRandomBuilder maxCollectionSize(final int maxCollectionSize) {
+        this.maxCollectionSize = maxCollectionSize;
         return this;
     }
 

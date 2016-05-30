@@ -33,7 +33,6 @@ import java.util.concurrent.ConcurrentMap;
 import java.util.concurrent.ConcurrentNavigableMap;
 import java.util.concurrent.ConcurrentSkipListMap;
 
-import static io.github.benas.randombeans.util.Constants.MAX_COLLECTION_SIZE;
 import static io.github.benas.randombeans.util.ReflectionUtils.*;
 
 /**
@@ -54,7 +53,7 @@ class MapPopulator {
 
     @SuppressWarnings("unchecked")
     Map<?, ?> getRandomMap(final Field field, final PopulatorContext context) {
-        int randomSize = collectionSize();
+        int randomSize = enhancedRandom.getRandomCollectionSize();
         Class<?> fieldType = field.getType();
         Type fieldGenericType = field.getGenericType();
         Map<Object, Object> map;
@@ -82,12 +81,6 @@ class MapPopulator {
             }
         }
         return map;
-    }
-
-    /** make collections contain at least one item */
-    int collectionSize() {
-        int randomSize = 1 + enhancedRandom.nextInt(enhancedRandom.getMaxCollectionSize());
-        return randomSize;
     }
 
     Map<?, ?> getEmptyImplementationForMapInterface(final Class<?> mapInterface) {

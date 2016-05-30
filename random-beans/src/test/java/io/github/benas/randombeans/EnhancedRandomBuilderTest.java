@@ -135,7 +135,7 @@ public class EnhancedRandomBuilderTest {
 
         EnhancedRandom enhancedRandom = enhancedRandomBuilder.maxCollectionSize(42).build();
 
-        assertThat(((EnhancedRandomImpl)enhancedRandom).getMaxCollectionSize()).isEqualTo(42);
+        assertThat(((EnhancedRandomImpl)enhancedRandom).getRandomCollectionSize()).isBetween(1, 42);
     }
 
 }
