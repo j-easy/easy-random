@@ -65,7 +65,7 @@ public class InternalRandomizerRegistry implements RandomizerRegistry {
     @Override
     public void init(EnhancedRandomParameters parameters) {
         long seed = parameters.getSeed();
-        randomizers.put(String.class, new StringRandomizer(seed));
+        randomizers.put(String.class, new StringRandomizer(parameters.getMaxStringLength(), seed));
         randomizers.put(Character.class, new CharacterRandomizer(seed));
         randomizers.put(char.class, new CharacterRandomizer(seed));
         randomizers.put(Boolean.class, new BooleanRandomizer(seed));

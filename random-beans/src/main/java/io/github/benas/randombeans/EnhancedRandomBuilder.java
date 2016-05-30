@@ -71,7 +71,7 @@ public class EnhancedRandomBuilder {
      * Register a custom randomizer for a given field.
      *
      * @param fieldDefinition definition of the field to randomize
-     * @param randomizer the custom {@link Randomizer} to use
+     * @param randomizer      the custom {@link Randomizer} to use
      * @return a pre configured {@link EnhancedRandomBuilder} instance
      */
     public <T, F, R> EnhancedRandomBuilder randomize(FieldDefinition<T, F> fieldDefinition, Randomizer<R> randomizer) {
@@ -83,7 +83,7 @@ public class EnhancedRandomBuilder {
      * Register a supplier as randomizer for a given field.
      *
      * @param fieldDefinition definition of the field to randomize
-     * @param supplier the custom {@link Supplier} to use
+     * @param supplier        the custom {@link Supplier} to use
      * @return a pre configured {@link EnhancedRandomBuilder} instance
      */
     public <T, F, R> EnhancedRandomBuilder randomize(FieldDefinition<T, F> fieldDefinition, Supplier<R> supplier) {
@@ -93,7 +93,7 @@ public class EnhancedRandomBuilder {
     /**
      * Register a custom randomizer for a given type.
      *
-     * @param type class of the type to randomize
+     * @param type       class of the type to randomize
      * @param randomizer the custom {@link Randomizer} to use
      * @return a pre configured {@link EnhancedRandomBuilder} instance
      */
@@ -105,7 +105,7 @@ public class EnhancedRandomBuilder {
     /**
      * Register a supplier as randomizer for a given type.
      *
-     * @param type class of the type to randomize
+     * @param type     class of the type to randomize
      * @param supplier the custom {@link Supplier} to use
      * @return a pre configured {@link EnhancedRandomBuilder} instance
      */
@@ -136,11 +136,23 @@ public class EnhancedRandomBuilder {
 
     /**
      * Set the maximum collection size.
+     *
      * @param maxCollectionSize the maximum collection size
      * @return a pre configured {@link EnhancedRandomBuilder} instance
      */
     public EnhancedRandomBuilder maxCollectionSize(final int maxCollectionSize) {
         parameters.setMaxCollectionSize(maxCollectionSize);
+        return this;
+    }
+
+    /**
+     * Set the maximum string length.
+     *
+     * @param maxStringLength the maximum string length
+     * @return a pre configured {@link EnhancedRandomBuilder} instance
+     */
+    public EnhancedRandomBuilder maxStringLength(final int maxStringLength) {
+        parameters.setMaxStringLength(maxStringLength);
         return this;
     }
 
@@ -195,9 +207,9 @@ public class EnhancedRandomBuilder {
     }
 
     private Collection<RandomizerRegistry> loadRegistries() {
-      List<RandomizerRegistry> registries = new ArrayList<>();
-      ServiceLoader.load(RandomizerRegistry.class).forEach(registries::add);
-      return registries;
+        List<RandomizerRegistry> registries = new ArrayList<>();
+        ServiceLoader.load(RandomizerRegistry.class).forEach(registries::add);
+        return registries;
     }
 
 }

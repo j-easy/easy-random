@@ -15,12 +15,15 @@ public class EnhancedRandomParameters {
 
     private int maxCollectionSize;
 
+    private int maxStringLength;
+
     private boolean scanClasspathForConcreteTypes;
 
     public EnhancedRandomParameters() {
         scanClasspathForConcreteTypes = false;
         seed = new Random().nextLong();
         maxCollectionSize = Constants.MAX_COLLECTION_SIZE;
+        maxStringLength = Constants.MAX_STRING_LENGTH;
     }
 
     public long getSeed() {
@@ -45,5 +48,13 @@ public class EnhancedRandomParameters {
 
     public void setScanClasspathForConcreteTypes(boolean scanClasspathForConcreteTypes) {
         this.scanClasspathForConcreteTypes = scanClasspathForConcreteTypes;
+    }
+
+    public int getMaxStringLength() {
+        return maxStringLength;
+    }
+
+    public void setMaxStringLength(int maxStringLength) {
+        this.maxStringLength = maxStringLength;
     }
 }

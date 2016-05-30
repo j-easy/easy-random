@@ -326,6 +326,25 @@ public class EnhancedRandomImplTest {
         persons.stream().forEach(this::validatePerson);
     }
 
+    @Test
+    public void testMaxStringLength() {
+        // Given
+        int maxStringLength = 50;
+        enhancedRandom = aNewEnhancedRandomBuilder().maxStringLength(maxStringLength).build();
+
+        // When
+        Person person = random(Person.class);
+
+        // Then
+        assertThat(person.getName().length()).isLessThanOrEqualTo(maxStringLength);
+        assertThat(person.getEmail().length()).isLessThanOrEqualTo(maxStringLength);
+        assertThat(person.getPhoneNumber().length()).isLessThanOrEqualTo(maxStringLength);
+        assertThat(person.getAddress().getCity().length()).isLessThanOrEqualTo(maxStringLength);
+        assertThat(person.getAddress().getCountry().length()).isLessThanOrEqualTo(maxStringLength);
+        assertThat(person.getAddress().getZipCode().length()).isLessThanOrEqualTo(maxStringLength);
+        assertThat(person.getAddress().getStreet().getName().length()).isLessThanOrEqualTo(maxStringLength);
+    }
+
     void validatePerson(Person person) {
         assertThat(person).isNotNull();
         assertThat(person.getId()).isNotNull();
