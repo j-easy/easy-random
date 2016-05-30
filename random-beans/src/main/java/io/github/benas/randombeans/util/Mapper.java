@@ -10,7 +10,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 public enum Mapper {
     INSTANCE;
 
-    static private ObjectMapper objectMapper = new ObjectMapper();
+    static private final ObjectMapper objectMapper = new ObjectMapper();
 
     ObjectMapper objectMapper() {
         return objectMapper;

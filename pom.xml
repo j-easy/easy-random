@@ -210,11 +210,6 @@
                 <version>${assertj.version}</version>
             </dependency>
             <dependency>
-                <groupId>org.mockito</groupId>
-                <artifactId>mockito-core</artifactId>
-                <version>${mockito-core.version}</version>
-            </dependency>
-            <dependency>
                 <groupId>com.tngtech.java</groupId>
                 <artifactId>junit-dataprovider</artifactId>
                 <version>${junit-dataprovider.version}</version>

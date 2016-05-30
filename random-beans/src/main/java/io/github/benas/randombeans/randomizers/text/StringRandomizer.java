@@ -36,7 +36,7 @@ import java.nio.charset.Charset;
  */
 public class StringRandomizer extends AbstractRandomizer<String> {
 
-    private CharacterRandomizer characterRandomizer;
+    private final CharacterRandomizer characterRandomizer;
 
     private int length = Constants.MAX_STRING_LENGTH;
 

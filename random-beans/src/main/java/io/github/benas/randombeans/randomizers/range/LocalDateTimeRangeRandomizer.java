@@ -35,9 +35,9 @@ import java.time.LocalTime;
  */
 public class LocalDateTimeRangeRandomizer extends AbstractRangeRandomizer<LocalDateTime> {
 
-    private LocalDateRangeRandomizer localDateRangeRandomizer;
+    private final LocalDateRangeRandomizer localDateRangeRandomizer;
 
-    private LocalTimeRangeRandomizer localTimeRangeRandomizer;
+    private final LocalTimeRangeRandomizer localTimeRangeRandomizer;
 
     /**
      * Create a new {@link LocalDateTimeRangeRandomizer}.
