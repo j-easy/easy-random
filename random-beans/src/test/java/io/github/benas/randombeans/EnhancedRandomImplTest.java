@@ -293,7 +293,7 @@ public class EnhancedRandomImplTest {
     @Test
     @Deprecated
     public void testRandomStream_deprecatedAPI() {
-        List<Person> persons = random(5, Person.class, "address", "phoneNumber").collect(Collectors.toList());
+        List<Person> persons = random(Person.class, 5, "address", "phoneNumber").collect(Collectors.toList());
         assertThat(persons.size()).isEqualTo(5);
         persons.stream().forEach(this::validatePerson);
     }

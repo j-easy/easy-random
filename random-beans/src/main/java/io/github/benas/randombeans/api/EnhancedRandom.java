@@ -56,25 +56,26 @@ public abstract class EnhancedRandom extends Random {
     /**
      * Generate a stream of random instances of the given type.
      *
-     * @param amount the number of instances to generate
-     * @param type the type for which instances will be generated
+     * @param type           the type for which instances will be generated
+     * @param amount         the number of instances to generate
      * @param excludedFields the name of fields to exclude
-     * @return a list of random instances of the given type
+     * @param <T>            the actual type of the target objects
+     * @return a stream of random instances of the given type
      * @throws ObjectGenerationException when unable to populate an instance of the given type
      * @deprecated please use {@link #randomStreamOf(int, Class, String...)}
      */
     @Deprecated
-    public static <T> Stream<T> random(final int amount, final Class<T> type, final String... excludedFields) {
+    public static <T> Stream<T> random(final Class<T> type, final int amount, final String... excludedFields) {
         return randomStreamOf(amount, type, excludedFields);
     }
 
     /**
      * Generate a stream of random instances of the given type.
      *
-     * @param amount the number of instances to generate
-     * @param type the type for which instances will be generated
+     * @param amount         the number of instances to generate
+     * @param type           the type for which instances will be generated
      * @param excludedFields the name of fields to exclude
-     * @return a list of random instances of the given type
+     * @return a stream of random instances of the given type
      * @throws ObjectGenerationException when unable to populate an instance of the given type
      */
     public static <T> Stream<T> randomStreamOf(final int amount, final Class<T> type, final String... excludedFields) {
@@ -84,8 +85,8 @@ public abstract class EnhancedRandom extends Random {
     /**
      * Generate a {@link List} of random instances of the given type.
      *
-     * @param amount the number of instances to generate
-     * @param type the type for which instances will be generated
+     * @param amount         the number of instances to generate
+     * @param type           the type for which instances will be generated
      * @param excludedFields the name of fields to exclude
      * @return a list of random instances of the given type
      * @throws ObjectGenerationException when unable to populate an instance of the given type
@@ -97,10 +98,10 @@ public abstract class EnhancedRandom extends Random {
     /**
      * Generate a {@link Set} of random instances of the given type.
      *
-     * @param amount the number of instances to generate
-     * @param type the type for which instances will be generated
+     * @param amount         the number of instances to generate
+     * @param type           the type for which instances will be generated
      * @param excludedFields the name of fields to exclude
-     * @return a list of random instances of the given type
+     * @return a set of random instances of the given type
      * @throws ObjectGenerationException when unable to populate an instance of the given type
      */
     public static <T> Set<T> randomSetOf(final int amount, final Class<T> type, final String... excludedFields) {
@@ -110,14 +111,14 @@ public abstract class EnhancedRandom extends Random {
     /**
      * Generate a {@link Collection} of random instances of the given type.
      *
-     * @param amount the number of instances to generate
-     * @param type the type for which instances will be generated
+     * @param amount         the number of instances to generate
+     * @param type           the type for which instances will be generated
      * @param excludedFields the name of fields to exclude
-     * @return a list of random instances of the given type
+     * @return a collection of random instances of the given type
      * @throws ObjectGenerationException when unable to populate an instance of the given type
      */
     public static <T> Collection<T> randomCollectionOf(final int amount, final Class<T> type, final String... excludedFields) {
-        return randomStreamOf(amount, type, excludedFields).collect(toList());
+        return randomListOf(amount, type, excludedFields);
     }
 
     /**
@@ -135,7 +136,7 @@ public abstract class EnhancedRandom extends Random {
      * Generate a stream of random instances of the given type.
      *
      * @param type           the type for which instances will be generated
-     * @param amount     the number of instances to generate
+     * @param amount         the number of instances to generate
      * @param excludedFields the name of fields to exclude
      * @param <T>            the actual type of the target objects
      * @return a stream of random instances of the given type
