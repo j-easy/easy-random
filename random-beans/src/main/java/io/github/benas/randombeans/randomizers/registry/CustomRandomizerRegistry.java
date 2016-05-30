@@ -26,6 +26,7 @@ package io.github.benas.randombeans.randomizers.registry;
 
 import io.github.benas.randombeans.FieldDefinition;
 import io.github.benas.randombeans.annotation.Priority;
+import io.github.benas.randombeans.api.EnhancedRandomParameters;
 import io.github.benas.randombeans.api.Randomizer;
 import io.github.benas.randombeans.api.RandomizerRegistry;
 
@@ -43,6 +44,11 @@ public class CustomRandomizerRegistry implements RandomizerRegistry {
 
     private final Map<FieldDefinition<?, ?>, Randomizer<?>> customFieldRandomizersRegistry = new HashMap<>();
     private final Map<Class<?>, Randomizer<?>> customTypeRandomizersRegistry = new HashMap<>();
+
+    @Override
+    public void init(EnhancedRandomParameters parameters) {
+        // no op
+    }
 
     /**
      * Set the initial seed for all randomizers of the registry

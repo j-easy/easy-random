@@ -25,6 +25,7 @@
 package io.github.benas.randombeans.validation;
 
 import io.github.benas.randombeans.annotation.Priority;
+import io.github.benas.randombeans.api.EnhancedRandomParameters;
 import io.github.benas.randombeans.api.Randomizer;
 import io.github.benas.randombeans.api.RandomizerRegistry;
 import io.github.benas.randombeans.randomizers.misc.ConstantRandomizer;
@@ -52,6 +53,11 @@ import static io.github.benas.randombeans.randomizers.range.IntegerRangeRandomiz
 public class BeanValidationRandomizerRegistry implements RandomizerRegistry {
 
     private long seed;
+
+    @Override
+    public void init(EnhancedRandomParameters parameters) {
+        this.seed = parameters.getSeed();
+    }
 
     @Override
     public void setSeed(final long seed) {

@@ -34,10 +34,19 @@ import java.lang.reflect.Field;
 public interface RandomizerRegistry {
 
     /**
+     * Initialize the registry.
+     *
+     * @param parameters of the {@link EnhancedRandom} instance being configured
+     */
+    void init(EnhancedRandomParameters parameters);
+
+    /**
      * Set the initial seed for all randomizers of the registry
      *
      * @param seed the initial seed
+     * @deprecated use {@link #init(EnhancedRandomParameters parameters)} instead
      */
+    @Deprecated
     void setSeed(final long seed);
 
     /**

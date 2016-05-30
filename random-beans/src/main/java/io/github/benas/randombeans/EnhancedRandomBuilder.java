@@ -190,7 +190,7 @@ public class EnhancedRandomBuilder {
         registries.add(customRandomizerRegistry); // programatically registered randomizers through randomize()
         registries.addAll(userRegistries); // programatically registered registries through registerRandomizerRegistry()
         registries.addAll(loadRegistries()); // registries added to classpath through the SPI
-        registries.forEach(registry -> registry.setSeed(parameters.getSeed()));
+        registries.forEach(registry -> registry.init(parameters));
         return registries;
     }
 

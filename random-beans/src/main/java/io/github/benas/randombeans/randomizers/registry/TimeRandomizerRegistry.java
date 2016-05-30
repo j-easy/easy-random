@@ -24,6 +24,7 @@
 package io.github.benas.randombeans.randomizers.registry;
 
 import io.github.benas.randombeans.annotation.Priority;
+import io.github.benas.randombeans.api.EnhancedRandomParameters;
 import io.github.benas.randombeans.api.Randomizer;
 import io.github.benas.randombeans.api.RandomizerRegistry;
 import io.github.benas.randombeans.randomizers.time.*;
@@ -46,7 +47,8 @@ public class TimeRandomizerRegistry implements RandomizerRegistry {
     private final Map<Class<?>, Randomizer<?>> randomizers = new HashMap<>();
 
     @Override
-    public void setSeed(long seed) {
+    public void init(EnhancedRandomParameters parameters) {
+        long seed = parameters.getSeed();
         randomizers.put(Duration.class, new DurationRandomizer(seed));
         randomizers.put(GregorianCalendar.class, new GregorianCalendarRandomizer(seed));
         randomizers.put(Instant.class, new InstantRandomizer(seed));
@@ -62,6 +64,11 @@ public class TimeRandomizerRegistry implements RandomizerRegistry {
         randomizers.put(Year.class, new YearRandomizer(seed));
         randomizers.put(ZonedDateTime.class, new ZonedDateTimeRandomizer(seed));
         randomizers.put(ZoneOffset.class, new ZoneOffsetRandomizer(seed));
+    }
+
+    @Override
+    public void setSeed(long seed) {
+        // no op
     }
 
     @Override

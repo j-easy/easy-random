@@ -25,6 +25,7 @@
 package io.github.benas.randombeans.randomizers.jodatime.registry;
 
 import io.github.benas.randombeans.annotation.Priority;
+import io.github.benas.randombeans.api.EnhancedRandomParameters;
 import io.github.benas.randombeans.api.Randomizer;
 import io.github.benas.randombeans.api.RandomizerRegistry;
 import io.github.benas.randombeans.randomizers.jodatime.*;
@@ -44,7 +45,8 @@ public class JodaTimeRandomizerRegistry implements RandomizerRegistry {
     private final Map<Class<?>, Randomizer<?>> randomizers = new HashMap<>();
 
     @Override
-    public void setSeed(final long seed) {
+    public void init(EnhancedRandomParameters parameters) {
+        long seed = parameters.getSeed();
         randomizers.put(org.joda.time.DateTime.class, new JodaTimeDateTimeRandomizer(seed));
         randomizers.put(org.joda.time.LocalDate.class, new JodaTimeLocalDateRandomizer(seed));
         randomizers.put(org.joda.time.LocalTime.class, new JodaTimeLocalTimeRandomizer(seed));
@@ -52,6 +54,11 @@ public class JodaTimeRandomizerRegistry implements RandomizerRegistry {
         randomizers.put(org.joda.time.Duration.class, new JodaTimeDurationRandomizer(seed));
         randomizers.put(org.joda.time.Period.class, new JodaTimePeriodRandomizer(seed));
         randomizers.put(org.joda.time.Interval.class, new JodaTimeIntervalRandomizer(seed));
+    }
+
+    @Override
+    public void setSeed(final long seed) {
+        // no op
     }
 
     @Override

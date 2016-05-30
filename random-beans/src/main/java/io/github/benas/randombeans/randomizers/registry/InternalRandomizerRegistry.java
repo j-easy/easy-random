@@ -25,6 +25,7 @@
 package io.github.benas.randombeans.randomizers.registry;
 
 import io.github.benas.randombeans.annotation.Priority;
+import io.github.benas.randombeans.api.EnhancedRandomParameters;
 import io.github.benas.randombeans.api.Randomizer;
 import io.github.benas.randombeans.api.RandomizerRegistry;
 import io.github.benas.randombeans.randomizers.misc.BooleanRandomizer;
@@ -62,7 +63,8 @@ public class InternalRandomizerRegistry implements RandomizerRegistry {
     private final Map<Class<?>, Randomizer<?>> randomizers = new HashMap<>();
 
     @Override
-    public void setSeed(final long seed) {
+    public void init(EnhancedRandomParameters parameters) {
+        long seed = parameters.getSeed();
         randomizers.put(String.class, new StringRandomizer(seed));
         randomizers.put(Character.class, new CharacterRandomizer(seed));
         randomizers.put(char.class, new CharacterRandomizer(seed));
@@ -93,6 +95,11 @@ public class InternalRandomizerRegistry implements RandomizerRegistry {
         randomizers.put(URI.class, new UriRandomizer(seed));
         randomizers.put(Locale.class, new LocaleRandomizer(seed));
         randomizers.put(UUID.class, new UUIDRandomizer(seed));
+    }
+
+    @Override
+    public void setSeed(final long seed) {
+        // no op
     }
 
     @Override

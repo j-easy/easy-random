@@ -26,6 +26,7 @@ package io.github.benas.randombeans.randomizers.registry;
 
 import io.github.benas.randombeans.annotation.Priority;
 import io.github.benas.randombeans.annotation.RandomizerArgument;
+import io.github.benas.randombeans.api.EnhancedRandomParameters;
 import io.github.benas.randombeans.api.Randomizer;
 import io.github.benas.randombeans.api.RandomizerRegistry;
 import io.github.benas.randombeans.util.ReflectionUtils;
@@ -39,6 +40,11 @@ import java.lang.reflect.Field;
  */
 @Priority(-253)
 public class AnnotationRandomizerRegistry implements RandomizerRegistry {
+
+    @Override
+    public void init(EnhancedRandomParameters parameters) {
+        // no op
+    }
 
     /**
      * Set the initial seed for all randomizers of the registry
