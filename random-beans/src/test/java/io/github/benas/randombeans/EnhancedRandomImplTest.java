@@ -40,6 +40,7 @@ import org.mockito.runners.MockitoJUnitRunner;
 
 import java.nio.charset.Charset;
 import java.time.LocalDate;
+import java.time.LocalTime;
 import java.util.Collection;
 import java.util.Date;
 import java.util.List;
@@ -379,6 +380,21 @@ public class EnhancedRandomImplTest {
 
         // Then
         assertThat(timeBean.getLocalDate()).isAfterOrEqualTo(minDate).isBeforeOrEqualTo(maxDate);
+    }
+
+
+    @Test
+    public void testTimeRange() throws Exception {
+        // Given
+        LocalTime minTime = LocalTime.of(15, 0, 0);
+        LocalTime maxTime = LocalTime.of(18, 0, 0);
+        enhancedRandom = aNewEnhancedRandomBuilder().timeRange(minTime, maxTime).build();
+
+        // When
+        TimeBean timeBean = enhancedRandom.nextObject(TimeBean.class);
+
+        // Then
+        assertThat(timeBean.getLocalTime()).isAfterOrEqualTo(minTime).isBeforeOrEqualTo(maxTime);
     }
 
     void validatePerson(Person person) {

@@ -29,6 +29,7 @@ import io.github.benas.randombeans.api.Randomizer;
 import io.github.benas.randombeans.api.RandomizerRegistry;
 import io.github.benas.randombeans.randomizers.range.LocalDateRangeRandomizer;
 import io.github.benas.randombeans.randomizers.range.LocalDateTimeRangeRandomizer;
+import io.github.benas.randombeans.randomizers.range.LocalTimeRangeRandomizer;
 import io.github.benas.randombeans.randomizers.time.*;
 
 import java.lang.reflect.Field;
@@ -39,8 +40,6 @@ import java.util.Map;
 import java.util.TimeZone;
 
 import static java.time.LocalDateTime.of;
-import static java.time.LocalTime.MAX;
-import static java.time.LocalTime.MIN;
 
 /**
  * A registry of randomizers for Java 8 JSR 310 types.
@@ -57,12 +56,14 @@ public class TimeRandomizerRegistry implements RandomizerRegistry {
         long seed = parameters.getSeed();
         LocalDate minDate = parameters.getDateRange().getMin();
         LocalDate maxDate = parameters.getDateRange().getMax();
+        LocalTime minTime = parameters.getTimeRange().getMin();
+        LocalTime maxTime = parameters.getTimeRange().getMax();
         randomizers.put(Duration.class, new DurationRandomizer(seed));
         randomizers.put(GregorianCalendar.class, new GregorianCalendarRandomizer(seed));
         randomizers.put(Instant.class, new InstantRandomizer(seed));
         randomizers.put(LocalDate.class, new LocalDateRangeRandomizer(minDate, maxDate, seed));
-        randomizers.put(LocalDateTime.class, new LocalDateTimeRangeRandomizer(of(minDate, MIN), of(maxDate, MAX), seed));
-        randomizers.put(LocalTime.class, new LocalTimeRandomizer(seed));
+        randomizers.put(LocalDateTime.class, new LocalDateTimeRangeRandomizer(of(minDate, minTime), of(maxDate, maxTime), seed));
+        randomizers.put(LocalTime.class, new LocalTimeRangeRandomizer(minTime, maxTime, seed));
         randomizers.put(MonthDay.class, new MonthDayRandomizer(seed));
         randomizers.put(OffsetDateTime.class, new OffsetDateTimeRandomizer(seed));
         randomizers.put(OffsetTime.class, new OffsetTimeRandomizer(seed));
