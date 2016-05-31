@@ -30,6 +30,7 @@ import io.github.benas.randombeans.api.Randomizer;
 import io.github.benas.randombeans.beans.*;
 import io.github.benas.randombeans.randomizers.misc.ConstantRandomizer;
 import io.github.benas.randombeans.util.ReflectionUtils;
+import org.assertj.core.api.Assertions;
 import org.junit.Before;
 import org.junit.Ignore;
 import org.junit.Test;
@@ -38,6 +39,7 @@ import org.mockito.Mock;
 import org.mockito.runners.MockitoJUnitRunner;
 
 import java.nio.charset.Charset;
+import java.time.LocalDate;
 import java.util.Collection;
 import java.util.Date;
 import java.util.List;
@@ -365,6 +367,19 @@ public class EnhancedRandomImplTest {
         }
     }
 
+    @Test
+    public void testDateRange() throws Exception {
+        // Given
+        LocalDate minDate = LocalDate.of(2016, 1, 1);
+        LocalDate maxDate = LocalDate.of(2016, 1, 31);
+        enhancedRandom = aNewEnhancedRandomBuilder().dateRange(minDate, maxDate).build();
+
+        // When
+        TimeBean timeBean = enhancedRandom.nextObject(TimeBean.class);
+
+        // Then
+        assertThat(timeBean.getLocalDate()).isAfterOrEqualTo(minDate).isBeforeOrEqualTo(maxDate);
+    }
 
     void validatePerson(Person person) {
         assertThat(person).isNotNull();

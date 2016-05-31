@@ -32,6 +32,7 @@ import io.github.benas.randombeans.randomizers.misc.SkipRandomizer;
 import io.github.benas.randombeans.randomizers.registry.CustomRandomizerRegistry;
 
 import java.nio.charset.Charset;
+import java.time.LocalDate;
 import java.util.*;
 import java.util.function.Supplier;
 
@@ -165,6 +166,11 @@ public class EnhancedRandomBuilder {
      */
     public EnhancedRandomBuilder charset(final Charset charset) {
         parameters.setCharset(charset);
+        return this;
+    }
+
+    public EnhancedRandomBuilder dateRange(final LocalDate min, final LocalDate max) {
+        parameters.setDateRange(min, max);
         return this;
     }
 

@@ -27,6 +27,8 @@ import io.github.benas.randombeans.annotation.Priority;
 import io.github.benas.randombeans.api.EnhancedRandomParameters;
 import io.github.benas.randombeans.api.Randomizer;
 import io.github.benas.randombeans.api.RandomizerRegistry;
+import io.github.benas.randombeans.randomizers.range.LocalDateRangeRandomizer;
+import io.github.benas.randombeans.randomizers.range.LocalDateTimeRangeRandomizer;
 import io.github.benas.randombeans.randomizers.time.*;
 
 import java.lang.reflect.Field;
@@ -35,6 +37,10 @@ import java.util.GregorianCalendar;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.TimeZone;
+
+import static java.time.LocalDateTime.of;
+import static java.time.LocalTime.MAX;
+import static java.time.LocalTime.MIN;
 
 /**
  * A registry of randomizers for Java 8 JSR 310 types.
@@ -49,11 +55,13 @@ public class TimeRandomizerRegistry implements RandomizerRegistry {
     @Override
     public void init(EnhancedRandomParameters parameters) {
         long seed = parameters.getSeed();
+        LocalDate minDate = parameters.getDateRange().getMin();
+        LocalDate maxDate = parameters.getDateRange().getMax();
         randomizers.put(Duration.class, new DurationRandomizer(seed));
         randomizers.put(GregorianCalendar.class, new GregorianCalendarRandomizer(seed));
         randomizers.put(Instant.class, new InstantRandomizer(seed));
-        randomizers.put(LocalDate.class, new LocalDateRandomizer(seed));
-        randomizers.put(LocalDateTime.class, new LocalDateTimeRandomizer(seed));
+        randomizers.put(LocalDate.class, new LocalDateRangeRandomizer(minDate, maxDate, seed));
+        randomizers.put(LocalDateTime.class, new LocalDateTimeRangeRandomizer(of(minDate, MIN), of(maxDate, MAX), seed));
         randomizers.put(LocalTime.class, new LocalTimeRandomizer(seed));
         randomizers.put(MonthDay.class, new MonthDayRandomizer(seed));
         randomizers.put(OffsetDateTime.class, new OffsetDateTimeRandomizer(seed));

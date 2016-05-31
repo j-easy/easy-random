@@ -4,7 +4,12 @@ import io.github.benas.randombeans.util.Constants;
 
 import java.nio.charset.Charset;
 import java.nio.charset.StandardCharsets;
+import java.time.LocalDate;
+import java.time.LocalTime;
 import java.util.Random;
+
+import static io.github.benas.randombeans.util.Constants.IN_TEN_YEARS;
+import static io.github.benas.randombeans.util.Constants.TEN_YEARS_AGO;
 
 /**
  * Parameters of an {@link EnhancedRandom} instance.
@@ -23,12 +28,15 @@ public class EnhancedRandomParameters {
 
     private boolean scanClasspathForConcreteTypes;
 
+    private Range<LocalDate> dateRange;
+
     public EnhancedRandomParameters() {
         scanClasspathForConcreteTypes = false;
         seed = new Random().nextLong();
         maxCollectionSize = Constants.MAX_COLLECTION_SIZE;
         maxStringLength = Constants.MAX_STRING_LENGTH;
         charset = StandardCharsets.US_ASCII;
+        dateRange = new Range<>(TEN_YEARS_AGO.toLocalDate(), IN_TEN_YEARS.toLocalDate());
     }
 
     public long getSeed() {
@@ -69,5 +77,31 @@ public class EnhancedRandomParameters {
 
     public void setCharset(Charset charset) {
         this.charset = charset;
+    }
+
+    public Range<LocalDate> getDateRange() {
+        return dateRange;
+    }
+
+    public void setDateRange(LocalDate min, LocalDate max) {
+        this.dateRange = new Range<>(min, max);
+    }
+
+    public class Range<T> {
+        private T min;
+        private T max;
+
+        public Range(T min, T max) {
+            this.min = min;
+            this.max = max;
+        }
+
+        public T getMin() {
+            return min;
+        }
+
+        public T getMax() {
+            return max;
+        }
     }
 }

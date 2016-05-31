@@ -34,9 +34,12 @@ import io.github.benas.randombeans.randomizers.misc.UUIDRandomizer;
 import io.github.benas.randombeans.randomizers.net.UriRandomizer;
 import io.github.benas.randombeans.randomizers.net.UrlRandomizer;
 import io.github.benas.randombeans.randomizers.number.*;
+import io.github.benas.randombeans.randomizers.range.DateRangeRandomizer;
+import io.github.benas.randombeans.randomizers.range.SqlDateRangeRandomizer;
 import io.github.benas.randombeans.randomizers.text.CharacterRandomizer;
 import io.github.benas.randombeans.randomizers.text.StringRandomizer;
 import io.github.benas.randombeans.randomizers.time.*;
+import io.github.benas.randombeans.util.DateUtils;
 
 import java.lang.reflect.Field;
 import java.math.BigDecimal;
@@ -52,6 +55,8 @@ import java.util.Map;
 import java.util.UUID;
 import java.util.concurrent.atomic.AtomicInteger;
 import java.util.concurrent.atomic.AtomicLong;
+
+import static io.github.benas.randombeans.util.DateUtils.toDate;
 
 /**
  * Registry for Java built-in types.
@@ -89,8 +94,10 @@ public class InternalRandomizerRegistry implements RandomizerRegistry {
         randomizers.put(BigDecimal.class, new BigDecimalRandomizer(seed));
         randomizers.put(AtomicLong.class, new AtomicLongRandomizer(seed));
         randomizers.put(AtomicInteger.class, new AtomicIntegerRandomizer(seed));
-        randomizers.put(Date.class, new DateRandomizer(seed));
-        randomizers.put(java.sql.Date.class, new SqlDateRandomizer(seed));
+        Date minDate = toDate(parameters.getDateRange().getMin());
+        Date maxDate = toDate(parameters.getDateRange().getMax());
+        randomizers.put(Date.class, new DateRangeRandomizer(minDate, maxDate, seed));
+        randomizers.put(java.sql.Date.class, new SqlDateRangeRandomizer(new java.sql.Date(minDate.getTime()), new java.sql.Date(maxDate.getTime()), seed));
         randomizers.put(java.sql.Time.class, new SqlTimeRandomizer(seed));
         randomizers.put(java.sql.Timestamp.class, new SqlTimestampRandomizer(seed));
         randomizers.put(Calendar.class, new CalendarRandomizer(seed));

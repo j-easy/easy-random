@@ -29,10 +29,16 @@ import io.github.benas.randombeans.api.EnhancedRandomParameters;
 import io.github.benas.randombeans.api.Randomizer;
 import io.github.benas.randombeans.api.RandomizerRegistry;
 import io.github.benas.randombeans.randomizers.jodatime.*;
+import io.github.benas.randombeans.randomizers.jodatime.range.JodaTimeDateTimeRangeRandomizer;
+import io.github.benas.randombeans.randomizers.jodatime.range.JodaTimeLocalDateRangeRandomizer;
+import io.github.benas.randombeans.randomizers.jodatime.range.JodaTimeLocalDateTimeRangeRandomizer;
 
 import java.lang.reflect.Field;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
+
+import static io.github.benas.randombeans.util.DateUtils.toDate;
 
 /**
  * A registry of randomizers for Joda Time types.
@@ -47,10 +53,12 @@ public class JodaTimeRandomizerRegistry implements RandomizerRegistry {
     @Override
     public void init(EnhancedRandomParameters parameters) {
         long seed = parameters.getSeed();
-        randomizers.put(org.joda.time.DateTime.class, new JodaTimeDateTimeRandomizer(seed));
-        randomizers.put(org.joda.time.LocalDate.class, new JodaTimeLocalDateRandomizer(seed));
+        Date minDate = toDate(parameters.getDateRange().getMin());
+        Date maxDate = toDate(parameters.getDateRange().getMax());
+        randomizers.put(org.joda.time.DateTime.class, new JodaTimeDateTimeRangeRandomizer(minDate, maxDate, seed));
+        randomizers.put(org.joda.time.LocalDate.class, new JodaTimeLocalDateRangeRandomizer(minDate, maxDate, seed));
         randomizers.put(org.joda.time.LocalTime.class, new JodaTimeLocalTimeRandomizer(seed));
-        randomizers.put(org.joda.time.LocalDateTime.class, new JodaTimeLocalDateTimeRandomizer(seed));
+        randomizers.put(org.joda.time.LocalDateTime.class, new JodaTimeLocalDateTimeRangeRandomizer(minDate, maxDate, seed));
         randomizers.put(org.joda.time.Duration.class, new JodaTimeDurationRandomizer(seed));
         randomizers.put(org.joda.time.Period.class, new JodaTimePeriodRandomizer(seed));
         randomizers.put(org.joda.time.Interval.class, new JodaTimeIntervalRandomizer(seed));
