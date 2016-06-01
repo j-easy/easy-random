@@ -178,13 +178,13 @@ public class StringRandomizer extends AbstractRandomizer<String> {
     /**
      * Create a new {@link StringRandomizer}.
      *
-     * @param charset to use
-     * @param length  of the String to generate
-     * @param seed    initial seed
+     * @param charset   to use
+     * @param maxLength of the String to generate
+     * @param seed      initial seed
      * @return a new {@link StringRandomizer}.
      */
-    public static StringRandomizer aNewStringRandomizer(final Charset charset, final int length, final long seed) {
-        return new StringRandomizer(charset, length, seed);
+    public static StringRandomizer aNewStringRandomizer(final Charset charset, final int maxLength, final long seed) {
+        return new StringRandomizer(charset, maxLength, seed);
     }
 
     @Override
