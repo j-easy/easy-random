@@ -53,9 +53,12 @@ import static io.github.benas.randombeans.FieldDefinitionBuilder.field;
 import static io.github.benas.randombeans.api.EnhancedRandom.*;
 import static io.github.benas.randombeans.util.CharacterUtils.collectPrintableCharactersOf;
 import static io.github.benas.randombeans.util.CharacterUtils.filterLetters;
+import static io.github.benas.randombeans.util.DateUtils.toDate;
+import static java.time.LocalDate.of;
 import static java.util.Arrays.asList;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.fail;
+import static org.assertj.core.api.BDDAssertions.then;
 import static org.mockito.Mockito.when;
 
 @RunWith(MockitoJUnitRunner.class)
@@ -394,6 +397,14 @@ public class EnhancedRandomImplTest {
 
         // Then
         assertThat(timeBean.getLocalTime()).isAfterOrEqualTo(minTime).isBeforeOrEqualTo(maxTime);
+    }
+
+    @Test
+    public void annotatedRandomizerArgumentsShouldBeCorrectlyParsed() {
+        TestData data = random(TestData.class);
+
+        then(data.getDate()).isBetween(toDate(of(2016, 1, 10)), toDate(of(2016, 1, 30)));
+        then(data.getPrice()).isBetween(200, 500);
     }
 
     void validatePerson(Person person) {
