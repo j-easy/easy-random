@@ -32,8 +32,10 @@ import io.github.benas.randombeans.randomizers.jodatime.*;
 import io.github.benas.randombeans.randomizers.jodatime.range.JodaTimeDateTimeRangeRandomizer;
 import io.github.benas.randombeans.randomizers.jodatime.range.JodaTimeLocalDateRangeRandomizer;
 import io.github.benas.randombeans.randomizers.jodatime.range.JodaTimeLocalDateTimeRangeRandomizer;
+import io.github.benas.randombeans.randomizers.jodatime.range.JodaTimeLocalTimeRangeRandomizer;
 
 import java.lang.reflect.Field;
+import java.time.LocalTime;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
@@ -55,9 +57,11 @@ public class JodaTimeRandomizerRegistry implements RandomizerRegistry {
         long seed = parameters.getSeed();
         Date minDate = toDate(parameters.getDateRange().getMin());
         Date maxDate = toDate(parameters.getDateRange().getMax());
+        LocalTime minTime = parameters.getTimeRange().getMin();
+        LocalTime maxTime = parameters.getTimeRange().getMax();
         randomizers.put(org.joda.time.DateTime.class, new JodaTimeDateTimeRangeRandomizer(minDate, maxDate, seed));
         randomizers.put(org.joda.time.LocalDate.class, new JodaTimeLocalDateRangeRandomizer(minDate, maxDate, seed));
-        randomizers.put(org.joda.time.LocalTime.class, new JodaTimeLocalTimeRandomizer(seed));
+        randomizers.put(org.joda.time.LocalTime.class, new JodaTimeLocalTimeRangeRandomizer(toJodaLocalTime(minTime), toJodaLocalTime(maxTime), seed));
         randomizers.put(org.joda.time.LocalDateTime.class, new JodaTimeLocalDateTimeRangeRandomizer(minDate, maxDate, seed));
         randomizers.put(org.joda.time.Duration.class, new JodaTimeDurationRandomizer(seed));
         randomizers.put(org.joda.time.Period.class, new JodaTimePeriodRandomizer(seed));
@@ -75,7 +79,11 @@ public class JodaTimeRandomizerRegistry implements RandomizerRegistry {
     }
 
     @Override
-    public Randomizer<?> getRandomizer(Class<?> type) {
+    public Randomizer<?> getRandomizer(final Class<?> type) {
         return randomizers.get(type);
+    }
+
+    private org.joda.time.LocalTime toJodaLocalTime(final LocalTime localTime) {
+        return new org.joda.time.LocalTime(localTime.getHour(), localTime.getMinute(), localTime.getSecond());
     }
 }
