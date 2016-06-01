@@ -24,6 +24,7 @@
 
 package io.github.benas.randombeans.util;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
 import io.github.benas.randombeans.annotation.RandomizerArgument;
 import io.github.benas.randombeans.api.ObjectGenerationException;
 import io.github.benas.randombeans.api.Randomizer;
@@ -32,6 +33,7 @@ import lombok.experimental.UtilityClass;
 import java.lang.reflect.*;
 import java.util.*;
 
+import static java.lang.String.format;
 import static java.util.Arrays.asList;
 import static java.util.stream.Collectors.toList;
 
@@ -42,6 +44,8 @@ import static java.util.stream.Collectors.toList;
  */
 @UtilityClass
 public class ReflectionUtils {
+
+    private static final ObjectMapper objectMapper = new ObjectMapper();
 
     /**
      * Get declared fields of a given type.
@@ -269,33 +273,49 @@ public class ReflectionUtils {
     }
 
     @SuppressWarnings("unchecked")
-    public static <T> Randomizer<T> newInstance(Class<T> clazz, RandomizerArgument[] args) {
+    public static <T> Randomizer<T> newInstance(final Class<T> type, final RandomizerArgument[] randomizerArguments) {
         try {
-            if (args != null && args.length > 0) {
-                for (Constructor<?> c : clazz.getConstructors()) {
-                    if (c.getParameterCount() > 0 && c.getParameterCount() == args.length) {
-                        Object[] nArgs = new Object[args.length];
-                        Class<?>[] argTypes = c.getParameterTypes();
-                        for (int x = 0; x < args.length; x++) {
-                            Class<?> argType = argTypes[x];
-                            RandomizerArgument arg = args[x];
-                            String val = arg.value();
-                            Class<?> type = arg.type();
-
-                            if (argType.isAssignableFrom(arg.type())) {
-                                nArgs[x] = Mapper.INSTANCE.convertValue(val, type);
-                            } else {
-                                // Can't be a valid input for this constructor
-                                break;
-                            }
-                        }
-                        return (Randomizer<T>) c.newInstance(nArgs);
-                    }
+            if (notEmpty(randomizerArguments)) {
+                Optional<Constructor<?>> matchingConstructor = asList(type.getConstructors())
+                        .stream()
+                        .filter(constructor -> hasSameArgumentNumber(constructor, randomizerArguments) &&
+                                               hasSameArgumentTypes(constructor, randomizerArguments))
+                        .findFirst();
+                if (matchingConstructor.isPresent()) {
+                    return (Randomizer<T>) matchingConstructor.get().newInstance(convertArguments(randomizerArguments));
                 }
             }
-            return (Randomizer<T>) clazz.newInstance();
+            return (Randomizer<T>) type.newInstance();
         } catch (IllegalAccessException | InvocationTargetException | InstantiationException e) {
-            throw new ObjectGenerationException(String.format("Could not create Randomizer with type: %s and constructor arguments: %s", clazz, Arrays.toString(args)), e);
+            throw new ObjectGenerationException(format("Could not create Randomizer of type: %s with constructor arguments: %s", type, Arrays.toString(randomizerArguments)), e);
         }
+    }
+
+    private static boolean notEmpty(final RandomizerArgument[] randomizerArguments) {
+        return randomizerArguments != null && randomizerArguments.length > 0;
+    }
+
+    private static boolean hasSameArgumentNumber(final Constructor<?> constructor, final RandomizerArgument[] randomizerArguments) {
+        return constructor.getParameterCount() == randomizerArguments.length;
+    }
+
+    private static boolean hasSameArgumentTypes(final Constructor<?> constructor, final RandomizerArgument[] randomizerArguments) {
+        Class<?>[] constructorParameterTypes = constructor.getParameterTypes();
+        for (int i = 0; i < randomizerArguments.length; i++) {
+            if (!constructorParameterTypes[i].isAssignableFrom(randomizerArguments[i].type())) {
+                // Argument types does not match
+                return false;
+            }
+        }
+        return true;
+    }
+
+    private static Object[] convertArguments(final RandomizerArgument[] declaredArguments) {
+        int numberOfArguments = declaredArguments.length;
+        Object[] arguments = new Object[numberOfArguments];
+        for (int i = 0; i < numberOfArguments; i++) {
+            arguments[i] = objectMapper.convertValue(declaredArguments[i].value(), declaredArguments[i].type());
+        }
+        return arguments;
     }
 }
