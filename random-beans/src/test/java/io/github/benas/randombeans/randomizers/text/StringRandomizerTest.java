@@ -47,7 +47,7 @@ public class StringRandomizerTest extends AbstractRandomizerTest<String> {
     public void shouldGenerateTheSameValueForTheSameSeed() {
         // Given
         randomizer = aNewStringRandomizer(SEED);
-        String expected = "eOMtThyhVNLWUZNRcBaQKxIyedUsFwdk";
+        String expected = "eOMtThyhVNLWUZNRcBaQKxIy";
 
         // When
         String actual = randomizer.getRandomValue();
@@ -57,17 +57,18 @@ public class StringRandomizerTest extends AbstractRandomizerTest<String> {
     }
 
     @Test
-    public void generatedValueShouldHaveTheSpecifiedLength() {
+    public void theLengthOfTheGeneratedValueShouldBeLowerThanTheSpecifiedMaxLength() {
         // Given
-        final int expectedLength = 10;
-        randomizer = aNewStringRandomizer(expectedLength, SEED);
-        String expectedValue = "eOMtThyhVN";
+        final int maxLength = 10;
+        randomizer = aNewStringRandomizer(maxLength, SEED);
+        String expectedValue = "eOM";
 
         // When
         String actual = randomizer.getRandomValue();
 
         // Then
-        assertThat(actual).isEqualTo(expectedValue).hasSize(expectedLength);
+        assertThat(actual).isEqualTo(expectedValue);
+        assertThat(actual.length()).isLessThanOrEqualTo(maxLength);
     }
 
 }

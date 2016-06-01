@@ -30,7 +30,6 @@ import io.github.benas.randombeans.api.Randomizer;
 import io.github.benas.randombeans.beans.*;
 import io.github.benas.randombeans.randomizers.misc.ConstantRandomizer;
 import io.github.benas.randombeans.util.ReflectionUtils;
-import org.assertj.core.api.Assertions;
 import org.junit.Before;
 import org.junit.Ignore;
 import org.junit.Test;
@@ -257,7 +256,7 @@ public class EnhancedRandomImplTest {
         // Given
         enhancedRandom = aNewEnhancedRandomBuilder().seed(SEED).build();
 
-        String expectedString = "eOMtThyhVNLWUZNRcBaQKxIyedUsFwdk";
+        String expectedString = "eOMtThyhVNLWUZNRcBaQKxIy";
         Person expectedPerson = buildExpectedPerson();
         int[] expectedInts = buildExpectedInts();
 
@@ -431,19 +430,19 @@ public class EnhancedRandomImplTest {
         Person expectedPerson = new Person();
 
         Street street = new Street();
-        street.setName("tGKbgicZaHCBRQDSxVLhpfQGTMDYpsBZ");
+        street.setName("elQbxeTeQOvaScfqIOOmaaJxkyvRnLRY");
         street.setNumber(-1188957731);
         street.setType((byte) -35);
 
         Address address = new Address();
-        address.setCity("HeWKEJdpHYZGhtgdntugzvvKAXLhMLlN");
-        address.setCountry("gNfZBdyFGRajVfJNonEnOinZjUfzQhdg");
-        address.setZipCode("xvfBoeygjbUMaAIKKIkknjWEXJUfPxxQ");
+        address.setCity("CBRQDSxVL");
+        address.setCountry("hpfQGTMDYpsBZxvfBoe");
+        address.setZipCode("tGKbgicZaH");
         address.setStreet(street);
 
-        expectedPerson.setName("6iahpms0vt904iii4q2e29mmjg");
-        expectedPerson.setEmail("elQbxeTeQOvaScfqIOOmaaJxkyvRnLRY");
-        expectedPerson.setPhoneNumber("LLfDTDGspDbQvBQYuxiXXVytGCxzVllp");
+        expectedPerson.setName("wCTSeCODYsELoVqtepGSijxlz");
+        expectedPerson.setEmail("edUsFwdk");
+        expectedPerson.setPhoneNumber("ygjbUMaAIKKIkknjWEXJ");
         expectedPerson.setGender(Gender.FEMALE);
         expectedPerson.setAddress(address);
 
