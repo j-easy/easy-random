@@ -47,7 +47,7 @@ import static io.github.benas.randombeans.util.DateUtils.toDate;
  *
  * @author Rémi Alvergnat (toilal.dev@gmail.com)
  */
-@Priority(-255)
+@Priority(-3)
 public class JodaTimeRandomizerRegistry implements RandomizerRegistry {
 
     private final Map<Class<?>, Randomizer<?>> randomizers = new HashMap<>();

@@ -39,7 +39,7 @@ import java.util.Map;
  *
  * @author Mahmoud Ben Hassine (mahmoud.benhassine@icloud.com)
  */
-@Priority(-254)
+@Priority(0)
 public class CustomRandomizerRegistry implements RandomizerRegistry {
 
     private final Map<FieldDefinition<?, ?>, Randomizer<?>> customFieldRandomizersRegistry = new HashMap<>();

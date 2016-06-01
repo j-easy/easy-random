@@ -38,7 +38,7 @@ import java.lang.reflect.Field;
  *
  * @author Mahmoud Ben Hassine (mahmoud.benhassine@icloud.com)
  */
-@Priority(-253)
+@Priority(-2)
 public class AnnotationRandomizerRegistry implements RandomizerRegistry {
 
     @Override

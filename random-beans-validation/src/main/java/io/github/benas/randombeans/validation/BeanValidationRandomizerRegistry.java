@@ -31,32 +31,37 @@ import io.github.benas.randombeans.api.RandomizerRegistry;
 import io.github.benas.randombeans.randomizers.misc.ConstantRandomizer;
 import io.github.benas.randombeans.randomizers.misc.NullRandomizer;
 import io.github.benas.randombeans.randomizers.range.*;
+import io.github.benas.randombeans.randomizers.text.CharacterRandomizer;
 import io.github.benas.randombeans.randomizers.text.StringDelegatingRandomizer;
-import io.github.benas.randombeans.randomizers.text.StringRandomizer;
 import io.github.benas.randombeans.util.Constants;
 
 import javax.validation.constraints.*;
 import java.lang.reflect.Field;
 import java.math.BigDecimal;
 import java.math.BigInteger;
+import java.nio.charset.Charset;
 import java.util.Calendar;
 import java.util.Date;
 
 import static io.github.benas.randombeans.randomizers.range.IntegerRangeRandomizer.aNewIntegerRangeRandomizer;
+import static io.github.benas.randombeans.randomizers.text.CharacterRandomizer.aNewCharacterRandomizer;
 
 /**
  * A registry of randomizers to support fields annotated with the <a href="http://beanvalidation.org/">JSR 349</a> annotations.
  *
  * @author Rémi Alvergnat (toilal.dev@gmail.com)
  */
-@Priority(-128)
+@Priority(-1)
 public class BeanValidationRandomizerRegistry implements RandomizerRegistry {
 
     private long seed;
 
+    private Charset charset;
+
     @Override
     public void init(EnhancedRandomParameters parameters) {
         this.seed = parameters.getSeed();
+        this.charset = parameters.getCharset();
     }
 
     @Override
@@ -221,11 +226,21 @@ public class BeanValidationRandomizerRegistry implements RandomizerRegistry {
         if (field.isAnnotationPresent(Size.class)) {
             Size sizeAnnotation = field.getAnnotation(Size.class);
 
-            int min = sizeAnnotation.min();
-            int max = sizeAnnotation.max();
+            final int min = sizeAnnotation.min();
+            final int max = sizeAnnotation.max();
             if (fieldType.equals(String.class)) {
-                int randomLength = aNewIntegerRangeRandomizer(min, max).getRandomValue();
-                return new StringRandomizer(randomLength, seed);
+                final int randomLength = aNewIntegerRangeRandomizer(min, max).getRandomValue();
+                return new Randomizer<String>() {
+                    private final CharacterRandomizer characterRandomizer = aNewCharacterRandomizer(charset, seed);
+                    @Override
+                    public String getRandomValue() {
+                        StringBuilder stringBuilder = new StringBuilder();
+                        for (int i = 0; i < randomLength; i++) {
+                            stringBuilder.append(characterRandomizer.getRandomValue());
+                        }
+                        return stringBuilder.toString();
+                    }
+                };
             }
         }
 

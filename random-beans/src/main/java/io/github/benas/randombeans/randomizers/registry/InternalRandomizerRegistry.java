@@ -63,7 +63,7 @@ import static io.github.benas.randombeans.util.DateUtils.toDate;
  *
  * @author Rémi Alvergnat (toilal.dev@gmail.com)
  */
-@Priority(-255)
+@Priority(-5)
 public class InternalRandomizerRegistry implements RandomizerRegistry {
 
     private final Map<Class<?>, Randomizer<?>> randomizers = new HashMap<>();

@@ -46,7 +46,7 @@ import static java.time.LocalDateTime.of;
  *
  * @author Mahmoud Ben Hassine (mahmoud.benhassine@icloud.com)
  */
-@Priority(-255)
+@Priority(-4)
 public class TimeRandomizerRegistry implements RandomizerRegistry {
 
     private final Map<Class<?>, Randomizer<?>> randomizers = new HashMap<>();
