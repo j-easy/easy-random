@@ -24,7 +24,6 @@
 
 package io.github.benas.randombeans.randomizers.range;
 
-import io.github.benas.randombeans.EnhancedRandomBuilder;
 import io.github.benas.randombeans.annotation.Randomizer;
 import io.github.benas.randombeans.annotation.RandomizerArgument;
 import io.github.benas.randombeans.api.EnhancedRandom;
@@ -73,40 +72,37 @@ public class IntegerRangeRandomizerTest extends AbstractRangeRandomizerTest<Inte
     public void shouldAlwaysGenerateTheSameValueForTheSameSeed() {
         // given
         IntegerRangeRandomizer integerRangeRandomizer = aNewIntegerRangeRandomizer(min, max, SEED);
-        
+
         // when
         Integer i = integerRangeRandomizer.getRandomValue();
 
         then(i).isEqualTo(7);
     }
 
-    public static class TestData {
-        public TestData(int price) {
-            this.price = price;
+    @Test
+    public void annotationShouldWorkWithRange() {
+        TestData data = null;
+        for (int x = 0; x < 10; x++) {
+            data = EnhancedRandom.random(TestData.class);
+            then(data.getPrice()).isBetween(200, 500);
         }
+    }
 
-        @Randomizer(value=IntegerRangeRandomizer.class, args={
-                @RandomizerArgument(value="200", type=Integer.class),
-                @RandomizerArgument(value="500", type=Integer.class)
+    public static class TestData {
+        @Randomizer(value = IntegerRangeRandomizer.class, args = {
+                @RandomizerArgument(value = "200", type = Integer.class),
+                @RandomizerArgument(value = "500", type = Integer.class)
         })
-        private int price;
+        private final int price;
 
-        public void setPrice(int price) {
+        public TestData(int price) {
             this.price = price;
         }
 
         public int getPrice() {
             return price;
         }
-    }
 
-    @Test
-    public void annotationShouldWorkWithRange() {
-        TestData data = null;
-        for(int x=0; x < 10; x++) {
-            data = EnhancedRandom.random(TestData.class);
-            then(data.getPrice()).isBetween(200, 500);
-        }
     }
 
 }

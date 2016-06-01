@@ -42,7 +42,6 @@ import static org.assertj.core.api.Assertions.entry;
 import static org.mockito.Mockito.when;
 
 @RunWith(MockitoJUnitRunner.class)
-@SuppressWarnings({"unchecked", "rawtypes"})
 public class MapPopulatorTest {
 
     private static final int SIZE = 1;
@@ -129,13 +128,5 @@ public class MapPopulatorTest {
         private Map<String, String> typedMap;
         private HashMap<String, String> typedConcreteMap;
 
-        public Map getRawMap() { return rawMap; }
-        public void setRawMap(Map rawMap) { this.rawMap = rawMap; }
-        public HashMap getConcreteMap() { return concreteMap; }
-        public void setConcreteMap(HashMap concreteMap) { this.concreteMap = concreteMap; }
-        public Map<String, String> getTypedMap() { return typedMap; }
-        public void setTypedMap(Map<String, String> typedMap) { this.typedMap = typedMap; }
-        public HashMap<String, String> getTypedConcreteMap() { return typedConcreteMap; }
-        public void setTypedConcreteMap(HashMap<String, String> typedConcreteMap) { this.typedConcreteMap = typedConcreteMap; }
     }
 }

@@ -37,31 +37,8 @@ public class Mamals {
         return mamal;
     }
 
-    public void setMamal(Mammal mamal) {
-        this.mamal = mamal;
-    }
-
     public MammalImpl getMamalImpl() {
         return mamalImpl;
     }
 
-    public void setMamalImpl(MammalImpl mamalImpl) {
-        this.mamalImpl = mamalImpl;
-    }
-
-    public List<Mammal> getMamalList() {
-        return mamalList;
-    }
-
-    public void setMamalList(List<Mammal> mamalList) {
-        this.mamalList = mamalList;
-    }
-
-    public List<MammalImpl> getMamalImplList() {
-        return mamalImplList;
-    }
-
-    public void setMamalImplList(List<MammalImpl> mamalImplList) {
-        this.mamalImplList = mamalImplList;
-    }
 }

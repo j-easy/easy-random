@@ -24,9 +24,9 @@
 
 package io.github.benas.randombeans.randomizers.time;
 
-import java.util.TimeZone;
-
 import io.github.benas.randombeans.randomizers.AbstractRandomizer;
+
+import java.util.TimeZone;
 
 /**
  * Generate a random {@link TimeZone}.
@@ -46,15 +46,6 @@ public class TimeZoneRandomizer extends AbstractRandomizer<TimeZone> {
      */
     public TimeZoneRandomizer(final long seed) {
         super(seed);
-    }
-
-    /**
-     * Create a new {@link TimeZoneRandomizer}.
-     *
-     * @return a new {@link TimeZoneRandomizer}.
-     */
-    public static TimeZoneRandomizer aNewTimeZoneRandomizer() {
-        return new TimeZoneRandomizer();
     }
 
     /**

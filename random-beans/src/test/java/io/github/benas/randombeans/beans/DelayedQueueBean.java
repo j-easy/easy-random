@@ -27,27 +27,11 @@ package io.github.benas.randombeans.beans;
 import lombok.Data;
 
 import java.util.concurrent.DelayQueue;
-import java.util.concurrent.Delayed;
-import java.util.concurrent.TimeUnit;
 
-@SuppressWarnings("rawtypes")
 @Data
 public class DelayedQueueBean {
 
     private DelayQueue delayQueue;
-    private DelayQueue<DummyDelayed> typedDelayQueue;
 
 
-    private class DummyDelayed implements Delayed {
-
-        @Override
-        public long getDelay(TimeUnit timeUnit) {
-            return 0;
-        }
-
-        @Override
-        public int compareTo(Delayed delayed) {
-            return 0;
-        }
-    }
 }

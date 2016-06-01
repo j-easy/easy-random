@@ -89,7 +89,6 @@ public class CollectionPopulatorTest {
         Field field = Foo.class.getDeclaredField("typedInterfaceList");
 
         // When
-        @SuppressWarnings("unchecked")
         Collection<String> collection = (Collection<String>) collectionPopulator.getRandomCollection(field, context);
 
         // Then
@@ -104,7 +103,6 @@ public class CollectionPopulatorTest {
         Field field = Foo.class.getDeclaredField("typedConcreteList");
 
         // When
-        @SuppressWarnings("unchecked")
         Collection<String> collection = (Collection<String>) collectionPopulator.getRandomCollection(field, context);
 
         // Then
@@ -118,20 +116,11 @@ public class CollectionPopulatorTest {
         assertThat(collection).isInstanceOf(ArrayList.class).isEmpty();
     }
 
-    @SuppressWarnings("rawtypes")
     class Foo {
         private List rawInterfaceList;
         private List<String> typedInterfaceList;
         private ArrayList rawConcreteList;
         private ArrayList<String> typedConcreteList;
 
-        public List getRawInterfaceList() { return rawInterfaceList; }
-        public void setRawInterfaceList(List rawInterfaceList) { this.rawInterfaceList = rawInterfaceList; }
-        public List<String> getTypedInterfaceList() { return typedInterfaceList; }
-        public void setTypedInterfaceList(List<String> typedInterfaceList) { this.typedInterfaceList = typedInterfaceList; }
-        public ArrayList getRawConcreteList() { return rawConcreteList; }
-        public void setRawConcreteList(ArrayList rawConcreteList) { this.rawConcreteList = rawConcreteList; }
-        public ArrayList<String> getTypedConcreteList() { return typedConcreteList; }
-        public void setTypedConcreteList(ArrayList<String> typedConcreteList) { this.typedConcreteList = typedConcreteList; }
     }
 }

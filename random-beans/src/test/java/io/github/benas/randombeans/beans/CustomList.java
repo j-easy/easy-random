@@ -1,6 +1,9 @@
 package io.github.benas.randombeans.beans;
 
-import java.util.*;
+import java.util.Collection;
+import java.util.Iterator;
+import java.util.List;
+import java.util.ListIterator;
 
 public class CustomList implements List<String> {
 
@@ -8,10 +11,6 @@ public class CustomList implements List<String> {
 
     public String getName() {
         return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
     }
 
     @Override

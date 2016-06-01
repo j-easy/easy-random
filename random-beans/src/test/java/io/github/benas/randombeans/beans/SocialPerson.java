@@ -33,11 +33,4 @@ public class SocialPerson extends Person {
     public SocialPerson() {
     }
 
-    public Set<Person> getFriends() {
-        return friends;
-    }
-
-    public void setFriends(Set<Person> friends) {
-        this.friends = friends;
-    }
 }

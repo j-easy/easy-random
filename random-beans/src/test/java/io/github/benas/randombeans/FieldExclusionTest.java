@@ -26,22 +26,22 @@ package io.github.benas.randombeans;
 
 import io.github.benas.randombeans.api.EnhancedRandom;
 import io.github.benas.randombeans.api.Randomizer;
-import io.github.benas.randombeans.beans.exclusion.C;
 import io.github.benas.randombeans.beans.Human;
 import io.github.benas.randombeans.beans.Person;
+import io.github.benas.randombeans.beans.exclusion.C;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.Mock;
 import org.mockito.runners.MockitoJUnitRunner;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import static io.github.benas.randombeans.EnhancedRandomBuilder.aNewEnhancedRandomBuilder;
 import static io.github.benas.randombeans.FieldDefinitionBuilder.field;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.Mockito.when;
-
-import java.util.ArrayList;
-import java.util.List;
 
 @RunWith(MockitoJUnitRunner.class)
 public class FieldExclusionTest {
@@ -234,15 +234,12 @@ public class FieldExclusionTest {
     }
 
     public static class InlineInitializationBean {
-        private List<String> myList = new ArrayList<>();
+        private final List<String> myList = new ArrayList<>();
 
         public List<String> getMyList() {
             return myList;
         }
 
-        public void setMyList(List<String> myList) {
-            this.myList = myList;
-        }
     }
 
 }

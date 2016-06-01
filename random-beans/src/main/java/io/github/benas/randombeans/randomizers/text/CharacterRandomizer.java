@@ -97,32 +97,11 @@ public class CharacterRandomizer extends AbstractRandomizer<Character> {
     /**
      * Create a new {@link CharacterRandomizer}.
      *
-     * @param charset to use
-     * @return a new {@link CharacterRandomizer}.
-     */
-    public static CharacterRandomizer aNewCharacterRandomizer(final Charset charset) {
-        return new CharacterRandomizer(charset);
-    }
-
-    /**
-     * Create a new {@link CharacterRandomizer}.
-     *
      * @param seed initial seed
      * @return a new {@link CharacterRandomizer}.
      */
     public static CharacterRandomizer aNewCharacterRandomizer(final long seed) {
         return new CharacterRandomizer(seed);
-    }
-
-    /**
-     * Create a new {@link CharacterRandomizer}.
-     *
-     * @param charset to use
-     * @param seed    initial seed
-     * @return a new {@link CharacterRandomizer}.
-     */
-    public static CharacterRandomizer aNewCharacterRandomizer(final Charset charset, final long seed) {
-        return new CharacterRandomizer(charset, seed);
     }
 
     @Override

@@ -76,16 +76,8 @@ public class Person extends Human implements Comparable<Person> {
         return nicknames;
     }
 
-    public void setNicknames(List<String> nicknames) {
-        this.nicknames = nicknames;
-    }
-
     public Date getBirthDate() {
         return birthDate;
-    }
-
-    public void setBirthDate(Date birthdate) {
-        this.birthDate = birthdate;
     }
 
     public String getPhoneNumber() {
@@ -98,18 +90,6 @@ public class Person extends Human implements Comparable<Person> {
 
     public String getExcluded() {
         return excluded;
-    }
-
-    public void setExcluded(String excluded) {
-        this.excluded = excluded;
-    }
-
-    public Person getParent() {
-        return parent;
-    }
-
-    public void setParent(Person parent) {
-        this.parent = parent;
     }
 
     @Override

@@ -115,32 +115,11 @@ public class StringRandomizer extends AbstractRandomizer<String> {
     /**
      * Create a new {@link StringRandomizer}.
      *
-     * @param charset to use
-     * @return a new {@link StringRandomizer}.
-     */
-    public static StringRandomizer aNewStringRandomizer(final Charset charset) {
-        return new StringRandomizer(charset);
-    }
-
-    /**
-     * Create a new {@link StringRandomizer}.
-     *
      * @param seed initial seed
      * @return a new {@link StringRandomizer}.
      */
     public static StringRandomizer aNewStringRandomizer(final long seed) {
         return new StringRandomizer(seed);
-    }
-
-    /**
-     * Create a new {@link StringRandomizer}.
-     *
-     * @param charset to use
-     * @param seed    initial seed
-     * @return a new {@link StringRandomizer}.
-     */
-    public static StringRandomizer aNewStringRandomizer(final Charset charset, final long seed) {
-        return new StringRandomizer(charset, seed);
     }
 
     /**
@@ -152,18 +131,6 @@ public class StringRandomizer extends AbstractRandomizer<String> {
      */
     public static StringRandomizer aNewStringRandomizer(final int length, final long seed) {
         return new StringRandomizer(length, seed);
-    }
-
-    /**
-     * Create a new {@link StringRandomizer}.
-     *
-     * @param charset to use
-     * @param length  of the String to generate
-     * @param seed    initial seed
-     * @return a new {@link StringRandomizer}.
-     */
-    public static StringRandomizer aNewStringRandomizer(final Charset charset, final int length, final long seed) {
-        return new StringRandomizer(charset, length, seed);
     }
 
     @Override
