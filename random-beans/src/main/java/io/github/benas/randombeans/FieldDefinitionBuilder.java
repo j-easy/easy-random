@@ -83,7 +83,7 @@ public class FieldDefinitionBuilder {
      *
      * @return a new {@link FieldDefinition}
      */
-    public FieldDefinition get() {
+    public FieldDefinition<?, ?> get() {
         checkArguments();
         return new FieldDefinition<>(name, type, clazz);
     }

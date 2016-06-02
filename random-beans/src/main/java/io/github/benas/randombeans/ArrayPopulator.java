@@ -61,7 +61,7 @@ class ArrayPopulator {
 
     Object getRandomPrimitiveArray(final Class<?> primitiveType) {
         final int randomSize = abs((byte) enhancedRandom.nextInt());
-        final Randomizer randomizer = randomizerProvider.getRandomizerByType(primitiveType);
+        final Randomizer<?> randomizer = randomizerProvider.getRandomizerByType(primitiveType);
         final Object result = Array.newInstance(primitiveType, randomSize);
         for (int index = 0; index < randomSize; index++) {
             Array.set(result, index, randomizer.getRandomValue());
