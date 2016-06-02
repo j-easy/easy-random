@@ -74,7 +74,7 @@ class RandomizerProvider {
         Randomizer<?> getRandomizer(RandomizerRegistry registry);
     }
 
-    private class ByTypeProvider implements Provider {
+    private static class ByTypeProvider implements Provider {
 
         private final Class<?> type;
 
@@ -88,7 +88,7 @@ class RandomizerProvider {
         }
     }
 
-    private class ByFieldProvider implements Provider {
+    private static class ByFieldProvider implements Provider {
 
         private final Field field;
 
