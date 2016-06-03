@@ -37,6 +37,8 @@ import io.github.lukehutch.fastclasspathscanner.FastClasspathScanner;
 /**
  * Facade for {@link io.github.lukehutch.fastclasspathscanner.FastClasspathScanner}. It is a separate class from {@link ReflectionUtils},
  * so that the classpath scanning - which can take a few seconds - is only done when necessary.
+ *
+ * @author Pascal Schumacher (https://github.com/PascalSchumacher)
  */
 abstract class FastClasspathScannerFacade {
 

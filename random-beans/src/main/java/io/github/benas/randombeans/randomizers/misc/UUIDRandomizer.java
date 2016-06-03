@@ -29,6 +29,8 @@ import io.github.benas.randombeans.randomizers.AbstractRandomizer;
 
 /**
  * Generate a random {@link UUID}.
+ *
+ * @author Pascal Schumacher (https://github.com/PascalSchumacher)
  */
 public class UUIDRandomizer extends AbstractRandomizer<UUID> {
 

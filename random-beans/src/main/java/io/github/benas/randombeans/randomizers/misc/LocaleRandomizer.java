@@ -29,6 +29,8 @@ import io.github.benas.randombeans.randomizers.AbstractRandomizer;
 
 /**
  * Generate a random {@link Locale}.
+ *
+ * @author Pascal Schumacher (https://github.com/PascalSchumacher)
  */
 public class LocaleRandomizer extends AbstractRandomizer<Locale> {
 

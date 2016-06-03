@@ -29,6 +29,8 @@ import io.github.benas.randombeans.randomizers.AbstractRandomizer;
 
 /**
  * Generate a random {@link TimeZone}.
+ *
+ * @author Pascal Schumacher (https://github.com/PascalSchumacher)
  */
 public class TimeZoneRandomizer extends AbstractRandomizer<TimeZone> {
 

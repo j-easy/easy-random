@@ -39,7 +39,6 @@ public class JodaTimeDateTimeRandomizer extends JodaTimeAbstractRandomizer<DateT
     public JodaTimeDateTimeRandomizer() {
     }
 
-
     /**
      * Create a new {@link JodaTimeDateTimeRandomizer}.
      *

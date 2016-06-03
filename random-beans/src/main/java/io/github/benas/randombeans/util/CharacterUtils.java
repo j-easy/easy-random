@@ -31,6 +31,11 @@ import java.util.List;
 
 import static java.util.stream.Collectors.toList;
 
+/**
+ * Character utility methods.
+ *
+ * @author Pascal Schumacher (https://github.com/PascalSchumacher)
+ */
 @UtilityClass
 public class CharacterUtils {
 
