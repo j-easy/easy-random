@@ -365,7 +365,7 @@ public class EnhancedRandomImplTest {
         // Then
         char[] chars = person.getName().toCharArray();
         for (char c : chars) {
-            assertThat(letters.contains(c));
+            assertThat(letters).contains(c);
         }
     }
 
