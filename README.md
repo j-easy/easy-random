@@ -91,14 +91,15 @@ If you have any question, suggestion, or feedback, do not hesitate to use the [G
 
 * [Alberto Lagna](https://github.com/alagna)
 * [Adriano Machado](https://github.com/ammachado)
+* [Dovid Kopel](https://github.com/dovidkopel)
 * [Eric Taix](https://github.com/eric-taix)
+* [Fred Eckertson](https://github.com/feckertson)
 * [Jose Manuel Prieto](https://github.com/prietopa)
 * [Nikola Milivojevic](https://github.com/dziga)
-* [Rémi Alvergnat](http://www.pragmasphere.com)
-* [Fred Eckertson](https://github.com/feckertson)
 * [Pascal Schumacher](https://github.com/PascalSchumacher)
+* [Rémi Alvergnat](http://www.pragmasphere.com)
+* [Valters Vingolds](https://github.com/valters)
 * [Vincent Potucek](https://github.com/punkratz312)
-* [Dovid Kopel](https://github.com/dovidkopel)
 
 Thank you all for your contributions!
 

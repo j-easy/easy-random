@@ -149,6 +149,10 @@
             <name>Dovid Kopel</name>
             <url>https://github.com/dovidkopel</url>
         </contributor>
+        <contributor>
+            <name>Valters Vingolds</name>
+            <url>https://github.com/valters</url>
+        </contributor>
     </contributors>
 
     <dependencyManagement>
