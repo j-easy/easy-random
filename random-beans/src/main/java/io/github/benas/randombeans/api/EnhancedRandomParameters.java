@@ -121,7 +121,7 @@ public class EnhancedRandomParameters {
         this.timeRange = new Range<>(min, max);
     }
 
-    public class Range<T> {
+    public static class Range<T> {
         private T min;
         private T max;
 

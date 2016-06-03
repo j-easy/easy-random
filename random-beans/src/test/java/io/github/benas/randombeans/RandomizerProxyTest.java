@@ -46,7 +46,7 @@ public class RandomizerProxyTest {
         assertThat(randomizer.getRandomValue()).isInstanceOf(String.class).isEqualTo(FOO);
     }
 
-    private class MySupplier implements Supplier<String> {
+    private static class MySupplier implements Supplier<String> {
 
         @Override
         public String get() {

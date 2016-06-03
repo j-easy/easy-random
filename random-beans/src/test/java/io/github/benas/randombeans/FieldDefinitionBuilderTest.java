@@ -44,7 +44,7 @@ public class FieldDefinitionBuilderTest {
 
     @Test
     public void testFieldDefinitionBuilding() {
-        FieldDefinition fieldDefinition = builder.named(NAME).ofType(TYPE).inClass(CLASS).get();
+        FieldDefinition<?, ?> fieldDefinition = builder.named(NAME).ofType(TYPE).inClass(CLASS).get();
 
         assertThat(fieldDefinition).isNotNull();
         assertThat(fieldDefinition.getName()).isEqualTo(NAME);
