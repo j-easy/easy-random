@@ -61,6 +61,8 @@ public class EmailRandomizer extends FakerBasedRandomizer<String> {
 
     /**
      * Create a new {@link EmailRandomizer}.
+     *
+     * @return a new {@link EmailRandomizer}
      */
     public static EmailRandomizer aNewEmailRandomizer() {
         return new EmailRandomizer();
@@ -70,6 +72,7 @@ public class EmailRandomizer extends FakerBasedRandomizer<String> {
      * Create a new {@link EmailRandomizer}.
      *
      * @param seed the initial seed
+     * @return a new {@link EmailRandomizer}
      */
     public static EmailRandomizer aNewEmailRandomizer(final long seed) {
         return new EmailRandomizer(seed);
@@ -80,6 +83,7 @@ public class EmailRandomizer extends FakerBasedRandomizer<String> {
      *
      * @param seed   the initial seed
      * @param locale the locale to use
+     * @return a new {@link EmailRandomizer}
      */
     public static EmailRandomizer aNewEmailRandomizer(final long seed, final Locale locale) {
         return new EmailRandomizer(seed, locale);

@@ -50,6 +50,7 @@ public class ReflectionUtils {
      * Get declared fields of a given type.
      *
      * @param type the type to introspect
+     * @param <T>  the actual type to introspect
      * @return list of declared fields
      */
     public static <T> List<Field> getDeclaredFields(T type) {
@@ -111,6 +112,7 @@ public class ReflectionUtils {
      * Check if the type is abstract (either an interface or an abstract class).
      *
      * @param type the type to check
+     * @param <T>  the actual type to check
      * @return true if the type is abstract, false otherwise
      */
     public static <T> boolean isAbstract(final Class<T> type) {
@@ -121,6 +123,7 @@ public class ReflectionUtils {
      * Check if the type is public.
      *
      * @param type the type to check
+     * @param <T>  the actual type to check
      * @return true if the type is public, false otherwise
      */
     public static <T> boolean isPublic(final Class<T> type) {
@@ -234,6 +237,7 @@ public class ReflectionUtils {
      * Searches the classpath for all public concrete subtypes of the given interface or abstract class.
      *
      * @param type to search concrete subtypes of
+     * @param <T>  the actual type to introspect
      * @return a list of all concrete subtypes found
      */
     public static <T> List<Class<?>> getPublicConcreteSubTypesOf(final Class<T> type) {
@@ -278,7 +282,7 @@ public class ReflectionUtils {
                 Optional<Constructor<?>> matchingConstructor = asList(type.getConstructors())
                         .stream()
                         .filter(constructor -> hasSameArgumentNumber(constructor, randomizerArguments) &&
-                                               hasSameArgumentTypes(constructor, randomizerArguments))
+                                hasSameArgumentTypes(constructor, randomizerArguments))
                         .findFirst();
                 if (matchingConstructor.isPresent()) {
                     return (Randomizer<T>) matchingConstructor.get().newInstance(convertArguments(randomizerArguments));

@@ -61,6 +61,8 @@ public class StateRandomizer extends FakerBasedRandomizer<String> {
 
     /**
      * Create a new {@link StateRandomizer}.
+     *
+     * @return a new {@link StateRandomizer}
      */
     public static StateRandomizer aNewStateRandomizer() {
         return new StateRandomizer();
@@ -70,6 +72,7 @@ public class StateRandomizer extends FakerBasedRandomizer<String> {
      * Create a new {@link StateRandomizer}.
      *
      * @param seed the initial seed
+     * @return a new {@link StateRandomizer}
      */
     public static StateRandomizer aNewStateRandomizer(final long seed) {
         return new StateRandomizer(seed);
@@ -80,6 +83,7 @@ public class StateRandomizer extends FakerBasedRandomizer<String> {
      *
      * @param seed   the initial seed
      * @param locale the locale to use
+     * @return a new {@link StateRandomizer}
      */
     public static StateRandomizer aNewStateRandomizer(final long seed, final Locale locale) {
         return new StateRandomizer(seed, locale);

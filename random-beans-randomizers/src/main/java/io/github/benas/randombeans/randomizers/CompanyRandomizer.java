@@ -61,6 +61,8 @@ public class CompanyRandomizer extends FakerBasedRandomizer<String> {
 
     /**
      * Create a new {@link CompanyRandomizer}.
+     *
+     * @return a new {@link CompanyRandomizer}
      */
     public static CompanyRandomizer aNewCompanyRandomizer() {
         return new CompanyRandomizer();
@@ -70,6 +72,7 @@ public class CompanyRandomizer extends FakerBasedRandomizer<String> {
      * Create a new {@link CompanyRandomizer}.
      *
      * @param seed the initial seed
+     * @return a new {@link CompanyRandomizer}
      */
     public static CompanyRandomizer aNewCompanyRandomizer(final long seed) {
         return new CompanyRandomizer(seed);
@@ -80,6 +83,7 @@ public class CompanyRandomizer extends FakerBasedRandomizer<String> {
      *
      * @param seed   the initial seed
      * @param locale the locale to use
+     * @return a new {@link CompanyRandomizer}
      */
     public static CompanyRandomizer aNewCompanyRandomizer(final long seed, final Locale locale) {
         return new CompanyRandomizer(seed, locale);

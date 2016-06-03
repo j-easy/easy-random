@@ -74,6 +74,7 @@ public abstract class EnhancedRandom extends Random {
      * @param amount         the number of instances to generate
      * @param type           the type for which instances will be generated
      * @param excludedFields the name of fields to exclude
+     * @param <T>            the actual type of the target objects
      * @return a stream of random instances of the given type
      * @throws ObjectGenerationException when unable to populate an instance of the given type
      */
@@ -87,6 +88,7 @@ public abstract class EnhancedRandom extends Random {
      * @param amount         the number of instances to generate
      * @param type           the type for which instances will be generated
      * @param excludedFields the name of fields to exclude
+     * @param <T>            the actual type of the target objects
      * @return a list of random instances of the given type
      * @throws ObjectGenerationException when unable to populate an instance of the given type
      */
@@ -100,6 +102,7 @@ public abstract class EnhancedRandom extends Random {
      * @param amount         the number of instances to generate
      * @param type           the type for which instances will be generated
      * @param excludedFields the name of fields to exclude
+     * @param <T>            the actual type of the target objects
      * @return a set of random instances of the given type
      * @throws ObjectGenerationException when unable to populate an instance of the given type
      */
@@ -113,6 +116,7 @@ public abstract class EnhancedRandom extends Random {
      * @param amount         the number of instances to generate
      * @param type           the type for which instances will be generated
      * @param excludedFields the name of fields to exclude
+     * @param <T>            the actual type of the target objects
      * @return a collection of random instances of the given type
      * @throws ObjectGenerationException when unable to populate an instance of the given type
      */

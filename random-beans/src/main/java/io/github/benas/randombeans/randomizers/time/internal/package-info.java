@@ -22,6 +22,8 @@
  *   THE SOFTWARE.
  */
 /**
- * This package contains randomizers for date and time types.
+ * This package contains internal date and time randomizers.
+ *
+ * @author Mahmoud Ben Hassine (mahmoud.benhassine@icloud.com)
  */
-package io.github.benas.randombeans.randomizers.time;
+package io.github.benas.randombeans.randomizers.time.internal;

@@ -61,6 +61,8 @@ public class FullNameRandomizer extends FakerBasedRandomizer<String> {
 
     /**
      * Create a new {@link FullNameRandomizer}.
+     *
+     * @return a new {@link FullNameRandomizer}
      */
     public static FullNameRandomizer aNewFullNameRandomizer() {
         return new FullNameRandomizer();
@@ -70,6 +72,7 @@ public class FullNameRandomizer extends FakerBasedRandomizer<String> {
      * Create a new {@link FullNameRandomizer}.
      *
      * @param seed the initial seed
+     * @return a new {@link FullNameRandomizer}
      */
     public static FullNameRandomizer aNewFullNameRandomizer(final long seed) {
         return new FullNameRandomizer(seed);
@@ -80,6 +83,7 @@ public class FullNameRandomizer extends FakerBasedRandomizer<String> {
      *
      * @param seed   the initial seed
      * @param locale the locale to use
+     * @return a new {@link FullNameRandomizer}
      */
     public static FullNameRandomizer aNewFullNameRandomizer(final long seed, final Locale locale) {
         return new FullNameRandomizer(seed, locale);

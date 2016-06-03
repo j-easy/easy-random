@@ -29,6 +29,7 @@ import io.github.benas.randombeans.randomizers.AbstractRandomizer;
 /**
  * A {@link Randomizer} that generates a random value from a given {@link Enum}.
  *
+ * @param <E> the type of elements in the enumeration
  * @author Mahmoud Ben Hassine (mahmoud.benhassine@icloud.com)
  */
 public class EnumRandomizer<E extends Enum<E>> extends AbstractRandomizer<E> {
@@ -60,6 +61,7 @@ public class EnumRandomizer<E extends Enum<E>> extends AbstractRandomizer<E> {
      * Create a new {@link EnumRandomizer}.
      *
      * @param enumeration the enumeration from which this randomizer will generate random values
+     * @param <E>         the type of elements in the enumeration
      * @return a new {@link EnumRandomizer}.
      */
     public static <E extends Enum<E>> EnumRandomizer<E> aNewEnumRandomizer(final Class<E> enumeration) {
@@ -71,6 +73,7 @@ public class EnumRandomizer<E extends Enum<E>> extends AbstractRandomizer<E> {
      *
      * @param enumeration the enumeration from which this randomizer will generate random values
      * @param seed        the initial seed
+     * @param <E>         the type of elements in the enumeration
      * @return a new {@link EnumRandomizer}.
      */
     public static <E extends Enum<E>> EnumRandomizer<E> aNewEnumRandomizer(final Class<E> enumeration, final long seed) {

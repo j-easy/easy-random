@@ -36,6 +36,8 @@ public class ConstantRandomizer<T> implements Randomizer<T> {
 
     /**
      * Create a new {@link ConstantRandomizer}.
+     *
+     * @param value the constant value
      */
     public ConstantRandomizer(T value) {
         this.value = value;
@@ -44,6 +46,8 @@ public class ConstantRandomizer<T> implements Randomizer<T> {
     /**
      * Create a new {@link ConstantRandomizer}.
      *
+     * @param value the constant value
+     * @param <T>   the type of generated elements
      * @return a new {@link ConstantRandomizer}.
      */
     public static <T> ConstantRandomizer<T> aNewConstantRandomizer(final T value) {
