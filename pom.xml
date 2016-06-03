@@ -258,7 +258,7 @@
                     <executions>
                         <execution>
                             <goals>
-                                <goal>javadoc</goal>
+                                <goal>aggregate</goal>
                             </goals>
                             <phase>install</phase>
                         </execution>
