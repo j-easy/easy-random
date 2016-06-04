@@ -70,6 +70,7 @@ class RandomizerProvider {
         return null;
     }
 
+    @FunctionalInterface
     private interface Provider {
         Randomizer<?> getRandomizer(RandomizerRegistry registry);
     }
