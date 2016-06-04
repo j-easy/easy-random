@@ -44,7 +44,6 @@ import java.util.Date;
 import java.util.List;
 import java.util.Set;
 import java.util.function.Supplier;
-import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 import static io.github.benas.randombeans.EnhancedRandomBuilder.aNewEnhancedRandomBuilder;
@@ -55,6 +54,7 @@ import static io.github.benas.randombeans.util.CharacterUtils.filterLetters;
 import static io.github.benas.randombeans.util.DateUtils.toDate;
 import static java.time.LocalDate.of;
 import static java.util.Arrays.asList;
+import static java.util.stream.Collectors.toList;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.fail;
 import static org.assertj.core.api.BDDAssertions.then;
@@ -65,6 +65,7 @@ public class EnhancedRandomImplTest {
 
     private static final String FOO = "foo";
     private static final long SEED = 123L;
+    private static final int SIZE = 5;
 
     @Mock
     private Randomizer<String> randomizer;
@@ -84,26 +85,31 @@ public class EnhancedRandomImplTest {
     @Test
     public void generatedBeansShouldBeCorrectlyPopulated() {
         Person person = enhancedRandom.nextObject(Person.class);
+        validatePerson(person);
+    }
 
-        assertThat(person).isNotNull();
-        assertThat(person.getEmail()).isNotEmpty();
-        assertThat(person.getGender()).isIn(asList(Gender.values()));
-        assertThat(person.getBirthDate()).isNotNull();
-        assertThat(person.getPhoneNumber()).isNotEmpty();
-        assertThat(person.getNicknames()).isNotNull();
-        assertThat(person.getName()).isNotEmpty();
+    @Test
+    public void generatedStreamOfBeansShouldBeCorrectlyPopulated() {
+        Stream<Person> persons = randomStreamOf(SIZE, Person.class);
+        validatePersons(persons.collect(toList()), SIZE);
+    }
 
-        final Address address = person.getAddress();
-        assertThat(address).isNotNull();
-        assertThat(address.getCity()).isNotEmpty();
-        assertThat(address.getCountry()).isNotEmpty();
-        assertThat(address.getZipCode()).isNotEmpty();
+    @Test
+    public void generatedListOfBeansShouldBeCorrectlyPopulated() {
+        List<Person> persons = randomListOf(SIZE, Person.class);
+        validatePersons(persons, SIZE);
+    }
 
-        final Street street = address.getStreet();
-        assertThat(street).isNotNull();
-        assertThat(street.getName()).isNotEmpty();
-        assertThat(street.getNumber()).isNotNull();
-        assertThat(street.getType()).isNotNull();
+    @Test
+    public void generatedSetOfBeansShouldBeCorrectlyPopulated() {
+        Set<Person> persons = randomSetOf(SIZE, Person.class);
+        validatePersons(persons, SIZE);
+    }
+
+    @Test
+    public void generatedCollectionOfBeansShouldBeCorrectlyPopulated() {
+        Collection<Person> persons = randomCollectionOf(SIZE, Person.class);
+        validatePersons(persons, SIZE);
     }
 
     @Test
@@ -186,14 +192,14 @@ public class EnhancedRandomImplTest {
     }
 
     @Test(expected = ObjectGenerationException.class)
-    public void failsToPopulateInterfacesAndAbstractClassesIfScanClasspathForConcreteTypesIsDisabled() {
+    public void whenScanClasspathForConcreteTypesIsDisabled_thenShouldFailToPopulateInterfacesAndAbstractClasses() {
         enhancedRandom = aNewEnhancedRandomBuilder().scanClasspathForConcreteTypes(false).build();
 
         enhancedRandom.nextObject(Mamals.class);
     }
 
     @Test
-    public void generatesConcreteTypesForInterfacesAndAbstractClassesIfScanClasspathForConcreteTypesIsEnabled() {
+    public void whenScanClasspathForConcreteTypesIsEnabled_thenShouldPopulateInterfacesAndAbstractClasses() {
         enhancedRandom = aNewEnhancedRandomBuilder().scanClasspathForConcreteTypes(true).build();
 
         Mamals mamals = enhancedRandom.nextObject(Mamals.class);
@@ -203,7 +209,7 @@ public class EnhancedRandomImplTest {
     }
 
     @Test
-    public void generatesConcreteTypesForFieldsWithGenericParametersIfScanClasspathForConcreteTypesIsEnabled() {
+    public void whenScanClasspathForConcreteTypesIsEnabled_thenShouldPopulateConcreteTypesForFieldsWithGenericParameters() {
         enhancedRandom = aNewEnhancedRandomBuilder().scanClasspathForConcreteTypes(true).build();
 
         ComparableBean comparableBean = enhancedRandom.nextObject(ComparableBean.class);
@@ -212,7 +218,7 @@ public class EnhancedRandomImplTest {
     }
 
     @Test
-    public void generatedConcreteSubTypesMustBePopulatedWhenScanClasspathForConcreteTypesIsEnabled() {
+    public void whenScanClasspathForConcreteTypesIsEnabled_thenShouldPopulateConcreteSubTypes() {
         // Given
         enhancedRandom = EnhancedRandomBuilder.aNewEnhancedRandomBuilder().scanClasspathForConcreteTypes(true).build();
 
@@ -226,12 +232,12 @@ public class EnhancedRandomImplTest {
     }
 
     @Test(expected = IllegalArgumentException.class)
-    public void whenSpecifiedNumberOfBeansToGenerateIsNegativeThenShouldThrowAnIllegalArgumentException() {
+    public void whenSpecifiedNumberOfBeansToGenerateIsNegative_thenShouldThrowAnIllegalArgumentException() {
         enhancedRandom.objects(Person.class, -2);
     }
 
     @Test(expected = ObjectGenerationException.class)
-    public void whenUnableToInstantiateFieldThenShouldThrowABeanPopulationException() {
+    public void whenUnableToInstantiateField_thenShouldThrowBeanPopulationException() {
         enhancedRandom.nextObject(AbstractBean.class);
     }
 
@@ -276,7 +282,7 @@ public class EnhancedRandomImplTest {
     @Test
     public void supplierShouldBehaveLikeRandomizer() {
         // Given
-        enhancedRandom = aNewEnhancedRandomBuilder().randomize(String.class, supplier).build(); // All string fields should be equal to FOO
+        enhancedRandom = aNewEnhancedRandomBuilder().randomize(String.class, supplier).build();
 
         // When
         Person actual = enhancedRandom.nextObject(Person.class);
@@ -288,49 +294,6 @@ public class EnhancedRandomImplTest {
         assertThat(actual.getEmail()).isEqualTo(FOO);
         assertThat(actual.getEmail()).isEqualTo(FOO);
         assertThat(actual.getExcluded()).isNull();
-    }
-
-    @Test
-    public void generatedBeanWithStaticMethodMustBeValid() {
-        Person person = random(Person.class, "address", "phoneNumber");
-
-        validatePerson(person);
-    }
-
-    @Test
-    @Deprecated
-    public void testRandomStream_deprecatedAPI() {
-        List<Person> persons = random(Person.class, 5, "address", "phoneNumber").collect(Collectors.toList());
-        assertThat(persons.size()).isEqualTo(5);
-        persons.stream().forEach(this::validatePerson);
-    }
-
-    @Test
-    public void testRandomStream() {
-        List<Person> persons = randomStreamOf(5, Person.class, "address", "phoneNumber").collect(Collectors.toList());
-        assertThat(persons.size()).isEqualTo(5);
-        persons.stream().forEach(this::validatePerson);
-    }
-
-    @Test
-    public void test_randomListOf() {
-        List<Person> persons = randomListOf(5, Person.class, "address", "phoneNumber");
-        assertThat(persons.size()).isEqualTo(5);
-        persons.stream().forEach(this::validatePerson);
-    }
-
-    @Test
-    public void test_randomSetOf() {
-        Set<Person> persons = randomSetOf(5, Person.class, "address", "phoneNumber");
-        assertThat(persons.size()).isEqualTo(5);
-        persons.stream().forEach(this::validatePerson);
-    }
-
-    @Test
-    public void test_randomCollectionOf() {
-        Collection<Person> persons = randomCollectionOf(5, Person.class, "address", "phoneNumber");
-        assertThat(persons.size()).isEqualTo(5);
-        persons.stream().forEach(this::validatePerson);
     }
 
     @Test
@@ -406,11 +369,31 @@ public class EnhancedRandomImplTest {
         then(data.getPrice()).isBetween(200, 500);
     }
 
-    void validatePerson(Person person) {
+    void validatePerson(final Person person) {
         assertThat(person).isNotNull();
-        assertThat(person.getId()).isNotNull();
-        assertThat(person.getAddress()).isNull();
-        assertThat(person.getPhoneNumber()).isNull();
+        assertThat(person.getEmail()).isNotEmpty();
+        assertThat(person.getGender()).isIn(asList(Gender.values()));
+        assertThat(person.getBirthDate()).isNotNull();
+        assertThat(person.getPhoneNumber()).isNotEmpty();
+        assertThat(person.getNicknames()).isNotNull();
+        assertThat(person.getName()).isNotEmpty();
+
+        final Address address = person.getAddress();
+        assertThat(address).isNotNull();
+        assertThat(address.getCity()).isNotEmpty();
+        assertThat(address.getCountry()).isNotEmpty();
+        assertThat(address.getZipCode()).isNotEmpty();
+
+        final Street street = address.getStreet();
+        assertThat(street).isNotNull();
+        assertThat(street.getName()).isNotEmpty();
+        assertThat(street.getNumber()).isNotNull();
+        assertThat(street.getType()).isNotNull();
+    }
+
+    void validatePersons(final Collection<Person> persons, final int expectedSize) {
+        assertThat(persons).hasSize(expectedSize);
+        persons.stream().forEach(this::validatePerson);
     }
 
     @Ignore("Dummy test to see possible reasons of randomization failures")
