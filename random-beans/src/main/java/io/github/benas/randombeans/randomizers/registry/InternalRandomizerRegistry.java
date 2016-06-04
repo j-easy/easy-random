@@ -38,7 +38,6 @@ import io.github.benas.randombeans.randomizers.range.SqlDateRangeRandomizer;
 import io.github.benas.randombeans.randomizers.text.CharacterRandomizer;
 import io.github.benas.randombeans.randomizers.text.StringRandomizer;
 import io.github.benas.randombeans.randomizers.time.*;
-import io.github.benas.randombeans.util.DateUtils;
 
 import java.lang.reflect.Field;
 import java.math.BigDecimal;
