@@ -25,9 +25,16 @@ package io.github.benas.randombeans.beans;
 
 
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 
 @Data
+@EqualsAndHashCode(callSuper=true)
 public class ConcreteBar extends Bar {
 
     private String name;
+
+    @Override
+    public String getName() {
+        return name;
+    }
 }
