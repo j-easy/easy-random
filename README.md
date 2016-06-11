@@ -1,14 +1,27 @@
 # What is Random Beans ?
 
-Random Beans is a library that generates random Java beans.
-Generating random data is a common requirement in software testing, and this task can quickly become tedious when the domain model
-involves many related classes. Random Beans tries to make this task easier.
+Random Beans is a library that generates random Java beans. Let's say you have a class `Person` and you want to generate a random instance of it, here we go:
 
-# Why Random Beans?
+```java
+Person person = random(Person.class);
+```
+
+The static method `EnhancedRandom.random` is able to generate random instances of a given type.
+
+Let's see another example. If you want to generate a random stream of 10 persons, you can use the following snippet:
+
+```java
+Stream<Person> persons = randomStreamOf(10, Person.class);
+```
+
+This second static method of the `EnhancedRandom` API is able to generate a stream of random instances of a given type.
+
+# What is this EnhancedRandom API?
 
 The `java.util.Random` API provides 7 methods to generate random data: `nextInt()`, `nextLong()`, `nextDouble()`, `nextFloat()`, `nextBytes()`, `nextBoolean()` and `nextGaussian()`.
 What if you need to generate a random `String`? Or say a random instance of your domain object?
-Random Beans provides the `EnhancedRandom` API that extends `java.util.Random` with a method called `nextObject(Class type)`. This method is able to generate a random instance of any arbitrary Java bean:
+Random Beans provides the `EnhancedRandom` API that extends `java.util.Random` with a method called `nextObject(Class type)`.
+This method is able to generate a random instance of any arbitrary Java bean:
 
 ```java
 EnhancedRandom enhancedRandom = EnhancedRandomBuilder.aNewEnhancedRandomBuilder().build();
@@ -16,21 +29,32 @@ Person person = enhancedRandom.nextObject(Person.class);
 ```
 
 The `EnhancedRandomBuilder` is the main entry point to configure `EnhancedRandom` instances with a fluent API. It allows you to set all
-parameters to control how random data is generated. In most cases, default options are enough and you can use a static import of the `EnhancedRandom.random(Class object)` method:
+parameters to control how random data is generated:
 
 ```java
-Person person = random(Person.class);
+EnhancedRandom random = EnhancedRandomBuilder.aNewEnhancedRandomBuilder()
+   .maxCollectionSize(10)
+   .maxStringLength(20)
+   .charset(forName("UTF-8"))
+   .dateRange(today, tomorrow)
+   .timeRange(nine, five)
+   .scanClasspathForConcreteTypes(true)
+   .seed(123L)
+   .build();
 ```
 
-This snippet will generate a random instance of the `Person` type.
+For more details about these parameters, please refer to the [configuration parameters](https://github.com/benas/random-beans/wiki/Randomization-parameters) section.
+
+In most cases, default options are enough and you can use a static import of the `EnhancedRandom.random(Class object)` as seen previously.
+
+# Why Random Beans ?
 
 Populating a Java object with random data can look easy at first glance, unless your domain model involves many related classes.
-Let's see a quick example, suppose you have the following domain classes:
+In the previous example, let's suppose the `Person` type is defined as follows:
 
 ![](https://github.com/benas/random-beans/raw/master/site/person.png)
 
-With Random Beans, generating a random `Person` object is done with the previous snippet. The library will **recursively** populate
-all the object graph. **Without** Random Beans, you would write something like:
+**Without** Random Beans, you would write the following code in order to create an instance of the `Person` class:
 
 ```java
 Street street = new Street(12, (byte) 1, "Oxford street");
@@ -60,7 +84,8 @@ person.setGender(Gender.MALE);
 person.setAddress(address);
 ```
 
-As you can see, Random Beans can tremendously reduce the code of generating random data than doing it by hand.
+With Random Beans, generating a random `Person` object is done with `random(Person.class)`. The library will **recursively** populate
+all the object graph. That's a big difference!
 
 ## Quick links
 
