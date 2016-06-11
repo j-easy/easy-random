@@ -46,16 +46,6 @@ public class AnnotationRandomizerRegistry implements RandomizerRegistry {
     }
 
     /**
-     * Set the initial seed for all randomizers of the registry
-     *
-     * @param seed the initial seed
-     */
-    @Override
-    public void setSeed(long seed) {
-        // no op
-    }
-
-    /**
      * Retrieves a randomizer for the given field.
      *
      * @param field the field for which a randomizer was registered

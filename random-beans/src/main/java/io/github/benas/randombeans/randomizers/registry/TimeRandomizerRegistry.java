@@ -76,11 +76,6 @@ public class TimeRandomizerRegistry implements RandomizerRegistry {
     }
 
     @Override
-    public void setSeed(long seed) {
-        // no op
-    }
-
-    @Override
     public Randomizer<?> getRandomizer(final Field field) {
         return getRandomizer(field.getType());
     }

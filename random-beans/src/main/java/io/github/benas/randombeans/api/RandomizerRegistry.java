@@ -40,15 +40,6 @@ public interface RandomizerRegistry {
     void init(EnhancedRandomParameters parameters);
 
     /**
-     * Set the initial seed for all randomizers of the registry
-     *
-     * @param seed the initial seed
-     * @deprecated use {@link #init(EnhancedRandomParameters parameters)} instead
-     */
-    @Deprecated
-    void setSeed(final long seed);
-
-    /**
      * Retrieves a randomizer for the given field.
      *
      * @param field the field for which a randomizer was registered

@@ -64,11 +64,6 @@ public class BeanValidationRandomizerRegistry implements RandomizerRegistry {
     }
 
     @Override
-    public void setSeed(final long seed) {
-        this.seed = seed;
-    }
-
-    @Override
     public Randomizer<?> getRandomizer(final Field field) {
 
         Class<?> fieldType = field.getType();

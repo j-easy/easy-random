@@ -68,11 +68,6 @@ public class JodaTimeRandomizerRegistry implements RandomizerRegistry {
     }
 
     @Override
-    public void setSeed(final long seed) {
-        // no op
-    }
-
-    @Override
     public Randomizer<?> getRandomizer(final Field field) {
         return getRandomizer(field.getType());
     }

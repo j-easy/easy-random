@@ -49,16 +49,6 @@ public class CustomRandomizerRegistry implements RandomizerRegistry {
         // no op
     }
 
-    /**
-     * Set the initial seed for all randomizers of the registry
-     *
-     * @param seed the initial seed
-     */
-    @Override
-    public void setSeed(long seed) {
-        // no op
-    }
-
     @Override
     public Randomizer<?> getRandomizer(Field field) {
         Class<?> type = field.getType();
