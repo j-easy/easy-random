@@ -14,7 +14,7 @@ Let's see another example. If you want to generate a random stream of 10 persons
 Stream<Person> persons = randomStreamOf(10, Person.class);
 ```
 
-This second static method of the `EnhancedRandom` API is able to generate a stream of random instances of a given type.
+This second static method of the `EnhancedRandom` API generates a stream of random instances of a given type.
 
 # What is this EnhancedRandom API?
 
