@@ -56,7 +56,6 @@
         <jackson.version>2.7.4</jackson.version>
         <mockito-core.version>1.10.19</mockito-core.version>
         <junit-dataprovider.version>1.11.0</junit-dataprovider.version>
-        <maven-javadoc-plugin.version>2.10.3</maven-javadoc-plugin.version>
         <maven-surefire-plugin.version>2.19.1</maven-surefire-plugin.version>
         <maven-compiler-plugin.version>3.5.1</maven-compiler-plugin.version>
         <maven-cobertura-plugin.version>2.7</maven-cobertura-plugin.version>
@@ -254,19 +253,6 @@
                         </includes>
                         <reportFormat>html</reportFormat>
                     </configuration>
-                </plugin>
-                <plugin>
-                    <groupId>org.apache.maven.plugins</groupId>
-                    <artifactId>maven-javadoc-plugin</artifactId>
-                    <version>${maven-javadoc-plugin.version}</version>
-                    <executions>
-                        <execution>
-                            <goals>
-                                <goal>aggregate</goal>
-                            </goals>
-                            <phase>install</phase>
-                        </execution>
-                    </executions>
                 </plugin>
                 <plugin>
                     <groupId>org.apache.maven.plugins</groupId>
