@@ -2,6 +2,33 @@ RANDOM BEANS CHANGELOG
 ===================================
 https://github.com/benas/random-beans
 
+Changes in version 3.1.0 (2016-06-11)
+-------------------------------------
+
+# New features
+
+* issue #136: add `maxCollectionSize` parameter
+* issue #140: add `maxStringLength` parameter
+* issue #141: add `charset` parameter
+* issue #142: add `dateRange` parameter
+* issue #144: add `timeRange` parameter
+
+# API changes and improvements
+
+* issue #134:
+ * Deprecate method `random(Class, int, String...)` in `EnhancedRandom`
+ * Add method `randomStreamOf(Class, int, String...)` in `EnhancedRandom`
+ * Add method `randomListOf(Class, int, String...)` in `EnhancedRandom`
+ * Add method `randomSetOf(Class, int, String...)` in `EnhancedRandom`
+ * Add method `randomCollectionOf(Class, int, String...)` in `EnhancedRandom`
+* issue #130: add `@RandomizerArgument` annotation
+
+# Fixed Bugs
+
+* issue #131: InstantiationException when providing a randomizer without default constructor in `@Randomizer`
+* issue #135: Unable to exclude `java.time.Instant` from being randomized
+* issue #145: `StringRandomizer` should generate strings with random length
+
 Changes in version 3.0.0 (2016-05-07)
 -------------------------------------
 

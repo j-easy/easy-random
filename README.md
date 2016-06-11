@@ -74,8 +74,8 @@ As you can see, Random Beans can tremendously reduce the code of generating rand
 
 ## Current version
 
-* The current stable version is `3.0.0` : [![Maven Central](https://maven-badges.herokuapp.com/maven-central/io.github.benas/random-beans/badge.svg?style=flat)](http://search.maven.org/#artifactdetails|io.github.benas|random-beans|3.0.0|)
-* The current development version is `3.1.0-SNAPSHOT` : [![Build Status](https://travis-ci.org/benas/random-beans.svg?branch=master)](https://travis-ci.org/benas/random-beans)
+* The current stable version is `3.1.0` : [![Maven Central](https://maven-badges.herokuapp.com/maven-central/io.github.benas/random-beans/badge.svg?style=flat)](http://search.maven.org/#artifactdetails|io.github.benas|random-beans|3.1.0|)
+* The current development version is `3.2.0-SNAPSHOT` : [![Build Status](https://travis-ci.org/benas/random-beans.svg?branch=master)](https://travis-ci.org/benas/random-beans)
 
 You can find more details on how to get started [here](https://github.com/benas/random-beans/wiki/Getting-Started).
 
