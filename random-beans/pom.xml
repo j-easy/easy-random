@@ -27,7 +27,7 @@
     <parent>
         <artifactId>random-beans-parent</artifactId>
         <groupId>io.github.benas</groupId>
-        <version>3.1.1-SNAPSHOT</version>
+        <version>3.1.0-SNAPSHOT</version>
     </parent>
     <modelVersion>4.0.0</modelVersion>
 
