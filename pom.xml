@@ -257,19 +257,6 @@
                 </plugin>
                 <plugin>
                     <groupId>org.apache.maven.plugins</groupId>
-                    <artifactId>maven-javadoc-plugin</artifactId>
-                    <version>${maven-javadoc-plugin.version}</version>
-                    <executions>
-                        <execution>
-                            <goals>
-                                <goal>aggregate</goal>
-                            </goals>
-                            <phase>install</phase>
-                        </execution>
-                    </executions>
-                </plugin>
-                <plugin>
-                    <groupId>org.apache.maven.plugins</groupId>
                     <artifactId>maven-release-plugin</artifactId>
                     <version>${maven-release-plugin.version}</version>
                 </plugin>
