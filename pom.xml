@@ -53,7 +53,7 @@
         <fast-classpath-scanner.version>1.9.19</fast-classpath-scanner.version>
         <hibernate-validator.version>5.2.4.Final</hibernate-validator.version>
         <javax.el.version>2.2.6</javax.el.version>
-        <jackson.version>2.7.4</jackson.version>
+        <jackson.version>2.7.5</jackson.version>
         <mockito-core.version>1.10.19</mockito-core.version>
         <junit-dataprovider.version>1.11.0</junit-dataprovider.version>
         <maven-surefire-plugin.version>2.19.1</maven-surefire-plugin.version>
