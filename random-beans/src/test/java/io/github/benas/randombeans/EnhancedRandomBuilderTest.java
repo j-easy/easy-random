@@ -137,4 +137,16 @@ public class EnhancedRandomBuilderTest {
         assertThat(((EnhancedRandomImpl)enhancedRandom).getRandomCollectionSize()).isBetween(1, 42);
     }
 
+    @Test
+    public void shouldConfigureExclusionOfTypesFromBuilder() {
+        enhancedRandomBuilder = aNewEnhancedRandomBuilder();
+
+        EnhancedRandom enhancedRandom = enhancedRandomBuilder.exclude(String.class, Long.class).build();
+
+        Human randomHuman = enhancedRandom.nextObject(Human.class);
+
+        assertThat(randomHuman.getName()).isNull();
+        assertThat(randomHuman.getId()).isNull();
+    }
+
 }

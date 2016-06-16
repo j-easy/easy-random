@@ -138,6 +138,19 @@ public class EnhancedRandomBuilder {
     }
 
     /**
+     * Exclude types from being populated.
+     *
+     * @param types the types to exclude
+     * @return a pre configured {@link EnhancedRandomBuilder} instance
+     */
+    public EnhancedRandomBuilder exclude(Class<?>... types) {
+        for (Class<?> type : types) {
+            customRandomizerRegistry.registerRandomizer(type, new SkipRandomizer());
+        }
+        return this;
+    }
+
+    /**
      * Set the initial random seed.
      *
      * @param seed the initial seed
