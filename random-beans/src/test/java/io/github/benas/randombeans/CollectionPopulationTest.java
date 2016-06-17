@@ -275,6 +275,17 @@ public class CollectionPopulationTest {
         assertThat(customList.getName()).isNotNull();
     }
 
+    @Test
+    @SuppressWarnings("unchecked")
+    public void typeVariableCollectionTypesMustBeGeneratedEmpty() {
+        enhancedRandom = aNewEnhancedRandomBuilder().build();
+        TypeVariableCollectionBean<String, String> bean = enhancedRandom.nextObject(TypeVariableCollectionBean.class);
+        assertThat(bean.getCollection()).isEmpty();
+        assertThat(bean.getList()).isEmpty();
+        assertThat(bean.getSet()).isEmpty();
+        assertThat(bean.getMap()).isEmpty();
+    }
+
     private void assertContainsOnlyNonEmptyPersons(Collection<Person> persons) {
         for (Person Person : persons) {
             assertThat(Person).isNotNull();
