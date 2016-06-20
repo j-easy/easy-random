@@ -23,8 +23,10 @@
  */
 package io.github.benas.randombeans;
 
+import io.github.benas.randombeans.annotation.Exclude;
 import io.github.benas.randombeans.api.EnhancedRandom;
 
+import java.lang.annotation.Annotation;
 import java.lang.reflect.Field;
 import java.util.*;
 
@@ -46,10 +48,17 @@ class PopulatorContext {
 
     private final Stack<PopulatorContextStackItem> stack;
 
+    private final Set<Class<? extends Annotation>> excludedAnnotations;
+
     PopulatorContext(final String... excludedFields) {
         populatedBeans = new IdentityHashMap<>();
         stack = new Stack<>();
         this.excludedFields = new HashSet<>(toLowerCase(Arrays.asList(excludedFields)));
+        this.excludedAnnotations = new HashSet<>(Arrays.asList(Exclude.class));
+    }
+
+    void addExcludedAnnotation(final Collection<Class<? extends Annotation>> excludedAnnotations) {
+        this.excludedAnnotations.addAll(excludedAnnotations);
     }
 
     void addPopulatedBean(final Class<?> type, Object object) {
@@ -75,6 +84,10 @@ class PopulatorContext {
 
     Set<String> getExcludedFields() {
         return excludedFields;
+    }
+
+    Set<Class<? extends Annotation>> getExcludedAnnotations() {
+        return excludedAnnotations;
     }
 
     void pushStackItem(final PopulatorContextStackItem field) {

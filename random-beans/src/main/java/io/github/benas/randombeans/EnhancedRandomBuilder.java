@@ -23,6 +23,7 @@
  */
 package io.github.benas.randombeans;
 
+import io.github.benas.randombeans.annotation.Exclude;
 import io.github.benas.randombeans.api.EnhancedRandom;
 import io.github.benas.randombeans.api.EnhancedRandomParameters;
 import io.github.benas.randombeans.api.Randomizer;
@@ -30,6 +31,7 @@ import io.github.benas.randombeans.api.RandomizerRegistry;
 import io.github.benas.randombeans.randomizers.misc.SkipRandomizer;
 import io.github.benas.randombeans.randomizers.registry.CustomRandomizerRegistry;
 
+import java.lang.annotation.Annotation;
 import java.nio.charset.Charset;
 import java.time.LocalDate;
 import java.time.LocalTime;
@@ -147,6 +149,14 @@ public class EnhancedRandomBuilder {
         for (Class<?> type : types) {
             customRandomizerRegistry.registerRandomizer(type, new SkipRandomizer());
         }
+        return this;
+    }
+
+    public EnhancedRandomBuilder excludeAnnotations(Class<? extends Annotation>... annotations) {
+        Set<Class<? extends Annotation>> as = new HashSet();
+        as.add(Exclude.class);
+        as.addAll(Arrays.asList(annotations));
+        parameters.setExcludedAnnotations(as);
         return this;
     }
 

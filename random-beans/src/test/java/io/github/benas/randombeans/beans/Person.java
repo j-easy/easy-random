@@ -47,6 +47,9 @@ public class Person extends Human implements Comparable<Person> {
     @Exclude
     protected String excluded;
 
+    @FakeExclude
+    protected Object test;
+
     public String getEmail() {
         return email;
     }
@@ -109,6 +112,15 @@ public class Person extends Human implements Comparable<Person> {
 
     public void setParent(Person parent) {
         this.parent = parent;
+    }
+
+    public Object getTest() {
+        return test;
+    }
+
+    public Person setTest(Object test) {
+        this.test = test;
+        return this;
     }
 
     @Override
