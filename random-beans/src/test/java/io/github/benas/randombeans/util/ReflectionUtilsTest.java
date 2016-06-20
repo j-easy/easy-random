@@ -40,7 +40,7 @@ public class ReflectionUtilsTest {
 
     @Test
     public void testGetInheritedFields() throws Exception {
-        assertThat(ReflectionUtils.getInheritedFields(SocialPerson.class)).hasSize(11);
+        assertThat(ReflectionUtils.getInheritedFields(SocialPerson.class)).hasSize(12);
     }
 
     @Test
