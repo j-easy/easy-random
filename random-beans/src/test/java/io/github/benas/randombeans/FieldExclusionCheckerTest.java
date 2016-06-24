@@ -23,6 +23,8 @@
  */
 package io.github.benas.randombeans;
 
+import io.github.benas.randombeans.annotation.Exclude;
+import io.github.benas.randombeans.beans.FakeExclude;
 import io.github.benas.randombeans.beans.Human;
 import io.github.benas.randombeans.beans.Person;
 import org.junit.Before;
@@ -32,6 +34,7 @@ import org.mockito.Mock;
 import org.mockito.runners.MockitoJUnitRunner;
 
 import java.lang.reflect.Field;
+import java.util.Arrays;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
@@ -50,8 +53,24 @@ public class FieldExclusionCheckerTest {
 
     @Test
     public void fieldsAnnotatedWithAtExcludeShouldBeExcluded() throws NoSuchFieldException {
+        populatorContext = new PopulatorContext();
+        populatorContext.addExcludedAnnotation(Arrays.asList(Exclude.class));
         // Given
         Field field = Person.class.getDeclaredField("excluded");
+
+        // When
+        boolean actual = checker.shouldBeExcluded(field, populatorContext);
+
+        // Then
+        assertThat(actual).isTrue();
+    }
+
+    @Test
+    public void fieldsAnnotatedShouldBeExcluded() throws NoSuchFieldException {
+        populatorContext = new PopulatorContext();
+        populatorContext.addExcludedAnnotation(Arrays.asList(FakeExclude.class));
+        // Given
+        Field field = Person.class.getDeclaredField("test");
 
         // When
         boolean actual = checker.shouldBeExcluded(field, populatorContext);

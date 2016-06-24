@@ -23,13 +23,18 @@
  */
 package io.github.benas.randombeans.api;
 
+import io.github.benas.randombeans.annotation.Exclude;
 import io.github.benas.randombeans.util.Constants;
 
+import java.lang.annotation.Annotation;
 import java.nio.charset.Charset;
 import java.nio.charset.StandardCharsets;
 import java.time.LocalDate;
 import java.time.LocalTime;
+import java.util.Arrays;
+import java.util.HashSet;
 import java.util.Random;
+import java.util.Set;
 
 import static io.github.benas.randombeans.util.Constants.IN_TEN_YEARS;
 import static io.github.benas.randombeans.util.Constants.TEN_YEARS_AGO;
@@ -55,6 +60,8 @@ public class EnhancedRandomParameters {
 
     private Range<LocalTime> timeRange;
 
+    private Set<Class<? extends Annotation>> excludedAnnotations;
+
     public EnhancedRandomParameters() {
         scanClasspathForConcreteTypes = false;
         seed = new Random().nextLong();
@@ -63,6 +70,7 @@ public class EnhancedRandomParameters {
         charset = StandardCharsets.US_ASCII;
         dateRange = new Range<>(TEN_YEARS_AGO.toLocalDate(), IN_TEN_YEARS.toLocalDate());
         timeRange = new Range<>(LocalTime.MIN, LocalTime.MAX);
+        excludedAnnotations = new HashSet(Arrays.asList(Exclude.class));
     }
 
     public long getSeed() {
@@ -119,6 +127,15 @@ public class EnhancedRandomParameters {
 
     public void setTimeRange(final LocalTime min, final LocalTime max) {
         this.timeRange = new Range<>(min, max);
+    }
+
+    public EnhancedRandomParameters setExcludedAnnotations(Set<Class<? extends Annotation>> excludedAnnotations) {
+        this.excludedAnnotations = excludedAnnotations;
+        return this;
+    }
+
+    public Set<Class<? extends Annotation>> getExcludedAnnotations() {
+        return excludedAnnotations;
     }
 
     public static class Range<T> {
