@@ -25,6 +25,10 @@ package io.github.benas.randombeans;
 
 import lombok.Value;
 
+import java.lang.annotation.Annotation;
+import java.util.HashSet;
+import java.util.Set;
+
 /**
  * Defines attributes used to identify fields.
  *
@@ -41,6 +45,8 @@ public class FieldDefinition<T, F> {
 
     private final Class<T> clazz;
 
+    private final Set<Class <? extends Annotation>> annotations;
+
     /**
      * Create a new {@link FieldDefinition}.
      *
@@ -49,8 +55,20 @@ public class FieldDefinition<T, F> {
      * @param clazz the declaring class type
      */
     public FieldDefinition(String name, Class<F> type, Class<T> clazz) {
+        this(name, type, clazz, new HashSet<>());
+    }
+
+    /**
+     * Create a new {@link FieldDefinition}.
+     *
+     * @param name  the field name
+     * @param type  the filed type
+     * @param clazz the declaring class type
+     */
+    public FieldDefinition(String name, Class<F> type, Class<T> clazz, Set<Class <? extends Annotation>> annotations) {
         this.name = name;
         this.type = type;
         this.clazz = clazz;
+        this.annotations = annotations;
     }
 }

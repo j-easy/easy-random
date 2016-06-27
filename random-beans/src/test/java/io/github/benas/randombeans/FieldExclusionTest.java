@@ -25,6 +25,8 @@ package io.github.benas.randombeans;
 
 import io.github.benas.randombeans.api.EnhancedRandom;
 import io.github.benas.randombeans.api.Randomizer;
+import io.github.benas.randombeans.beans.Address;
+import io.github.benas.randombeans.beans.Website;
 import io.github.benas.randombeans.beans.exclusion.C;
 import io.github.benas.randombeans.beans.Human;
 import io.github.benas.randombeans.beans.Person;
@@ -83,6 +85,26 @@ public class FieldExclusionTest {
     }
 
     @Test
+    public void excludedFieldsUsingFieldDefinitionShouldNotBePopulated() {
+        // given
+        enhancedRandom = aNewEnhancedRandomBuilder()
+                .exclude(field().named("name").get())
+                .build();
+
+        // when
+        Person person = enhancedRandom.nextObject(Person.class);
+
+        // then
+        assertThat(person).isNotNull();
+        assertThat(person.getAddress()).isNotNull();
+        assertThat(person.getAddress().getStreet()).isNotNull();
+
+        // person.name and street.name should be null
+        assertThat(person.getName()).isNull();
+        assertThat(person.getAddress().getStreet().getName()).isNull();
+    }
+
+    @Test
     public void excludedDottedFieldsShouldNotBePopulated() {
         Person person = enhancedRandom.nextObject(Person.class, "address.street.name");
 
@@ -98,6 +120,41 @@ public class FieldExclusionTest {
 
         assertThat(person).isNotNull();
         assertThat(person.getExcluded()).isNull();
+    }
+
+    @Test
+    public void fieldsExcludedWithAnnotationViaFieldDefinitionShouldNotBePopulated() {
+        // given
+        enhancedRandom = aNewEnhancedRandomBuilder()
+                .exclude(field().isAnnotatedWith(Deprecated.class).get())
+                .build();
+
+        // when
+        Website website = enhancedRandom.nextObject(Website.class);
+
+        // then
+        assertThat(website).isNotNull();
+        assertThat(website.getProvider()).isNull();
+    }
+
+    @Test
+    public void fieldsExcludedFromTypeViaFieldDefinitionShouldNotBePopulated() {
+        // given
+        enhancedRandom = aNewEnhancedRandomBuilder()
+                .exclude(field().inClass(Address.class).get())
+                .build();
+
+        // when
+        Person person = enhancedRandom.nextObject(Person.class);
+
+        // then
+        assertThat(person).isNotNull();
+        assertThat(person.getAddress()).isNotNull();
+        // all fields declared in class Address must be null
+        assertThat(person.getAddress().getCity()).isNull();
+        assertThat(person.getAddress().getStreet()).isNull();
+        assertThat(person.getAddress().getZipCode()).isNull();
+        assertThat(person.getAddress().getCountry()).isNull();
     }
 
     @Test

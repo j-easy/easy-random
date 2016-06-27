@@ -23,6 +23,7 @@
  */
 package io.github.benas.randombeans.randomizers.registry;
 
+import io.github.benas.randombeans.FieldDefinition;
 import io.github.benas.randombeans.annotation.Exclude;
 import io.github.benas.randombeans.annotation.Priority;
 import io.github.benas.randombeans.api.EnhancedRandomParameters;
@@ -35,31 +36,36 @@ import java.lang.reflect.Field;
 import java.util.HashSet;
 import java.util.Set;
 
+import static io.github.benas.randombeans.FieldDefinitionBuilder.field;
+
 /**
- * A {@link RandomizerRegistry} to exclude fields using annotations.
+ * A {@link RandomizerRegistry} to exclude fields using a {@link FieldDefinition}.
  *
  * @author Mahmoud Ben Hassine (mahmoud.benhassine@icloud.com)
  */
 @Priority(0)
 public class ExclusionRandomizerRegistry implements RandomizerRegistry {
 
-    private Set<Class<? extends Annotation>> annotations = new HashSet<>();
+    private Set<FieldDefinition<?, ?>> fieldDefinitions = new HashSet<>();
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public void init(EnhancedRandomParameters parameters) {
-        annotations.add(Exclude.class);
+        fieldDefinitions.add(field().isAnnotatedWith(Exclude.class).get());
     }
 
     /**
-     * Retrieves a randomizer for the given field.
-     *
-     * @param field the field for which a randomizer was registered
-     * @return the randomizer registered for the given field
+     * {@inheritDoc}
      */
     @Override
     public Randomizer<?> getRandomizer(Field field) {
-        for (Class<? extends Annotation> annotation : annotations) {
-            if (field.isAnnotationPresent(annotation)) {
+        for (FieldDefinition<?, ?> fieldDefinition : fieldDefinitions) {
+            if (hasName(field, fieldDefinition.getName()) &&
+                    isDeclaredInClass(field, fieldDefinition.getClazz()) &&
+                    hasType(field, fieldDefinition.getType()) &&
+                    isAnnotatedWithOneOf(field, fieldDefinition.getAnnotations())) {
                 return new SkipRandomizer();
             }
         }
@@ -72,6 +78,44 @@ public class ExclusionRandomizerRegistry implements RandomizerRegistry {
     @Override
     public Randomizer<?> getRandomizer(Class<?> clazz) {
         return null;
+    }
+
+    /**
+     * Add a field definition.
+     *
+     * @param fieldDefinition to add
+     */
+    public void addFieldDefinition(final FieldDefinition<?, ?> fieldDefinition) {
+        fieldDefinitions.add(fieldDefinition);
+    }
+
+    /*
+     * If a criteria (name, type, declaring class or present annotations) is not specified (ie is null),
+     * return true to not include it in the combination
+     */
+
+    private boolean hasType(final Field field, final Class<?> type) {
+        return type == null || field.getType().equals(type);
+    }
+
+    private boolean hasName(final Field field, final String name) {
+        return name == null || field.getName().equals(name);
+    }
+
+    private boolean isDeclaredInClass(final Field field, final Class<?> clazz) {
+        return clazz == null || field.getDeclaringClass().equals(clazz);
+    }
+
+    private boolean isAnnotatedWithOneOf(final Field field, final Set<Class<? extends Annotation>> annotations) {
+        if (annotations.isEmpty()) {
+            return true;
+        }
+        for (Class<? extends Annotation> annotation : annotations) {
+            if (field.isAnnotationPresent(annotation)) {
+                return true;
+            }
+        }
+        return false;
     }
 
 }

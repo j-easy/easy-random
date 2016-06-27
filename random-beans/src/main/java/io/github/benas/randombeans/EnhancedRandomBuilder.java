@@ -27,8 +27,8 @@ import io.github.benas.randombeans.api.EnhancedRandom;
 import io.github.benas.randombeans.api.EnhancedRandomParameters;
 import io.github.benas.randombeans.api.Randomizer;
 import io.github.benas.randombeans.api.RandomizerRegistry;
-import io.github.benas.randombeans.randomizers.misc.SkipRandomizer;
 import io.github.benas.randombeans.randomizers.registry.CustomRandomizerRegistry;
+import io.github.benas.randombeans.randomizers.registry.ExclusionRandomizerRegistry;
 
 import java.nio.charset.Charset;
 import java.time.LocalDate;
@@ -36,6 +36,7 @@ import java.time.LocalTime;
 import java.util.*;
 import java.util.function.Supplier;
 
+import static io.github.benas.randombeans.FieldDefinitionBuilder.field;
 import static io.github.benas.randombeans.RandomizerProxy.asRandomizer;
 
 /**
@@ -47,6 +48,8 @@ public class EnhancedRandomBuilder {
 
     private final CustomRandomizerRegistry customRandomizerRegistry;
 
+    private final ExclusionRandomizerRegistry exclusionRandomizerRegistry;
+
     private final Set<RandomizerRegistry> userRegistries;
 
     private EnhancedRandomParameters parameters;
@@ -56,6 +59,7 @@ public class EnhancedRandomBuilder {
      */
     public EnhancedRandomBuilder() {
         customRandomizerRegistry = new CustomRandomizerRegistry();
+        exclusionRandomizerRegistry = new ExclusionRandomizerRegistry();
         userRegistries = new LinkedHashSet<>();
         parameters = new EnhancedRandomParameters();
     }
@@ -134,7 +138,8 @@ public class EnhancedRandomBuilder {
      * @return a pre configured {@link EnhancedRandomBuilder} instance
      */
     public <T, F> EnhancedRandomBuilder exclude(FieldDefinition<T, F> fieldDefinition) {
-        return randomize(fieldDefinition, new SkipRandomizer());
+        exclusionRandomizerRegistry.addFieldDefinition(fieldDefinition);
+        return this;
     }
 
     /**
@@ -145,7 +150,7 @@ public class EnhancedRandomBuilder {
      */
     public EnhancedRandomBuilder exclude(Class<?>... types) {
         for (Class<?> type : types) {
-            customRandomizerRegistry.registerRandomizer(type, new SkipRandomizer());
+            exclusionRandomizerRegistry.addFieldDefinition(field().ofType(type).get());
         }
         return this;
     }
@@ -261,9 +266,10 @@ public class EnhancedRandomBuilder {
 
     private LinkedHashSet<RandomizerRegistry> setupRandomizerRegistries() {
         LinkedHashSet<RandomizerRegistry> registries = new LinkedHashSet<>();
-        registries.add(customRandomizerRegistry); // programatically registered randomizers through randomize()
-        registries.addAll(userRegistries); // programatically registered registries through registerRandomizerRegistry()
-        registries.addAll(loadRegistries()); // registries added to classpath through the SPI
+        registries.add(customRandomizerRegistry);
+        registries.add(exclusionRandomizerRegistry);
+        registries.addAll(userRegistries);
+        registries.addAll(loadRegistries());
         registries.forEach(registry -> registry.init(parameters));
         return registries;
     }

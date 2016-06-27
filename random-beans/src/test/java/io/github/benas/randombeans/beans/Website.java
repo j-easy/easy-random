@@ -37,4 +37,7 @@ public class Website {
 
     private URI uri;
 
+    @Deprecated
+    private String provider;
+
 }

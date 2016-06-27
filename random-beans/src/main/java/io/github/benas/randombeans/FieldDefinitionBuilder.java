@@ -23,6 +23,11 @@
  */
 package io.github.benas.randombeans;
 
+import java.lang.annotation.Annotation;
+import java.util.Collections;
+import java.util.HashSet;
+import java.util.Set;
+
 /**
  * Builder for {@link FieldDefinition}.
  *
@@ -35,6 +40,8 @@ public class FieldDefinitionBuilder {
     private Class<?> type;
 
     private Class<?> clazz;
+
+    private Set<Class<? extends Annotation>> annotations = new HashSet<>();
 
     /**
      * Create a new {@link FieldDefinitionBuilder}.
@@ -79,19 +86,24 @@ public class FieldDefinitionBuilder {
     }
 
     /**
+     * Specify annotations on field.
+     *
+     * @param annotations present on the field
+     * @return the configured {@link FieldDefinitionBuilder}
+     */
+    @SafeVarargs
+    public final FieldDefinitionBuilder isAnnotatedWith(Class<? extends Annotation>... annotations) {
+        Collections.addAll(this.annotations, annotations);
+        return this;
+    }
+
+    /**
      * Create a new {@link FieldDefinition}.
      *
      * @return a new {@link FieldDefinition}
      */
     public FieldDefinition<?, ?> get() {
-        checkArguments();
-        return new FieldDefinition<>(name, type, clazz);
-    }
-
-    private void checkArguments() {
-        if (name == null || type == null || clazz == null) {
-            throw new IllegalArgumentException("Arguments 'name', 'type' and 'class' are required");
-        }
+        return new FieldDefinition<>(name, type, clazz, annotations);
     }
 
 }
