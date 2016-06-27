@@ -49,18 +49,6 @@ public class FieldExclusionCheckerTest {
     }
 
     @Test
-    public void fieldsAnnotatedWithAtExcludeShouldBeExcluded() throws NoSuchFieldException {
-        // Given
-        Field field = Person.class.getDeclaredField("excluded");
-
-        // When
-        boolean actual = checker.shouldBeExcluded(field, populatorContext);
-
-        // Then
-        assertThat(actual).isTrue();
-    }
-
-    @Test
     public void staticFieldsShouldBeExcluded() throws NoSuchFieldException {
         // Given
         Field field = Human.class.getDeclaredField("SERIAL_VERSION_UID");

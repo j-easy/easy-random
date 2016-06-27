@@ -23,8 +23,6 @@
  */
 package io.github.benas.randombeans;
 
-import io.github.benas.randombeans.annotation.Exclude;
-
 import java.lang.reflect.Field;
 import java.util.Set;
 
@@ -46,9 +44,6 @@ class FieldExclusionChecker {
      * @return true if the field should be excluded, false otherwise
      */
     boolean shouldBeExcluded(final Field field, final PopulatorContext context) {
-        if (field.isAnnotationPresent(Exclude.class)) {
-            return true;
-        }
         if (isStatic(field)) {
             return true;
         }

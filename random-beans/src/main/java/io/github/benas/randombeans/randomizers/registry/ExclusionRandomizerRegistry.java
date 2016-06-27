@@ -23,50 +23,55 @@
  */
 package io.github.benas.randombeans.randomizers.registry;
 
-import io.github.benas.randombeans.FieldDefinition;
+import io.github.benas.randombeans.annotation.Exclude;
 import io.github.benas.randombeans.annotation.Priority;
 import io.github.benas.randombeans.api.EnhancedRandomParameters;
 import io.github.benas.randombeans.api.Randomizer;
 import io.github.benas.randombeans.api.RandomizerRegistry;
+import io.github.benas.randombeans.randomizers.misc.SkipRandomizer;
 
+import java.lang.annotation.Annotation;
 import java.lang.reflect.Field;
-import java.util.HashMap;
-import java.util.Map;
+import java.util.HashSet;
+import java.util.Set;
 
 /**
- * Registry of user defined randomizers.
+ * A {@link RandomizerRegistry} to exclude fields using annotations.
  *
  * @author Mahmoud Ben Hassine (mahmoud.benhassine@icloud.com)
  */
-@Priority(-1)
-public class CustomRandomizerRegistry implements RandomizerRegistry {
+@Priority(0)
+public class ExclusionRandomizerRegistry implements RandomizerRegistry {
 
-    private final Map<FieldDefinition<?, ?>, Randomizer<?>> customFieldRandomizersRegistry = new HashMap<>();
-    private final Map<Class<?>, Randomizer<?>> customTypeRandomizersRegistry = new HashMap<>();
+    private Set<Class<? extends Annotation>> annotations = new HashSet<>();
 
     @Override
     public void init(EnhancedRandomParameters parameters) {
-        // no op
+        annotations.add(Exclude.class);
     }
 
+    /**
+     * Retrieves a randomizer for the given field.
+     *
+     * @param field the field for which a randomizer was registered
+     * @return the randomizer registered for the given field
+     */
     @Override
     public Randomizer<?> getRandomizer(Field field) {
-        Class<?> type = field.getType();
-        Randomizer<?> randomizer = customFieldRandomizersRegistry.get(new FieldDefinition<>(field.getName(), type, field.getDeclaringClass()));
-        return randomizer != null ? randomizer : customTypeRandomizersRegistry.get(type);
+        for (Class<? extends Annotation> annotation : annotations) {
+            if (field.isAnnotationPresent(annotation)) {
+                return new SkipRandomizer();
+            }
+        }
+        return null;
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
-    public Randomizer<?> getRandomizer(Class<?> type) {
-        return customTypeRandomizersRegistry.get(type);
-    }
-
-    public <T, F, R> void registerRandomizer(final FieldDefinition<T,F> fieldDefinition, final Randomizer<R> randomizer) {
-        customFieldRandomizersRegistry.put(fieldDefinition, randomizer);
-    }
-
-    public <T, R> void registerRandomizer(final Class<T> type, final Randomizer<R> randomizer) {
-        customTypeRandomizersRegistry.put(type, randomizer);
+    public Randomizer<?> getRandomizer(Class<?> clazz) {
+        return null;
     }
 
 }

@@ -50,7 +50,7 @@ import static io.github.benas.randombeans.randomizers.text.CharacterRandomizer.a
  *
  * @author Rémi Alvergnat (toilal.dev@gmail.com)
  */
-@Priority(-1)
+@Priority(-2)
 public class BeanValidationRandomizerRegistry implements RandomizerRegistry {
 
     private long seed;
