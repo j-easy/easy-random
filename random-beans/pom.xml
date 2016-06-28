@@ -111,6 +111,11 @@
             <artifactId>junit-dataprovider</artifactId>
             <scope>test</scope>
         </dependency>
+        <dependency>
+		    <groupId>com.github.mifmif</groupId>
+		    <artifactId>generex</artifactId>
+		    <version>1.0.1</version>
+		</dependency>
     </dependencies>
 
     <build>

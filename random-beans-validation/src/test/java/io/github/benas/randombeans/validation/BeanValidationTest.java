@@ -80,6 +80,8 @@ public class BeanValidationTest {
 
         final int length = briefMessage.length();
         assertThat(length).isBetween(2, 10);// @Size(min=2, max=10) String briefMessage;
+        
+        assertThat(bean.getRegexString().length()).isEqualTo(4);
     }
 
     @Test
