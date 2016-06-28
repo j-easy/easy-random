@@ -31,7 +31,6 @@ import io.github.benas.randombeans.api.Randomizer;
 import io.github.benas.randombeans.api.RandomizerRegistry;
 import io.github.benas.randombeans.randomizers.misc.SkipRandomizer;
 
-import java.lang.annotation.Annotation;
 import java.lang.reflect.Field;
 import java.util.HashSet;
 import java.util.Set;
@@ -44,7 +43,7 @@ import static io.github.benas.randombeans.FieldDefinitionBuilder.field;
  * @author Mahmoud Ben Hassine (mahmoud.benhassine@icloud.com)
  */
 @Priority(0)
-public class ExclusionRandomizerRegistry implements RandomizerRegistry {
+public class ExclusionRandomizerRegistry extends AbstractRandomizerRegistry implements RandomizerRegistry {
 
     private Set<FieldDefinition<?, ?>> fieldDefinitions = new HashSet<>();
 
@@ -87,35 +86,6 @@ public class ExclusionRandomizerRegistry implements RandomizerRegistry {
      */
     public void addFieldDefinition(final FieldDefinition<?, ?> fieldDefinition) {
         fieldDefinitions.add(fieldDefinition);
-    }
-
-    /*
-     * If a criteria (name, type, declaring class or present annotations) is not specified (ie is null),
-     * return true to not include it in the combination
-     */
-
-    private boolean hasType(final Field field, final Class<?> type) {
-        return type == null || field.getType().equals(type);
-    }
-
-    private boolean hasName(final Field field, final String name) {
-        return name == null || field.getName().equals(name);
-    }
-
-    private boolean isDeclaredInClass(final Field field, final Class<?> clazz) {
-        return clazz == null || field.getDeclaringClass().equals(clazz);
-    }
-
-    private boolean isAnnotatedWithOneOf(final Field field, final Set<Class<? extends Annotation>> annotations) {
-        if (annotations.isEmpty()) {
-            return true;
-        }
-        for (Class<? extends Annotation> annotation : annotations) {
-            if (field.isAnnotationPresent(annotation)) {
-                return true;
-            }
-        }
-        return false;
     }
 
 }

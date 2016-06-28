@@ -181,6 +181,18 @@ public class EnhancedRandomImplTest {
     }
 
     @Test
+    public void customRandomzierForNameShouldBeUsedToPopulateFieldsHavingTheGivenName() {
+        enhancedRandom = aNewEnhancedRandomBuilder()
+                .randomize(field().named("name").get(), new ConstantRandomizer<>("name"))
+                .build();
+
+        Person person = enhancedRandom.nextObject(Person.class);
+
+        assertThat(person.getName()).isEqualTo("name");
+        assertThat(person.getAddress().getStreet().getName()).isEqualTo("name");
+    }
+
+    @Test
     public void javaNetTypesShouldBePopulated() {
 
         Website website = enhancedRandom.nextObject(Website.class);

@@ -35,6 +35,7 @@ import java.time.LocalDate;
 import java.time.LocalTime;
 import java.util.*;
 import java.util.function.Supplier;
+import java.util.logging.Logger;
 
 import static io.github.benas.randombeans.FieldDefinitionBuilder.field;
 import static io.github.benas.randombeans.RandomizerProxy.asRandomizer;
@@ -45,6 +46,8 @@ import static io.github.benas.randombeans.RandomizerProxy.asRandomizer;
  * @author Mahmoud Ben Hassine (mahmoud.benhassine@icloud.com)
  */
 public class EnhancedRandomBuilder {
+
+    private static final Logger LOGGER = Logger.getLogger(EnhancedRandomBuilder.class.getName());
 
     private final CustomRandomizerRegistry customRandomizerRegistry;
 
@@ -84,6 +87,10 @@ public class EnhancedRandomBuilder {
      * @return a pre configured {@link EnhancedRandomBuilder} instance
      */
     public <T, F, R> EnhancedRandomBuilder randomize(FieldDefinition<T, F> fieldDefinition, Randomizer<R> randomizer) {
+        if (fieldDefinition.getType() == null) {
+            LOGGER.warning("Ambiguous field definition: Field type is mandatory to register a custom randomizer: " + randomizer);
+            return this;
+        }
         customRandomizerRegistry.registerRandomizer(fieldDefinition, randomizer);
         return this;
     }
