@@ -27,12 +27,33 @@ import com.mifmif.common.regex.Generex;
 
 import io.github.benas.randombeans.randomizers.AbstractRandomizer;
 
+/**
+ * Generate a random {@link String} that matches a regular expression
+ * 
+ * @author Rebecca McQuary
+ *
+ */
 public class RegexRandomizer extends AbstractRandomizer<String>{
 
 	Generex generex;
 	
+	/**
+     * Create a new {@link RegexRandomizer}.
+     *
+     * @param regex to create string from
+     */
 	public RegexRandomizer(String regex){
 		generex = new Generex(regex);
+	}
+	
+	/**
+	 * Create a new {@link RegexRandomizer}.
+	 * @param seed the initial seed
+	 * @param regex to create string from
+	 */
+	public RegexRandomizer(long seed, String regex){
+		generex = new Generex(regex);
+		generex.setSeed(seed);
 	}
 	
 	@Override

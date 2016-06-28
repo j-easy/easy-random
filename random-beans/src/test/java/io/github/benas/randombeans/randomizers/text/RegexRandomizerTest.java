@@ -27,7 +27,9 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 import org.junit.Test;
 
-public class RegexRandomizerTest {
+import io.github.benas.randombeans.randomizers.AbstractRandomizerTest;
+
+public class RegexRandomizerTest extends AbstractRandomizerTest<String>{
 
     @Test
     public void generatedValueShouldMatchRegex() {
@@ -35,5 +37,14 @@ public class RegexRandomizerTest {
     	RegexRandomizer randomizer = new RegexRandomizer(regex);
 
         assertThat(randomizer.getRandomValue()).matches(regex);
+    }
+    
+    @Test
+    public void shouldGenerateTheSameValueForTheSameSeed(){
+    	String regex = "[a-zA-z0-9]{10}";
+    	String expected = "yf7bBkZ9TC";
+    	RegexRandomizer randomizer = new RegexRandomizer(SEED, regex);
+
+        assertThat(randomizer.getRandomValue()).isEqualTo(expected);
     }
 }
