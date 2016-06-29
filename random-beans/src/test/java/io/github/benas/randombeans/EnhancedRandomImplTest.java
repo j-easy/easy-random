@@ -180,16 +180,13 @@ public class EnhancedRandomImplTest {
         assertThat(human.getName()).isEqualTo("name");
     }
 
-    @Test
-    public void customRandomzierForNameShouldBeUsedToPopulateFieldsHavingTheGivenName() {
+    @Test(expected = IllegalArgumentException.class)
+    public void ambiguousFieldDefinitionShouldBeRejected() {
         enhancedRandom = aNewEnhancedRandomBuilder()
                 .randomize(field().named("name").get(), new ConstantRandomizer<>("name"))
                 .build();
 
-        Person person = enhancedRandom.nextObject(Person.class);
-
-        assertThat(person.getName()).isEqualTo("name");
-        assertThat(person.getAddress().getStreet().getName()).isEqualTo("name");
+        enhancedRandom.nextObject(Person.class);
     }
 
     @Test
