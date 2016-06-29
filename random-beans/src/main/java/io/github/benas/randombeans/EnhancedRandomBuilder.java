@@ -38,6 +38,7 @@ import java.util.function.Supplier;
 
 import static io.github.benas.randombeans.FieldDefinitionBuilder.field;
 import static io.github.benas.randombeans.RandomizerProxy.asRandomizer;
+import static java.lang.String.format;
 
 /**
  * Builder to create {@link EnhancedRandom} instances.
@@ -76,6 +77,8 @@ public class EnhancedRandomBuilder {
     /**
      * Register a custom randomizer for a given field.
      *
+     * <strong>The field type MUST be provided in the field definition</strong>
+     *
      * @param fieldDefinition definition of the field to randomize
      * @param randomizer      the custom {@link Randomizer} to use
      * @param <T> The target class type
@@ -84,12 +87,18 @@ public class EnhancedRandomBuilder {
      * @return a pre configured {@link EnhancedRandomBuilder} instance
      */
     public <T, F, R> EnhancedRandomBuilder randomize(FieldDefinition<T, F> fieldDefinition, Randomizer<R> randomizer) {
+        if (fieldDefinition.getType() == null) {
+            throw new IllegalArgumentException(format("Ambiguous field definition: %s." +
+                    " Field type is mandatory to register a custom randomizer: %s", fieldDefinition, randomizer));
+        }
         customRandomizerRegistry.registerRandomizer(fieldDefinition, randomizer);
         return this;
     }
 
     /**
      * Register a supplier as randomizer for a given field.
+     *
+     * <strong>The field type MUST be provided in the field definition</strong>
      *
      * @param fieldDefinition definition of the field to randomize
      * @param supplier        the custom {@link Supplier} to use

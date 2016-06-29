@@ -180,6 +180,15 @@ public class EnhancedRandomImplTest {
         assertThat(human.getName()).isEqualTo("name");
     }
 
+    @Test(expected = IllegalArgumentException.class)
+    public void ambiguousFieldDefinitionShouldBeRejected() {
+        enhancedRandom = aNewEnhancedRandomBuilder()
+                .randomize(field().named("name").get(), new ConstantRandomizer<>("name"))
+                .build();
+
+        enhancedRandom.nextObject(Person.class);
+    }
+
     @Test
     public void javaNetTypesShouldBePopulated() {
 

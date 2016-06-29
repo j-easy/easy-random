@@ -39,7 +39,7 @@ import java.util.Map;
  * @author Mahmoud Ben Hassine (mahmoud.benhassine@icloud.com)
  */
 @Priority(-1)
-public class CustomRandomizerRegistry implements RandomizerRegistry {
+public class CustomRandomizerRegistry extends AbstractRandomizerRegistry implements RandomizerRegistry {
 
     private final Map<FieldDefinition<?, ?>, Randomizer<?>> customFieldRandomizersRegistry = new HashMap<>();
     private final Map<Class<?>, Randomizer<?>> customTypeRandomizersRegistry = new HashMap<>();
@@ -51,9 +51,15 @@ public class CustomRandomizerRegistry implements RandomizerRegistry {
 
     @Override
     public Randomizer<?> getRandomizer(Field field) {
-        Class<?> type = field.getType();
-        Randomizer<?> randomizer = customFieldRandomizersRegistry.get(new FieldDefinition<>(field.getName(), type, field.getDeclaringClass()));
-        return randomizer != null ? randomizer : customTypeRandomizersRegistry.get(type);
+        for (FieldDefinition<?, ?> fieldDefinition : customFieldRandomizersRegistry.keySet()) {
+            if (hasName(field, fieldDefinition.getName()) &&
+                    isDeclaredInClass(field, fieldDefinition.getClazz()) &&
+                    hasType(field, fieldDefinition.getType()) &&
+                    isAnnotatedWithOneOf(field, fieldDefinition.getAnnotations())) {
+                return customFieldRandomizersRegistry.get(fieldDefinition);
+            }
+        }
+        return customTypeRandomizersRegistry.get(field.getType());
     }
 
     @Override
