@@ -61,6 +61,9 @@ class BeanValidationAnnotatedBean {
 
     @Size(min=2, max=10)
     private String briefMessage;
+    
+    @Pattern(regexp="[a-z]{4}")
+    private String regexString;
 
     public BeanValidationAnnotatedBean() {
     }
@@ -154,7 +157,15 @@ class BeanValidationAnnotatedBean {
     }
 
 
-    @Override
+    public String getRegexString() {
+		return regexString;
+	}
+
+	public void setRegexString(String regexString) {
+		this.regexString = regexString;
+	}
+
+	@Override
     public String toString() {
         final StringBuilder sb = new StringBuilder("BeanValidationAnnotatedBean{");
         sb.append("unsupported=").append(unsupported);
@@ -168,6 +179,7 @@ class BeanValidationAnnotatedBean {
         sb.append(", username='").append(username).append('\'');
         sb.append(", unusedString='").append(unusedString).append('\'');
         sb.append(", briefMessage='").append(briefMessage).append('\'');
+        sb.append(", regexString=").append(regexString).append('\'');
         sb.append('}');
         return sb.toString();
     }

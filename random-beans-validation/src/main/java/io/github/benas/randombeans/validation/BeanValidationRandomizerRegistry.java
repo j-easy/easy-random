@@ -31,6 +31,7 @@ import io.github.benas.randombeans.randomizers.misc.ConstantRandomizer;
 import io.github.benas.randombeans.randomizers.misc.NullRandomizer;
 import io.github.benas.randombeans.randomizers.range.*;
 import io.github.benas.randombeans.randomizers.text.CharacterRandomizer;
+import io.github.benas.randombeans.randomizers.text.RegexRandomizer;
 import io.github.benas.randombeans.randomizers.text.StringDelegatingRandomizer;
 import io.github.benas.randombeans.util.Constants;
 
@@ -236,6 +237,15 @@ public class BeanValidationRandomizerRegistry implements RandomizerRegistry {
                     }
                 };
             }
+        }
+        
+        if(field.isAnnotationPresent(Pattern.class)) {
+        	Pattern patternAnnotation = field.getAnnotation(Pattern.class);
+        	
+        	final String regex = patternAnnotation.regexp();
+        	if(fieldType.equals(String.class)) {
+        		return new RegexRandomizer(seed, regex);
+        	}
         }
 
         return null;
