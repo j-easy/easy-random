@@ -133,9 +133,7 @@ public class EnhancedRandomImplTest {
     @Test
     public void immutableBeansShouldBePopulated() {
         final ImmutableBean immutableBean = enhancedRandom.nextObject(ImmutableBean.class);
-        assertThat(immutableBean).isNotNull();
-        assertThat(immutableBean.getFinalValue()).isNotNull();
-        assertThat(immutableBean.getFinalCollection()).isNotNull();
+        assertThat(immutableBean).hasNoNullFieldsOrProperties();
     }
 
     @Test
@@ -194,10 +192,7 @@ public class EnhancedRandomImplTest {
 
         Website website = enhancedRandom.nextObject(Website.class);
 
-        assertThat(website).isNotNull();
-        assertThat(website.getName()).isNotNull();
-        assertThat(website.getUri()).isNotNull();
-        assertThat(website.getUrl()).isNotNull();
+        assertThat(website).hasNoNullFieldsOrProperties();
     }
 
     @Test(expected = ObjectGenerationException.class)

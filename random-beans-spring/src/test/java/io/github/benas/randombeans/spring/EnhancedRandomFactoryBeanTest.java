@@ -43,8 +43,7 @@ public class EnhancedRandomFactoryBeanTest {
         // the enhancedRandom should generate valid instances
         Foo foo = enhancedRandom.nextObject(Foo.class);
 
-        assertThat(foo).isNotNull();
-        assertThat(foo.getName()).isNotEmpty();
+        assertThat(foo).hasNoNullFieldsOrProperties();
     }
 
     @Test
