@@ -29,6 +29,8 @@ import io.github.benas.randombeans.api.Randomizer;
 import io.github.benas.randombeans.beans.*;
 import io.github.benas.randombeans.randomizers.misc.ConstantRandomizer;
 import io.github.benas.randombeans.util.ReflectionUtils;
+import lombok.Data;
+
 import org.junit.Before;
 import org.junit.Ignore;
 import org.junit.Test;
@@ -333,6 +335,52 @@ public class EnhancedRandomImplTest {
         char[] chars = person.getName().toCharArray();
         for (char c : chars) {
             assertThat(letters).contains(c);
+        }
+    }
+
+    @Test
+    public void shouldKeepDefaultNonNullFieldValuesBeDefault() {
+        // When
+        BeanWithDefaultFieldValues bean = random(BeanWithDefaultFieldValues.class);
+
+        // Then
+        assertThat(bean.getDefaultNonNullValue()).isEqualTo("default");
+        assertThat(bean.getDefaultNonNullValueSetByConstructor()).isEqualTo("defaultSetByConstructor");
+    }
+
+    @Test
+    public void shouldKeepDefaultNonNullFieldValuesIfKeepDefaultNonNullFieldValuesParameterIsTrue() {
+        // Given
+        enhancedRandom = aNewEnhancedRandomBuilder().keepDefaultNonNullFieldValues(true).build();
+
+        // When
+        BeanWithDefaultFieldValues bean = enhancedRandom.nextObject(BeanWithDefaultFieldValues.class);
+
+        // Then
+        assertThat(bean.getDefaultNonNullValue()).isEqualTo("default");
+        assertThat(bean.getDefaultNonNullValueSetByConstructor()).isEqualTo("defaultSetByConstructor");
+    }
+
+    @Test
+    public void shouldOverwriteDefaultFieldValuesIfKeepDefaultNonNullFieldValuesParameterIsFalse() {
+        // Given
+        enhancedRandom = aNewEnhancedRandomBuilder().keepDefaultNonNullFieldValues(false).build();
+
+        // When
+        BeanWithDefaultFieldValues bean = enhancedRandom.nextObject(BeanWithDefaultFieldValues.class);
+
+        // Then
+        assertThat(bean.getDefaultNonNullValue()).isNotEqualTo("default").isNotNull();
+        assertThat(bean.getDefaultNonNullValueSetByConstructor()).isNotEqualTo("defaultSetByConstructor").isNotNull();
+    }
+
+    @Data
+    public static class BeanWithDefaultFieldValues {
+        private String defaultNonNullValue = "default";
+        private String defaultNonNullValueSetByConstructor;
+
+        public BeanWithDefaultFieldValues() {
+            defaultNonNullValueSetByConstructor = "defaultSetByConstructor";
         }
     }
 

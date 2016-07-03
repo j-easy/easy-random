@@ -258,6 +258,33 @@ public class EnhancedRandomBuilder {
     }
 
     /**
+     * Should default non-Null field values be kept?
+     * E.g. should the values of the {@code strings} and {@code integers} fields below be kept untouched
+     *  or should they be randomized.
+     * 
+     * <pre>
+     * {@code
+     * public class Bean {
+     *     Set<String> strings = new HashSet<>();
+     *     List<Integer> integers;
+     * 
+     *     public Bean() {
+     *         integers = Arrays.asList(1, 2, 3);
+     *     }
+     * }}
+     * </pre>
+     * 
+     * Activated by default.
+     *
+     * @param keepDefaultNonNullFieldValues whether to keep default non-Null field values or not
+     * @return a pre configured {@link EnhancedRandomBuilder} instance
+     */
+    public EnhancedRandomBuilder keepDefaultNonNullFieldValues(boolean keepDefaultNonNullFieldValues) {
+        parameters.setKeepDefaultNonNullFieldValues(keepDefaultNonNullFieldValues);
+        return this;
+    }
+
+    /**
      * Build a {@link EnhancedRandom} instance.
      *
      * @return a configured {@link EnhancedRandom} instance

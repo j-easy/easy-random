@@ -89,6 +89,64 @@ public class ReflectionUtils {
     }
 
     /**
+     * Get the value (accessible or not accessible) of a field of a target object.
+     *
+     * @param object instance to get the field of
+     * @param field  field to get the value of
+     * @throws IllegalAccessException if field can not be accessed
+     */
+    public static Object getFieldValue(final Object object, final Field field) throws IllegalAccessException {
+        boolean access = field.isAccessible();
+        field.setAccessible(true);
+        Object value = field.get(object);
+        field.setAccessible(access);
+        return value;
+    }
+
+    /**
+     * Check if a field has a primitive type and matching default value which is set by the compiler.
+     *
+     * @param object instance to get the field value of
+     * @param field  field to check
+     * @throws IllegalAccessException if field cannot be accessed
+     */
+    public static boolean isPrimitiveFieldWithDefaultValue(final Object object, final Field field) throws IllegalAccessException {
+        Class<?> fieldType = field.getType();
+        if (!fieldType.isPrimitive()) {
+            return false;
+        }
+        Object fieldValue = getFieldValue(object, field);
+        if (fieldValue == null) {
+            return false;
+        }
+        if (fieldType.equals(boolean.class) && (boolean) fieldValue == false) {
+            return true;
+        }
+        if (fieldType.equals(byte.class) && (byte) fieldValue == (byte) 0) {
+            return true;
+        }
+        if (fieldType.equals(short.class) && (short) fieldValue == (short) 0) {
+          return true;
+        }
+        if (fieldType.equals(int.class) && (int) fieldValue == 0) {
+            return true;
+        }
+        if (fieldType.equals(long.class) && (long) fieldValue == 0L) {
+            return true;
+        }
+        if (fieldType.equals(float.class) && (float) fieldValue == 0.0F) {
+            return true;
+        }
+        if (fieldType.equals(double.class) && (double) fieldValue == 0.0D) {
+            return true;
+        }
+        if (fieldType.equals(char.class) && (char) fieldValue == '\u0000') {
+            return true;
+        }
+        return false;
+    }
+
+    /**
      * Check if a field is static.
      *
      * @param field the field to check

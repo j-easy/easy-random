@@ -100,5 +100,54 @@ public class ReflectionUtilsTest {
         assertThat(ReflectionUtils.isJdkBuiltIn(CustomList.class)).isFalse();
     }
 
+    @Test
+    public void testIsPrimitiveFieldWithDefaultValue() throws Exception {
+        Class<PrimitiveFieldsWithDefaultValuesBean> defaultValueClass = PrimitiveFieldsWithDefaultValuesBean.class;
+        PrimitiveFieldsWithDefaultValuesBean defaultValueBean = new PrimitiveFieldsWithDefaultValuesBean();
+        assertThat(ReflectionUtils.isPrimitiveFieldWithDefaultValue(defaultValueBean, defaultValueClass.getField("bool"))).isTrue();
+        assertThat(ReflectionUtils.isPrimitiveFieldWithDefaultValue(defaultValueBean, defaultValueClass.getField("b"))).isTrue();
+        assertThat(ReflectionUtils.isPrimitiveFieldWithDefaultValue(defaultValueBean, defaultValueClass.getField("s"))).isTrue();
+        assertThat(ReflectionUtils.isPrimitiveFieldWithDefaultValue(defaultValueBean, defaultValueClass.getField("i"))).isTrue();
+        assertThat(ReflectionUtils.isPrimitiveFieldWithDefaultValue(defaultValueBean, defaultValueClass.getField("l"))).isTrue();
+        assertThat(ReflectionUtils.isPrimitiveFieldWithDefaultValue(defaultValueBean, defaultValueClass.getField("f"))).isTrue();
+        assertThat(ReflectionUtils.isPrimitiveFieldWithDefaultValue(defaultValueBean, defaultValueClass.getField("d"))).isTrue();
+        assertThat(ReflectionUtils.isPrimitiveFieldWithDefaultValue(defaultValueBean, defaultValueClass.getField("c"))).isTrue();
+
+        Class<PrimitiveFieldsWithNonDefaultValuesBean> nonDefaultValueClass = PrimitiveFieldsWithNonDefaultValuesBean.class;
+        PrimitiveFieldsWithNonDefaultValuesBean nonDefaultValueBean = new PrimitiveFieldsWithNonDefaultValuesBean();
+        assertThat(ReflectionUtils.isPrimitiveFieldWithDefaultValue(nonDefaultValueBean, nonDefaultValueClass.getField("bool"))).isFalse();
+        assertThat(ReflectionUtils.isPrimitiveFieldWithDefaultValue(nonDefaultValueBean, nonDefaultValueClass.getField("b"))).isFalse();
+        assertThat(ReflectionUtils.isPrimitiveFieldWithDefaultValue(nonDefaultValueBean, nonDefaultValueClass.getField("s"))).isFalse();
+        assertThat(ReflectionUtils.isPrimitiveFieldWithDefaultValue(nonDefaultValueBean, nonDefaultValueClass.getField("i"))).isFalse();
+        assertThat(ReflectionUtils.isPrimitiveFieldWithDefaultValue(nonDefaultValueBean, nonDefaultValueClass.getField("l"))).isFalse();
+        assertThat(ReflectionUtils.isPrimitiveFieldWithDefaultValue(nonDefaultValueBean, nonDefaultValueClass.getField("f"))).isFalse();
+        assertThat(ReflectionUtils.isPrimitiveFieldWithDefaultValue(nonDefaultValueBean, nonDefaultValueClass.getField("d"))).isFalse();
+        assertThat(ReflectionUtils.isPrimitiveFieldWithDefaultValue(nonDefaultValueBean, nonDefaultValueClass.getField("c"))).isFalse();
+    }
+
+    @SuppressWarnings("unused")
+    private class PrimitiveFieldsWithDefaultValuesBean {
+        public boolean bool;
+        public byte b;
+        public short s;
+        public int i;
+        public long l;
+        public float f;
+        public double d;
+        public char c;
+    }
+
+    @SuppressWarnings("unused")
+    private class PrimitiveFieldsWithNonDefaultValuesBean {
+        public boolean bool = true;
+        public byte b = (byte) 1;
+        public short s = (short) 1;
+        public int i = 1;
+        public long l = 1L;
+        public float f = 1.0F;
+        public double d = 1.0D;
+        public char c = 'a';
+    }
+
     private class Dummy { }
 }

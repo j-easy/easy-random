@@ -147,6 +147,9 @@ class EnhancedRandomImpl extends EnhancedRandom {
 
     private <T> void populateField(final Field field, final T result, final PopulatorContext context) throws IllegalAccessException {
         if (!fieldExclusionChecker.shouldBeExcluded(field, context)) {
+            if (parameters.isKeepDefaultNonNullFieldValues() && getFieldValue(result, field) != null && !isPrimitiveFieldWithDefaultValue(result, field)) {
+              return;
+            }
             fieldPopulator.populateField(result, field, context);
         }
     }

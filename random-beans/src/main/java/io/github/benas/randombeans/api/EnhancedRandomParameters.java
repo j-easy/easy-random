@@ -53,6 +53,8 @@ public class EnhancedRandomParameters {
 
     private boolean scanClasspathForConcreteTypes;
 
+    private boolean keepDefaultNonNullFieldValues;
+
     private Range<LocalDate> dateRange;
 
     private Range<LocalTime> timeRange;
@@ -63,6 +65,7 @@ public class EnhancedRandomParameters {
         maxCollectionSize = Constants.MAX_COLLECTION_SIZE;
         maxStringLength = Constants.MAX_STRING_LENGTH;
         charset = StandardCharsets.US_ASCII;
+        keepDefaultNonNullFieldValues = true;
         dateRange = new Range<>(TEN_YEARS_AGO.toLocalDate(), IN_TEN_YEARS.toLocalDate());
         timeRange = new Range<>(LocalTime.MIN, LocalTime.MAX);
     }
