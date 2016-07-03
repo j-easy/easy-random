@@ -38,6 +38,6 @@ public class BooleanRandomizerTest extends AbstractRandomizerTest<Boolean> {
 
     @Test
     public void shouldGenerateTheSameValueForTheSameSeed() {
-        assertThat(aNewBooleanRandomizer(SEED).getRandomValue()).isEqualTo(true);
+        assertThat(aNewBooleanRandomizer(SEED).getRandomValue()).isTrue();
     }
 }
