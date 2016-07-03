@@ -41,15 +41,8 @@ public class JodaTimeSupportTest {
 
     @Test
     public void jodaTimeBeansShouldBeFilledIn() {
-
         Organizer organizer = enhancedRandom.nextObject(Organizer.class);
 
-        assertThat(organizer).isNotNull();
-        assertThat(organizer.getAnniversary()).isNotNull();
-        assertThat(organizer.getBirthday()).isNotNull();
-        assertThat(organizer.getHiking()).isNotNull();
-        assertThat(organizer.getClasses()).isNotNull();
-        assertThat(organizer.getTraining()).isNotNull();
-        assertThat(organizer.getWorkDuration()).isNotNull();
+        assertThat(organizer).hasNoNullFieldsOrProperties();
     }
 }

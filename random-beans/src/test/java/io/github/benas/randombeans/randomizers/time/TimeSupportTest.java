@@ -48,20 +48,7 @@ public class TimeSupportTest {
     public void threeTenTypesShouldBePopulated() {
         TimeBean timeBean = enhancedRandom.nextObject(TimeBean.class);
 
-        assertThat(timeBean.getDuration()).isNotNull();
-        assertThat(timeBean.getInstant()).isNotNull();
-        assertThat(timeBean.getLocalDate()).isNotNull();
-        assertThat(timeBean.getLocalTime()).isNotNull();
-        assertThat(timeBean.getLocalDateTime()).isNotNull();
-        assertThat(timeBean.getMonth()).isNotNull();
-        assertThat(timeBean.getMonthDay()).isNotNull();
-        assertThat(timeBean.getOffsetDateTime()).isNotNull();
-        assertThat(timeBean.getOffsetTime()).isNotNull();
-        assertThat(timeBean.getPeriod()).isNotNull();
-        assertThat(timeBean.getYearMonth()).isNotNull();
-        assertThat(timeBean.getYear()).isNotNull();
-        assertThat(timeBean.getZonedDateTime()).isNotNull();
-        assertThat(timeBean.getZoneOffset()).isNotNull();
+        assertThat(timeBean).hasNoNullFieldsOrProperties();
     }
 
     @Test
