@@ -24,6 +24,7 @@
 package io.github.benas.randombeans.api;
 
 import io.github.benas.randombeans.util.Constants;
+import lombok.Data;
 
 import java.nio.charset.Charset;
 import java.nio.charset.StandardCharsets;
@@ -39,6 +40,7 @@ import static io.github.benas.randombeans.util.Constants.TEN_YEARS_AGO;
  *
  * @author Mahmoud Ben Hassine (mahmoud.benhassine@icloud.com)
  */
+@Data
 public class EnhancedRandomParameters {
 
     private long seed;
@@ -65,62 +67,15 @@ public class EnhancedRandomParameters {
         timeRange = new Range<>(LocalTime.MIN, LocalTime.MAX);
     }
 
-    public long getSeed() {
-        return seed;
-    }
-
-    public void setSeed(long seed) {
-        this.seed = seed;
-    }
-
-    public int getMaxCollectionSize() {
-        return maxCollectionSize;
-    }
-
-    public void setMaxCollectionSize(int maxCollectionSize) {
-        this.maxCollectionSize = maxCollectionSize;
-    }
-
-    public boolean isScanClasspathForConcreteTypes() {
-        return scanClasspathForConcreteTypes;
-    }
-
-    public void setScanClasspathForConcreteTypes(boolean scanClasspathForConcreteTypes) {
-        this.scanClasspathForConcreteTypes = scanClasspathForConcreteTypes;
-    }
-
-    public int getMaxStringLength() {
-        return maxStringLength;
-    }
-
-    public void setMaxStringLength(int maxStringLength) {
-        this.maxStringLength = maxStringLength;
-    }
-
-    public Charset getCharset() {
-        return charset;
-    }
-
-    public void setCharset(Charset charset) {
-        this.charset = charset;
-    }
-
-    public Range<LocalDate> getDateRange() {
-        return dateRange;
-    }
-
     public void setDateRange(final LocalDate min, final LocalDate max) {
         this.dateRange = new Range<>(min, max);
-    }
-
-    public Range<LocalTime> getTimeRange() {
-        return timeRange;
     }
 
     public void setTimeRange(final LocalTime min, final LocalTime max) {
         this.timeRange = new Range<>(min, max);
     }
 
+    @Data
     public static class Range<T> {
         private T min;
         private T max;
@@ -128,14 +83,6 @@ public class EnhancedRandomParameters {
         public Range(T min, T max) {
             this.min = min;
             this.max = max;
-        }
-
-        public T getMin() {
-            return min;
-        }
-
-        public T getMax() {
-            return max;
         }
     }
 }
