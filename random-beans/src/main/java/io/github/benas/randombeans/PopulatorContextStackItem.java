@@ -24,6 +24,7 @@
 package io.github.benas.randombeans;
 
 import io.github.benas.randombeans.api.EnhancedRandom;
+import lombok.Data;
 
 import java.lang.reflect.Field;
 
@@ -32,6 +33,7 @@ import java.lang.reflect.Field;
  *
  * @author Rémi Alvergnat (toilal.dev@gmail.com)
  */
+@Data
 class PopulatorContextStackItem {
 
     private Object object;
@@ -40,22 +42,6 @@ class PopulatorContextStackItem {
 
     public PopulatorContextStackItem(final Object object, final Field field) {
         this.object = object;
-        this.field = field;
-    }
-
-    public Object getObject() {
-        return object;
-    }
-
-    public void setObject(final Object object) {
-        this.object = object;
-    }
-
-    public Field getField() {
-        return field;
-    }
-
-    public void setField(final Field field) {
         this.field = field;
     }
 }
