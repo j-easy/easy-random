@@ -122,6 +122,7 @@ If you have any question, suggestion, or feedback, do not hesitate to use the [G
 * [Jose Manuel Prieto](https://github.com/prietopa)
 * [Nikola Milivojevic](https://github.com/dziga)
 * [Pascal Schumacher](https://github.com/PascalSchumacher)
+* [Rebecca McQuary](https://github.com/rmcquary)
 * [Rémi Alvergnat](http://www.pragmasphere.com)
 * [Valters Vingolds](https://github.com/valters)
 * [Vincent Potucek](https://github.com/punkratz312)
