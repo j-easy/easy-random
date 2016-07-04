@@ -27,11 +27,11 @@ import io.github.benas.randombeans.annotation.Priority;
 import io.github.benas.randombeans.api.EnhancedRandomParameters;
 import io.github.benas.randombeans.api.Randomizer;
 import io.github.benas.randombeans.api.RandomizerRegistry;
+import io.github.benas.randombeans.randomizers.RegularExpressionRandomizer;
 import io.github.benas.randombeans.randomizers.misc.ConstantRandomizer;
 import io.github.benas.randombeans.randomizers.misc.NullRandomizer;
 import io.github.benas.randombeans.randomizers.range.*;
 import io.github.benas.randombeans.randomizers.text.CharacterRandomizer;
-import io.github.benas.randombeans.randomizers.text.RegexRandomizer;
 import io.github.benas.randombeans.randomizers.text.StringDelegatingRandomizer;
 import io.github.benas.randombeans.util.Constants;
 
@@ -244,7 +244,7 @@ public class BeanValidationRandomizerRegistry implements RandomizerRegistry {
         	
         	final String regex = patternAnnotation.regexp();
         	if(fieldType.equals(String.class)) {
-        		return new RegexRandomizer(seed, regex);
+        		return new RegularExpressionRandomizer(regex, seed);
         	}
         }
 

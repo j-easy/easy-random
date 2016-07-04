@@ -75,7 +75,7 @@
     <dependencies>
         <dependency>
             <groupId>io.github.benas</groupId>
-            <artifactId>random-beans</artifactId>
+            <artifactId>random-beans-randomizers</artifactId>
         </dependency>
         <dependency>
             <groupId>javax.validation</groupId>

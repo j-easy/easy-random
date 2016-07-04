@@ -162,6 +162,11 @@
                 <version>${project.version}</version>
             </dependency>
             <dependency>
+                <groupId>io.github.benas</groupId>
+                <artifactId>random-beans-randomizers</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+            <dependency>
                 <groupId>javax.validation</groupId>
                 <artifactId>validation-api</artifactId>
                 <version>${validation-api.version}</version>
