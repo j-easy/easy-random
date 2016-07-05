@@ -258,7 +258,7 @@ public class EnhancedRandomBuilder {
     }
 
     /**
-     * Should default non-Null field values be kept?
+     * Should default initialization of field values be overridden?
      * E.g. should the values of the {@code strings} and {@code integers} fields below be kept untouched
      *  or should they be randomized.
      * 
@@ -274,13 +274,13 @@ public class EnhancedRandomBuilder {
      * }}
      * </pre>
      * 
-     * Activated by default.
+     * Deactivated by default.
      *
-     * @param keepDefaultNonNullFieldValues whether to keep default non-Null field values or not
+     * @param overrideDefaultInitialization whether to override default initialization of field values or not
      * @return a pre configured {@link EnhancedRandomBuilder} instance
      */
-    public EnhancedRandomBuilder keepDefaultNonNullFieldValues(boolean keepDefaultNonNullFieldValues) {
-        parameters.setKeepDefaultNonNullFieldValues(keepDefaultNonNullFieldValues);
+    public EnhancedRandomBuilder overrideDefaultInitialization(boolean overrideDefaultInitialization) {
+        parameters.setOverrideDefaultInitialization(overrideDefaultInitialization);
         return this;
     }
 

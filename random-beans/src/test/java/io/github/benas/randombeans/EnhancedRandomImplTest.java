@@ -339,7 +339,7 @@ public class EnhancedRandomImplTest {
     }
 
     @Test
-    public void shouldKeepDefaultNonNullFieldValuesBeDefault() {
+    public void shouldNotOverrideDefaultFieldValuesByDefault() {
         // When
         BeanWithDefaultFieldValues bean = random(BeanWithDefaultFieldValues.class);
 
@@ -349,9 +349,9 @@ public class EnhancedRandomImplTest {
     }
 
     @Test
-    public void shouldKeepDefaultNonNullFieldValuesIfKeepDefaultNonNullFieldValuesParameterIsTrue() {
+    public void whenOverrideDefaultInitializationParameterIsFalse_thenShouldKeepDefaultFieldValues() {
         // Given
-        enhancedRandom = aNewEnhancedRandomBuilder().keepDefaultNonNullFieldValues(true).build();
+        enhancedRandom = aNewEnhancedRandomBuilder().overrideDefaultInitialization(false).build();
 
         // When
         BeanWithDefaultFieldValues bean = enhancedRandom.nextObject(BeanWithDefaultFieldValues.class);
@@ -362,9 +362,9 @@ public class EnhancedRandomImplTest {
     }
 
     @Test
-    public void shouldOverwriteDefaultFieldValuesIfKeepDefaultNonNullFieldValuesParameterIsFalse() {
+    public void whenOverrideDefaultInitializationParameterIsTrue_thenShouldRandomizeFields() {
         // Given
-        enhancedRandom = aNewEnhancedRandomBuilder().keepDefaultNonNullFieldValues(false).build();
+        enhancedRandom = aNewEnhancedRandomBuilder().overrideDefaultInitialization(true).build();
 
         // When
         BeanWithDefaultFieldValues bean = enhancedRandom.nextObject(BeanWithDefaultFieldValues.class);
