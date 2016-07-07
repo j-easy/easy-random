@@ -26,7 +26,8 @@ package io.github.benas.randombeans.randomizers.jodatime;
 import static org.assertj.core.api.BDDAssertions.then;
 
 import org.joda.time.DateTime;
-import org.joda.time.LocalDate;
+import org.joda.time.ReadablePartial;
+import org.joda.time.base.AbstractPartial;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
@@ -76,9 +77,8 @@ public class JodaTimeRangeRandomizersTest extends AbstractJodaTimeRandomizerTest
     @UseDataProvider("generateSeededTimeRandomizersAndTheirExpectedValues")
     public void shouldGenerateTheSameTimeForTheSameSeed(Randomizer<?> randomizer, Object expected) {
         //when
-        Object actual = randomizer.getRandomValue();
-
-        then(actual).isEqualTo(expected);
+        AbstractPartial actual = (AbstractPartial) randomizer.getRandomValue();
+        then(actual.isEqual((ReadablePartial) expected)).isTrue();
     }
 
     @Test
