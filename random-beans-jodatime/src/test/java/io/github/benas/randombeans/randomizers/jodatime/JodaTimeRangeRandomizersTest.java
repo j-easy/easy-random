@@ -23,6 +23,9 @@
  */
 package io.github.benas.randombeans.randomizers.jodatime;
 
+import static io.github.benas.randombeans.randomizers.jodatime.range.JodaTimeLocalDateRangeRandomizer.aNewJodaTimeLocalDateRangeRandomizer;
+import static io.github.benas.randombeans.randomizers.jodatime.range.JodaTimeLocalDateTimeRangeRandomizer.aNewJodaTimeLocalDateTimeRangeRandomizer;
+import static io.github.benas.randombeans.randomizers.jodatime.range.JodaTimeLocalTimeRangeRandomizer.aNewJodaTimeLocalTimeRangeRandomizer;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.BDDAssertions.then;
 
@@ -64,20 +67,20 @@ public class JodaTimeRangeRandomizersTest extends AbstractJodaTimeRandomizerTest
 
     @Test
     public void shouldGenerateTheSameLocalDateForTheSameSeed() {
-        assertThat(new JodaTimeLocalDateRangeRandomizer(SEED).getRandomValue())
-                .isEqualTo(new JodaTimeLocalDateRangeRandomizer(SEED).getRandomValue());
+        assertThat(aNewJodaTimeLocalDateRangeRandomizer(SEED).getRandomValue())
+                .isEqualTo(aNewJodaTimeLocalDateRangeRandomizer(SEED).getRandomValue());
     }
 
     @Test
     public void shouldGenerateTheSameLocalTimeForTheSameSeed() {
-        assertThat(new JodaTimeLocalTimeRangeRandomizer(SEED).getRandomValue())
-                .isEqualTo(new JodaTimeLocalTimeRangeRandomizer(SEED).getRandomValue());
+        assertThat(aNewJodaTimeLocalTimeRangeRandomizer(SEED).getRandomValue())
+                .isEqualTo(aNewJodaTimeLocalTimeRangeRandomizer(SEED).getRandomValue());
     }
 
     @Test
     public void shouldGenerateTheSameLocalDateTimeForTheSameSeed() {
-        assertThat(new JodaTimeLocalDateTimeRangeRandomizer(SEED).getRandomValue())
-                .isEqualTo(new JodaTimeLocalDateTimeRangeRandomizer(SEED).getRandomValue());
+        assertThat(aNewJodaTimeLocalDateTimeRangeRandomizer(SEED).getRandomValue())
+                .isEqualTo(aNewJodaTimeLocalDateTimeRangeRandomizer(SEED).getRandomValue());
     }
 
     @Test
