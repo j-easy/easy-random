@@ -25,6 +25,8 @@ package io.github.benas.randombeans.spring;
 
 import io.github.benas.randombeans.api.Randomizer;
 
+import java.lang.annotation.Annotation;
+
 /**
  * A bean used to register custom randomizers with the {@link EnhancedRandomFactoryBean}.
  *
@@ -35,27 +37,36 @@ public class RandomizerBean<T, F> {
     /**
      * The class type for which the randomizer will be used.
      */
-    private final Class<T> type;
+    private Class<T> type;
 
     /**
      * The field type within the class for which the randomizer will be used.
      */
-    private final Class<F> fieldType;
+    private Class<F> fieldType;
 
     /**
      * The field name within the class for which the randomizer will be used.
      */
-    private final String fieldName;
+    private String fieldName;
+
+    /**
+     * The annotation present on the field.
+     */
+    private Class<? extends Annotation> annotation;
 
     /**
      * The randomizer to register.
      */
-    private final Randomizer<T> randomizer;
+    private Randomizer<T> randomizer;
 
-    public RandomizerBean(Class<T> type, Class<F> fieldType, String fieldName, Randomizer<T> randomizer) {
+    public RandomizerBean() {
+    }
+
+    public RandomizerBean(Class<T> type, Class<F> fieldType, String fieldName, Randomizer<T> randomizer, Class <? extends Annotation> annotation) {
         this.type = type;
         this.fieldType = fieldType;
         this.fieldName = fieldName;
+        this.annotation = annotation;
         this.randomizer = randomizer;
     }
 
@@ -71,7 +82,31 @@ public class RandomizerBean<T, F> {
         return fieldName;
     }
 
+    public Class<? extends Annotation> getAnnotation() {
+        return annotation;
+    }
+
     public Randomizer<T> getRandomizer() {
         return randomizer;
+    }
+
+    public void setType(Class<T> type) {
+        this.type = type;
+    }
+
+    public void setFieldType(Class<F> fieldType) {
+        this.fieldType = fieldType;
+    }
+
+    public void setFieldName(String fieldName) {
+        this.fieldName = fieldName;
+    }
+
+    public void setAnnotation(Class<? extends Annotation> annotation) {
+        this.annotation = annotation;
+    }
+
+    public void setRandomizer(Randomizer<T> randomizer) {
+        this.randomizer = randomizer;
     }
 }

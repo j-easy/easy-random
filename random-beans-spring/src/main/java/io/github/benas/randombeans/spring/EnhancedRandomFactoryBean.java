@@ -24,15 +24,12 @@
 package io.github.benas.randombeans.spring;
 
 import io.github.benas.randombeans.EnhancedRandomBuilder;
-import io.github.benas.randombeans.FieldDefinition;
+import io.github.benas.randombeans.FieldDefinitionBuilder;
 import io.github.benas.randombeans.api.EnhancedRandom;
 import io.github.benas.randombeans.api.Randomizer;
 import org.springframework.beans.factory.FactoryBean;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 import static io.github.benas.randombeans.EnhancedRandomBuilder.aNewEnhancedRandomBuilder;
 import static io.github.benas.randombeans.FieldDefinitionBuilder.field;
@@ -52,13 +49,15 @@ public class EnhancedRandomFactoryBean implements FactoryBean<EnhancedRandom> {
     public EnhancedRandom getObject() throws Exception {
         EnhancedRandomBuilder enhancedRandomBuilder = aNewEnhancedRandomBuilder();
         for (RandomizerBean<?, ?> bean : randomizers) {
-            FieldDefinition<?, ?> fieldDefinition = field()
+            FieldDefinitionBuilder fieldDefinitionBuilder = field()
                     .named(bean.getFieldName())
                     .ofType(bean.getFieldType())
-                    .inClass(bean.getType())
-                    .get();
+                    .inClass(bean.getType());
+            if (bean.getAnnotation() != null) {
+                fieldDefinitionBuilder.isAnnotatedWith(bean.getAnnotation());
+            }
             Randomizer<?> randomizer = bean.getRandomizer();
-            enhancedRandomBuilder.randomize(fieldDefinition, randomizer);
+            enhancedRandomBuilder.randomize(fieldDefinitionBuilder.get(), randomizer);
         }
         for (Map.Entry<Class<?>, Randomizer<?>> entry : mappings.entrySet()) {
             enhancedRandomBuilder.randomize(entry.getKey(), entry.getValue());

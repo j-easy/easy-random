@@ -61,6 +61,7 @@ public class EnhancedRandomFactoryBeanTest {
         assertThat(foo.getName()).isIn(NameRandomizer.NAMES);
         assertThat(foo.getAge()).isEqualTo(10);
         assertThat(foo.getWeight()).isEqualTo(10);
+        assertThat(foo.getBar()).isIn(NameRandomizer.NAMES);
     }
 
     private EnhancedRandom getEnhancedRandomFromSpringContext(String contextFileName) {

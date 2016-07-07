@@ -32,6 +32,7 @@
         <property name="randomizers">
             <list value-type="java.util.ArrayList">
                 <ref bean="nameRandomizer"/>
+                <ref bean="barRandomizer"/>
             </list>
         </property>
         <property name="mappings">
@@ -47,12 +48,24 @@
     </bean>
 
     <bean id="nameRandomizer" class="io.github.benas.randombeans.spring.RandomizerBean">
-        <constructor-arg type="java.lang.Class" index="0" value="io.github.benas.randombeans.spring.Foo"/>
-        <constructor-arg type="java.lang.Class" index="1" value="java.lang.String"/>
-        <constructor-arg value="name"/>
-        <constructor-arg>
+        <property name="type" value="io.github.benas.randombeans.spring.Foo"/>
+        <property name="fieldType" value="java.lang.String"/>
+        <property name="fieldName" value="name"/>
+        <property name="randomizer">
             <bean class="io.github.benas.randombeans.spring.NameRandomizer"/>
-        </constructor-arg>
+        </property>
+    </bean>
+
+    <bean id="barRandomizer" class="io.github.benas.randombeans.spring.RandomizerBean">
+        <property name="fieldType" value="java.lang.String"/>
+        <property name="annotation">
+            <bean class="java.lang.Class" factory-method="forName">
+                <constructor-arg value="java.lang.Deprecated"/>
+            </bean>
+        </property>
+        <property name="randomizer">
+            <bean class="io.github.benas.randombeans.spring.NameRandomizer"/>
+        </property>
     </bean>
 
 </beans>

@@ -31,6 +31,17 @@ class Foo {
 
     private Integer weight;
 
+    @Deprecated
+    private String bar;
+
+    public String getBar() {
+        return bar;
+    }
+
+    public void setBar(String bar) {
+        this.bar = bar;
+    }
+
     public String getName() {
         return name;
     }
