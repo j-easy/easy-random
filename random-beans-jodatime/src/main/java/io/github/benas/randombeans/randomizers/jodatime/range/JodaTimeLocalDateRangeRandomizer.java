@@ -56,9 +56,22 @@ public class JodaTimeLocalDateRangeRandomizer extends JodaTimeAbstractRandomizer
      * @param min date
      * @param max date
      * @param seed initial seed
+     *
+     * @deprecated Use {@link JodaTimeLocalDateRangeRandomizer#JodaTimeLocalDateRangeRandomizer(org.joda.time.LocalDate, org.joda.time.LocalDate, long)} instead
      */
+    @Deprecated
     public JodaTimeLocalDateRangeRandomizer(final Date min, final Date max, final long seed) {
         super(min, max, seed);
+    }
+
+    /**
+     * Create a new {@link JodaTimeLocalDateRangeRandomizer}.
+     * @param min date
+     * @param max date
+     * @param seed initial seed
+     */
+    public JodaTimeLocalDateRangeRandomizer(final LocalDate min, final LocalDate max, final long seed) {
+        super(min.toDate(), max.toDate(), seed);
     }
 
     @Override

@@ -56,9 +56,22 @@ public class JodaTimeDateTimeRangeRandomizer extends JodaTimeAbstractRandomizer<
      * @param min date
      * @param max date
      * @param seed initial seed
+     *
+     * @deprecated Use {@link JodaTimeDateTimeRangeRandomizer#JodaTimeDateTimeRangeRandomizer(org.joda.time.DateTime, org.joda.time.DateTime, long)} instead
      */
+    @Deprecated
     public JodaTimeDateTimeRangeRandomizer(final Date min, final Date max, final long seed) {
         super(min, max, seed);
+    }
+
+    /**
+     * Create a new {@link JodaTimeDateTimeRangeRandomizer}.
+     * @param min date
+     * @param max date
+     * @param seed initial seed
+     */
+    public JodaTimeDateTimeRangeRandomizer(final DateTime min, final DateTime max, final long seed) {
+        super(min.toDate(), max.toDate(), seed);
     }
 
     @Override
