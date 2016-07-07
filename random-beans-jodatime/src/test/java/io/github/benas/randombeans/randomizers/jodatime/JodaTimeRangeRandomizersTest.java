@@ -27,8 +27,6 @@ import static org.assertj.core.api.BDDAssertions.then;
 
 import org.joda.time.DateTime;
 import org.joda.time.LocalDate;
-import org.joda.time.LocalDateTime;
-import org.joda.time.LocalTime;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
@@ -66,10 +64,11 @@ public class JodaTimeRangeRandomizersTest extends AbstractJodaTimeRandomizerTest
 
     @DataProvider
     public static Object[][] generateSeededTimeRandomizersAndTheirExpectedValues() {
+        DateTime expectedDateTime = DateTime.parse("2024-06-18T19:54:04.570+02:00");
         return new Object[][] {
-            { new JodaTimeLocalDateRangeRandomizer(SEED), LocalDate.parse("2024-06-18") },
-            { new JodaTimeLocalDateTimeRangeRandomizer(SEED), LocalDateTime.parse("2024-06-18T19:54:04.570") },
-            { new JodaTimeLocalTimeRangeRandomizer(SEED), LocalTime.parse("19:54:04.570") },
+            { new JodaTimeLocalDateRangeRandomizer(SEED), expectedDateTime.toLocalDate() },
+            { new JodaTimeLocalTimeRangeRandomizer(SEED), expectedDateTime.toLocalTime() },
+            { new JodaTimeLocalDateTimeRangeRandomizer(SEED), expectedDateTime.toLocalDateTime() },
         };
     }
 
@@ -87,7 +86,7 @@ public class JodaTimeRangeRandomizersTest extends AbstractJodaTimeRandomizerTest
         //when
         DateTime actual = new JodaTimeDateTimeRangeRandomizer(SEED).getRandomValue();
 
-        // isEqual compares only the instant and ignores the timezone that makes 
+        // isEqual compares only the instant and ignores the timezone that makes
         // this test independent of the current timezone
         then(actual.isEqual(DateTime.parse("2024-06-18T19:54:04.570+02:00"))).isTrue();
     }
