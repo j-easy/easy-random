@@ -31,6 +31,8 @@ class Foo {
 
     private Integer weight;
 
+    private String nickName;
+
     @Deprecated
     private String bar;
 
@@ -64,5 +66,13 @@ class Foo {
 
     public void setWeight(Integer weight) {
         this.weight = weight;
+    }
+
+    public String getNickName() {
+        return nickName;
+    }
+
+    public void setNickName(String nickName) {
+        this.nickName = nickName;
     }
 }

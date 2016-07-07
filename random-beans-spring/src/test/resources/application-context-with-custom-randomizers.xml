@@ -45,6 +45,7 @@
                 </entry>
             </map>
         </property>
+        <property name="maxStringLength" value="3"/>
     </bean>
 
     <bean id="nameRandomizer" class="io.github.benas.randombeans.spring.RandomizerBean">
