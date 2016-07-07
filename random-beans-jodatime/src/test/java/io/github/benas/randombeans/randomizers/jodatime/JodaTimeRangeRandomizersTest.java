@@ -23,11 +23,10 @@
  */
 package io.github.benas.randombeans.randomizers.jodatime;
 
+import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.BDDAssertions.then;
 
-import org.joda.time.DateTime;
-import org.joda.time.ReadablePartial;
-import org.joda.time.base.AbstractPartial;
+import org.joda.time.*;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
@@ -63,22 +62,22 @@ public class JodaTimeRangeRandomizersTest extends AbstractJodaTimeRandomizerTest
         then(randomNumber).isNotNull();
     }
 
-    @DataProvider
-    public static Object[][] generateSeededTimeRandomizersAndTheirExpectedValues() {
-        DateTime expectedDateTime = DateTime.parse("2024-06-18T19:54:04.570+02:00");
-        return new Object[][] {
-            { new JodaTimeLocalDateRangeRandomizer(SEED), expectedDateTime.toLocalDate() },
-            { new JodaTimeLocalTimeRangeRandomizer(SEED), expectedDateTime.toLocalTime() },
-            { new JodaTimeLocalDateTimeRangeRandomizer(SEED), expectedDateTime.toLocalDateTime() },
-        };
+    @Test
+    public void shouldGenerateTheSameLocalDateForTheSameSeed() {
+        assertThat(new JodaTimeLocalDateRangeRandomizer(SEED).getRandomValue())
+                .isEqualTo(new JodaTimeLocalDateRangeRandomizer(SEED).getRandomValue());
     }
 
     @Test
-    @UseDataProvider("generateSeededTimeRandomizersAndTheirExpectedValues")
-    public void shouldGenerateTheSameTimeForTheSameSeed(Randomizer<?> randomizer, Object expected) {
-        //when
-        AbstractPartial actual = (AbstractPartial) randomizer.getRandomValue();
-        then(actual.isEqual((ReadablePartial) expected)).isTrue();
+    public void shouldGenerateTheSameLocalTimeForTheSameSeed() {
+        assertThat(new JodaTimeLocalTimeRangeRandomizer(SEED).getRandomValue())
+                .isEqualTo(new JodaTimeLocalTimeRangeRandomizer(SEED).getRandomValue());
+    }
+
+    @Test
+    public void shouldGenerateTheSameLocalDateTimeForTheSameSeed() {
+        assertThat(new JodaTimeLocalDateTimeRangeRandomizer(SEED).getRandomValue())
+                .isEqualTo(new JodaTimeLocalDateTimeRangeRandomizer(SEED).getRandomValue());
     }
 
     @Test
