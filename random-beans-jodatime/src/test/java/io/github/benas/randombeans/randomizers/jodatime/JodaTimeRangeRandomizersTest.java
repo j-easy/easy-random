@@ -23,6 +23,7 @@
  */
 package io.github.benas.randombeans.randomizers.jodatime;
 
+import static io.github.benas.randombeans.randomizers.jodatime.range.JodaTimeDateTimeRangeRandomizer.aNewJodaTimeDateTimeRangeRandomizer;
 import static io.github.benas.randombeans.randomizers.jodatime.range.JodaTimeLocalDateRangeRandomizer.aNewJodaTimeLocalDateRangeRandomizer;
 import static io.github.benas.randombeans.randomizers.jodatime.range.JodaTimeLocalDateTimeRangeRandomizer.aNewJodaTimeLocalDateTimeRangeRandomizer;
 import static io.github.benas.randombeans.randomizers.jodatime.range.JodaTimeLocalTimeRangeRandomizer.aNewJodaTimeLocalTimeRangeRandomizer;
@@ -65,6 +66,34 @@ public class JodaTimeRangeRandomizersTest extends AbstractJodaTimeRandomizerTest
         then(randomNumber).isNotNull();
     }
 
+    @DataProvider
+    public static Object[][] generateRandomizersAndMinMax() {
+        LocalDateTime localDateTimeMin = LocalDateTime.parse("2016-01-18T19:34:04.570");
+        LocalDateTime localDateTimeMax = LocalDateTime.parse("2016-01-18T20:34:14.570");
+        DateTime dateTimeMin = localDateTimeMin.toDateTime();
+        DateTime dateTimeMax = localDateTimeMax.toDateTime();
+        LocalDate localDateMin = localDateTimeMin.toLocalDate();
+        LocalDate localDateMax = localDateTimeMax.toLocalDate();
+        LocalTime localTimeMin = localDateTimeMin.toLocalTime();
+        LocalTime localTimeMax = localDateTimeMax.toLocalTime();
+        return new Object[][] {
+                { aNewJodaTimeDateTimeRangeRandomizer(dateTimeMin, dateTimeMax, SEED), dateTimeMin, dateTimeMax },
+                { aNewJodaTimeLocalDateRangeRandomizer(localDateMin, localDateMax, SEED), localDateMin, localDateMax },
+                { aNewJodaTimeLocalDateTimeRangeRandomizer(localDateTimeMin, localDateTimeMax, SEED), localDateTimeMin, localDateTimeMax },
+                { aNewJodaTimeLocalTimeRangeRandomizer(localTimeMin, localTimeMax, SEED), localTimeMin, localTimeMax },
+        };
+    }
+
+    @Test
+    @UseDataProvider("generateRandomizersAndMinMax")
+    @SuppressWarnings({ "rawtypes", "unchecked" })
+    public void shouldGenerateValuesBetweenMinAndMax(Randomizer<Comparable> randomizer, Comparable min, Comparable max) {
+        // when
+        Comparable randomValue = randomizer.getRandomValue();
+
+        then(randomValue).isBetween(min, max);
+    }
+
     @Test
     public void shouldGenerateTheSameLocalDateForTheSameSeed() {
         assertThat(aNewJodaTimeLocalDateRangeRandomizer(SEED).getRandomValue())
@@ -86,7 +115,7 @@ public class JodaTimeRangeRandomizersTest extends AbstractJodaTimeRandomizerTest
     @Test
     public void shouldGenerateTheSameDateTimeForTheSameSeed() {
         //when
-        DateTime actual = new JodaTimeDateTimeRangeRandomizer(SEED).getRandomValue();
+        DateTime actual = aNewJodaTimeDateTimeRangeRandomizer(SEED).getRandomValue();
 
         // isEqual compares only the instant and ignores the timezone that makes
         // this test independent of the current timezone
