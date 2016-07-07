@@ -36,8 +36,8 @@ public class TestData {
     }
 
     @Randomizer(value = DateRangeRandomizer.class, args = {
-            @RandomizerArgument(value = "2016-01-10", type = Date.class),
-            @RandomizerArgument(value = "2016-01-30", type = Date.class)
+            @RandomizerArgument(value = "2016-01-10T00:00:00", type = Date.class),
+            @RandomizerArgument(value = "2016-01-30T59:59:59", type = Date.class)
     })
     private Date date;
 
