@@ -53,8 +53,8 @@ import static io.github.benas.randombeans.FieldDefinitionBuilder.field;
 import static io.github.benas.randombeans.api.EnhancedRandom.*;
 import static io.github.benas.randombeans.util.CharacterUtils.collectPrintableCharactersOf;
 import static io.github.benas.randombeans.util.CharacterUtils.filterLetters;
-import static io.github.benas.randombeans.util.DateUtils.toDate;
-import static java.time.LocalDate.of;
+import static java.sql.Timestamp.valueOf;
+import static java.time.LocalDateTime.of;
 import static java.util.Arrays.asList;
 import static java.util.stream.Collectors.toList;
 import static org.assertj.core.api.Assertions.assertThat;
@@ -417,7 +417,7 @@ public class EnhancedRandomImplTest {
     public void annotatedRandomizerArgumentsShouldBeCorrectlyParsed() {
         TestData data = random(TestData.class);
 
-        then(data.getDate()).isBetween(toDate(of(2016, 1, 10)), toDate(of(2016, 1, 30)));
+        then(data.getDate()).isBetween(valueOf(of(2016, 1, 10, 0, 0, 0)), valueOf(of(2016, 1, 30, 23, 59, 59)));
         then(data.getPrice()).isBetween(200, 500);
     }
 
