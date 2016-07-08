@@ -25,11 +25,9 @@ package io.github.benas.randombeans.util;
 
 import lombok.experimental.UtilityClass;
 
-import java.time.LocalDate;
 import java.time.ZonedDateTime;
 import java.util.Date;
 
-import static java.sql.Date.valueOf;
 import static java.util.Date.from;
 
 /**
@@ -48,16 +46,6 @@ public class DateUtils {
      */
     public static Date toDate(ZonedDateTime zonedDateTime) {
         return from(zonedDateTime.toInstant());
-    }
-
-    /**
-     * Convert a {@link LocalDate} to {@link Date}.
-     *
-     * @param localDate to convert
-     * @return the corresponding {@link Date} object
-     */
-    public static Date toDate(LocalDate localDate) {
-        return valueOf(localDate);
     }
 
 }
