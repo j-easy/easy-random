@@ -30,6 +30,7 @@ import io.github.benas.randombeans.api.Randomizer;
 import lombok.experimental.UtilityClass;
 
 import java.lang.reflect.*;
+import java.text.SimpleDateFormat;
 import java.util.*;
 
 import static java.lang.String.format;
@@ -44,7 +45,13 @@ import static java.util.stream.Collectors.toList;
 @UtilityClass
 public class ReflectionUtils {
 
+    private static final String DATE_FORMAT = "yyyy-MM-dd HH:mm:ss";
+
     private static final ObjectMapper objectMapper = new ObjectMapper();
+
+    static {
+        objectMapper.setDateFormat(new SimpleDateFormat(DATE_FORMAT));
+    }
 
     /**
      * Get declared fields of a given type.
