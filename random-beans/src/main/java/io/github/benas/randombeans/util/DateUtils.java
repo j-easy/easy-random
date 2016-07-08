@@ -57,7 +57,7 @@ public class DateUtils {
      * @return the corresponding {@link Date} object
      */
     public static Date toDate(LocalDate localDate) {
-        return new Date(valueOf(localDate).getTime());
+        return valueOf(localDate);
     }
 
 }
