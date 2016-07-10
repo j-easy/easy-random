@@ -2,6 +2,29 @@ RANDOM BEANS CHANGELOG
 ===================================
 https://github.com/benas/random-beans
 
+Changes in version 3.2.0 (2016-07-10)
+-------------------------------------
+
+# New features
+
+* issue #156: Add possibility to exclude field annotated with a custom annotation
+* issue #160: `FieldDefinition` should be more flexible
+* issue #166: add `overrideDefaultInitialization` parameter
+
+# API changes and improvements
+
+* issue #171:
+   Deprecated constructor `JodaTimeDateTimeRangeRandomizer(Date min, Date max, long seed)`
+   Deprecated constructor `JodaTimeLocalDateRangeRandomizer(Date min, Date max, long seed)`
+   Deprecated constructor `JodaTimeLocalDateTimeRangeRandomizer(Date min, Date max, long seed)`
+
+# Fixed Bugs
+
+* issue #153: Exception when randomizing collection with type variable generics
+* issue #169: Default field initialization should not be overridden
+* issue #171: Joda time range randomizers must take Joda time types as parameters (not java.util.Date)
+* issue #175: Unable to register parameters through Spring factory bean
+
 Changes in version 3.1.0 (2016-06-11)
 -------------------------------------
 
