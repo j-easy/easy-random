@@ -7,9 +7,12 @@ Changes in version 3.2.0 (2016-07-10)
 
 # New features
 
+* issue #151: Add method to exclude fields by type `EnhancedRandomBuilder#exclude(Class... types)`
 * issue #156: Add possibility to exclude field annotated with a custom annotation
 * issue #160: `FieldDefinition` should be more flexible
+* issue #162: Add support for `@Pattern` to generate random strings that match a regex
 * issue #166: add `overrideDefaultInitialization` parameter
+* issue #172: add `ZonedDateTimeRangeRandomizer`
 
 # API changes and improvements
 
