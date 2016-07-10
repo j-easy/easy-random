@@ -27,8 +27,6 @@ import io.github.benas.randombeans.api.Randomizer;
 import io.github.benas.randombeans.randomizers.jodatime.JodaTimeAbstractRandomizer;
 import org.joda.time.LocalDate;
 
-import java.util.Date;
-
 /**
  * A {@link Randomizer} that generates random {@link LocalDate} in a given range.
  *
@@ -49,19 +47,6 @@ public class JodaTimeLocalDateRangeRandomizer extends JodaTimeAbstractRandomizer
      */
     public JodaTimeLocalDateRangeRandomizer(final long seed) {
         super(seed);
-    }
-
-    /**
-     * Create a new {@link JodaTimeLocalDateRangeRandomizer}.
-     * @param min date
-     * @param max date
-     * @param seed initial seed
-     *
-     * @deprecated Use {@link JodaTimeLocalDateRangeRandomizer#JodaTimeLocalDateRangeRandomizer(org.joda.time.LocalDate, org.joda.time.LocalDate, long)} instead
-     */
-    @Deprecated
-    public JodaTimeLocalDateRangeRandomizer(final Date min, final Date max, final long seed) {
-        super(min, max, seed);
     }
 
     /**
