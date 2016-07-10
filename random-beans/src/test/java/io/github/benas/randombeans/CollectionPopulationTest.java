@@ -31,6 +31,7 @@ import org.junit.Test;
 
 import java.util.*;
 
+import static io.github.benas.randombeans.EnhancedRandomBuilder.aNewEnhancedRandom;
 import static io.github.benas.randombeans.EnhancedRandomBuilder.aNewEnhancedRandomBuilder;
 import static org.assertj.core.api.Assertions.assertThat;
 
@@ -40,7 +41,7 @@ public class CollectionPopulationTest {
 
     @Before
     public void setUp() {
-        enhancedRandom = aNewEnhancedRandomBuilder().build();
+        enhancedRandom = aNewEnhancedRandom();
     }
 
     @Test
@@ -278,7 +279,7 @@ public class CollectionPopulationTest {
     @Test
     @SuppressWarnings("unchecked")
     public void typeVariableCollectionTypesMustBeGeneratedEmpty() {
-        enhancedRandom = aNewEnhancedRandomBuilder().build();
+        enhancedRandom = aNewEnhancedRandom();
         TypeVariableCollectionBean<String, String> bean = enhancedRandom.nextObject(TypeVariableCollectionBean.class);
         assertThat(bean.getCollection()).isEmpty();
         assertThat(bean.getList()).isEmpty();

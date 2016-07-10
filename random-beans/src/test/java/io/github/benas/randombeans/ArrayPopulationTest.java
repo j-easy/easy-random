@@ -29,7 +29,7 @@ import io.github.benas.randombeans.beans.Person;
 import org.junit.Before;
 import org.junit.Test;
 
-import static io.github.benas.randombeans.EnhancedRandomBuilder.aNewEnhancedRandomBuilder;
+import static io.github.benas.randombeans.EnhancedRandomBuilder.aNewEnhancedRandom;
 import static org.assertj.core.api.Assertions.assertThat;
 
 import java.lang.reflect.Array;
@@ -40,7 +40,7 @@ public class ArrayPopulationTest {
 
     @Before
     public void setUp() {
-        enhancedRandom = aNewEnhancedRandomBuilder().build();
+        enhancedRandom = aNewEnhancedRandom();
     }
 
     @Test

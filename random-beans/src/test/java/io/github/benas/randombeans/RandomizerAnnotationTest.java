@@ -28,21 +28,21 @@ import org.junit.Test;
 import io.github.benas.randombeans.api.ObjectGenerationException;
 import io.github.benas.randombeans.api.Randomizer;
 
-import static io.github.benas.randombeans.EnhancedRandomBuilder.aNewEnhancedRandomBuilder;
+import static io.github.benas.randombeans.EnhancedRandomBuilder.aNewEnhancedRandom;
 import static org.assertj.core.api.Assertions.assertThat;
 
 public class RandomizerAnnotationTest {
 
     @Test
     public void fieldAnnotatedWithRandomizerShouldBePopulatedWithValuesGeneratedByTheDeclaredRandomizer() {
-        Foo foo = aNewEnhancedRandomBuilder().build().nextObject(Foo.class);
+        Foo foo = aNewEnhancedRandom().nextObject(Foo.class);
         assertThat(foo.getName()).isEqualTo("foo");
     }
 
     @Test(expected=ObjectGenerationException.class)
     // https://github.com/benas/random-beans/issues/131
     public void shouldThrowObjectGenerationExceptionWhenRandomizerUsedInRandomizerAnnotationHasNoDefaultConstructor() {
-        aNewEnhancedRandomBuilder().build().nextObject(Bar.class);
+        aNewEnhancedRandom().nextObject(Bar.class);
     }
 
     private class Bar {

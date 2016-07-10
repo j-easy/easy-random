@@ -48,6 +48,7 @@ import java.util.Set;
 import java.util.function.Supplier;
 import java.util.stream.Stream;
 
+import static io.github.benas.randombeans.EnhancedRandomBuilder.aNewEnhancedRandom;
 import static io.github.benas.randombeans.EnhancedRandomBuilder.aNewEnhancedRandomBuilder;
 import static io.github.benas.randombeans.FieldDefinitionBuilder.field;
 import static io.github.benas.randombeans.api.EnhancedRandom.*;
@@ -79,7 +80,7 @@ public class EnhancedRandomImplTest {
 
     @Before
     public void setUp() {
-        enhancedRandom = aNewEnhancedRandomBuilder().build();
+        enhancedRandom = aNewEnhancedRandom();
         when(randomizer.getRandomValue()).thenReturn(FOO);
         when(supplier.get()).thenReturn(FOO);
     }

@@ -30,7 +30,7 @@ import org.junit.Test;
 
 import java.util.Collection;
 
-import static io.github.benas.randombeans.EnhancedRandomBuilder.aNewEnhancedRandomBuilder;
+import static io.github.benas.randombeans.EnhancedRandomBuilder.aNewEnhancedRandom;
 import static org.assertj.core.api.Assertions.assertThat;
 
 public class MapPopulationTest {
@@ -39,7 +39,7 @@ public class MapPopulationTest {
 
     @Before
     public void setUp() {
-        enhancedRandom = aNewEnhancedRandomBuilder().build();
+        enhancedRandom = aNewEnhancedRandom();
     }
 
     @Test

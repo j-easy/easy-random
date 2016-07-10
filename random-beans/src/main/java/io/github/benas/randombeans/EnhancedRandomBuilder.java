@@ -75,6 +75,15 @@ public class EnhancedRandomBuilder {
     }
 
     /**
+     * Create a new {@link EnhancedRandom} instance with default parameters.
+     *
+     * @return a new {@link EnhancedRandom}
+     */
+    public static EnhancedRandom aNewEnhancedRandom() {
+        return new EnhancedRandomBuilder().build();
+    }
+
+    /**
      * Register a custom randomizer for a given field.
      *
      * <strong>The field type MUST be provided in the field definition</strong>

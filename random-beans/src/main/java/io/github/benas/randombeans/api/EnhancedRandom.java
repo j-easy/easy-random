@@ -29,7 +29,7 @@ import java.util.Random;
 import java.util.Set;
 import java.util.stream.Stream;
 
-import static io.github.benas.randombeans.EnhancedRandomBuilder.aNewEnhancedRandomBuilder;
+import static io.github.benas.randombeans.EnhancedRandomBuilder.aNewEnhancedRandom;
 import static java.util.stream.Collectors.toList;
 import static java.util.stream.Collectors.toSet;
 
@@ -49,7 +49,7 @@ public abstract class EnhancedRandom extends Random {
      * @return a random instance of the given type
      */
     public static <T> T random(final Class<T> type, final String... excludedFields) {
-        return aNewEnhancedRandomBuilder().build().nextObject(type, excludedFields);
+        return aNewEnhancedRandom().nextObject(type, excludedFields);
     }
 
     /**
@@ -63,7 +63,7 @@ public abstract class EnhancedRandom extends Random {
      * @throws ObjectGenerationException when unable to populate an instance of the given type
      */
     public static <T> Stream<T> randomStreamOf(final int amount, final Class<T> type, final String... excludedFields) {
-        return aNewEnhancedRandomBuilder().build().objects(type, amount, excludedFields);
+        return aNewEnhancedRandom().objects(type, amount, excludedFields);
     }
 
     /**
