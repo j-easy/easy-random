@@ -47,7 +47,8 @@ abstract class FastClasspathScannerFacade {
 
     static {
         typeToConcreteSubTypes = new ConcurrentHashMap<>();
-        classpathScanner = new FastClasspathScanner();
+        // disable blacklisting of JRE system jars and system packages (java.* and sun.*)
+        classpathScanner = new FastClasspathScanner("!!");
         classpathScanner.scan();
     }
 
