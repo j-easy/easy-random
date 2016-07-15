@@ -33,6 +33,7 @@ import java.util.Objects;
 import java.util.concurrent.ConcurrentHashMap;
 
 import io.github.lukehutch.fastclasspathscanner.FastClasspathScanner;
+import io.github.lukehutch.fastclasspathscanner.scanner.ScanResult;
 
 /**
  * Facade for {@link io.github.lukehutch.fastclasspathscanner.FastClasspathScanner}. It is a separate class from {@link ReflectionUtils},
@@ -43,13 +44,12 @@ import io.github.lukehutch.fastclasspathscanner.FastClasspathScanner;
 abstract class FastClasspathScannerFacade {
 
     private static final ConcurrentHashMap<Class<?>, List<Class<?>>> typeToConcreteSubTypes;
-    private static final FastClasspathScanner classpathScanner;
+    private static final ScanResult scanResult;
 
     static {
         typeToConcreteSubTypes = new ConcurrentHashMap<>();
         // disable blacklisting of JRE system jars and system packages (java.* and sun.*)
-        classpathScanner = new FastClasspathScanner("!!");
-        classpathScanner.scan();
+        scanResult = new FastClasspathScanner("!!").scan();
     }
 
     /**
@@ -68,7 +68,7 @@ abstract class FastClasspathScannerFacade {
     }
 
     private static <T> List<Class<?>> searchForPublicConcreteSubTypesOf(final Class<T> type) {
-        List<String> subTypes = type.isInterface() ? classpathScanner.getNamesOfClassesImplementing(type) : classpathScanner.getNamesOfSubclassesOf(type);
+        List<String> subTypes = type.isInterface() ? scanResult.getNamesOfClassesImplementing(type) : scanResult.getNamesOfSubclassesOf(type);
         return subTypes.stream().map(className -> {
             try {
                 ClassLoader classloader = Thread.currentThread().getContextClassLoader();
