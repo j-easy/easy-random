@@ -29,6 +29,8 @@ import org.junit.runner.RunWith;
 import org.mockito.Mock;
 import org.mockito.runners.MockitoJUnitRunner;
 
+import lombok.Data;
+
 import java.lang.reflect.Field;
 import java.util.ArrayList;
 import java.util.Collection;
@@ -117,20 +119,12 @@ public class CollectionPopulatorTest {
         assertThat(collection).isInstanceOf(ArrayList.class).isEmpty();
     }
 
+    @Data
     @SuppressWarnings("rawtypes")
     class Foo {
         private List rawInterfaceList;
         private List<String> typedInterfaceList;
         private ArrayList rawConcreteList;
         private ArrayList<String> typedConcreteList;
-
-        public List getRawInterfaceList() { return rawInterfaceList; }
-        public void setRawInterfaceList(List rawInterfaceList) { this.rawInterfaceList = rawInterfaceList; }
-        public List<String> getTypedInterfaceList() { return typedInterfaceList; }
-        public void setTypedInterfaceList(List<String> typedInterfaceList) { this.typedInterfaceList = typedInterfaceList; }
-        public ArrayList getRawConcreteList() { return rawConcreteList; }
-        public void setRawConcreteList(ArrayList rawConcreteList) { this.rawConcreteList = rawConcreteList; }
-        public ArrayList<String> getTypedConcreteList() { return typedConcreteList; }
-        public void setTypedConcreteList(ArrayList<String> typedConcreteList) { this.typedConcreteList = typedConcreteList; }
     }
 }
