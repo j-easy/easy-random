@@ -37,7 +37,6 @@ import static org.mockito.Mockito.when;
 public class ArrayPopulatorTest {
 
     private static final int INT = 10;
-    private static final char CHAR = 'R';
     private static final String STRING = "FOO";
 
     @Mock
@@ -47,7 +46,7 @@ public class ArrayPopulatorTest {
     @Mock
     private RandomizerProvider randomizerProvider;
     @Mock
-    private Randomizer integerRandomizer, characterRandomizer;
+    private Randomizer integerRandomizer;
 
     private ArrayPopulator arrayPopulator;
 
@@ -56,9 +55,7 @@ public class ArrayPopulatorTest {
         arrayPopulator = new ArrayPopulator(enhancedRandom, randomizerProvider);
         when(enhancedRandom.nextInt()).thenReturn(INT);
         when(randomizerProvider.getRandomizerByType(Integer.TYPE)).thenReturn(integerRandomizer);
-        when(randomizerProvider.getRandomizerByType(Character.TYPE)).thenReturn(characterRandomizer);
         when(integerRandomizer.getRandomValue()).thenReturn(INT);
-        when(characterRandomizer.getRandomValue()).thenReturn(CHAR);
         when(enhancedRandom.doPopulateBean(String.class, context)).thenReturn(STRING);
     }
 
@@ -74,12 +71,5 @@ public class ArrayPopulatorTest {
         int[] ints = (int[]) arrayPopulator.getRandomPrimitiveArray(Integer.TYPE);
 
         assertThat(ints).containsOnly(INT);
-    }
-
-    @Test
-    public void charArraysShouldBeFilledWithOnlyAlphabeticLetters() {
-        char[] chars = (char[]) arrayPopulator.getRandomArray(char[].class, context);
-
-        assertThat(chars).containsOnly(CHAR);
     }
 }
