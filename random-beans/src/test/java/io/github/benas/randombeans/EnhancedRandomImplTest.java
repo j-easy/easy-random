@@ -252,11 +252,7 @@ public class EnhancedRandomImplTest {
     public void beansWithRecursiveStructureMustNotCauseStackOverflowException() {
         Node node = enhancedRandom.nextObject(Node.class);
 
-        assertThat(node).isNotNull();
-        assertThat(node.getValue()).isNotEmpty();
-        assertThat(node.getLeft()).isNotNull();
-        assertThat(node.getRight()).isNotNull();
-        assertThat(node.getParents()).isNotNull();
+        assertThat(node).hasNoNullFieldsOrProperties();
     }
 
     @Test
