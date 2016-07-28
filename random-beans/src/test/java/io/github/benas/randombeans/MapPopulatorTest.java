@@ -29,6 +29,8 @@ import org.junit.runner.RunWith;
 import org.mockito.Mock;
 import org.mockito.runners.MockitoJUnitRunner;
 
+import lombok.Data;
+
 import java.lang.reflect.Field;
 import java.util.HashMap;
 import java.util.Map;
@@ -122,19 +124,11 @@ public class MapPopulatorTest {
         assertThat(map).isInstanceOf(TreeMap.class).isEmpty();
     }
 
+    @Data
     class Foo {
         private Map rawMap;
         private HashMap concreteMap;
         private Map<String, String> typedMap;
         private HashMap<String, String> typedConcreteMap;
-
-        public Map getRawMap() { return rawMap; }
-        public void setRawMap(Map rawMap) { this.rawMap = rawMap; }
-        public HashMap getConcreteMap() { return concreteMap; }
-        public void setConcreteMap(HashMap concreteMap) { this.concreteMap = concreteMap; }
-        public Map<String, String> getTypedMap() { return typedMap; }
-        public void setTypedMap(Map<String, String> typedMap) { this.typedMap = typedMap; }
-        public HashMap<String, String> getTypedConcreteMap() { return typedConcreteMap; }
-        public void setTypedConcreteMap(HashMap<String, String> typedConcreteMap) { this.typedConcreteMap = typedConcreteMap; }
     }
 }
