@@ -64,32 +64,22 @@ public class ArrayPopulatorTest {
 
     @Test
     public void getRandomArray() {
-        Object array = arrayPopulator.getRandomArray(String[].class, context);
+        String[] strings = (String[]) arrayPopulator.getRandomArray(String[].class, context);
 
-        assertThat(array).isInstanceOf(String[].class);
-        String[] strings = (String[]) array;
-        for (String string : strings) {
-            assertThat(string).isEqualTo(STRING);
-        }
+        assertThat(strings).containsOnly(STRING);
     }
 
     @Test
     public void getRandomPrimitiveArray() {
-        Object array = arrayPopulator.getRandomPrimitiveArray(Integer.TYPE);
+        int[] ints = (int[]) arrayPopulator.getRandomPrimitiveArray(Integer.TYPE);
 
-        assertThat(array).isInstanceOf(int[].class);
-        int[] ints = (int[]) array;
-        for (int i : ints) {
-            assertThat(i).isEqualTo(INT);
-        }
+        assertThat(ints).containsOnly(INT);
     }
 
     @Test
     public void charArraysShouldBeFilledWithOnlyAlphabeticLetters() {
         char[] chars = (char[]) arrayPopulator.getRandomArray(char[].class, context);
 
-        for (char c : chars) {
-            assertThat(c).isEqualTo(CHAR);
-        }
+        assertThat(chars).containsOnly(CHAR);
     }
 }
