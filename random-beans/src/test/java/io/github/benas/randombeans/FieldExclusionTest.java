@@ -124,6 +124,7 @@ public class FieldExclusionTest {
     }
 
     @Test
+    @SuppressWarnings("deprecation")
     public void fieldsExcludedWithAnnotationViaFieldDefinitionShouldNotBePopulated() {
         // given
         enhancedRandom = aNewEnhancedRandomBuilder()
