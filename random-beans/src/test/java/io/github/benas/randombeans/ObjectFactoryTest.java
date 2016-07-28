@@ -62,7 +62,7 @@ public class ObjectFactoryTest {
         Collection<?> collection = objectFactory.createEmptyCollectionForType(ArrayBlockingQueue.class, INITIAL_CAPACITY);
 
         assertThat(collection).isInstanceOf(ArrayBlockingQueue.class).isEmpty();
-        assertThat(((ArrayBlockingQueue) collection).remainingCapacity()).isEqualTo(INITIAL_CAPACITY);
+        assertThat(((ArrayBlockingQueue<?>) collection).remainingCapacity()).isEqualTo(INITIAL_CAPACITY);
     }
 
     @Test(expected = UnsupportedOperationException.class)
