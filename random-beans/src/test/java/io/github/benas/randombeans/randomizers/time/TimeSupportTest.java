@@ -53,7 +53,6 @@ public class TimeSupportTest {
     }
 
     @Test
-    @SuppressWarnings("unchecked")
     // https://github.com/benas/random-beans/issues/135
     public void threeTenRandomizersCanBeOverridenByCustomRandomizers() {
         EnhancedRandom customEnhancedRandom = EnhancedRandomBuilder.aNewEnhancedRandomBuilder()

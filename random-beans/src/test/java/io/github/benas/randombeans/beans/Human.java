@@ -28,7 +28,6 @@ import lombok.Data;
 @Data
 public class Human implements Mammal {
 
-    @SuppressWarnings("unused")
     public static final long SERIAL_VERSION_UID = 593716507559065802L;
 
     protected final Long id = null;
