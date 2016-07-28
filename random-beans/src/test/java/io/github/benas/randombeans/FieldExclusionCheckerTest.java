@@ -24,7 +24,6 @@
 package io.github.benas.randombeans;
 
 import io.github.benas.randombeans.beans.Human;
-import io.github.benas.randombeans.beans.Person;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
