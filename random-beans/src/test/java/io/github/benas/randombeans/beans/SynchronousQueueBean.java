@@ -25,7 +25,7 @@ package io.github.benas.randombeans.beans;
 
 import java.util.concurrent.SynchronousQueue;
 
-@SuppressWarnings("rawtypes")
+@SuppressWarnings({"rawtypes", "unused"})
 public class SynchronousQueueBean {
 
     private SynchronousQueue synchronousQueue;
