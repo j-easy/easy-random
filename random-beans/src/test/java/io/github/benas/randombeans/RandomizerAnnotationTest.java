@@ -61,6 +61,14 @@ public class RandomizerAnnotationTest {
         }
     }
 
+    public static class DummyRandomizer implements Randomizer<String> {
+
+        @Override
+        public String getRandomValue() {
+            return "foo";
+        }
+    }
+
     private class Foo {
         @io.github.benas.randombeans.annotation.Randomizer(DummyRandomizer.class)
         private String name;
