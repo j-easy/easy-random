@@ -78,6 +78,62 @@ public class EnhancedRandomParameters {
         this.timeRange = new Range<>(min, max);
     }
 
+    public void setSeed(long seed) {
+        this.seed = seed;
+    }
+
+    public void setMaxCollectionSize(int maxCollectionSize) {
+        this.maxCollectionSize = maxCollectionSize;
+    }
+
+    public void setMaxStringLength(int maxStringLength) {
+        this.maxStringLength = maxStringLength;
+    }
+
+    public void setCharset(Charset charset) {
+        this.charset = charset;
+    }
+
+    public void setScanClasspathForConcreteTypes(boolean scanClasspathForConcreteTypes) {
+        this.scanClasspathForConcreteTypes = scanClasspathForConcreteTypes;
+    }
+
+    public void setOverrideDefaultInitialization(boolean overrideDefaultInitialization) {
+        this.overrideDefaultInitialization = overrideDefaultInitialization;
+    }
+
+    public long getSeed() {
+        return seed;
+    }
+
+    public int getMaxCollectionSize() {
+        return maxCollectionSize;
+    }
+
+    public int getMaxStringLength() {
+        return maxStringLength;
+    }
+
+    public Charset getCharset() {
+        return charset;
+    }
+
+    public boolean isScanClasspathForConcreteTypes() {
+        return scanClasspathForConcreteTypes;
+    }
+
+    public boolean isOverrideDefaultInitialization() {
+        return overrideDefaultInitialization;
+    }
+
+    public Range<LocalDate> getDateRange() {
+        return dateRange;
+    }
+
+    public Range<LocalTime> getTimeRange() {
+        return timeRange;
+    }
+
     @Data
     public static class Range<T> {
         private T min;

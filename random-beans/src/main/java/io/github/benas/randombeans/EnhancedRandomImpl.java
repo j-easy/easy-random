@@ -57,14 +57,18 @@ class EnhancedRandomImpl extends EnhancedRandom {
 
     private final FieldExclusionChecker fieldExclusionChecker;
 
-    EnhancedRandomImpl(final Set<RandomizerRegistry> registries) {
-        objectFactory = new ObjectFactory();
+    EnhancedRandomImpl(final Set<RandomizerRegistry> registries, ProxyRegistry proxyRegistry) {
+        objectFactory = new ObjectFactory(proxyRegistry);
         randomizerProvider = new RandomizerProvider(registries);
         arrayPopulator = new ArrayPopulator(this, randomizerProvider);
         collectionPopulator = new CollectionPopulator(this, objectFactory);
         mapPopulator = new MapPopulator(this, objectFactory);
         fieldPopulator = new FieldPopulator(this, randomizerProvider, arrayPopulator, collectionPopulator, mapPopulator);
         fieldExclusionChecker = new FieldExclusionChecker();
+    }
+
+    EnhancedRandomImpl(final Set<RandomizerRegistry> registries) {
+        this(registries, null);
     }
 
     @Override
@@ -137,6 +141,7 @@ class EnhancedRandomImpl extends EnhancedRandom {
             return (T) mapPopulator.getEmptyImplementationForMapInterface(type);
         }
         return null;
+
     }
 
     private <T> void populateFields(final List<Field> fields, final T result, final PopulatorContext context) throws IllegalAccessException {

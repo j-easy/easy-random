@@ -50,6 +50,7 @@
         <joda-time.version>2.9.4</joda-time.version>
         <spring-context.version>4.3.1.RELEASE</spring-context.version>
         <objenesis.version>2.4</objenesis.version>
+        <byte-buddy.version>1.4.18</byte-buddy.version>
         <fast-classpath-scanner.version>1.93.0</fast-classpath-scanner.version>
         <hibernate-validator.version>5.2.4.Final</hibernate-validator.version>
         <javax.el.version>2.2.6</javax.el.version>
@@ -184,6 +185,11 @@
                 <groupId>org.springframework</groupId>
                 <artifactId>spring-context</artifactId>
                 <version>${spring-context.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>net.bytebuddy</groupId>
+                <artifactId>byte-buddy</artifactId>
+                <version>${byte-buddy.version}</version>
             </dependency>
             <dependency>
                 <groupId>com.fasterxml.jackson.core</groupId>
