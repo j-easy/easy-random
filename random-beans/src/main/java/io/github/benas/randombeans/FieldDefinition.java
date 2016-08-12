@@ -71,4 +71,20 @@ public class FieldDefinition<T, F> {
         this.clazz = clazz;
         this.annotations = annotations;
     }
+
+    public String getName() {
+        return name;
+    }
+
+    public Class<F> getType() {
+        return type;
+    }
+
+    public Class<T> getClazz() {
+        return clazz;
+    }
+
+    public Set<Class<? extends Annotation>> getAnnotations() {
+        return annotations;
+    }
 }

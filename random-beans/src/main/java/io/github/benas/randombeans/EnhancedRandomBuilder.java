@@ -23,12 +23,10 @@
  */
 package io.github.benas.randombeans;
 
-import io.github.benas.randombeans.api.EnhancedRandom;
-import io.github.benas.randombeans.api.EnhancedRandomParameters;
-import io.github.benas.randombeans.api.Randomizer;
-import io.github.benas.randombeans.api.RandomizerRegistry;
+import io.github.benas.randombeans.api.*;
 import io.github.benas.randombeans.randomizers.registry.CustomRandomizerRegistry;
 import io.github.benas.randombeans.randomizers.registry.ExclusionRandomizerRegistry;
+import net.bytebuddy.dynamic.DynamicType;
 
 import java.nio.charset.Charset;
 import java.time.LocalDate;
@@ -53,6 +51,8 @@ public class EnhancedRandomBuilder {
 
     private final Set<RandomizerRegistry> userRegistries;
 
+    private final ProxyRegistry proxyRegistry;
+
     private EnhancedRandomParameters parameters;
 
     /**
@@ -61,6 +61,7 @@ public class EnhancedRandomBuilder {
     public EnhancedRandomBuilder() {
         customRandomizerRegistry = new CustomRandomizerRegistry();
         exclusionRandomizerRegistry = new ExclusionRandomizerRegistry();
+        proxyRegistry = new ProxyRegistryImpl();
         userRegistries = new LinkedHashSet<>();
         parameters = new EnhancedRandomParameters();
     }
@@ -131,6 +132,11 @@ public class EnhancedRandomBuilder {
      */
     public <T, R> EnhancedRandomBuilder randomize(Class<T> type, Randomizer<R> randomizer) {
         customRandomizerRegistry.registerRandomizer(type, randomizer);
+        return this;
+    }
+
+    public <T, R> EnhancedRandomBuilder proxy(Class<T> type, DynamicType.Unloaded<R> unloadedProxy) {
+        proxyRegistry.proxy(type, unloadedProxy);
         return this;
     }
 
@@ -300,11 +306,11 @@ public class EnhancedRandomBuilder {
      */
     public EnhancedRandom build() {
         LinkedHashSet<RandomizerRegistry> registries = setupRandomizerRegistries();
-        return setupEnhancedRandom(registries);
+        return setupEnhancedRandom(registries, proxyRegistry);
     }
 
-    private EnhancedRandomImpl setupEnhancedRandom(LinkedHashSet<RandomizerRegistry> registries) {
-        EnhancedRandomImpl enhancedRandom = new EnhancedRandomImpl(registries);
+    private EnhancedRandomImpl setupEnhancedRandom(LinkedHashSet<RandomizerRegistry> registries, ProxyRegistry proxyRegistry) {
+        EnhancedRandomImpl enhancedRandom = new EnhancedRandomImpl(registries, proxyRegistry);
         enhancedRandom.setParameters(parameters);
         return enhancedRandom;
     }

@@ -23,6 +23,9 @@
  */
 package io.github.benas.randombeans;
 
+import io.github.benas.randombeans.api.ProxyRegistry;
+import net.bytebuddy.dynamic.DynamicType;
+import net.bytebuddy.dynamic.loading.ClassLoadingStrategy;
 import org.objenesis.Objenesis;
 import org.objenesis.ObjenesisStd;
 
@@ -46,7 +49,17 @@ class ObjectFactory {
 
     private final Objenesis objenesis = new ObjenesisStd();
 
+    private final ProxyRegistry proxyRegistry;
+
     private boolean scanClasspathForConcreteTypes;
+
+    public ObjectFactory() {
+        this.proxyRegistry = new ProxyRegistryImpl();
+    }
+
+    public ObjectFactory(ProxyRegistry proxyRegistry) {
+        this.proxyRegistry = proxyRegistry;
+    }
 
     <T> T createInstance(final Class<T> type) {
         if (scanClasspathForConcreteTypes && isAbstract(type)) {
@@ -61,7 +74,26 @@ class ObjectFactory {
         }
     }
 
+    private <T> Class<? extends T> toClass(final DynamicType.Unloaded<T> unloaded) {
+        return unloaded.load(
+                getClass().getClassLoader(),
+                ClassLoadingStrategy.Default.WRAPPER
+        ).getLoaded();
+    }
+
+    private <T> T createInstance(final DynamicType.Unloaded<T> unloaded) {
+        Class<? extends T> type = toClass(unloaded);
+        try {
+            return type.newInstance();
+        } catch (Exception exception) {
+            return objenesis.newInstance(type);
+        }
+    }
+
     private <T> T createNewInstance(final Class<T> type) {
+        if(proxyRegistry.hasProxy(type)) {
+            return createInstance(proxyRegistry.getProxy(type));
+        }
         try {
             return type.newInstance();
         } catch (Exception exception) {
