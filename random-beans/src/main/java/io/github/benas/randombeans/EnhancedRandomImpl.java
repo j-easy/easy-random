@@ -125,7 +125,7 @@ class EnhancedRandomImpl extends EnhancedRandom {
 
     private <T> T randomize(final Class<T> type, final PopulatorContext context) {
         if (isEnumType(type)) {
-            return (T) new EnumRandomizer(type, nextLong()).getRandomValue();
+            return (T) new EnumRandomizer(type, parameters.getSeed()).getRandomValue();
         }
         if (isArrayType(type)) {
             return (T) arrayPopulator.getRandomArray(type, context);
