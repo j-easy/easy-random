@@ -29,6 +29,7 @@ import io.github.benas.randombeans.api.Randomizer;
 import io.github.benas.randombeans.beans.*;
 import io.github.benas.randombeans.randomizers.misc.ConstantRandomizer;
 import io.github.benas.randombeans.util.ReflectionUtils;
+import java.util.HashSet;
 import lombok.Data;
 
 import org.junit.Before;
@@ -418,6 +419,16 @@ public class EnhancedRandomImplTest {
         then(data.getPrice()).isBetween(200, 500);
     }
 
+    @Test
+    public void nextEnumShouldNotAlwaysReturnTheSameValue() {
+        HashSet<TestEnum> distinctEnumBeans = new HashSet<>();
+        for (int i = 0; i < 10; i++) {
+            distinctEnumBeans.add(enhancedRandom.nextObject(TestEnum.class));
+        }
+
+        assertThat(distinctEnumBeans.size()).isGreaterThan(1);
+    }
+
     void validatePerson(final Person person) {
         assertThat(person).isNotNull();
         assertThat(person.getEmail()).isNotEmpty();
@@ -505,5 +516,9 @@ public class EnhancedRandomImplTest {
                 -1116321717, -749120929, -251374152, -751402843, -747583833, 1385925969, -2086462186, -918500648,
                 -1743430693, -1618968583, 980431507, 1514579611, 1302100274, 724999798, -1309772554, -1143448117,
                 1839376840, 1847876220, -148273579, 1870475320, -1179265442};
+    }
+
+    private enum TestEnum {
+        ONE_THING, ANOTHER_THING, SOMETHING_ELSE;
     }
 }
