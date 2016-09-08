@@ -54,6 +54,7 @@ public class ArrayPopulatorTest {
     public void setUp() {
         arrayPopulator = new ArrayPopulator(enhancedRandom, randomizerProvider);
         when(enhancedRandom.nextInt()).thenReturn(INT);
+        when(enhancedRandom.getRandomCollectionSize()).thenReturn(INT);
         when(randomizerProvider.getRandomizerByType(Integer.TYPE)).thenReturn(integerRandomizer);
         when(integerRandomizer.getRandomValue()).thenReturn(INT);
         when(enhancedRandom.doPopulateBean(String.class, context)).thenReturn(STRING);

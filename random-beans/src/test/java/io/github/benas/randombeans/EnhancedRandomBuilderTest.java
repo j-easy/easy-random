@@ -137,6 +137,15 @@ public class EnhancedRandomBuilderTest {
         assertThat(((EnhancedRandomImpl)enhancedRandom).getRandomCollectionSize()).isBetween(1, 42);
     }
 
+    @Test // https://github.com/benas/random-beans/issues/191
+    public void maxCollectionSizeShouldWorkForArrays() {
+        EnhancedRandom enhancedRandom = aNewEnhancedRandomBuilder().maxCollectionSize(1).build();
+
+        String[] strArr = enhancedRandom.nextObject(String[].class);
+
+        assertThat(strArr.length).isLessThanOrEqualTo(1);
+    }
+
     @Test
     public void shouldConfigureExclusionOfTypesFromBuilder() {
         enhancedRandomBuilder = aNewEnhancedRandomBuilder();
