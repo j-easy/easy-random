@@ -48,7 +48,7 @@
         <assertj.version>3.5.2</assertj.version>
         <validation-api.version>1.1.0.Final</validation-api.version>
         <joda-time.version>2.9.4</joda-time.version>
-        <spring-context.version>4.3.1.RELEASE</spring-context.version>
+        <spring-context.version>4.3.2.RELEASE</spring-context.version>
         <objenesis.version>2.4</objenesis.version>
         <fast-classpath-scanner.version>2.0.2</fast-classpath-scanner.version>
         <hibernate-validator.version>5.2.4.Final</hibernate-validator.version>
