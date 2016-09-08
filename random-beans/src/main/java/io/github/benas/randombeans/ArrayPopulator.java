@@ -51,7 +51,7 @@ class ArrayPopulator {
         if (componentType.isPrimitive()) {
             return getRandomPrimitiveArray(componentType);
         }
-        int randomSize = abs((byte) enhancedRandom.nextInt());
+        int randomSize = enhancedRandom.getRandomCollectionSize();
         T[] itemsList = (T[]) Array.newInstance(componentType, randomSize);
         for (int i = 0; i < randomSize; i++) {
             itemsList[i] = (T) enhancedRandom.doPopulateBean(fieldType.getComponentType(), context);
