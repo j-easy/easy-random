@@ -94,7 +94,7 @@ class FieldPopulator {
         } else if (isMapType(fieldType)) {
             value = mapPopulator.getRandomMap(field, context);
         } else {
-            if (scanClasspathForConcreteTypes && isAbstract(fieldType)) {
+            if (scanClasspathForConcreteTypes && isAbstract(fieldType) && !isEnumType(fieldType) /*enums can be abstract, but can not inherit*/) {
                 Class<?> randomConcreteSubType = randomElementOf(filterSameParameterizedTypes(getPublicConcreteSubTypesOf(fieldType), fieldGenericType));
                 if (randomConcreteSubType == null) {
                     throw new ObjectGenerationException("Unable to find a matching concrete subtype of type: " + fieldType);
