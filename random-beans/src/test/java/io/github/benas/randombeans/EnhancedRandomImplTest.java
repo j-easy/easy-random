@@ -239,6 +239,15 @@ public class EnhancedRandomImplTest {
         assertThat(foo.getBar().getName()).isNotEmpty();
     }
 
+    @Test
+    public void whenScanClasspathForConcreteTypesIsEnabled_thenShouldPopulateAbstractEnumeration() {
+        EnhancedRandom random = EnhancedRandomBuilder.aNewEnhancedRandomBuilder().scanClasspathForConcreteTypes(true).build();
+
+        ClassUsingAbstractEnum randomValue = random.nextObject(ClassUsingAbstractEnum.class);
+
+        then(randomValue.getTestEnum()).isNotNull();
+    }
+
     @Test(expected = IllegalArgumentException.class)
     public void whenSpecifiedNumberOfBeansToGenerateIsNegative_thenShouldThrowAnIllegalArgumentException() {
         enhancedRandom.objects(Person.class, -2);
