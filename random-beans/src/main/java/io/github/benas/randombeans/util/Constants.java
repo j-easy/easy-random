@@ -46,6 +46,11 @@ public abstract class Constants {
     public static final int MAX_COLLECTION_SIZE = Byte.MAX_VALUE;
 
     /**
+     * Maximum number of different objects to generate for a type.
+     */
+    public static final int MAX_OBJECT_POOL_SIZE = 10;
+
+    /**
      * Maximum string size.
      */
     public static final byte MAX_STRING_LENGTH = 32;

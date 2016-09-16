@@ -25,6 +25,8 @@ package io.github.benas.randombeans;
 
 import io.github.benas.randombeans.beans.Address;
 import io.github.benas.randombeans.beans.Person;
+import io.github.benas.randombeans.util.Constants;
+
 import org.junit.Before;
 import org.junit.Test;
 import org.mockito.Mock;
@@ -42,7 +44,7 @@ public class PopulatorContextTest {
 
     @Before
     public void setUp() {
-        populatorContext = new PopulatorContext();
+        populatorContext = new PopulatorContext(Constants.MAX_OBJECT_POOL_SIZE);
     }
 
     @Test
@@ -53,7 +55,7 @@ public class PopulatorContextTest {
         assertThat(populatorContext.hasRandomizedType(String.class)).isFalse();
 
         // When the object pool size is filled => should be considered as already randomized
-        for (int i = 1; i < PopulatorContext.OBJECT_POOL_SIZE; i++) {
+        for (int i = 1; i < Constants.MAX_OBJECT_POOL_SIZE; i++) {
             populatorContext.addPopulatedBean(String.class, "bean" + i);
         }
         assertThat(populatorContext.hasRandomizedType(String.class)).isTrue();

@@ -53,7 +53,7 @@ public class EnhancedRandomBuilder {
 
     private final Set<RandomizerRegistry> userRegistries;
 
-    private EnhancedRandomParameters parameters;
+    private final EnhancedRandomParameters parameters;
 
     /**
      * Create a new {@link EnhancedRandomBuilder}.
@@ -203,6 +203,17 @@ public class EnhancedRandomBuilder {
      */
     public EnhancedRandomBuilder maxStringLength(final int maxStringLength) {
         parameters.setMaxStringLength(maxStringLength);
+        return this;
+    }
+
+    /**
+     * Set the maximum number of different objects to generate for a type.
+     *
+     * @param maxObjectPoolSize the maximum number of objects
+     * @return a pre configured {@link EnhancedRandomBuilder} instance
+     */
+    public EnhancedRandomBuilder maxObjectPoolSize(final int maxObjectPoolSize) {
+        parameters.setMaxObjectPoolSize(maxObjectPoolSize);
         return this;
     }
 

@@ -316,7 +316,7 @@ public class EnhancedRandomImplTest {
         enhancedRandom = aNewEnhancedRandomBuilder().maxStringLength(maxStringLength).build();
 
         // When
-        Person person = random(Person.class);
+        Person person = enhancedRandom.nextObject(Person.class);
 
         // Then
         assertThat(person.getName().length()).isLessThanOrEqualTo(maxStringLength);
@@ -326,6 +326,23 @@ public class EnhancedRandomImplTest {
         assertThat(person.getAddress().getCountry().length()).isLessThanOrEqualTo(maxStringLength);
         assertThat(person.getAddress().getZipCode().length()).isLessThanOrEqualTo(maxStringLength);
         assertThat(person.getAddress().getStreet().getName().length()).isLessThanOrEqualTo(maxStringLength);
+    }
+
+    @Data
+    static class PersonTuple {
+        public Person left, right;
+    }
+
+    @Test
+    public void testMaxObjectPoolSize() {
+        // Given
+        enhancedRandom = aNewEnhancedRandomBuilder().maxObjectPoolSize(1).build();
+
+        // When
+        PersonTuple persons = enhancedRandom.nextObject(PersonTuple.class);
+
+        // Then
+        assertThat(persons.left).isSameAs(persons.right);
     }
 
     @Test

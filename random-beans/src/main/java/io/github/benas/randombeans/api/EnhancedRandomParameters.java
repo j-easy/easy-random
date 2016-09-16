@@ -49,6 +49,8 @@ public class EnhancedRandomParameters {
 
     private int maxStringLength;
 
+    private int maxObjectPoolSize;
+
     private Charset charset;
 
     private boolean scanClasspathForConcreteTypes;
@@ -64,6 +66,7 @@ public class EnhancedRandomParameters {
         seed = new Random().nextLong();
         maxCollectionSize = Constants.MAX_COLLECTION_SIZE;
         maxStringLength = Constants.MAX_STRING_LENGTH;
+        maxObjectPoolSize = Constants.MAX_OBJECT_POOL_SIZE;
         charset = StandardCharsets.US_ASCII;
         overrideDefaultInitialization = false;
         dateRange = new Range<>(TEN_YEARS_AGO.toLocalDate(), IN_TEN_YEARS.toLocalDate());

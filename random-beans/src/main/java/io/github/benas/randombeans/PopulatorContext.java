@@ -38,7 +38,7 @@ import static java.util.stream.Collectors.toList;
  */
 class PopulatorContext {
 
-    static final byte OBJECT_POOL_SIZE = 10;
+    private final int maxObjectPoolSize;
 
     private final Set<String> excludedFields;
 
@@ -46,18 +46,19 @@ class PopulatorContext {
 
     private final Stack<PopulatorContextStackItem> stack;
 
-    PopulatorContext(final String... excludedFields) {
+    PopulatorContext(final int maxObjectPoolSize, final String... excludedFields) {
         populatedBeans = new IdentityHashMap<>();
         stack = new Stack<>();
+        this.maxObjectPoolSize = maxObjectPoolSize;
         this.excludedFields = new HashSet<>(toLowerCase(Arrays.asList(excludedFields)));
     }
 
     void addPopulatedBean(final Class<?> type, Object object) {
         List<Object> objects = populatedBeans.get(type);
         if (objects == null) {
-            objects = new ArrayList<>(OBJECT_POOL_SIZE);
+            objects = new ArrayList<>(maxObjectPoolSize);
         }
-        if (objects.size() < OBJECT_POOL_SIZE) {
+        if (objects.size() < maxObjectPoolSize) {
             objects.add(object);
         }
         populatedBeans.put(type, objects);
@@ -70,7 +71,7 @@ class PopulatorContext {
     }
 
     boolean hasRandomizedType(final Class<?> type) {
-        return populatedBeans.containsKey(type) && populatedBeans.get(type).size() == OBJECT_POOL_SIZE;
+        return populatedBeans.containsKey(type) && populatedBeans.get(type).size() == maxObjectPoolSize;
     }
 
     Set<String> getExcludedFields() {
