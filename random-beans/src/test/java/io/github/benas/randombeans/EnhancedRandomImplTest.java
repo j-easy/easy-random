@@ -277,7 +277,7 @@ public class EnhancedRandomImplTest {
         // Given
         enhancedRandom = aNewEnhancedRandomBuilder().seed(SEED).build();
 
-        String expectedString = "eOMtThyhVNLWUZNRcBaQKxIy";
+        String expectedString = "eOMtThyhVNLWUZN";
         Person expectedPerson = buildExpectedPerson();
         int[] expectedInts = buildExpectedInts();
 
@@ -326,6 +326,25 @@ public class EnhancedRandomImplTest {
         assertThat(person.getAddress().getCountry().length()).isLessThanOrEqualTo(maxStringLength);
         assertThat(person.getAddress().getZipCode().length()).isLessThanOrEqualTo(maxStringLength);
         assertThat(person.getAddress().getStreet().getName().length()).isLessThanOrEqualTo(maxStringLength);
+    }
+
+    @Test
+    public void testMinStringLength() {
+        // Given
+        int minStringLength = 3;
+        enhancedRandom = aNewEnhancedRandomBuilder().minStringLength(minStringLength).build();
+
+        // When
+        Person person = enhancedRandom.nextObject(Person.class);
+
+        // Then
+        assertThat(person.getName().length()).isGreaterThanOrEqualTo(minStringLength);
+        assertThat(person.getEmail().length()).isGreaterThanOrEqualTo(minStringLength);
+        assertThat(person.getPhoneNumber().length()).isGreaterThanOrEqualTo(minStringLength);
+        assertThat(person.getAddress().getCity().length()).isGreaterThanOrEqualTo(minStringLength);
+        assertThat(person.getAddress().getCountry().length()).isGreaterThanOrEqualTo(minStringLength);
+        assertThat(person.getAddress().getZipCode().length()).isGreaterThanOrEqualTo(minStringLength);
+        assertThat(person.getAddress().getStreet().getName().length()).isGreaterThanOrEqualTo(minStringLength);
     }
 
     @Data
@@ -519,7 +538,7 @@ public class EnhancedRandomImplTest {
         address.setZipCode("tGKbgicZaH");
         address.setStreet(street);
 
-        expectedPerson.setName("wCTSeCODYsELoVqtepGSijxlz");
+        expectedPerson.setName("DcSTDyUMJzFCdjUpSfoiHR");
         expectedPerson.setEmail("edUsFwdk");
         expectedPerson.setPhoneNumber("ygjbUMaAIKKIkknjWEXJ");
         expectedPerson.setGender(Gender.FEMALE);
