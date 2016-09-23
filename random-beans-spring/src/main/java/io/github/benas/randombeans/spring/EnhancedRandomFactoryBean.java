@@ -60,6 +60,7 @@ public class EnhancedRandomFactoryBean implements FactoryBean<EnhancedRandom> {
     private LocalTime minTime = LocalTime.MIN;
     private LocalTime maxTime = LocalTime.MAX;
     private int maxStringLength = Constants.MAX_STRING_LENGTH;
+    private int minStringLength = Constants.MIN_STRING_LENGTH;
     private int maxCollectionSize = Constants.MAX_COLLECTION_SIZE;
     private boolean overrideDefaultInitialization;
     private boolean scanClasspathForConcreteTypes;
@@ -88,6 +89,7 @@ public class EnhancedRandomFactoryBean implements FactoryBean<EnhancedRandom> {
         enhancedRandomBuilder.dateRange(minDate, maxDate);
         enhancedRandomBuilder.timeRange(minTime, maxTime);
         enhancedRandomBuilder.maxStringLength(maxStringLength);
+        enhancedRandomBuilder.minStringLength(minStringLength);
         enhancedRandomBuilder.maxCollectionSize(maxCollectionSize);
         enhancedRandomBuilder.overrideDefaultInitialization(overrideDefaultInitialization);
         enhancedRandomBuilder.scanClasspathForConcreteTypes(scanClasspathForConcreteTypes);
@@ -143,6 +145,10 @@ public class EnhancedRandomFactoryBean implements FactoryBean<EnhancedRandom> {
 
     public void setMaxStringLength(int maxStringLength) {
         this.maxStringLength = maxStringLength;
+    }
+
+    public void setMinStringLength(int minStringLength) {
+        this.minStringLength = minStringLength;
     }
 
     public void setMaxCollectionSize(int maxCollectionSize) {

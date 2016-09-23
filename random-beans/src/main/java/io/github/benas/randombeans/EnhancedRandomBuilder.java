@@ -221,6 +221,17 @@ public class EnhancedRandomBuilder {
     }
 
     /**
+     * Set the minimum string length.
+     *
+     * @param minStringLength the minimum string length
+     * @return a pre configured {@link EnhancedRandomBuilder} instance
+     */
+    public EnhancedRandomBuilder minStringLength(final int minStringLength) {
+        parameters.setMinStringLength(minStringLength);
+        return this;
+    }
+
+    /**
      * Set the maximum number of different objects to generate for a type.
      *
      * @param maxObjectPoolSize the maximum number of objects

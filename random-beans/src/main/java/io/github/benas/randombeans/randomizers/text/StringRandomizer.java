@@ -38,6 +38,7 @@ public class StringRandomizer extends AbstractRandomizer<String> {
     private final CharacterRandomizer characterRandomizer;
 
     private int maxLength = Constants.MAX_STRING_LENGTH;
+    private int minLength = Constants.MIN_STRING_LENGTH;
 
     /**
      * Create a new {@link StringRandomizer}.
@@ -103,6 +104,20 @@ public class StringRandomizer extends AbstractRandomizer<String> {
     /**
      * Create a new {@link StringRandomizer}.
      *
+     * @param maxLength of the String to generate
+     * @param minLength of the String to generate
+     * @param seed      initial seed
+     */
+    public StringRandomizer(final int minLength, final int maxLength, final long seed) {
+        super(seed);
+        this.maxLength = maxLength;
+        this.minLength = minLength;
+        characterRandomizer = new CharacterRandomizer(seed);
+    }
+
+    /**
+     * Create a new {@link StringRandomizer}.
+     *
      * @param charset   to use
      * @param maxLength of the String to generate
      * @param seed      initial seed
@@ -110,6 +125,24 @@ public class StringRandomizer extends AbstractRandomizer<String> {
     public StringRandomizer(final Charset charset, final int maxLength, final long seed) {
         super(seed);
         this.maxLength = maxLength;
+        characterRandomizer = new CharacterRandomizer(charset, seed);
+    }
+
+    /**
+     * Create a new {@link StringRandomizer}.
+     *
+     * @param charset   to use
+     * @param maxLength of the String to generate
+     * @param minLength of the String to generate
+     * @param seed      initial seed
+     */
+    public StringRandomizer(final Charset charset, final int minLength, final int maxLength, final long seed) {
+        super(seed);
+        if (minLength > maxLength) {
+            throw new IllegalArgumentException("minLength should be less than or equal to maxLength");
+        }
+        this.maxLength = maxLength;
+        this.minLength = minLength;
         characterRandomizer = new CharacterRandomizer(charset, seed);
     }
 
@@ -177,6 +210,21 @@ public class StringRandomizer extends AbstractRandomizer<String> {
     /**
      * Create a new {@link StringRandomizer}.
      *
+     * @param maxLength of the String to generate
+     * @param minLength of the String to generate
+     * @param seed      initial seed
+     * @return a new {@link StringRandomizer}.
+     */
+    public static StringRandomizer aNewStringRandomizer(final int minLength, final int maxLength, final long seed) {
+        if (minLength > maxLength) {
+            throw new IllegalArgumentException("minLength should be less than or equal to maxLength");
+        }
+        return new StringRandomizer(minLength, maxLength, seed);
+    }
+
+    /**
+     * Create a new {@link StringRandomizer}.
+     *
      * @param charset   to use
      * @param maxLength of the String to generate
      * @param seed      initial seed
@@ -186,10 +234,26 @@ public class StringRandomizer extends AbstractRandomizer<String> {
         return new StringRandomizer(charset, maxLength, seed);
     }
 
+    /**
+     * Create a new {@link StringRandomizer}.
+     *
+     * @param charset   to use
+     * @param maxLength of the String to generate
+     * @param minLength of the String to generate
+     * @param seed      initial seed
+     * @return a new {@link StringRandomizer}.
+     */
+    public static StringRandomizer aNewStringRandomizer(final Charset charset, final int minLength, final int maxLength, final long seed) {
+        if (minLength > maxLength) {
+            throw new IllegalArgumentException("minLength should be less than or equal to maxLength");
+        }
+        return new StringRandomizer(charset, minLength, maxLength, seed);
+    }
+
     @Override
     public String getRandomValue() {
         StringBuilder stringBuilder = new StringBuilder();
-        int length = 1 + random.nextInt(maxLength);
+        int length = minLength + random.nextInt(maxLength - minLength);
         for (int i = 0; i < length; i++) {
             stringBuilder.append(characterRandomizer.getRandomValue());
         }

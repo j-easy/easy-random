@@ -51,6 +51,8 @@ public class EnhancedRandomParameters {
 
     private int maxStringLength;
 
+    private int minStringLength;
+
     private int maxObjectPoolSize;
 
     private Charset charset;
@@ -69,6 +71,7 @@ public class EnhancedRandomParameters {
         minCollectionSize = Constants.MIN_COLLECTION_SIZE;
         maxCollectionSize = Constants.MAX_COLLECTION_SIZE;
         maxStringLength = Constants.MAX_STRING_LENGTH;
+        minStringLength = Constants.MIN_STRING_LENGTH;
         maxObjectPoolSize = Constants.MAX_OBJECT_POOL_SIZE;
         charset = StandardCharsets.US_ASCII;
         overrideDefaultInitialization = false;
