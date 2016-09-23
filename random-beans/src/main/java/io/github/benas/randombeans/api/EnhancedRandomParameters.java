@@ -45,6 +45,8 @@ public class EnhancedRandomParameters {
 
     private long seed;
 
+    private int minCollectionSize;
+
     private int maxCollectionSize;
 
     private int maxStringLength;
@@ -64,6 +66,7 @@ public class EnhancedRandomParameters {
     public EnhancedRandomParameters() {
         scanClasspathForConcreteTypes = false;
         seed = new Random().nextLong();
+        minCollectionSize = Constants.MIN_COLLECTION_SIZE;
         maxCollectionSize = Constants.MAX_COLLECTION_SIZE;
         maxStringLength = Constants.MAX_STRING_LENGTH;
         maxObjectPoolSize = Constants.MAX_OBJECT_POOL_SIZE;
