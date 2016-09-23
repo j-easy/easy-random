@@ -70,7 +70,7 @@ public class InternalRandomizerRegistry implements RandomizerRegistry {
     public void init(EnhancedRandomParameters parameters) {
         long seed = parameters.getSeed();
         Charset charset = parameters.getCharset();
-        randomizers.put(String.class, new StringRandomizer(charset, parameters.getMaxStringLength(), seed));
+        randomizers.put(String.class, new StringRandomizer(charset, parameters.getMinStringLength(), parameters.getMaxStringLength(), seed));
         CharacterRandomizer characterRandomizer = new CharacterRandomizer(charset, seed);
         randomizers.put(Character.class, characterRandomizer);
         randomizers.put(char.class, characterRandomizer);

@@ -528,19 +528,19 @@ public class EnhancedRandomImplTest {
         Person expectedPerson = new Person();
 
         Street street = new Street();
-        street.setName("elQbxeTeQOvaScfqIOOmaaJxkyvRnLRY");
+        street.setName("dkelQbxe");
         street.setNumber(-1188957731);
         street.setType((byte) -35);
 
         Address address = new Address();
-        address.setCity("CBRQDSxVL");
-        address.setCountry("hpfQGTMDYpsBZxvfBoe");
-        address.setZipCode("tGKbgicZaH");
+        address.setCity("fqIOOmaaJxkyvRnLRYtGKbgic");
+        address.setCountry("ZaHCBRQDSxVLhpf");
+        address.setZipCode("TeQOvaSc");
         address.setStreet(street);
 
         expectedPerson.setName("DcSTDyUMJzFCdjUpSfoiHR");
-        expectedPerson.setEmail("edUsFwdk");
-        expectedPerson.setPhoneNumber("ygjbUMaAIKKIkknjWEXJ");
+        expectedPerson.setEmail("RcBaQKxIyedUsFw");
+        expectedPerson.setPhoneNumber("QGTMDYpsBZxv");
         expectedPerson.setGender(Gender.FEMALE);
         expectedPerson.setAddress(address);
 
