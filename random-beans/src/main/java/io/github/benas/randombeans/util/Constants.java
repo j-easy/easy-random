@@ -41,6 +41,11 @@ public abstract class Constants {
     private static final ZonedDateTime REFERENCE_DATE = of(2020, 1, 1, 0, 0, 0, 0, ZoneId.of("UTC+1"));
 
     /**
+     * Minimum collection size.
+     */
+    public static final int MIN_COLLECTION_SIZE = 1;
+
+    /**
      * Maximum collection size.
      */
     public static final int MAX_COLLECTION_SIZE = Byte.MAX_VALUE;

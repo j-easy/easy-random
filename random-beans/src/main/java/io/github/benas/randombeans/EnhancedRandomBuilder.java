@@ -185,6 +185,20 @@ public class EnhancedRandomBuilder {
     }
 
     /**
+     * Set the minimum collection size.
+     *
+     * @param minCollectionSize the minimum collection size
+     * @return a pre configured {@link EnhancedRandomBuilder} instance
+     */
+    public EnhancedRandomBuilder minCollectionSize(final int minCollectionSize) {
+        if (minCollectionSize < 1) {
+            throw new IllegalArgumentException("minCollectionSize must be >= 1");
+        }
+        parameters.setMinCollectionSize(minCollectionSize);
+        return this;
+    }
+
+    /**
      * Set the maximum collection size.
      *
      * @param maxCollectionSize the maximum collection size
@@ -310,6 +324,12 @@ public class EnhancedRandomBuilder {
      * @return a configured {@link EnhancedRandom} instance
      */
     public EnhancedRandom build() {
+        int minCollectionSize = parameters.getMinCollectionSize();
+        int maxCollectionSize = parameters.getMaxCollectionSize();
+        if (minCollectionSize > maxCollectionSize) {
+            throw new IllegalArgumentException(format("minCollectionSize (%s) must be <= than maxCollectionSize (%s)",
+                    minCollectionSize, maxCollectionSize));
+        }
         LinkedHashSet<RandomizerRegistry> registries = setupRandomizerRegistries();
         return setupEnhancedRandom(registries);
     }

@@ -128,13 +128,27 @@ public class EnhancedRandomBuilderTest {
         assertThat(actual).isEqualTo(human);
     }
 
+    @Test(expected=IllegalArgumentException.class)
+    public void shouldNotAllowMinCollectionSizeValuesSmallerThatOne() {
+        enhancedRandomBuilder = aNewEnhancedRandomBuilder();
+
+        enhancedRandomBuilder.minCollectionSize(0).build();
+    }
+
+    @Test(expected=IllegalArgumentException.class)
+    public void shouldNotAllowMinCollectionSizeGreaterThanMaxCollectionSize() {
+        enhancedRandomBuilder = aNewEnhancedRandomBuilder();
+
+        enhancedRandomBuilder.minCollectionSize(2).maxCollectionSize(1).build();
+    }
+
     @Test
     public void shouldConfigureCollectionSizeFromBuilder() {
         enhancedRandomBuilder = aNewEnhancedRandomBuilder();
 
-        EnhancedRandom enhancedRandom = enhancedRandomBuilder.maxCollectionSize(42).build();
+        EnhancedRandom enhancedRandom = enhancedRandomBuilder.minCollectionSize(41).maxCollectionSize(42).build();
 
-        assertThat(((EnhancedRandomImpl)enhancedRandom).getRandomCollectionSize()).isBetween(1, 42);
+        assertThat(((EnhancedRandomImpl)enhancedRandom).getRandomCollectionSize()).isBetween(41, 42);
     }
 
     @Test // https://github.com/benas/random-beans/issues/191
