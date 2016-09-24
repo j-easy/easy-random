@@ -191,8 +191,8 @@ public class EnhancedRandomBuilder {
      * @return a pre configured {@link EnhancedRandomBuilder} instance
      */
     public EnhancedRandomBuilder minCollectionSize(final int minCollectionSize) {
-        if (minCollectionSize < 1) {
-            throw new IllegalArgumentException("minCollectionSize must be >= 1");
+        if (minCollectionSize < 0) {
+            throw new IllegalArgumentException("minCollectionSize must be >= 0");
         }
         parameters.setMinCollectionSize(minCollectionSize);
         return this;

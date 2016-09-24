@@ -85,6 +85,23 @@ public class CollectionRandomizersTest {
     }
 
     @DataProvider
+    public static Object[] generateCollectionRandomizersForEmptyCollections() {
+        return new Object[] {
+                aNewListRandomizer(elementRandomizer(), 0),
+                aNewQueueRandomizer(elementRandomizer(), 0),
+                aNewSetRandomizer(elementRandomizer(), 0) };
+    }
+
+    @Test
+    @UseDataProvider("generateCollectionRandomizersForEmptyCollections")
+    public <T> void shouldAllowGeneratingEmptyCollections(Randomizer<Collection<T>> collectionRandomizer) {
+        // when
+        Collection<T> randomCollection = collectionRandomizer.getRandomValue();
+
+        then(randomCollection).isEmpty();
+    }
+
+    @DataProvider
     public static Object[] generateCollectionRandomizersWithIllegalSize() {
         Randomizer<String> elementRandomizer = elementRandomizer();
         int illegalSize = -1;

@@ -108,8 +108,8 @@ public class MapRandomizer<K, V> implements Randomizer<Map<K, V>> {
     }
 
     private void checkArguments(final int nbEntries) {
-        if (nbEntries < 1) {
-            throw new IllegalArgumentException("The number of entries to generate must be >= 1");
+        if (nbEntries < 0) {
+            throw new IllegalArgumentException("The number of entries to generate must be >= 0");
         }
     }
 

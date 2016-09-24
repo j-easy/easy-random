@@ -58,6 +58,11 @@ public class MapRandomizerTest {
         assertThat(aNewMapRandomizer(keyRandomizer, valueRandomizer, 3).getRandomValue()).hasSize(3);
     }
 
+    @Test
+    public <T> void specifiedSizeCanBeZero() {
+        assertThat(aNewMapRandomizer(keyRandomizer, valueRandomizer, 0).getRandomValue()).isEmpty();
+    }
+
     @Test(expected = IllegalArgumentException.class)
     public void specifiedSizeShouldBePositive() {
         aNewMapRandomizer(keyRandomizer, valueRandomizer, -3);
