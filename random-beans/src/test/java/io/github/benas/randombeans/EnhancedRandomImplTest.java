@@ -40,6 +40,7 @@ import org.mockito.Mock;
 import org.mockito.runners.MockitoJUnitRunner;
 
 import java.nio.charset.Charset;
+import java.nio.charset.StandardCharsets;
 import java.time.LocalDate;
 import java.time.LocalTime;
 import java.util.Collection;
@@ -365,9 +366,9 @@ public class EnhancedRandomImplTest {
     }
 
     @Test
-    public void testCharset() throws Exception {
+    public void testCharset() {
         // Given
-        Charset charset = Charset.forName("UTF-8");
+        Charset charset = StandardCharsets.UTF_8;
         List<Character> letters = filterLetters(collectPrintableCharactersOf(charset));
         enhancedRandom = aNewEnhancedRandomBuilder().charset(charset).build();
 
@@ -428,7 +429,7 @@ public class EnhancedRandomImplTest {
     }
 
     @Test
-    public void testDateRange() throws Exception {
+    public void testDateRange() {
         // Given
         LocalDate minDate = LocalDate.of(2016, 1, 1);
         LocalDate maxDate = LocalDate.of(2016, 1, 31);
@@ -441,9 +442,8 @@ public class EnhancedRandomImplTest {
         assertThat(timeBean.getLocalDate()).isAfterOrEqualTo(minDate).isBeforeOrEqualTo(maxDate);
     }
 
-
     @Test
-    public void testTimeRange() throws Exception {
+    public void testTimeRange() {
         // Given
         LocalTime minTime = LocalTime.of(15, 0, 0);
         LocalTime maxTime = LocalTime.of(18, 0, 0);
@@ -503,7 +503,7 @@ public class EnhancedRandomImplTest {
 
     @Ignore("Dummy test to see possible reasons of randomization failures")
     @Test
-    public void tryToRandomizeAllPublicConcreteTypesInTheClasspath() throws Exception {
+    public void tryToRandomizeAllPublicConcreteTypesInTheClasspath(){
         int success = 0;
         int failure = 0;
         List<Class<?>> publicConcreteTypes = ReflectionUtils.getPublicConcreteSubTypesOf(Object.class);
