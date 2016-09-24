@@ -129,10 +129,10 @@ public class EnhancedRandomBuilderTest {
     }
 
     @Test(expected=IllegalArgumentException.class)
-    public void shouldNotAllowMinCollectionSizeValuesSmallerThatOne() {
+    public void shouldNotAllowNegativeMinCollectionSize() {
         enhancedRandomBuilder = aNewEnhancedRandomBuilder();
 
-        enhancedRandomBuilder.minCollectionSize(0).build();
+        enhancedRandomBuilder.minCollectionSize(-1).build();
     }
 
     @Test(expected=IllegalArgumentException.class)

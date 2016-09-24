@@ -54,8 +54,8 @@ abstract class CollectionRandomizer<T> implements Randomizer<Collection<T>> {
     }
 
     private void checkArguments(final int nbElements) {
-        if (nbElements < 1) {
-            throw new IllegalArgumentException("The number of elements to generate must be >= 1");
+        if (nbElements < 0) {
+            throw new IllegalArgumentException("The number of elements to generate must be >= 0");
         }
     }
 
