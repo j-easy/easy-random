@@ -166,9 +166,9 @@ class EnhancedRandomImpl extends EnhancedRandom {
         int minCollectionSize = parameters.getMinCollectionSize();
         int maxCollectionSize = parameters.getMaxCollectionSize();
         if (minCollectionSize == maxCollectionSize) {
-            return nextInt(minCollectionSize);
+            return minCollectionSize;
         }
-        return nextInt(maxCollectionSize - minCollectionSize) + maxCollectionSize;
+        return nextInt(maxCollectionSize - minCollectionSize) + minCollectionSize;
     }
 
     public void setParameters(EnhancedRandomParameters parameters) {
