@@ -117,7 +117,8 @@ class EnhancedRandomImpl extends EnhancedRandom {
 
             // retrieve declared and inherited fields
             List<Field> fields = getDeclaredFields(result);
-            fields.addAll(getInheritedFields(type));
+            // we can not use type here, because with classpath scanning enabled the result can be a subtype
+            fields.addAll(getInheritedFields(result.getClass()));
 
             // populate fields with random data
             populateFields(fields, result, context);

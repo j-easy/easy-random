@@ -227,7 +227,22 @@ public class EnhancedRandomImplTest {
     }
 
     @Test
-    public void whenScanClasspathForConcreteTypesIsEnabled_thenShouldPopulateConcreteSubTypes() {
+    public void whenScanClasspathForConcreteTypesIsEnabled_thenShouldPopulateAbstractTypesWithConcreteSubTypes() {
+        // Given
+        enhancedRandom = EnhancedRandomBuilder.aNewEnhancedRandomBuilder().scanClasspathForConcreteTypes(true).build();
+
+        // When
+        Bar bar = enhancedRandom.nextObject(Bar.class);
+
+        // Then
+        assertThat(bar).isNotNull();
+        assertThat(bar).isInstanceOf(ConcreteBar.class);
+        // https://github.com/benas/random-beans/issues/204
+        assertThat(bar.getI()).isNotNull(); 
+    }
+
+    @Test
+    public void whenScanClasspathForConcreteTypesIsEnabled_thenShouldPopulateFieldsOfAbstractTypeWithConcreteSubTypes() {
         // Given
         enhancedRandom = EnhancedRandomBuilder.aNewEnhancedRandomBuilder().scanClasspathForConcreteTypes(true).build();
 
