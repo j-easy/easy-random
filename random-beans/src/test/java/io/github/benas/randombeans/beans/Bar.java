@@ -23,7 +23,12 @@
  */
 package io.github.benas.randombeans.beans;
 
+import lombok.Data;
+
+@Data
 public abstract class Bar {
+
+    private Integer i;
 
     public abstract String getName();
 }
