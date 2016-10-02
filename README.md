@@ -124,6 +124,7 @@ If you have any question, suggestion, or feedback, do not hesitate to use the [G
 * [Pascal Schumacher](https://github.com/PascalSchumacher)
 * [Rebecca McQuary](https://github.com/rmcquary)
 * [Rémi Alvergnat](http://www.pragmasphere.com)
+* [Rodrigue Alcazar](https://github.com/rodriguealcazar)
 * [Valters Vingolds](https://github.com/valters)
 * [Vincent Potucek](https://github.com/punkratz312)
 
