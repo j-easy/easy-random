@@ -59,8 +59,9 @@
         <maven-surefire-plugin.version>2.19.1</maven-surefire-plugin.version>
         <maven-compiler-plugin.version>3.5.1</maven-compiler-plugin.version>
         <maven-cobertura-plugin.version>2.7</maven-cobertura-plugin.version>
-        <maven-coveralls-plugin.version>4.2.0</maven-coveralls-plugin.version>
+        <maven-coveralls-plugin.version>4.3.0</maven-coveralls-plugin.version>
         <maven-release-plugin.version>2.5.3</maven-release-plugin.version>
+        <maven-license-plugin.version>3.0</maven-license-plugin.version>
     </properties>
 
     <modules>
@@ -293,7 +294,7 @@
             <plugin>
                 <groupId>com.mycila</groupId>
                 <artifactId>license-maven-plugin</artifactId>
-                <version>2.11</version>
+                <version>${maven-license-plugin.version}</version>
                 <configuration>
                     <header>licence-header-template.txt</header>
                     <properties>
