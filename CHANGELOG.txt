@@ -2,6 +2,31 @@ RANDOM BEANS CHANGELOG
 ===================================
 https://github.com/benas/random-beans
 
+Changes in version 3.3.0 (2016-10-02)
+-------------------------------------
+
+# New features and enhancements
+
+* issue #177 : add method to create EnhancedRandom instances with default parameters
+* issue #182 : add maxObjectPoolSize parameter
+* issue #192 : add minStringLength parameter
+* issue #197 : add minCollectionSize parameter
+* issue #201 : allow generation of empty collections
+
+# Fixed Bugs
+
+* issue #184 : Enum values are not randomized
+* issue #189 : Abstract enums are not initialized
+* issue #191 : maxCollectionSize parameter is not used for arrays
+* issue #199 : MapRandomizer sometimes fails because "random number of entries = 0"
+* issue #204 : fields of direct abstract superclass are not populated
+
+# API changes
+
+* The constructor `JodaTimeDateTimeRangeRandomizer(Date min, Date max, long seed)` has been removed (it was deprecated in v3.2)
+* The constructor `JodaTimeLocalDateRangeRandomizer(Date min, Date max, long seed)` has been removed (it was deprecated in v3.2)
+* The constructor `JodaTimeLocalDateTimeRangeRandomizer(Date min, Date max, long seed)` has been removed (it was deprecated in v3.2)
+
 Changes in version 3.2.0 (2016-07-10)
 -------------------------------------
 
