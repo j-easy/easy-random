@@ -80,7 +80,6 @@
         <dependency>
             <groupId>com.github.javafaker</groupId>
             <artifactId>javafaker</artifactId>
-            <version>${faker.version}</version>
         </dependency>
         <dependency>
             <groupId>junit</groupId>
