@@ -37,7 +37,6 @@ import java.util.Map;
 import java.util.SortedMap;
 import java.util.TreeMap;
 
-import static java.util.Collections.emptyMap;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.entry;
 import static org.mockito.Mockito.when;
@@ -66,7 +65,6 @@ public class MapPopulatorTest {
     @Test
     public void rawInterfaceMapTypesMustBeGeneratedEmpty() throws Exception {
         // Given
-        when(enhancedRandom.doPopulateBean(Map.class, context)).thenReturn(emptyMap());
         Field field = Foo.class.getDeclaredField("rawMap");
 
         // When
@@ -79,7 +77,6 @@ public class MapPopulatorTest {
     @Test
     public void rawConcreteMapTypesMustBeGeneratedEmpty() throws Exception {
         // Given
-        when(enhancedRandom.doPopulateBean(HashMap.class, context)).thenReturn(new HashMap());
         Field field = Foo.class.getDeclaredField("concreteMap");
 
         // When

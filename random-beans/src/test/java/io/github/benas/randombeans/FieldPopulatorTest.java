@@ -112,7 +112,6 @@ public class FieldPopulatorTest {
 
         // Then
         assertThat(arrayBean.getStrings()).isEqualTo(object);
-
     }
 
     @Test
@@ -121,14 +120,12 @@ public class FieldPopulatorTest {
         Field strings = CollectionBean.class.getDeclaredField("typedCollection");
         CollectionBean collectionBean = new CollectionBean();
         Collection<Person> persons = Collections.emptyList();
-        when(arrayPopulator.getRandomArray(strings.getType(), populatorContext)).thenReturn(persons);
 
         // When
         fieldPopulator.populateField(collectionBean, strings, populatorContext);
 
         // Then
         assertThat(collectionBean.getTypedCollection()).isEqualTo(persons);
-
     }
 
     @Test
@@ -137,13 +134,11 @@ public class FieldPopulatorTest {
         Field strings = MapBean.class.getDeclaredField("typedMap");
         MapBean mapBean = new MapBean();
         Map<Integer, Person> idToPerson = new HashMap<>();
-        when(arrayPopulator.getRandomArray(strings.getType(), populatorContext)).thenReturn(idToPerson);
 
         // When
         fieldPopulator.populateField(mapBean, strings, populatorContext);
 
         // Then
         assertThat(mapBean.getTypedMap()).isEqualTo(idToPerson);
-
     }
 }

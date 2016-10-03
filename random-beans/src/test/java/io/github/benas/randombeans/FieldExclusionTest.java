@@ -24,7 +24,6 @@
 package io.github.benas.randombeans;
 
 import io.github.benas.randombeans.api.EnhancedRandom;
-import io.github.benas.randombeans.api.Randomizer;
 import io.github.benas.randombeans.beans.Address;
 import io.github.benas.randombeans.beans.Website;
 import io.github.benas.randombeans.beans.exclusion.C;
@@ -33,14 +32,12 @@ import io.github.benas.randombeans.beans.Person;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-import org.mockito.Mock;
 import org.mockito.runners.MockitoJUnitRunner;
 
 import static io.github.benas.randombeans.EnhancedRandomBuilder.aNewEnhancedRandom;
 import static io.github.benas.randombeans.EnhancedRandomBuilder.aNewEnhancedRandomBuilder;
 import static io.github.benas.randombeans.FieldDefinitionBuilder.field;
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.mockito.Mockito.when;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -48,17 +45,11 @@ import java.util.List;
 @RunWith(MockitoJUnitRunner.class)
 public class FieldExclusionTest {
 
-    private static final String NAME = "foo";
-
-    @Mock
-    private Randomizer<String> randomizer;
-
     private EnhancedRandom enhancedRandom;
 
     @Before
     public void setUp() {
         enhancedRandom = aNewEnhancedRandom();
-        when(randomizer.getRandomValue()).thenReturn(NAME);
     }
 
     @Test
