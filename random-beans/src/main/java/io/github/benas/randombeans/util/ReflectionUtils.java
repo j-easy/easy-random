@@ -178,7 +178,7 @@ public abstract class ReflectionUtils {
      * @return true if the type is populatable, false otherwise
      */
     public static boolean isPopulatable(final Type type) {
-        return !isWildcardType(type) && !isCollectionType(type);
+        return !isWildcardType(type) && !isTypeVariable(type) && !isCollectionType(type) && !isParameterizedType(type);
     }
 
     /**
@@ -219,6 +219,16 @@ public abstract class ReflectionUtils {
      */
     public static boolean isWildcardType(final Type type) {
         return type instanceof WildcardType;
+    }
+
+    /**
+     * Check if a type is a type variable
+     *
+     * @param type the type to check
+     * @return true if the type is a type variable, false otherwise
+     */
+    public static boolean isTypeVariable(final Type type) {
+        return type instanceof TypeVariable<?>;
     }
 
     /**
