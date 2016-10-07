@@ -48,6 +48,8 @@ public class WildCardCollectionBean {
 
     private List<?> unboundedWildCardTypedList;
     private List<? extends Runnable> boundedWildCardTypedList;
+    // https://github.com/benas/random-beans/issues/208
+    private List<Comparable<? extends Object>> nestedBoundedWildCardTypedList;
 
     private Queue<?> unboundedWildCardTypedQueue;
     private Queue<? extends Runnable> boundedWildCardTypedQueue;
