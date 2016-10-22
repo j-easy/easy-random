@@ -45,7 +45,7 @@
         <java.version>1.8</java.version>
         <lombok.version>1.16.10</lombok.version>
         <junit.version>4.12</junit.version>
-        <faker.version>0.10</faker.version>
+        <faker.version>0.11</faker.version>
         <assertj.version>3.5.2</assertj.version>
         <validation-api.version>1.1.0.Final</validation-api.version>
         <joda-time.version>2.9.4</joda-time.version>
@@ -227,6 +227,9 @@
                 <groupId>com.github.javafaker</groupId>
                 <artifactId>javafaker</artifactId>
                 <version>${faker.version}</version>
+                <!-- The "plain" version of javafaker has a dependency that is not in maven central and therefore
+                     not available for user with restrictive policies concerning allowed maven repos. -->
+                <classifier>deps</classifier>
             </dependency>
             <dependency>
                 <groupId>junit</groupId>

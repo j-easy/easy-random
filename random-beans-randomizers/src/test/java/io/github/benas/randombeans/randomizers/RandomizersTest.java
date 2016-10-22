@@ -96,14 +96,14 @@ public class RandomizersTest extends AbstractRandomizerTest<FakerBasedRandomizer
     public static Object[][] generateSeededRandomizersAndTheirExpectedValues() {
         return new Object[][] {
                 { aNewCityRandomizer(SEED), "Candacemouth" },
-                { aNewCompanyRandomizer(SEED), "Weissnat, Weissnat and Weissnat" },
+                { aNewCompanyRandomizer(SEED), "Heathcote, Heathcote and Heathcote" },
                 { aNewCountryRandomizer(SEED), "Antarctica (the territory South of 60 deg S)" },
                 { aNewCreditCardNumberRandomizer(SEED), "1211-1221-1234-2201" },
-                { aNewEmailRandomizer(SEED), "jayne.weissnat@hotmail.com" }, 
+                { aNewEmailRandomizer(SEED), "jayne.heathcote@hotmail.com" }, 
                 { aNewFirstNameRandomizer(SEED), "Jayne" },
-                { aNewFullNameRandomizer(SEED), "Candace Crona" },
+                { aNewFullNameRandomizer(SEED), "Candace Hane" },
                 { aNewIsbnRandomizer(SEED), "206-9-57-475-3963" },
-                { aNewLastNameRandomizer(SEED), "Hyatt" },
+                { aNewLastNameRandomizer(SEED), "Durgan" },
                 { aNewLatitudeRandomizer(SEED), "40" + new DecimalFormatSymbols().getDecimalSeparator() + "171357" },
                 { aNewLongitudeRandomizer(SEED), "80" + new DecimalFormatSymbols().getDecimalSeparator() + "342713" },
                 { aNewParagraphRandomizer(SEED), "Totam assumenda eius autem similique. Aut voluptatem enim praesentium. Suscipit cupiditate doloribus debitis dolor. Cumque sapiente occaecati. Quos maiores quae." },
@@ -111,7 +111,7 @@ public class RandomizersTest extends AbstractRandomizerTest<FakerBasedRandomizer
                 { aNewRegularExpressionRandomizer("\\d+[A-Z]{5}", SEED), "8UYSMT" },
                 { aNewSentenceRandomizer(SEED), "Dolor totam assumenda eius autem." },
                 { aNewStateRandomizer(SEED), "North Carolina" },
-                { aNewStreetRandomizer(SEED), "Weissnat Locks" },
+                { aNewStreetRandomizer(SEED), "Heathcote Locks" },
                 { aNewWordRandomizer(SEED), "repellat" },
                 { aNewZipCodeRandomizer(SEED), "06957-4753" }
         };
@@ -144,7 +144,7 @@ public class RandomizersTest extends AbstractRandomizerTest<FakerBasedRandomizer
                 { aNewPhoneNumberRandomizer(SEED, LOCALE), "0106957475" },
                 { aNewSentenceRandomizer(SEED, LOCALE), "Dolor totam assumenda eius autem." },
                 { aNewStateRandomizer(SEED, LOCALE), "Haute-Normandie" },
-                { aNewStreetRandomizer(SEED, LOCALE), "Emilie Saint-Denis" },
+                { aNewStreetRandomizer(SEED, LOCALE), "Rue de Presbourg" },
                 { aNewWordRandomizer(SEED, LOCALE), "repellat" },
                 { aNewZipCodeRandomizer(SEED, LOCALE), "06957" }
         };
