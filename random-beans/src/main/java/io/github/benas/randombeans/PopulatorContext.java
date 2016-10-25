@@ -24,6 +24,7 @@
 package io.github.benas.randombeans;
 
 import io.github.benas.randombeans.api.EnhancedRandom;
+import io.github.benas.randombeans.util.Constants;
 
 import java.lang.reflect.Field;
 import java.util.*;
@@ -38,6 +39,8 @@ import static java.util.stream.Collectors.toList;
  */
 class PopulatorContext {
 
+    private final int maxInitializationDepth;
+
     private final int maxObjectPoolSize;
 
     private final Set<String> excludedFields;
@@ -46,10 +49,11 @@ class PopulatorContext {
 
     private final Stack<PopulatorContextStackItem> stack;
 
-    PopulatorContext(final int maxObjectPoolSize, final String... excludedFields) {
+    PopulatorContext(final int maxObjectPoolSize, final int maxInitializationDepth, final String... excludedFields) {
         populatedBeans = new IdentityHashMap<>();
         stack = new Stack<>();
         this.maxObjectPoolSize = maxObjectPoolSize;
+        this.maxInitializationDepth = maxInitializationDepth;
         this.excludedFields = new HashSet<>(toLowerCase(Arrays.asList(excludedFields)));
     }
 
@@ -90,6 +94,11 @@ class PopulatorContext {
         List<String> pathToField = getStackedFieldNames();
         pathToField.add(field.getName());
         return String.join(".", toLowerCase(pathToField));
+    }
+
+    boolean isExceedInitializationDepth(){
+        int currentInitializationDepth = stack.size();
+        return maxInitializationDepth != Constants.UNLIMITED_INITIALIZATION_DEPTH && currentInitializationDepth>maxInitializationDepth;
     }
 
     private List<String> getStackedFieldNames() {

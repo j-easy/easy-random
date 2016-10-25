@@ -243,6 +243,17 @@ public class EnhancedRandomBuilder {
     }
 
     /**
+     * Set the maximum initialization depth for objects tree.
+     *
+     * @param maxInitializationDepth the maximum initialization depth
+     * @return a pre configured {@link EnhancedRandomBuilder} instance
+     */
+    public EnhancedRandomBuilder maxInitializationDepth(final int maxInitializationDepth) {
+        parameters.setMaxInitializationDepth(maxInitializationDepth);
+        return this;
+    }
+
+    /**
      * Set the charset to use for character based fields.
      *
      * @param charset the charset to use

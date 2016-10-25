@@ -141,4 +141,18 @@ public class FieldPopulatorTest {
         // Then
         assertThat(mapBean.getTypedMap()).isEqualTo(idToPerson);
     }
+
+    @Test
+    public void whenExceedInitializationDepth_thenFieldNotInitialize() throws NoSuchFieldException, IllegalAccessException {
+        // Given
+        Field name = Human.class.getDeclaredField("name");
+        Human human = new Human();
+        when(populatorContext.isExceedInitializationDepth()).thenReturn(true);
+
+        // When
+        fieldPopulator.populateField(human, name, populatorContext);
+
+        // Then
+        assertThat(human.getName()).isNull();
+    }
 }

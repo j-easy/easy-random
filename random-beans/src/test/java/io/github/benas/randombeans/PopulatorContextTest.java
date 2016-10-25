@@ -44,7 +44,7 @@ public class PopulatorContextTest {
 
     @Before
     public void setUp() {
-        populatorContext = new PopulatorContext(Constants.MAX_OBJECT_POOL_SIZE);
+        populatorContext = new PopulatorContext(Constants.MAX_OBJECT_POOL_SIZE, Constants.UNLIMITED_INITIALIZATION_DEPTH);
     }
 
     @Test
@@ -98,5 +98,63 @@ public class PopulatorContextTest {
 
         // Then
         assertThat(fullFieldName).isEqualTo("address.street");
+    }
+
+    @Test
+    public void whenCurrentStackSizeOverMaxInitializationDepth_thenExceedInitializationDepth() throws NoSuchFieldException {
+        // Given
+        PopulatorContext customPopulatorContext = new PopulatorContext(Constants.MAX_OBJECT_POOL_SIZE, 1);
+        Field address = Person.class.getDeclaredField("address");
+        customPopulatorContext.pushStackItem(new PopulatorContextStackItem(bean1, address));
+        customPopulatorContext.pushStackItem(new PopulatorContextStackItem(bean2, address));
+
+        // When
+        boolean isExceedInitializationDepth = customPopulatorContext.isExceedInitializationDepth();
+
+        // Then
+        assertThat(isExceedInitializationDepth).isTrue();
+    }
+
+    @Test
+    public void whenCurrentStackSizeLessMaxInitializationDepth_thenNotExceedInitializationDepth() throws NoSuchFieldException {
+        // Given
+        PopulatorContext customPopulatorContext = new PopulatorContext(Constants.MAX_OBJECT_POOL_SIZE, 2);
+        Field address = Person.class.getDeclaredField("address");
+        customPopulatorContext.pushStackItem(new PopulatorContextStackItem(bean1, address));
+
+        // When
+        boolean isExceedInitializationDepth = customPopulatorContext.isExceedInitializationDepth();
+
+        // Then
+        assertThat(isExceedInitializationDepth).isFalse();
+    }
+
+    @Test
+    public void whenCurrentStackSizeEqualMaxInitializationDepth_thenNotExceedInitializationDepth() throws NoSuchFieldException {
+        // Given
+        PopulatorContext customPopulatorContext = new PopulatorContext(Constants.MAX_OBJECT_POOL_SIZE, 2);
+        Field address = Person.class.getDeclaredField("address");
+        customPopulatorContext.pushStackItem(new PopulatorContextStackItem(bean1, address));
+        customPopulatorContext.pushStackItem(new PopulatorContextStackItem(bean2, address));
+
+        // When
+        boolean isExceedInitializationDepth = customPopulatorContext.isExceedInitializationDepth();
+
+        // Then
+        assertThat(isExceedInitializationDepth).isFalse();
+    }
+
+    @Test
+    public void whenCurrentStackSizeIsUnlimited_thenNotExceedInitializationDepth() throws NoSuchFieldException {
+        // Given
+        Field address = Person.class.getDeclaredField("address");
+        populatorContext.pushStackItem(new PopulatorContextStackItem(bean1, address));
+        populatorContext.pushStackItem(new PopulatorContextStackItem(bean2, address));
+
+        // When
+        boolean isExceedInitializationDepth = populatorContext.isExceedInitializationDepth();
+
+        // Then
+        assertThat(isExceedInitializationDepth).isFalse();
     }
 }

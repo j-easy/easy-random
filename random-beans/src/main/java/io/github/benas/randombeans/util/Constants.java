@@ -56,6 +56,11 @@ public abstract class Constants {
     public static final int MAX_OBJECT_POOL_SIZE = 10;
 
     /**
+     * Value for property maxInitializationDepth, which mean, that initialization depth is unlimited
+     */
+    public static final int UNLIMITED_INITIALIZATION_DEPTH = -1;
+
+    /**
      * Maximum string size.
      */
     public static final byte MAX_STRING_LENGTH = 32;

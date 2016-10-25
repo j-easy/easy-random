@@ -72,13 +72,15 @@ class FieldPopulator {
             return;
         }
         context.pushStackItem(new PopulatorContextStackItem(target, field));
-        Object value;
-        if (randomizer != null) {
-            value = randomizer.getRandomValue();
-        } else {
-            value = generateRandomValue(field, context);
+        if(!context.isExceedInitializationDepth()) {
+            Object value;
+            if (randomizer != null) {
+                value = randomizer.getRandomValue();
+            } else {
+                value = generateRandomValue(field, context);
+            }
+            setProperty(target, field, value);
         }
-        setProperty(target, field, value);
         context.popStackItem();
     }
 
