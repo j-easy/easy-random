@@ -189,6 +189,15 @@ public class MapPopulationTest {
         assertThat(customMap.getName()).isNotNull();
     }
 
+    @Test
+    public void enumMapTypeShouldBePopulated() throws Exception {
+        EnumMapBean enumMapBean = enhancedRandom.nextObject(EnumMapBean.class);
+
+        assertThat(enumMapBean).isNotNull();
+        assertThat(enumMapBean.getTypedEnumMap()).isNotNull();
+        assertThat(enumMapBean.getUntypedEnumMap()).isNull();
+    }
+
     private void assertContainsOnlyNonEmptyPersons(Collection<Person> persons) {
         for (Person person : persons) {
             assertThat(person).isNotNull();

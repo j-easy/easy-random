@@ -63,7 +63,17 @@ class MapPopulator {
             try {
                 map = (Map<Object, Object>) fieldType.newInstance();
             } catch (InstantiationException | IllegalAccessException e) {
-                map = (Map<Object, Object>) objectFactory.createInstance(fieldType);
+                // Creating EnumMap with objenesis by-passes the constructor with keyType which leads to CCE at insertion time
+                if (fieldType.isAssignableFrom(EnumMap.class)) {
+                    if (isParameterizedType(fieldGenericType)) {
+                        Type type = ((ParameterizedType) fieldGenericType).getActualTypeArguments()[0];
+                        map = new EnumMap((Class<?>)type);
+                    } else {
+                        return null;
+                    }
+                } else {
+                    map = (Map<Object, Object>) objectFactory.createInstance(fieldType);
+                }
             }
         }
 
