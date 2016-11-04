@@ -72,7 +72,7 @@ class FieldPopulator {
             return;
         }
         context.pushStackItem(new PopulatorContextStackItem(target, field));
-        if(!context.isExceedInitializationDepth()) {
+        if(!context.isExceedRandomizationDepth()) {
             Object value;
             if (randomizer != null) {
                 value = randomizer.getRandomValue();

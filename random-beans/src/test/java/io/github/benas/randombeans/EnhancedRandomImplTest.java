@@ -381,9 +381,9 @@ public class EnhancedRandomImplTest {
     }
 
     @Test
-    public void testMaxInitializationDepth() {
+    public void testMaxRandomizationDepth() {
         // Given
-        enhancedRandom = aNewEnhancedRandomBuilder().maxObjectPoolSize(10).maxInitializationDepth(2).build();
+        enhancedRandom = aNewEnhancedRandomBuilder().maxObjectPoolSize(10).maxRandomizationDepth(2).build();
 
         // When
         Person person = enhancedRandom.nextObject(Person.class);

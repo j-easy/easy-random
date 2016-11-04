@@ -39,7 +39,7 @@ import static java.util.stream.Collectors.toList;
  */
 class PopulatorContext {
 
-    private final int maxInitializationDepth;
+    private final int maxRandomizationDepth;
 
     private final int maxObjectPoolSize;
 
@@ -49,11 +49,11 @@ class PopulatorContext {
 
     private final Stack<PopulatorContextStackItem> stack;
 
-    PopulatorContext(final int maxObjectPoolSize, final int maxInitializationDepth, final String... excludedFields) {
+    PopulatorContext(final int maxObjectPoolSize, final int maxRandomizationDepth, final String... excludedFields) {
         populatedBeans = new IdentityHashMap<>();
         stack = new Stack<>();
         this.maxObjectPoolSize = maxObjectPoolSize;
-        this.maxInitializationDepth = maxInitializationDepth;
+        this.maxRandomizationDepth = maxRandomizationDepth;
         this.excludedFields = new HashSet<>(toLowerCase(Arrays.asList(excludedFields)));
     }
 
@@ -96,9 +96,9 @@ class PopulatorContext {
         return String.join(".", toLowerCase(pathToField));
     }
 
-    boolean isExceedInitializationDepth(){
-        int currentInitializationDepth = stack.size();
-        return maxInitializationDepth != Constants.UNLIMITED_INITIALIZATION_DEPTH && currentInitializationDepth>maxInitializationDepth;
+    boolean isExceedRandomizationDepth(){
+        int currentRandomizationDepth = stack.size();
+        return currentRandomizationDepth>maxRandomizationDepth;
     }
 
     private List<String> getStackedFieldNames() {

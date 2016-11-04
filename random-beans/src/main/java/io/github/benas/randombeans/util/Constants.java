@@ -56,9 +56,9 @@ public abstract class Constants {
     public static final int MAX_OBJECT_POOL_SIZE = 10;
 
     /**
-     * Value for property maxInitializationDepth, which mean, that initialization depth is unlimited
+     * Value for property maxRandomizationDepth, which mean, that randomization depth is unlimited
      */
-    public static final int UNLIMITED_INITIALIZATION_DEPTH = -1;
+    public static final int MAX_RANDOMIZATION_DEPTH = Integer.MAX_VALUE;
 
     /**
      * Maximum string size.

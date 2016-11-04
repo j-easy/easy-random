@@ -143,11 +143,11 @@ public class FieldPopulatorTest {
     }
 
     @Test
-    public void whenExceedInitializationDepth_thenFieldNotInitialize() throws NoSuchFieldException, IllegalAccessException {
+    public void whenExceedRandomizationDepth_thenFieldNotInitialize() throws NoSuchFieldException, IllegalAccessException {
         // Given
         Field name = Human.class.getDeclaredField("name");
         Human human = new Human();
-        when(populatorContext.isExceedInitializationDepth()).thenReturn(true);
+        when(populatorContext.isExceedRandomizationDepth()).thenReturn(true);
 
         // When
         fieldPopulator.populateField(human, name, populatorContext);

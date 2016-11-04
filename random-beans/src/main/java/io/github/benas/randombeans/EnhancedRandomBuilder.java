@@ -243,13 +243,13 @@ public class EnhancedRandomBuilder {
     }
 
     /**
-     * Set the maximum initialization depth for objects tree.
+     * Set the maximum randomization depth for objects tree.
      *
-     * @param maxInitializationDepth the maximum initialization depth
+     * @param maxRandomizationDepth the maximum randomization depth
      * @return a pre configured {@link EnhancedRandomBuilder} instance
      */
-    public EnhancedRandomBuilder maxInitializationDepth(final int maxInitializationDepth) {
-        parameters.setMaxInitializationDepth(maxInitializationDepth);
+    public EnhancedRandomBuilder maxRandomizationDepth(final int maxRandomizationDepth) {
+        parameters.setMaxRandomizationDepth(maxRandomizationDepth);
         return this;
     }
 

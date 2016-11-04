@@ -44,7 +44,7 @@ public class PopulatorContextTest {
 
     @Before
     public void setUp() {
-        populatorContext = new PopulatorContext(Constants.MAX_OBJECT_POOL_SIZE, Constants.UNLIMITED_INITIALIZATION_DEPTH);
+        populatorContext = new PopulatorContext(Constants.MAX_OBJECT_POOL_SIZE, Constants.MAX_RANDOMIZATION_DEPTH);
     }
 
     @Test
@@ -101,7 +101,7 @@ public class PopulatorContextTest {
     }
 
     @Test
-    public void whenCurrentStackSizeOverMaxInitializationDepth_thenExceedInitializationDepth() throws NoSuchFieldException {
+    public void whenCurrentStackSizeOverMaxRandomizationDepth_thenExceedRandomizationDepth() throws NoSuchFieldException {
         // Given
         PopulatorContext customPopulatorContext = new PopulatorContext(Constants.MAX_OBJECT_POOL_SIZE, 1);
         Field address = Person.class.getDeclaredField("address");
@@ -109,28 +109,28 @@ public class PopulatorContextTest {
         customPopulatorContext.pushStackItem(new PopulatorContextStackItem(bean2, address));
 
         // When
-        boolean isExceedInitializationDepth = customPopulatorContext.isExceedInitializationDepth();
+        boolean isExceedRandomizationDepth = customPopulatorContext.isExceedRandomizationDepth();
 
         // Then
-        assertThat(isExceedInitializationDepth).isTrue();
+        assertThat(isExceedRandomizationDepth).isTrue();
     }
 
     @Test
-    public void whenCurrentStackSizeLessMaxInitializationDepth_thenNotExceedInitializationDepth() throws NoSuchFieldException {
+    public void whenCurrentStackSizeLessMaxRandomizationDepth_thenNotExceedRandomizationDepth() throws NoSuchFieldException {
         // Given
         PopulatorContext customPopulatorContext = new PopulatorContext(Constants.MAX_OBJECT_POOL_SIZE, 2);
         Field address = Person.class.getDeclaredField("address");
         customPopulatorContext.pushStackItem(new PopulatorContextStackItem(bean1, address));
 
         // When
-        boolean isExceedInitializationDepth = customPopulatorContext.isExceedInitializationDepth();
+        boolean isExceedRandomizationDepth = customPopulatorContext.isExceedRandomizationDepth();
 
         // Then
-        assertThat(isExceedInitializationDepth).isFalse();
+        assertThat(isExceedRandomizationDepth).isFalse();
     }
 
     @Test
-    public void whenCurrentStackSizeEqualMaxInitializationDepth_thenNotExceedInitializationDepth() throws NoSuchFieldException {
+    public void whenCurrentStackSizeEqualMaxRandomizationDepth_thenNotExceedRandomizationDepth() throws NoSuchFieldException {
         // Given
         PopulatorContext customPopulatorContext = new PopulatorContext(Constants.MAX_OBJECT_POOL_SIZE, 2);
         Field address = Person.class.getDeclaredField("address");
@@ -138,23 +138,10 @@ public class PopulatorContextTest {
         customPopulatorContext.pushStackItem(new PopulatorContextStackItem(bean2, address));
 
         // When
-        boolean isExceedInitializationDepth = customPopulatorContext.isExceedInitializationDepth();
+        boolean isExceedRandomizationDepth = customPopulatorContext.isExceedRandomizationDepth();
 
         // Then
-        assertThat(isExceedInitializationDepth).isFalse();
+        assertThat(isExceedRandomizationDepth).isFalse();
     }
 
-    @Test
-    public void whenCurrentStackSizeIsUnlimited_thenNotExceedInitializationDepth() throws NoSuchFieldException {
-        // Given
-        Field address = Person.class.getDeclaredField("address");
-        populatorContext.pushStackItem(new PopulatorContextStackItem(bean1, address));
-        populatorContext.pushStackItem(new PopulatorContextStackItem(bean2, address));
-
-        // When
-        boolean isExceedInitializationDepth = populatorContext.isExceedInitializationDepth();
-
-        // Then
-        assertThat(isExceedInitializationDepth).isFalse();
-    }
 }
