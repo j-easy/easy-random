@@ -242,7 +242,7 @@ public class ReflectionUtils {
      * @return true if the type is populatable, false otherwise
      */
     public static boolean isPopulatable(final Type type) {
-        return !isWildcardType(type) && !isTypeVariable(type) && !isCollectionType(type);
+        return !isWildcardType(type) && !isTypeVariable(type) && !isCollectionType(type) && !isParameterizedType(type);
     }
 
     /**
