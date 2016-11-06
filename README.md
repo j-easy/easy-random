@@ -124,6 +124,7 @@ If you have any question, suggestion, or feedback, do not hesitate to use the [G
 * [Fred Eckertson](https://github.com/feckertson)
 * [Jose Manuel Prieto](https://github.com/prietopa)
 * [Nikola Milivojevic](https://github.com/dziga)
+* [Oleksandr Shcherbyna](https://github.com/sansherbina)
 * [Pascal Schumacher](https://github.com/PascalSchumacher)
 * [Rebecca McQuary](https://github.com/rmcquary)
 * [Rémi Alvergnat](http://www.pragmasphere.com)
