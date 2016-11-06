@@ -381,6 +381,21 @@ public class EnhancedRandomImplTest {
     }
 
     @Test
+    public void testMaxRandomizationDepth() {
+        // Given
+        enhancedRandom = aNewEnhancedRandomBuilder().maxObjectPoolSize(10).maxRandomizationDepth(2).build();
+
+        // When
+        Person person = enhancedRandom.nextObject(Person.class);
+
+        // Then
+        assertThat(person).isNotNull();
+        assertThat(person.getParent()).isNotNull();
+        assertThat(person.getParent().getParent()).isNotNull();
+        assertThat(person.getParent().getParent().getParent()).isNull();
+    }
+
+    @Test
     public void testCharset() {
         // Given
         Charset charset = StandardCharsets.UTF_8;
