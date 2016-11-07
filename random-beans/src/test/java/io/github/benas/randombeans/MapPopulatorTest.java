@@ -23,13 +23,12 @@
  */
 package io.github.benas.randombeans;
 
+import lombok.Data;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.Mock;
 import org.mockito.runners.MockitoJUnitRunner;
-
-import lombok.Data;
 
 import java.lang.reflect.Field;
 import java.util.HashMap;
@@ -55,7 +54,7 @@ public class MapPopulatorTest {
     private EnhancedRandomImpl enhancedRandom;
 
     private MapPopulator mapPopulator;
-    
+
     @Before
     public void setUp() {
         ObjectFactory objectFactory = new ObjectFactory();
@@ -121,11 +120,40 @@ public class MapPopulatorTest {
         assertThat(map).isInstanceOf(TreeMap.class).isEmpty();
     }
 
+    @Test
+    public void notAddNullKeysToMapExceptHashMap() throws NoSuchFieldException {
+        // Given
+        when(enhancedRandom.getRandomCollectionSize()).thenReturn(SIZE);
+        when(enhancedRandom.doPopulateBean(String.class, context)).thenReturn(null);
+        Field field = Foo.class.getDeclaredField("typedTreeMap");
+
+        // When
+        Map<String, String> randomMap = (Map<String, String>) mapPopulator.getRandomMap(field, context);
+
+        // Then
+        assertThat(randomMap).isEmpty();
+    }
+
+    @Test
+    public void addNullKeysToHashMap() throws NoSuchFieldException {
+        // Given
+        when(enhancedRandom.getRandomCollectionSize()).thenReturn(SIZE);
+        when(enhancedRandom.doPopulateBean(String.class, context)).thenReturn(null);
+        Field field = Foo.class.getDeclaredField("typedConcreteMap");
+
+        // When
+        Map<String, String> randomMap = (Map<String, String>) mapPopulator.getRandomMap(field, context);
+
+        // Then
+        assertThat(randomMap).containsExactly(entry(null, null));
+    }
+
     @Data
     class Foo {
         private Map rawMap;
         private HashMap concreteMap;
         private Map<String, String> typedMap;
         private HashMap<String, String> typedConcreteMap;
+        private TreeMap<String, String> typedTreeMap;
     }
 }
