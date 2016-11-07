@@ -58,4 +58,7 @@ class AbstractRandomizerRegistry {
         return false;
     }
 
+    protected boolean hasAllModifiers(final Field field, final Integer modifiers){
+        return modifiers == null || (modifiers & field.getModifiers()) == modifiers;
+    }
 }

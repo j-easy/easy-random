@@ -47,6 +47,8 @@ public class FieldDefinition<T, F> {
 
     private final Set<Class <? extends Annotation>> annotations;
 
+    private final Integer modifiers;
+
     /**
      * Create a new {@link FieldDefinition}.
      *
@@ -66,9 +68,22 @@ public class FieldDefinition<T, F> {
      * @param clazz the declaring class type
      */
     public FieldDefinition(String name, Class<F> type, Class<T> clazz, Set<Class <? extends Annotation>> annotations) {
+        this(name, type, clazz, annotations, null);
+    }
+
+    /**
+     * Create a new {@link FieldDefinition}.
+     *
+     * @param name  the field name
+     * @param type  the filed type
+     * @param clazz the declaring class type
+     * @param modifiers the field modifiers
+     */
+    public FieldDefinition(String name, Class<F> type, Class<T> clazz, Set<Class <? extends Annotation>> annotations, Integer modifiers) {
         this.name = name;
         this.type = type;
         this.clazz = clazz;
         this.annotations = annotations;
+        this.modifiers = modifiers;
     }
 }
