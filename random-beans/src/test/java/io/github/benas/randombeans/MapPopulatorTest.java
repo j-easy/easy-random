@@ -121,21 +121,7 @@ public class MapPopulatorTest {
     }
 
     @Test
-    public void notAddNullKeysToMapExceptHashMap() throws NoSuchFieldException {
-        // Given
-        when(enhancedRandom.getRandomCollectionSize()).thenReturn(SIZE);
-        when(enhancedRandom.doPopulateBean(String.class, context)).thenReturn(null);
-        Field field = Foo.class.getDeclaredField("typedTreeMap");
-
-        // When
-        Map<String, String> randomMap = (Map<String, String>) mapPopulator.getRandomMap(field, context);
-
-        // Then
-        assertThat(randomMap).isEmpty();
-    }
-
-    @Test
-    public void addNullKeysToHashMap() throws NoSuchFieldException {
+    public void notAddNullKeysToMap() throws NoSuchFieldException {
         // Given
         when(enhancedRandom.getRandomCollectionSize()).thenReturn(SIZE);
         when(enhancedRandom.doPopulateBean(String.class, context)).thenReturn(null);
@@ -145,7 +131,7 @@ public class MapPopulatorTest {
         Map<String, String> randomMap = (Map<String, String>) mapPopulator.getRandomMap(field, context);
 
         // Then
-        assertThat(randomMap).containsExactly(entry(null, null));
+        assertThat(randomMap).isEmpty();
     }
 
     @Data
@@ -154,6 +140,5 @@ public class MapPopulatorTest {
         private HashMap concreteMap;
         private Map<String, String> typedMap;
         private HashMap<String, String> typedConcreteMap;
-        private TreeMap<String, String> typedTreeMap;
     }
 }
