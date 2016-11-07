@@ -39,6 +39,7 @@ import static io.github.benas.randombeans.EnhancedRandomBuilder.aNewEnhancedRand
 import static io.github.benas.randombeans.FieldDefinitionBuilder.field;
 import static org.assertj.core.api.Assertions.assertThat;
 
+import java.lang.reflect.Modifier;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -280,6 +281,51 @@ public class FieldExclusionTest {
 
         assertThat(bean).isNotNull();
         assertThat(bean.getMyList()).isEmpty();
+    }
+
+    @Test
+    public void fieldsExcludedWithOneModifierShouldNotBePopulated() {
+        // given
+        enhancedRandom = aNewEnhancedRandomBuilder()
+                .exclude(field().hasModifiers(Modifier.TRANSIENT).get())
+                .build();
+
+        // when
+        Person person = enhancedRandom.nextObject(Person.class);
+
+        // then
+        assertThat(person).isNotNull();
+        assertThat(person.getEmail()).isNull();
+    }
+
+    @Test
+    public void fieldsExcludedWithTwoModifiersShouldNotBePopulated() {
+        // given
+        enhancedRandom = aNewEnhancedRandomBuilder()
+                .exclude(field().hasModifiers(Modifier.TRANSIENT | Modifier.PROTECTED).get())
+                .build();
+
+        // when
+        Person person = enhancedRandom.nextObject(Person.class);
+
+        // then
+        assertThat(person).isNotNull();
+        assertThat(person.getEmail()).isNull();
+    }
+
+    @Test
+    public void fieldsExcludedWithTwoModifiersShouldBePopulatedIfOneModifierIsNotFit() {
+        // given
+        enhancedRandom = aNewEnhancedRandomBuilder()
+                .exclude(field().hasModifiers(Modifier.TRANSIENT | Modifier.PUBLIC).get())
+                .build();
+
+        // when
+        Person person = enhancedRandom.nextObject(Person.class);
+
+        // then
+        assertThat(person).isNotNull();
+        assertThat(person.getEmail()).isNotNull();
     }
 
     public static class InlineInitializationBean {

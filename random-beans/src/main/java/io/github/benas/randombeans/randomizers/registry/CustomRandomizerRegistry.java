@@ -55,7 +55,8 @@ public class CustomRandomizerRegistry extends AbstractRandomizerRegistry impleme
             if (hasName(field, fieldDefinition.getName()) &&
                     isDeclaredInClass(field, fieldDefinition.getClazz()) &&
                     hasType(field, fieldDefinition.getType()) &&
-                    isAnnotatedWithOneOf(field, fieldDefinition.getAnnotations())) {
+                    isAnnotatedWithOneOf(field, fieldDefinition.getAnnotations()) &&
+                    hasAllModifiers(field, fieldDefinition.getModifiers())) {
                 return customFieldRandomizersRegistry.get(fieldDefinition);
             }
         }

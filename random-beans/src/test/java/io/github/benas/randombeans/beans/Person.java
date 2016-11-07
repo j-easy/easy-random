@@ -30,7 +30,7 @@ import java.util.List;
 
 public class Person extends Human implements Comparable<Person> {
 
-    protected String email;
+    protected transient String email;
 
     protected Gender gender;
 

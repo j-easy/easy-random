@@ -43,6 +43,8 @@ public class FieldDefinitionBuilder {
 
     private Set<Class<? extends Annotation>> annotations = new HashSet<>();
 
+    private int modifiers;
+
     /**
      * Create a new {@link FieldDefinitionBuilder}.
      *
@@ -98,12 +100,23 @@ public class FieldDefinitionBuilder {
     }
 
     /**
+     * Specify field modifiers.
+     *
+     * @param modifiers the field modifiers
+     * @return the configured {@link FieldDefinitionBuilder}
+     */
+    public FieldDefinitionBuilder hasModifiers(int modifiers) {
+        this.modifiers = modifiers;
+        return this;
+    }
+
+    /**
      * Create a new {@link FieldDefinition}.
      *
      * @return a new {@link FieldDefinition}
      */
     public FieldDefinition<?, ?> get() {
-        return new FieldDefinition<>(name, type, clazz, annotations);
+        return new FieldDefinition<>(name, type, clazz, annotations, modifiers);
     }
 
 }
