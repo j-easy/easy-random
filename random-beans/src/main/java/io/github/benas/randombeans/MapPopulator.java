@@ -85,7 +85,9 @@ class MapPopulator {
                 for (int index = 0; index < randomSize; index++) {
                     Object randomKey = enhancedRandom.doPopulateBean((Class<?>) keyType, context);
                     Object randomValue = enhancedRandom.doPopulateBean((Class<?>) valueType, context);
-                    map.put(randomKey, randomValue);
+                    if(randomKey != null) {
+                        map.put(randomKey, randomValue);
+                    }
                 }
             }
         }
