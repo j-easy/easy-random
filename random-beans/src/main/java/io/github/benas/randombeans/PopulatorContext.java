@@ -24,7 +24,6 @@
 package io.github.benas.randombeans;
 
 import io.github.benas.randombeans.api.EnhancedRandom;
-import io.github.benas.randombeans.util.Constants;
 
 import java.lang.reflect.Field;
 import java.util.*;
