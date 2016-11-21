@@ -59,7 +59,7 @@ public class MapRandomizerTest {
     }
 
     @Test
-    public <T> void specifiedSizeCanBeZero() {
+    public void specifiedSizeCanBeZero() {
         assertThat(aNewMapRandomizer(keyRandomizer, valueRandomizer, 0).getRandomValue()).isEmpty();
     }
 
