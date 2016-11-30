@@ -96,14 +96,14 @@ public class RandomizersTest extends AbstractRandomizerTest<FakerBasedRandomizer
     public static Object[][] generateSeededRandomizersAndTheirExpectedValues() {
         return new Object[][] {
                 { aNewCityRandomizer(SEED), "Candacemouth" },
-                { aNewCompanyRandomizer(SEED), "Heathcote, Heathcote and Heathcote" },
+                { aNewCompanyRandomizer(SEED), "Weissnat, Weissnat and Weissnat" },
                 { aNewCountryRandomizer(SEED), "Antarctica (the territory South of 60 deg S)" },
                 { aNewCreditCardNumberRandomizer(SEED), "1211-1221-1234-2201" },
-                { aNewEmailRandomizer(SEED), "jayne.heathcote@hotmail.com" }, 
+                { aNewEmailRandomizer(SEED), "jayne.weissnat@hotmail.com" }, 
                 { aNewFirstNameRandomizer(SEED), "Jayne" },
-                { aNewFullNameRandomizer(SEED), "Candace Hane" },
-                { aNewIsbnRandomizer(SEED), "206-9-57-475-3963" },
-                { aNewLastNameRandomizer(SEED), "Durgan" },
+                { aNewFullNameRandomizer(SEED), "Candace Crona" },
+                { aNewIsbnRandomizer(SEED), "9781797745008" },
+                { aNewLastNameRandomizer(SEED), "Hyatt" },
                 { aNewLatitudeRandomizer(SEED), "40" + new DecimalFormatSymbols().getDecimalSeparator() + "171357" },
                 { aNewLongitudeRandomizer(SEED), "80" + new DecimalFormatSymbols().getDecimalSeparator() + "342713" },
                 { aNewParagraphRandomizer(SEED), "Totam assumenda eius autem similique. Aut voluptatem enim praesentium. Suscipit cupiditate doloribus debitis dolor. Cumque sapiente occaecati. Quos maiores quae." },
@@ -111,7 +111,7 @@ public class RandomizersTest extends AbstractRandomizerTest<FakerBasedRandomizer
                 { aNewRegularExpressionRandomizer("\\d+[A-Z]{5}", SEED), "8UYSMT" },
                 { aNewSentenceRandomizer(SEED), "Dolor totam assumenda eius autem." },
                 { aNewStateRandomizer(SEED), "North Carolina" },
-                { aNewStreetRandomizer(SEED), "Heathcote Locks" },
+                { aNewStreetRandomizer(SEED), "Weissnat Locks" },
                 { aNewWordRandomizer(SEED), "repellat" },
                 { aNewZipCodeRandomizer(SEED), "06957-4753" }
         };
@@ -136,14 +136,14 @@ public class RandomizersTest extends AbstractRandomizerTest<FakerBasedRandomizer
                 { aNewEmailRandomizer(SEED, LOCALE), "alice.masson@hotmail.fr" }, 
                 { aNewFirstNameRandomizer(SEED, LOCALE), "Alice" },
                 { aNewFullNameRandomizer(SEED, LOCALE), "Masson Emilie" },
-                { aNewIsbnRandomizer(SEED, LOCALE), "206-9-57-475-3963" },
+                { aNewIsbnRandomizer(SEED, LOCALE), "9781797745008" },
                 { aNewLastNameRandomizer(SEED, LOCALE), "Faure" },
                 { aNewLatitudeRandomizer(SEED, LOCALE), "40" + new DecimalFormatSymbols().getDecimalSeparator() + "171357" }, // should really be "40.171357", seems like a bug in java-faker
                 { aNewLongitudeRandomizer(SEED, LOCALE), "80" + new DecimalFormatSymbols().getDecimalSeparator() + "342713" }, // should really be "80.342713", seems like a bug in java-faker
                 { aNewParagraphRandomizer(SEED, LOCALE), "Totam assumenda eius autem similique. Aut voluptatem enim praesentium. Suscipit cupiditate doloribus debitis dolor. Cumque sapiente occaecati. Quos maiores quae." },
-                { aNewPhoneNumberRandomizer(SEED, LOCALE), "0106957475" },
+                { aNewPhoneNumberRandomizer(SEED, LOCALE), "03 06 95 74 75" },
                 { aNewSentenceRandomizer(SEED, LOCALE), "Dolor totam assumenda eius autem." },
-                { aNewStateRandomizer(SEED, LOCALE), "Haute-Normandie" },
+                { aNewStateRandomizer(SEED, LOCALE), "Lorraine" },
                 { aNewStreetRandomizer(SEED, LOCALE), "Rue de Presbourg" },
                 { aNewWordRandomizer(SEED, LOCALE), "repellat" },
                 { aNewZipCodeRandomizer(SEED, LOCALE), "06957" }

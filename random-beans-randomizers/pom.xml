@@ -80,9 +80,6 @@
         <dependency>
             <groupId>com.github.javafaker</groupId>
             <artifactId>javafaker</artifactId>
-            <!-- The "plain" version of javafaker has a dependency that is not in maven central and therefore
-                 not available for user with restrictive policies concerning allowed maven repos. -->
-            <classifier>deps</classifier>
         </dependency>
         <dependency>
             <groupId>junit</groupId>
