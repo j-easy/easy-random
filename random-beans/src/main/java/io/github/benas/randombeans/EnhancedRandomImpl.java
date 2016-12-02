@@ -105,7 +105,7 @@ class EnhancedRandomImpl extends EnhancedRandom {
             }
 
             // If the type has been already randomized, return one cached instance to avoid recursion.
-            if (context.hasRandomizedType(type)) {
+            if (context.hasAlreadyRandomizedType(type)) {
                 return (T) context.getPopulatedBean(type);
             }
 

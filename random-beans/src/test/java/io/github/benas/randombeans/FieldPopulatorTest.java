@@ -147,7 +147,7 @@ public class FieldPopulatorTest {
         // Given
         Field name = Human.class.getDeclaredField("name");
         Human human = new Human();
-        when(populatorContext.isExceedRandomizationDepth()).thenReturn(true);
+        when(populatorContext.hasExceededRandomizationDepth()).thenReturn(true);
 
         // When
         fieldPopulator.populateField(human, name, populatorContext);

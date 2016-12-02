@@ -52,13 +52,13 @@ public class PopulatorContextTest {
 
         // Only one instance has been randomized => should be considered as not randomized yet
         populatorContext.addPopulatedBean(String.class, "bean" + 0);
-        assertThat(populatorContext.hasRandomizedType(String.class)).isFalse();
+        assertThat(populatorContext.hasAlreadyRandomizedType(String.class)).isFalse();
 
         // When the object pool size is filled => should be considered as already randomized
         for (int i = 1; i < Constants.MAX_OBJECT_POOL_SIZE; i++) {
             populatorContext.addPopulatedBean(String.class, "bean" + i);
         }
-        assertThat(populatorContext.hasRandomizedType(String.class)).isTrue();
+        assertThat(populatorContext.hasAlreadyRandomizedType(String.class)).isTrue();
     }
 
     @Test
@@ -67,7 +67,7 @@ public class PopulatorContextTest {
         populatorContext.addPopulatedBean(String.class, bean1);
 
         // When
-        boolean hasPopulatedBean = populatorContext.hasRandomizedType(Integer.class);
+        boolean hasPopulatedBean = populatorContext.hasAlreadyRandomizedType(Integer.class);
 
         // Then
         assertThat(hasPopulatedBean).isFalse();
@@ -101,7 +101,7 @@ public class PopulatorContextTest {
     }
 
     @Test
-    public void whenCurrentStackSizeOverMaxRandomizationDepth_thenExceedRandomizationDepth() throws NoSuchFieldException {
+    public void whenCurrentStackSizeOverMaxRandomizationDepth_thenShouldExceedRandomizationDepth() throws NoSuchFieldException {
         // Given
         PopulatorContext customPopulatorContext = new PopulatorContext(Constants.MAX_OBJECT_POOL_SIZE, 1);
         Field address = Person.class.getDeclaredField("address");
@@ -109,28 +109,28 @@ public class PopulatorContextTest {
         customPopulatorContext.pushStackItem(new PopulatorContextStackItem(bean2, address));
 
         // When
-        boolean isExceedRandomizationDepth = customPopulatorContext.isExceedRandomizationDepth();
+        boolean hasExceededRandomizationDepth = customPopulatorContext.hasExceededRandomizationDepth();
 
         // Then
-        assertThat(isExceedRandomizationDepth).isTrue();
+        assertThat(hasExceededRandomizationDepth).isTrue();
     }
 
     @Test
-    public void whenCurrentStackSizeLessMaxRandomizationDepth_thenNotExceedRandomizationDepth() throws NoSuchFieldException {
+    public void whenCurrentStackSizeLessMaxRandomizationDepth_thenShouldNotExceedRandomizationDepth() throws NoSuchFieldException {
         // Given
         PopulatorContext customPopulatorContext = new PopulatorContext(Constants.MAX_OBJECT_POOL_SIZE, 2);
         Field address = Person.class.getDeclaredField("address");
         customPopulatorContext.pushStackItem(new PopulatorContextStackItem(bean1, address));
 
         // When
-        boolean isExceedRandomizationDepth = customPopulatorContext.isExceedRandomizationDepth();
+        boolean hasExceededRandomizationDepth = customPopulatorContext.hasExceededRandomizationDepth();
 
         // Then
-        assertThat(isExceedRandomizationDepth).isFalse();
+        assertThat(hasExceededRandomizationDepth).isFalse();
     }
 
     @Test
-    public void whenCurrentStackSizeEqualMaxRandomizationDepth_thenNotExceedRandomizationDepth() throws NoSuchFieldException {
+    public void whenCurrentStackSizeEqualMaxRandomizationDepth_thenShouldNotExceedRandomizationDepth() throws NoSuchFieldException {
         // Given
         PopulatorContext customPopulatorContext = new PopulatorContext(Constants.MAX_OBJECT_POOL_SIZE, 2);
         Field address = Person.class.getDeclaredField("address");
@@ -138,10 +138,10 @@ public class PopulatorContextTest {
         customPopulatorContext.pushStackItem(new PopulatorContextStackItem(bean2, address));
 
         // When
-        boolean isExceedRandomizationDepth = customPopulatorContext.isExceedRandomizationDepth();
+        boolean hasExceededRandomizationDepth = customPopulatorContext.hasExceededRandomizationDepth();
 
         // Then
-        assertThat(isExceedRandomizationDepth).isFalse();
+        assertThat(hasExceededRandomizationDepth).isFalse();
     }
 
 }

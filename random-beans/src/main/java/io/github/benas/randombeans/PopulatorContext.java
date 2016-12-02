@@ -73,7 +73,7 @@ class PopulatorContext {
         return populatedBeans.get(type).get(randomIndex);
     }
 
-    boolean hasRandomizedType(final Class<?> type) {
+    boolean hasAlreadyRandomizedType(final Class<?> type) {
         return populatedBeans.containsKey(type) && populatedBeans.get(type).size() == maxObjectPoolSize;
     }
 
@@ -95,9 +95,9 @@ class PopulatorContext {
         return String.join(".", toLowerCase(pathToField));
     }
 
-    boolean isExceedRandomizationDepth(){
+    boolean hasExceededRandomizationDepth() {
         int currentRandomizationDepth = stack.size();
-        return currentRandomizationDepth>maxRandomizationDepth;
+        return currentRandomizationDepth > maxRandomizationDepth;
     }
 
     private List<String> getStackedFieldNames() {
@@ -105,10 +105,10 @@ class PopulatorContext {
     }
 
     private List<String> toLowerCase(final List<String> strings) {
-      return strings.stream().map(String::toLowerCase).collect(toList());
+        return strings.stream().map(String::toLowerCase).collect(toList());
     }
 
     private int nextInt(int startInclusive, int endExclusive) {
-      return startInclusive + new Random().nextInt(endExclusive - startInclusive);
+        return startInclusive + new Random().nextInt(endExclusive - startInclusive);
     }
 }
