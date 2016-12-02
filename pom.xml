@@ -46,7 +46,7 @@
         <lombok.version>1.16.10</lombok.version>
         <junit.version>4.12</junit.version>
         <faker.version>0.12</faker.version>
-        <assertj.version>3.6.0</assertj.version>
+        <assertj.version>3.6.1</assertj.version>
         <validation-api.version>1.1.0.Final</validation-api.version>
         <joda-time.version>2.9.6</joda-time.version>
         <spring-context.version>4.3.4.RELEASE</spring-context.version>
