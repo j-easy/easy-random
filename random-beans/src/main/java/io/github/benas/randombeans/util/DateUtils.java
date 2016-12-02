@@ -38,6 +38,8 @@ import static java.util.Date.from;
 @UtilityClass
 public class DateUtils {
 
+    public static final String DATE_FORMAT = "yyyy-MM-dd HH:mm:ss";
+
     /**
      * Convert a {@link ZonedDateTime} to {@link Date}.
      *

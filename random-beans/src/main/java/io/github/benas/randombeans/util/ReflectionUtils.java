@@ -33,6 +33,7 @@ import java.lang.reflect.*;
 import java.text.SimpleDateFormat;
 import java.util.*;
 
+import static io.github.benas.randombeans.util.DateUtils.DATE_FORMAT;
 import static java.lang.String.format;
 import static java.util.Arrays.asList;
 import static java.util.stream.Collectors.toList;
@@ -44,8 +45,6 @@ import static java.util.stream.Collectors.toList;
  */
 @UtilityClass
 public class ReflectionUtils {
-
-    private static final String DATE_FORMAT = "yyyy-MM-dd HH:mm:ss";
 
     private static final ObjectMapper objectMapper = new ObjectMapper();
 
