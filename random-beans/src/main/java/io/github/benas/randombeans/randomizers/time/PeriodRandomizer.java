@@ -25,7 +25,6 @@ package io.github.benas.randombeans.randomizers.time;
 
 import io.github.benas.randombeans.api.Randomizer;
 import io.github.benas.randombeans.randomizers.misc.EnumRandomizer;
-import io.github.benas.randombeans.randomizers.time.internal.DayRandomizer;
 
 import java.time.Month;
 import java.time.Period;

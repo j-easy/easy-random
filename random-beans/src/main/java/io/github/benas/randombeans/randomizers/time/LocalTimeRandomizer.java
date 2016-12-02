@@ -24,8 +24,6 @@
 package io.github.benas.randombeans.randomizers.time;
 
 import io.github.benas.randombeans.api.Randomizer;
-import io.github.benas.randombeans.randomizers.time.internal.HourRandomizer;
-import io.github.benas.randombeans.randomizers.time.internal.MinuteRandomizer;
 
 import java.time.LocalTime;
 

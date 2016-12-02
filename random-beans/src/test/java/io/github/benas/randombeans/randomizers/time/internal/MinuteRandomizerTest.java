@@ -24,11 +24,12 @@
 package io.github.benas.randombeans.randomizers.time.internal;
 
 import io.github.benas.randombeans.randomizers.AbstractRandomizerTest;
+import io.github.benas.randombeans.randomizers.time.MinuteRandomizer;
 import org.junit.Before;
 import org.junit.Test;
 
-import static io.github.benas.randombeans.randomizers.time.internal.MinuteRandomizer.MAX_MINUTE;
-import static io.github.benas.randombeans.randomizers.time.internal.MinuteRandomizer.MIN_MINUTE;
+import static io.github.benas.randombeans.randomizers.time.MinuteRandomizer.MAX_MINUTE;
+import static io.github.benas.randombeans.randomizers.time.MinuteRandomizer.MIN_MINUTE;
 import static org.assertj.core.api.Assertions.assertThat;
 
 public class MinuteRandomizerTest extends AbstractRandomizerTest<Integer> {

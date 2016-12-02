@@ -24,11 +24,12 @@
 package io.github.benas.randombeans.randomizers.time.internal;
 
 import io.github.benas.randombeans.randomizers.AbstractRandomizerTest;
+import io.github.benas.randombeans.randomizers.time.DayRandomizer;
 import org.junit.Before;
 import org.junit.Test;
 
-import static io.github.benas.randombeans.randomizers.time.internal.DayRandomizer.MAX_DAY;
-import static io.github.benas.randombeans.randomizers.time.internal.DayRandomizer.MIN_DAY;
+import static io.github.benas.randombeans.randomizers.time.DayRandomizer.MAX_DAY;
+import static io.github.benas.randombeans.randomizers.time.DayRandomizer.MIN_DAY;
 import static org.assertj.core.api.Assertions.assertThat;
 
 public class DayRandomizerTest extends AbstractRandomizerTest<Integer> {

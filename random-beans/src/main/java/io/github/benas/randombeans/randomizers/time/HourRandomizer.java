@@ -21,33 +21,33 @@
  *   OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  *   THE SOFTWARE.
  */
-package io.github.benas.randombeans.randomizers.time.internal;
+package io.github.benas.randombeans.randomizers.time;
 
 import io.github.benas.randombeans.api.Randomizer;
 import io.github.benas.randombeans.randomizers.range.IntegerRangeRandomizer;
 
 /**
- * A {@link Randomizer} that generates a random day value between {@link DayRandomizer#MIN_DAY} and {@link DayRandomizer#MAX_DAY}.
+ * A {@link Randomizer} that generates a random hour value between {@link HourRandomizer#MIN_HOUR} and {@link HourRandomizer#MAX_HOUR}.
  * 
  * @author Mahmoud Ben Hassine (mahmoud.benhassine@icloud.com)
  */
-public class DayRandomizer implements Randomizer<Integer> {
+public class HourRandomizer implements Randomizer<Integer> {
     
-    public static final int MIN_DAY = 1;
-    public static final int MAX_DAY = 28; // 31 may break some LocalDateTime instances when the dayOfMonth is invalid
+    public static final int MIN_HOUR = 0;
+    public static final int MAX_HOUR = 23;
 
-    private final IntegerRangeRandomizer dayRandomizer;
+    private final IntegerRangeRandomizer hourRandomizer;
 
-    public DayRandomizer() {
-        dayRandomizer = new IntegerRangeRandomizer(MIN_DAY, MAX_DAY);
+    public HourRandomizer() {
+        hourRandomizer = new IntegerRangeRandomizer(MIN_HOUR, MAX_HOUR);
     }
 
-    public DayRandomizer(final long seed) {
-        dayRandomizer = new IntegerRangeRandomizer(MIN_DAY, MAX_DAY, seed);
+    public HourRandomizer(final long seed) {
+        hourRandomizer = new IntegerRangeRandomizer(MIN_HOUR, MAX_HOUR, seed);
     }
 
     @Override
     public Integer getRandomValue() {
-        return dayRandomizer.getRandomValue();
+        return hourRandomizer.getRandomValue();
     }
 }

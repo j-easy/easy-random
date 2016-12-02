@@ -21,7 +21,7 @@
  *   OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  *   THE SOFTWARE.
  */
-package io.github.benas.randombeans.randomizers.time.internal;
+package io.github.benas.randombeans.randomizers.time;
 
 import io.github.benas.randombeans.api.Randomizer;
 import io.github.benas.randombeans.randomizers.range.IntegerRangeRandomizer;
