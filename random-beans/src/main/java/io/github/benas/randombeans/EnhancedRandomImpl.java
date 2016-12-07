@@ -31,7 +31,11 @@ import io.github.benas.randombeans.api.RandomizerRegistry;
 import io.github.benas.randombeans.randomizers.EnumRandomizer;
 
 import java.lang.reflect.Field;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Set;
+import java.util.Map;
+import java.util.HashMap;
 
 import static io.github.benas.randombeans.util.ReflectionUtils.*;
 
