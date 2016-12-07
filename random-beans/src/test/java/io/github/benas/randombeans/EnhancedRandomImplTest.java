@@ -28,6 +28,7 @@ import io.github.benas.randombeans.api.EnhancedRandom;
 import io.github.benas.randombeans.api.ObjectGenerationException;
 import io.github.benas.randombeans.api.Randomizer;
 import io.github.benas.randombeans.beans.*;
+import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -253,6 +254,28 @@ public class EnhancedRandomImplTest {
         expectedPerson.setAddress(address);
 
         return expectedPerson;
+    }
+
+    @Test
+    public void enumRandomization() throws Exception {
+        final EnhancedRandom r = aNewEnhancedRandomBuilder()
+                .seed(239)
+                .build();
+        for (int i = 0; i < 100; i++) {
+            final Enum res = r.nextObject(Enum.class);
+            if (res != Enum.F_3) {
+                return;
+            }
+        }
+        Assert.fail();
+    }
+
+    enum Enum {
+        F_1,
+        F_2,
+        F_3,
+        F_4,
+        F_5,
     }
 
     private int[] buildExpectedInts() {
