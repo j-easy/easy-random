@@ -31,9 +31,7 @@ import io.github.benas.randombeans.api.RandomizerRegistry;
 import io.github.benas.randombeans.randomizers.EnumRandomizer;
 
 import java.lang.reflect.Field;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
 
 import static io.github.benas.randombeans.util.ReflectionUtils.*;
 
@@ -125,9 +123,15 @@ class EnhancedRandomImpl extends EnhancedRandom {
         }
     }
 
+    private final Map<Class, EnumRandomizer> enumRandomizers = new HashMap<>();
     private <T> T randomize(final Class<T> type, final PopulatorContext context) {
         if (isEnumType(type)) {
-            return (T) new EnumRandomizer(type, seed).getRandomValue();
+            EnumRandomizer enumRandomizer = enumRandomizers.get(type);
+            if (enumRandomizer == null) {
+                enumRandomizer = new EnumRandomizer(type, seed);
+                enumRandomizers.put(type, enumRandomizer);
+            }
+            return (T) enumRandomizer.getRandomValue();
         }
         if (isArrayType(type)) {
             return (T) arrayPopulator.getRandomArray(type, context);
