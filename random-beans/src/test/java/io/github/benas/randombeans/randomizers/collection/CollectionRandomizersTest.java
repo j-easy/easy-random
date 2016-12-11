@@ -60,11 +60,11 @@ public class CollectionRandomizersTest {
 
     @Test
     @UseDataProvider("generateCollectionRandomizers")
-    public <T> void generatedCollectionSizeShouldNotBeEmpty(Randomizer<Collection<T>> collectionRandomizer) {
+    public <T> void generatedCollectionShouldNotBeNull(Randomizer<Collection<T>> collectionRandomizer) {
         // when
         Collection<T> randomCollection = collectionRandomizer.getRandomValue();
 
-        then(randomCollection).isNotEmpty();
+        then(randomCollection).isNotNull();
     }
 
     @DataProvider
