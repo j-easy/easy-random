@@ -23,47 +23,44 @@
  */
 package io.github.benas.randombeans;
 
+import static io.github.benas.randombeans.EnhancedRandomBuilder.aNewEnhancedRandom;
+import static io.github.benas.randombeans.EnhancedRandomBuilder.aNewEnhancedRandomBuilder;
+import static io.github.benas.randombeans.FieldDefinitionBuilder.field;
 import io.github.benas.randombeans.api.EnhancedRandom;
+import static io.github.benas.randombeans.api.EnhancedRandom.*;
 import io.github.benas.randombeans.api.ObjectGenerationException;
 import io.github.benas.randombeans.api.Randomizer;
 import io.github.benas.randombeans.beans.*;
 import io.github.benas.randombeans.randomizers.misc.ConstantRandomizer;
+import static io.github.benas.randombeans.util.CharacterUtils.collectPrintableCharactersOf;
+import static io.github.benas.randombeans.util.CharacterUtils.filterLetters;
 import io.github.benas.randombeans.util.ReflectionUtils;
+import java.nio.charset.Charset;
+import java.nio.charset.StandardCharsets;
+import static java.sql.Timestamp.valueOf;
+import java.time.LocalDate;
+import static java.time.LocalDateTime.of;
+import java.time.LocalTime;
+import static java.util.Arrays.asList;
+import java.util.Collection;
+import java.util.Date;
 import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
+import java.util.function.Supplier;
+import static java.util.stream.Collectors.toList;
+import java.util.stream.Stream;
 import lombok.Data;
-
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.fail;
+import static org.assertj.core.api.BDDAssertions.then;
 import org.junit.Before;
 import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.Mock;
-import org.mockito.runners.MockitoJUnitRunner;
-
-import java.nio.charset.Charset;
-import java.nio.charset.StandardCharsets;
-import java.time.LocalDate;
-import java.time.LocalTime;
-import java.util.Collection;
-import java.util.Date;
-import java.util.List;
-import java.util.Set;
-import java.util.function.Supplier;
-import java.util.stream.Stream;
-
-import static io.github.benas.randombeans.EnhancedRandomBuilder.aNewEnhancedRandom;
-import static io.github.benas.randombeans.EnhancedRandomBuilder.aNewEnhancedRandomBuilder;
-import static io.github.benas.randombeans.FieldDefinitionBuilder.field;
-import static io.github.benas.randombeans.api.EnhancedRandom.*;
-import static io.github.benas.randombeans.util.CharacterUtils.collectPrintableCharactersOf;
-import static io.github.benas.randombeans.util.CharacterUtils.filterLetters;
-import static java.sql.Timestamp.valueOf;
-import static java.time.LocalDateTime.of;
-import static java.util.Arrays.asList;
-import static java.util.stream.Collectors.toList;
-import static org.assertj.core.api.Assertions.assertThat;
-import static org.assertj.core.api.Assertions.fail;
-import static org.assertj.core.api.BDDAssertions.then;
 import static org.mockito.Mockito.when;
+import org.mockito.runners.MockitoJUnitRunner;
 
 @RunWith(MockitoJUnitRunner.class)
 public class EnhancedRandomImplTest {
@@ -238,7 +235,7 @@ public class EnhancedRandomImplTest {
         assertThat(bar).isNotNull();
         assertThat(bar).isInstanceOf(ConcreteBar.class);
         // https://github.com/benas/random-beans/issues/204
-        assertThat(bar.getI()).isNotNull(); 
+        assertThat(bar.getI()).isNotNull();
     }
 
     @Test
@@ -293,7 +290,7 @@ public class EnhancedRandomImplTest {
         // Given
         enhancedRandom = aNewEnhancedRandomBuilder().seed(SEED).build();
 
-        String expectedString = "eOMtThyhVNLWUZN";
+        String expectedString = "eOMtThyhVNLWUZNRcBaQKxIy";
         Person expectedPerson = buildExpectedPerson();
         int[] expectedInts = buildExpectedInts();
 
@@ -558,19 +555,19 @@ public class EnhancedRandomImplTest {
         Person expectedPerson = new Person();
 
         Street street = new Street();
-        street.setName("dkelQbxe");
+        street.setName("elQbxeTeQOvaScfqIOOmaaJxkyvRnLRY");
         street.setNumber(-1188957731);
         street.setType((byte) -35);
 
         Address address = new Address();
-        address.setCity("fqIOOmaaJxkyvRnLRYtGKbgic");
-        address.setCountry("ZaHCBRQDSxVLhpf");
-        address.setZipCode("TeQOvaSc");
+        address.setCity("CBRQDSxVL");
+        address.setCountry("hpfQGTMDYpsBZxvfBoe");
+        address.setZipCode("tGKbgicZaH");
         address.setStreet(street);
 
-        expectedPerson.setName("DcSTDyUMJzFCdjUpSfoiHR");
-        expectedPerson.setEmail("RcBaQKxIyedUsFw");
-        expectedPerson.setPhoneNumber("QGTMDYpsBZxv");
+        expectedPerson.setName("wCTSeCODYsELoVqtepGSijxlz");
+        expectedPerson.setEmail("edUsFwdk");
+        expectedPerson.setPhoneNumber("ygjbUMaAIKKIkknjWEXJ");
         expectedPerson.setGender(Gender.FEMALE);
         expectedPerson.setAddress(address);
 
