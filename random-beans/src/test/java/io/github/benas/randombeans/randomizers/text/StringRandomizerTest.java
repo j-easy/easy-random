@@ -24,11 +24,10 @@
 package io.github.benas.randombeans.randomizers.text;
 
 import io.github.benas.randombeans.randomizers.AbstractRandomizerTest;
-import org.junit.Before;
-import org.junit.Test;
-
 import static io.github.benas.randombeans.randomizers.text.StringRandomizer.aNewStringRandomizer;
 import static org.assertj.core.api.Assertions.assertThat;
+import org.junit.Before;
+import org.junit.Test;
 
 public class StringRandomizerTest extends AbstractRandomizerTest<String> {
 
@@ -46,7 +45,7 @@ public class StringRandomizerTest extends AbstractRandomizerTest<String> {
     public void shouldGenerateTheSameValueForTheSameSeed() {
         // Given
         randomizer = aNewStringRandomizer(SEED);
-        String expected = "eOMtThyhVNLWUZN";
+        String expected = "eOMtThyhVNLWUZNRcBaQKxIy";
 
         // When
         String actual = randomizer.getRandomValue();
@@ -60,7 +59,7 @@ public class StringRandomizerTest extends AbstractRandomizerTest<String> {
         // Given
         final int maxLength = 10;
         randomizer = aNewStringRandomizer(maxLength, SEED);
-        String expectedValue = "eOMtThyhV";
+        String expectedValue = "eOM";
 
         // When
         String actual = randomizer.getRandomValue();
@@ -76,7 +75,7 @@ public class StringRandomizerTest extends AbstractRandomizerTest<String> {
         final int minLength = 3;
         final int maxLength = 10;
         randomizer = aNewStringRandomizer(minLength, maxLength, SEED);
-        String expectedValue = "eOM";
+        String expectedValue = "eOMtThyh";
 
         // When
         String actual = randomizer.getRandomValue();
