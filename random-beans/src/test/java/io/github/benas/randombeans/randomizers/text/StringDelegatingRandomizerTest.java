@@ -28,7 +28,7 @@ import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.Mock;
-import org.mockito.runners.MockitoJUnitRunner;
+import org.mockito.junit.MockitoJUnitRunner;
 
 import static io.github.benas.randombeans.randomizers.text.StringDelegatingRandomizer.aNewStringDelegatingRandomizer;
 import static java.lang.String.valueOf;
