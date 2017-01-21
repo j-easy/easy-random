@@ -54,7 +54,7 @@ public class TimeSupportTest {
 
     @Test
     // https://github.com/benas/random-beans/issues/135
-    public void threeTenRandomizersCanBeOverridenByCustomRandomizers() {
+    public void threeTenRandomizersCanBeOverriddenByCustomRandomizers() {
         EnhancedRandom customEnhancedRandom = EnhancedRandomBuilder.aNewEnhancedRandomBuilder()
                 .exclude(FieldDefinitionBuilder.field().named("instant").ofType(Instant.class).inClass(TimeBean.class).get()).build();
 
