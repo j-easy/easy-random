@@ -67,6 +67,8 @@ public class EnhancedRandomParameters {
 
     private Range<LocalTime> timeRange;
 
+    private Range<Integer> stringLengthRange;
+
     public EnhancedRandomParameters() {
         scanClasspathForConcreteTypes = false;
         seed = new Random().nextLong();
@@ -80,6 +82,7 @@ public class EnhancedRandomParameters {
         overrideDefaultInitialization = false;
         dateRange = new Range<>(TEN_YEARS_AGO.toLocalDate(), IN_TEN_YEARS.toLocalDate());
         timeRange = new Range<>(LocalTime.MIN, LocalTime.MAX);
+        stringLengthRange = new Range<>(Constants.MIN_STRING_LENGTH, Constants.MAX_STRING_LENGTH);
     }
 
     public void setDateRange(final LocalDate min, final LocalDate max) {
@@ -88,6 +91,10 @@ public class EnhancedRandomParameters {
 
     public void setTimeRange(final LocalTime min, final LocalTime max) {
         this.timeRange = new Range<>(min, max);
+    }
+
+    public void setStringLengthRange(final int minStringLength, final int maxStringLength) {
+        this.stringLengthRange = new Range<>(minStringLength, maxStringLength);
     }
 
     @Data

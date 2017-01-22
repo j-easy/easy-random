@@ -210,11 +210,32 @@ public class EnhancedRandomBuilder {
     }
 
     /**
-     * Set the maximum string length.
+     * Set the string length range.
      *
+     * @param minStringLength the minimum string length
      * @param maxStringLength the maximum string length
      * @return a pre configured {@link EnhancedRandomBuilder} instance
      */
+    public EnhancedRandomBuilder stringLengthRange(final int minStringLength, final int maxStringLength) {
+        if (minStringLength < 0) {
+            throw new IllegalArgumentException("minStringLength must be >= 0");
+        }
+        if (minStringLength > maxStringLength) {
+            throw new IllegalArgumentException(format("minStringLength (%s) must be <= than maxStringLength (%s)",
+                    minStringLength, maxStringLength));
+        }
+        parameters.setStringLengthRange(minStringLength, maxStringLength);
+        return this;
+    }
+
+    /**
+     * Set the maximum string length.
+     *
+     * @deprecated use io.github.benas.randombeans.EnhancedRandomBuilder#stringLengthRange(int, int) instead
+     * @param maxStringLength the maximum string length
+     * @return a pre configured {@link EnhancedRandomBuilder} instance
+     */
+    @Deprecated
     public EnhancedRandomBuilder maxStringLength(final int maxStringLength) {
         parameters.setMaxStringLength(maxStringLength);
         return this;
@@ -223,9 +244,11 @@ public class EnhancedRandomBuilder {
     /**
      * Set the minimum string length.
      *
+     * @deprecated use io.github.benas.randombeans.EnhancedRandomBuilder#stringLengthRange(int, int) instead
      * @param minStringLength the minimum string length
      * @return a pre configured {@link EnhancedRandomBuilder} instance
      */
+    @Deprecated
     public EnhancedRandomBuilder minStringLength(final int minStringLength) {
         parameters.setMinStringLength(minStringLength);
         return this;

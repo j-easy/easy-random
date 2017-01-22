@@ -91,6 +91,7 @@ public class EnhancedRandomFactoryBean implements FactoryBean<EnhancedRandom> {
         enhancedRandomBuilder.timeRange(minTime, maxTime);
         enhancedRandomBuilder.maxStringLength(maxStringLength);
         enhancedRandomBuilder.minStringLength(minStringLength);
+        enhancedRandomBuilder.stringLengthRange(minStringLength, maxStringLength);
         enhancedRandomBuilder.minCollectionSize(minCollectionSize);
         enhancedRandomBuilder.maxCollectionSize(maxCollectionSize);
         enhancedRandomBuilder.overrideDefaultInitialization(overrideDefaultInitialization);

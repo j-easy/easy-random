@@ -63,12 +63,12 @@ public abstract class Constants {
     /**
      * Maximum string size.
      */
-    public static final byte MAX_STRING_LENGTH = 32;
+    public static final int MAX_STRING_LENGTH = 32;
 
     /**
      * Minimum string size.
      */
-    public static final byte MIN_STRING_LENGTH = 1;
+    public static final int MIN_STRING_LENGTH = 1;
 
     /**
      * Default date range in which dates will be generated: [now - 10 years, now + 10 years].
