@@ -61,6 +61,7 @@ public class EnhancedRandomFactoryBean implements FactoryBean<EnhancedRandom> {
     private LocalTime maxTime = LocalTime.MAX;
     private int maxStringLength = Constants.MAX_STRING_LENGTH;
     private int minStringLength = Constants.MIN_STRING_LENGTH;
+    private int minCollectionSize = Constants.MIN_COLLECTION_SIZE;
     private int maxCollectionSize = Constants.MAX_COLLECTION_SIZE;
     private boolean overrideDefaultInitialization;
     private boolean scanClasspathForConcreteTypes;
@@ -90,6 +91,7 @@ public class EnhancedRandomFactoryBean implements FactoryBean<EnhancedRandom> {
         enhancedRandomBuilder.timeRange(minTime, maxTime);
         enhancedRandomBuilder.maxStringLength(maxStringLength);
         enhancedRandomBuilder.minStringLength(minStringLength);
+        enhancedRandomBuilder.minCollectionSize(minCollectionSize);
         enhancedRandomBuilder.maxCollectionSize(maxCollectionSize);
         enhancedRandomBuilder.overrideDefaultInitialization(overrideDefaultInitialization);
         enhancedRandomBuilder.scanClasspathForConcreteTypes(scanClasspathForConcreteTypes);
@@ -153,6 +155,10 @@ public class EnhancedRandomFactoryBean implements FactoryBean<EnhancedRandom> {
 
     public void setMaxCollectionSize(int maxCollectionSize) {
         this.maxCollectionSize = maxCollectionSize;
+    }
+
+    public void setMinCollectionSize(int minCollectionSize) {
+        this.minCollectionSize = minCollectionSize;
     }
 
     public void setOverrideDefaultInitialization(boolean overrideDefaultInitialization) {
