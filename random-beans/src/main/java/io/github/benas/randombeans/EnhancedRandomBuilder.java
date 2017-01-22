@@ -187,9 +187,11 @@ public class EnhancedRandomBuilder {
     /**
      * Set the minimum collection size.
      *
+     * @deprecated use io.github.benas.randombeans.EnhancedRandomBuilder#collectionSizeRange(int, int) instead
      * @param minCollectionSize the minimum collection size
      * @return a pre configured {@link EnhancedRandomBuilder} instance
      */
+    @Deprecated
     public EnhancedRandomBuilder minCollectionSize(final int minCollectionSize) {
         if (minCollectionSize < 0) {
             throw new IllegalArgumentException("minCollectionSize must be >= 0");
@@ -201,11 +203,32 @@ public class EnhancedRandomBuilder {
     /**
      * Set the maximum collection size.
      *
+     * @deprecated use io.github.benas.randombeans.EnhancedRandomBuilder#collectionSizeRange(int, int) instead
      * @param maxCollectionSize the maximum collection size
      * @return a pre configured {@link EnhancedRandomBuilder} instance
      */
+    @Deprecated
     public EnhancedRandomBuilder maxCollectionSize(final int maxCollectionSize) {
         parameters.setMaxCollectionSize(maxCollectionSize);
+        return this;
+    }
+
+    /**
+     * Set the collection size range.
+     *
+     * @param minCollectionSize the minimum collection size
+     * @param maxCollectionSize the maximum collection size
+     * @return a pre configured {@link EnhancedRandomBuilder} instance
+     */
+    public EnhancedRandomBuilder collectionSizeRange(final int minCollectionSize, final int maxCollectionSize) {
+        if (minCollectionSize < 0) {
+            throw new IllegalArgumentException("minCollectionSize must be >= 0");
+        }
+        if (minCollectionSize > maxCollectionSize) {
+            throw new IllegalArgumentException(format("minCollectionSize (%s) must be <= than maxCollectionSize (%s)",
+                    minCollectionSize, maxCollectionSize));
+        }
+        parameters.setCollectionSizeRange(minCollectionSize, maxCollectionSize);
         return this;
     }
 
@@ -346,8 +369,9 @@ public class EnhancedRandomBuilder {
      * @return a configured {@link EnhancedRandom} instance
      */
     public EnhancedRandom build() {
-        int minCollectionSize = parameters.getMinCollectionSize();
-        int maxCollectionSize = parameters.getMaxCollectionSize();
+        int minCollectionSize = parameters.getCollectionSizeRange().getMin();
+        int maxCollectionSize = parameters.getCollectionSizeRange().getMax();
+        // // TODO can be removed when deprecated methods (minCollectionSize/maxCollectionSize) are removed
         if (minCollectionSize > maxCollectionSize) {
             throw new IllegalArgumentException(format("minCollectionSize (%s) must be <= than maxCollectionSize (%s)",
                     minCollectionSize, maxCollectionSize));
