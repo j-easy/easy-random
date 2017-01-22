@@ -26,6 +26,8 @@ package io.github.benas.randombeans;
 import org.objenesis.Objenesis;
 import org.objenesis.ObjenesisStd;
 
+import io.github.benas.randombeans.api.ObjectGenerationException;
+
 import java.util.Collection;
 import java.util.concurrent.ArrayBlockingQueue;
 import java.util.concurrent.DelayQueue;
@@ -57,7 +59,11 @@ class ObjectFactory {
                 return (T) createNewInstance(randomConcreteSubType);
             }
         } else {
-            return createNewInstance(type);
+            try {
+                return createNewInstance(type);
+            } catch (Error e) {
+                throw new ObjectGenerationException("Unable to create an instance of type: " + type, e);
+            }
         }
     }
 

@@ -26,6 +26,7 @@ package io.github.benas.randombeans;
 import io.github.benas.randombeans.api.Randomizer;
 import io.github.benas.randombeans.beans.*;
 import io.github.benas.randombeans.randomizers.misc.SkipRandomizer;
+
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -38,7 +39,10 @@ import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
 
+import javax.xml.bind.JAXBElement;
+
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.BDDAssertions.thenThrownBy;
 import static org.mockito.Mockito.when;
 
 @RunWith(MockitoJUnitRunner.class)
@@ -154,5 +158,20 @@ public class FieldPopulatorTest {
 
         // Then
         assertThat(human.getName()).isNull();
+    }
+
+    @Test //https://github.com/benas/random-beans/issues/221
+    public void shouldFailWithNiceErrorMessageWhenUnableToCreateFieldValue() throws Exception {
+      // Given
+      FieldPopulator fieldPopulator = new FieldPopulator(new EnhancedRandomImpl(Collections.emptySet()), randomizerProvider, arrayPopulator, collectionPopulator, mapPopulator);
+      Field jaxbElementField = JaxbElementFieldBean.class.getDeclaredField("jaxbElementField");
+      JaxbElementFieldBean jaxbElementFieldBean = new JaxbElementFieldBean();
+
+      thenThrownBy(() -> { fieldPopulator.populateField(jaxbElementFieldBean, jaxbElementField, populatorContext); })
+          .hasMessage("Unable to create type: javax.xml.bind.JAXBElement for field: jaxbElementField of class: io.github.benas.randombeans.FieldPopulatorTest$JaxbElementFieldBean");
+    }
+
+    public class JaxbElementFieldBean {
+      JAXBElement<String> jaxbElementField;
     }
 }

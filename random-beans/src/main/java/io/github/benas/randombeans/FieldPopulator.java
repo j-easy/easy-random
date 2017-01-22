@@ -77,7 +77,13 @@ class FieldPopulator {
             if (randomizer != null) {
                 value = randomizer.getRandomValue();
             } else {
-                value = generateRandomValue(field, context);
+                try {
+                    value = generateRandomValue(field, context);
+                } catch (ObjectGenerationException e) {
+                    String exceptionMessage = String.format("Unable to create type: %s for field: %s of class: %s",
+                          field.getType().getName(), field.getName(), target.getClass().getName());
+                    throw new ObjectGenerationException(exceptionMessage, e);
+                }
             }
             setProperty(target, field, value);
         }
