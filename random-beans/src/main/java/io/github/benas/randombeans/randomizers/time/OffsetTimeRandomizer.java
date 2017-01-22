@@ -36,8 +36,8 @@ import java.time.ZoneOffset;
  */
 public class OffsetTimeRandomizer implements Randomizer<OffsetTime> {
 
-    private final LocalTimeRandomizer localTimeRandomizer;
-    private final ZoneOffsetRandomizer zoneOffsetRandomizer;
+    private LocalTimeRandomizer localTimeRandomizer;
+    private ZoneOffsetRandomizer zoneOffsetRandomizer;
 
     /**
      * Create a new {@link OffsetTimeRandomizer}.
@@ -81,5 +81,13 @@ public class OffsetTimeRandomizer implements Randomizer<OffsetTime> {
         LocalTime randomLocalTime = localTimeRandomizer.getRandomValue();
         ZoneOffset randomZoneOffset = zoneOffsetRandomizer.getRandomValue();
         return OffsetTime.of(randomLocalTime, randomZoneOffset);
+    }
+
+    public void setLocalTimeRandomizer(final LocalTimeRandomizer localTimeRandomizer) {
+        this.localTimeRandomizer = localTimeRandomizer;
+    }
+
+    public void setZoneOffsetRandomizer(final ZoneOffsetRandomizer zoneOffsetRandomizer) {
+        this.zoneOffsetRandomizer = zoneOffsetRandomizer;
     }
 }

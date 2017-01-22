@@ -41,7 +41,7 @@ import java.util.Set;
  */
 public class ZonedDateTimeRandomizer extends AbstractRandomizer<ZonedDateTime> {
 
-    private final LocalDateTimeRandomizer localDateTimeRandomizer;
+    private LocalDateTimeRandomizer localDateTimeRandomizer;
 
     /**
      * Create a new {@link ZonedDateTimeRandomizer}.
@@ -92,4 +92,7 @@ public class ZonedDateTimeRandomizer extends AbstractRandomizer<ZonedDateTime> {
         return ZoneId.of(ids.get(random.nextInt(ids.size())));
     }
 
+    public void setLocalDateTimeRandomizer(final LocalDateTimeRandomizer localDateTimeRandomizer) {
+        this.localDateTimeRandomizer = localDateTimeRandomizer;
+    }
 }
