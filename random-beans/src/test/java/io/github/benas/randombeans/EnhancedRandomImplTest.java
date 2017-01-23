@@ -323,41 +323,23 @@ public class EnhancedRandomImplTest {
     }
 
     @Test
-    public void testMaxStringLength() {
-        // Given
-        int maxStringLength = 50;
-        enhancedRandom = aNewEnhancedRandomBuilder().maxStringLength(maxStringLength).build();
-
-        // When
-        Person person = enhancedRandom.nextObject(Person.class);
-
-        // Then
-        assertThat(person.getName().length()).isLessThanOrEqualTo(maxStringLength);
-        assertThat(person.getEmail().length()).isLessThanOrEqualTo(maxStringLength);
-        assertThat(person.getPhoneNumber().length()).isLessThanOrEqualTo(maxStringLength);
-        assertThat(person.getAddress().getCity().length()).isLessThanOrEqualTo(maxStringLength);
-        assertThat(person.getAddress().getCountry().length()).isLessThanOrEqualTo(maxStringLength);
-        assertThat(person.getAddress().getZipCode().length()).isLessThanOrEqualTo(maxStringLength);
-        assertThat(person.getAddress().getStreet().getName().length()).isLessThanOrEqualTo(maxStringLength);
-    }
-
-    @Test
-    public void testMinStringLength() {
+    public void testStringLengthRange() {
         // Given
         int minStringLength = 3;
-        enhancedRandom = aNewEnhancedRandomBuilder().minStringLength(minStringLength).build();
+        int maxStringLength = 50;
+        enhancedRandom = aNewEnhancedRandomBuilder().stringLengthRange(minStringLength, maxStringLength).build();
 
         // When
         Person person = enhancedRandom.nextObject(Person.class);
 
         // Then
-        assertThat(person.getName().length()).isGreaterThanOrEqualTo(minStringLength);
-        assertThat(person.getEmail().length()).isGreaterThanOrEqualTo(minStringLength);
-        assertThat(person.getPhoneNumber().length()).isGreaterThanOrEqualTo(minStringLength);
-        assertThat(person.getAddress().getCity().length()).isGreaterThanOrEqualTo(minStringLength);
-        assertThat(person.getAddress().getCountry().length()).isGreaterThanOrEqualTo(minStringLength);
-        assertThat(person.getAddress().getZipCode().length()).isGreaterThanOrEqualTo(minStringLength);
-        assertThat(person.getAddress().getStreet().getName().length()).isGreaterThanOrEqualTo(minStringLength);
+        assertThat(person.getName().length()).isBetween(minStringLength, maxStringLength);
+        assertThat(person.getEmail().length()).isBetween(minStringLength, maxStringLength);
+        assertThat(person.getPhoneNumber().length()).isBetween(minStringLength, maxStringLength);
+        assertThat(person.getAddress().getCity().length()).isBetween(minStringLength, maxStringLength);
+        assertThat(person.getAddress().getCountry().length()).isBetween(minStringLength, maxStringLength);
+        assertThat(person.getAddress().getZipCode().length()).isBetween(minStringLength, maxStringLength);
+        assertThat(person.getAddress().getStreet().getName().length()).isBetween(minStringLength, maxStringLength);
     }
 
     @Data

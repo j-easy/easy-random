@@ -160,6 +160,20 @@ public class EnhancedRandomBuilderTest {
         assertThat(strArr.length).isLessThanOrEqualTo(1);
     }
 
+    @Test(expected=IllegalArgumentException.class)
+    public void shouldNotAllowNegativeMinStringLength() {
+        enhancedRandomBuilder = aNewEnhancedRandomBuilder();
+
+        enhancedRandomBuilder.stringLengthRange(-1, 10).build();
+    }
+
+    @Test(expected=IllegalArgumentException.class)
+    public void shouldNotAllowMinStringLengthGreaterThanMaxStringLength() {
+        enhancedRandomBuilder = aNewEnhancedRandomBuilder();
+
+        enhancedRandomBuilder.stringLengthRange(2, 1).build();
+    }
+
     @Test
     public void shouldConfigureExclusionOfTypesFromBuilder() {
         enhancedRandomBuilder = aNewEnhancedRandomBuilder();
