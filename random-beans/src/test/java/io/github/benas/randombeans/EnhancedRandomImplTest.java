@@ -50,7 +50,6 @@ import java.util.Set;
 import java.util.function.Supplier;
 import static java.util.stream.Collectors.toList;
 import java.util.stream.Stream;
-import lombok.Data;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.fail;
 import static org.assertj.core.api.BDDAssertions.then;
@@ -342,11 +341,6 @@ public class EnhancedRandomImplTest {
         assertThat(person.getAddress().getStreet().getName().length()).isBetween(minStringLength, maxStringLength);
     }
 
-    @Data
-    static class PersonTuple {
-        public Person left, right;
-    }
-
     @Test
     public void testMaxObjectPoolSize() {
         // Given
@@ -425,16 +419,6 @@ public class EnhancedRandomImplTest {
         // Then
         assertThat(bean.getDefaultNonNullValue()).isNotEqualTo("default").isNotNull();
         assertThat(bean.getDefaultNonNullValueSetByConstructor()).isNotEqualTo("defaultSetByConstructor").isNotNull();
-    }
-
-    @Data
-    public static class BeanWithDefaultFieldValues {
-        private String defaultNonNullValue = "default";
-        private String defaultNonNullValueSetByConstructor;
-
-        public BeanWithDefaultFieldValues() {
-            defaultNonNullValueSetByConstructor = "defaultSetByConstructor";
-        }
     }
 
     @Test
@@ -572,7 +556,4 @@ public class EnhancedRandomImplTest {
                 1839376840, 1847876220, -148273579, 1870475320, -1179265442};
     }
 
-    private enum TestEnum {
-        ONE_THING, ANOTHER_THING, SOMETHING_ELSE;
-    }
 }
