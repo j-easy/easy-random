@@ -29,6 +29,8 @@ import io.github.benas.randombeans.api.Randomizer;
 import io.github.benas.randombeans.api.RandomizerRegistry;
 import io.github.benas.randombeans.randomizers.registry.CustomRandomizerRegistry;
 import io.github.benas.randombeans.randomizers.registry.ExclusionRandomizerRegistry;
+import io.github.benas.randombeans.util.Constants;
+import io.github.benas.randombeans.util.Range;
 
 import java.nio.charset.Charset;
 import java.time.LocalDate;
@@ -38,6 +40,8 @@ import java.util.function.Supplier;
 
 import static io.github.benas.randombeans.FieldDefinitionBuilder.field;
 import static io.github.benas.randombeans.RandomizerProxy.asRandomizer;
+import static io.github.benas.randombeans.util.Constants.DEFAULT_COLLECTION_SIZE_RANGE;
+import static io.github.benas.randombeans.util.Constants.DEFAULT_STRING_LENGTH_RANGE;
 import static java.lang.String.format;
 
 /**
@@ -196,7 +200,7 @@ public class EnhancedRandomBuilder {
         if (minCollectionSize < 0) {
             throw new IllegalArgumentException("minCollectionSize must be >= 0");
         }
-        parameters.setMinCollectionSize(minCollectionSize);
+        parameters.setCollectionSizeRange(new Range<>(minCollectionSize, Constants.DEFAULT_COLLECTION_SIZE_RANGE.getMax()));
         return this;
     }
 
@@ -209,7 +213,7 @@ public class EnhancedRandomBuilder {
      */
     @Deprecated
     public EnhancedRandomBuilder maxCollectionSize(final int maxCollectionSize) {
-        parameters.setMaxCollectionSize(maxCollectionSize);
+        parameters.setCollectionSizeRange(new Range<>(DEFAULT_COLLECTION_SIZE_RANGE.getMin(), maxCollectionSize));
         return this;
     }
 
@@ -228,7 +232,7 @@ public class EnhancedRandomBuilder {
             throw new IllegalArgumentException(format("minCollectionSize (%s) must be <= than maxCollectionSize (%s)",
                     minCollectionSize, maxCollectionSize));
         }
-        parameters.setCollectionSizeRange(minCollectionSize, maxCollectionSize);
+        parameters.setCollectionSizeRange(new Range<>(minCollectionSize, maxCollectionSize));
         return this;
     }
 
@@ -247,7 +251,7 @@ public class EnhancedRandomBuilder {
             throw new IllegalArgumentException(format("minStringLength (%s) must be <= than maxStringLength (%s)",
                     minStringLength, maxStringLength));
         }
-        parameters.setStringLengthRange(minStringLength, maxStringLength);
+        parameters.setStringLengthRange(new Range<>(minStringLength, maxStringLength));
         return this;
     }
 
@@ -260,7 +264,7 @@ public class EnhancedRandomBuilder {
      */
     @Deprecated
     public EnhancedRandomBuilder maxStringLength(final int maxStringLength) {
-        parameters.setMaxStringLength(maxStringLength);
+        parameters.setStringLengthRange(new Range<>(DEFAULT_STRING_LENGTH_RANGE.getMin(), maxStringLength));
         return this;
     }
 
@@ -273,7 +277,7 @@ public class EnhancedRandomBuilder {
      */
     @Deprecated
     public EnhancedRandomBuilder minStringLength(final int minStringLength) {
-        parameters.setMinStringLength(minStringLength);
+        parameters.setStringLengthRange(new Range<>(minStringLength, DEFAULT_STRING_LENGTH_RANGE.getMax()));
         return this;
     }
 
@@ -344,7 +348,7 @@ public class EnhancedRandomBuilder {
      * @return a pre configured {@link EnhancedRandomBuilder} instance
      */
     public EnhancedRandomBuilder dateRange(final LocalDate min, final LocalDate max) {
-        parameters.setDateRange(min, max);
+        parameters.setDateRange(new Range<>(min, max));
         return this;
     }
 
@@ -356,7 +360,7 @@ public class EnhancedRandomBuilder {
      * @return a pre configured {@link EnhancedRandomBuilder} instance
      */
     public EnhancedRandomBuilder timeRange(final LocalTime min, final LocalTime max) {
-        parameters.setTimeRange(min, max);
+        parameters.setTimeRange(new Range<>(min, max));
         return this;
     }
 

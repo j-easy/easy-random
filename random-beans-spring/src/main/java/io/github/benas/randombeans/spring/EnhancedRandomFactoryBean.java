@@ -39,8 +39,7 @@ import java.util.*;
 
 import static io.github.benas.randombeans.EnhancedRandomBuilder.aNewEnhancedRandomBuilder;
 import static io.github.benas.randombeans.FieldDefinitionBuilder.field;
-import static io.github.benas.randombeans.util.Constants.IN_TEN_YEARS;
-import static io.github.benas.randombeans.util.Constants.TEN_YEARS_AGO;
+import static io.github.benas.randombeans.util.Constants.DEFAULT_DATES_RANGE;
 
 /**
  * Spring Factory Bean that creates {@link EnhancedRandom} instances.
@@ -55,14 +54,14 @@ public class EnhancedRandomFactoryBean implements FactoryBean<EnhancedRandom> {
 
     private long seed = new Random().nextLong();
     private Charset charset = StandardCharsets.US_ASCII;
-    private LocalDate minDate = TEN_YEARS_AGO.toLocalDate();
-    private LocalDate maxDate = IN_TEN_YEARS.toLocalDate();
+    private LocalDate minDate = DEFAULT_DATES_RANGE.getMin().toLocalDate();
+    private LocalDate maxDate = DEFAULT_DATES_RANGE.getMax().toLocalDate();
     private LocalTime minTime = LocalTime.MIN;
     private LocalTime maxTime = LocalTime.MAX;
-    private int maxStringLength = Constants.MAX_STRING_LENGTH;
-    private int minStringLength = Constants.MIN_STRING_LENGTH;
-    private int minCollectionSize = Constants.MIN_COLLECTION_SIZE;
-    private int maxCollectionSize = Constants.MAX_COLLECTION_SIZE;
+    private int maxStringLength = Constants.DEFAULT_STRING_LENGTH_RANGE.getMax();
+    private int minStringLength = Constants.DEFAULT_STRING_LENGTH_RANGE.getMin();
+    private int minCollectionSize = Constants.DEFAULT_COLLECTION_SIZE_RANGE.getMin();
+    private int maxCollectionSize = Constants.DEFAULT_COLLECTION_SIZE_RANGE.getMax();
     private int objectPoolSize = Constants.DEFAULT_OBJECT_POOL_SIZE;
     private int randomizationDepth = Constants.DEFAULT_RANDOMIZATION_DEPTH;
     private boolean overrideDefaultInitialization;

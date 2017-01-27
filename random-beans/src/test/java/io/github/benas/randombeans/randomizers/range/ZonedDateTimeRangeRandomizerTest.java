@@ -39,8 +39,8 @@ public class ZonedDateTimeRangeRandomizerTest extends AbstractRangeRandomizerTes
 
     @Before
     public void setUp() {
-        minZonedDateTime = Constants.TEN_YEARS_AGO.minusYears(50);
-        maxZonedDateTime = Constants.IN_TEN_YEARS.plusYears(50);
+        minZonedDateTime = Constants.DEFAULT_DATES_RANGE.getMin().minusYears(50);
+        maxZonedDateTime = Constants.DEFAULT_DATES_RANGE.getMax().plusYears(50);
         randomizer = aNewZonedDateTimeRangeRandomizer(minZonedDateTime, maxZonedDateTime);
     }
 

@@ -37,8 +37,8 @@ public class StringRandomizer extends AbstractRandomizer<String> {
 
     private final CharacterRandomizer characterRandomizer;
 
-    private int maxLength = Constants.MAX_STRING_LENGTH;
-    private int minLength = Constants.MIN_STRING_LENGTH;
+    private int maxLength = Constants.DEFAULT_STRING_LENGTH_RANGE.getMax();
+    private int minLength = Constants.DEFAULT_STRING_LENGTH_RANGE.getMin();
 
     /**
      * Create a new {@link StringRandomizer}.

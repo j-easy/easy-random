@@ -28,8 +28,7 @@ import io.github.benas.randombeans.randomizers.range.DateRangeRandomizer;
 
 import java.util.Date;
 
-import static io.github.benas.randombeans.util.Constants.IN_TEN_YEARS;
-import static io.github.benas.randombeans.util.Constants.TEN_YEARS_AGO;
+import static io.github.benas.randombeans.util.Constants.DEFAULT_DATES_RANGE;
 import static io.github.benas.randombeans.util.DateUtils.toDate;
 
 /**
@@ -45,7 +44,7 @@ public class DateRandomizer implements Randomizer<Date> {
      * Create a new {@link DateRandomizer}.
      */
     public DateRandomizer() {
-        delegate = new DateRangeRandomizer(toDate(TEN_YEARS_AGO), toDate(IN_TEN_YEARS));
+        delegate = new DateRangeRandomizer(toDate(DEFAULT_DATES_RANGE.getMin()), toDate(DEFAULT_DATES_RANGE.getMax()));
     }
 
     /**
@@ -54,7 +53,7 @@ public class DateRandomizer implements Randomizer<Date> {
      * @param seed initial seed
      */
     public DateRandomizer(final long seed) {
-        delegate = new DateRangeRandomizer(toDate(TEN_YEARS_AGO), toDate(IN_TEN_YEARS), seed);
+        delegate = new DateRangeRandomizer(toDate(DEFAULT_DATES_RANGE.getMin()), toDate(DEFAULT_DATES_RANGE.getMax()), seed);
     }
 
     /**

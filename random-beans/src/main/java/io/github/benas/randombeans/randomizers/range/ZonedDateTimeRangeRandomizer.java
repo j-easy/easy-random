@@ -86,12 +86,12 @@ public class ZonedDateTimeRangeRandomizer extends AbstractRangeRandomizer<ZonedD
 
     @Override
     protected ZonedDateTime getDefaultMinValue() {
-        return Constants.TEN_YEARS_AGO;
+        return Constants.DEFAULT_DATES_RANGE.getMin();
     }
 
     @Override
     protected ZonedDateTime getDefaultMaxValue() {
-        return Constants.IN_TEN_YEARS;
+        return Constants.DEFAULT_DATES_RANGE.getMax();
     }
 
     @Override
