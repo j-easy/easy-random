@@ -30,13 +30,13 @@ import org.junit.Test;
 import static io.github.benas.randombeans.EnhancedRandomBuilder.aNewEnhancedRandomBuilder;
 import static org.assertj.core.api.Assertions.assertThat;
 
-public class MaxRandomizationDepthParameterTests {
+public class RandomizationDepthParameterTests {
 
     @Test
-    public void testMaxRandomizationDepth() {
+    public void testRandomizationDepth() {
         // Given
         EnhancedRandom enhancedRandom = aNewEnhancedRandomBuilder()
-                .maxRandomizationDepth(2)
+                .randomizationDepth(2)
                 .build();
 
         // When

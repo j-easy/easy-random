@@ -304,11 +304,24 @@ public class EnhancedRandomBuilder {
     /**
      * Set the maximum randomization depth for objects tree.
      *
+     * @deprecated use {@link EnhancedRandomBuilder#randomizationDepth(int)} instead
      * @param maxRandomizationDepth the maximum randomization depth
      * @return a pre configured {@link EnhancedRandomBuilder} instance
      */
+    @Deprecated
     public EnhancedRandomBuilder maxRandomizationDepth(final int maxRandomizationDepth) {
-        parameters.setMaxRandomizationDepth(maxRandomizationDepth);
+        parameters.setRandomizationDepth(maxRandomizationDepth);
+        return this;
+    }
+
+    /**
+     * Set the randomization depth for objects tree.
+     *
+     * @param randomizationDepth the maximum randomization depth
+     * @return a pre configured {@link EnhancedRandomBuilder} instance
+     */
+    public EnhancedRandomBuilder randomizationDepth(final int randomizationDepth) {
+        parameters.setRandomizationDepth(randomizationDepth);
         return this;
     }
 

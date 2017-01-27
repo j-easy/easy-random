@@ -64,7 +64,7 @@ public class EnhancedRandomFactoryBean implements FactoryBean<EnhancedRandom> {
     private int minCollectionSize = Constants.MIN_COLLECTION_SIZE;
     private int maxCollectionSize = Constants.MAX_COLLECTION_SIZE;
     private int objectPoolSize = Constants.DEFAULT_OBJECT_POOL_SIZE;
-    private int maxRandomizationDepth = Constants.MAX_RANDOMIZATION_DEPTH;
+    private int randomizationDepth = Constants.DEFAULT_RANDOMIZATION_DEPTH;
     private boolean overrideDefaultInitialization;
     private boolean scanClasspathForConcreteTypes;
 
@@ -96,7 +96,7 @@ public class EnhancedRandomFactoryBean implements FactoryBean<EnhancedRandom> {
         enhancedRandomBuilder.overrideDefaultInitialization(overrideDefaultInitialization);
         enhancedRandomBuilder.scanClasspathForConcreteTypes(scanClasspathForConcreteTypes);
         enhancedRandomBuilder.objectPoolSize(objectPoolSize);
-        enhancedRandomBuilder.maxRandomizationDepth(maxRandomizationDepth);
+        enhancedRandomBuilder.randomizationDepth(randomizationDepth);
 
         return enhancedRandomBuilder.build();
     }
@@ -175,7 +175,7 @@ public class EnhancedRandomFactoryBean implements FactoryBean<EnhancedRandom> {
         this.objectPoolSize = objectPoolSize;
     }
 
-    public void setMaxRandomizationDepth(int maxRandomizationDepth) {
-        this.maxRandomizationDepth = maxRandomizationDepth;
+    public void setRandomizationDepth(int randomizationDepth) {
+        this.randomizationDepth = randomizationDepth;
     }
 }

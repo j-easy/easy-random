@@ -55,7 +55,7 @@ public class EnhancedRandomParameters {
 
     private int objectPoolSize;
 
-    private int maxRandomizationDepth;
+    private int randomizationDepth;
 
     private Charset charset;
 
@@ -77,7 +77,7 @@ public class EnhancedRandomParameters {
         maxStringLength = Constants.MAX_STRING_LENGTH;
         minStringLength = Constants.MIN_STRING_LENGTH;
         objectPoolSize = Constants.DEFAULT_OBJECT_POOL_SIZE;
-        maxRandomizationDepth = Constants.MAX_RANDOMIZATION_DEPTH;
+        randomizationDepth = Constants.DEFAULT_RANDOMIZATION_DEPTH;
         charset = StandardCharsets.US_ASCII;
         overrideDefaultInitialization = false;
         dateRange = new Range<>(TEN_YEARS_AGO.toLocalDate(), IN_TEN_YEARS.toLocalDate());

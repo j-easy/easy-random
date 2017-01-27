@@ -44,7 +44,7 @@ public class PopulatorContextTest {
 
     @Before
     public void setUp() {
-        populatorContext = new PopulatorContext(Constants.DEFAULT_OBJECT_POOL_SIZE, Constants.MAX_RANDOMIZATION_DEPTH);
+        populatorContext = new PopulatorContext(Constants.DEFAULT_OBJECT_POOL_SIZE, Constants.DEFAULT_RANDOMIZATION_DEPTH);
     }
 
     @Test
