@@ -23,56 +23,47 @@
  */
 package io.github.benas.randombeans;
 
-import static io.github.benas.randombeans.EnhancedRandomBuilder.aNewEnhancedRandom;
-import static io.github.benas.randombeans.EnhancedRandomBuilder.aNewEnhancedRandomBuilder;
-import static io.github.benas.randombeans.FieldDefinitionBuilder.field;
 import io.github.benas.randombeans.api.EnhancedRandom;
-import static io.github.benas.randombeans.api.EnhancedRandom.*;
 import io.github.benas.randombeans.api.ObjectGenerationException;
 import io.github.benas.randombeans.api.Randomizer;
 import io.github.benas.randombeans.beans.*;
 import io.github.benas.randombeans.randomizers.misc.ConstantRandomizer;
-import static io.github.benas.randombeans.util.CharacterUtils.collectPrintableCharactersOf;
-import static io.github.benas.randombeans.util.CharacterUtils.filterLetters;
 import io.github.benas.randombeans.util.ReflectionUtils;
-import java.nio.charset.Charset;
-import java.nio.charset.StandardCharsets;
-import static java.sql.Timestamp.valueOf;
-import java.time.LocalDate;
-import static java.time.LocalDateTime.of;
-import java.time.LocalTime;
-import static java.util.Arrays.asList;
-import java.util.Collection;
-import java.util.Date;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
-import java.util.function.Supplier;
-import static java.util.stream.Collectors.toList;
-import java.util.stream.Stream;
-import static org.assertj.core.api.Assertions.assertThat;
-import static org.assertj.core.api.Assertions.fail;
-import static org.assertj.core.api.BDDAssertions.then;
 import org.junit.Before;
 import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.Mock;
-import static org.mockito.Mockito.when;
 import org.mockito.junit.MockitoJUnitRunner;
+
+import java.lang.reflect.Modifier;
+import java.util.Collection;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
+import java.util.stream.Stream;
+
+import static io.github.benas.randombeans.EnhancedRandomBuilder.aNewEnhancedRandom;
+import static io.github.benas.randombeans.EnhancedRandomBuilder.aNewEnhancedRandomBuilder;
+import static io.github.benas.randombeans.FieldDefinitionBuilder.field;
+import static io.github.benas.randombeans.api.EnhancedRandom.*;
+import static java.sql.Timestamp.valueOf;
+import static java.time.LocalDateTime.of;
+import static java.util.Arrays.asList;
+import static java.util.stream.Collectors.toList;
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.fail;
+import static org.assertj.core.api.BDDAssertions.then;
+import static org.mockito.Mockito.when;
 
 @RunWith(MockitoJUnitRunner.class)
 public class EnhancedRandomImplTest {
 
     private static final String FOO = "foo";
-    private static final long SEED = 123L;
     private static final int SIZE = 5;
 
     @Mock
     private Randomizer<String> randomizer;
-
-    @Mock
-    private Supplier<String> supplier;
 
     private EnhancedRandom enhancedRandom;
 
@@ -80,7 +71,6 @@ public class EnhancedRandomImplTest {
     public void setUp() {
         enhancedRandom = aNewEnhancedRandom();
         when(randomizer.getRandomValue()).thenReturn(FOO);
-        when(supplier.get()).thenReturn(FOO);
     }
 
     @Test
@@ -145,7 +135,7 @@ public class EnhancedRandomImplTest {
     }
 
     @Test
-    public void generatedBeansWithCustomRandomizersShouldBeCorrectlyPopulated() {
+    public void customRandomzierForFieldsShouldBeUsedToPopulateObjects() {
         FieldDefinition<?, ?> fieldDefinition = field().named("name").ofType(String.class).inClass(Human.class).get();
         enhancedRandom = aNewEnhancedRandomBuilder()
                 .randomize(fieldDefinition, randomizer)
@@ -158,25 +148,56 @@ public class EnhancedRandomImplTest {
     }
 
     @Test
+    public void customRandomzierForFieldsShouldBeUsedToPopulateFieldsWithOneModifier() {
+        // Given
+        FieldDefinition<?, ?> fieldDefinition = field().hasModifiers(Modifier.TRANSIENT).ofType(String.class).get();
+        EnhancedRandom random = EnhancedRandomBuilder.aNewEnhancedRandomBuilder()
+                .randomize(fieldDefinition, randomizer).build();
+
+        // When
+        Person person = random.nextObject(Person.class);
+
+        // Then
+        assertThat(person.getEmail()).isEqualTo(FOO);
+        assertThat(person.getName()).isNotEqualTo(FOO);
+    }
+
+    @Test
+    public void customRandomzierForFieldsShouldBeUsedToPopulateFieldsWithMultipleModifier() {
+        // Given
+        int modifiers = Modifier.TRANSIENT | Modifier.PROTECTED;
+        FieldDefinition<?, ?> fieldDefinition = field().hasModifiers(modifiers).ofType(String.class).get();
+        EnhancedRandom random = EnhancedRandomBuilder.aNewEnhancedRandomBuilder()
+                .randomize(fieldDefinition, randomizer).build();
+
+        // When
+        Person person = random.nextObject(Person.class);
+
+        // Then
+        assertThat(person.getEmail()).isEqualTo(FOO);
+        assertThat(person.getName()).isNotEqualTo(FOO);
+    }
+
+    @Test
     public void customRandomzierForTypesShouldBeUsedToPopulateObjects() {
         enhancedRandom = aNewEnhancedRandomBuilder()
-                .randomize(String.class, new ConstantRandomizer<>("name"))
+                .randomize(String.class, randomizer)
                 .build();
 
         String string = enhancedRandom.nextObject(String.class);
 
-        assertThat(string).isEqualTo("name");
+        assertThat(string).isEqualTo(FOO);
     }
 
     @Test
     public void customRandomzierForTypesShouldBeUsedToPopulateFields() {
         enhancedRandom = aNewEnhancedRandomBuilder()
-                .randomize(String.class, new ConstantRandomizer<>("name"))
+                .randomize(String.class, randomizer)
                 .build();
 
         Human human = enhancedRandom.nextObject(Human.class);
 
-        assertThat(human.getName()).isEqualTo("name");
+        assertThat(human.getName()).isEqualTo(FOO);
     }
 
     @Test(expected = IllegalArgumentException.class)
@@ -188,85 +209,13 @@ public class EnhancedRandomImplTest {
         enhancedRandom.nextObject(Person.class);
     }
 
-    @Test
-    public void javaNetTypesShouldBePopulated() {
-
-        Website website = enhancedRandom.nextObject(Website.class);
-
-        assertThat(website).hasNoNullFieldsOrProperties();
-    }
-
-    @Test(expected = ObjectGenerationException.class)
-    public void whenScanClasspathForConcreteTypesIsDisabled_thenShouldFailToPopulateInterfacesAndAbstractClasses() {
-        enhancedRandom = aNewEnhancedRandomBuilder().scanClasspathForConcreteTypes(false).build();
-
-        enhancedRandom.nextObject(Mamals.class);
-    }
-
-    @Test
-    public void whenScanClasspathForConcreteTypesIsEnabled_thenShouldPopulateInterfacesAndAbstractClasses() {
-        enhancedRandom = aNewEnhancedRandomBuilder().scanClasspathForConcreteTypes(true).build();
-
-        Mamals mamals = enhancedRandom.nextObject(Mamals.class);
-
-        assertThat(mamals.getMamal()).isOfAnyClassIn(Human.class, Ape.class, Person.class, SocialPerson.class);
-        assertThat(mamals.getMamalImpl()).isOfAnyClassIn(Human.class, Ape.class, Person.class, SocialPerson.class);
-    }
-
-    @Test
-    public void whenScanClasspathForConcreteTypesIsEnabled_thenShouldPopulateConcreteTypesForFieldsWithGenericParameters() {
-        enhancedRandom = aNewEnhancedRandomBuilder().scanClasspathForConcreteTypes(true).build();
-
-        ComparableBean comparableBean = enhancedRandom.nextObject(ComparableBean.class);
-
-        assertThat(comparableBean.getDateComparable()).isOfAnyClassIn(ComparableBean.AlwaysEqual.class, Date.class);
-    }
-
-    @Test
-    public void whenScanClasspathForConcreteTypesIsEnabled_thenShouldPopulateAbstractTypesWithConcreteSubTypes() {
-        // Given
-        enhancedRandom = EnhancedRandomBuilder.aNewEnhancedRandomBuilder().scanClasspathForConcreteTypes(true).build();
-
-        // When
-        Bar bar = enhancedRandom.nextObject(Bar.class);
-
-        // Then
-        assertThat(bar).isNotNull();
-        assertThat(bar).isInstanceOf(ConcreteBar.class);
-        // https://github.com/benas/random-beans/issues/204
-        assertThat(bar.getI()).isNotNull();
-    }
-
-    @Test
-    public void whenScanClasspathForConcreteTypesIsEnabled_thenShouldPopulateFieldsOfAbstractTypeWithConcreteSubTypes() {
-        // Given
-        enhancedRandom = EnhancedRandomBuilder.aNewEnhancedRandomBuilder().scanClasspathForConcreteTypes(true).build();
-
-        // When
-        Foo foo = enhancedRandom.nextObject(Foo.class);
-
-        // Then
-        assertThat(foo).isNotNull();
-        assertThat(foo.getBar()).isInstanceOf(ConcreteBar.class);
-        assertThat(foo.getBar().getName()).isNotEmpty();
-    }
-
-    @Test
-    public void whenScanClasspathForConcreteTypesIsEnabled_thenShouldPopulateAbstractEnumeration() {
-        EnhancedRandom random = EnhancedRandomBuilder.aNewEnhancedRandomBuilder().scanClasspathForConcreteTypes(true).build();
-
-        ClassUsingAbstractEnum randomValue = random.nextObject(ClassUsingAbstractEnum.class);
-
-        then(randomValue.getTestEnum()).isNotNull();
-    }
-
     @Test(expected = IllegalArgumentException.class)
     public void whenSpecifiedNumberOfBeansToGenerateIsNegative_thenShouldThrowAnIllegalArgumentException() {
         enhancedRandom.objects(Person.class, -2);
     }
 
     @Test(expected = ObjectGenerationException.class)
-    public void whenUnableToInstantiateField_thenShouldThrowBeanPopulationException() {
+    public void whenUnableToInstantiateField_thenShouldThrowObjectGenerationException() {
         enhancedRandom.nextObject(AbstractBean.class);
     }
 
@@ -282,171 +231,6 @@ public class EnhancedRandomImplTest {
         Object object = enhancedRandom.nextObject(Object.class);
 
         assertThat(object).isNotNull();
-    }
-
-    @Test
-    public void generatedObjectShouldBeAlwaysTheSameForTheSameSeed() {
-        // Given
-        enhancedRandom = aNewEnhancedRandomBuilder().seed(SEED).build();
-
-        String expectedString = "eOMtThyhVNLWUZNRcBaQKxIy";
-        Person expectedPerson = buildExpectedPerson();
-        int[] expectedInts = buildExpectedInts();
-
-        // When
-        String actualString = enhancedRandom.nextObject(String.class);
-        Person actualPerson = enhancedRandom.nextObject(Person.class);
-        int[] actualInts = enhancedRandom.nextObject(int[].class);
-
-        // Then
-        assertThat(actualString).isEqualTo(expectedString);
-        assertThat(actualPerson).isEqualTo(expectedPerson);
-        assertThat(actualInts).isEqualTo(expectedInts);
-    }
-
-    @Test
-    public void supplierShouldBehaveLikeRandomizer() {
-        // Given
-        enhancedRandom = aNewEnhancedRandomBuilder().randomize(String.class, supplier).build();
-
-        // When
-        Person actual = enhancedRandom.nextObject(Person.class);
-
-        // Then
-        assertThat(actual).isNotNull();
-        assertThat(actual.getPhoneNumber()).isEqualTo(FOO);
-        assertThat(actual.getName()).isEqualTo(FOO);
-        assertThat(actual.getEmail()).isEqualTo(FOO);
-        assertThat(actual.getEmail()).isEqualTo(FOO);
-        assertThat(actual.getExcluded()).isNull();
-    }
-
-    @Test
-    public void testStringLengthRange() {
-        // Given
-        int minStringLength = 3;
-        int maxStringLength = 50;
-        enhancedRandom = aNewEnhancedRandomBuilder().stringLengthRange(minStringLength, maxStringLength).build();
-
-        // When
-        Person person = enhancedRandom.nextObject(Person.class);
-
-        // Then
-        assertThat(person.getName().length()).isBetween(minStringLength, maxStringLength);
-        assertThat(person.getEmail().length()).isBetween(minStringLength, maxStringLength);
-        assertThat(person.getPhoneNumber().length()).isBetween(minStringLength, maxStringLength);
-        assertThat(person.getAddress().getCity().length()).isBetween(minStringLength, maxStringLength);
-        assertThat(person.getAddress().getCountry().length()).isBetween(minStringLength, maxStringLength);
-        assertThat(person.getAddress().getZipCode().length()).isBetween(minStringLength, maxStringLength);
-        assertThat(person.getAddress().getStreet().getName().length()).isBetween(minStringLength, maxStringLength);
-    }
-
-    @Test
-    public void testMaxObjectPoolSize() {
-        // Given
-        enhancedRandom = aNewEnhancedRandomBuilder().maxObjectPoolSize(1).build();
-
-        // When
-        PersonTuple persons = enhancedRandom.nextObject(PersonTuple.class);
-
-        // Then
-        assertThat(persons.left).isSameAs(persons.right);
-    }
-
-    @Test
-    public void testMaxRandomizationDepth() {
-        // Given
-        enhancedRandom = aNewEnhancedRandomBuilder().maxObjectPoolSize(10).maxRandomizationDepth(2).build();
-
-        // When
-        Person person = enhancedRandom.nextObject(Person.class);
-
-        // Then
-        assertThat(person).isNotNull();
-        assertThat(person.getParent()).isNotNull();
-        assertThat(person.getParent().getParent()).isNotNull();
-        assertThat(person.getParent().getParent().getParent()).isNull();
-    }
-
-    @Test
-    public void testCharset() {
-        // Given
-        Charset charset = StandardCharsets.UTF_8;
-        List<Character> letters = filterLetters(collectPrintableCharactersOf(charset));
-        enhancedRandom = aNewEnhancedRandomBuilder().charset(charset).build();
-
-        // When
-        Person person = random(Person.class);
-
-        // Then
-        char[] chars = person.getName().toCharArray();
-        for (char c : chars) {
-            assertThat(letters).contains(c);
-        }
-    }
-
-    @Test
-    public void shouldNotOverrideDefaultFieldValuesByDefault() {
-        // When
-        BeanWithDefaultFieldValues bean = random(BeanWithDefaultFieldValues.class);
-
-        // Then
-        assertThat(bean.getDefaultNonNullValue()).isEqualTo("default");
-        assertThat(bean.getDefaultNonNullValueSetByConstructor()).isEqualTo("defaultSetByConstructor");
-    }
-
-    @Test
-    public void whenOverrideDefaultInitializationParameterIsFalse_thenShouldKeepDefaultFieldValues() {
-        // Given
-        enhancedRandom = aNewEnhancedRandomBuilder().overrideDefaultInitialization(false).build();
-
-        // When
-        BeanWithDefaultFieldValues bean = enhancedRandom.nextObject(BeanWithDefaultFieldValues.class);
-
-        // Then
-        assertThat(bean.getDefaultNonNullValue()).isEqualTo("default");
-        assertThat(bean.getDefaultNonNullValueSetByConstructor()).isEqualTo("defaultSetByConstructor");
-    }
-
-    @Test
-    public void whenOverrideDefaultInitializationParameterIsTrue_thenShouldRandomizeFields() {
-        // Given
-        enhancedRandom = aNewEnhancedRandomBuilder().overrideDefaultInitialization(true).build();
-
-        // When
-        BeanWithDefaultFieldValues bean = enhancedRandom.nextObject(BeanWithDefaultFieldValues.class);
-
-        // Then
-        assertThat(bean.getDefaultNonNullValue()).isNotEqualTo("default").isNotNull();
-        assertThat(bean.getDefaultNonNullValueSetByConstructor()).isNotEqualTo("defaultSetByConstructor").isNotNull();
-    }
-
-    @Test
-    public void testDateRange() {
-        // Given
-        LocalDate minDate = LocalDate.of(2016, 1, 1);
-        LocalDate maxDate = LocalDate.of(2016, 1, 31);
-        enhancedRandom = aNewEnhancedRandomBuilder().dateRange(minDate, maxDate).build();
-
-        // When
-        TimeBean timeBean = enhancedRandom.nextObject(TimeBean.class);
-
-        // Then
-        assertThat(timeBean.getLocalDate()).isAfterOrEqualTo(minDate).isBeforeOrEqualTo(maxDate);
-    }
-
-    @Test
-    public void testTimeRange() {
-        // Given
-        LocalTime minTime = LocalTime.of(15, 0, 0);
-        LocalTime maxTime = LocalTime.of(18, 0, 0);
-        enhancedRandom = aNewEnhancedRandomBuilder().timeRange(minTime, maxTime).build();
-
-        // When
-        TimeBean timeBean = enhancedRandom.nextObject(TimeBean.class);
-
-        // Then
-        assertThat(timeBean.getLocalTime()).isAfterOrEqualTo(minTime).isBeforeOrEqualTo(maxTime);
     }
 
     @Test
@@ -467,7 +251,7 @@ public class EnhancedRandomImplTest {
         assertThat(distinctEnumBeans.size()).isGreaterThan(1);
     }
 
-    void validatePerson(final Person person) {
+    private void validatePerson(final Person person) {
         assertThat(person).isNotNull();
         assertThat(person.getEmail()).isNotEmpty();
         assertThat(person.getGender()).isIn(asList(Gender.values()));
@@ -489,9 +273,9 @@ public class EnhancedRandomImplTest {
         assertThat(street.getType()).isNotNull();
     }
 
-    void validatePersons(final Collection<Person> persons, final int expectedSize) {
+    private void validatePersons(final Collection<Person> persons, final int expectedSize) {
         assertThat(persons).hasSize(expectedSize);
-        persons.stream().forEach(this::validatePerson);
+        persons.forEach(this::validatePerson);
     }
 
     @Ignore("Dummy test to see possible reasons of randomization failures")
@@ -515,45 +299,6 @@ public class EnhancedRandomImplTest {
         }
         System.out.println("Success: " + success);
         System.out.println("Failure: " + failure);
-    }
-
-    private Person buildExpectedPerson() {
-        Person expectedPerson = new Person();
-
-        Street street = new Street();
-        street.setName("elQbxeTeQOvaScfqIOOmaaJxkyvRnLRY");
-        street.setNumber(-1188957731);
-        street.setType((byte) -35);
-
-        Address address = new Address();
-        address.setCity("CBRQDSxVL");
-        address.setCountry("hpfQGTMDYpsBZxvfBoe");
-        address.setZipCode("tGKbgicZaH");
-        address.setStreet(street);
-
-        expectedPerson.setName("wCTSeCODYsELoVqtepGSijxlz");
-        expectedPerson.setEmail("edUsFwdk");
-        expectedPerson.setPhoneNumber("ygjbUMaAIKKIkknjWEXJ");
-        expectedPerson.setGender(Gender.FEMALE);
-        expectedPerson.setAddress(address);
-
-        return expectedPerson;
-    }
-
-    private int[] buildExpectedInts() {
-        return new int[]{
-                -535098017, -1935747844, -1219562352, 696711130, 308881275, -1366603797, -875052456, 1149563170,
-                -1809396988, 1041944832, -394597452, -1708209621, 639583273, 930399700, -106429739, 1967925707,
-                281732816, 382363784, 298577043, 525072488, 389778123, 1452179944, 1823070661, -292028230, -539486391,
-                -1383466546, -1824914989, 8083668, 1702941070, 2146898372, 1109455496, -82323612, 656237286, -851237395,
-                1118538028, -924378823, 1982908886, 61937700, 1885923537, 1007147781, 907979413, 2048182629,
-                -1656946195, 610315108, 143700666, 1887585643, -1336180951, 481114396, -1356725194, -648969061,
-                323234679, 672907686, -228467837, 1719789600, 1876370794, -260807699, -1315052259, 1788269654,
-                -1389857855, -736339116, -1594362319, -1447490197, -1826631868, 132343550, 1666325652, -964773309,
-                812299731, 1789518152, 114768374, 796275100, 135535291, -1663939686, -728392106, 1705899379,
-                -1116321717, -749120929, -251374152, -751402843, -747583833, 1385925969, -2086462186, -918500648,
-                -1743430693, -1618968583, 980431507, 1514579611, 1302100274, 724999798, -1309772554, -1143448117,
-                1839376840, 1847876220, -148273579, 1870475320, -1179265442};
     }
 
 }

@@ -23,18 +23,19 @@
  */
 package io.github.benas.randombeans.randomizers.net;
 
+import com.tngtech.java.junit.dataprovider.DataProvider;
+import com.tngtech.java.junit.dataprovider.DataProviderRunner;
+import com.tngtech.java.junit.dataprovider.UseDataProvider;
 import io.github.benas.randombeans.api.Randomizer;
+import io.github.benas.randombeans.beans.Website;
 import io.github.benas.randombeans.randomizers.AbstractRandomizerTest;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
-import com.tngtech.java.junit.dataprovider.DataProvider;
-import com.tngtech.java.junit.dataprovider.DataProviderRunner;
-import com.tngtech.java.junit.dataprovider.UseDataProvider;
-
 import java.net.URI;
 import java.net.URL;
 
+import static io.github.benas.randombeans.EnhancedRandomBuilder.aNewEnhancedRandom;
 import static io.github.benas.randombeans.randomizers.net.UriRandomizer.aNewUriRandomizer;
 import static io.github.benas.randombeans.randomizers.net.UrlRandomizer.aNewUrlRandomizer;
 import static org.assertj.core.api.BDDAssertions.then;
@@ -74,5 +75,13 @@ public class NetRandomizersTest extends AbstractRandomizerTest<Randomizer<?>> {
         Object actual = randomizer.getRandomValue();
 
         then(actual).isEqualTo(expected);
+    }
+
+    @Test
+    public void javaNetTypesShouldBePopulated() {
+        // when
+        Website website = aNewEnhancedRandom().nextObject(Website.class);
+
+        then(website).hasNoNullFieldsOrProperties();
     }
 }
