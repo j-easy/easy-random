@@ -23,28 +23,36 @@
  */
 package io.github.benas.randombeans;
 
+import io.github.benas.randombeans.api.EnhancedRandomParameters;
 import io.github.benas.randombeans.beans.Address;
 import io.github.benas.randombeans.beans.Person;
 import io.github.benas.randombeans.util.Constants;
-
 import org.junit.Before;
 import org.junit.Test;
+import org.junit.runner.RunWith;
 import org.mockito.Mock;
+import org.mockito.junit.MockitoJUnitRunner;
 
 import java.lang.reflect.Field;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.mockito.Mockito.when;
 
+@RunWith(MockitoJUnitRunner.class)
 public class PopulatorContextTest {
 
     @Mock
     private Object bean1, bean2;
+    @Mock
+    private EnhancedRandomParameters parameters;
 
     private PopulatorContext populatorContext;
 
     @Before
     public void setUp() {
-        populatorContext = new PopulatorContext(Constants.DEFAULT_OBJECT_POOL_SIZE, Constants.DEFAULT_RANDOMIZATION_DEPTH);
+        when(parameters.getObjectPoolSize()).thenReturn(Constants.DEFAULT_OBJECT_POOL_SIZE);
+        when(parameters.getRandomizationDepth()).thenReturn(Constants.DEFAULT_RANDOMIZATION_DEPTH);
+        populatorContext = new PopulatorContext(parameters);
     }
 
     @Test
@@ -103,7 +111,8 @@ public class PopulatorContextTest {
     @Test
     public void whenCurrentStackSizeOverMaxRandomizationDepth_thenShouldExceedRandomizationDepth() throws NoSuchFieldException {
         // Given
-        PopulatorContext customPopulatorContext = new PopulatorContext(Constants.DEFAULT_OBJECT_POOL_SIZE, 1);
+        when(parameters.getRandomizationDepth()).thenReturn(1);
+        PopulatorContext customPopulatorContext = new PopulatorContext(parameters);
         Field address = Person.class.getDeclaredField("address");
         customPopulatorContext.pushStackItem(new PopulatorContextStackItem(bean1, address));
         customPopulatorContext.pushStackItem(new PopulatorContextStackItem(bean2, address));
@@ -118,7 +127,8 @@ public class PopulatorContextTest {
     @Test
     public void whenCurrentStackSizeLessMaxRandomizationDepth_thenShouldNotExceedRandomizationDepth() throws NoSuchFieldException {
         // Given
-        PopulatorContext customPopulatorContext = new PopulatorContext(Constants.DEFAULT_OBJECT_POOL_SIZE, 2);
+        when(parameters.getRandomizationDepth()).thenReturn(2);
+        PopulatorContext customPopulatorContext = new PopulatorContext(parameters);
         Field address = Person.class.getDeclaredField("address");
         customPopulatorContext.pushStackItem(new PopulatorContextStackItem(bean1, address));
 
@@ -132,7 +142,8 @@ public class PopulatorContextTest {
     @Test
     public void whenCurrentStackSizeEqualMaxRandomizationDepth_thenShouldNotExceedRandomizationDepth() throws NoSuchFieldException {
         // Given
-        PopulatorContext customPopulatorContext = new PopulatorContext(Constants.DEFAULT_OBJECT_POOL_SIZE, 2);
+        when(parameters.getRandomizationDepth()).thenReturn(2);
+        PopulatorContext customPopulatorContext = new PopulatorContext(parameters);
         Field address = Person.class.getDeclaredField("address");
         customPopulatorContext.pushStackItem(new PopulatorContextStackItem(bean1, address));
         customPopulatorContext.pushStackItem(new PopulatorContextStackItem(bean2, address));

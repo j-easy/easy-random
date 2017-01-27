@@ -24,6 +24,7 @@
 package io.github.benas.randombeans;
 
 import io.github.benas.randombeans.api.EnhancedRandom;
+import io.github.benas.randombeans.api.EnhancedRandomParameters;
 
 import java.lang.reflect.Field;
 import java.util.*;
@@ -38,9 +39,7 @@ import static java.util.stream.Collectors.toList;
  */
 class PopulatorContext {
 
-    private final int maxRandomizationDepth;
-
-    private final int maxObjectPoolSize;
+    private final EnhancedRandomParameters parameters;
 
     private final Set<String> excludedFields;
 
@@ -48,20 +47,20 @@ class PopulatorContext {
 
     private final Stack<PopulatorContextStackItem> stack;
 
-    PopulatorContext(final int maxObjectPoolSize, final int maxRandomizationDepth, final String... excludedFields) {
+    PopulatorContext(final EnhancedRandomParameters parameters, final String... excludedFields) {
         populatedBeans = new IdentityHashMap<>();
         stack = new Stack<>();
-        this.maxObjectPoolSize = maxObjectPoolSize;
-        this.maxRandomizationDepth = maxRandomizationDepth;
+        this.parameters = parameters;
         this.excludedFields = new HashSet<>(toLowerCase(Arrays.asList(excludedFields)));
     }
 
     void addPopulatedBean(final Class<?> type, Object object) {
+        int objectPoolSize = parameters.getObjectPoolSize();
         List<Object> objects = populatedBeans.get(type);
         if (objects == null) {
-            objects = new ArrayList<>(maxObjectPoolSize);
+            objects = new ArrayList<>(objectPoolSize);
         }
-        if (objects.size() < maxObjectPoolSize) {
+        if (objects.size() < objectPoolSize) {
             objects.add(object);
         }
         populatedBeans.put(type, objects);
@@ -74,7 +73,7 @@ class PopulatorContext {
     }
 
     boolean hasAlreadyRandomizedType(final Class<?> type) {
-        return populatedBeans.containsKey(type) && populatedBeans.get(type).size() == maxObjectPoolSize;
+        return populatedBeans.containsKey(type) && populatedBeans.get(type).size() == parameters.getObjectPoolSize();
     }
 
     Set<String> getExcludedFields() {
@@ -97,7 +96,7 @@ class PopulatorContext {
 
     boolean hasExceededRandomizationDepth() {
         int currentRandomizationDepth = stack.size();
-        return currentRandomizationDepth > maxRandomizationDepth;
+        return currentRandomizationDepth > parameters.getRandomizationDepth();
     }
 
     private List<String> getStackedFieldNames() {
