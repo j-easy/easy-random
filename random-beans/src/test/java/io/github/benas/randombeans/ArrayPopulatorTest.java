@@ -23,13 +23,19 @@
  */
 package io.github.benas.randombeans;
 
+import io.github.benas.randombeans.api.EnhancedRandom;
 import io.github.benas.randombeans.api.Randomizer;
+import io.github.benas.randombeans.beans.ArrayBean;
+import io.github.benas.randombeans.beans.Person;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.Mock;
 import org.mockito.junit.MockitoJUnitRunner;
 
+import java.lang.reflect.Array;
+
+import static io.github.benas.randombeans.EnhancedRandomBuilder.aNewEnhancedRandom;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.Mockito.when;
 
@@ -60,6 +66,10 @@ public class ArrayPopulatorTest {
         when(enhancedRandom.doPopulateBean(String.class, context)).thenReturn(STRING);
     }
 
+    /*
+     * Unit tests for ArrayPopulator class
+     */
+
     @Test
     public void getRandomArray() {
         String[] strings = (String[]) arrayPopulator.getRandomArray(String[].class, context);
@@ -72,5 +82,92 @@ public class ArrayPopulatorTest {
         int[] ints = (int[]) arrayPopulator.getRandomPrimitiveArray(Integer.TYPE);
 
         assertThat(ints).containsOnly(INT);
+    }
+
+    /*
+     * Integration tests for arrays population
+     */
+
+    @Test
+    public void testArrayPopulation() {
+        EnhancedRandom enhancedRandom = aNewEnhancedRandom();
+
+        final String[] strings = enhancedRandom.nextObject(String[].class);
+
+        assertThat(strings).isNotNull();
+    }
+
+    @Test
+    public void testPrimitiveArrayPopulation() {
+        EnhancedRandom enhancedRandom = aNewEnhancedRandom();
+
+        final int[] ints = enhancedRandom.nextObject(int[].class);
+
+        assertThat(ints).isNotNull();
+    }
+
+    @Test
+    public void primitiveArraysShouldBeCorrectlyPopulated() {
+        EnhancedRandom enhancedRandom = aNewEnhancedRandom();
+
+        final ArrayBean bean = enhancedRandom.nextObject(ArrayBean.class);
+
+        // primitive types
+        assertThat(toObjectArray(bean.getByteArray())).hasOnlyElementsOfType(Byte.class);
+        assertThat(toObjectArray(bean.getShortArray())).hasOnlyElementsOfType(Short.class);
+        assertThat(toObjectArray(bean.getIntArray())).hasOnlyElementsOfType(Integer.class);
+        assertThat(toObjectArray(bean.getLongArray())).hasOnlyElementsOfType(Long.class);
+        assertThat(toObjectArray(bean.getFloatArray())).hasOnlyElementsOfType(Float.class);
+        assertThat(toObjectArray(bean.getDoubleArray())).hasOnlyElementsOfType(Double.class);
+        assertThat(toObjectArray(bean.getCharArray())).hasOnlyElementsOfType(Character.class);
+        assertThat(toObjectArray(bean.getBooleanArray())).hasOnlyElementsOfType(Boolean.class);
+    }
+
+    @Test
+    public void wrapperTypeArraysShouldBeCorrectlyPopulated() {
+        EnhancedRandom enhancedRandom = aNewEnhancedRandom();
+
+        final ArrayBean bean = enhancedRandom.nextObject(ArrayBean.class);
+
+        // wrapper types
+        assertThat(bean.getBytes()).hasOnlyElementsOfType(Byte.class);
+        assertThat(bean.getShorts()).hasOnlyElementsOfType(Short.class);
+        assertThat(bean.getIntegers()).hasOnlyElementsOfType(Integer.class);
+        assertThat(bean.getLongs()).hasOnlyElementsOfType(Long.class);
+        assertThat(bean.getFloats()).hasOnlyElementsOfType(Float.class);
+        assertThat(bean.getDoubles()).hasOnlyElementsOfType(Double.class);
+        assertThat(bean.getCharacters()).hasOnlyElementsOfType(Character.class);
+        assertThat(bean.getBooleans()).hasOnlyElementsOfType(Boolean.class);
+    }
+
+    @Test
+    public void arraysWithCustomTypesShouldBeCorrectlyPopulated() {
+        EnhancedRandom enhancedRandom = aNewEnhancedRandom();
+
+        final ArrayBean bean = enhancedRandom.nextObject(ArrayBean.class);
+
+        // custom types
+        assertThat(bean.getStrings()).doesNotContain(null, "");
+
+        Person[] persons = bean.getPersons();
+        assertContainsOnlyNonEmptyPersons(persons);
+    }
+
+    private void assertContainsOnlyNonEmptyPersons(final Person[] persons) {
+        for (Person person : persons) {
+            assertThat(person).isNotNull();
+            assertThat(person.getAddress().getCity()).isNotEmpty();
+            assertThat(person.getAddress().getZipCode()).isNotEmpty();
+            assertThat(person.getName()).isNotEmpty();
+        }
+    }
+
+    private Object[] toObjectArray(Object primitiveArray) {
+        int length = Array.getLength(primitiveArray);
+        Object[] objectArray = new Object[length];
+        for (int i = 0; i < length; ++i) {
+            objectArray[i] = Array.get(primitiveArray, i);
+        }
+        return objectArray;
     }
 }
