@@ -187,7 +187,7 @@ public class EnhancedRandomBuilder {
     /**
      * Set the minimum collection size.
      *
-     * @deprecated use io.github.benas.randombeans.EnhancedRandomBuilder#collectionSizeRange(int, int) instead
+     * @deprecated use {@link EnhancedRandomBuilder#collectionSizeRange(int, int)} instead
      * @param minCollectionSize the minimum collection size
      * @return a pre configured {@link EnhancedRandomBuilder} instance
      */
@@ -203,7 +203,7 @@ public class EnhancedRandomBuilder {
     /**
      * Set the maximum collection size.
      *
-     * @deprecated use io.github.benas.randombeans.EnhancedRandomBuilder#collectionSizeRange(int, int) instead
+     * @deprecated use {@link EnhancedRandomBuilder#collectionSizeRange(int, int)} instead
      * @param maxCollectionSize the maximum collection size
      * @return a pre configured {@link EnhancedRandomBuilder} instance
      */
@@ -254,7 +254,7 @@ public class EnhancedRandomBuilder {
     /**
      * Set the maximum string length.
      *
-     * @deprecated use io.github.benas.randombeans.EnhancedRandomBuilder#stringLengthRange(int, int) instead
+     * @deprecated use {@link EnhancedRandomBuilder#stringLengthRange(int, int)} instead
      * @param maxStringLength the maximum string length
      * @return a pre configured {@link EnhancedRandomBuilder} instance
      */
@@ -267,7 +267,7 @@ public class EnhancedRandomBuilder {
     /**
      * Set the minimum string length.
      *
-     * @deprecated use io.github.benas.randombeans.EnhancedRandomBuilder#stringLengthRange(int, int) instead
+     * @deprecated use {@link EnhancedRandomBuilder#stringLengthRange(int, int)} instead
      * @param minStringLength the minimum string length
      * @return a pre configured {@link EnhancedRandomBuilder} instance
      */
