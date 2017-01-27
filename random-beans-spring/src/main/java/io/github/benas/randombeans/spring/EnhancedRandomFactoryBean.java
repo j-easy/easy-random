@@ -63,6 +63,7 @@ public class EnhancedRandomFactoryBean implements FactoryBean<EnhancedRandom> {
     private int minStringLength = Constants.MIN_STRING_LENGTH;
     private int minCollectionSize = Constants.MIN_COLLECTION_SIZE;
     private int maxCollectionSize = Constants.MAX_COLLECTION_SIZE;
+    private int maxObjectPoolSize = Constants.MAX_OBJECT_POOL_SIZE;
     private boolean overrideDefaultInitialization;
     private boolean scanClasspathForConcreteTypes;
 
@@ -93,6 +94,7 @@ public class EnhancedRandomFactoryBean implements FactoryBean<EnhancedRandom> {
         enhancedRandomBuilder.collectionSizeRange(minCollectionSize, maxCollectionSize);
         enhancedRandomBuilder.overrideDefaultInitialization(overrideDefaultInitialization);
         enhancedRandomBuilder.scanClasspathForConcreteTypes(scanClasspathForConcreteTypes);
+        enhancedRandomBuilder.maxObjectPoolSize(maxObjectPoolSize);
 
         return enhancedRandomBuilder.build();
     }
@@ -165,5 +167,9 @@ public class EnhancedRandomFactoryBean implements FactoryBean<EnhancedRandom> {
 
     public void setScanClasspathForConcreteTypes(boolean scanClasspathForConcreteTypes) {
         this.scanClasspathForConcreteTypes = scanClasspathForConcreteTypes;
+    }
+
+    public void setMaxObjectPoolSize(int maxObjectPoolSize) {
+        this.maxObjectPoolSize = maxObjectPoolSize;
     }
 }
