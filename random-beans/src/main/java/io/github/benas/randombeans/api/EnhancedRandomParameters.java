@@ -24,6 +24,7 @@
 package io.github.benas.randombeans.api;
 
 import io.github.benas.randombeans.util.Constants;
+import io.github.benas.randombeans.util.Range;
 import lombok.Data;
 
 import java.nio.charset.Charset;
@@ -102,14 +103,4 @@ public class EnhancedRandomParameters {
         this.stringLengthRange = new Range<>(minStringLength, maxStringLength);
     }
 
-    @Data
-    public static class Range<T> {
-        private T min;
-        private T max;
-
-        public Range(T min, T max) {
-            this.min = min;
-            this.max = max;
-        }
-    }
 }
