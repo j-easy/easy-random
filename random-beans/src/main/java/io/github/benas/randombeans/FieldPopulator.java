@@ -66,12 +66,12 @@ class FieldPopulator {
         this.mapPopulator = mapPopulator;
     }
 
-    void populateField(final Object target, final Field field, final PopulatorContext context) throws IllegalAccessException {
+    void populateField(final Object target, final Field field, final RandomizationContext context) throws IllegalAccessException {
         Randomizer<?> randomizer = randomizerProvider.getRandomizerByField(field);
         if (randomizer instanceof SkipRandomizer) {
             return;
         }
-        context.pushStackItem(new PopulatorContextStackItem(target, field));
+        context.pushStackItem(new RandomizationContextStackItem(target, field));
         if(!context.hasExceededRandomizationDepth()) {
             Object value;
             if (randomizer != null) {
@@ -90,7 +90,7 @@ class FieldPopulator {
         context.popStackItem();
     }
 
-    private Object generateRandomValue(final Field field, final PopulatorContext context) {
+    private Object generateRandomValue(final Field field, final RandomizationContext context) {
         Class<?> fieldType = field.getType();
         Type fieldGenericType = field.getGenericType();
 

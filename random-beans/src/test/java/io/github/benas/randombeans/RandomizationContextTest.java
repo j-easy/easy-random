@@ -39,43 +39,43 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.Mockito.when;
 
 @RunWith(MockitoJUnitRunner.class)
-public class PopulatorContextTest {
+public class RandomizationContextTest {
 
     @Mock
     private Object bean1, bean2;
     @Mock
     private EnhancedRandomParameters parameters;
 
-    private PopulatorContext populatorContext;
+    private RandomizationContext randomizationContext;
 
     @Before
     public void setUp() {
         when(parameters.getObjectPoolSize()).thenReturn(Constants.DEFAULT_OBJECT_POOL_SIZE);
         when(parameters.getRandomizationDepth()).thenReturn(Constants.DEFAULT_RANDOMIZATION_DEPTH);
-        populatorContext = new PopulatorContext(parameters);
+        randomizationContext = new RandomizationContext(parameters);
     }
 
     @Test
     public void whenATypeHasBeenRandomized_thenHasPopulatedBeanShouldReturnTrueOnlyWhenTheObjectPoolIsFilled() {
 
         // Only one instance has been randomized => should be considered as not randomized yet
-        populatorContext.addPopulatedBean(String.class, "bean" + 0);
-        assertThat(populatorContext.hasAlreadyRandomizedType(String.class)).isFalse();
+        randomizationContext.addPopulatedBean(String.class, "bean" + 0);
+        assertThat(randomizationContext.hasAlreadyRandomizedType(String.class)).isFalse();
 
         // When the object pool size is filled => should be considered as already randomized
         for (int i = 1; i < Constants.DEFAULT_OBJECT_POOL_SIZE; i++) {
-            populatorContext.addPopulatedBean(String.class, "bean" + i);
+            randomizationContext.addPopulatedBean(String.class, "bean" + i);
         }
-        assertThat(populatorContext.hasAlreadyRandomizedType(String.class)).isTrue();
+        assertThat(randomizationContext.hasAlreadyRandomizedType(String.class)).isTrue();
     }
 
     @Test
     public void whenATypeHasNotBeenRandomizedYet_thenHasPopulatedBeanShouldReturnFalse() {
         // Given
-        populatorContext.addPopulatedBean(String.class, bean1);
+        randomizationContext.addPopulatedBean(String.class, bean1);
 
         // When
-        boolean hasPopulatedBean = populatorContext.hasAlreadyRandomizedType(Integer.class);
+        boolean hasPopulatedBean = randomizationContext.hasAlreadyRandomizedType(Integer.class);
 
         // Then
         assertThat(hasPopulatedBean).isFalse();
@@ -84,11 +84,11 @@ public class PopulatorContextTest {
     @Test
     public void whenATypeHasBeenRandomized_thenTheRandomizedBeanShouldBeRetrievedFromTheObjectPool() {
         // Given
-        populatorContext.addPopulatedBean(String.class, bean1);
-        populatorContext.addPopulatedBean(String.class, bean2);
+        randomizationContext.addPopulatedBean(String.class, bean1);
+        randomizationContext.addPopulatedBean(String.class, bean2);
 
         // When
-        Object populatedBean = populatorContext.getPopulatedBean(String.class);
+        Object populatedBean = randomizationContext.getPopulatedBean(String.class);
 
         // Then
         assertThat(populatedBean).isIn(bean1, bean2);
@@ -98,11 +98,11 @@ public class PopulatorContextTest {
     public void stackedFieldNamesShouldBeCorrectlyEncoded() throws NoSuchFieldException {
         // Given
         Field address = Person.class.getDeclaredField("address");
-        populatorContext.pushStackItem(new PopulatorContextStackItem(null, address));
+        randomizationContext.pushStackItem(new RandomizationContextStackItem(null, address));
         Field street = Address.class.getDeclaredField("street");
 
         // When
-        String fullFieldName = populatorContext.getFieldFullName(street);
+        String fullFieldName = randomizationContext.getFieldFullName(street);
 
         // Then
         assertThat(fullFieldName).isEqualTo("address.street");
@@ -112,13 +112,13 @@ public class PopulatorContextTest {
     public void whenCurrentStackSizeOverMaxRandomizationDepth_thenShouldExceedRandomizationDepth() throws NoSuchFieldException {
         // Given
         when(parameters.getRandomizationDepth()).thenReturn(1);
-        PopulatorContext customPopulatorContext = new PopulatorContext(parameters);
+        RandomizationContext customRandomizationContext = new RandomizationContext(parameters);
         Field address = Person.class.getDeclaredField("address");
-        customPopulatorContext.pushStackItem(new PopulatorContextStackItem(bean1, address));
-        customPopulatorContext.pushStackItem(new PopulatorContextStackItem(bean2, address));
+        customRandomizationContext.pushStackItem(new RandomizationContextStackItem(bean1, address));
+        customRandomizationContext.pushStackItem(new RandomizationContextStackItem(bean2, address));
 
         // When
-        boolean hasExceededRandomizationDepth = customPopulatorContext.hasExceededRandomizationDepth();
+        boolean hasExceededRandomizationDepth = customRandomizationContext.hasExceededRandomizationDepth();
 
         // Then
         assertThat(hasExceededRandomizationDepth).isTrue();
@@ -128,12 +128,12 @@ public class PopulatorContextTest {
     public void whenCurrentStackSizeLessMaxRandomizationDepth_thenShouldNotExceedRandomizationDepth() throws NoSuchFieldException {
         // Given
         when(parameters.getRandomizationDepth()).thenReturn(2);
-        PopulatorContext customPopulatorContext = new PopulatorContext(parameters);
+        RandomizationContext customRandomizationContext = new RandomizationContext(parameters);
         Field address = Person.class.getDeclaredField("address");
-        customPopulatorContext.pushStackItem(new PopulatorContextStackItem(bean1, address));
+        customRandomizationContext.pushStackItem(new RandomizationContextStackItem(bean1, address));
 
         // When
-        boolean hasExceededRandomizationDepth = customPopulatorContext.hasExceededRandomizationDepth();
+        boolean hasExceededRandomizationDepth = customRandomizationContext.hasExceededRandomizationDepth();
 
         // Then
         assertThat(hasExceededRandomizationDepth).isFalse();
@@ -143,13 +143,13 @@ public class PopulatorContextTest {
     public void whenCurrentStackSizeEqualMaxRandomizationDepth_thenShouldNotExceedRandomizationDepth() throws NoSuchFieldException {
         // Given
         when(parameters.getRandomizationDepth()).thenReturn(2);
-        PopulatorContext customPopulatorContext = new PopulatorContext(parameters);
+        RandomizationContext customRandomizationContext = new RandomizationContext(parameters);
         Field address = Person.class.getDeclaredField("address");
-        customPopulatorContext.pushStackItem(new PopulatorContextStackItem(bean1, address));
-        customPopulatorContext.pushStackItem(new PopulatorContextStackItem(bean2, address));
+        customRandomizationContext.pushStackItem(new RandomizationContextStackItem(bean1, address));
+        customRandomizationContext.pushStackItem(new RandomizationContextStackItem(bean2, address));
 
         // When
-        boolean hasExceededRandomizationDepth = customPopulatorContext.hasExceededRandomizationDepth();
+        boolean hasExceededRandomizationDepth = customRandomizationContext.hasExceededRandomizationDepth();
 
         // Then
         assertThat(hasExceededRandomizationDepth).isFalse();

@@ -38,7 +38,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 public class FieldExclusionCheckerTest {
 
     @Mock
-    private PopulatorContext populatorContext;
+    private RandomizationContext randomizationContext;
 
     private FieldExclusionChecker checker;
 
@@ -53,7 +53,7 @@ public class FieldExclusionCheckerTest {
         Field field = Human.class.getDeclaredField("SERIAL_VERSION_UID");
 
         // When
-        boolean actual = checker.shouldBeExcluded(field, populatorContext);
+        boolean actual = checker.shouldBeExcluded(field, randomizationContext);
 
         // Then
         assertThat(actual).isTrue();

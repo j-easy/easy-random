@@ -49,7 +49,7 @@ public class MapPopulatorTest {
     private static final String BAR = "bar";
 
     @Mock
-    private PopulatorContext context;
+    private RandomizationContext context;
     @Mock
     private EnhancedRandomImpl enhancedRandom;
 

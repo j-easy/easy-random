@@ -56,7 +56,7 @@ public class FieldPopulatorTest {
     @Mock
     private RandomizerProvider randomizerProvider;
     @Mock
-    private PopulatorContext populatorContext;
+    private RandomizationContext randomizationContext;
     @Mock
     private Randomizer randomizer;
     @Mock
@@ -82,7 +82,7 @@ public class FieldPopulatorTest {
         when(randomizerProvider.getRandomizerByField(name)).thenReturn(randomizer);
 
         // When
-        fieldPopulator.populateField(human, name, populatorContext);
+        fieldPopulator.populateField(human, name, randomizationContext);
 
         // Then
         assertThat(human.getName()).isNull();
@@ -97,7 +97,7 @@ public class FieldPopulatorTest {
         when(randomizer.getRandomValue()).thenReturn(NAME);
 
         // When
-        fieldPopulator.populateField(human, name, populatorContext);
+        fieldPopulator.populateField(human, name, randomizationContext);
 
         // Then
         assertThat(human.getName()).isEqualTo(NAME);
@@ -109,10 +109,10 @@ public class FieldPopulatorTest {
         Field strings = ArrayBean.class.getDeclaredField("strings");
         ArrayBean arrayBean = new ArrayBean();
         String[] object = new String[0];
-        when(arrayPopulator.getRandomArray(strings.getType(), populatorContext)).thenReturn(object);
+        when(arrayPopulator.getRandomArray(strings.getType(), randomizationContext)).thenReturn(object);
 
         // When
-        fieldPopulator.populateField(arrayBean, strings, populatorContext);
+        fieldPopulator.populateField(arrayBean, strings, randomizationContext);
 
         // Then
         assertThat(arrayBean.getStrings()).isEqualTo(object);
@@ -126,7 +126,7 @@ public class FieldPopulatorTest {
         Collection<Person> persons = Collections.emptyList();
 
         // When
-        fieldPopulator.populateField(collectionBean, strings, populatorContext);
+        fieldPopulator.populateField(collectionBean, strings, randomizationContext);
 
         // Then
         assertThat(collectionBean.getTypedCollection()).isEqualTo(persons);
@@ -140,7 +140,7 @@ public class FieldPopulatorTest {
         Map<Integer, Person> idToPerson = new HashMap<>();
 
         // When
-        fieldPopulator.populateField(mapBean, strings, populatorContext);
+        fieldPopulator.populateField(mapBean, strings, randomizationContext);
 
         // Then
         assertThat(mapBean.getTypedMap()).isEqualTo(idToPerson);
@@ -151,10 +151,10 @@ public class FieldPopulatorTest {
         // Given
         Field name = Human.class.getDeclaredField("name");
         Human human = new Human();
-        when(populatorContext.hasExceededRandomizationDepth()).thenReturn(true);
+        when(randomizationContext.hasExceededRandomizationDepth()).thenReturn(true);
 
         // When
-        fieldPopulator.populateField(human, name, populatorContext);
+        fieldPopulator.populateField(human, name, randomizationContext);
 
         // Then
         assertThat(human.getName()).isNull();
@@ -167,7 +167,7 @@ public class FieldPopulatorTest {
       Field jaxbElementField = JaxbElementFieldBean.class.getDeclaredField("jaxbElementField");
       JaxbElementFieldBean jaxbElementFieldBean = new JaxbElementFieldBean();
 
-      thenThrownBy(() -> { fieldPopulator.populateField(jaxbElementFieldBean, jaxbElementField, populatorContext); })
+      thenThrownBy(() -> { fieldPopulator.populateField(jaxbElementFieldBean, jaxbElementField, randomizationContext); })
           .hasMessage("Unable to create type: javax.xml.bind.JAXBElement for field: jaxbElementField of class: io.github.benas.randombeans.FieldPopulatorTest$JaxbElementFieldBean");
     }
 

@@ -48,7 +48,7 @@ class CollectionPopulator {
     }
 
     @SuppressWarnings({"unchecked", "rawtypes"})
-    Collection<?> getRandomCollection(final Field field, final PopulatorContext context) {
+    Collection<?> getRandomCollection(final Field field, final RandomizationContext context) {
         int randomSize = enhancedRandom.getRandomCollectionSize();
         Class<?> fieldType = field.getType();
         Type fieldGenericType = field.getGenericType();

@@ -74,7 +74,7 @@ class EnhancedRandomImpl extends EnhancedRandom {
 
     @Override
     public <T> T nextObject(final Class<T> type, final String... excludedFields) {
-        return doPopulateBean(type, new PopulatorContext(parameters, excludedFields));
+        return doPopulateBean(type, new RandomizationContext(parameters, excludedFields));
     }
 
     @Override
@@ -90,7 +90,7 @@ class EnhancedRandomImpl extends EnhancedRandom {
         return streamBuilder.build();
     }
 
-    <T> T doPopulateBean(final Class<T> type, final PopulatorContext context) {
+    <T> T doPopulateBean(final Class<T> type, final RandomizationContext context) {
         T result;
         try {
 
@@ -129,7 +129,7 @@ class EnhancedRandomImpl extends EnhancedRandom {
         }
     }
 
-    private <T> T randomize(final Class<T> type, final PopulatorContext context) {
+    private <T> T randomize(final Class<T> type, final RandomizationContext context) {
         if (isEnumType(type)) {
             if (!enumRandomizersByType.containsKey(type)) {
                 enumRandomizersByType.put(type, new EnumRandomizer(type, parameters.getSeed()));
@@ -148,13 +148,13 @@ class EnhancedRandomImpl extends EnhancedRandom {
         return null;
     }
 
-    private <T> void populateFields(final List<Field> fields, final T result, final PopulatorContext context) throws IllegalAccessException {
+    private <T> void populateFields(final List<Field> fields, final T result, final RandomizationContext context) throws IllegalAccessException {
         for (final Field field : fields) {
             populateField(field, result, context);
         }
     }
 
-    private <T> void populateField(final Field field, final T result, final PopulatorContext context) throws IllegalAccessException {
+    private <T> void populateField(final Field field, final T result, final RandomizationContext context) throws IllegalAccessException {
         if (!fieldExclusionChecker.shouldBeExcluded(field, context)) {
             if (!parameters.isOverrideDefaultInitialization() && getFieldValue(result, field) != null && !isPrimitiveFieldWithDefaultValue(result, field)) {
               return;

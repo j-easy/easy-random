@@ -51,7 +51,7 @@ class MapPopulator {
     }
 
     @SuppressWarnings("unchecked")
-    Map<?, ?> getRandomMap(final Field field, final PopulatorContext context) {
+    Map<?, ?> getRandomMap(final Field field, final RandomizationContext context) {
         int randomSize = enhancedRandom.getRandomCollectionSize();
         Class<?> fieldType = field.getType();
         Type fieldGenericType = field.getGenericType();

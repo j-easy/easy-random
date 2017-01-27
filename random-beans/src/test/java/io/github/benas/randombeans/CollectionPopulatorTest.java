@@ -50,7 +50,7 @@ public class CollectionPopulatorTest {
     private static final String STRING = "foo";
 
     @Mock
-    private PopulatorContext context;
+    private RandomizationContext context;
     @Mock
     private EnhancedRandomImpl enhancedRandom;
 

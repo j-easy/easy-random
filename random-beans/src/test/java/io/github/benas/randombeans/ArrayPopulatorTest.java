@@ -46,7 +46,7 @@ public class ArrayPopulatorTest {
     private static final String STRING = "FOO";
 
     @Mock
-    private PopulatorContext context;
+    private RandomizationContext context;
     @Mock
     private EnhancedRandomImpl enhancedRandom;
     @Mock

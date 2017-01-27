@@ -34,13 +34,13 @@ import java.lang.reflect.Field;
  * @author Rémi Alvergnat (toilal.dev@gmail.com)
  */
 @Data
-class PopulatorContextStackItem {
+class RandomizationContextStackItem {
 
     private Object object;
 
     private Field field;
 
-    public PopulatorContextStackItem(final Object object, final Field field) {
+    RandomizationContextStackItem(final Object object, final Field field) {
         this.object = object;
         this.field = field;
     }

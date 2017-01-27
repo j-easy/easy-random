@@ -37,7 +37,7 @@ import static java.util.stream.Collectors.toList;
  *
  * @author Rémi Alvergnat (toilal.dev@gmail.com)
  */
-class PopulatorContext {
+class RandomizationContext {
 
     private final EnhancedRandomParameters parameters;
 
@@ -45,9 +45,9 @@ class PopulatorContext {
 
     private final Map<Class<?>, List<Object>> populatedBeans;
 
-    private final Stack<PopulatorContextStackItem> stack;
+    private final Stack<RandomizationContextStackItem> stack;
 
-    PopulatorContext(final EnhancedRandomParameters parameters, final String... excludedFields) {
+    RandomizationContext(final EnhancedRandomParameters parameters, final String... excludedFields) {
         populatedBeans = new IdentityHashMap<>();
         stack = new Stack<>();
         this.parameters = parameters;
@@ -80,7 +80,7 @@ class PopulatorContext {
         return excludedFields;
     }
 
-    void pushStackItem(final PopulatorContextStackItem field) {
+    void pushStackItem(final RandomizationContextStackItem field) {
         stack.push(field);
     }
 

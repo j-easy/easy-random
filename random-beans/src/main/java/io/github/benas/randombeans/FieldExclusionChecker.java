@@ -43,7 +43,7 @@ class FieldExclusionChecker {
      * @param context the current population context
      * @return true if the field should be excluded, false otherwise
      */
-    boolean shouldBeExcluded(final Field field, final PopulatorContext context) {
+    boolean shouldBeExcluded(final Field field, final RandomizationContext context) {
         if (isStatic(field)) {
             return true;
         }

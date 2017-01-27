@@ -46,7 +46,7 @@ class ArrayPopulator {
     }
 
     @SuppressWarnings("unchecked")
-    <T> Object getRandomArray(final Class<?> fieldType, final PopulatorContext context) {
+    <T> Object getRandomArray(final Class<?> fieldType, final RandomizationContext context) {
         Class<?> componentType = fieldType.getComponentType();
         if (componentType.isPrimitive()) {
             return getRandomPrimitiveArray(componentType);
