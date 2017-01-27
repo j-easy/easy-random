@@ -51,9 +51,9 @@ public abstract class Constants {
     public static final int MAX_COLLECTION_SIZE = Byte.MAX_VALUE;
 
     /**
-     * Maximum number of different objects to generate for a type.
+     * Number of different objects to generate for a type.
      */
-    public static final int MAX_OBJECT_POOL_SIZE = 10;
+    public static final int DEFAULT_OBJECT_POOL_SIZE = 10;
 
     /**
      * Value for property maxRandomizationDepth, which mean, that randomization depth is unlimited

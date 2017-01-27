@@ -53,7 +53,7 @@ public class EnhancedRandomParameters {
 
     private int minStringLength;
 
-    private int maxObjectPoolSize;
+    private int objectPoolSize;
 
     private int maxRandomizationDepth;
 
@@ -76,7 +76,7 @@ public class EnhancedRandomParameters {
         seed = new Random().nextLong();
         maxStringLength = Constants.MAX_STRING_LENGTH;
         minStringLength = Constants.MIN_STRING_LENGTH;
-        maxObjectPoolSize = Constants.MAX_OBJECT_POOL_SIZE;
+        objectPoolSize = Constants.DEFAULT_OBJECT_POOL_SIZE;
         maxRandomizationDepth = Constants.MAX_RANDOMIZATION_DEPTH;
         charset = StandardCharsets.US_ASCII;
         overrideDefaultInitialization = false;

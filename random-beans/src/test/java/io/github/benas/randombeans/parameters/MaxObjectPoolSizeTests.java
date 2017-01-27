@@ -36,7 +36,7 @@ public class MaxObjectPoolSizeTests {
     public void testMaxObjectPoolSize() {
         // Given
         EnhancedRandom enhancedRandom = aNewEnhancedRandomBuilder()
-                .maxObjectPoolSize(1)
+                .objectPoolSize(1)
                 .build();
 
         // When

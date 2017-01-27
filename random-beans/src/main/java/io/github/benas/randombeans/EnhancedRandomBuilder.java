@@ -282,9 +282,22 @@ public class EnhancedRandomBuilder {
      *
      * @param maxObjectPoolSize the maximum number of objects
      * @return a pre configured {@link EnhancedRandomBuilder} instance
+     * @deprecated use {@link io.github.benas.randombeans.EnhancedRandomBuilder#objectPoolSize(int)} instead
      */
+    @Deprecated
     public EnhancedRandomBuilder maxObjectPoolSize(final int maxObjectPoolSize) {
-        parameters.setMaxObjectPoolSize(maxObjectPoolSize);
+        parameters.setObjectPoolSize(maxObjectPoolSize);
+        return this;
+    }
+
+    /**
+     * Set the number of different objects to generate for a type.
+     *
+     * @param objectPoolSize the number of objects to generate in the pool
+     * @return a pre configured {@link EnhancedRandomBuilder} instance
+     */
+    public EnhancedRandomBuilder objectPoolSize(final int objectPoolSize) {
+        parameters.setObjectPoolSize(objectPoolSize);
         return this;
     }
 
