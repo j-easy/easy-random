@@ -135,6 +135,7 @@ If you have any question, suggestion, or feedback, do not hesitate to use the [G
 * [Eric Taix](https://github.com/eric-taix)
 * [Fred Eckertson](https://github.com/feckertson)
 * [Jose Manuel Prieto](https://github.com/prietopa)
+* [kermit-the-frog](https://github.com/kermit-the-frog)
 * [Nikola Milivojevic](https://github.com/dziga)
 * [Oleksandr Shcherbyna](https://github.com/sansherbina)
 * [Pascal Schumacher](https://github.com/PascalSchumacher)

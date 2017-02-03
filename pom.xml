@@ -166,6 +166,10 @@
             <name>Valters Vingolds</name>
             <url>https://github.com/valters</url>
         </contributor>
+        <contributor>
+            <name>kermit-the-frog</name>
+            <url>https://github.com/kermit-the-frog</url>
+        </contributor>
     </contributors>
 
     <dependencyManagement>
