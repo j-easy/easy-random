@@ -20,7 +20,7 @@ This second static method of the `EnhancedRandom` API generates a stream of rand
 
 The `java.util.Random` API provides 7 methods to generate random data: `nextInt()`, `nextLong()`, `nextDouble()`, `nextFloat()`, `nextBytes()`, `nextBoolean()` and `nextGaussian()`.
 What if you need to generate a random `String`? Or say a random instance of your domain object?
-Random Beans provides the `EnhancedRandom` API that extends `java.util.Random` with a method called `nextObject(Class type)`.
+Random Beans provides the `EnhancedRandom` API that extends (enhances) `java.util.Random` with a method called `nextObject(Class type)`.
 This method is able to generate a random instance of any arbitrary Java bean:
 
 ```java
@@ -28,28 +28,39 @@ EnhancedRandom enhancedRandom = EnhancedRandomBuilder.aNewEnhancedRandom();
 Person person = enhancedRandom.nextObject(Person.class);
 ```
 
-The `EnhancedRandomBuilder` is the main entry point to configure `EnhancedRandom` instances with a fluent API. It allows you to set all
+The `EnhancedRandomBuilder` is the main entry point to configure `EnhancedRandom` instances. It allows you to set all
 parameters to control how random data is generated:
 
 ```java
 EnhancedRandom random = EnhancedRandomBuilder.aNewEnhancedRandomBuilder()
-   .minCollectionSize(5)
-   .maxCollectionSize(10)
-   .minStringLength(10)
-   .maxStringLength(20)
-   .maxObjectPoolSize(100)
-   .maxRandomizationDepth(3)
-   .charset(forName("UTF-8"))
-   .dateRange(today, tomorrow)
-   .timeRange(nine, five)
-   .scanClasspathForConcreteTypes(true)
    .seed(123L)
+   .objectPoolSize(100)
+   .randomizationDepth(3)
+   .charset(forName("UTF-8"))
+   .timeRange(nine, five)
+   .dateRange(today, tomorrow)
+   .stringLengthRange(5, 50)
+   .collectionSizeRange(1, 10)
+   .scanClasspathForConcreteTypes(true)
+   .overrideDefaultInitialization(false)
    .build();
 ```
 
 For more details about these parameters, please refer to the [configuration parameters](https://github.com/benas/random-beans/wiki/Randomization-parameters) section.
 
 In most cases, default options are enough and you can use a static import of the `EnhancedRandom.random(Class object)` as seen previously.
+
+Random beans allows you to control how to generate random data through the `Randomizer` interface
+ and makes it easy to exclude some fields from the object graph using the fluent `FieldDefinition` API:
+
+```java
+EnhancedRandom enhancedRandom = EnhancedRandomBuilder.aNewEnhancedRandomBuilder()
+   .randomize(String.class, (Randomizer<String>) () -> "foo")
+   .exclude(field().named("age").ofType(Integer.class).inClass(Person.class).get())
+   .build();
+
+Person person = enhancedRandom.nextObject(Person.class);
+```
 
 # Why Random Beans ?
 
@@ -103,8 +114,8 @@ all the object graph. That's a big difference!
 
 ## Current version
 
-* The current stable version is `3.4.0` : [![Maven Central](https://maven-badges.herokuapp.com/maven-central/io.github.benas/random-beans/badge.svg?style=flat)](http://search.maven.org/#artifactdetails|io.github.benas|random-beans|3.4.0|)
-* The current development version is `3.5.0-SNAPSHOT` : [![Build Status](https://travis-ci.org/benas/random-beans.svg?branch=master)](https://travis-ci.org/benas/random-beans)
+* The current stable version is `3.5.0` : [![Maven Central](https://maven-badges.herokuapp.com/maven-central/io.github.benas/random-beans/badge.svg?style=flat)](http://search.maven.org/#artifactdetails|io.github.benas|random-beans|3.5.0|)
+* The current development version is `3.6.0-SNAPSHOT` : [![Build Status](https://travis-ci.org/benas/random-beans.svg?branch=master)](https://travis-ci.org/benas/random-beans)
 
 You can find more details on how to get started [here](https://github.com/benas/random-beans/wiki/Getting-Started).
 

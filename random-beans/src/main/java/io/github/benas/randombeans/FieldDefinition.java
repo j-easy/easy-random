@@ -66,6 +66,7 @@ public class FieldDefinition<T, F> {
      * @param name  the field name
      * @param type  the filed type
      * @param clazz the declaring class type
+     * @param annotations annotations present on the field
      */
     public FieldDefinition(String name, Class<F> type, Class<T> clazz, Set<Class <? extends Annotation>> annotations) {
         this(name, type, clazz, annotations, null);
@@ -77,6 +78,7 @@ public class FieldDefinition<T, F> {
      * @param name  the field name
      * @param type  the filed type
      * @param clazz the declaring class type
+     * @param annotations annotations present on the field
      * @param modifiers the field modifiers
      */
     public FieldDefinition(String name, Class<F> type, Class<T> clazz, Set<Class <? extends Annotation>> annotations, Integer modifiers) {

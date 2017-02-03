@@ -99,6 +99,7 @@ public class ReflectionUtils {
      *
      * @param object instance to get the field of
      * @param field  field to get the value of
+     * @return the value of the field
      * @throws IllegalAccessException if field can not be accessed
      */
     public static Object getFieldValue(final Object object, final Field field) throws IllegalAccessException {
@@ -114,6 +115,7 @@ public class ReflectionUtils {
      *
      * @param object instance to get the field value of
      * @param field  field to check
+     * @return true if the field is primitive and is set to the default value, false otherwise
      * @throws IllegalAccessException if field cannot be accessed
      */
     public static boolean isPrimitiveFieldWithDefaultValue(final Object object, final Field field) throws IllegalAccessException {
