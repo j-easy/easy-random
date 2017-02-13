@@ -170,6 +170,10 @@
             <name>kermit-the-frog</name>
             <url>https://github.com/kermit-the-frog</url>
         </contributor>
+        <contributor>
+            <name>Lucas Andersson</name>
+            <url>https://github.com/LucasAndersson</url>
+        </contributor>
     </contributors>
 
     <dependencyManagement>

@@ -144,6 +144,7 @@ If you have any question, suggestion, or feedback, do not hesitate to use the [G
 * [Rodrigue Alcazar](https://github.com/rodriguealcazar)
 * [Valters Vingolds](https://github.com/valters)
 * [Vincent Potucek](https://github.com/punkratz312)
+* [Lucas Andersson](https://github.com/LucasAndersson)
 
 Thank you all for your contributions!
 
