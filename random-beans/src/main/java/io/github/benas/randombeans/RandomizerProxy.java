@@ -58,7 +58,9 @@ class RandomizerProxy implements InvocationHandler {
     @Override
     public Object invoke(final Object proxy, final Method method, final Object[] args) throws Throwable {
         if ("getRandomValue".equals(method.getName())) {
-            return target.getClass().getMethod("get").invoke(target, args);
+            Method getMethod = target.getClass().getMethod("get");
+            getMethod.setAccessible(true);
+            return getMethod.invoke(target, args);
         }
         return null;
     }
