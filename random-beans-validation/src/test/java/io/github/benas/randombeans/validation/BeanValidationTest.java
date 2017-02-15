@@ -23,19 +23,22 @@
  */
 package io.github.benas.randombeans.validation;
 
-import io.github.benas.randombeans.api.EnhancedRandom;
-import org.junit.Before;
-import org.junit.Test;
+import static io.github.benas.randombeans.EnhancedRandomBuilder.aNewEnhancedRandom;
+import static io.github.benas.randombeans.EnhancedRandomBuilder.aNewEnhancedRandomBuilder;
+import static org.assertj.core.api.Assertions.assertThat;
+
+import java.math.BigDecimal;
+import java.util.Set;
 
 import javax.validation.ConstraintViolation;
 import javax.validation.Validation;
 import javax.validation.Validator;
 import javax.validation.ValidatorFactory;
-import java.math.BigDecimal;
-import java.util.Set;
 
-import static io.github.benas.randombeans.EnhancedRandomBuilder.aNewEnhancedRandom;
-import static org.assertj.core.api.Assertions.assertThat;
+import org.junit.Before;
+import org.junit.Test;
+
+import io.github.benas.randombeans.api.EnhancedRandom;
 
 public class BeanValidationTest {
 
@@ -68,15 +71,35 @@ public class BeanValidationTest {
 
         assertThat(bean.getMinQuantity()).isGreaterThanOrEqualTo(5);// @Min(5) int minQuantity;
 
-        assertThat(bean.getMaxDiscount()).isLessThanOrEqualTo(new BigDecimal("30.00"));// @DecimalMax("30.00") BigDecimal maxDiscount;;
+        assertThat(bean.getMaxDiscount()).isLessThanOrEqualTo(new BigDecimal("30.00"));// @DecimalMax("30.00") BigDecimal maxDiscount;
 
-        assertThat(bean.getMinDiscount()).isGreaterThanOrEqualTo(new BigDecimal("5.00"));// @DecimalMin("5.00") BigDecimal minDiscount;;
+        assertThat(bean.getMinDiscount()).isGreaterThanOrEqualTo(new BigDecimal("5.00"));// @DecimalMin("5.00") BigDecimal minDiscount;
 
         assertThat(bean.getMinQuantity()).isGreaterThanOrEqualTo(5);// @Min(5) int minQuantity;
 
         assertThat(bean.getBriefMessage().length()).isBetween(2, 10);// @Size(min=2, max=10) String briefMessage;
 
         assertThat(bean.getRegexString()).matches("[a-z]{4}");
+    }
+
+    @Test
+    public void shouldGenerateTheSameValueForTheSameSeed() {
+        EnhancedRandom random = aNewEnhancedRandomBuilder().seed(123L).build();
+ 
+        BeanValidationAnnotatedBean bean = random.nextObject(BeanValidationAnnotatedBean.class);
+
+        assertThat(bean.getUsername()).isEqualTo("eOMtThyhVNLWUZNRcBaQKxIy");
+        // uses DateRange with now as end, so test is not repeatable
+        // assertThat(bean.getBirthday()).isEqualTo("2007-07-22T13:20:35.628");
+        // uses DateRange with now as start, so test is not repeatable
+        // assertThat(bean.getEventDate()).isEqualTo("2017-07-22T13:20:35.628");
+        assertThat(bean.getMaxQuantity()).isEqualTo(-2055951746);
+        assertThat(bean.getMinQuantity()).isEqualTo(91531906);
+        assertThat(bean.getMaxDiscount()).isEqualTo(new BigDecimal(30));
+        assertThat(bean.getMinDiscount()).isEqualTo(new BigDecimal(393126525614007301L));
+        assertThat(bean.getMinQuantity()).isEqualTo(91531906);
+        assertThat(bean.getBriefMessage()).isEqualTo("tguu");
+        assertThat(bean.getRegexString()).isEqualTo("vuna");
     }
 
     @Test

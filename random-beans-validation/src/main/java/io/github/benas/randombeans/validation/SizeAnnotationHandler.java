@@ -24,23 +24,21 @@
 package io.github.benas.randombeans.validation;
 
 import io.github.benas.randombeans.api.Randomizer;
-import io.github.benas.randombeans.randomizers.text.CharacterRandomizer;
+import io.github.benas.randombeans.randomizers.text.StringRandomizer;
 
 import javax.validation.constraints.Size;
 import java.lang.reflect.Field;
 import java.nio.charset.Charset;
-
-import static io.github.benas.randombeans.randomizers.range.IntegerRangeRandomizer.aNewIntegerRangeRandomizer;
-import static io.github.benas.randombeans.randomizers.text.CharacterRandomizer.aNewCharacterRandomizer;
+import java.util.Random;
 
 class SizeAnnotationHandler implements BeanValidationAnnotationHandler {
 
-    private long seed;
+    private final Random random;
 
     private Charset charset;
 
     public SizeAnnotationHandler(long seed, Charset charset) {
-        this.seed = seed;
+        random = new Random(seed);
         this.charset = charset;
     }
 
@@ -51,19 +49,7 @@ class SizeAnnotationHandler implements BeanValidationAnnotationHandler {
         final int min = sizeAnnotation.min();
         final int max = sizeAnnotation.max();
         if (fieldType.equals(String.class)) {
-            final int randomLength = aNewIntegerRangeRandomizer(min, max).getRandomValue();
-            return new Randomizer<String>() {
-                private final CharacterRandomizer characterRandomizer = aNewCharacterRandomizer(charset, seed);
-
-                @Override
-                public String getRandomValue() {
-                    StringBuilder stringBuilder = new StringBuilder();
-                    for (int i = 0; i < randomLength; i++) {
-                        stringBuilder.append(characterRandomizer.getRandomValue());
-                    }
-                    return stringBuilder.toString();
-                }
-            };
+            return new StringRandomizer(charset, min, max, random.nextLong());
         }
         return null;
     }

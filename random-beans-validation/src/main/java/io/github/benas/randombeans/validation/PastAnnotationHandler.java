@@ -30,18 +30,19 @@ import io.github.benas.randombeans.util.Constants;
 import java.lang.reflect.Field;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.Random;
 
 class PastAnnotationHandler implements BeanValidationAnnotationHandler {
 
-    private long seed;
+    private final Random random;
 
     public PastAnnotationHandler(long seed) {
-        this.seed = seed;
+        random = new Random(seed);
     }
 
     public Randomizer<?> getRandomizer(Field field) {
         Calendar calendar = Calendar.getInstance();
         calendar.add(Calendar.YEAR, -Constants.DEFAULT_DATE_RANGE);
-        return new DateRangeRandomizer(calendar.getTime(), new Date(), seed);
+        return new DateRangeRandomizer(calendar.getTime(), new Date(), random.nextLong());
     }
 }
