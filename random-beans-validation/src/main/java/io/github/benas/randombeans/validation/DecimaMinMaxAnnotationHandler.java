@@ -32,13 +32,14 @@ import javax.validation.constraints.DecimalMin;
 import java.lang.reflect.Field;
 import java.math.BigDecimal;
 import java.math.BigInteger;
+import java.util.Random;
 
 class DecimaMinMaxAnnotationHandler implements BeanValidationAnnotationHandler {
 
-    private long seed;
+    private final Random random;
 
     public DecimaMinMaxAnnotationHandler(long seed) {
-        this.seed = seed;
+        random = new Random(seed);
     }
 
     public Randomizer<?> getRandomizer(Field field) {
@@ -62,49 +63,49 @@ class DecimaMinMaxAnnotationHandler implements BeanValidationAnnotationHandler {
                 return new ByteRangeRandomizer(
                         minValue == null ? null : minValue.byteValue(),
                         maxValue == null ? null : maxValue.byteValue(),
-                        seed
+                        random.nextLong()
                 );
             }
             if (fieldType.equals(Short.TYPE) || fieldType.equals(Short.class)) {
                 return new ShortRangeRandomizer(
                         minValue == null ? null : minValue.shortValue(),
                         maxValue == null ? null : maxValue.shortValue(),
-                        seed
+                        random.nextLong()
                 );
             }
             if (fieldType.equals(Integer.TYPE) || fieldType.equals(Integer.class)) {
                 return new IntegerRangeRandomizer(
                         minValue == null ? null : minValue.intValue(),
                         maxValue == null ? null : maxValue.intValue(),
-                        seed
+                        random.nextLong()
                 );
             }
             if (fieldType.equals(Long.TYPE) || fieldType.equals(Long.class)) {
                 return new LongRangeRandomizer(
                         minValue == null ? null : minValue.longValue(),
                         maxValue == null ? null : maxValue.longValue(),
-                        seed
+                        random.nextLong()
                 );
             }
             if (fieldType.equals(BigInteger.class)) {
                 return new BigIntegerRangeRandomizer(
                         minValue == null ? null : minValue.intValue(),
                         maxValue == null ? null : maxValue.intValue(),
-                        seed
+                        random.nextLong()
                 );
             }
             if (fieldType.equals(BigDecimal.class)) {
                 return new BigDecimalRangeRandomizer(
                         minValue == null ? null : minValue.longValue(),
                         maxValue == null ? null : maxValue.longValue(),
-                        seed
+                        random.nextLong()
                 );
             }
             if (fieldType.equals(String.class)) {
                 BigDecimalRangeRandomizer delegate = new BigDecimalRangeRandomizer(
                         minValue == null ? null : minValue.longValue(),
                         maxValue == null ? null : maxValue.longValue(),
-                        seed
+                        random.nextLong()
                 );
                 return new StringDelegatingRandomizer(delegate);
             }

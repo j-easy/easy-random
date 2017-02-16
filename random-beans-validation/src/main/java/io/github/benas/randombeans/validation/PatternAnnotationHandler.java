@@ -28,13 +28,14 @@ import io.github.benas.randombeans.randomizers.RegularExpressionRandomizer;
 
 import javax.validation.constraints.Pattern;
 import java.lang.reflect.Field;
+import java.util.Random;
 
 class PatternAnnotationHandler implements BeanValidationAnnotationHandler {
 
-    private long seed;
+    private final Random random;
 
     public PatternAnnotationHandler(long seed) {
-        this.seed = seed;
+        random = new Random(seed);
     }
 
     public Randomizer<?> getRandomizer(Field field) {
@@ -43,7 +44,7 @@ class PatternAnnotationHandler implements BeanValidationAnnotationHandler {
 
         final String regex = patternAnnotation.regexp();
         if (fieldType.equals(String.class)) {
-            return new RegularExpressionRandomizer(regex, seed);
+            return new RegularExpressionRandomizer(regex, random.nextLong());
         }
         return null;
     }
