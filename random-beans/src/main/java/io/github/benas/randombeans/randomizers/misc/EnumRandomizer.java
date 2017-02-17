@@ -26,6 +26,11 @@ package io.github.benas.randombeans.randomizers.misc;
 import io.github.benas.randombeans.api.Randomizer;
 import io.github.benas.randombeans.randomizers.AbstractRandomizer;
 
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.List;
+
 /**
  * A {@link Randomizer} that generates a random value from a given {@link Enum}.
  *
@@ -35,6 +40,7 @@ import io.github.benas.randombeans.randomizers.AbstractRandomizer;
 public class EnumRandomizer<E extends Enum<E>> extends AbstractRandomizer<E> {
 
     private final Class<E> enumeration;
+	private E[] excludedValues;
 
     /**
      * Create a new {@link EnumRandomizer}.
@@ -56,6 +62,27 @@ public class EnumRandomizer<E extends Enum<E>> extends AbstractRandomizer<E> {
         super(seed);
         this.enumeration = enumeration;
     }
+
+	/**
+	 * Create a new {@link EnumRandomizer}.
+	 *
+	 * @param enumeration
+	 *            the enumeration from which this randomizer will generate
+	 *            random values
+	 * @param excludedValues
+	 *            the values to exclude from random picking
+	 * @throws IllegalArgumentException
+	 *             when excludedValues contains all enumeration values
+	 */
+	public EnumRandomizer(final Class<E> enumeration, E... excludedValues) throws IllegalArgumentException {
+		super();
+		this.enumeration = enumeration;
+		this.excludedValues = excludedValues;
+		boolean excludedValuesIncludeAllValues = Arrays.asList(excludedValues).containsAll(Arrays.asList(enumeration.getEnumConstants()));
+		if (excludedValuesIncludeAllValues) {
+			throw new IllegalArgumentException("No enum element available for random picking.");
+		}
+	}
 
     /**
      * Create a new {@link EnumRandomizer}.
@@ -80,10 +107,49 @@ public class EnumRandomizer<E extends Enum<E>> extends AbstractRandomizer<E> {
         return new EnumRandomizer<>(enumeration, seed);
     }
 
-    @Override
-    public E getRandomValue() {
-        E[] enumConstants = enumeration.getEnumConstants();
-        int randomIndex = random.nextInt(enumConstants.length);
-        return enumConstants[randomIndex];
-    }
+	/**
+	 * Create a new {@link EnumRandomizer}.
+	 *
+	 * @param enumeration
+	 *            the enumeration from which this randomizer will generate
+	 *            random values
+	 * @param excludedValues
+	 *            the values to exclude from the subset in which the random
+	 *            value will be picked
+	 * @param <E>
+	 *            the type of elements in the enumeration
+	 * @return a new {@link EnumRandomizer}.
+	 */
+	public static <E extends Enum<E>> EnumRandomizer<E> aNewEnumRandomizer(final Class<E> enumeration, E... excludedValues) {
+		return new EnumRandomizer<>(enumeration, excludedValues);
+	}
+
+	/**
+	 * Get a random value within an enumeration or an enumeration subset (when
+	 * values are excluded)
+	 * 
+	 * @return a random value within the enumeration
+	 */
+	@Override
+	public E getRandomValue() {
+		List<E> enumConstants = getFilteredList();
+		int randomIndex = random.nextInt(enumConstants.size());
+		return enumConstants.get(randomIndex);
+	}
+
+	/**
+	 * Get a subset of enumeration
+	 *
+	 * @return the enumeration values minus those excluded.
+	 */
+	private List<E> getFilteredList() {
+		List<E> filteredValues = new ArrayList<>();
+		Collections.addAll(filteredValues, enumeration.getEnumConstants());
+		if (excludedValues != null) {
+			for (E element : excludedValues) {
+				filteredValues.remove(element);
+			}
+		}
+		return filteredValues;
+	}
 }
