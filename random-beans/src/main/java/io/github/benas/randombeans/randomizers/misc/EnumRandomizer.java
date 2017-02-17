@@ -39,8 +39,7 @@ import java.util.List;
  */
 public class EnumRandomizer<E extends Enum<E>> extends AbstractRandomizer<E> {
 
-    private final Class<E> enumeration;
-    private E[] excludedValues;
+    private List<E> enumConstants;
 
     /**
      * Create a new {@link EnumRandomizer}.
@@ -49,7 +48,7 @@ public class EnumRandomizer<E extends Enum<E>> extends AbstractRandomizer<E> {
      */
     public EnumRandomizer(final Class<E> enumeration) {
         super();
-        this.enumeration = enumeration;
+        this.enumConstants = Arrays.asList(enumeration.getEnumConstants());
     }
 
     /**
@@ -60,7 +59,7 @@ public class EnumRandomizer<E extends Enum<E>> extends AbstractRandomizer<E> {
      */
     public EnumRandomizer(final Class<E> enumeration, final long seed) {
         super(seed);
-        this.enumeration = enumeration;
+        this.enumConstants = Arrays.asList(enumeration.getEnumConstants());
     }
 
     /**
@@ -68,16 +67,12 @@ public class EnumRandomizer<E extends Enum<E>> extends AbstractRandomizer<E> {
      *
      * @param enumeration    the enumeration from which this randomizer will generate random values
      * @param excludedValues the values to exclude from random picking
-     * @throws IllegalArgumentException when excludedValues contains all enumeration values
+     * @throws IllegalArgumentException when excludedValues contains all enumeration values,
+     *                                  ie all elements from the enumeration are excluded
      */
-    public EnumRandomizer(final Class<E> enumeration, E... excludedValues) throws IllegalArgumentException {
-        super();
-        this.enumeration = enumeration;
-        this.excludedValues = excludedValues;
-        boolean excludedValuesIncludeAllValues = Arrays.asList(excludedValues).containsAll(Arrays.asList(enumeration.getEnumConstants()));
-        if (excludedValuesIncludeAllValues) {
-            throw new IllegalArgumentException("No enum element available for random picking.");
-        }
+    public EnumRandomizer(final Class<E> enumeration, final E... excludedValues) throws IllegalArgumentException {
+        checkExcludedValues(enumeration, excludedValues);
+        this.enumConstants = getFilteredList(enumeration, excludedValues);
     }
 
     /**
@@ -111,7 +106,7 @@ public class EnumRandomizer<E extends Enum<E>> extends AbstractRandomizer<E> {
      * @param <E>            the type of elements in the enumeration
      * @return a new {@link EnumRandomizer}.
      */
-    public static <E extends Enum<E>> EnumRandomizer<E> aNewEnumRandomizer(final Class<E> enumeration, E... excludedValues) {
+    public static <E extends Enum<E>> EnumRandomizer<E> aNewEnumRandomizer(final Class<E> enumeration, final E... excludedValues) {
         return new EnumRandomizer<>(enumeration, excludedValues);
     }
 
@@ -122,9 +117,15 @@ public class EnumRandomizer<E extends Enum<E>> extends AbstractRandomizer<E> {
      */
     @Override
     public E getRandomValue() {
-        List<E> enumConstants = getFilteredList();
         int randomIndex = random.nextInt(enumConstants.size());
         return enumConstants.get(randomIndex);
+    }
+
+    private void checkExcludedValues(Class<E> enumeration, E[] excludedValues) {
+        boolean excludedValuesIncludeAllValues = Arrays.asList(excludedValues).containsAll(Arrays.asList(enumeration.getEnumConstants()));
+        if (excludedValuesIncludeAllValues) {
+            throw new IllegalArgumentException("No enum element available for random picking.");
+        }
     }
 
     /**
@@ -132,7 +133,7 @@ public class EnumRandomizer<E extends Enum<E>> extends AbstractRandomizer<E> {
      *
      * @return the enumeration values minus those excluded.
      */
-    private List<E> getFilteredList() {
+    private List<E> getFilteredList(Class<E> enumeration, E... excludedValues) {
         List<E> filteredValues = new ArrayList<>();
         Collections.addAll(filteredValues, enumeration.getEnumConstants());
         if (excludedValues != null) {
