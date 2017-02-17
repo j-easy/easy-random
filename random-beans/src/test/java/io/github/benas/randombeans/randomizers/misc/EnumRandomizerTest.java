@@ -28,9 +28,6 @@ import static io.github.benas.randombeans.randomizers.misc.EnumRandomizerTest.Ge
 import static org.assertj.core.api.Assertions.assertThat;
 import io.github.benas.randombeans.randomizers.AbstractRandomizerTest;
 
-import java.util.List;
-import java.util.NoSuchElementException;
-
 import org.junit.Test;
 
 public class EnumRandomizerTest extends AbstractRandomizerTest<EnumRandomizerTest.Gender> {
@@ -49,29 +46,17 @@ public class EnumRandomizerTest extends AbstractRandomizerTest<EnumRandomizerTes
         MALE, FEMALE
     }
 
-	@Test
-	public void should_return_a_list_values_which_does_not_contain_the_excluded_ones() {
-		AnEnumeration anUnwantedValue = AnEnumeration.J;
-		AnEnumeration anotherUnwantedValue = AnEnumeration.N;
-		List<AnEnumeration> elements = aNewEnumRandomizer(AnEnumeration.class, anUnwantedValue, anotherUnwantedValue).getFilteredList();
-		assertThat(elements).doesNotContain(anUnwantedValue);
-		assertThat(elements).doesNotContain(anotherUnwantedValue);
-	}
 
 	@Test
 	public void should_return_a_value_different_from_the_excluded_one() {
-		AnEnumeration valueToExclude = AnEnumeration.J;
-		AnEnumeration randomElement = aNewEnumRandomizer(AnEnumeration.class, valueToExclude).getRandomValue();
+		Gender valueToExclude = Gender.MALE;
+		Gender randomElement = aNewEnumRandomizer(Gender.class, valueToExclude).getRandomValue();
 		assertThat(randomElement).isNotNull();
 		assertThat(randomElement).isNotEqualTo(valueToExclude);
 	}
 
-	@Test(expected = NoSuchElementException.class)
+	@Test(expected = IllegalArgumentException.class)
 	public void should_throw_an_exception_when_all_values_are_excluded() {
-		aNewEnumRandomizer(AnEnumeration.class, AnEnumeration.values()).getRandomValue();
-	}
-
-	private enum AnEnumeration {
-		A, J, N, S, E, Q, T;
+		aNewEnumRandomizer(Gender.class, Gender.values());
 	}
 }

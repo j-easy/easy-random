@@ -27,9 +27,9 @@ import io.github.benas.randombeans.api.Randomizer;
 import io.github.benas.randombeans.randomizers.AbstractRandomizer;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
-import java.util.NoSuchElementException;
 
 /**
  * A {@link Randomizer} that generates a random value from a given {@link Enum}.
@@ -69,13 +69,19 @@ public class EnumRandomizer<E extends Enum<E>> extends AbstractRandomizer<E> {
 	 * @param enumeration
 	 *            the enumeration from which this randomizer will generate
 	 *            random values
-	 * @param seed
-	 *            the initial seed
+	 * @param excludedValues
+	 *            the values to exclude from random picking
+	 * @throws IllegalArgumentException
+	 *             when excludedValues contains all enumeration values
 	 */
-	public EnumRandomizer(final Class<E> enumeration, E... excludedValues) {
+	public EnumRandomizer(final Class<E> enumeration, E... excludedValues) throws IllegalArgumentException {
 		super();
 		this.enumeration = enumeration;
 		this.excludedValues = excludedValues;
+		boolean excludedValuesIncludeAllValues = Arrays.asList(excludedValues).containsAll(Arrays.asList(enumeration.getEnumConstants()));
+		if (excludedValuesIncludeAllValues) {
+			throw new IllegalArgumentException("No enum element available for random picking.");
+		}
 	}
 
     /**
@@ -121,21 +127,12 @@ public class EnumRandomizer<E extends Enum<E>> extends AbstractRandomizer<E> {
 	/**
 	 * Get a random value within an enumeration or an enumeration subset (when
 	 * values are excluded)
-	 *
-	 * @param enumClass
-	 *            enum class in which a random value is picked
-	 * @param excludedValues
-	 *            the values to exclude from the random picking
+	 * 
 	 * @return a random value within the enumeration
-	 * @throws NoSuchElementException
-	 *             when no value is available in the subset
 	 */
 	@Override
-	public E getRandomValue() throws NoSuchElementException {
+	public E getRandomValue() {
 		List<E> enumConstants = getFilteredList();
-		if (enumConstants.isEmpty()) {
-			throw new NoSuchElementException("No enum element available for random picking.");
-		}
 		int randomIndex = random.nextInt(enumConstants.size());
 		return enumConstants.get(randomIndex);
 	}
@@ -143,14 +140,9 @@ public class EnumRandomizer<E extends Enum<E>> extends AbstractRandomizer<E> {
 	/**
 	 * Get a subset of enumeration
 	 *
-	 * @param enumClass
-	 *            the enumeration class in which values are picked
-	 * @param excludedValues
-	 *            the values to exclude from the subset
-	 * @return
+	 * @return the enumeration values minus those excluded.
 	 */
-	@SuppressWarnings("unchecked")
-	protected List<E> getFilteredList() {
+	private List<E> getFilteredList() {
 		List<E> filteredValues = new ArrayList<>();
 		Collections.addAll(filteredValues, enumeration.getEnumConstants());
 		if (excludedValues != null) {
