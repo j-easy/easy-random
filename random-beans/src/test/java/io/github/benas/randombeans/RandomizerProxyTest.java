@@ -23,25 +23,17 @@
  */
 package io.github.benas.randombeans;
 
-import io.github.benas.randombeans.api.EnhancedRandom;
 import io.github.benas.randombeans.api.Randomizer;
-import io.github.benas.randombeans.beans.Person;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-import org.mockito.Mock;
 import org.mockito.junit.MockitoJUnitRunner;
 
 import java.util.function.Supplier;
 
-import static io.github.benas.randombeans.EnhancedRandomBuilder.aNewEnhancedRandomBuilder;
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.mockito.Mockito.when;
 
 @RunWith(MockitoJUnitRunner.class)
 public class RandomizerProxyTest {
-
-    @Mock
-    private Supplier<String> supplier;
 
     private  static final String FOO = "foo";
 
@@ -57,23 +49,16 @@ public class RandomizerProxyTest {
         assertThat(randomizer.getRandomValue()).isInstanceOf(String.class).isEqualTo(FOO);
     }
 
-    // FIXME moved from EnhancedRandomIpmlTest, duplicate with theRandomizerProxyShouldBehaveLikeTheSupplier test ?
     @Test
-    public void supplierShouldBehaveLikeRandomizer() {
+    public void theRandomizerProxyShouldBehaveLikeTheSupplierDefinedWithLambda() throws Exception {
         // Given
-        EnhancedRandom enhancedRandom = aNewEnhancedRandomBuilder().randomize(String.class, supplier).build();
+        Supplier<String> supplier = () -> FOO;
 
         // When
-        when(supplier.get()).thenReturn(FOO);
-        Person actual = enhancedRandom.nextObject(Person.class);
+        Randomizer<?> randomizer = RandomizerProxy.asRandomizer(supplier);
 
         // Then
-        assertThat(actual).isNotNull();
-        assertThat(actual.getPhoneNumber()).isEqualTo(FOO);
-        assertThat(actual.getName()).isEqualTo(FOO);
-        assertThat(actual.getEmail()).isEqualTo(FOO);
-        assertThat(actual.getEmail()).isEqualTo(FOO);
-        assertThat(actual.getExcluded()).isNull();
+        assertThat(randomizer.getRandomValue()).isInstanceOf(String.class).isEqualTo(FOO);
     }
 
     private static class MySupplier implements Supplier<String> {
