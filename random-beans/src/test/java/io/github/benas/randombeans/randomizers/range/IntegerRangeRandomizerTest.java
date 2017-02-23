@@ -23,6 +23,9 @@
  */
 package io.github.benas.randombeans.randomizers.range;
 
+import io.github.benas.randombeans.EnhancedRandomBuilder;
+import io.github.benas.randombeans.api.EnhancedRandom;
+import io.github.benas.randombeans.beans.Street;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -73,6 +76,30 @@ public class IntegerRangeRandomizerTest extends AbstractRangeRandomizerTest<Inte
         Integer i = integerRangeRandomizer.getRandomValue();
 
         then(i).isEqualTo(7);
+    }
+
+    /*
+     * Integration tests
+     */
+
+    @Test
+    public void generatedValueShouldBeWithinSpecifiedRange_whenUsedToRandomizeIntegerType() throws Exception {
+        EnhancedRandom enhancedRandom = EnhancedRandomBuilder.aNewEnhancedRandomBuilder()
+                .randomize(Integer.class, new IntegerRangeRandomizer(min, max))
+                .build();
+
+        Integer integer = enhancedRandom.nextObject(Integer.class);
+        assertThat(integer).isBetween(min, max);
+    }
+
+    @Test
+    public void generatedValueShouldBeWithinSpecifiedRange_whenUsedToRandomizeNonIntegerType() throws Exception {
+        EnhancedRandom enhancedRandom = EnhancedRandomBuilder.aNewEnhancedRandomBuilder()
+                .randomize(Integer.class, new IntegerRangeRandomizer(min, max))
+                .build();
+
+        Street street = enhancedRandom.nextObject(Street.class);
+        assertThat(street.getNumber()).isBetween(min, max);
     }
 
 }
