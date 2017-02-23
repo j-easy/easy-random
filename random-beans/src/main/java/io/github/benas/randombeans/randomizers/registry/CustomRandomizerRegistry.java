@@ -28,6 +28,7 @@ import io.github.benas.randombeans.annotation.Priority;
 import io.github.benas.randombeans.api.EnhancedRandomParameters;
 import io.github.benas.randombeans.api.Randomizer;
 import io.github.benas.randombeans.api.RandomizerRegistry;
+import io.github.benas.randombeans.util.ReflectionUtils;
 
 import java.lang.reflect.Field;
 import java.util.HashMap;
@@ -60,12 +61,18 @@ public class CustomRandomizerRegistry extends AbstractRandomizerRegistry impleme
                 return customFieldRandomizersRegistry.get(fieldDefinition);
             }
         }
-        return customTypeRandomizersRegistry.get(field.getType());
+        return getRandomizer(field.getType());
     }
 
     @Override
     public Randomizer<?> getRandomizer(Class<?> type) {
-        return customTypeRandomizersRegistry.get(type);
+        // issue 241: primitive type were ignored: try to get randomizer by primtive type, if not, then try by wrapper type
+        Randomizer<?> randomizer = customTypeRandomizersRegistry.get(type);
+        if( randomizer == null) {
+            Class<?> wrapperType = type.isPrimitive() ? ReflectionUtils.getWrapperType(type) : type;
+            randomizer =  customTypeRandomizersRegistry.get(wrapperType);
+        }
+        return randomizer;
     }
 
     public <T, F, R> void registerRandomizer(final FieldDefinition<T,F> fieldDefinition, final Randomizer<R> randomizer) {

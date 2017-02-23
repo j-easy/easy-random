@@ -67,7 +67,7 @@ class FieldPopulator {
     }
 
     void populateField(final Object target, final Field field, final RandomizationContext context) throws IllegalAccessException {
-        Randomizer<?> randomizer = randomizerProvider.getRandomizerByField(field);
+        Randomizer<?> randomizer = getRandomizer(field);
         if (randomizer instanceof SkipRandomizer) {
             return;
         }
@@ -88,6 +88,15 @@ class FieldPopulator {
             setProperty(target, field, value);
         }
         context.popStackItem();
+    }
+
+    private Randomizer<?> getRandomizer(Field field) {
+        // issue 241: if there is no custom randomizer by field, then check by type
+        Randomizer<?> randomizer = randomizerProvider.getRandomizerByField(field);
+        if (randomizer == null) {
+            randomizer = randomizerProvider.getRandomizerByType(field.getType());
+        }
+        return randomizer;
     }
 
     private Object generateRandomValue(final Field field, final RandomizationContext context) {

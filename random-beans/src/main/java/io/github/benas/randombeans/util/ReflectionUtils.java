@@ -111,6 +111,41 @@ public class ReflectionUtils {
     }
 
     /**
+     * Get wrapper type of a primitive type.
+     *
+     * @param primitiveType to get its wrapper type
+     * @return the wrapper type of the given primitive type
+     */
+    public Class<?> getWrapperType(Class<?> primitiveType) {
+        // FIXME is there a better way to do this?
+        if (Byte.TYPE.equals(primitiveType)) {
+            return Byte.class;
+        }
+        if (Short.TYPE.equals(primitiveType)) {
+            return Short.class;
+        }
+        if (Integer.TYPE.equals(primitiveType)) {
+            return Integer.class;
+        }
+        if (Long.TYPE.equals(primitiveType)) {
+            return Long.class;
+        }
+        if (Double.TYPE.equals(primitiveType)) {
+            return Double.class;
+        }
+        if (Float.TYPE.equals(primitiveType)) {
+            return Float.class;
+        }
+        if (Boolean.TYPE.equals(primitiveType)) {
+            return Boolean.class;
+        }
+        if (Character.TYPE.equals(primitiveType)) {
+            return Character.class;
+        }
+        return primitiveType; // if not primitive, return it as is
+    }
+
+    /**
      * Check if a field has a primitive type and matching default value which is set by the compiler.
      *
      * @param object instance to get the field value of
