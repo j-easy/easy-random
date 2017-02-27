@@ -26,6 +26,7 @@ package io.github.benas.randombeans.randomizers.range;
 import io.github.benas.randombeans.api.Randomizer;
 
 import java.math.BigDecimal;
+import java.math.RoundingMode;
 
 /**
  * Generate a random {@link BigDecimal} in the given range.
@@ -35,6 +36,7 @@ import java.math.BigDecimal;
 public class BigDecimalRangeRandomizer implements Randomizer<BigDecimal> {
 
     private final LongRangeRandomizer delegate;
+    private Integer scale;
 
     /**
      * Create a new {@link BigDecimalRangeRandomizer}.
@@ -55,6 +57,18 @@ public class BigDecimalRangeRandomizer implements Randomizer<BigDecimal> {
      */
     public BigDecimalRangeRandomizer(final Long min, final Long max, final long seed) {
         delegate = new LongRangeRandomizer(min, max, seed);
+    }
+
+    /**
+     * Create a new {@link BigDecimalRangeRandomizer}. The default rounding mode is {@link RoundingMode#HALF_UP}.
+     *
+     * @param min   min value
+     * @param max   max value
+     * @param scale of the {@code BigDecimal} value to be returned.
+     */
+    public BigDecimalRangeRandomizer(final Long min, final Long max, final Integer scale) {
+        delegate = new LongRangeRandomizer(min, max);
+        this.scale = scale;
     }
 
     /**
@@ -80,8 +94,24 @@ public class BigDecimalRangeRandomizer implements Randomizer<BigDecimal> {
         return new BigDecimalRangeRandomizer(min, max, seed);
     }
 
+    /**
+     * Create a new {@link BigDecimalRangeRandomizer}.The default rounding mode is {@link RoundingMode#HALF_UP}.
+     *
+     * @param min   min value
+     * @param max   max value
+     * @param scale of the {@code BigDecimal} value to be returned.
+     * @return a new {@link BigDecimalRangeRandomizer}.
+     */
+    public static BigDecimalRangeRandomizer aNewBigDecimalRangeRandomizer(final Long min, final Long max, final Integer scale) {
+        return new BigDecimalRangeRandomizer(min, max, scale);
+    }
+
     @Override
     public BigDecimal getRandomValue() {
-        return new BigDecimal(delegate.getRandomValue());
+        BigDecimal randomValue = new BigDecimal(delegate.getRandomValue());
+        if (scale != null) {
+            randomValue = randomValue.setScale(this.scale, RoundingMode.HALF_UP);
+        }
+        return randomValue;
     }
 }
