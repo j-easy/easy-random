@@ -26,6 +26,7 @@ package io.github.benas.randombeans.randomizers.number;
 import io.github.benas.randombeans.api.Randomizer;
 
 import java.math.BigDecimal;
+import java.math.RoundingMode;
 
 /**
  * Generate a random {@link BigDecimal}.
@@ -35,6 +36,7 @@ import java.math.BigDecimal;
 public class BigDecimalRandomizer implements Randomizer<BigDecimal> {
 
     private final DoubleRandomizer delegate;
+    private Integer scale;
 
     /**
      * Create a new {@link BigDecimalRandomizer}.
@@ -50,6 +52,16 @@ public class BigDecimalRandomizer implements Randomizer<BigDecimal> {
      */
     public BigDecimalRandomizer(final long seed) {
         delegate = new DoubleRandomizer(seed);
+    }
+
+    /**
+     * Create a new {@link BigDecimalRandomizer}. The default rounding mode is {@link RoundingMode#HALF_UP}.
+     *
+     * @param scale of the {@code BigDecimal} value to be returned.
+     */
+    public BigDecimalRandomizer(final Integer scale) {
+        delegate = new DoubleRandomizer();
+        this.scale = scale;
     }
 
     /**
@@ -70,9 +82,23 @@ public class BigDecimalRandomizer implements Randomizer<BigDecimal> {
     public static BigDecimalRandomizer aNewBigDecimalRandomizer(final long seed) {
         return new BigDecimalRandomizer(seed);
     }
-    
+
+    /**
+     * Create a new {@link BigDecimalRandomizer}.The default rounding mode is {@link RoundingMode#HALF_UP}.
+     *
+     * @param scale of the {@code BigDecimal} value to be returned.
+     * @return a new {@link BigDecimalRandomizer}.
+     */
+    public static BigDecimalRandomizer aNewBigDecimalRandomizer(final Integer scale) {
+        return new BigDecimalRandomizer(scale);
+    }
+
     @Override
     public BigDecimal getRandomValue() {
-        return new BigDecimal(delegate.getRandomValue());
+        BigDecimal randomValue = new BigDecimal(delegate.getRandomValue());
+        if (scale != null) {
+            randomValue = randomValue.setScale(this.scale, RoundingMode.HALF_UP);
+        }
+        return randomValue;
     }
 }

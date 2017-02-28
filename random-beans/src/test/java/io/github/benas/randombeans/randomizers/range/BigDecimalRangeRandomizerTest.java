@@ -72,10 +72,34 @@ public class BigDecimalRangeRandomizerTest extends AbstractRangeRandomizerTest<B
     public void shouldAlwaysGenerateTheSameValueForTheSameSeed() {
         // given
         BigDecimalRangeRandomizer bigDecimalRangeRandomizer = aNewBigDecimalRangeRandomizer(min, max, SEED);
-        
+
         // when
         BigDecimal bigDecimal = bigDecimalRangeRandomizer.getRandomValue();
 
         then(bigDecimal).isEqualTo(new BigDecimal("7"));
+    }
+
+    @Test
+    public void generatedValueShouldHaveProvidedPositiveScale() {
+        // given
+        Integer scale = 2;
+        BigDecimalRangeRandomizer bigDecimalRangeRandomizer = aNewBigDecimalRangeRandomizer(min, max, scale);
+
+        // when
+        BigDecimal bigDecimal = bigDecimalRangeRandomizer.getRandomValue();
+
+        then(bigDecimal.scale()).isEqualTo(scale);
+    }
+
+    @Test
+    public void generatedValueShouldHaveProvidedNegativeScale() {
+        // given
+        Integer scale = -2;
+        BigDecimalRangeRandomizer bigDecimalRangeRandomizer = aNewBigDecimalRangeRandomizer(min, max, scale);
+
+        // when
+        BigDecimal bigDecimal = bigDecimalRangeRandomizer.getRandomValue();
+
+        then(bigDecimal.scale()).isEqualTo(scale);
     }
 }

@@ -178,6 +178,10 @@
             <name>euZebe</name>
             <url>https://github.com/euzebe</url>
         </contributor>
+        <contributor>
+            <name>Petromir Dzhunev</name>
+            <url>https://github.com/petromir</url>
+        </contributor>
     </contributors>
 
     <dependencyManagement>

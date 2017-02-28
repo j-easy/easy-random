@@ -146,6 +146,7 @@ If you have any question, suggestion, or feedback, do not hesitate to use the [G
 * [Vincent Potucek](https://github.com/punkratz312)
 * [Lucas Andersson](https://github.com/LucasAndersson)
 * [euZebe](https://github.com/euzebe)
+* [Petromir Dzhunev](https://github.com/petromir)
 
 Thank you all for your contributions!
 
