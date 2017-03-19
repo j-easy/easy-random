@@ -147,7 +147,7 @@ public class FieldPopulatorTest {
     }
 
     @Test
-    public void whenExceedRandomizationDepth_thenFieldNotInitialize() throws NoSuchFieldException, IllegalAccessException {
+    public void whenRandomizationDepthIsExceeded_thenFieldsAreNotInitialized() throws Exception {
         // Given
         Field name = Human.class.getDeclaredField("name");
         Human human = new Human();
