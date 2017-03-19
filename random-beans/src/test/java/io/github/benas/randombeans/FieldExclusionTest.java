@@ -284,6 +284,17 @@ public class FieldExclusionTest {
     }
 
     @Test
+    public void whenFieldIsExcluded_thenItsInlineInitializationShouldBeUsedAsIs_EvenIfBeanHasNoPublicConstructor() {
+        enhancedRandom = aNewEnhancedRandomBuilder()
+            .exclude(new FieldDefinition<>("myList", List.class, InlineInitializationBeanPrivateConstructor.class))
+            .build();
+
+        InlineInitializationBeanPrivateConstructor bean = enhancedRandom.nextObject(InlineInitializationBeanPrivateConstructor.class);
+
+        assertThat(bean.getMyList()).isEmpty();
+    }
+
+    @Test
     public void fieldsExcludedWithOneModifierShouldNotBePopulated() {
         // given
         enhancedRandom = aNewEnhancedRandomBuilder()
@@ -340,4 +351,13 @@ public class FieldExclusionTest {
         }
     }
 
+    public static class InlineInitializationBeanPrivateConstructor {
+        private List<String> myList = new ArrayList<>();
+
+        public List<String> getMyList() {
+            return myList;
+        }
+
+        private InlineInitializationBeanPrivateConstructor() {}
+    }
 }

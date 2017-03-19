@@ -28,6 +28,7 @@ import org.objenesis.ObjenesisStd;
 
 import io.github.benas.randombeans.api.ObjectGenerationException;
 
+import java.lang.reflect.Constructor;
 import java.util.Collection;
 import java.util.concurrent.ArrayBlockingQueue;
 import java.util.concurrent.DelayQueue;
@@ -69,7 +70,11 @@ class ObjectFactory {
 
     private <T> T createNewInstance(final Class<T> type) {
         try {
-            return type.newInstance();
+            Constructor<T> noArgConstructor = type.getDeclaredConstructor();
+            if (!noArgConstructor.isAccessible()) {
+                noArgConstructor.setAccessible(true);
+            }
+            return noArgConstructor.newInstance();
         } catch (Exception exception) {
             return objenesis.newInstance(type);
         }
