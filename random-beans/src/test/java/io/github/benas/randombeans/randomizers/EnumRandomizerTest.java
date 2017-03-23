@@ -37,7 +37,7 @@ public class EnumRandomizerTest {
 
     @Before
     public void setUp() {
-        randomizer = new EnumRandomizer<>(Gender.class);
+        randomizer = new EnumRandomizer(Gender.class);
     }
 
     @Test

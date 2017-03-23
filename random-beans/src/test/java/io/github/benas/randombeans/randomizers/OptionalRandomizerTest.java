@@ -47,7 +47,7 @@ public class OptionalRandomizerTest {
     @Before
     public void setUp() {
         when(randomizer.getRandomValue()).thenReturn(NAME);
-        optionalRandomizer = new OptionalRandomizer<>(randomizer, 100);
+        optionalRandomizer = new OptionalRandomizer(randomizer, 100);
     }
 
     @Test

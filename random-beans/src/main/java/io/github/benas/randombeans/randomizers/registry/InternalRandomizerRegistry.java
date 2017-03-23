@@ -49,7 +49,7 @@ import java.util.concurrent.atomic.AtomicLong;
 @Priority(-255)
 public class InternalRandomizerRegistry implements RandomizerRegistry {
 
-    private final Map<Class<?>, Randomizer<?>> randomizers = new HashMap<>();
+    private final Map<Class<?>, Randomizer<?>> randomizers = new HashMap();
 
     @Override
     public void setSeed(final long seed) {

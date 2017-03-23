@@ -39,7 +39,7 @@ import static java.util.Collections.sort;
  */
 class RandomizerProvider {
 
-    private final List<RandomizerRegistry> registries = new ArrayList<>();
+    private final List<RandomizerRegistry> registries = new ArrayList();
 
     private final Comparator<Object> priorityComparator = new PriorityComparator();
 
@@ -57,7 +57,7 @@ class RandomizerProvider {
     }
 
     private Randomizer<?> getRandomizer(final Provider provider) {
-        List<Randomizer<?>> randomizers = new ArrayList<>();
+        List<Randomizer<?>> randomizers = new ArrayList();
         for (RandomizerRegistry registry : registries) {
             Randomizer<?> randomizer = provider.getRandomizer(registry);
             if (randomizer != null) {

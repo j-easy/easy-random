@@ -79,7 +79,7 @@ public class MapRandomizer<K, V> implements Randomizer<Map<K, V>> {
      * @param valueRandomizer the randomizer for values
      */
     public static <K, V> MapRandomizer aNewMapRandomizer(final Randomizer<K> keyRandomizer, final Randomizer<V> valueRandomizer) {
-        return new MapRandomizer<>(keyRandomizer, valueRandomizer, abs(aNewByteRandomizer().getRandomValue()));
+        return new MapRandomizer(keyRandomizer, valueRandomizer, abs(aNewByteRandomizer().getRandomValue()));
     }
 
     /**
@@ -90,12 +90,12 @@ public class MapRandomizer<K, V> implements Randomizer<Map<K, V>> {
      * @param nbEntries       the number of entries to generate
      */
     public static <K, V> MapRandomizer aNewMapRandomizer(final Randomizer<K> keyRandomizer, final Randomizer<V> valueRandomizer, final int nbEntries) {
-        return new MapRandomizer<>(keyRandomizer, valueRandomizer, nbEntries);
+        return new MapRandomizer(keyRandomizer, valueRandomizer, nbEntries);
     }
 
     @Override
     public Map<K, V> getRandomValue() {
-        Map<K, V> result = new HashMap<>();
+        Map<K, V> result = new HashMap();
         for (int i = 0; i < nbElements; i++) {
             result.put(keyRandomizer.getRandomValue(), valueRandomizer.getRandomValue());
         }

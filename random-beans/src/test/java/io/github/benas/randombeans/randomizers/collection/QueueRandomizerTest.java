@@ -45,7 +45,7 @@ public class QueueRandomizerTest {
 
     @Before
     public void setUp() throws Exception {
-        queueRandomizer = new QueueRandomizer<>(randomizer, 3);
+        queueRandomizer = new QueueRandomizer(randomizer, 3);
     }
 
     @Test
@@ -57,7 +57,7 @@ public class QueueRandomizerTest {
 
     @Test(expected = IllegalArgumentException.class)
     public void nbElementsShouldBePositive() {
-        queueRandomizer = new QueueRandomizer<>(randomizer, -3);
+        queueRandomizer = new QueueRandomizer(randomizer, -3);
     }
 
 }

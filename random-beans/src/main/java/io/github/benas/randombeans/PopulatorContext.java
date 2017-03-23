@@ -49,15 +49,15 @@ class PopulatorContext {
     private Stack<PopulatorContextStackItem> stack;
 
     PopulatorContext(final String... excludedFields) {
-        populatedBeans = new IdentityHashMap<>();
-        stack = new Stack<>();
+        populatedBeans = new IdentityHashMap();
+        stack = new Stack();
         this.excludedFields = excludedFields;
     }
 
     void addPopulatedBean(final Class<?> type, Object object) {
         List<Object> objects = populatedBeans.get(type);
         if (objects == null) {
-            objects = new ArrayList<>(OBJECT_POOL_SIZE);
+            objects = new ArrayList(OBJECT_POOL_SIZE);
         }
         if (objects.size() < OBJECT_POOL_SIZE) {
             objects.add(object);
@@ -96,7 +96,7 @@ class PopulatorContext {
     }
 
     List<Field> getStackedFields() {
-        List<Field> fields = new ArrayList<>();
+        List<Field> fields = new ArrayList();
         for (PopulatorContextStackItem stackItem : stack) {
             fields.add(stackItem.getField());
         }

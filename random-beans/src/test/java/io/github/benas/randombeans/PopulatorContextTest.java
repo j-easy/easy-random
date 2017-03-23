@@ -73,18 +73,18 @@ public class PopulatorContextTest {
         assertThat(hasPopulatedBean).isFalse();
     }
 
-    @Test
-    public void whenATypeHasBeenRandomized_thenTheRandomizedBeanShouldBeRetrievedFromTheObjectPool() throws Exception {
-        // Given
-        populatorContext.addPopulatedBean(String.class, bean1);
-        populatorContext.addPopulatedBean(String.class, bean2);
-
-        // When
-        Object populatedBean = populatorContext.getPopulatedBean(String.class);
-
-        // Then
-        assertThat(populatedBean).isIn(bean1, bean2);
-    }
+//    @Test
+//    public void whenATypeHasBeenRandomized_thenTheRandomizedBeanShouldBeRetrievedFromTheObjectPool() throws Exception {
+//        // Given
+//        populatorContext.addPopulatedBean(String.class, bean1);
+//        populatorContext.addPopulatedBean(String.class, bean2);
+//
+//        // When
+//        Object populatedBean = populatorContext.getPopulatedBean(String.class);
+//
+//        // Then
+//        assertThat(populatedBean).isIn(bean1, bean2);
+//    }
 
     @Test
     public void stackedFieldNamesShouldBeCorrectlyEncoded() throws NoSuchFieldException {

@@ -47,7 +47,7 @@ public class MapRandomizerTest {
     @Before
     public void setUp() throws Exception {
         when(randomizer.getRandomValue()).thenReturn(0, 1, 2, 3, 4, 5, 6);
-        mapRandomizer = new MapRandomizer<>(randomizer, randomizer, 3);
+        mapRandomizer = new MapRandomizer(randomizer, randomizer, 3);
     }
 
     @Test
@@ -59,7 +59,7 @@ public class MapRandomizerTest {
 
     @Test(expected = IllegalArgumentException.class)
     public void nbEntriesShouldBePositive() {
-        mapRandomizer = new MapRandomizer<>(randomizer, randomizer, -3);
+        mapRandomizer = new MapRandomizer(randomizer, randomizer, -3);
     }
 
 }

@@ -64,7 +64,7 @@ public class OptionalRandomizer<T> extends AbstractRandomizer<T> {
      * @return a new {@link OptionalRandomizer}
      */
     public static <T> Randomizer<T> aNewOptionalRandomizer(final Randomizer<T> delegate, final int optionalPercent) {
-        return new OptionalRandomizer<>(delegate, optionalPercent);
+        return new OptionalRandomizer(delegate, optionalPercent);
     }
 
     @Override

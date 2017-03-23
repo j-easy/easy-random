@@ -46,7 +46,7 @@ public abstract class ReflectionUtils {
     private static final Reflections reflections;
 
     static {
-        typeToConcreteSubTypes = new ConcurrentHashMap<>();
+        typeToConcreteSubTypes = new ConcurrentHashMap();
         reflections = new Reflections(new ConfigurationBuilder().setUrls(forJavaClassPath()));
     }
 
@@ -57,7 +57,7 @@ public abstract class ReflectionUtils {
      * @return list of declared fields
      */
     public static <T> List<Field> getDeclaredFields(T type) {
-        return new ArrayList<>(asList(type.getClass().getDeclaredFields()));
+        return new ArrayList(asList(type.getClass().getDeclaredFields()));
     }
 
     /**
@@ -67,7 +67,7 @@ public abstract class ReflectionUtils {
      * @return list of inherited fields
      */
     public static List<Field> getInheritedFields(Class<?> type) {
-        List<Field> inheritedFields = new ArrayList<>();
+        List<Field> inheritedFields = new ArrayList();
         while (type.getSuperclass() != null) {
             Class<?> superclass = type.getSuperclass();
             inheritedFields.addAll(asList(superclass.getDeclaredFields()));
@@ -246,7 +246,7 @@ public abstract class ReflectionUtils {
     public static List<Class<?>> filterSameParameterizedTypes(final List<Class<?>> types, final Type type) {
         if (type instanceof ParameterizedType) {
             Type[] fieldArugmentTypes = ((ParameterizedType) type).getActualTypeArguments();
-            List<Class<?>> typesWithSameParameterizedTypes = new ArrayList<>();
+            List<Class<?>> typesWithSameParameterizedTypes = new ArrayList();
             for (Class<?> currentConcreteType : types) {
                 List<Type[]> actualTypeArguments = getActualTypeArgumentsOfGenericInterfaces(currentConcreteType);
                 for (Type[] currentTypeArguments : actualTypeArguments) {
@@ -262,7 +262,7 @@ public abstract class ReflectionUtils {
 
     private static <T> List<Class<?>> searchForPublicConcreteSubTypesOf(final Class<T> type) {
         Set<Class<? extends T>> subTypes = reflections.getSubTypesOf(type);
-        List<Class<?>> concreteSubTypes = new ArrayList<>();
+        List<Class<?>> concreteSubTypes = new ArrayList();
         for (Class<? extends T> currentSubType : subTypes) {
             if (isPublic(currentSubType) && !(isAbstract(currentSubType))) {
                 concreteSubTypes.add(currentSubType);
@@ -272,7 +272,7 @@ public abstract class ReflectionUtils {
     }
 
     private static List<Type[]> getActualTypeArgumentsOfGenericInterfaces(final Class<?> type) {
-        List<Type[]> actualTypeArguments = new ArrayList<>();
+        List<Type[]> actualTypeArguments = new ArrayList();
         Type[] genericInterfaceTypes = type.getGenericInterfaces();
         for (Type currentGenericInterfaceType : genericInterfaceTypes) {
             if (currentGenericInterfaceType instanceof ParameterizedType) {

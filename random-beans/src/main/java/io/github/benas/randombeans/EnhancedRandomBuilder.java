@@ -51,7 +51,7 @@ public class EnhancedRandomBuilder {
 
     private EnhancedRandomBuilder() {
         customRandomizerRegistry = new CustomRandomizerRegistry();
-        userRegistries = new LinkedHashSet<>();
+        userRegistries = new LinkedHashSet<RandomizerRegistry>();
         scanClasspathForConcreteTypes = false;
         seed = DEFAULT_SEED;
     }
@@ -129,7 +129,7 @@ public class EnhancedRandomBuilder {
      * @return a configured {@link EnhancedRandom} instance
      */
     public EnhancedRandom build() {
-        LinkedHashSet<RandomizerRegistry> registries = new LinkedHashSet<>();
+        LinkedHashSet<RandomizerRegistry> registries = new LinkedHashSet<RandomizerRegistry>();
         registries.add(customRandomizerRegistry); // programatically registered randomizers through randomize()
         registries.addAll(userRegistries); // programatically registered registries through registerRandomizerRegistry()
         registries.addAll(loadRegistries()); // registries added to classpath through the SPI
@@ -143,7 +143,7 @@ public class EnhancedRandomBuilder {
     }
 
     private Collection<RandomizerRegistry> loadRegistries() {
-        List<RandomizerRegistry> registries = new ArrayList<>();
+        List<RandomizerRegistry> registries = new ArrayList<RandomizerRegistry>();
         ServiceLoader<RandomizerRegistry> loader = ServiceLoader.load(RandomizerRegistry.class);
         for (RandomizerRegistry registry : loader) {
             registries.add(registry);

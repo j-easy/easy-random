@@ -41,7 +41,7 @@ import java.util.Map;
 @Priority(-255)
 public class JodaTimeRandomizerRegistry implements RandomizerRegistry {
 
-    private Map<Class<?>, Randomizer<?>> randomizers = new HashMap<>();
+    private Map<Class<?>, Randomizer<?>> randomizers = new HashMap();
 
     @Override
     public void setSeed(final long seed) {

@@ -62,7 +62,7 @@ public class QueueRandomizer<T> extends CollectionRandomizer<T> {
      * @param delegate the delegate {@link Randomizer} used to generate elements
      */
     public static <T> QueueRandomizer aNewQueueRandomizer(final Randomizer<T> delegate) {
-        return new QueueRandomizer<>(delegate);
+        return new QueueRandomizer<T>(delegate);
     }
 
     /**
@@ -72,12 +72,12 @@ public class QueueRandomizer<T> extends CollectionRandomizer<T> {
      * @param nbElements The number of elements to generate
      */
     public static <T> QueueRandomizer aNewQueueRandomizer(final Randomizer<T> delegate, final int nbElements) {
-        return new QueueRandomizer<>(delegate, nbElements);
+        return new QueueRandomizer<T>(delegate, nbElements);
     }
 
     @Override
     public Queue<T> getRandomValue() {
-        Queue<T> result = new LinkedList<>();
+        Queue<T> result = new LinkedList<T>();
         for (int i = 0; i < nbElements; i++) {
             result.add(getRandomElement());
         }

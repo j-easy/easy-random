@@ -62,7 +62,7 @@ public class SetRandomizer<T> extends CollectionRandomizer<T> {
      * @param delegate the {@link Randomizer} to use to generate random elements
      */
     public static <T> SetRandomizer aNewSetRandomizer(final Randomizer<T> delegate) {
-        return new SetRandomizer<>(delegate);
+        return new SetRandomizer(delegate);
     }
 
     /**
@@ -72,12 +72,12 @@ public class SetRandomizer<T> extends CollectionRandomizer<T> {
      * @param nbElements The number of elements to generate
      */
     public static <T> SetRandomizer aNewSetRandomizer(final Randomizer<T> delegate, final int nbElements) {
-        return new SetRandomizer<>(delegate, nbElements);
+        return new SetRandomizer(delegate, nbElements);
     }
 
     @Override
     public Set<T> getRandomValue() {
-        Set<T> result = new HashSet<>();
+        Set<T> result = new HashSet();
         for (int i = 0; i < nbElements; i++) {
             result.add(getRandomElement());
         }

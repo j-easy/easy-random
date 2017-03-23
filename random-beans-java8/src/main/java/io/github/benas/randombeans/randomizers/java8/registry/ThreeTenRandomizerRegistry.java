@@ -38,7 +38,7 @@ import java.util.Map;
  */
 public class ThreeTenRandomizerRegistry implements RandomizerRegistry {
 
-    private Map<Class<?>, Randomizer<?>> randomizers = new HashMap<>();
+    private Map<Class<?>, Randomizer<?>> randomizers = new HashMap();
 
     public ThreeTenRandomizerRegistry() {
         randomizers.put(java.time.Duration.class, new DurationRandomizer());

@@ -84,7 +84,7 @@ class EnhancedRandomImpl extends EnhancedRandom {
         if (size < 0) {
             throw new IllegalArgumentException("The size must be positive");
         }
-        List<T> beans = new ArrayList<>(size);
+        List<T> beans = new ArrayList<T>(size);
         for (int i = 0; i < size; i++) {
             T bean = nextObject(type, excludedFields);
             beans.add(bean);
@@ -120,7 +120,7 @@ class EnhancedRandomImpl extends EnhancedRandom {
             populateFields(fields, result, context);
 
             return result;
-        } catch (InstantiationError | Exception e) {
+        } catch (Exception  e) {
             throw new ObjectGenerationException("Unable to generate a random instance of type " + type, e);
         }
     }

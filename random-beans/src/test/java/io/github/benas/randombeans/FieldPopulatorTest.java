@@ -137,7 +137,7 @@ public class FieldPopulatorTest {
         // Given
         Field strings = MapBean.class.getDeclaredField("typedMap");
         MapBean mapBean = new MapBean();
-        Map<Integer, Person> idToPerson = new HashMap<>();
+        Map<Integer, Person> idToPerson = new HashMap();
         when(arrayPopulator.getRandomArray(strings.getType(), populatorContext)).thenReturn(idToPerson);
 
         // When

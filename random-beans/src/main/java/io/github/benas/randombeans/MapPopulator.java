@@ -64,7 +64,9 @@ class MapPopulator {
         } else {
             try {
                 map = (Map<Object, Object>) fieldType.newInstance();
-            } catch (InstantiationException | IllegalAccessException e) {
+            } catch (IllegalAccessException e) {
+                map = (Map<Object, Object>) objectFactory.createInstance(fieldType);
+            } catch (InstantiationException e) {
                 map = (Map<Object, Object>) objectFactory.createInstance(fieldType);
             }
         }
@@ -85,15 +87,15 @@ class MapPopulator {
     }
 
     Map<?, ?> getEmptyImplementationForMapInterface(final Class<?> mapInterface) {
-        Map<?, ?> map = new HashMap<>();
+        Map<?, ?> map = new HashMap();
         if (ConcurrentNavigableMap.class.isAssignableFrom(mapInterface)) {
-            map = new ConcurrentSkipListMap<>();
+            map = new ConcurrentSkipListMap();
         } else if (ConcurrentMap.class.isAssignableFrom(mapInterface)) {
-            map = new ConcurrentHashMap<>();
+            map = new ConcurrentHashMap();
         } else if (NavigableMap.class.isAssignableFrom(mapInterface)) {
-            map = new TreeMap<>();
+            map = new TreeMap();
         } else if (SortedMap.class.isAssignableFrom(mapInterface)) {
-            map = new TreeMap<>();
+            map = new TreeMap();
         }
         return map;
     }

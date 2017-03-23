@@ -78,25 +78,25 @@ class CollectionPopulator {
     }
 
     Collection<?> getEmptyImplementationForCollectionInterface(final Class<?> collectionInterface) {
-        Collection<?> collection = new ArrayList<>();
+        Collection<?> collection = new ArrayList();
         if (List.class.isAssignableFrom(collectionInterface)) {
-            collection = new ArrayList<>();
+            collection = new ArrayList();
         } else if (NavigableSet.class.isAssignableFrom(collectionInterface)) {
-            collection = new TreeSet<>();
+            collection = new TreeSet();
         } else if (SortedSet.class.isAssignableFrom(collectionInterface)) {
-            collection = new TreeSet<>();
+            collection = new TreeSet();
         } else if (Set.class.isAssignableFrom(collectionInterface)) {
-            collection = new HashSet<>();
+            collection = new HashSet();
         } else if (BlockingDeque.class.isAssignableFrom(collectionInterface)) {
-            collection = new LinkedBlockingDeque<>();
+            collection = new LinkedBlockingDeque();
         } else if (Deque.class.isAssignableFrom(collectionInterface)) {
-            collection = new ArrayDeque<>();
+            collection = new ArrayDeque();
         } else if (TransferQueue.class.isAssignableFrom(collectionInterface)) {
-            collection = new LinkedTransferQueue<>();
+            collection = new LinkedTransferQueue();
         } else if (BlockingQueue.class.isAssignableFrom(collectionInterface)) {
-            collection = new LinkedBlockingQueue<>();
+            collection = new LinkedBlockingQueue();
         } else if (Queue.class.isAssignableFrom(collectionInterface)) {
-            collection = new LinkedList<>();
+            collection = new LinkedList();
         }
         return collection;
     }

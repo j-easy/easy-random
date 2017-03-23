@@ -60,11 +60,11 @@ public class BeanValidationRandomizerRegistry implements RandomizerRegistry {
 
         Class<?> fieldType = field.getType();
         if (field.isAnnotationPresent(AssertFalse.class)) {
-            return new ConstantRandomizer<>(false);
+            return new ConstantRandomizer(false);
         }
 
         if (field.isAnnotationPresent(AssertTrue.class)) {
-            return new ConstantRandomizer<>(true);
+            return new ConstantRandomizer(true);
         }
 
         if (field.isAnnotationPresent(Null.class)) {

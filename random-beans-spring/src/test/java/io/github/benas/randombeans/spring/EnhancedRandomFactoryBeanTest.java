@@ -64,8 +64,14 @@ public class EnhancedRandomFactoryBeanTest {
     }
 
     private EnhancedRandom getEnhancedRandomFromSpringContext(String contextFileName) {
-        try (AbstractApplicationContext applicationContext = new ClassPathXmlApplicationContext(contextFileName)) {
+        AbstractApplicationContext applicationContext = null;
+        try  {
+            applicationContext= new ClassPathXmlApplicationContext(contextFileName);
             return applicationContext.getBean(EnhancedRandom.class);
+        } finally {
+            if (applicationContext != null) {
+                applicationContext.close();
+            }
         }
     }
 

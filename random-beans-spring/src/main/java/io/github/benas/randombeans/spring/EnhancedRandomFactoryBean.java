@@ -43,7 +43,7 @@ import static io.github.benas.randombeans.FieldDefinitionBuilder.field;
  */
 public class EnhancedRandomFactoryBean implements FactoryBean<EnhancedRandom> {
 
-    private List<RandomizerBean<?, ?>> randomizers = new ArrayList<>();
+    private List<RandomizerBean<?, ?>> randomizers = new ArrayList();
 
     @Override
     public EnhancedRandom getObject() throws Exception {

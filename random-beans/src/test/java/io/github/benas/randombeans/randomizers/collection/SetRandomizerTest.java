@@ -45,7 +45,7 @@ public class SetRandomizerTest {
 
     @Before
     public void setUp() throws Exception {
-        setRandomizer = new SetRandomizer<>(randomizer, 3);
+        setRandomizer = new SetRandomizer(randomizer, 3);
     }
 
     @Test
@@ -57,7 +57,7 @@ public class SetRandomizerTest {
 
     @Test(expected = IllegalArgumentException.class)
     public void nbElementsShouldBePositive() {
-        setRandomizer = new SetRandomizer<>(randomizer, -3);
+        setRandomizer = new SetRandomizer(randomizer, -3);
     }
 
 }

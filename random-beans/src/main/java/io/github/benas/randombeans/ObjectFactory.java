@@ -69,14 +69,21 @@ class ObjectFactory {
         Collection<?> collection;
         try {
             collection = (Collection<?>) fieldType.newInstance();
-        } catch (InstantiationException | IllegalAccessException e) {
-            // Creating an ArrayBlockingQueue with objenesis by-passes the constructor.
-            // This leads to inconsistent state of the collection (locks are not initialized) that causes NPE at elements insertion time..
-            if (fieldType.equals(ArrayBlockingQueue.class)) {
-                collection = new ArrayBlockingQueue<>(initialSize);
-            } else {
-                collection = (Collection<?>) objenesis.newInstance(fieldType);
-            }
+        } catch (InstantiationException e) {
+            collection = handleCreateEmptyCollectionForType(fieldType, initialSize);
+        } catch (IllegalAccessException e) {
+            collection = handleCreateEmptyCollectionForType(fieldType, initialSize);
+        }
+        return collection;
+    }
+
+    private Collection<?> handleCreateEmptyCollectionForType(Class<?> fieldType, int initialSize) {
+        Collection<?> collection;// Creating an ArrayBlockingQueue with objenesis by-passes the constructor.
+        // This leads to inconsistent state of the collection (locks are not initialized) that causes NPE at elements insertion time..
+        if (fieldType.equals(ArrayBlockingQueue.class)) {
+            collection = new ArrayBlockingQueue(initialSize);
+        } else {
+            collection = (Collection<?>) objenesis.newInstance(fieldType);
         }
         return collection;
     }
