@@ -25,7 +25,9 @@
 package io.github.benas.randombeans;
 
 import io.github.benas.randombeans.api.EnhancedRandom;
+import io.github.benas.randombeans.api.ObjectGenerationException;
 import io.github.benas.randombeans.api.Randomizer;
+import io.github.benas.randombeans.beans.AbstractBean;
 import io.github.benas.randombeans.beans.Address;
 import io.github.benas.randombeans.beans.Ape;
 import io.github.benas.randombeans.beans.ComparableBean;
@@ -155,16 +157,16 @@ public class EnhancedRandomImplTest {
         assertThat(website.getUrl()).isNotNull();
     }
 
-//    @Test(expected = ObjectGenerationException.class)
-//    public void failsToPopulateInterfacesAndAbstractClassesIfScanClasspathForConcreteTypesIsDisabled() {
-//        try {
-//            enhancedRandom = aNewEnhancedRandomBuilder().scanClasspathForConcreteTypes(false).build();
-//            enhancedRandom.nextObject(Mamals.class);
-//        } catch (Throwable t){
-//            t.printStackTrace();
-//            throw new ObjectGenerationException(t.getMessage(),t);
-//        }
-//    }
+    @Test(expected = ObjectGenerationException.class)
+    public void failsToPopulateInterfacesAndAbstractClassesIfScanClasspathForConcreteTypesIsDisabled() throws Throwable{
+        enhancedRandom = aNewEnhancedRandomBuilder().scanClasspathForConcreteTypes(false).build();
+
+        try {
+            enhancedRandom.nextObject(Mamals.class);
+        } catch (Throwable e){
+            throw e;
+        }
+    }
 
     @Test
     public void generatesConcreteTypesForInterfacesAndAbstractClassesIfScanClasspathForConcreteTypesIsEnabled() {
@@ -204,10 +206,10 @@ public class EnhancedRandomImplTest {
         enhancedRandom.nextObjects(Person.class, -2);
     }
 
-//    @Test(expected = ObjectGenerationException.class)
-//    public void whenUnableToInstantiateFieldThenShouldThrowABeanPopulationException() {
-//        enhancedRandom.nextObject(AbstractBean.class);
-//    }
+    @Test(expected = ObjectGenerationException.class)
+    public void whenUnableToInstantiateFieldThenShouldThrowABeanPopulationException() {
+        enhancedRandom.nextObject(AbstractBean.class);
+    }
 
     @Test
     public void beansWithRecursiveStructureMustNotCauseStackOverflowException() {

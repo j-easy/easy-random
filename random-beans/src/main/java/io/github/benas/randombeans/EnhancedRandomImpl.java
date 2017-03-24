@@ -120,7 +120,9 @@ class EnhancedRandomImpl extends EnhancedRandom {
             populateFields(fields, result, context);
 
             return result;
-        } catch (Exception  e) {
+        } catch (InstantiationError e) {
+            throw new ObjectGenerationException("Unable to generate a random instance of type " + type, e);
+        } catch (Exception e) {
             throw new ObjectGenerationException("Unable to generate a random instance of type " + type, e);
         }
     }

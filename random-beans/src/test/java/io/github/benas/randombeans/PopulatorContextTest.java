@@ -29,6 +29,7 @@ import io.github.benas.randombeans.beans.Person;
 import org.junit.Before;
 import org.junit.Test;
 import org.mockito.Mock;
+import org.mockito.MockitoAnnotations;
 
 import java.lang.reflect.Field;
 
@@ -45,6 +46,7 @@ public class PopulatorContextTest {
     @Before
     public void setUp() throws Exception {
         populatorContext = new PopulatorContext();
+        MockitoAnnotations.initMocks(this);
     }
 
     @Test
@@ -73,18 +75,18 @@ public class PopulatorContextTest {
         assertThat(hasPopulatedBean).isFalse();
     }
 
-//    @Test
-//    public void whenATypeHasBeenRandomized_thenTheRandomizedBeanShouldBeRetrievedFromTheObjectPool() throws Exception {
-//        // Given
-//        populatorContext.addPopulatedBean(String.class, bean1);
-//        populatorContext.addPopulatedBean(String.class, bean2);
-//
-//        // When
-//        Object populatedBean = populatorContext.getPopulatedBean(String.class);
-//
-//        // Then
-//        assertThat(populatedBean).isIn(bean1, bean2);
-//    }
+    @Test
+    public void whenATypeHasBeenRandomized_thenTheRandomizedBeanShouldBeRetrievedFromTheObjectPool() throws Exception {
+        // Given
+        populatorContext.addPopulatedBean(String.class, bean1);
+        populatorContext.addPopulatedBean(String.class, bean2);
+
+        // When
+        Object populatedBean = populatorContext.getPopulatedBean(String.class);
+
+        // Then
+        assertThat(populatedBean).isIn(bean1, bean2);
+    }
 
     @Test
     public void stackedFieldNamesShouldBeCorrectlyEncoded() throws NoSuchFieldException {
