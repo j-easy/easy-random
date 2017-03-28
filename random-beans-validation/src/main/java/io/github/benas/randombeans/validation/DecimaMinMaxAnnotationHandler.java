@@ -34,8 +34,6 @@ import java.math.BigDecimal;
 import java.math.BigInteger;
 import java.util.Random;
 
-import static io.github.benas.randombeans.validation.ReflectionUtils.*;
-
 class DecimaMinMaxAnnotationHandler implements BeanValidationAnnotationHandler {
 
     private final Random random;
@@ -46,9 +44,12 @@ class DecimaMinMaxAnnotationHandler implements BeanValidationAnnotationHandler {
 
     public Randomizer<?> getRandomizer(Field field) {
         Class<?> fieldType = field.getType();
-        if (isAnnotationPresent(field, DecimalMin.class) || isAnnotationPresent(field, DecimalMax.class)) {
-            DecimalMax decimalMaxAnnotation = getAnnotation(field, DecimalMax.class);
-            DecimalMin decimalMinAnnotation = getAnnotation(field, DecimalMin.class);
+        if (io.github.benas.randombeans.util.ReflectionUtils.isAnnotationPresent(field, DecimalMin.class) || io.github.benas.randombeans.util.ReflectionUtils
+                .isAnnotationPresent(field, DecimalMax.class)) {
+            DecimalMax decimalMaxAnnotation = io.github.benas.randombeans.util.ReflectionUtils
+                    .getAnnotation(field, DecimalMax.class);
+            DecimalMin decimalMinAnnotation = io.github.benas.randombeans.util.ReflectionUtils
+                    .getAnnotation(field, DecimalMin.class);
 
             BigDecimal maxValue = null;
             BigDecimal minValue = null;

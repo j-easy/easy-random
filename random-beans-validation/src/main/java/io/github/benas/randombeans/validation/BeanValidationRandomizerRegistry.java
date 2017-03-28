@@ -35,7 +35,6 @@ import java.lang.reflect.Method;
 import java.nio.charset.Charset;
 import java.util.HashMap;
 import java.util.Map;
-import static io.github.benas.randombeans.validation.ReflectionUtils.*;
 
 /**
  * A registry of randomizers to support fields annotated with the <a href="http://beanvalidation.org/">JSR 349</a> annotations.
@@ -66,11 +65,12 @@ public class BeanValidationRandomizerRegistry implements RandomizerRegistry {
 
     @Override
     public Randomizer<?> getRandomizer(final Field field) {
-        final Method readMethod = getReadMethod(field).orElse(null);
+        final Method readMethod = io.github.benas.randombeans.util.ReflectionUtils.getReadMethod(field).orElse(null);
         for (Map.Entry<Class<? extends Annotation>, BeanValidationAnnotationHandler> entry : annotationHandlers.entrySet()) {
             Class<? extends Annotation> annotation = entry.getKey();
             BeanValidationAnnotationHandler annotationHandler = entry.getValue();
-            if (isAnnotationPresent(field, annotation) && annotationHandler != null) {
+            if (io.github.benas.randombeans.util.ReflectionUtils
+                    .isAnnotationPresent(field, annotation) && annotationHandler != null) {
                 return annotationHandler.getRandomizer(field);
             }
         }

@@ -26,9 +26,17 @@ package io.github.benas.randombeans.util;
 import io.github.benas.randombeans.beans.*;
 import org.junit.Test;
 
+import java.lang.annotation.Documented;
+import java.lang.annotation.Retention;
+import java.lang.annotation.Target;
+import java.lang.reflect.Field;
+import java.lang.reflect.Method;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
+import static java.lang.annotation.ElementType.*;
+import static java.lang.annotation.RetentionPolicy.RUNTIME;
 import static org.assertj.core.api.Assertions.assertThat;
 
 public class ReflectionUtilsTest {
@@ -142,6 +150,39 @@ public class ReflectionUtilsTest {
         assertThat(ReflectionUtils.isPrimitiveFieldWithDefaultValue(nonDefaultValueBean, nonDefaultValueClass.getField("c"))).isFalse();
     }
 
+    @Test
+    public void testGetReadMethod() throws NoSuchFieldException {
+        assertThat(ReflectionUtils.getReadMethod(PrimitiveFieldsWithDefaultValuesBean.class.getDeclaredField("b"))).isEmpty();
+        final Optional<Method> readMethod =
+                ReflectionUtils.getReadMethod(Foo.class.getDeclaredField("bar"));
+        assertThat(readMethod).isNotNull();
+        assertThat(readMethod.get().getName()).isEqualTo("getBar");
+    }
+
+    @Test
+    public void testGetAnnotation() throws NoSuchMethodException, NoSuchFieldException {
+        Field field = AnnotatedBean.class.getDeclaredField("fieldAnnotation");
+        assertThat(ReflectionUtils.getAnnotation(field, NotNull.class)).isInstanceOf(NotNull.class);
+
+        field = AnnotatedBean.class.getDeclaredField("methodAnnotation");
+        assertThat(ReflectionUtils.getAnnotation(field, NotNull.class)).isInstanceOf(NotNull.class);
+
+        field = AnnotatedBean.class.getDeclaredField("noAnnotation");
+        assertThat(ReflectionUtils.getAnnotation(field, NotNull.class)).isNull();
+    }
+
+    @Test
+    public void testIsAnnotationPresent() throws NoSuchMethodException, NoSuchFieldException {
+        Field field = AnnotatedBean.class.getDeclaredField("fieldAnnotation");
+        assertThat(ReflectionUtils.isAnnotationPresent(field, NotNull.class)).isTrue();
+
+        field = AnnotatedBean.class.getDeclaredField("methodAnnotation");
+        assertThat(ReflectionUtils.isAnnotationPresent(field, NotNull.class)).isTrue();
+
+        field = AnnotatedBean.class.getDeclaredField("noAnnotation");
+        assertThat(ReflectionUtils.isAnnotationPresent(field, NotNull.class)).isFalse();
+    }
+
     @SuppressWarnings("unused")
     private class PrimitiveFieldsWithDefaultValuesBean {
         public boolean bool;
@@ -166,5 +207,44 @@ public class ReflectionUtilsTest {
         public char c = 'a';
     }
 
+    public static class AnnotatedBean {
+        @NotNull
+        private String fieldAnnotation;
+        private String methodAnnotation;
+        private String noAnnotation;
+
+        public String getFieldAnnotation() {
+            return fieldAnnotation;
+        }
+
+        public void setFieldAnnotation(String fieldAnnotation) {
+            this.fieldAnnotation = fieldAnnotation;
+        }
+
+        @NotNull
+        public String getMethodAnnotation() {
+            return methodAnnotation;
+        }
+
+        public void setMethodAnnotation(String methodAnnotation) {
+            this.methodAnnotation = methodAnnotation;
+        }
+
+        public String getNoAnnotation() {
+            return noAnnotation;
+        }
+
+        public void setNoAnnotation(String noAnnotation) {
+            this.noAnnotation = noAnnotation;
+        }
+    }
+
     private class Dummy { }
+
+    @Target({ METHOD, FIELD, ANNOTATION_TYPE, CONSTRUCTOR, PARAMETER })
+    @Retention(RUNTIME)
+    @Documented
+    public @interface NotNull {
+
+    }
 }
