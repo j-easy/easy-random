@@ -32,7 +32,7 @@ import java.lang.reflect.Field;
 import java.math.BigDecimal;
 import java.math.BigInteger;
 import java.util.Random;
-
+import static io.github.benas.randombeans.validation.ReflectionUtils.*;
 class MinMaxAnnotationHandler implements BeanValidationAnnotationHandler {
 
     private final Random random;
@@ -43,9 +43,9 @@ class MinMaxAnnotationHandler implements BeanValidationAnnotationHandler {
 
     public Randomizer<?> getRandomizer(Field field) {
         Class<?> fieldType = field.getType();
-        if (field.isAnnotationPresent(Max.class) || field.isAnnotationPresent(Min.class)) {
-            Max maxAnnotation = field.getAnnotation(Max.class);
-            Min minAnnotation = field.getAnnotation(Min.class);
+        if (isAnnotationPresent(field, Max.class) ||isAnnotationPresent(field, Min.class)) {
+            Max maxAnnotation = getAnnotation(field, Max.class);
+            Min minAnnotation = getAnnotation(field, Min.class);
 
             Long maxValue = null;
             Long minValue = null;

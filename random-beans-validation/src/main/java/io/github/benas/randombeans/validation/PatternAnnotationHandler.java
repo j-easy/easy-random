@@ -29,6 +29,7 @@ import io.github.benas.randombeans.randomizers.RegularExpressionRandomizer;
 import javax.validation.constraints.Pattern;
 import java.lang.reflect.Field;
 import java.util.Random;
+import static io.github.benas.randombeans.validation.ReflectionUtils.*;
 
 class PatternAnnotationHandler implements BeanValidationAnnotationHandler {
 
@@ -40,7 +41,7 @@ class PatternAnnotationHandler implements BeanValidationAnnotationHandler {
 
     public Randomizer<?> getRandomizer(Field field) {
         Class<?> fieldType = field.getType();
-        Pattern patternAnnotation = field.getAnnotation(Pattern.class);
+        Pattern patternAnnotation = getAnnotation(field, Pattern.class);
 
         final String regex = patternAnnotation.regexp();
         if (fieldType.equals(String.class)) {

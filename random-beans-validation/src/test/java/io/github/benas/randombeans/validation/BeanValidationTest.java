@@ -23,22 +23,21 @@
  */
 package io.github.benas.randombeans.validation;
 
-import static io.github.benas.randombeans.EnhancedRandomBuilder.aNewEnhancedRandom;
-import static io.github.benas.randombeans.EnhancedRandomBuilder.aNewEnhancedRandomBuilder;
-import static org.assertj.core.api.Assertions.assertThat;
-
-import java.math.BigDecimal;
-import java.util.Set;
+import io.github.benas.randombeans.api.EnhancedRandom;
+import org.junit.Before;
+import org.junit.Test;
 
 import javax.validation.ConstraintViolation;
 import javax.validation.Validation;
 import javax.validation.Validator;
 import javax.validation.ValidatorFactory;
+import java.math.BigDecimal;
+import java.util.Set;
 
-import org.junit.Before;
-import org.junit.Test;
-
-import io.github.benas.randombeans.api.EnhancedRandom;
+import static io.github.benas.randombeans.EnhancedRandomBuilder.aNewEnhancedRandom;
+import static io.github.benas.randombeans.EnhancedRandomBuilder.aNewEnhancedRandomBuilder;
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.junit.Assert.assertNotNull;
 
 public class BeanValidationTest {
 
@@ -83,6 +82,46 @@ public class BeanValidationTest {
     }
 
     @Test
+    public void generatedValuesShouldBeValidAccordingToValidationConstraintsOnMethod() {
+        BeanValidationMethodAnnotatedBean bean = enhancedRandom.nextObject(BeanValidationMethodAnnotatedBean.class);
+
+        assertThat(bean).isNotNull();
+
+        assertThat(bean.isUnsupported()).isFalse();// @AssertFalse boolean unsupported;
+
+        assertThat(bean.isActive()).isTrue();// @AssertTrue boolean active;
+
+        assertThat(bean.getUnusedString()).isNull();// @Null String unusedString;
+
+        assertThat(bean.getUsername()).isNotNull();// @NotNull String username;
+
+        assertThat(bean.getBirthday()).isInThePast();// @Past Date birthday;
+
+        assertThat(bean.getEventDate()).isInTheFuture();// @Future Date eventDate;
+
+        assertThat(bean.getMaxQuantity()).isLessThanOrEqualTo(10);// @Max(10) int maxQuantity;
+
+        assertThat(bean.getMinQuantity()).isGreaterThanOrEqualTo(5);// @Min(5) int minQuantity;
+
+        assertThat(bean.getMaxDiscount()).isLessThanOrEqualTo(new BigDecimal("30.00"));// @DecimalMax("30.00") BigDecimal maxDiscount;
+
+        assertThat(bean.getMinDiscount()).isGreaterThanOrEqualTo(new BigDecimal("5.00"));// @DecimalMin("5.00") BigDecimal minDiscount;
+
+        assertThat(bean.getMinQuantity()).isGreaterThanOrEqualTo(5);// @Min(5) int minQuantity;
+
+        assertThat(bean.getBriefMessage().length()).isBetween(2, 10);// @Size(min=2, max=10) String briefMessage;
+
+        assertThat(bean.getRegexString()).matches("[a-z]{4}");
+    }
+
+    @Test
+    public void generatedValuesForBeanWithoutReadMethod()
+            throws NoSuchFieldException, IllegalAccessException {
+        BeanValidationWithoutReadMethodBean bean = enhancedRandom.nextObject(BeanValidationWithoutReadMethodBean.class);
+        assertNotNull(bean); // Should not throw an exception
+    }
+
+        @Test
     public void shouldGenerateTheSameValueForTheSameSeed() {
         EnhancedRandom random = aNewEnhancedRandomBuilder().seed(123L).build();
  
