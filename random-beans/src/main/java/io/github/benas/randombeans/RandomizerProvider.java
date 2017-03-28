@@ -28,7 +28,12 @@ import io.github.benas.randombeans.api.Randomizer;
 import io.github.benas.randombeans.api.RandomizerRegistry;
 
 import java.lang.reflect.Field;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Comparator;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.Set;
 
 import static java.util.Collections.sort;
 
@@ -42,6 +47,14 @@ class RandomizerProvider {
     private final List<RandomizerRegistry> registries = new ArrayList();
 
     private final Comparator<Object> priorityComparator = new PriorityComparator();
+
+    private static final Randomizer NULL_RANDOMIZER = new Randomizer() {
+        @Override
+        public Object getRandomValue() {
+            return null;
+        }
+    };
+    private Map<Provider, Randomizer> providerRandomizerMap = new HashMap<Provider, Randomizer>();
 
     RandomizerProvider(final Set<RandomizerRegistry> registries) {
         this.registries.addAll(registries);
@@ -57,6 +70,15 @@ class RandomizerProvider {
     }
 
     private Randomizer<?> getRandomizer(final Provider provider) {
+        Randomizer<?> cachedRandomizer = providerRandomizerMap.get(provider);
+        if (cachedRandomizer == null) {
+            cachedRandomizer = searchForRandomizer(provider);
+            providerRandomizerMap.put(provider, cachedRandomizer);
+        }
+        return NULL_RANDOMIZER.equals(cachedRandomizer) ? null : cachedRandomizer;
+    }
+
+    private Randomizer<?> searchForRandomizer(Provider provider) {
         List<Randomizer<?>> randomizers = new ArrayList();
         for (RandomizerRegistry registry : registries) {
             Randomizer<?> randomizer = provider.getRandomizer(registry);
@@ -68,11 +90,16 @@ class RandomizerProvider {
         if (!randomizers.isEmpty()) {
             return randomizers.get(0);
         }
-        return null;
+        return NULL_RANDOMIZER;
     }
 
     private interface Provider {
         Randomizer<?> getRandomizer(RandomizerRegistry registry);
+
+        boolean equals(Object o);
+
+        int hashCode();
+
     }
 
     private class ByTypeProvider implements Provider {
@@ -87,6 +114,23 @@ class RandomizerProvider {
         public Randomizer<?> getRandomizer(final RandomizerRegistry registry) {
             return registry.getRandomizer(type);
         }
+
+        @Override
+        public boolean equals(Object o) {
+            if (this == o) return true;
+            if (o == null || getClass() != o.getClass()) return false;
+
+            ByTypeProvider that = (ByTypeProvider) o;
+
+            if (type != null ? !type.equals(that.type) : that.type != null) return false;
+
+            return true;
+        }
+
+        @Override
+        public int hashCode() {
+            return type != null ? type.hashCode() : 0;
+        }
     }
 
     private class ByFieldProvider implements Provider {
@@ -100,6 +144,23 @@ class RandomizerProvider {
         @Override
         public Randomizer<?> getRandomizer(final RandomizerRegistry registry) {
             return registry.getRandomizer(field);
+        }
+
+        @Override
+        public boolean equals(Object o) {
+            if (this == o) return true;
+            if (o == null || getClass() != o.getClass()) return false;
+
+            ByFieldProvider that = (ByFieldProvider) o;
+
+            if (field != null ? !field.equals(that.field) : that.field != null) return false;
+
+            return true;
+        }
+
+        @Override
+        public int hashCode() {
+            return field != null ? field.hashCode() : 0;
         }
     }
 }
