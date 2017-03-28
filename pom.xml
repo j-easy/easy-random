@@ -182,6 +182,10 @@
             <name>Petromir Dzhunev</name>
             <url>https://github.com/petromir</url>
         </contributor>
+        <contributor>
+            <name>de-x</name>
+            <url>http://huningd.github.io</url>
+        </contributor>
     </contributors>
 
     <dependencyManagement>
