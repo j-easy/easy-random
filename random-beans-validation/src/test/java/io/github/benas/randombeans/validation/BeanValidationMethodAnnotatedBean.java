@@ -53,9 +53,6 @@ class BeanValidationMethodAnnotatedBean {
 
     private String regexString;
 
-    public BeanValidationMethodAnnotatedBean() {
-    }
-
     @AssertFalse
     public boolean isUnsupported() {
         return unsupported;
@@ -157,14 +154,14 @@ class BeanValidationMethodAnnotatedBean {
 
     @Pattern(regexp="[a-z]{4}")
     public String getRegexString() {
-		return regexString;
-	}
+        return regexString;
+    }
 
-	public void setRegexString(String regexString) {
-		this.regexString = regexString;
-	}
+    public void setRegexString(String regexString) {
+        this.regexString = regexString;
+    }
 
-	@Override
+    @Override
     public String toString() {
         final StringBuilder sb = new StringBuilder("BeanValidationAnnotatedBean{");
         sb.append("unsupported=").append(unsupported);

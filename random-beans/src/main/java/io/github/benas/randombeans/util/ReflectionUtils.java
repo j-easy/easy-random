@@ -387,7 +387,7 @@ public class ReflectionUtils {
      * @return given annotation if field or read method has this annotation or null.
      */
     public static <T extends Annotation> T getAnnotation(Field field, Class<T> annotationType) {
-        return field.getAnnotation(annotationType)==null ? getAnnotationFromReadMethod(getReadMethod(field).orElse(null),
+        return field.getAnnotation(annotationType) == null ? getAnnotationFromReadMethod(getReadMethod(field).orElse(null),
                 annotationType) : field.getAnnotation(annotationType);
     }
 
@@ -409,23 +409,18 @@ public class ReflectionUtils {
      * @return Optional of read method or empty if field has no read method
      */
     public static Optional<Method> getReadMethod(Field field) {
-        Optional<Method> readMethod;
         try {
             PropertyDescriptor props = new PropertyDescriptor(field.getName(), field.getDeclaringClass());
             return Optional.of(props.getReadMethod());
         } catch (IntrospectionException e) {
             // Ignore fields without a read method.
-            readMethod = Optional.empty();
+            return Optional.empty();
         }
-        return readMethod;
     }
 
-
-    private static <T extends Annotation> T getAnnotationFromReadMethod(Method readMethod,
-            Class<T> clazz) {
-        return readMethod == null? null: readMethod.getAnnotation(clazz);
+    private static <T extends Annotation> T getAnnotationFromReadMethod(Method readMethod, Class<T> clazz) {
+        return readMethod == null ? null : readMethod.getAnnotation(clazz);
     }
-
 
     private static List<Type[]> getActualTypeArgumentsOfGenericInterfaces(final Class<?> type) {
         List<Type[]> actualTypeArguments = new ArrayList<>();

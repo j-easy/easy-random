@@ -37,7 +37,6 @@ import java.util.Set;
 import static io.github.benas.randombeans.EnhancedRandomBuilder.aNewEnhancedRandom;
 import static io.github.benas.randombeans.EnhancedRandomBuilder.aNewEnhancedRandomBuilder;
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.junit.Assert.assertNotNull;
 
 public class BeanValidationTest {
 
@@ -115,13 +114,13 @@ public class BeanValidationTest {
     }
 
     @Test
-    public void generatedValuesForBeanWithoutReadMethod()
-            throws NoSuchFieldException, IllegalAccessException {
+    public void generatedValuesForBeanWithoutReadMethod() {
         BeanValidationWithoutReadMethodBean bean = enhancedRandom.nextObject(BeanValidationWithoutReadMethodBean.class);
-        assertNotNull(bean); // Should not throw an exception
+ 
+        assertThat(bean).hasNoNullFieldsOrProperties();
     }
 
-        @Test
+    @Test
     public void shouldGenerateTheSameValueForTheSameSeed() {
         EnhancedRandom random = aNewEnhancedRandomBuilder().seed(123L).build();
  
