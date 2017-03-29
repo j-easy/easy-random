@@ -25,6 +25,7 @@ package io.github.benas.randombeans.validation;
 
 import io.github.benas.randombeans.api.Randomizer;
 import io.github.benas.randombeans.randomizers.range.*;
+import io.github.benas.randombeans.util.ReflectionUtils;
 
 import javax.validation.constraints.Max;
 import javax.validation.constraints.Min;
@@ -41,11 +42,15 @@ class MinMaxAnnotationHandler implements BeanValidationAnnotationHandler {
         random = new Random(seed);
     }
 
+    @Override
     public Randomizer<?> getRandomizer(Field field) {
         Class<?> fieldType = field.getType();
-        if (field.isAnnotationPresent(Max.class) || field.isAnnotationPresent(Min.class)) {
-            Max maxAnnotation = field.getAnnotation(Max.class);
-            Min minAnnotation = field.getAnnotation(Min.class);
+        if (ReflectionUtils.isAnnotationPresent(field, Max.class) || ReflectionUtils
+                .isAnnotationPresent(field, Min.class)) {
+            Max maxAnnotation = ReflectionUtils
+                    .getAnnotation(field, Max.class);
+            Min minAnnotation = ReflectionUtils
+                    .getAnnotation(field, Min.class);
 
             Long maxValue = null;
             Long minValue = null;

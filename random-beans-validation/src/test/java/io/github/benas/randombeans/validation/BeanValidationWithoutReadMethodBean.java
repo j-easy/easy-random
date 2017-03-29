@@ -23,27 +23,14 @@
  */
 package io.github.benas.randombeans.validation;
 
-import io.github.benas.randombeans.api.Randomizer;
-import io.github.benas.randombeans.randomizers.range.DateRangeRandomizer;
-import io.github.benas.randombeans.util.Constants;
+import javax.validation.constraints.NotNull;
 
-import java.lang.reflect.Field;
-import java.util.Calendar;
-import java.util.Date;
-import java.util.Random;
+public class BeanValidationWithoutReadMethodBean {
 
-class PastAnnotationHandler implements BeanValidationAnnotationHandler {
+    @NotNull
+    private String fieldWithoutReadMethod;
 
-    private final Random random;
-
-    public PastAnnotationHandler(long seed) {
-        random = new Random(seed);
-    }
-
-    @Override
-    public Randomizer<?> getRandomizer(Field field) {
-        Calendar calendar = Calendar.getInstance();
-        calendar.add(Calendar.YEAR, -Constants.DEFAULT_DATE_RANGE);
-        return new DateRangeRandomizer(calendar.getTime(), new Date(), random.nextLong());
+    public void setFieldWithoutReadMethod(String fieldWithoutReadMethod) {
+        this.fieldWithoutReadMethod = fieldWithoutReadMethod;
     }
 }

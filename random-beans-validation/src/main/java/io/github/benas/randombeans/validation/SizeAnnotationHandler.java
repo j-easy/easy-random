@@ -25,6 +25,7 @@ package io.github.benas.randombeans.validation;
 
 import io.github.benas.randombeans.api.Randomizer;
 import io.github.benas.randombeans.randomizers.text.StringRandomizer;
+import io.github.benas.randombeans.util.ReflectionUtils;
 
 import javax.validation.constraints.Size;
 import java.lang.reflect.Field;
@@ -42,9 +43,11 @@ class SizeAnnotationHandler implements BeanValidationAnnotationHandler {
         this.charset = charset;
     }
 
+    @Override
     public Randomizer<?> getRandomizer(Field field) {
         Class<?> fieldType = field.getType();
-        Size sizeAnnotation = field.getAnnotation(Size.class);
+        Size sizeAnnotation = ReflectionUtils
+                .getAnnotation(field, Size.class);
 
         final int min = sizeAnnotation.min();
         final int max = sizeAnnotation.max();

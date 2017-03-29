@@ -29,6 +29,9 @@ import io.github.benas.randombeans.api.ObjectGenerationException;
 import io.github.benas.randombeans.api.Randomizer;
 import lombok.experimental.UtilityClass;
 
+import java.beans.IntrospectionException;
+import java.beans.PropertyDescriptor;
+import java.lang.annotation.Annotation;
 import java.lang.reflect.*;
 import java.text.SimpleDateFormat;
 import java.util.*;
@@ -375,6 +378,55 @@ public class ReflectionUtils {
         return types;
     }
 
+    /**
+     * Looks for given annotationType on given field or read method for field.
+     *
+     * @param field field to check
+     * @param annotationType Type of annotation you're looking for.
+     * @param <T> the actual type of annotation
+     * @return given annotation if field or read method has this annotation or null.
+     */
+    public static <T extends Annotation> T getAnnotation(Field field, Class<T> annotationType) {
+        return field.getAnnotation(annotationType)==null ? getAnnotationFromReadMethod(getReadMethod(field).orElse(null),
+                annotationType) : field.getAnnotation(annotationType);
+    }
+
+    /**
+     * Checks if field or corresponding read method is annotated with given annotationType.
+     *
+     * @param field Field to check
+     * @param annotationType Annotation you're looking for.
+     * @return true if field or read method it annotated with given annotationType or false.
+     */
+    public static boolean isAnnotationPresent(Field field, Class<? extends Annotation> annotationType) {
+        final Optional<Method> readMethod = getReadMethod(field);
+        return field.isAnnotationPresent(annotationType) || readMethod.isPresent() && readMethod.get().isAnnotationPresent(annotationType);
+    }
+
+    /**
+     * Get the read method for given field.
+     * @param field field to get the read method for.
+     * @return Optional of read method or empty if field has no read method
+     */
+    public static Optional<Method> getReadMethod(Field field) {
+        Optional<Method> readMethod;
+        try {
+            PropertyDescriptor props = new PropertyDescriptor(field.getName(), field.getDeclaringClass());
+            return Optional.of(props.getReadMethod());
+        } catch (IntrospectionException e) {
+            // Ignore fields without a read method.
+            readMethod = Optional.empty();
+        }
+        return readMethod;
+    }
+
+
+    private static <T extends Annotation> T getAnnotationFromReadMethod(Method readMethod,
+            Class<T> clazz) {
+        return readMethod == null? null: readMethod.getAnnotation(clazz);
+    }
+
+
     private static List<Type[]> getActualTypeArgumentsOfGenericInterfaces(final Class<?> type) {
         List<Type[]> actualTypeArguments = new ArrayList<>();
         Type[] genericInterfaceTypes = type.getGenericInterfaces();
@@ -432,4 +484,5 @@ public class ReflectionUtils {
         }
         return arguments;
     }
+
 }

@@ -26,6 +26,7 @@ package io.github.benas.randombeans.validation;
 import io.github.benas.randombeans.api.Randomizer;
 import io.github.benas.randombeans.randomizers.range.*;
 import io.github.benas.randombeans.randomizers.text.StringDelegatingRandomizer;
+import io.github.benas.randombeans.util.ReflectionUtils;
 
 import javax.validation.constraints.DecimalMax;
 import javax.validation.constraints.DecimalMin;
@@ -42,11 +43,15 @@ class DecimaMinMaxAnnotationHandler implements BeanValidationAnnotationHandler {
         random = new Random(seed);
     }
 
+    @Override
     public Randomizer<?> getRandomizer(Field field) {
         Class<?> fieldType = field.getType();
-        if (field.isAnnotationPresent(DecimalMin.class) || field.isAnnotationPresent(DecimalMax.class)) {
-            DecimalMax decimalMaxAnnotation = field.getAnnotation(DecimalMax.class);
-            DecimalMin decimalMinAnnotation = field.getAnnotation(DecimalMin.class);
+        if (ReflectionUtils.isAnnotationPresent(field, DecimalMin.class) || ReflectionUtils
+                .isAnnotationPresent(field, DecimalMax.class)) {
+            DecimalMax decimalMaxAnnotation = ReflectionUtils
+                    .getAnnotation(field, DecimalMax.class);
+            DecimalMin decimalMinAnnotation = ReflectionUtils
+                    .getAnnotation(field, DecimalMin.class);
 
             BigDecimal maxValue = null;
             BigDecimal minValue = null;

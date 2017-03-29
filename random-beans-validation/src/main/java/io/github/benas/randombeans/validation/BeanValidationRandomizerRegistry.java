@@ -27,6 +27,7 @@ import io.github.benas.randombeans.annotation.Priority;
 import io.github.benas.randombeans.api.EnhancedRandomParameters;
 import io.github.benas.randombeans.api.Randomizer;
 import io.github.benas.randombeans.api.RandomizerRegistry;
+import io.github.benas.randombeans.util.ReflectionUtils;
 
 import javax.validation.constraints.*;
 import java.lang.annotation.Annotation;
@@ -64,10 +65,12 @@ public class BeanValidationRandomizerRegistry implements RandomizerRegistry {
 
     @Override
     public Randomizer<?> getRandomizer(final Field field) {
+
         for (Map.Entry<Class<? extends Annotation>, BeanValidationAnnotationHandler> entry : annotationHandlers.entrySet()) {
             Class<? extends Annotation> annotation = entry.getKey();
             BeanValidationAnnotationHandler annotationHandler = entry.getValue();
-            if (field.isAnnotationPresent(annotation) && annotationHandler != null) {
+            if (ReflectionUtils
+                    .isAnnotationPresent(field, annotation) && annotationHandler != null) {
                 return annotationHandler.getRandomizer(field);
             }
         }
