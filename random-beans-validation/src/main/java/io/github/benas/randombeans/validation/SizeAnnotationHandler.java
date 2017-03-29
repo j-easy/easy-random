@@ -43,6 +43,7 @@ class SizeAnnotationHandler implements BeanValidationAnnotationHandler {
         this.charset = charset;
     }
 
+    @Override
     public Randomizer<?> getRandomizer(Field field) {
         Class<?> fieldType = field.getType();
         Size sizeAnnotation = ReflectionUtils

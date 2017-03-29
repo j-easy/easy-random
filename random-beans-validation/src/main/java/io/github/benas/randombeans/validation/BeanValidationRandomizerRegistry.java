@@ -32,7 +32,6 @@ import io.github.benas.randombeans.util.ReflectionUtils;
 import javax.validation.constraints.*;
 import java.lang.annotation.Annotation;
 import java.lang.reflect.Field;
-import java.lang.reflect.Method;
 import java.nio.charset.Charset;
 import java.util.HashMap;
 import java.util.Map;
@@ -66,7 +65,7 @@ public class BeanValidationRandomizerRegistry implements RandomizerRegistry {
 
     @Override
     public Randomizer<?> getRandomizer(final Field field) {
-        final Method readMethod = ReflectionUtils.getReadMethod(field).orElse(null);
+
         for (Map.Entry<Class<? extends Annotation>, BeanValidationAnnotationHandler> entry : annotationHandlers.entrySet()) {
             Class<? extends Annotation> annotation = entry.getKey();
             BeanValidationAnnotationHandler annotationHandler = entry.getValue();

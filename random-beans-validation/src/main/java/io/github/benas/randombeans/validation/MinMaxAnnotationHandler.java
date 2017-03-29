@@ -42,6 +42,7 @@ class MinMaxAnnotationHandler implements BeanValidationAnnotationHandler {
         random = new Random(seed);
     }
 
+    @Override
     public Randomizer<?> getRandomizer(Field field) {
         Class<?> fieldType = field.getType();
         if (ReflectionUtils.isAnnotationPresent(field, Max.class) || ReflectionUtils

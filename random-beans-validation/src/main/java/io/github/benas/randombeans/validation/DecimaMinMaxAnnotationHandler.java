@@ -43,6 +43,7 @@ class DecimaMinMaxAnnotationHandler implements BeanValidationAnnotationHandler {
         random = new Random(seed);
     }
 
+    @Override
     public Randomizer<?> getRandomizer(Field field) {
         Class<?> fieldType = field.getType();
         if (ReflectionUtils.isAnnotationPresent(field, DecimalMin.class) || ReflectionUtils

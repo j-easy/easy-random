@@ -30,6 +30,7 @@ import java.lang.reflect.Field;
 
 class NullAnnotationHandler implements BeanValidationAnnotationHandler {
 
+    @Override
     public Randomizer<?> getRandomizer(Field field) {
         return new NullRandomizer();
     }
