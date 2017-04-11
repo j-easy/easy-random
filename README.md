@@ -107,17 +107,12 @@ all the object graph. That's a big difference!
 |Item                  |Link                                                                                      |
 |:---------------------|:-----------------------------------------------------------------------------------------|
 |Documentation         | [https://github.com/benas/random-beans/wiki](https://github.com/benas/random-beans/wiki) |
-|Continuous integration| [Build job @ Travis CI](https://travis-ci.org/benas/random-beans)                        |
 |Agile Board           | [Backlog items @ waffle.io](https://waffle.io/benas/random-beans)                        |
+|Continuous integration| [![Build Status](https://travis-ci.org/benas/random-beans.svg?branch=master)](https://travis-ci.org/benas/random-beans) |
 |Code coverage         | [![Coverage Status](https://coveralls.io/repos/benas/random-beans/badge.svg?branch=master&service=github)](https://coveralls.io/github/benas/random-beans?branch=master) |
 |Dependencies          | [![Dependency Status](https://www.versioneye.com/user/projects/56c6d7fa19f173000c237adc/badge.svg?style=flat)](https://www.versioneye.com/user/projects/56c6d7fa19f173000c237adc) |
-
-## Current version
-
-* The current stable version is `3.6.0` : [![Maven Central](https://maven-badges.herokuapp.com/maven-central/io.github.benas/random-beans/badge.svg?style=flat)](http://search.maven.org/#artifactdetails|io.github.benas|random-beans|3.6.0|)
-* The current development version is `3.7.0-SNAPSHOT` : [![Build Status](https://travis-ci.org/benas/random-beans.svg?branch=master)](https://travis-ci.org/benas/random-beans)
-
-You can find more details on how to get started [here](https://github.com/benas/random-beans/wiki/Getting-Started).
+|Current version       | [![Maven Central](https://maven-badges.herokuapp.com/maven-central/io.github.benas/random-beans/badge.svg?style=flat)](http://repo1.maven.org/maven2/io/github/benas/random-beans/3.6.0/) |
+|License               | [![MIT license](http://img.shields.io/badge/license-MIT-brightgreen.svg?style=flat)](http://opensource.org/licenses/MIT) |
 
 ## Contribution
 
@@ -127,7 +122,14 @@ If you believe you found a bug, please use the [issue tracker](https://github.co
 
 If you have any question, suggestion, or feedback, do not hesitate to use the [Gitter channel](https://gitter.im/benas/random-beans) of the project.
 
-## Awesome contributors
+## Core team and contributors
+
+#### Core team
+
+* [Mahmoud Ben Hassine](https://github.com/benas)
+* [Pascal Schumacher](https://github.com/PascalSchumacher)
+
+#### Awesome contributors
 
 * [Alberto Lagna](https://github.com/alagna)
 * [Adriano Machado](https://github.com/ammachado)
@@ -138,7 +140,6 @@ If you have any question, suggestion, or feedback, do not hesitate to use the [G
 * [kermit-the-frog](https://github.com/kermit-the-frog)
 * [Nikola Milivojevic](https://github.com/dziga)
 * [Oleksandr Shcherbyna](https://github.com/sansherbina)
-* [Pascal Schumacher](https://github.com/PascalSchumacher)
 * [Rebecca McQuary](https://github.com/rmcquary)
 * [Rémi Alvergnat](http://www.pragmasphere.com)
 * [Rodrigue Alcazar](https://github.com/rodriguealcazar)
@@ -149,31 +150,3 @@ If you have any question, suggestion, or feedback, do not hesitate to use the [G
 * [Petromir Dzhunev](https://github.com/petromir)
 
 Thank you all for your contributions!
-
-## License
-
-Random Beans is released under the [![MIT license](http://img.shields.io/badge/license-MIT-brightgreen.svg?style=flat)](http://opensource.org/licenses/MIT).
-
-```
-The MIT License
-
-Copyright (c) 2017, Mahmoud Ben Hassine (mahmoud.benhassine@icloud.com)
-
-Permission is hereby granted, free of charge, to any person obtaining a copy
-of this software and associated documentation files (the "Software"), to deal
-in the Software without restriction, including without limitation the rights
-to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-copies of the Software, and to permit persons to whom the Software is
-furnished to do so, subject to the following conditions:
-
-The above copyright notice and this permission notice shall be included in
-all copies or substantial portions of the Software.
-
-THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
-THE SOFTWARE.
-```
