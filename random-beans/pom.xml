@@ -90,6 +90,11 @@
             <artifactId>lombok</artifactId>
         </dependency>
         <dependency>
+           <groupId>net.bytebuddy</groupId>
+           <artifactId>byte-buddy</artifactId>
+           <version>1.4.4</version>
+        </dependency>
+        <dependency>
             <groupId>junit</groupId>
             <artifactId>junit</artifactId>
             <scope>test</scope>
