@@ -82,12 +82,8 @@ class EnhancedRandomImpl extends EnhancedRandom {
         if (streamSize < 0) {
             throw new IllegalArgumentException("The stream size must be positive");
         }
-        Stream.Builder<T> streamBuilder = Stream.builder();
-        for (int i = 0; i < streamSize; i++) {
-            T bean = nextObject(type, excludedFields);
-            streamBuilder.add(bean);
-        }
-        return streamBuilder.build();
+        
+        return Stream.generate(() -> nextObject(type, excludedFields)).limit(streamSize);
     }
 
     <T> T doPopulateBean(final Class<T> type, final RandomizationContext context) {
