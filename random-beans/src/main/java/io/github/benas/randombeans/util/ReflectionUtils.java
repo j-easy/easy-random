@@ -24,6 +24,7 @@
 package io.github.benas.randombeans.util;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import io.github.benas.randombeans.PrimitiveEnum;
 import io.github.benas.randombeans.annotation.RandomizerArgument;
 import io.github.benas.randombeans.api.ObjectGenerationException;
 import io.github.benas.randombeans.api.Randomizer;
@@ -120,31 +121,12 @@ public class ReflectionUtils {
      * @return the wrapper type of the given primitive type
      */
     public Class<?> getWrapperType(Class<?> primitiveType) {
-        // FIXME is there a better way to do this?
-        if (Byte.TYPE.equals(primitiveType)) {
-            return Byte.class;
+        for(PrimitiveEnum p : PrimitiveEnum.values()) {
+            if(p.getType().equals(primitiveType)) {
+                return p.getClazz();
+            }
         }
-        if (Short.TYPE.equals(primitiveType)) {
-            return Short.class;
-        }
-        if (Integer.TYPE.equals(primitiveType)) {
-            return Integer.class;
-        }
-        if (Long.TYPE.equals(primitiveType)) {
-            return Long.class;
-        }
-        if (Double.TYPE.equals(primitiveType)) {
-            return Double.class;
-        }
-        if (Float.TYPE.equals(primitiveType)) {
-            return Float.class;
-        }
-        if (Boolean.TYPE.equals(primitiveType)) {
-            return Boolean.class;
-        }
-        if (Character.TYPE.equals(primitiveType)) {
-            return Character.class;
-        }
+
         return primitiveType; // if not primitive, return it as is
     }
 
