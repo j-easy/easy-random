@@ -107,6 +107,14 @@
                 <role>Lead developer</role>
             </roles>
         </developer>
+        <developer>
+            <id>PascalSchumacher</id>
+            <name>Pascal Schumacher</name>
+            <url>https://github.com/PascalSchumacher</url>
+            <roles>
+                <role>Core developer</role>
+            </roles>
+        </developer>
     </developers>
 
     <contributors>
@@ -147,10 +155,6 @@
             <url>https://github.com/feckertson</url>
         </contributor>
         <contributor>
-            <name>Pascal Schumacher</name>
-            <url>https://github.com/PascalSchumacher</url>
-        </contributor>
-        <contributor>
             <name>Rebecca McQuary</name>
             <url>https://github.com/rmcquary</url>
         </contributor>
@@ -185,6 +189,14 @@
         <contributor>
             <name>de-x</name>
             <url>http://huningd.github.io</url>
+        </contributor>
+        <contributor>
+            <name>Ryan Dunckel</name>
+            <url>https://github.com/sparty02</url>
+        </contributor>
+        <contributor>
+            <name>Sam Van Overmeire</name>
+            <url>https://github.com/VanOvermeire</url>
         </contributor>
     </contributors>
 

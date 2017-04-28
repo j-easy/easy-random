@@ -131,22 +131,25 @@ If you have any question, suggestion, or feedback, do not hesitate to use the [G
 
 #### Awesome contributors
 
-* [Alberto Lagna](https://github.com/alagna)
 * [Adriano Machado](https://github.com/ammachado)
+* [Alberto Lagna](https://github.com/alagna)
 * [Dovid Kopel](https://github.com/dovidkopel)
+* [de-x](https://github.com/huningd)
 * [Eric Taix](https://github.com/eric-taix)
+* [euZebe](https://github.com/euzebe)
 * [Fred Eckertson](https://github.com/feckertson)
 * [Jose Manuel Prieto](https://github.com/prietopa)
 * [kermit-the-frog](https://github.com/kermit-the-frog)
+* [Lucas Andersson](https://github.com/LucasAndersson)
 * [Nikola Milivojevic](https://github.com/dziga)
 * [Oleksandr Shcherbyna](https://github.com/sansherbina)
+* [Petromir Dzhunev](https://github.com/petromir)
+* [Ryan Dunckel](https://github.com/sparty02)
 * [Rebecca McQuary](https://github.com/rmcquary)
 * [Rémi Alvergnat](http://www.pragmasphere.com)
 * [Rodrigue Alcazar](https://github.com/rodriguealcazar)
+* [Sam Van Overmeire](https://github.com/VanOvermeire)
 * [Valters Vingolds](https://github.com/valters)
 * [Vincent Potucek](https://github.com/punkratz312)
-* [Lucas Andersson](https://github.com/LucasAndersson)
-* [euZebe](https://github.com/euzebe)
-* [Petromir Dzhunev](https://github.com/petromir)
 
 Thank you all for your contributions!
