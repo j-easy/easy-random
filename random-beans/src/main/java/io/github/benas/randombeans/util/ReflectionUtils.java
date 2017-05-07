@@ -394,29 +394,20 @@ public class ReflectionUtils {
         Class<?> fieldClass = field.getDeclaringClass();
         String capitalizedFieldName = fieldName.substring(0, 1).toUpperCase(ENGLISH) + fieldName.substring(1);
         // try to find getProperty
-        Method getter = findMethod("get" + capitalizedFieldName, fieldClass);
-        if (getter != null) {
-            return Optional.of(getter);
+        Optional<Method> getter = findMethod("get" + capitalizedFieldName, fieldClass);
+        if (getter.isPresent()) {
+            return getter;
         }
         // try to find isProperty for boolean properties
-        return Optional.ofNullable(findMethod("is" + capitalizedFieldName, fieldClass));
+        return findMethod("is" + capitalizedFieldName, fieldClass);
     }
 
-    private static Method findMethod(String name, Class<?> target) {
-        // try public methods only
+    private static Optional<Method> findMethod(String name, Class<?> target) {
         try {
-            return target.getMethod(name);
-        } catch (NoSuchMethodException | SecurityException ignored) {
+            return Optional.of(target.getMethod(name));
+        } catch (NoSuchMethodException | SecurityException e) {
+            return Optional.empty();
         }
-        // search all methods
-        while (target != null) {
-            try {
-                return target.getDeclaredMethod(name);
-            } catch (NoSuchMethodException | SecurityException ignored) {
-            }
-            target = target.getSuperclass();
-        }
-        return null;
     }
 
     private static <T extends Annotation> T getAnnotationFromReadMethod(Method readMethod, Class<T> clazz) {
