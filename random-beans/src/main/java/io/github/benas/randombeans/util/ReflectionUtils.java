@@ -30,8 +30,6 @@ import io.github.benas.randombeans.api.ObjectGenerationException;
 import io.github.benas.randombeans.api.Randomizer;
 import lombok.experimental.UtilityClass;
 
-import java.beans.IntrospectionException;
-import java.beans.PropertyDescriptor;
 import java.lang.annotation.Annotation;
 import java.lang.reflect.*;
 import java.text.SimpleDateFormat;
@@ -40,6 +38,7 @@ import java.util.*;
 import static io.github.benas.randombeans.util.DateUtils.DATE_FORMAT;
 import static java.lang.String.format;
 import static java.util.Arrays.asList;
+import static java.util.Locale.ENGLISH;
 import static java.util.stream.Collectors.toList;
 
 /**
@@ -391,13 +390,33 @@ public class ReflectionUtils {
      * @return Optional of read method or empty if field has no read method
      */
     public static Optional<Method> getReadMethod(Field field) {
-        try {
-            PropertyDescriptor props = new PropertyDescriptor(field.getName(), field.getDeclaringClass());
-            return Optional.of(props.getReadMethod());
-        } catch (IntrospectionException e) {
-            // Ignore fields without a read method.
-            return Optional.empty();
+        String fieldName = field.getName();
+        Class<?> fieldClass = field.getDeclaringClass();
+        String capitalizedFieldName = fieldName.substring(0, 1).toUpperCase(ENGLISH) + fieldName.substring(1);
+        // try to find getProperty
+        Method getter = findMethod("get" + capitalizedFieldName, fieldClass);
+        if (getter != null) {
+            return Optional.of(getter);
         }
+        // try to find isProperty for boolean properties
+        return Optional.ofNullable(findMethod("is" + capitalizedFieldName, fieldClass));
+    }
+
+    private static Method findMethod(String name, Class<?> target) {
+        // try public methods only
+        try {
+            return target.getMethod(name);
+        } catch (NoSuchMethodException | SecurityException ignored) {
+        }
+        // search all methods
+        while (target != null) {
+            try {
+                return target.getDeclaredMethod(name);
+            } catch (NoSuchMethodException | SecurityException ignored) {
+            }
+            target = target.getSuperclass();
+        }
+        return null;
     }
 
     private static <T extends Annotation> T getAnnotationFromReadMethod(Method readMethod, Class<T> clazz) {
