@@ -374,6 +374,27 @@
             <properties>
                 <argLine>--add-modules java.xml.bind</argLine>
             </properties>
+            <build>
+                <plugins>
+                    <plugin>
+                        <groupId>org.apache.maven.plugins</groupId>
+                        <artifactId>maven-compiler-plugin</artifactId>
+                        <version>${maven-compiler-plugin.version}</version>
+                        <configuration>
+                            <verbose>true</verbose>
+                            <source>${java.version}</source>
+                            <target>${java.version}</target>
+                            <showWarnings>true</showWarnings>
+                            <fork>true</fork>
+                            <compilerArgs>
+                                <arg>-verbose</arg>
+                                <arg>-Xlint:unchecked</arg>
+                                <arg>-J--permit-illegal-access</arg>
+                            </compilerArgs>
+                        </configuration>
+                    </plugin>
+                </plugins>
+            </build>
         </profile>
     </profiles>
 
