@@ -394,15 +394,15 @@ public class ReflectionUtils {
         Class<?> fieldClass = field.getDeclaringClass();
         String capitalizedFieldName = fieldName.substring(0, 1).toUpperCase(ENGLISH) + fieldName.substring(1);
         // try to find getProperty
-        Optional<Method> getter = findMethod("get" + capitalizedFieldName, fieldClass);
+        Optional<Method> getter = getPublicMethod("get" + capitalizedFieldName, fieldClass);
         if (getter.isPresent()) {
             return getter;
         }
         // try to find isProperty for boolean properties
-        return findMethod("is" + capitalizedFieldName, fieldClass);
+        return getPublicMethod("is" + capitalizedFieldName, fieldClass);
     }
 
-    private static Optional<Method> findMethod(String name, Class<?> target) {
+    private static Optional<Method> getPublicMethod(String name, Class<?> target) {
         try {
             return Optional.of(target.getMethod(name));
         } catch (NoSuchMethodException | SecurityException e) {
