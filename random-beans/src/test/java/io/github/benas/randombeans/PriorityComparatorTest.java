@@ -28,7 +28,6 @@ import org.junit.Before;
 import org.junit.Test;
 
 import java.util.Arrays;
-import java.util.Collections;
 import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
@@ -53,7 +52,7 @@ public class PriorityComparatorTest {
         assertThat(priorityComparator.compare(foo, bar)).isGreaterThan(0);
 
         List<Object> objects = Arrays.asList(foo,bar);
-        Collections.sort(objects, priorityComparator);
+        objects.sort(priorityComparator);
         // objects must be sorted in decreasing priority order: 2 > 1
         assertThat(objects).containsExactly(bar, foo);
     }
