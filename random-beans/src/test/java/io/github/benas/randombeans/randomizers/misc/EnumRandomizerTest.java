@@ -46,17 +46,16 @@ public class EnumRandomizerTest extends AbstractRandomizerTest<EnumRandomizerTes
         MALE, FEMALE
     }
 
+    @Test
+    public void should_return_a_value_different_from_the_excluded_one() {
+        Gender valueToExclude = Gender.MALE;
+        Gender randomElement = aNewEnumRandomizer(Gender.class, valueToExclude).getRandomValue();
+        assertThat(randomElement).isNotNull();
+        assertThat(randomElement).isNotEqualTo(valueToExclude);
+    }
 
-	@Test
-	public void should_return_a_value_different_from_the_excluded_one() {
-		Gender valueToExclude = Gender.MALE;
-		Gender randomElement = aNewEnumRandomizer(Gender.class, valueToExclude).getRandomValue();
-		assertThat(randomElement).isNotNull();
-		assertThat(randomElement).isNotEqualTo(valueToExclude);
-	}
-
-	@Test(expected = IllegalArgumentException.class)
-	public void should_throw_an_exception_when_all_values_are_excluded() {
-		aNewEnumRandomizer(Gender.class, Gender.values());
-	}
+    @Test(expected = IllegalArgumentException.class)
+    public void should_throw_an_exception_when_all_values_are_excluded() {
+        aNewEnumRandomizer(Gender.class, Gender.values());
+    }
 }
