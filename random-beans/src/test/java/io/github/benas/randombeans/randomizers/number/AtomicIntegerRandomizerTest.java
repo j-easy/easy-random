@@ -52,6 +52,6 @@ public class AtomicIntegerRandomizerTest extends AbstractRandomizerTest<AtomicIn
         // when
         AtomicInteger atomicInteger = atomicIntegerRandomizer.getRandomValue();
 
-        then(atomicInteger.get()).isEqualTo(-1188957731);
+        then(atomicInteger).hasValue(-1188957731);
     }
 }

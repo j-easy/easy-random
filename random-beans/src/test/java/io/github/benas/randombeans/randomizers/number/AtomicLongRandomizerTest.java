@@ -52,6 +52,6 @@ public class AtomicLongRandomizerTest extends AbstractRandomizerTest<AtomicLong>
         // when
         AtomicLong atomicLong = atomicLongRandomizer.getRandomValue();
 
-        then(atomicLong.get()).isEqualTo(-5106534569952410475L);
+        then(atomicLong).hasValue(-5106534569952410475L);
     }
 }
