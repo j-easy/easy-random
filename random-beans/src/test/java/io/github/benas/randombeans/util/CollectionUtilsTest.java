@@ -31,7 +31,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 public class CollectionUtilsTest {
 
     @Test
-    public void testRandomElementOf() throws Exception {
+    public void testRandomElementOf() {
         // Given
         String[] elements = {"foo", "bar"};
 

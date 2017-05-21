@@ -50,7 +50,7 @@ public class RandomizerProxyTest {
     }
 
     @Test
-    public void theRandomizerProxyShouldBehaveLikeTheSupplierDefinedWithLambda() throws Exception {
+    public void theRandomizerProxyShouldBehaveLikeTheSupplierDefinedWithLambda() {
         // Given
         Supplier<String> supplier = () -> FOO;
 

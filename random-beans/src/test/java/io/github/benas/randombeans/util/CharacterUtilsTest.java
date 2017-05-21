@@ -34,7 +34,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 public class CharacterUtilsTest {
 
     @Test
-    public void testFilterLetters() throws Exception {
+    public void testFilterLetters() {
         List<Character> characters = filterLetters(asList('a', 'b', '1'));
 
         assertThat(characters).containsExactly('a', 'b');

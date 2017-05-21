@@ -83,7 +83,7 @@ public class IntegerRangeRandomizerTest extends AbstractRangeRandomizerTest<Inte
      */
 
     @Test
-    public void generatedValueShouldBeWithinSpecifiedRange_whenUsedToRandomizePrimitiveIntegerType() throws Exception {
+    public void generatedValueShouldBeWithinSpecifiedRange_whenUsedToRandomizePrimitiveIntegerType() {
         EnhancedRandom enhancedRandom = EnhancedRandomBuilder.aNewEnhancedRandomBuilder()
                 .randomize(int.class, new IntegerRangeRandomizer(min, max))
                 .build();
@@ -93,7 +93,7 @@ public class IntegerRangeRandomizerTest extends AbstractRangeRandomizerTest<Inte
     }
 
     @Test
-    public void generatedValueShouldBeWithinSpecifiedRange_whenUsedToRandomizeWrapperIntegerType() throws Exception {
+    public void generatedValueShouldBeWithinSpecifiedRange_whenUsedToRandomizeWrapperIntegerType() {
         EnhancedRandom enhancedRandom = EnhancedRandomBuilder.aNewEnhancedRandomBuilder()
                 .randomize(Integer.class, new IntegerRangeRandomizer(min, max))
                 .build();
@@ -103,7 +103,7 @@ public class IntegerRangeRandomizerTest extends AbstractRangeRandomizerTest<Inte
     }
 
     @Test
-    public void generatedValueShouldBeWithinSpecifiedRange_whenUsedToRandomizeNonIntegerType() throws Exception {
+    public void generatedValueShouldBeWithinSpecifiedRange_whenUsedToRandomizeNonIntegerType() {
         EnhancedRandom enhancedRandom = EnhancedRandomBuilder.aNewEnhancedRandomBuilder()
                 .randomize(Integer.class, new IntegerRangeRandomizer(min, max))
                 .build();
