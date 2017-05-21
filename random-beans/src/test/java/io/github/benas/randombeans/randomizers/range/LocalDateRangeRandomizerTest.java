@@ -49,7 +49,7 @@ public class LocalDateRangeRandomizerTest extends AbstractRangeRandomizerTest<Lo
 
     @Test
     public void generatedLocalDateShouldBeWithinSpecifiedRange() {
-        assertThat(randomizer.getRandomValue()).isAfterOrEqualTo(minDate).isBeforeOrEqualTo(maxDate);
+        assertThat(randomizer.getRandomValue()).isBetween(minDate, maxDate);
     }
 
     @Test

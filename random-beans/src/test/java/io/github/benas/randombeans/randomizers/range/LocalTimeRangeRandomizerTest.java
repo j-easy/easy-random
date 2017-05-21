@@ -49,7 +49,7 @@ public class LocalTimeRangeRandomizerTest extends AbstractRangeRandomizerTest<Lo
 
     @Test
     public void generatedLocalTimeShouldBeWithinSpecifiedRange() {
-        assertThat(randomizer.getRandomValue()).isAfterOrEqualTo(minTime).isBeforeOrEqualTo(maxTime);
+        assertThat(randomizer.getRandomValue()).isBetween(minTime, maxTime);
     }
 
     @Test

@@ -51,7 +51,7 @@ public class ZonedDateTimeRangeRandomizerTest extends AbstractRangeRandomizerTes
 
     @Test
     public void generatedZonedDateTimeShouldBeWithinSpecifiedRange() {
-        assertThat(randomizer.getRandomValue()).isAfterOrEqualTo(minZonedDateTime).isBeforeOrEqualTo(maxZonedDateTime);
+        assertThat(randomizer.getRandomValue()).isBetween(minZonedDateTime, maxZonedDateTime);
     }
 
     @Test

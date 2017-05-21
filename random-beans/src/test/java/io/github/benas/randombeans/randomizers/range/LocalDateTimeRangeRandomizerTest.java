@@ -51,7 +51,7 @@ public class LocalDateTimeRangeRandomizerTest extends AbstractRangeRandomizerTes
 
     @Test
     public void generatedLocalDateTimeShouldBeWithinSpecifiedRange() {
-        assertThat(randomizer.getRandomValue()).isAfterOrEqualTo(minDateTime).isBeforeOrEqualTo(maxDateTime);
+        assertThat(randomizer.getRandomValue()).isBetween(minDateTime, maxDateTime);
     }
 
     @Test
