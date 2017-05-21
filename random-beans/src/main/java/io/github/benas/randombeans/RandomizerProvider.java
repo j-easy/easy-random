@@ -29,8 +29,6 @@ import io.github.benas.randombeans.api.RandomizerRegistry;
 import java.lang.reflect.Field;
 import java.util.*;
 
-import static java.util.Collections.sort;
-
 /**
  * Central class to get registered randomizers by Field or by Type.
  *
@@ -44,7 +42,7 @@ class RandomizerProvider {
 
     RandomizerProvider(final Set<RandomizerRegistry> registries) {
         this.registries.addAll(registries);
-        sort(this.registries, priorityComparator);
+        this.registries.sort(priorityComparator);
     }
 
     Randomizer<?> getRandomizerByField(final Field field) {
@@ -56,18 +54,11 @@ class RandomizerProvider {
     }
 
     private Randomizer<?> getRandomizer(final Provider provider) {
-        List<Randomizer<?>> randomizers = new ArrayList<>();
-        for (RandomizerRegistry registry : registries) {
-            Randomizer<?> randomizer = provider.getRandomizer(registry);
-            if (randomizer != null) {
-                randomizers.add(randomizer);
-            }
-        }
-        sort(randomizers, priorityComparator);
-        if (!randomizers.isEmpty()) {
-            return randomizers.get(0);
-        }
-        return null;
+        return registries.stream()
+                .map(provider::getRandomizer)
+                .filter(Objects::nonNull)
+                .sorted(priorityComparator)
+                .findFirst().orElse(null);
     }
 
     @FunctionalInterface
