@@ -1,3 +1,28 @@
+***
+
+<div align="center">
+    <b><em>Random Beans</em></b><br>
+    Because life is too short to generate random Java&trade; beans by hand..
+</div>
+
+<div align="center">
+
+[![MIT license](http://img.shields.io/badge/license-MIT-brightgreen.svg?style=flat)](http://opensource.org/licenses/MIT)
+[![Coverage Status](https://coveralls.io/repos/benas/random-beans/badge.svg?branch=master&service=github)](https://coveralls.io/github/benas/random-beans?branch=master)
+[![Build Status](https://travis-ci.org/benas/random-beans.svg?branch=master)](https://travis-ci.org/benas/random-beans)
+[![Dependency Status](https://www.versioneye.com/user/projects/56c6d7fa19f173000c237adc/badge.svg?style=flat)](https://www.versioneye.com/user/projects/56c6d7fa19f173000c237adc)
+[![Maven Central](https://maven-badges.herokuapp.com/maven-central/io.github.benas/random-beans/badge.svg?style=flat)](http://repo1.maven.org/maven2/io/github/benas/random-beans/3.6.0/)
+[![Javadoc](https://javadoc-emblem.rhcloud.com/doc/io.github.benas/random-beans/badge.svg)](http://www.javadoc.io/doc/io.github.benas/random-beans)
+[![Gitter](https://badges.gitter.im/Join%20Chat.svg)](https://gitter.im/benas/random-beans)
+
+</div>
+
+***
+
+## Latest news
+
+* 05/03/2017: Version 3.6.0 is out with new features and bug fixes. See all details in the [change log](https://github.com/benas/random-beans/releases).
+
 # What is Random Beans ?
 
 Random Beans is a library that generates random Java beans. Let's say you have a class `Person` and you want to generate a random instance of it, here we go:
@@ -102,17 +127,44 @@ person.setAddress(address);
 With Random Beans, generating a random `Person` object is done with `random(Person.class)`. The library will **recursively** populate
 all the object graph. That's a big difference!
 
-## Quick links
+## How this can be useful ?
 
-|Item                  |Link                                                                                      |
-|:---------------------|:-----------------------------------------------------------------------------------------|
-|Documentation         | [https://github.com/benas/random-beans/wiki](https://github.com/benas/random-beans/wiki) |
-|Agile Board           | [Backlog items @ waffle.io](https://waffle.io/benas/random-beans)                        |
-|Continuous integration| [![Build Status](https://travis-ci.org/benas/random-beans.svg?branch=master)](https://travis-ci.org/benas/random-beans) |
-|Code coverage         | [![Coverage Status](https://coveralls.io/repos/benas/random-beans/badge.svg?branch=master&service=github)](https://coveralls.io/github/benas/random-beans?branch=master) |
-|Dependencies          | [![Dependency Status](https://www.versioneye.com/user/projects/56c6d7fa19f173000c237adc/badge.svg?style=flat)](https://www.versioneye.com/user/projects/56c6d7fa19f173000c237adc) |
-|Current version       | [![Maven Central](https://maven-badges.herokuapp.com/maven-central/io.github.benas/random-beans/badge.svg?style=flat)](http://repo1.maven.org/maven2/io/github/benas/random-beans/3.6.0/) |
-|License               | [![MIT license](http://img.shields.io/badge/license-MIT-brightgreen.svg?style=flat)](http://opensource.org/licenses/MIT) |
+Sometimes, the test fixture does not really matter to the test logic. For example, if we want to test the result of a new sorting algorithm,
+ we can generate random input data and assert the output is sorted, regardless of the data itself:
+
+```java
+@org.junit.Test
+public void testSortAlgorithm() {
+
+   // Given
+   int[] ints = aNewEnhancedRandom().nextObject(int[].class);
+
+   // When
+   int[] sortedInts = myAwesomeSortAlgo.sort(ints);
+
+   // Then
+   assertThat(sortedInts).isSorted(); // fake assertion
+
+}
+```
+
+Another example is testing the persistence of a domain object, we can generate a random domain object, persist it and assert the database contains the same values:
+
+```java
+@org.junit.Test
+public void testPersistPerson() throws Exception {
+   // Given
+   Person person = random(Person.class);
+
+   // When
+   personDao.persist(person);
+
+   // Then
+   assertThat("person_table").column("name").value().isEqualTo(person.getName()); // assretj db
+}
+```
+
+There are many other uses cases where random beans can be useful, you can find a non exhaustive list in the [wiki](https://github.com/benas/random-beans/wiki/use-cases).
 
 ## Contribution
 
