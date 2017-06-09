@@ -127,7 +127,7 @@ person.setAddress(address);
 With Random Beans, generating a random `Person` object is done with `random(Person.class)`. The library will **recursively** populate
 all the object graph. That's a big difference!
 
-## How this can be useful ?
+## How can this be useful ?
 
 Sometimes, the test fixture does not really matter to the test logic. For example, if we want to test the result of a new sorting algorithm,
  we can generate random input data and assert the output is sorted, regardless of the data itself:
