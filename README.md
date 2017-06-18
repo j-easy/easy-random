@@ -11,7 +11,7 @@
 [![Coverage Status](https://coveralls.io/repos/benas/random-beans/badge.svg?branch=master&service=github)](https://coveralls.io/github/benas/random-beans?branch=master)
 [![Build Status](https://travis-ci.org/benas/random-beans.svg?branch=master)](https://travis-ci.org/benas/random-beans)
 [![Dependency Status](https://www.versioneye.com/user/projects/56c6d7fa19f173000c237adc/badge.svg?style=flat)](https://www.versioneye.com/user/projects/56c6d7fa19f173000c237adc)
-[![Maven Central](https://maven-badges.herokuapp.com/maven-central/io.github.benas/random-beans/badge.svg?style=flat)](http://repo1.maven.org/maven2/io/github/benas/random-beans/3.6.0/)
+[![Maven Central](https://maven-badges.herokuapp.com/maven-central/io.github.benas/random-beans/badge.svg?style=flat)](http://repo1.maven.org/maven2/io/github/benas/random-beans/3.7.0/)
 [![Javadoc](https://javadoc-emblem.rhcloud.com/doc/io.github.benas/random-beans/badge.svg)](http://www.javadoc.io/doc/io.github.benas/random-beans)
 [![Gitter](https://badges.gitter.im/Join%20Chat.svg)](https://gitter.im/benas/random-beans)
 
@@ -21,6 +21,7 @@
 
 ## Latest news
 
+* 19/06/2017: Version 3.7.0 is released. Checkout what's new in the [change log](https://github.com/benas/random-beans/releases).
 * 05/03/2017: Version 3.6.0 is out with new features and bug fixes. See all details in the [change log](https://github.com/benas/random-beans/releases).
 
 # What is Random Beans ?
@@ -186,7 +187,7 @@ If you have any question, suggestion, or feedback, do not hesitate to use the [G
 * [Adriano Machado](https://github.com/ammachado)
 * [Alberto Lagna](https://github.com/alagna)
 * [Dovid Kopel](https://github.com/dovidkopel)
-* [de-x](https://github.com/huningd)
+* [huningd](https://github.com/huningd)
 * [Eric Taix](https://github.com/eric-taix)
 * [euZebe](https://github.com/euzebe)
 * [Fred Eckertson](https://github.com/feckertson)
