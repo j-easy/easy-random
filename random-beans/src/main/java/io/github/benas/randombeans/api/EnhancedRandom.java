@@ -35,6 +35,7 @@ import static java.util.stream.Collectors.toSet;
 
 /**
  * Abstract class for random object generator.
+ * <strong>Static methods in this class use default parameters and do not take into account configuration parameters set with {@link io.github.benas.randombeans.EnhancedRandomBuilder}.</strong>
  *
  * @author Mahmoud Ben Hassine (mahmoud.benhassine@icloud.com)
  */
@@ -42,6 +43,7 @@ public abstract class EnhancedRandom extends Random {
 
     /**
      * Generate a random instance of the given type.
+     * <strong>This method uses default parameters and does not take into account configuration parameters set with {@link io.github.benas.randombeans.EnhancedRandomBuilder}.</strong>
      *
      * @param type           the target class type
      * @param excludedFields the name of fields to exclude
@@ -54,6 +56,7 @@ public abstract class EnhancedRandom extends Random {
 
     /**
      * Generate a stream of random instances of the given type.
+     * <strong>This method uses default parameters and does not take into account configuration parameters set with {@link io.github.benas.randombeans.EnhancedRandomBuilder}.</strong>
      *
      * @param amount         the number of instances to generate
      * @param type           the type for which instances will be generated
@@ -68,6 +71,7 @@ public abstract class EnhancedRandom extends Random {
 
     /**
      * Generate a {@link List} of random instances of the given type.
+     * <strong>This method uses default parameters and does not take into account configuration parameters set with {@link io.github.benas.randombeans.EnhancedRandomBuilder}.</strong>
      *
      * @param amount         the number of instances to generate
      * @param type           the type for which instances will be generated
@@ -82,6 +86,7 @@ public abstract class EnhancedRandom extends Random {
 
     /**
      * Generate a {@link Set} of random instances of the given type.
+     * <strong>This method uses default parameters and does not take into account configuration parameters set with {@link io.github.benas.randombeans.EnhancedRandomBuilder}.</strong>
      *
      * @param amount         the number of instances to generate
      * @param type           the type for which instances will be generated
@@ -96,6 +101,7 @@ public abstract class EnhancedRandom extends Random {
 
     /**
      * Generate a {@link Collection} of random instances of the given type.
+     * <strong>This method uses default parameters and does not take into account configuration parameters set with {@link io.github.benas.randombeans.EnhancedRandomBuilder}.</strong>
      *
      * @param amount         the number of instances to generate
      * @param type           the type for which instances will be generated
