@@ -1,5 +1,8 @@
 language: java
+# trusty is required for oraclejdk9
+dist: trusty
 jdk:
   - oraclejdk8
+  - oraclejdk9
 after_success:
   - mvn clean cobertura:cobertura coveralls:report

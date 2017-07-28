@@ -366,7 +366,7 @@
                             <compilerArgs>
                                 <arg>-verbose</arg>
                                 <arg>-Xlint:unchecked</arg>
-                                <arg>-J--permit-illegal-access</arg>
+                                <arg>-J--illegal-access=permit</arg>
                             </compilerArgs>
                         </configuration>
                     </plugin>
