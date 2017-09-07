@@ -47,7 +47,7 @@ public abstract class AbstractRandomizer<T> implements Randomizer<T>  {
     }
 
     protected String[] getPredefinedValuesOf(final String key) {
-        return getBundle("data").getString(key).split(",");
+        return getBundle("random-beans-data").getString(key).split(",");
     }
 
     @Override
