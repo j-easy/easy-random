@@ -34,6 +34,8 @@ import java.util.Locale;
  */
 public class EmailRandomizer extends FakerBasedRandomizer<String> {
 
+    private boolean safe;
+
     /**
      * Create a new {@link EmailRandomizer}.
      */
@@ -57,6 +59,18 @@ public class EmailRandomizer extends FakerBasedRandomizer<String> {
      */
     public EmailRandomizer(final long seed, final Locale locale) {
         super(seed, locale);
+    }
+
+    /**
+     * Create a new {@link EmailRandomizer}.
+     *
+     * @param seed   the initial seed
+     * @param locale the locale to use
+     * @param safe   true to generate safe emails (invalid domains), false otherwise
+     */
+    public EmailRandomizer(final long seed, final Locale locale, final boolean safe) {
+        super(seed, locale);
+        this.safe = safe;
     }
 
     /**
@@ -89,9 +103,21 @@ public class EmailRandomizer extends FakerBasedRandomizer<String> {
         return new EmailRandomizer(seed, locale);
     }
 
+    /**
+     * Create a new {@link EmailRandomizer}.
+     *
+     * @param seed   the initial seed
+     * @param locale the locale to use
+     * @param safe   true to generate safe emails (invalid domains), false otherwise
+     * @return a new {@link EmailRandomizer}
+     */
+    public static EmailRandomizer aNewEmailRandomizer(final long seed, final Locale locale, final boolean safe) {
+        return new EmailRandomizer(seed, locale, safe);
+    }
+
     @Override
     public String getRandomValue() {
-        return faker.internet().emailAddress();
+        return safe ? faker.internet().safeEmailAddress() : faker.internet().emailAddress();
     }
 
 }
