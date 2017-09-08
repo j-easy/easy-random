@@ -48,6 +48,7 @@
         <module>random-beans-validation</module>
         <module>random-beans-jodatime</module>
         <module>random-beans-randomizers</module>
+        <module>random-beans-bom</module>
     </modules>
 
     <scm>
