@@ -73,6 +73,7 @@ public class TimeRandomizerRegistry implements RandomizerRegistry {
         randomizers.put(Year.class, new YearRandomizer(seed));
         randomizers.put(ZonedDateTime.class, new ZonedDateTimeRandomizer(seed));
         randomizers.put(ZoneOffset.class, new ZoneOffsetRandomizer(seed));
+        randomizers.put(ZoneId.class, new ZoneIdRandomizer(seed));
     }
 
     @Override

@@ -58,4 +58,6 @@ public class TimeBean {
 
     private ZoneOffset zoneOffset;
 
+    private ZoneId zoneId;
+
 }

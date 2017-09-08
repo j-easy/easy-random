@@ -40,6 +40,7 @@ import static io.github.benas.randombeans.randomizers.time.SqlTimeRandomizer.aNe
 import static io.github.benas.randombeans.randomizers.time.SqlTimestampRandomizer.aNewSqlTimestampRandomizer;
 import static io.github.benas.randombeans.randomizers.time.YearMonthRandomizer.aNewYearMonthRandomizer;
 import static io.github.benas.randombeans.randomizers.time.YearRandomizer.aNewYearRandomizer;
+import static io.github.benas.randombeans.randomizers.time.ZoneIdRandomizer.aNewZoneIdRandomizer;
 import static io.github.benas.randombeans.randomizers.time.ZoneOffsetRandomizer.aNewZoneOffsetRandomizer;
 import static java.time.LocalDateTime.of;
 import static java.time.ZoneOffset.ofTotalSeconds;
@@ -77,6 +78,7 @@ public class TimeRandomizersTest extends AbstractRandomizerTest<Randomizer<?>> {
                 aNewYearRandomizer(),
                 aNewYearMonthRandomizer(),
                 aNewZoneOffsetRandomizer(),
+                aNewZoneIdRandomizer(),
                 aNewCalendarRandomizer(),
                 aNewDateRandomizer(),
                 aNewGregorianCalendarRandomizer(),
@@ -116,6 +118,7 @@ public class TimeRandomizersTest extends AbstractRandomizerTest<Randomizer<?>> {
                 { aNewYearRandomizer(SEED), Year.of(2024) },
                 { aNewYearMonthRandomizer(SEED), YearMonth.of(2024, Month.MARCH) },
                 { aNewZoneOffsetRandomizer(SEED), ZoneOffset.ofTotalSeconds(28923) },
+                { aNewZoneIdRandomizer(SEED), ZoneId.of("Pacific/Auckland") },
                 { aNewCalendarRandomizer(SEED), expectedCalendar },
                 { aNewDateRandomizer(SEED), new Date(1718733244570L) },
                 { aNewGregorianCalendarRandomizer(SEED), expectedGregorianCalendar },
