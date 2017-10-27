@@ -102,7 +102,7 @@ public class RandomizersTest extends AbstractRandomizerTest<FakerBasedRandomizer
                 { aNewEmailRandomizer(SEED), "jayne.weissnat@hotmail.com" }, 
                 { aNewFirstNameRandomizer(SEED), "Jayne" },
                 { aNewFullNameRandomizer(SEED), "Candace Crona" },
-                { aNewIsbnRandomizer(SEED), "9781797745008" },
+                { aNewIsbnRandomizer(SEED), "9781797845005" },
                 { aNewLastNameRandomizer(SEED), "Hyatt" },
                 { aNewLatitudeRandomizer(SEED), "40" + new DecimalFormatSymbols().getDecimalSeparator() + "171357" },
                 { aNewLongitudeRandomizer(SEED), "80" + new DecimalFormatSymbols().getDecimalSeparator() + "342713" },
@@ -136,7 +136,7 @@ public class RandomizersTest extends AbstractRandomizerTest<FakerBasedRandomizer
                 { aNewEmailRandomizer(SEED, LOCALE), "alice.masson@hotmail.fr" }, 
                 { aNewFirstNameRandomizer(SEED, LOCALE), "Alice" },
                 { aNewFullNameRandomizer(SEED, LOCALE), "Masson Emilie" },
-                { aNewIsbnRandomizer(SEED, LOCALE), "9781797745008" },
+                { aNewIsbnRandomizer(SEED, LOCALE), "9781797845005" },
                 { aNewLastNameRandomizer(SEED, LOCALE), "Faure" },
                 { aNewLatitudeRandomizer(SEED, LOCALE), "40" + new DecimalFormatSymbols().getDecimalSeparator() + "171357" }, // should really be "40.171357", seems like a bug in java-faker
                 { aNewLongitudeRandomizer(SEED, LOCALE), "80" + new DecimalFormatSymbols().getDecimalSeparator() + "342713" }, // should really be "80.342713", seems like a bug in java-faker
