@@ -26,9 +26,11 @@ package io.github.benas.randombeans.randomizers.misc;
 import static io.github.benas.randombeans.randomizers.misc.EnumRandomizer.aNewEnumRandomizer;
 import static io.github.benas.randombeans.randomizers.misc.EnumRandomizerTest.Gender.FEMALE;
 import static org.assertj.core.api.Assertions.assertThat;
-import io.github.benas.randombeans.randomizers.AbstractRandomizerTest;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
+
+import io.github.benas.randombeans.randomizers.AbstractRandomizerTest;
 
 public class EnumRandomizerTest extends AbstractRandomizerTest<EnumRandomizerTest.Gender> {
 
@@ -54,8 +56,8 @@ public class EnumRandomizerTest extends AbstractRandomizerTest<EnumRandomizerTes
         assertThat(randomElement).isNotEqualTo(valueToExclude);
     }
 
-    @Test(expected = IllegalArgumentException.class)
+    @Test
     public void should_throw_an_exception_when_all_values_are_excluded() {
-        aNewEnumRandomizer(Gender.class, Gender.values());
+        assertThatThrownBy(() -> aNewEnumRandomizer(Gender.class, Gender.values())).isInstanceOf(IllegalArgumentException.class);
     }
 }

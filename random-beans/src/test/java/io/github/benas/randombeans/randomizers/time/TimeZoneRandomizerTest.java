@@ -28,14 +28,14 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 import java.util.TimeZone;
 
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 
 import io.github.benas.randombeans.randomizers.AbstractRandomizerTest;
 
 public class TimeZoneRandomizerTest extends AbstractRandomizerTest<TimeZone> {
 
-    @Before
+    @BeforeEach
     public void setUp() {
         randomizer = aNewTimeZoneRandomizer(SEED);
     }

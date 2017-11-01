@@ -23,16 +23,18 @@
  */
 package io.github.benas.randombeans.randomizers.collection;
 
-import io.github.benas.randombeans.api.Randomizer;
+import static io.github.benas.randombeans.randomizers.collection.MapRandomizer.aNewMapRandomizer;
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
+import static org.mockito.Mockito.when;
+
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.Mock;
 import org.mockito.junit.MockitoJUnitRunner;
 
-import static io.github.benas.randombeans.randomizers.collection.MapRandomizer.aNewMapRandomizer;
-import static org.assertj.core.api.Assertions.assertThat;
-import static org.mockito.Mockito.when;
+import io.github.benas.randombeans.api.Randomizer;
 
 @RunWith(MockitoJUnitRunner.class)
 public class MapRandomizerTest {
@@ -63,18 +65,18 @@ public class MapRandomizerTest {
         assertThat(aNewMapRandomizer(keyRandomizer, valueRandomizer, 0).getRandomValue()).isEmpty();
     }
 
-    @Test(expected = IllegalArgumentException.class)
+    @Test
     public void specifiedSizeShouldBePositive() {
-        aNewMapRandomizer(keyRandomizer, valueRandomizer, -3);
+        assertThatThrownBy(() -> aNewMapRandomizer(keyRandomizer, valueRandomizer, -3)).isInstanceOf(IllegalArgumentException.class);
     }
 
-    @Test(expected = NullPointerException.class)
+    @Test
     public void nullKeyRandomizer() {
-        aNewMapRandomizer(null, valueRandomizer, 3);
+        assertThatThrownBy(() -> aNewMapRandomizer(null, valueRandomizer, 3)).isInstanceOf(NullPointerException.class);
     }
 
-    @Test(expected = NullPointerException.class)
+    @Test
     public void nullValueRandomizer() {
-        aNewMapRandomizer(keyRandomizer, null, 3);
+        assertThatThrownBy(() -> aNewMapRandomizer(keyRandomizer, null, 3)).isInstanceOf(NullPointerException.class);
     }
 }

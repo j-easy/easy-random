@@ -23,19 +23,20 @@
  */
 package io.github.benas.randombeans.randomizers.range;
 
-import org.junit.Before;
-import org.junit.Test;
+import static io.github.benas.randombeans.randomizers.range.LocalDateRangeRandomizer.aNewLocalDateRangeRandomizer;
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 import java.time.LocalDate;
 
-import static io.github.benas.randombeans.randomizers.range.LocalDateRangeRandomizer.aNewLocalDateRangeRandomizer;
-import static org.assertj.core.api.Assertions.assertThat;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 
 public class LocalDateRangeRandomizerTest extends AbstractRangeRandomizerTest<LocalDate> {
 
     private LocalDate minDate, maxDate;
 
-    @Before
+    @BeforeEach
     public void setUp() {
         minDate = LocalDate.MIN;
         maxDate = LocalDate.MAX;
@@ -65,9 +66,9 @@ public class LocalDateRangeRandomizerTest extends AbstractRangeRandomizerTest<Lo
         assertThat(randomValue).isEqualTo(expected);
     }
 
-    @Test(expected = IllegalArgumentException.class)
+    @Test
     public void whenSpecifiedMinDateIsAfterMaxDate_thenShouldThrowIllegalArgumentException() {
-        aNewLocalDateRangeRandomizer(maxDate, minDate);
+        assertThatThrownBy(() -> aNewLocalDateRangeRandomizer(maxDate, minDate)).isInstanceOf(IllegalArgumentException.class);
     }
 
     @Test

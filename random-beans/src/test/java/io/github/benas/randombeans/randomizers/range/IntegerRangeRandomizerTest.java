@@ -23,19 +23,21 @@
  */
 package io.github.benas.randombeans.randomizers.range;
 
+import static io.github.benas.randombeans.randomizers.range.IntegerRangeRandomizer.aNewIntegerRangeRandomizer;
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
+import static org.assertj.core.api.BDDAssertions.then;
+
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+
 import io.github.benas.randombeans.EnhancedRandomBuilder;
 import io.github.benas.randombeans.api.EnhancedRandom;
 import io.github.benas.randombeans.beans.Street;
-import org.junit.Before;
-import org.junit.Test;
-
-import static io.github.benas.randombeans.randomizers.range.IntegerRangeRandomizer.aNewIntegerRangeRandomizer;
-import static org.assertj.core.api.Assertions.assertThat;
-import static org.assertj.core.api.BDDAssertions.then;
 
 public class IntegerRangeRandomizerTest extends AbstractRangeRandomizerTest<Integer> {
 
-    @Before
+    @BeforeEach
     public void setUp() {
         min = 1;
         max = 10;
@@ -48,9 +50,9 @@ public class IntegerRangeRandomizerTest extends AbstractRangeRandomizerTest<Inte
         assertThat(randomValue).isBetween(min, max);
     }
 
-    @Test(expected = IllegalArgumentException.class)
+    @Test
     public void whenSpecifiedMinValueIsAfterMaxValueThenThrowIllegalArgumentException() {
-        aNewIntegerRangeRandomizer(max, min);
+        assertThatThrownBy(() -> aNewIntegerRangeRandomizer(max, min)).isInstanceOf(IllegalArgumentException.class);
     }
 
     @Test

@@ -46,16 +46,16 @@ import static org.assertj.core.api.BDDAssertions.then;
 
 import java.text.DecimalFormatSymbols;
 
-import org.junit.Test;
-import org.junit.runner.RunWith;
+import org.junit.jupiter.api.TestTemplate;
+import org.junit.jupiter.api.extension.ExtendWith;
 
-import com.tngtech.java.junit.dataprovider.DataProvider;
-import com.tngtech.java.junit.dataprovider.DataProviderRunner;
-import com.tngtech.java.junit.dataprovider.UseDataProvider;
+import com.tngtech.junit.dataprovider.DataProvider;
+import com.tngtech.junit.dataprovider.UseDataProvider;
+import com.tngtech.junit.dataprovider.UseDataProviderExtension;
 
 import io.github.benas.randombeans.api.Randomizer;
 
-@RunWith(DataProviderRunner.class)
+@ExtendWith(UseDataProviderExtension.class)
 public class RandomizersTest extends AbstractRandomizerTest<FakerBasedRandomizer<?>>{
 
     @DataProvider
@@ -83,7 +83,7 @@ public class RandomizersTest extends AbstractRandomizerTest<FakerBasedRandomizer
         };
     }
 
-    @Test
+    @TestTemplate
     @UseDataProvider("generateRandomizers")
     public void generatedNumberShouldNotBeNull(Randomizer<?> randomizer) {
         // when
@@ -117,7 +117,7 @@ public class RandomizersTest extends AbstractRandomizerTest<FakerBasedRandomizer
         };
     }
 
-    @Test
+    @TestTemplate
     @UseDataProvider("generateSeededRandomizersAndTheirExpectedValues")
     public void shouldGenerateTheSameValueForTheSameSeed(Randomizer<?> randomizer, Object expected) {
         //when
@@ -150,7 +150,7 @@ public class RandomizersTest extends AbstractRandomizerTest<FakerBasedRandomizer
         };
     }
 
-    @Test
+    @TestTemplate
     @UseDataProvider("generateSeededRandomizersWithLocaleAndTheirExpectedValues")
     public void shouldGenerateTheSameValueForTheSameSeedForSameLocale(Randomizer<?> randomizer, Object expected) {
         //when

@@ -35,16 +35,16 @@ import static org.mockito.Mockito.when;
 import java.util.Collection;
 
 import org.assertj.core.api.ThrowableAssert.ThrowingCallable;
-import org.junit.Test;
-import org.junit.runner.RunWith;
+import org.junit.jupiter.api.TestTemplate;
+import org.junit.jupiter.api.extension.ExtendWith;
 
-import com.tngtech.java.junit.dataprovider.DataProvider;
-import com.tngtech.java.junit.dataprovider.DataProviderRunner;
-import com.tngtech.java.junit.dataprovider.UseDataProvider;
+import com.tngtech.junit.dataprovider.DataProvider;
+import com.tngtech.junit.dataprovider.UseDataProvider;
+import com.tngtech.junit.dataprovider.UseDataProviderExtension;
 
 import io.github.benas.randombeans.api.Randomizer;
 
-@RunWith(DataProviderRunner.class)
+@ExtendWith(UseDataProviderExtension.class)
 public class CollectionRandomizersTest {
 
     private static final int collectionSize = 3;
@@ -58,7 +58,7 @@ public class CollectionRandomizersTest {
                 aNewSetRandomizer(elementRandomizer) };
     }
 
-    @Test
+    @TestTemplate
     @UseDataProvider("generateCollectionRandomizers")
     public <T> void generatedCollectionShouldNotBeNull(Randomizer<Collection<T>> collectionRandomizer) {
         // when
@@ -75,7 +75,7 @@ public class CollectionRandomizersTest {
                 aNewSetRandomizer(elementRandomizer(), collectionSize) };
     }
 
-    @Test
+    @TestTemplate
     @UseDataProvider("generateCollectionRandomizersWithSpecificSize")
     public <T> void generatedCollectionSizeShouldBeEqualToTheSpecifiedSize(Randomizer<Collection<T>> collectionRandomizer) {
         // when
@@ -92,7 +92,7 @@ public class CollectionRandomizersTest {
                 aNewSetRandomizer(elementRandomizer(), 0) };
     }
 
-    @Test
+    @TestTemplate
     @UseDataProvider("generateCollectionRandomizersForEmptyCollections")
     public <T> void shouldAllowGeneratingEmptyCollections(Randomizer<Collection<T>> collectionRandomizer) {
         // when
@@ -111,7 +111,7 @@ public class CollectionRandomizersTest {
                 (ThrowingCallable) () -> aNewSetRandomizer(elementRandomizer, illegalSize) };
     }
 
-    @Test
+    @TestTemplate
     @UseDataProvider("generateCollectionRandomizersWithIllegalSize")
     public void specifiedSizeShouldBePositive(ThrowingCallable callable) {
         // when

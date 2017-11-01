@@ -24,7 +24,7 @@
 package io.github.benas.randombeans.util;
 
 import io.github.benas.randombeans.beans.*;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 import java.lang.annotation.Documented;
 import java.lang.annotation.Retention;

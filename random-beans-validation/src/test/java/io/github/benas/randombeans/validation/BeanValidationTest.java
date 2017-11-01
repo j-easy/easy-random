@@ -23,26 +23,28 @@
  */
 package io.github.benas.randombeans.validation;
 
-import io.github.benas.randombeans.api.EnhancedRandom;
-import org.junit.Before;
-import org.junit.Test;
+import static io.github.benas.randombeans.EnhancedRandomBuilder.aNewEnhancedRandom;
+import static io.github.benas.randombeans.EnhancedRandomBuilder.aNewEnhancedRandomBuilder;
+import static org.assertj.core.api.Assertions.assertThat;
+
+import java.math.BigDecimal;
+import java.util.Set;
 
 import javax.validation.ConstraintViolation;
 import javax.validation.Validation;
 import javax.validation.Validator;
 import javax.validation.ValidatorFactory;
-import java.math.BigDecimal;
-import java.util.Set;
 
-import static io.github.benas.randombeans.EnhancedRandomBuilder.aNewEnhancedRandom;
-import static io.github.benas.randombeans.EnhancedRandomBuilder.aNewEnhancedRandomBuilder;
-import static org.assertj.core.api.Assertions.assertThat;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+
+import io.github.benas.randombeans.api.EnhancedRandom;
 
 public class BeanValidationTest {
 
     private EnhancedRandom enhancedRandom;
 
-    @Before
+    @BeforeEach
     public void setUp() {
         enhancedRandom = aNewEnhancedRandom();
     }

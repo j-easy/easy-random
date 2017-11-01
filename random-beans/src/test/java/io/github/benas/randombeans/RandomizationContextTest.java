@@ -23,20 +23,21 @@
  */
 package io.github.benas.randombeans;
 
-import io.github.benas.randombeans.api.EnhancedRandomParameters;
-import io.github.benas.randombeans.beans.Address;
-import io.github.benas.randombeans.beans.Person;
-import io.github.benas.randombeans.util.Constants;
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.mockito.Mockito.when;
+
+import java.lang.reflect.Field;
+
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.Mock;
 import org.mockito.junit.MockitoJUnitRunner;
 
-import java.lang.reflect.Field;
-
-import static org.assertj.core.api.Assertions.assertThat;
-import static org.mockito.Mockito.when;
+import io.github.benas.randombeans.api.EnhancedRandomParameters;
+import io.github.benas.randombeans.beans.Address;
+import io.github.benas.randombeans.beans.Person;
+import io.github.benas.randombeans.util.Constants;
 
 @RunWith(MockitoJUnitRunner.class)
 public class RandomizationContextTest {

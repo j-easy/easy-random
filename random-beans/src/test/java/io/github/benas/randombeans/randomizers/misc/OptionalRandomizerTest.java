@@ -23,15 +23,16 @@
  */
 package io.github.benas.randombeans.randomizers.misc;
 
-import io.github.benas.randombeans.api.Randomizer;
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.mockito.Mockito.when;
+
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.Mock;
 import org.mockito.junit.MockitoJUnitRunner;
 
-import static org.assertj.core.api.Assertions.assertThat;
-import static org.mockito.Mockito.when;
+import io.github.benas.randombeans.api.Randomizer;
 
 @RunWith(MockitoJUnitRunner.class)
 public class OptionalRandomizerTest {

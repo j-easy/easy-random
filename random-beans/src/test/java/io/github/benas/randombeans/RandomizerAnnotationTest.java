@@ -23,13 +23,14 @@
  */
 package io.github.benas.randombeans;
 
-import org.junit.Test;
+import static io.github.benas.randombeans.EnhancedRandomBuilder.aNewEnhancedRandom;
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
+
+import org.junit.jupiter.api.Test;
 
 import io.github.benas.randombeans.api.ObjectGenerationException;
 import io.github.benas.randombeans.api.Randomizer;
-
-import static io.github.benas.randombeans.EnhancedRandomBuilder.aNewEnhancedRandom;
-import static org.assertj.core.api.Assertions.assertThat;
 
 public class RandomizerAnnotationTest {
 
@@ -39,10 +40,10 @@ public class RandomizerAnnotationTest {
         assertThat(foo.getName()).isEqualTo("foo");
     }
 
-    @Test(expected=ObjectGenerationException.class)
+    @Test
     // https://github.com/benas/random-beans/issues/131
     public void shouldThrowObjectGenerationExceptionWhenRandomizerUsedInRandomizerAnnotationHasNoDefaultConstructor() {
-        aNewEnhancedRandom().nextObject(Bar.class);
+        assertThatThrownBy(() -> aNewEnhancedRandom().nextObject(Bar.class)).isInstanceOf(ObjectGenerationException.class);
     }
 
     private class Bar {

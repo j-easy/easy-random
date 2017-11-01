@@ -23,14 +23,15 @@
  */
 package io.github.benas.randombeans;
 
-import io.github.benas.randombeans.api.Randomizer;
+import static org.assertj.core.api.Assertions.assertThat;
+
+import java.util.function.Supplier;
+
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.junit.MockitoJUnitRunner;
 
-import java.util.function.Supplier;
-
-import static org.assertj.core.api.Assertions.assertThat;
+import io.github.benas.randombeans.api.Randomizer;
 
 @RunWith(MockitoJUnitRunner.class)
 public class RandomizerProxyTest {

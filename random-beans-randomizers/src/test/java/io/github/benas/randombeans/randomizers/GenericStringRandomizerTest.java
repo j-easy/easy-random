@@ -23,18 +23,18 @@
  */
 package io.github.benas.randombeans.randomizers;
 
-import org.junit.Before;
-import org.junit.Test;
-
 import static io.github.benas.randombeans.randomizers.GenericStringRandomizer.aNewGenericStringRandomizer;
 import static java.util.Arrays.asList;
 import static org.assertj.core.api.BDDAssertions.then;
+
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 
 public class GenericStringRandomizerTest extends AbstractRandomizerTest<String> {
 
     private String[] words;
 
-    @Before
+    @BeforeEach
     public void setUp() {
         words = new String[]{"foo", "bar"};
     }

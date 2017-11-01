@@ -23,10 +23,10 @@
  */
 package io.github.benas.randombeans.util;
 
-import org.junit.Test;
-
 import static java.util.Arrays.asList;
 import static org.assertj.core.api.Assertions.assertThat;
+
+import org.junit.jupiter.api.Test;
 
 public class CollectionUtilsTest {
 

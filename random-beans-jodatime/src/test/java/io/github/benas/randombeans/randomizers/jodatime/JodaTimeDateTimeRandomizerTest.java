@@ -24,7 +24,7 @@
 package io.github.benas.randombeans.randomizers.jodatime;
 
 import org.joda.time.DateTime;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 import static io.github.benas.randombeans.randomizers.jodatime.JodaTimeDateTimeRandomizer.aNewJodaTimeDateTimeRandomizer;
 import static org.assertj.core.api.Assertions.assertThat;

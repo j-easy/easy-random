@@ -23,16 +23,17 @@
  */
 package io.github.benas.randombeans.randomizers.range;
 
-import org.junit.Before;
-import org.junit.Test;
-
 import static io.github.benas.randombeans.randomizers.range.LongRangeRandomizer.aNewLongRangeRandomizer;
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.assertj.core.api.BDDAssertions.then;
+
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 
 public class LongRangeRandomizerTest extends AbstractRangeRandomizerTest<Long> {
 
-    @Before
+    @BeforeEach
     public void setUp() {
         min = 1L;
         max = 10L;
@@ -45,9 +46,9 @@ public class LongRangeRandomizerTest extends AbstractRangeRandomizerTest<Long> {
         assertThat(randomValue).isBetween(min, max);
     }
 
-    @Test(expected = IllegalArgumentException.class)
+    @Test
     public void whenSpecifiedMinValueIsAfterMaxValueThenThrowIllegalArgumentException() {
-        aNewLongRangeRandomizer(max, min);
+        assertThatThrownBy(() -> aNewLongRangeRandomizer(max, min)).isInstanceOf(IllegalArgumentException.class);
     }
 
     @Test

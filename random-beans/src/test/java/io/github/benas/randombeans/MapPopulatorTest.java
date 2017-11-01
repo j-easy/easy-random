@@ -23,22 +23,32 @@
  */
 package io.github.benas.randombeans;
 
-import io.github.benas.randombeans.api.EnhancedRandom;
-import io.github.benas.randombeans.beans.*;
-import lombok.Data;
+import static io.github.benas.randombeans.EnhancedRandomBuilder.aNewEnhancedRandom;
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.entry;
+import static org.mockito.Mockito.when;
+
+import java.lang.reflect.Field;
+import java.util.Collection;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.SortedMap;
+import java.util.TreeMap;
+
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.Mock;
 import org.mockito.junit.MockitoJUnitRunner;
 
-import java.lang.reflect.Field;
-import java.util.*;
-
-import static io.github.benas.randombeans.EnhancedRandomBuilder.aNewEnhancedRandom;
-import static org.assertj.core.api.Assertions.assertThat;
-import static org.assertj.core.api.Assertions.entry;
-import static org.mockito.Mockito.when;
+import io.github.benas.randombeans.api.EnhancedRandom;
+import io.github.benas.randombeans.beans.CompositeMapBean;
+import io.github.benas.randombeans.beans.CustomMap;
+import io.github.benas.randombeans.beans.EnumMapBean;
+import io.github.benas.randombeans.beans.MapBean;
+import io.github.benas.randombeans.beans.Person;
+import io.github.benas.randombeans.beans.WildCardMapBean;
+import lombok.Data;
 
 @RunWith(MockitoJUnitRunner.class)
 @SuppressWarnings({"unchecked", "rawtypes"})

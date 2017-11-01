@@ -23,24 +23,36 @@
  */
 package io.github.benas.randombeans;
 
-import io.github.benas.randombeans.api.EnhancedRandom;
-import io.github.benas.randombeans.api.ObjectGenerationException;
-import io.github.benas.randombeans.beans.*;
+import static io.github.benas.randombeans.EnhancedRandomBuilder.aNewEnhancedRandom;
+import static io.github.benas.randombeans.EnhancedRandomBuilder.aNewEnhancedRandomBuilder;
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
+import static org.mockito.Mockito.when;
+
+import java.lang.reflect.Field;
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.Mock;
 import org.mockito.junit.MockitoJUnitRunner;
 
+import io.github.benas.randombeans.api.EnhancedRandom;
+import io.github.benas.randombeans.api.ObjectGenerationException;
+import io.github.benas.randombeans.beans.CollectionBean;
+import io.github.benas.randombeans.beans.CompositeCollectionBean;
+import io.github.benas.randombeans.beans.CustomList;
+import io.github.benas.randombeans.beans.DelayedQueueBean;
+import io.github.benas.randombeans.beans.Person;
+import io.github.benas.randombeans.beans.SynchronousQueueBean;
+import io.github.benas.randombeans.beans.TypeVariableCollectionBean;
+import io.github.benas.randombeans.beans.WildCardCollectionBean;
 import lombok.Data;
-
-import java.lang.reflect.Field;
-import java.util.*;
-
-import static io.github.benas.randombeans.EnhancedRandomBuilder.aNewEnhancedRandom;
-import static io.github.benas.randombeans.EnhancedRandomBuilder.aNewEnhancedRandomBuilder;
-import static org.assertj.core.api.Assertions.assertThat;
-import static org.mockito.Mockito.when;
 
 @RunWith(MockitoJUnitRunner.class)
 @SuppressWarnings({"unchecked", "rawtypes"})
@@ -341,18 +353,18 @@ public class CollectionPopulatorTest {
         assertThat(compositeCollectionBean.getTypedQueueOdQueues()).isEmpty();
     }
 
-    @Test(expected = ObjectGenerationException.class)
+    @Test
     public void synchronousQueueTypeMustBeRejected() {
         EnhancedRandom enhancedRandom = aNewEnhancedRandom();
 
-        enhancedRandom.nextObject(SynchronousQueueBean.class);
+        assertThatThrownBy(() -> enhancedRandom.nextObject(SynchronousQueueBean.class)).isInstanceOf(ObjectGenerationException.class);
     }
 
-    @Test(expected = ObjectGenerationException.class)
+    @Test
     public void delayedQueueTypeMustBeRejected() {
         EnhancedRandom enhancedRandom = aNewEnhancedRandom();
 
-        enhancedRandom.nextObject(DelayedQueueBean.class);
+        assertThatThrownBy(() -> enhancedRandom.nextObject(DelayedQueueBean.class)).isInstanceOf(ObjectGenerationException.class);
     }
 
     @Test

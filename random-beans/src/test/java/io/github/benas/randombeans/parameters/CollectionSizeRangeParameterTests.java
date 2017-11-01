@@ -23,24 +23,26 @@
  */
 package io.github.benas.randombeans.parameters;
 
-import io.github.benas.randombeans.api.EnhancedRandom;
-import org.junit.Test;
+import static io.github.benas.randombeans.EnhancedRandomBuilder.aNewEnhancedRandomBuilder;
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 import java.util.ArrayList;
 
-import static io.github.benas.randombeans.EnhancedRandomBuilder.aNewEnhancedRandomBuilder;
-import static org.assertj.core.api.Assertions.assertThat;
+import org.junit.jupiter.api.Test;
+
+import io.github.benas.randombeans.api.EnhancedRandom;
 
 public class CollectionSizeRangeParameterTests {
 
-    @Test(expected=IllegalArgumentException.class)
+    @Test
     public void shouldNotAllowNegativeMinCollectionSize() {
-        aNewEnhancedRandomBuilder().collectionSizeRange(-1, 10).build();
+        assertThatThrownBy(() -> aNewEnhancedRandomBuilder().collectionSizeRange(-1, 10).build()).isInstanceOf(IllegalArgumentException.class);
     }
 
-    @Test(expected=IllegalArgumentException.class)
+    @Test
     public void shouldNotAllowMinCollectionSizeGreaterThanMaxCollectionSize() {
-        aNewEnhancedRandomBuilder().collectionSizeRange(2, 1).build();
+        assertThatThrownBy(() -> aNewEnhancedRandomBuilder().collectionSizeRange(2, 1).build()).isInstanceOf(IllegalArgumentException.class);
     }
 
     @Test

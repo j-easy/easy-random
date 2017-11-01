@@ -23,18 +23,19 @@
  */
 package io.github.benas.randombeans.randomizers.jodatime;
 
-import io.github.benas.randombeans.api.EnhancedRandom;
-import org.junit.Before;
-import org.junit.Test;
-
 import static io.github.benas.randombeans.EnhancedRandomBuilder.aNewEnhancedRandom;
 import static org.assertj.core.api.Assertions.assertThat;
+
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+
+import io.github.benas.randombeans.api.EnhancedRandom;
 
 public class JodaTimeSupportTest {
 
     private EnhancedRandom enhancedRandom;
 
-    @Before
+    @BeforeEach
     public void setUp() {
         enhancedRandom = aNewEnhancedRandom();
     }

@@ -30,13 +30,17 @@ import static io.github.benas.randombeans.randomizers.jodatime.range.JodaTimeLoc
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.BDDAssertions.then;
 
-import org.joda.time.*;
-import org.junit.Test;
-import org.junit.runner.RunWith;
+import org.joda.time.DateTime;
+import org.joda.time.LocalDate;
+import org.joda.time.LocalDateTime;
+import org.joda.time.LocalTime;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.TestTemplate;
+import org.junit.jupiter.api.extension.ExtendWith;
 
-import com.tngtech.java.junit.dataprovider.DataProvider;
-import com.tngtech.java.junit.dataprovider.DataProviderRunner;
-import com.tngtech.java.junit.dataprovider.UseDataProvider;
+import com.tngtech.junit.dataprovider.DataProvider;
+import com.tngtech.junit.dataprovider.UseDataProvider;
+import com.tngtech.junit.dataprovider.UseDataProviderExtension;
 
 import io.github.benas.randombeans.api.Randomizer;
 import io.github.benas.randombeans.randomizers.jodatime.range.JodaTimeDateTimeRangeRandomizer;
@@ -44,7 +48,7 @@ import io.github.benas.randombeans.randomizers.jodatime.range.JodaTimeLocalDateR
 import io.github.benas.randombeans.randomizers.jodatime.range.JodaTimeLocalDateTimeRangeRandomizer;
 import io.github.benas.randombeans.randomizers.jodatime.range.JodaTimeLocalTimeRangeRandomizer;
 
-@RunWith(DataProviderRunner.class)
+@ExtendWith(UseDataProviderExtension.class)
 public class JodaTimeRangeRandomizersTest extends AbstractJodaTimeRandomizerTest {
 
     @DataProvider
@@ -57,7 +61,7 @@ public class JodaTimeRangeRandomizersTest extends AbstractJodaTimeRandomizerTest
         };
     }
 
-    @Test
+    @TestTemplate
     @UseDataProvider("generateRandomizers")
     public void generatedTimeShouldNotBeNull(Randomizer<?> randomizer) {
         // when
@@ -84,7 +88,7 @@ public class JodaTimeRangeRandomizersTest extends AbstractJodaTimeRandomizerTest
         };
     }
 
-    @Test
+    @TestTemplate
     @UseDataProvider("generateRandomizersAndMinMax")
     @SuppressWarnings({ "rawtypes", "unchecked" })
     public void shouldGenerateValuesBetweenMinAndMax(Randomizer<Comparable> randomizer, Comparable min, Comparable max) {

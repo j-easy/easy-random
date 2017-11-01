@@ -23,11 +23,12 @@
  */
 package io.github.benas.randombeans;
 
-import io.github.benas.randombeans.beans.Human;
-import org.junit.Before;
-import org.junit.Test;
-
 import static org.assertj.core.api.Assertions.assertThat;
+
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+
+import io.github.benas.randombeans.beans.Human;
 
 public class FieldDefinitionBuilderTest {
 
@@ -37,7 +38,7 @@ public class FieldDefinitionBuilderTest {
 
     private FieldDefinitionBuilder builder;
 
-    @Before
+    @BeforeEach
     public void setUp() {
         builder = new FieldDefinitionBuilder();
     }

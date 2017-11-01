@@ -23,15 +23,17 @@
  */
 package io.github.benas.randombeans.randomizers.text;
 
-import io.github.benas.randombeans.randomizers.AbstractRandomizerTest;
 import static io.github.benas.randombeans.randomizers.text.StringRandomizer.aNewStringRandomizer;
 import static org.assertj.core.api.Assertions.assertThat;
-import org.junit.Before;
-import org.junit.Test;
+
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+
+import io.github.benas.randombeans.randomizers.AbstractRandomizerTest;
 
 public class StringRandomizerTest extends AbstractRandomizerTest<String> {
 
-    @Before
+    @BeforeEach
     public void setUp() {
         randomizer = aNewStringRandomizer();
     }

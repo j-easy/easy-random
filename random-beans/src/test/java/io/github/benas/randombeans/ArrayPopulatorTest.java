@@ -23,21 +23,22 @@
  */
 package io.github.benas.randombeans;
 
-import io.github.benas.randombeans.api.EnhancedRandom;
-import io.github.benas.randombeans.api.Randomizer;
-import io.github.benas.randombeans.beans.ArrayBean;
-import io.github.benas.randombeans.beans.Person;
+import static io.github.benas.randombeans.EnhancedRandomBuilder.aNewEnhancedRandom;
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.mockito.Mockito.when;
+
+import java.lang.reflect.Array;
+
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.Mock;
 import org.mockito.junit.MockitoJUnitRunner;
 
-import java.lang.reflect.Array;
-
-import static io.github.benas.randombeans.EnhancedRandomBuilder.aNewEnhancedRandom;
-import static org.assertj.core.api.Assertions.assertThat;
-import static org.mockito.Mockito.when;
+import io.github.benas.randombeans.api.EnhancedRandom;
+import io.github.benas.randombeans.api.Randomizer;
+import io.github.benas.randombeans.beans.ArrayBean;
+import io.github.benas.randombeans.beans.Person;
 
 @RunWith(MockitoJUnitRunner.class)
 public class ArrayPopulatorTest {

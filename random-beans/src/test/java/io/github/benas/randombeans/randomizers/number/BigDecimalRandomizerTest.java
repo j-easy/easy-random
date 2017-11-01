@@ -23,13 +23,14 @@
  */
 package io.github.benas.randombeans.randomizers.number;
 
-import io.github.benas.randombeans.randomizers.AbstractRandomizerTest;
-import org.junit.Test;
+import static io.github.benas.randombeans.randomizers.number.BigDecimalRandomizer.aNewBigDecimalRandomizer;
+import static org.assertj.core.api.BDDAssertions.then;
 
 import java.math.BigDecimal;
 
-import static io.github.benas.randombeans.randomizers.number.BigDecimalRandomizer.aNewBigDecimalRandomizer;
-import static org.assertj.core.api.BDDAssertions.then;
+import org.junit.jupiter.api.Test;
+
+import io.github.benas.randombeans.randomizers.AbstractRandomizerTest;
 
 public class BigDecimalRandomizerTest extends AbstractRandomizerTest<BigDecimal> {
 

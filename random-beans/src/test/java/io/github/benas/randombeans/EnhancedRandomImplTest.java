@@ -23,18 +23,23 @@
  */
 package io.github.benas.randombeans;
 
-import io.github.benas.randombeans.api.EnhancedRandom;
-import io.github.benas.randombeans.api.ObjectGenerationException;
-import io.github.benas.randombeans.api.Randomizer;
-import io.github.benas.randombeans.beans.*;
-import io.github.benas.randombeans.randomizers.misc.ConstantRandomizer;
-import io.github.benas.randombeans.util.ReflectionUtils;
-import org.junit.Before;
-import org.junit.Ignore;
-import org.junit.Test;
-import org.junit.runner.RunWith;
-import org.mockito.Mock;
-import org.mockito.junit.MockitoJUnitRunner;
+import static io.github.benas.randombeans.EnhancedRandomBuilder.aNewEnhancedRandom;
+import static io.github.benas.randombeans.EnhancedRandomBuilder.aNewEnhancedRandomBuilder;
+import static io.github.benas.randombeans.FieldDefinitionBuilder.field;
+import static io.github.benas.randombeans.api.EnhancedRandom.random;
+import static io.github.benas.randombeans.api.EnhancedRandom.randomCollectionOf;
+import static io.github.benas.randombeans.api.EnhancedRandom.randomListOf;
+import static io.github.benas.randombeans.api.EnhancedRandom.randomSetOf;
+import static io.github.benas.randombeans.api.EnhancedRandom.randomStreamOf;
+import static java.sql.Timestamp.valueOf;
+import static java.time.LocalDateTime.of;
+import static java.util.Arrays.asList;
+import static java.util.stream.Collectors.toList;
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
+import static org.assertj.core.api.Assertions.fail;
+import static org.assertj.core.api.BDDAssertions.then;
+import static org.mockito.Mockito.when;
 
 import java.lang.reflect.Modifier;
 import java.util.Collection;
@@ -43,18 +48,28 @@ import java.util.List;
 import java.util.Set;
 import java.util.stream.Stream;
 
-import static io.github.benas.randombeans.EnhancedRandomBuilder.aNewEnhancedRandom;
-import static io.github.benas.randombeans.EnhancedRandomBuilder.aNewEnhancedRandomBuilder;
-import static io.github.benas.randombeans.FieldDefinitionBuilder.field;
-import static io.github.benas.randombeans.api.EnhancedRandom.*;
-import static java.sql.Timestamp.valueOf;
-import static java.time.LocalDateTime.of;
-import static java.util.Arrays.asList;
-import static java.util.stream.Collectors.toList;
-import static org.assertj.core.api.Assertions.assertThat;
-import static org.assertj.core.api.Assertions.fail;
-import static org.assertj.core.api.BDDAssertions.then;
-import static org.mockito.Mockito.when;
+import org.junit.Before;
+import org.junit.Ignore;
+import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.mockito.Mock;
+import org.mockito.junit.MockitoJUnitRunner;
+
+import io.github.benas.randombeans.api.EnhancedRandom;
+import io.github.benas.randombeans.api.ObjectGenerationException;
+import io.github.benas.randombeans.api.Randomizer;
+import io.github.benas.randombeans.beans.AbstractBean;
+import io.github.benas.randombeans.beans.Address;
+import io.github.benas.randombeans.beans.Gender;
+import io.github.benas.randombeans.beans.Human;
+import io.github.benas.randombeans.beans.ImmutableBean;
+import io.github.benas.randombeans.beans.Node;
+import io.github.benas.randombeans.beans.Person;
+import io.github.benas.randombeans.beans.Street;
+import io.github.benas.randombeans.beans.TestData;
+import io.github.benas.randombeans.beans.TestEnum;
+import io.github.benas.randombeans.randomizers.misc.ConstantRandomizer;
+import io.github.benas.randombeans.util.ReflectionUtils;
 
 @RunWith(MockitoJUnitRunner.class)
 public class EnhancedRandomImplTest {
@@ -200,23 +215,21 @@ public class EnhancedRandomImplTest {
         assertThat(human.getName()).isEqualTo(FOO);
     }
 
-    @Test(expected = IllegalArgumentException.class)
+    @Test
     public void ambiguousFieldDefinitionShouldBeRejected() {
-        enhancedRandom = aNewEnhancedRandomBuilder()
+        assertThatThrownBy(() -> enhancedRandom = aNewEnhancedRandomBuilder()
                 .randomize(field().named("name").get(), new ConstantRandomizer<>("name"))
-                .build();
-
-        enhancedRandom.nextObject(Person.class);
+                .build()).isInstanceOf(IllegalArgumentException.class);
     }
 
-    @Test(expected = IllegalArgumentException.class)
+    @Test
     public void whenSpecifiedNumberOfBeansToGenerateIsNegative_thenShouldThrowAnIllegalArgumentException() {
-        enhancedRandom.objects(Person.class, -2);
+        assertThatThrownBy(() -> enhancedRandom.objects(Person.class, -2)).isInstanceOf(IllegalArgumentException.class);
     }
 
-    @Test(expected = ObjectGenerationException.class)
+    @Test
     public void whenUnableToInstantiateField_thenShouldThrowObjectGenerationException() {
-        enhancedRandom.nextObject(AbstractBean.class);
+        assertThatThrownBy(() -> enhancedRandom.nextObject(AbstractBean.class)).isInstanceOf(ObjectGenerationException.class);
     }
 
     @Test

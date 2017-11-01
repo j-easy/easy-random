@@ -23,11 +23,12 @@
  */
 package io.github.benas.randombeans.randomizers.misc;
 
-import io.github.benas.randombeans.randomizers.AbstractRandomizerTest;
-import org.junit.Test;
-
 import static io.github.benas.randombeans.randomizers.misc.BooleanRandomizer.aNewBooleanRandomizer;
 import static org.assertj.core.api.Assertions.assertThat;
+
+import org.junit.jupiter.api.Test;
+
+import io.github.benas.randombeans.randomizers.AbstractRandomizerTest;
 
 public class BooleanRandomizerTest extends AbstractRandomizerTest<Boolean> {
 

@@ -23,27 +23,38 @@
  */
 package io.github.benas.randombeans.parameters;
 
-import io.github.benas.randombeans.EnhancedRandomBuilder;
-import io.github.benas.randombeans.api.EnhancedRandom;
-import io.github.benas.randombeans.api.ObjectGenerationException;
-import io.github.benas.randombeans.beans.*;
-import org.junit.Test;
+import static io.github.benas.randombeans.EnhancedRandomBuilder.aNewEnhancedRandomBuilder;
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
+import static org.assertj.core.api.BDDAssertions.then;
 
 import java.util.Date;
 
-import static io.github.benas.randombeans.EnhancedRandomBuilder.aNewEnhancedRandomBuilder;
-import static org.assertj.core.api.Assertions.assertThat;
-import static org.assertj.core.api.BDDAssertions.then;
+import org.junit.jupiter.api.Test;
+
+import io.github.benas.randombeans.EnhancedRandomBuilder;
+import io.github.benas.randombeans.api.EnhancedRandom;
+import io.github.benas.randombeans.api.ObjectGenerationException;
+import io.github.benas.randombeans.beans.Ape;
+import io.github.benas.randombeans.beans.Bar;
+import io.github.benas.randombeans.beans.ClassUsingAbstractEnum;
+import io.github.benas.randombeans.beans.ComparableBean;
+import io.github.benas.randombeans.beans.ConcreteBar;
+import io.github.benas.randombeans.beans.Foo;
+import io.github.benas.randombeans.beans.Human;
+import io.github.benas.randombeans.beans.Mamals;
+import io.github.benas.randombeans.beans.Person;
+import io.github.benas.randombeans.beans.SocialPerson;
 
 public class ScanClasspathForConcreteTypesParameterTests {
 
     private EnhancedRandom enhancedRandom;
 
-    @Test(expected = ObjectGenerationException.class)
+    @Test
     public void whenScanClasspathForConcreteTypesIsDisabled_thenShouldFailToPopulateInterfacesAndAbstractClasses() {
         enhancedRandom = aNewEnhancedRandomBuilder().scanClasspathForConcreteTypes(false).build();
 
-        enhancedRandom.nextObject(Mamals.class);
+        assertThatThrownBy(() -> enhancedRandom.nextObject(Mamals.class)).isInstanceOf(ObjectGenerationException.class);
     }
 
     @Test
