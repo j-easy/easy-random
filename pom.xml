@@ -9,7 +9,7 @@
     </parent>
 
     <groupId>io.github.benas</groupId>
-    <artifactId>random-beans-parent</artifactId>
+    <artifactId>random-beans-project</artifactId>
     <version>3.8.0-SNAPSHOT</version>
     <packaging>pom</packaging>
 
@@ -20,20 +20,6 @@
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <java.version>1.8</java.version>
-        <lombok.version>1.16.18</lombok.version>
-        <junit.version>4.12</junit.version>
-        <faker.version>0.14</faker.version>
-        <assertj.version>3.8.0</assertj.version>
-        <validation-api.version>1.1.0.Final</validation-api.version>
-        <joda-time.version>2.9.9</joda-time.version>
-        <spring-context.version>4.3.10.RELEASE</spring-context.version>
-        <objenesis.version>2.6</objenesis.version>
-        <fast-classpath-scanner.version>2.7.5</fast-classpath-scanner.version>
-        <hibernate-validator.version>5.4.1.Final</hibernate-validator.version>
-        <javax.el.version>2.2.6</javax.el.version>
-        <jackson.version>2.9.2</jackson.version>
-        <mockito-core.version>2.11.0</mockito-core.version>
-        <junit-dataprovider.version>1.13.1</junit-dataprovider.version>
         <maven-surefire-plugin.version>2.20</maven-surefire-plugin.version>
         <maven-compiler-plugin.version>3.6.1</maven-compiler-plugin.version>
         <maven-cobertura-plugin.version>2.7</maven-cobertura-plugin.version>
@@ -49,6 +35,7 @@
         <module>random-beans-jodatime</module>
         <module>random-beans-randomizers</module>
         <module>random-beans-bom</module>
+        <module>random-beans-parent</module>
     </modules>
 
     <scm>
@@ -177,93 +164,6 @@
             <url>https://github.com/VanOvermeire</url>
         </contributor>
     </contributors>
-
-    <dependencyManagement>
-        <dependencies>
-            <dependency>
-                <groupId>io.github.benas</groupId>
-                <artifactId>random-beans</artifactId>
-                <version>${project.version}</version>
-            </dependency>
-            <dependency>
-                <groupId>io.github.benas</groupId>
-                <artifactId>random-beans-randomizers</artifactId>
-                <version>${project.version}</version>
-            </dependency>
-            <dependency>
-                <groupId>org.projectlombok</groupId>
-                <artifactId>lombok</artifactId>
-                <version>${lombok.version}</version>
-                <scope>provided</scope>
-            </dependency>
-            <dependency>
-                <groupId>javax.validation</groupId>
-                <artifactId>validation-api</artifactId>
-                <version>${validation-api.version}</version>
-            </dependency>
-            <dependency>
-                <groupId>joda-time</groupId>
-                <artifactId>joda-time</artifactId>
-                <version>${joda-time.version}</version>
-            </dependency>
-            <dependency>
-                <groupId>org.springframework</groupId>
-                <artifactId>spring-context</artifactId>
-                <version>${spring-context.version}</version>
-            </dependency>
-            <dependency>
-                <groupId>com.fasterxml.jackson.core</groupId>
-                <artifactId>jackson-databind</artifactId>
-                <version>${jackson.version}</version>
-            </dependency>
-            <dependency>
-                <groupId>org.objenesis</groupId>
-                <artifactId>objenesis</artifactId>
-                <version>${objenesis.version}</version>
-            </dependency>
-            <dependency>
-                <groupId>io.github.lukehutch</groupId>
-                <artifactId>fast-classpath-scanner</artifactId>
-                <version>${fast-classpath-scanner.version}</version>
-                <optional>true</optional>
-            </dependency>
-            <dependency>
-                <groupId>org.hibernate</groupId>
-                <artifactId>hibernate-validator</artifactId>
-                <version>${hibernate-validator.version}</version>
-            </dependency>
-            <dependency>
-                <groupId>org.glassfish.web</groupId>
-                <artifactId>javax.el</artifactId>
-                <version>${javax.el.version}</version>
-            </dependency>
-            <dependency>
-                <groupId>com.github.javafaker</groupId>
-                <artifactId>javafaker</artifactId>
-                <version>${faker.version}</version>
-            </dependency>
-            <dependency>
-                <groupId>junit</groupId>
-                <artifactId>junit</artifactId>
-                <version>${junit.version}</version>
-            </dependency>
-            <dependency>
-                <groupId>org.assertj</groupId>
-                <artifactId>assertj-core</artifactId>
-                <version>${assertj.version}</version>
-            </dependency>
-            <dependency>
-                <groupId>org.mockito</groupId>
-                <artifactId>mockito-core</artifactId>
-                <version>${mockito-core.version}</version>
-            </dependency>
-            <dependency>
-                <groupId>com.tngtech.java</groupId>
-                <artifactId>junit-dataprovider</artifactId>
-                <version>${junit-dataprovider.version}</version>
-            </dependency>
-        </dependencies>
-    </dependencyManagement>
 
     <build>
         <pluginManagement>
