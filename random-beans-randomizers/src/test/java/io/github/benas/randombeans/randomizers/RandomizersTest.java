@@ -30,10 +30,12 @@ import static io.github.benas.randombeans.randomizers.CreditCardNumberRandomizer
 import static io.github.benas.randombeans.randomizers.EmailRandomizer.aNewEmailRandomizer;
 import static io.github.benas.randombeans.randomizers.FirstNameRandomizer.aNewFirstNameRandomizer;
 import static io.github.benas.randombeans.randomizers.FullNameRandomizer.aNewFullNameRandomizer;
+import static io.github.benas.randombeans.randomizers.Ipv4AddressRandomizer.aNewIpv4AddressRandomizer;
 import static io.github.benas.randombeans.randomizers.IsbnRandomizer.aNewIsbnRandomizer;
 import static io.github.benas.randombeans.randomizers.LastNameRandomizer.aNewLastNameRandomizer;
 import static io.github.benas.randombeans.randomizers.LatitudeRandomizer.aNewLatitudeRandomizer;
 import static io.github.benas.randombeans.randomizers.LongitudeRandomizer.aNewLongitudeRandomizer;
+import static io.github.benas.randombeans.randomizers.MacAddressRandomizer.aNewMacAddressRandomizer;
 import static io.github.benas.randombeans.randomizers.ParagraphRandomizer.aNewParagraphRandomizer;
 import static io.github.benas.randombeans.randomizers.PhoneNumberRandomizer.aNewPhoneNumberRandomizer;
 import static io.github.benas.randombeans.randomizers.RegularExpressionRandomizer.aNewRegularExpressionRandomizer;
@@ -68,10 +70,12 @@ public class RandomizersTest extends AbstractRandomizerTest<FakerBasedRandomizer
                 aNewEmailRandomizer(),
                 aNewFirstNameRandomizer(),
                 aNewFullNameRandomizer(),
+                aNewIpv4AddressRandomizer(),
                 aNewIsbnRandomizer(),
                 aNewLastNameRandomizer(),
                 aNewLatitudeRandomizer(),
                 aNewLongitudeRandomizer(),
+                aNewMacAddressRandomizer(),
                 aNewPhoneNumberRandomizer(),
                 aNewRegularExpressionRandomizer("\\d+[A-Z]{5}"),
                 aNewParagraphRandomizer(),
@@ -102,10 +106,12 @@ public class RandomizersTest extends AbstractRandomizerTest<FakerBasedRandomizer
                 { aNewEmailRandomizer(SEED), "jayne.weissnat@hotmail.com" }, 
                 { aNewFirstNameRandomizer(SEED), "Jayne" },
                 { aNewFullNameRandomizer(SEED), "Candace Crona" },
+                { aNewIpv4AddressRandomizer(SEED), "16.188.76.229" },
                 { aNewIsbnRandomizer(SEED), "9781797845005" },
                 { aNewLastNameRandomizer(SEED), "Hyatt" },
                 { aNewLatitudeRandomizer(SEED), "40" + new DecimalFormatSymbols().getDecimalSeparator() + "171357" },
                 { aNewLongitudeRandomizer(SEED), "80" + new DecimalFormatSymbols().getDecimalSeparator() + "342713" },
+                { aNewMacAddressRandomizer(SEED), "b3:f4:49:94:c9:e8" },
                 { aNewParagraphRandomizer(SEED), "Totam assumenda eius autem similique. Aut voluptatem enim praesentium. Suscipit cupiditate doloribus debitis dolor. Cumque sapiente occaecati. Quos maiores quae." },
                 { aNewPhoneNumberRandomizer(SEED), "1-069-574-7539" },
                 { aNewRegularExpressionRandomizer("\\d+[A-Z]{5}", SEED), "8UYSMT" },
@@ -136,10 +142,12 @@ public class RandomizersTest extends AbstractRandomizerTest<FakerBasedRandomizer
                 { aNewEmailRandomizer(SEED, LOCALE), "alice.masson@hotmail.fr" }, 
                 { aNewFirstNameRandomizer(SEED, LOCALE), "Alice" },
                 { aNewFullNameRandomizer(SEED, LOCALE), "Masson Emilie" },
+                { aNewIpv4AddressRandomizer(SEED, LOCALE), "16.188.76.229" },
                 { aNewIsbnRandomizer(SEED, LOCALE), "9781797845005" },
                 { aNewLastNameRandomizer(SEED, LOCALE), "Faure" },
                 { aNewLatitudeRandomizer(SEED, LOCALE), "40" + new DecimalFormatSymbols().getDecimalSeparator() + "171357" }, // should really be "40.171357", seems like a bug in java-faker
                 { aNewLongitudeRandomizer(SEED, LOCALE), "80" + new DecimalFormatSymbols().getDecimalSeparator() + "342713" }, // should really be "80.342713", seems like a bug in java-faker
+                { aNewMacAddressRandomizer(SEED, LOCALE), "b3:f4:49:94:c9:e8" },
                 { aNewParagraphRandomizer(SEED, LOCALE), "Totam assumenda eius autem similique. Aut voluptatem enim praesentium. Suscipit cupiditate doloribus debitis dolor. Cumque sapiente occaecati. Quos maiores quae." },
                 { aNewPhoneNumberRandomizer(SEED, LOCALE), "03 06 95 74 75" },
                 { aNewSentenceRandomizer(SEED, LOCALE), "Dolor totam assumenda eius autem." },

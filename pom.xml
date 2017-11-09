@@ -163,6 +163,10 @@
             <name>Sam Van Overmeire</name>
             <url>https://github.com/VanOvermeire</url>
         </contributor>
+        <contributor>
+            <name>Michael Düsterhus</name>
+            <url>https://github.com/reitzmichnicht</url>
+        </contributor>
     </contributors>
 
     <build>
