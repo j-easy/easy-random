@@ -10,43 +10,6 @@
     <name>Random Beans Spring</name>
     <artifactId>random-beans-spring</artifactId>
     <description>Random Beans module for Spring support</description>
-    <url>https://github.com/benas/random-beans</url>
-
-    <scm>
-        <url>git@github.com:benas/random-beans.git</url>
-        <connection>scm:git:git@github.com:benas/random-beans.git</connection>
-        <developerConnection>scm:git:git@github.com:benas/random-beans.git</developerConnection>
-        <tag>HEAD</tag>
-    </scm>
-
-    <ciManagement>
-        <system>Travis CI</system>
-        <url>https://travis-ci.org/benas/random-beans</url>
-    </ciManagement>
-
-    <issueManagement>
-        <system>GitHub</system>
-        <url>https://github.com/benas/random-beans/issues</url>
-    </issueManagement>
-
-    <licenses>
-        <license>
-            <name>MIT License</name>
-            <url>http://opensource.org/licenses/mit-license.php</url>
-        </license>
-    </licenses>
-
-    <developers>
-        <developer>
-            <id>benas</id>
-            <name>Mahmoud Ben Hassine</name>
-            <url>http://benas.github.io</url>
-            <email>mahmoud.benhassine@icloud.com</email>
-            <roles>
-                <role>Lead developer</role>
-            </roles>
-        </developer>
-    </developers>
 
     <dependencies>
         <dependency>
@@ -73,6 +36,5 @@
             <scope>test</scope>
         </dependency>
     </dependencies>
-
 
 </project>
