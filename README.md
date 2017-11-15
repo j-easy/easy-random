@@ -11,7 +11,7 @@
 [![Coverage Status](https://coveralls.io/repos/benas/random-beans/badge.svg?branch=master&service=github)](https://coveralls.io/github/benas/random-beans?branch=master)
 [![Build Status](https://travis-ci.org/benas/random-beans.svg?branch=master)](https://travis-ci.org/benas/random-beans)
 [![Maven Central](https://maven-badges.herokuapp.com/maven-central/io.github.benas/random-beans/badge.svg?style=flat)](http://repo1.maven.org/maven2/io/github/benas/random-beans/3.7.0/)
-[![Javadoc](https://javadoc-emblem.rhcloud.com/doc/io.github.benas/random-beans/badge.svg)](http://www.javadoc.io/doc/io.github.benas/random-beans)
+[![Javadocs](http://www.javadoc.io/badge/io.github.benas/random-beans.svg)](http://www.javadoc.io/doc/io.github.benas/random-beans)
 [![Gitter](https://badges.gitter.im/Join%20Chat.svg)](https://gitter.im/benas/random-beans)
 
 </div>
