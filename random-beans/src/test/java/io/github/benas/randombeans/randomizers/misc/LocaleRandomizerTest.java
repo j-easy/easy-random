@@ -28,7 +28,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 import java.util.Locale;
 
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 import io.github.benas.randombeans.randomizers.AbstractRandomizerTest;
 

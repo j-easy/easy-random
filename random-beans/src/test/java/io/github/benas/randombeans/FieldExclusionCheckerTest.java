@@ -23,16 +23,17 @@
  */
 package io.github.benas.randombeans;
 
-import io.github.benas.randombeans.beans.Human;
+import static org.assertj.core.api.Assertions.assertThat;
+
+import java.lang.reflect.Field;
+
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.Mock;
 import org.mockito.junit.MockitoJUnitRunner;
 
-import java.lang.reflect.Field;
-
-import static org.assertj.core.api.Assertions.assertThat;
+import io.github.benas.randombeans.beans.Human;
 
 @RunWith(MockitoJUnitRunner.class)
 public class FieldExclusionCheckerTest {

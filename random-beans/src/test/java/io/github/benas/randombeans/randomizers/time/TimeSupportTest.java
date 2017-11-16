@@ -23,24 +23,24 @@
  */
 package io.github.benas.randombeans.randomizers.time;
 
+import static io.github.benas.randombeans.EnhancedRandomBuilder.aNewEnhancedRandom;
+import static org.assertj.core.api.Assertions.assertThat;
+
+import java.time.Instant;
+
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+
 import io.github.benas.randombeans.EnhancedRandomBuilder;
 import io.github.benas.randombeans.FieldDefinitionBuilder;
 import io.github.benas.randombeans.api.EnhancedRandom;
 import io.github.benas.randombeans.beans.TimeBean;
 
-import java.time.Instant;
-
-import org.junit.Before;
-import org.junit.Test;
-
-import static io.github.benas.randombeans.EnhancedRandomBuilder.aNewEnhancedRandom;
-import static org.assertj.core.api.Assertions.assertThat;
-
 public class TimeSupportTest {
 
     private EnhancedRandom enhancedRandom;
 
-    @Before
+    @BeforeEach
     public void setUp() {
         enhancedRandom = aNewEnhancedRandom();
     }

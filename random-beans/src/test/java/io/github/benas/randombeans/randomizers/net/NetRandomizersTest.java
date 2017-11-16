@@ -23,24 +23,27 @@
  */
 package io.github.benas.randombeans.randomizers.net;
 
-import com.tngtech.java.junit.dataprovider.DataProvider;
-import com.tngtech.java.junit.dataprovider.DataProviderRunner;
-import com.tngtech.java.junit.dataprovider.UseDataProvider;
-import io.github.benas.randombeans.api.Randomizer;
-import io.github.benas.randombeans.beans.Website;
-import io.github.benas.randombeans.randomizers.AbstractRandomizerTest;
-import org.junit.Test;
-import org.junit.runner.RunWith;
-
-import java.net.URI;
-import java.net.URL;
-
 import static io.github.benas.randombeans.EnhancedRandomBuilder.aNewEnhancedRandom;
 import static io.github.benas.randombeans.randomizers.net.UriRandomizer.aNewUriRandomizer;
 import static io.github.benas.randombeans.randomizers.net.UrlRandomizer.aNewUrlRandomizer;
 import static org.assertj.core.api.BDDAssertions.then;
 
-@RunWith(DataProviderRunner.class)
+import java.net.URI;
+import java.net.URL;
+
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.TestTemplate;
+import org.junit.jupiter.api.extension.ExtendWith;
+
+import com.tngtech.junit.dataprovider.DataProvider;
+import com.tngtech.junit.dataprovider.UseDataProvider;
+import com.tngtech.junit.dataprovider.UseDataProviderExtension;
+
+import io.github.benas.randombeans.api.Randomizer;
+import io.github.benas.randombeans.beans.Website;
+import io.github.benas.randombeans.randomizers.AbstractRandomizerTest;
+
+@ExtendWith(UseDataProviderExtension.class)
 public class NetRandomizersTest extends AbstractRandomizerTest<Randomizer<?>> {
 
     @DataProvider
@@ -51,7 +54,7 @@ public class NetRandomizersTest extends AbstractRandomizerTest<Randomizer<?>> {
         };
     }
 
-    @Test
+    @TestTemplate
     @UseDataProvider("generateRandomizers")
     public void generatedValueShouldNotBeNull(Randomizer<?> randomizer) {
         // when
@@ -68,7 +71,7 @@ public class NetRandomizersTest extends AbstractRandomizerTest<Randomizer<?>> {
         };
     }
 
-    @Test
+    @TestTemplate
     @UseDataProvider("generateSeededRandomizersAndTheirExpectedValues")
     public void shouldGenerateTheSameValueForTheSameSeed(Randomizer<?> randomizer, Object expected) {
         //when

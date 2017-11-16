@@ -23,13 +23,14 @@
  */
 package io.github.benas.randombeans.parameters;
 
-import io.github.benas.randombeans.api.EnhancedRandom;
-import io.github.benas.randombeans.beans.BeanWithDefaultFieldValues;
-import org.junit.Test;
-
 import static io.github.benas.randombeans.EnhancedRandomBuilder.aNewEnhancedRandomBuilder;
 import static io.github.benas.randombeans.api.EnhancedRandom.random;
 import static org.assertj.core.api.Assertions.assertThat;
+
+import org.junit.jupiter.api.Test;
+
+import io.github.benas.randombeans.api.EnhancedRandom;
+import io.github.benas.randombeans.beans.BeanWithDefaultFieldValues;
 
 public class OverrideDefaultInitializationParameterTests {
 

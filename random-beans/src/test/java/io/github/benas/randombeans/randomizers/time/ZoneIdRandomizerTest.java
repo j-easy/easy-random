@@ -23,18 +23,19 @@
  */
 package io.github.benas.randombeans.randomizers.time;
 
-import io.github.benas.randombeans.randomizers.AbstractRandomizerTest;
-import org.junit.Before;
-import org.junit.Test;
-
-import java.time.ZoneId;
-
 import static io.github.benas.randombeans.randomizers.time.ZoneIdRandomizer.aNewZoneIdRandomizer;
 import static org.assertj.core.api.Assertions.assertThat;
 
+import java.time.ZoneId;
+
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+
+import io.github.benas.randombeans.randomizers.AbstractRandomizerTest;
+
 public class ZoneIdRandomizerTest extends AbstractRandomizerTest<ZoneId> {
 
-    @Before
+    @BeforeEach
     public void setUp() {
         randomizer = aNewZoneIdRandomizer(SEED);
     }

@@ -58,8 +58,8 @@
             <artifactId>javafaker</artifactId>
         </dependency>
         <dependency>
-            <groupId>junit</groupId>
-            <artifactId>junit</artifactId>
+            <groupId>org.junit.jupiter</groupId>
+            <artifactId>junit-jupiter-engine</artifactId>
             <scope>test</scope>
         </dependency>
         <dependency>
@@ -73,8 +73,8 @@
             <scope>test</scope>
         </dependency>
         <dependency>
-            <groupId>com.tngtech.java</groupId>
-            <artifactId>junit-dataprovider</artifactId>
+            <groupId>com.tngtech.junit.dataprovider</groupId>
+            <artifactId>junit-jupiter-dataprovider</artifactId>
             <scope>test</scope>
         </dependency>
     </dependencies>

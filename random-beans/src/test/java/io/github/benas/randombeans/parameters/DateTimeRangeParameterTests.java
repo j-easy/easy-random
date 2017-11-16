@@ -23,15 +23,16 @@
  */
 package io.github.benas.randombeans.parameters;
 
-import io.github.benas.randombeans.api.EnhancedRandom;
-import io.github.benas.randombeans.beans.TimeBean;
-import org.junit.Test;
+import static io.github.benas.randombeans.EnhancedRandomBuilder.aNewEnhancedRandomBuilder;
+import static org.assertj.core.api.Assertions.assertThat;
 
 import java.time.LocalDate;
 import java.time.LocalTime;
 
-import static io.github.benas.randombeans.EnhancedRandomBuilder.aNewEnhancedRandomBuilder;
-import static org.assertj.core.api.Assertions.assertThat;
+import org.junit.jupiter.api.Test;
+
+import io.github.benas.randombeans.api.EnhancedRandom;
+import io.github.benas.randombeans.beans.TimeBean;
 
 public class DateTimeRangeParameterTests {
 

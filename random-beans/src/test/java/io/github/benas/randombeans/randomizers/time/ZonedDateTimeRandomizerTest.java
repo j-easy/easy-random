@@ -23,13 +23,14 @@
  */
 package io.github.benas.randombeans.randomizers.time;
 
-import io.github.benas.randombeans.randomizers.AbstractRandomizerTest;
-import org.junit.Test;
+import static io.github.benas.randombeans.randomizers.time.ZonedDateTimeRandomizer.aNewZonedDateTimeRandomizer;
+import static org.assertj.core.api.BDDAssertions.then;
 
 import java.time.ZonedDateTime;
 
-import static io.github.benas.randombeans.randomizers.time.ZonedDateTimeRandomizer.aNewZonedDateTimeRandomizer;
-import static org.assertj.core.api.BDDAssertions.then;
+import org.junit.jupiter.api.Test;
+
+import io.github.benas.randombeans.randomizers.AbstractRandomizerTest;
 
 public class ZonedDateTimeRandomizerTest extends AbstractRandomizerTest<ZonedDateTime> {
 

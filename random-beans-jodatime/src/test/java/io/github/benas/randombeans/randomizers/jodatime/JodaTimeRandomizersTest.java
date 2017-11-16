@@ -37,16 +37,16 @@ import org.joda.time.LocalDate;
 import org.joda.time.LocalDateTime;
 import org.joda.time.LocalTime;
 import org.joda.time.Period;
-import org.junit.Test;
-import org.junit.runner.RunWith;
+import org.junit.jupiter.api.TestTemplate;
+import org.junit.jupiter.api.extension.ExtendWith;
 
-import com.tngtech.java.junit.dataprovider.DataProvider;
-import com.tngtech.java.junit.dataprovider.DataProviderRunner;
-import com.tngtech.java.junit.dataprovider.UseDataProvider;
+import com.tngtech.junit.dataprovider.DataProvider;
+import com.tngtech.junit.dataprovider.UseDataProvider;
+import com.tngtech.junit.dataprovider.UseDataProviderExtension;
 
 import io.github.benas.randombeans.api.Randomizer;
 
-@RunWith(DataProviderRunner.class)
+@ExtendWith(UseDataProviderExtension.class)
 public class JodaTimeRandomizersTest extends AbstractJodaTimeRandomizerTest {
 
     @DataProvider
@@ -61,7 +61,7 @@ public class JodaTimeRandomizersTest extends AbstractJodaTimeRandomizerTest {
         };
     }
 
-    @Test
+    @TestTemplate
     @UseDataProvider("generateRandomizers")
     public void generatedTimeShouldNotBeNull(Randomizer<?> randomizer) {
         // when
@@ -82,7 +82,7 @@ public class JodaTimeRandomizersTest extends AbstractJodaTimeRandomizerTest {
         };
     }
 
-    @Test
+    @TestTemplate
     @UseDataProvider("generateSeededRandomizersAndTheirExpectedValues")
     public void shouldGenerateTheSameValueForTheSameSeed(Randomizer<?> randomizer, Object expected) {
         //when

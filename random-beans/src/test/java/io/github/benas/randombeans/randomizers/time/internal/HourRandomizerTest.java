@@ -23,18 +23,19 @@
  */
 package io.github.benas.randombeans.randomizers.time.internal;
 
-import io.github.benas.randombeans.randomizers.AbstractRandomizerTest;
-import io.github.benas.randombeans.randomizers.time.HourRandomizer;
-import org.junit.Before;
-import org.junit.Test;
-
 import static io.github.benas.randombeans.randomizers.time.HourRandomizer.MAX_HOUR;
 import static io.github.benas.randombeans.randomizers.time.HourRandomizer.MIN_HOUR;
 import static org.assertj.core.api.Assertions.assertThat;
 
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+
+import io.github.benas.randombeans.randomizers.AbstractRandomizerTest;
+import io.github.benas.randombeans.randomizers.time.HourRandomizer;
+
 public class HourRandomizerTest extends AbstractRandomizerTest<Integer> {
 
-    @Before
+    @BeforeEach
     public void setUp() {
         randomizer = new HourRandomizer();
     }

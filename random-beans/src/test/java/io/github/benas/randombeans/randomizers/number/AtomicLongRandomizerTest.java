@@ -23,13 +23,14 @@
  */
 package io.github.benas.randombeans.randomizers.number;
 
-import io.github.benas.randombeans.randomizers.AbstractRandomizerTest;
-import org.junit.Test;
+import static io.github.benas.randombeans.randomizers.number.AtomicLongRandomizer.aNewAtomicLongRandomizer;
+import static org.assertj.core.api.BDDAssertions.then;
 
 import java.util.concurrent.atomic.AtomicLong;
 
-import static io.github.benas.randombeans.randomizers.number.AtomicLongRandomizer.aNewAtomicLongRandomizer;
-import static org.assertj.core.api.BDDAssertions.then;
+import org.junit.jupiter.api.Test;
+
+import io.github.benas.randombeans.randomizers.AbstractRandomizerTest;
 
 public class AtomicLongRandomizerTest extends AbstractRandomizerTest<AtomicLong> {
 

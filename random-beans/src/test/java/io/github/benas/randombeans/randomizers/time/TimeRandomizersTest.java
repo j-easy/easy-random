@@ -47,23 +47,35 @@ import static org.assertj.core.api.BDDAssertions.then;
 
 import java.sql.Time;
 import java.sql.Timestamp;
-import java.time.*;
+import java.time.Duration;
+import java.time.Instant;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.LocalTime;
+import java.time.Month;
+import java.time.MonthDay;
+import java.time.OffsetDateTime;
+import java.time.OffsetTime;
+import java.time.Period;
+import java.time.Year;
+import java.time.YearMonth;
+import java.time.ZoneOffset;
 import java.time.temporal.ChronoUnit;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.GregorianCalendar;
 
-import org.junit.Test;
-import org.junit.runner.RunWith;
+import org.junit.jupiter.api.TestTemplate;
+import org.junit.jupiter.api.extension.ExtendWith;
 
-import com.tngtech.java.junit.dataprovider.DataProvider;
-import com.tngtech.java.junit.dataprovider.DataProviderRunner;
-import com.tngtech.java.junit.dataprovider.UseDataProvider;
+import com.tngtech.junit.dataprovider.DataProvider;
+import com.tngtech.junit.dataprovider.UseDataProvider;
+import com.tngtech.junit.dataprovider.UseDataProviderExtension;
 
 import io.github.benas.randombeans.api.Randomizer;
 import io.github.benas.randombeans.randomizers.AbstractRandomizerTest;
 
-@RunWith(DataProviderRunner.class)
+@ExtendWith(UseDataProviderExtension.class)
 public class TimeRandomizersTest extends AbstractRandomizerTest<Randomizer<?>> {
 
     @DataProvider
@@ -90,7 +102,7 @@ public class TimeRandomizersTest extends AbstractRandomizerTest<Randomizer<?>> {
         };
     }
 
-    @Test
+    @TestTemplate
     @UseDataProvider("generateRandomizers")
     public void generatedTimeShouldNotBeNull(Randomizer<?> randomizer) {
         // when
@@ -129,7 +141,7 @@ public class TimeRandomizersTest extends AbstractRandomizerTest<Randomizer<?>> {
         };
     }
 
-    @Test
+    @TestTemplate
     @UseDataProvider("generateSeededRandomizersAndTheirExpectedValues")
     public void shouldGenerateTheSameValueForTheSameSeed(Randomizer<?> randomizer, Object expected) {
         //when

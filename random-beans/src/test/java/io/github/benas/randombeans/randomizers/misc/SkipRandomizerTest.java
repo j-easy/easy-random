@@ -23,10 +23,10 @@
  */
 package io.github.benas.randombeans.randomizers.misc;
 
-import org.junit.Test;
-
 import static io.github.benas.randombeans.randomizers.misc.SkipRandomizer.aNewSkipRandomizer;
 import static org.assertj.core.api.Assertions.assertThat;
+
+import org.junit.jupiter.api.Test;
 
 public class SkipRandomizerTest {
 

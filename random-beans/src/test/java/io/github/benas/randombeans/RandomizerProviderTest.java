@@ -23,20 +23,21 @@
  */
 package io.github.benas.randombeans;
 
-import io.github.benas.randombeans.api.Randomizer;
-import io.github.benas.randombeans.api.RandomizerRegistry;
-import io.github.benas.randombeans.beans.Foo;
+import static java.util.Collections.singleton;
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.mockito.Mockito.when;
+
+import java.lang.reflect.Field;
+
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.Mock;
 import org.mockito.junit.MockitoJUnitRunner;
 
-import java.lang.reflect.Field;
-
-import static java.util.Collections.singleton;
-import static org.assertj.core.api.Assertions.assertThat;
-import static org.mockito.Mockito.when;
+import io.github.benas.randombeans.api.Randomizer;
+import io.github.benas.randombeans.api.RandomizerRegistry;
+import io.github.benas.randombeans.beans.Foo;
 
 @RunWith(MockitoJUnitRunner.class)
 @SuppressWarnings("unchecked")

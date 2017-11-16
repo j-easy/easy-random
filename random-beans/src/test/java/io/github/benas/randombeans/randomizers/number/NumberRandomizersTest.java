@@ -23,18 +23,6 @@
  */
 package io.github.benas.randombeans.randomizers.number;
 
-import io.github.benas.randombeans.api.Randomizer;
-import io.github.benas.randombeans.randomizers.AbstractRandomizerTest;
-import org.junit.Test;
-import org.junit.runner.RunWith;
-
-import com.tngtech.java.junit.dataprovider.DataProvider;
-import com.tngtech.java.junit.dataprovider.DataProviderRunner;
-import com.tngtech.java.junit.dataprovider.UseDataProvider;
-
-import java.math.BigDecimal;
-import java.math.BigInteger;
-
 import static io.github.benas.randombeans.randomizers.number.BigDecimalRandomizer.aNewBigDecimalRandomizer;
 import static io.github.benas.randombeans.randomizers.number.BigIntegerRandomizer.aNewBigIntegerRandomizer;
 import static io.github.benas.randombeans.randomizers.number.ByteRandomizer.aNewByteRandomizer;
@@ -45,7 +33,20 @@ import static io.github.benas.randombeans.randomizers.number.LongRandomizer.aNew
 import static io.github.benas.randombeans.randomizers.number.ShortRandomizer.aNewShortRandomizer;
 import static org.assertj.core.api.BDDAssertions.then;
 
-@RunWith(DataProviderRunner.class)
+import java.math.BigDecimal;
+import java.math.BigInteger;
+
+import org.junit.jupiter.api.TestTemplate;
+import org.junit.jupiter.api.extension.ExtendWith;
+
+import com.tngtech.junit.dataprovider.DataProvider;
+import com.tngtech.junit.dataprovider.UseDataProvider;
+import com.tngtech.junit.dataprovider.UseDataProviderExtension;
+
+import io.github.benas.randombeans.api.Randomizer;
+import io.github.benas.randombeans.randomizers.AbstractRandomizerTest;
+
+@ExtendWith(UseDataProviderExtension.class)
 public class NumberRandomizersTest extends AbstractRandomizerTest<Object> {
 
     @DataProvider
@@ -62,7 +63,7 @@ public class NumberRandomizersTest extends AbstractRandomizerTest<Object> {
         };
     }
 
-    @Test
+    @TestTemplate
     @UseDataProvider("generateRandomizers")
     public void generatedNumberShouldNotBeNull(Randomizer<?> randomizer) {
         // when
@@ -85,7 +86,7 @@ public class NumberRandomizersTest extends AbstractRandomizerTest<Object> {
         };
     }
 
-    @Test
+    @TestTemplate
     @UseDataProvider("generateSeededRandomizersAndTheirExpectedValues")
     public void shouldGenerateTheSameValueForTheSameSeed(Randomizer<?> randomizer, Object expected) {
         //when

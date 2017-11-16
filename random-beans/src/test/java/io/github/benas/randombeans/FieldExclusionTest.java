@@ -23,17 +23,6 @@
  */
 package io.github.benas.randombeans;
 
-import io.github.benas.randombeans.api.EnhancedRandom;
-import io.github.benas.randombeans.beans.Address;
-import io.github.benas.randombeans.beans.Website;
-import io.github.benas.randombeans.beans.exclusion.C;
-import io.github.benas.randombeans.beans.Human;
-import io.github.benas.randombeans.beans.Person;
-import org.junit.Before;
-import org.junit.Test;
-import org.junit.runner.RunWith;
-import org.mockito.junit.MockitoJUnitRunner;
-
 import static io.github.benas.randombeans.EnhancedRandomBuilder.aNewEnhancedRandom;
 import static io.github.benas.randombeans.EnhancedRandomBuilder.aNewEnhancedRandomBuilder;
 import static io.github.benas.randombeans.FieldDefinitionBuilder.field;
@@ -42,6 +31,18 @@ import static org.assertj.core.api.Assertions.assertThat;
 import java.lang.reflect.Modifier;
 import java.util.ArrayList;
 import java.util.List;
+
+import org.junit.Before;
+import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.mockito.junit.MockitoJUnitRunner;
+
+import io.github.benas.randombeans.api.EnhancedRandom;
+import io.github.benas.randombeans.beans.Address;
+import io.github.benas.randombeans.beans.Human;
+import io.github.benas.randombeans.beans.Person;
+import io.github.benas.randombeans.beans.Website;
+import io.github.benas.randombeans.beans.exclusion.C;
 
 @RunWith(MockitoJUnitRunner.class)
 public class FieldExclusionTest {

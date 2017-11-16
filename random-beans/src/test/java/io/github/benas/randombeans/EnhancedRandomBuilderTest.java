@@ -23,22 +23,24 @@
  */
 package io.github.benas.randombeans;
 
-import io.github.benas.randombeans.api.EnhancedRandom;
-import io.github.benas.randombeans.api.Randomizer;
-import io.github.benas.randombeans.api.RandomizerRegistry;
-import io.github.benas.randombeans.beans.Human;
+import static io.github.benas.randombeans.EnhancedRandomBuilder.aNewEnhancedRandomBuilder;
+import static io.github.benas.randombeans.FieldDefinitionBuilder.field;
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
+import static org.mockito.Mockito.when;
+
+import java.util.function.Supplier;
+
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.Mock;
 import org.mockito.junit.MockitoJUnitRunner;
 
-import java.util.function.Supplier;
-
-import static io.github.benas.randombeans.EnhancedRandomBuilder.aNewEnhancedRandomBuilder;
-import static io.github.benas.randombeans.FieldDefinitionBuilder.field;
-import static org.assertj.core.api.Assertions.assertThat;
-import static org.mockito.Mockito.when;
+import io.github.benas.randombeans.api.EnhancedRandom;
+import io.github.benas.randombeans.api.Randomizer;
+import io.github.benas.randombeans.api.RandomizerRegistry;
+import io.github.benas.randombeans.beans.Human;
 
 @RunWith(MockitoJUnitRunner.class)
 @SuppressWarnings("unchecked")
@@ -128,18 +130,18 @@ public class EnhancedRandomBuilderTest {
         assertThat(actual).isEqualTo(human);
     }
 
-    @Test(expected=IllegalArgumentException.class)
+    @Test
     public void shouldNotAllowNegativeMinStringLength() {
         enhancedRandomBuilder = aNewEnhancedRandomBuilder();
 
-        enhancedRandomBuilder.stringLengthRange(-1, 10).build();
+        assertThatThrownBy(() -> enhancedRandomBuilder.stringLengthRange(-1, 10).build()).isInstanceOf(IllegalArgumentException.class);
     }
 
-    @Test(expected=IllegalArgumentException.class)
+    @Test
     public void shouldNotAllowMinStringLengthGreaterThanMaxStringLength() {
         enhancedRandomBuilder = aNewEnhancedRandomBuilder();
 
-        enhancedRandomBuilder.stringLengthRange(2, 1).build();
+        assertThatThrownBy(() -> enhancedRandomBuilder.stringLengthRange(2, 1).build()).isInstanceOf(IllegalArgumentException.class);
     }
 
     @Test
