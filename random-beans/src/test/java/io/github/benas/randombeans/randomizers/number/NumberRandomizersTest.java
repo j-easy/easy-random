@@ -30,6 +30,7 @@ import static io.github.benas.randombeans.randomizers.number.DoubleRandomizer.aN
 import static io.github.benas.randombeans.randomizers.number.FloatRandomizer.aNewFloatRandomizer;
 import static io.github.benas.randombeans.randomizers.number.IntegerRandomizer.aNewIntegerRandomizer;
 import static io.github.benas.randombeans.randomizers.number.LongRandomizer.aNewLongRandomizer;
+import static io.github.benas.randombeans.randomizers.number.NumberRandomizer.aNewNumberRandomizer;
 import static io.github.benas.randombeans.randomizers.number.ShortRandomizer.aNewShortRandomizer;
 import static org.assertj.core.api.BDDAssertions.then;
 
@@ -55,6 +56,7 @@ public class NumberRandomizersTest extends AbstractRandomizerTest<Object> {
                 aNewByteRandomizer(),
                 aNewShortRandomizer(),
                 aNewIntegerRandomizer(),
+                aNewNumberRandomizer(),
                 aNewLongRandomizer(),
                 aNewFloatRandomizer(),
                 aNewDoubleRandomizer(),
@@ -78,6 +80,7 @@ public class NumberRandomizersTest extends AbstractRandomizerTest<Object> {
                 { aNewByteRandomizer(SEED), (byte) -35 },
                 { aNewShortRandomizer(SEED), (short) -3619 },
                 { aNewIntegerRandomizer(SEED), -1188957731 },
+                { aNewNumberRandomizer(SEED), -1188957731 },
                 { aNewLongRandomizer(SEED), -5106534569952410475L },
                 { aNewFloatRandomizer(SEED), 0.72317415F },
                 { aNewDoubleRandomizer(SEED), 0.7231742029971469 },
