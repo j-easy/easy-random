@@ -35,11 +35,11 @@ import java.math.BigDecimal;
 import java.math.BigInteger;
 import java.util.Random;
 
-class DecimaMinMaxAnnotationHandler implements BeanValidationAnnotationHandler {
+class DecimalMinMaxAnnotationHandler implements BeanValidationAnnotationHandler {
 
     private final Random random;
 
-    public DecimaMinMaxAnnotationHandler(long seed) {
+    public DecimalMinMaxAnnotationHandler(long seed) {
         random = new Random(seed);
     }
 
