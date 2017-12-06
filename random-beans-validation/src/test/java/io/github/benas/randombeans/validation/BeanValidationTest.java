@@ -87,6 +87,9 @@ public class BeanValidationTest {
 
         assertThat(bean.getMinDiscount()).isGreaterThanOrEqualTo(new BigDecimal("5.00"));// @DecimalMin("5.00") BigDecimal minDiscount;
 
+        assertThat(bean.getDiscount()).isLessThanOrEqualTo(new BigDecimal("1.00"));// @DecimalMax("1.00") BigDecimal discount;
+        assertThat(bean.getDiscount()).isGreaterThanOrEqualTo(new BigDecimal("0.01"));// @DecimalMin("0.01") BigDecimal discount;
+
         assertThat(bean.getMinQuantity()).isGreaterThanOrEqualTo(5);// @Min(5) int minQuantity;
 
         assertThat(bean.getBriefMessage().length()).isBetween(2, 10);// @Size(min=2, max=10) String briefMessage;
@@ -132,6 +135,9 @@ public class BeanValidationTest {
 
         assertThat(bean.getMinDiscount()).isGreaterThanOrEqualTo(new BigDecimal("5.00"));// @DecimalMin("5.00") BigDecimal minDiscount;
 
+        assertThat(bean.getDiscount()).isLessThanOrEqualTo(new BigDecimal("1.00"));// @DecimalMax("1.00") BigDecimal discount;
+        assertThat(bean.getDiscount()).isGreaterThanOrEqualTo(new BigDecimal("0.01"));// @DecimalMin("0.01") BigDecimal discount;
+
         assertThat(bean.getMinQuantity()).isGreaterThanOrEqualTo(5);// @Min(5) int minQuantity;
 
         assertThat(bean.getBriefMessage().length()).isBetween(2, 10);// @Size(min=2, max=10) String briefMessage;
@@ -161,6 +167,7 @@ public class BeanValidationTest {
         assertThat(bean.getMinQuantity()).isEqualTo(91531906);
         assertThat(bean.getMaxDiscount()).isEqualTo(new BigDecimal(30));
         assertThat(bean.getMinDiscount()).isEqualTo(new BigDecimal(393126525614007301L));
+        //assertThat(bean.getDiscount()).isEqualTo(new BigDecimal(/* todo add assertion on actual value with the current seed */));
         assertThat(bean.getMinQuantity()).isEqualTo(91531906);
         assertThat(bean.getBriefMessage()).isEqualTo("tguu");
         assertThat(bean.getRegexString()).isEqualTo("vuna");
