@@ -21,14 +21,14 @@
  *   OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  *   THE SOFTWARE.
  */
-package io.github.benas.randombeans;
+package io.github.benas.randombeans.util;
 
 /**
  * Wrapper for primitive TYPE values and their classes.
  *
  * @author Sam Van Overmeire
  */
-public enum PrimitiveEnum {
+enum PrimitiveEnum {
 
     BYTE(Byte.TYPE, Byte.class),
     SHORT(Short.TYPE, Short.class),

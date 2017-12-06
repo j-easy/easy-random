@@ -24,7 +24,6 @@
 package io.github.benas.randombeans.util;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import io.github.benas.randombeans.PrimitiveEnum;
 import io.github.benas.randombeans.annotation.RandomizerArgument;
 import io.github.benas.randombeans.api.ObjectGenerationException;
 import io.github.benas.randombeans.api.Randomizer;
