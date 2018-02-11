@@ -185,6 +185,7 @@ If you have any question, suggestion, or feedback, do not hesitate to use the [G
 
 * [Adriano Machado](https://github.com/ammachado)
 * [Alberto Lagna](https://github.com/alagna)
+* [Andrew Neal](https://github.com/aeneal)
 * [Dovid Kopel](https://github.com/dovidkopel)
 * [huningd](https://github.com/huningd)
 * [Eric Taix](https://github.com/eric-taix)
