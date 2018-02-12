@@ -166,6 +166,10 @@ public void testPersistPerson() throws Exception {
 
 There are many other uses cases where random beans can be useful, you can find a non exhaustive list in the [wiki](https://github.com/benas/random-beans/wiki/use-cases).
 
+## Extensions
+
+* [JUnit extension](https://glytching.github.io/junit-extensions/randomBeans): Use random beans to generate random data in JUnit tests (courtesy of [glytching](https://github.com/glytching))
+
 ## Contribution
 
 You are welcome to contribute to the project with pull requests on GitHub.
