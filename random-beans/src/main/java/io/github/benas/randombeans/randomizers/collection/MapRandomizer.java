@@ -28,6 +28,7 @@ import lombok.NonNull;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.function.Function;
 
 import static io.github.benas.randombeans.randomizers.number.ByteRandomizer.aNewByteRandomizer;
 import static java.lang.Math.abs;
@@ -43,7 +44,7 @@ public class MapRandomizer<K, V> implements Randomizer<Map<K, V>> {
 
     private final int nbElements;
 
-    private final Randomizer<K> keyRandomizer;
+    private final Function<V, K> keyGenerator;
 
     private final Randomizer<V> valueRandomizer;
 
@@ -65,8 +66,29 @@ public class MapRandomizer<K, V> implements Randomizer<Map<K, V>> {
      * @param nbEntries       the number of entries to generate
      */
     public MapRandomizer(@NonNull final Randomizer<K> keyRandomizer, @NonNull final Randomizer<V> valueRandomizer, final int nbEntries) {
+        this(v -> keyRandomizer.getRandomValue(), valueRandomizer, nbEntries);
+    }
+
+    /**
+     * Create a new {@link MapRandomizer} with a random number of entries.
+     *
+     * @param keyGenerator    the depends on value key generator
+     * @param valueRandomizer the randomizer for values
+     */
+    public MapRandomizer(@NonNull final Function<V, K> keyGenerator, @NonNull final Randomizer<V> valueRandomizer) {
+        this(keyGenerator, valueRandomizer, getRandomSize());
+    }
+
+    /**
+     * Create a new {@link MapRandomizer} with a fixed number of entries.
+     *
+     * @param keyGenerator    the depends on value key generator
+     * @param valueRandomizer the randomizer for values
+     * @param nbEntries       the number of entries to generate
+     */
+    public MapRandomizer(@NonNull final Function<V, K> keyGenerator, @NonNull final Randomizer<V> valueRandomizer, final int nbEntries) {
         checkArguments(nbEntries);
-        this.keyRandomizer = keyRandomizer;
+        this.keyGenerator = keyGenerator;
         this.valueRandomizer = valueRandomizer;
         this.nbElements = nbEntries;
     }
@@ -87,6 +109,33 @@ public class MapRandomizer<K, V> implements Randomizer<Map<K, V>> {
     /**
      * Create a new {@link MapRandomizer} with a fixed number of entries.
      *
+     * @param keyGenerator    the depends on value key generator
+     * @param valueRandomizer the randomizer for values
+     * @param nbEntries       the number of entries to generate
+     * @param <K>             the type of key elements
+     * @param <V>             the type of value elements
+     * @return a new {@link MapRandomizer}
+     */
+    public static <K, V> MapRandomizer<K, V> aNewMapRandomizer(final Function<V, K> keyGenerator, final Randomizer<V> valueRandomizer, final int nbEntries) {
+        return new MapRandomizer<>(keyGenerator, valueRandomizer, nbEntries);
+    }
+
+    /**
+     * Create a new {@link MapRandomizer} with a random number of entries.
+     *
+     * @param keyGenerator    the depends on value key generator
+     * @param valueRandomizer the randomizer for values
+     * @param <K>             the type of key elements
+     * @param <V>             the type of value elements
+     * @return a new {@link MapRandomizer}
+     */
+    public static <K, V> MapRandomizer<K, V> aNewMapRandomizer(final Function<V, K> keyGenerator, final Randomizer<V> valueRandomizer) {
+        return new MapRandomizer<>(keyGenerator, valueRandomizer);
+    }
+
+    /**
+     * Create a new {@link MapRandomizer} with a fixed number of entries.
+     *
      * @param keyRandomizer   the randomizer for keys
      * @param valueRandomizer the randomizer for values
      * @param nbEntries       the number of entries to generate
@@ -102,7 +151,9 @@ public class MapRandomizer<K, V> implements Randomizer<Map<K, V>> {
     public Map<K, V> getRandomValue() {
         Map<K, V> result = new HashMap<>();
         for (int i = 0; i < nbElements; i++) {
-            result.put(keyRandomizer.getRandomValue(), valueRandomizer.getRandomValue());
+            V value = valueRandomizer.getRandomValue();
+            K key = keyGenerator.apply(value);
+            result.put(key, value);
         }
         return result;
     }

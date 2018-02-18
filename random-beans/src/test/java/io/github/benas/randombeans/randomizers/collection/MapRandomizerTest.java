@@ -36,8 +36,13 @@ import org.mockito.junit.MockitoJUnitRunner;
 
 import io.github.benas.randombeans.api.Randomizer;
 
+import java.util.Map;
+import java.util.function.Function;
+
 @RunWith(MockitoJUnitRunner.class)
 public class MapRandomizerTest {
+
+    private Function<String, Integer> keyGenerator = String::hashCode;
 
     @Mock
     private Randomizer<Integer> keyRandomizer;
@@ -72,11 +77,29 @@ public class MapRandomizerTest {
 
     @Test
     public void nullKeyRandomizer() {
-        assertThatThrownBy(() -> aNewMapRandomizer(null, valueRandomizer, 3)).isInstanceOf(NullPointerException.class);
+        assertThatThrownBy(() -> aNewMapRandomizer((Randomizer<Integer>) null, valueRandomizer, 3)).isInstanceOf(NullPointerException.class);
     }
 
     @Test
     public void nullValueRandomizer() {
         assertThatThrownBy(() -> aNewMapRandomizer(keyRandomizer, null, 3)).isInstanceOf(NullPointerException.class);
+    }
+
+    @Test
+    public void generatedWithKeyRandomizerMapShouldBeCorrect() {
+        Map<Integer, String> map = aNewMapRandomizer(keyRandomizer, valueRandomizer).getRandomValue();
+        assertThat(map).hasSize(3);
+        assertThat(map.get(1)).isEqualTo("a");
+        assertThat(map.get(2)).isEqualTo("b");
+        assertThat(map.get(3)).isEqualTo("c");
+    }
+
+    @Test
+    public void generatedWithGeyGeneratorMapShouldBeCorrect() {
+        Map<Integer, String> map = aNewMapRandomizer(keyGenerator, valueRandomizer).getRandomValue();
+        assertThat(map).hasSize(3);
+        assertThat(map.get("a".hashCode())).isEqualTo("a");
+        assertThat(map.get("b".hashCode())).isEqualTo("b");
+        assertThat(map.get("c".hashCode())).isEqualTo("c");
     }
 }
