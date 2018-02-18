@@ -208,5 +208,6 @@ If you have any question, suggestion, or feedback, do not hesitate to use the [G
 * [Sam Van Overmeire](https://github.com/VanOvermeire)
 * [Valters Vingolds](https://github.com/valters)
 * [Vincent Potucek](https://github.com/punkratz312)
+* [Sergey Ermakov](https://github.com/SButterfly)
 
 Thank you all for your contributions!

@@ -176,6 +176,10 @@
             <name>Sam Van Overmeire</name>
             <url>https://github.com/VanOvermeire</url>
         </contributor>
+        <contributor>
+            <name>Sergey Ermakov</name>
+            <url>https://github.com/SButterfly</url>
+        </contributor>
     </contributors>
 
     <dependencyManagement>
