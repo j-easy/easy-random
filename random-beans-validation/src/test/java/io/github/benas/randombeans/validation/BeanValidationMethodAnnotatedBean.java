@@ -37,6 +37,8 @@ class BeanValidationMethodAnnotatedBean {
 
     private BigDecimal minDiscount;
 
+    private int positive;
+
     private Date eventDate;
 
     private Date birthday;
@@ -87,6 +89,15 @@ class BeanValidationMethodAnnotatedBean {
 
     public void setMinDiscount(BigDecimal minDiscount) {
         this.minDiscount = minDiscount;
+    }
+
+    @Positive
+    public int getPositive() {
+        return positive;
+    }
+
+    public void setPositive(int positive) {
+        this.positive = positive;
     }
 
     @Future
@@ -176,6 +187,7 @@ class BeanValidationMethodAnnotatedBean {
         sb.append(", unusedString='").append(unusedString).append('\'');
         sb.append(", briefMessage='").append(briefMessage).append('\'');
         sb.append(", regexString=").append(regexString).append('\'');
+        sb.append(", positive=").append(positive).append('\'');
         sb.append('}');
         return sb.toString();
     }

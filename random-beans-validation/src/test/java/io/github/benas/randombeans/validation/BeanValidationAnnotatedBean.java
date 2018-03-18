@@ -53,6 +53,9 @@ class BeanValidationAnnotatedBean {
     @Min(5)
     private int minQuantity;
 
+    @Positive
+    private int positive;
+
     @NotNull
     private String username;
 
@@ -165,7 +168,15 @@ class BeanValidationAnnotatedBean {
 		this.regexString = regexString;
 	}
 
-	@Override
+    public int getPositive() {
+        return positive;
+    }
+
+    public void setPositive(int positive) {
+        this.positive = positive;
+    }
+
+    @Override
     public String toString() {
         final StringBuilder sb = new StringBuilder("BeanValidationAnnotatedBean{");
         sb.append("unsupported=").append(unsupported);
@@ -180,6 +191,7 @@ class BeanValidationAnnotatedBean {
         sb.append(", unusedString='").append(unusedString).append('\'');
         sb.append(", briefMessage='").append(briefMessage).append('\'');
         sb.append(", regexString=").append(regexString).append('\'');
+        sb.append(", positive=").append(positive).append('\'');
         sb.append('}');
         return sb.toString();
     }

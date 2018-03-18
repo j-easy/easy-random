@@ -67,6 +67,8 @@ public class BeanValidationTest {
 
         assertThat(bean.getEventDate()).isInTheFuture();// @Future Date eventDate;
 
+        assertThat(bean.getPositive()).isGreaterThanOrEqualTo(1);// @Positive int positive;
+
         assertThat(bean.getMaxQuantity()).isLessThanOrEqualTo(10);// @Max(10) int maxQuantity;
 
         assertThat(bean.getMinQuantity()).isGreaterThanOrEqualTo(5);// @Min(5) int minQuantity;
@@ -99,6 +101,8 @@ public class BeanValidationTest {
         assertThat(bean.getBirthday()).isInThePast();// @Past Date birthday;
 
         assertThat(bean.getEventDate()).isInTheFuture();// @Future Date eventDate;
+
+        assertThat(bean.getPositive()).isGreaterThanOrEqualTo(1);// @Positive int positive;
 
         assertThat(bean.getMaxQuantity()).isLessThanOrEqualTo(10);// @Max(10) int maxQuantity;
 
@@ -140,6 +144,7 @@ public class BeanValidationTest {
         assertThat(bean.getMinQuantity()).isEqualTo(91531906);
         assertThat(bean.getBriefMessage()).isEqualTo("tguu");
         assertThat(bean.getRegexString()).isEqualTo("vuna");
+        assertThat(bean.getPositive()).isEqualTo(1368348779);
     }
 
     @Test
