@@ -68,11 +68,6 @@
             <scope>test</scope>
         </dependency>
         <dependency>
-            <groupId>org.mockito</groupId>
-            <artifactId>mockito-core</artifactId>
-            <scope>test</scope>
-        </dependency>
-        <dependency>
             <groupId>com.tngtech.junit.dataprovider</groupId>
             <artifactId>junit-jupiter-dataprovider</artifactId>
             <scope>test</scope>
