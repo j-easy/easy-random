@@ -29,17 +29,17 @@ import static org.mockito.Mockito.when;
 
 import java.lang.reflect.Field;
 
-import org.junit.Before;
-import org.junit.Test;
-import org.junit.runner.RunWith;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Mock;
-import org.mockito.junit.MockitoJUnitRunner;
+import org.mockito.junit.jupiter.MockitoExtension;
 
 import io.github.benas.randombeans.api.Randomizer;
 import io.github.benas.randombeans.api.RandomizerRegistry;
 import io.github.benas.randombeans.beans.Foo;
 
-@RunWith(MockitoJUnitRunner.class)
+@ExtendWith(MockitoExtension.class)
 @SuppressWarnings("unchecked")
 public class RandomizerProviderTest {
 
@@ -50,7 +50,7 @@ public class RandomizerProviderTest {
 
     private RandomizerProvider randomizerProvider;
 
-    @Before
+    @BeforeEach
     public void setUp() {
         randomizerProvider = new RandomizerProvider(singleton(randomizerRegistry));
     }

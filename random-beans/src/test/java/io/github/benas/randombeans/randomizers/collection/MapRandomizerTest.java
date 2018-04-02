@@ -28,27 +28,20 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.mockito.Mockito.when;
 
-import org.junit.Before;
-import org.junit.Test;
-import org.junit.runner.RunWith;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Mock;
-import org.mockito.junit.MockitoJUnitRunner;
+import org.mockito.junit.jupiter.MockitoExtension;
 
 import io.github.benas.randombeans.api.Randomizer;
 
-@RunWith(MockitoJUnitRunner.class)
+@ExtendWith(MockitoExtension.class)
 public class MapRandomizerTest {
 
     @Mock
     private Randomizer<Integer> keyRandomizer;
     @Mock
     private Randomizer<String> valueRandomizer;
-
-    @Before
-    public void setUp() {
-        when(keyRandomizer.getRandomValue()).thenReturn(1, 2, 3);
-        when(valueRandomizer.getRandomValue()).thenReturn("a", "b", "c");
-    }
 
     @Test
     public void generatedMapShouldNotBeEmpty() {
@@ -57,6 +50,7 @@ public class MapRandomizerTest {
 
     @Test
     public void generatedMapSizeShouldBeEqualToTheSpecifiedSize() {
+        when(keyRandomizer.getRandomValue()).thenReturn(1, 2, 3);
         assertThat(aNewMapRandomizer(keyRandomizer, valueRandomizer, 3).getRandomValue()).hasSize(3);
     }
 

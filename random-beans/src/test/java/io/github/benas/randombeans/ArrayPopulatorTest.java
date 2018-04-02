@@ -29,18 +29,18 @@ import static org.mockito.Mockito.when;
 
 import java.lang.reflect.Array;
 
-import org.junit.Before;
-import org.junit.Test;
-import org.junit.runner.RunWith;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Mock;
-import org.mockito.junit.MockitoJUnitRunner;
+import org.mockito.junit.jupiter.MockitoExtension;
 
 import io.github.benas.randombeans.api.EnhancedRandom;
 import io.github.benas.randombeans.api.Randomizer;
 import io.github.benas.randombeans.beans.ArrayBean;
 import io.github.benas.randombeans.beans.Person;
 
-@RunWith(MockitoJUnitRunner.class)
+@ExtendWith(MockitoExtension.class)
 public class ArrayPopulatorTest {
 
     private static final int INT = 10;
@@ -57,22 +57,16 @@ public class ArrayPopulatorTest {
 
     private ArrayPopulator arrayPopulator;
 
-    @Before
+    @BeforeEach
     public void setUp() {
         arrayPopulator = new ArrayPopulator(enhancedRandom, randomizerProvider);
-        when(enhancedRandom.nextInt()).thenReturn(INT);
-        when(enhancedRandom.getRandomCollectionSize()).thenReturn(INT);
-        when(randomizerProvider.getRandomizerByType(Integer.TYPE)).thenReturn(integerRandomizer);
-        when(integerRandomizer.getRandomValue()).thenReturn(INT);
-        when(enhancedRandom.doPopulateBean(String.class, context)).thenReturn(STRING);
     }
-
-    /*
-     * Unit tests for ArrayPopulator class
-     */
 
     @Test
     public void getRandomArray() {
+        when(enhancedRandom.getRandomCollectionSize()).thenReturn(INT);
+        when(enhancedRandom.doPopulateBean(String.class, context)).thenReturn(STRING);
+
         String[] strings = (String[]) arrayPopulator.getRandomArray(String[].class, context);
 
         assertThat(strings).containsOnly(STRING);
@@ -80,6 +74,10 @@ public class ArrayPopulatorTest {
 
     @Test
     public void getRandomPrimitiveArray() {
+        when(enhancedRandom.nextInt()).thenReturn(INT);
+        when(randomizerProvider.getRandomizerByType(Integer.TYPE)).thenReturn(integerRandomizer);
+        when(integerRandomizer.getRandomValue()).thenReturn(INT);
+
         int[] ints = (int[]) arrayPopulator.getRandomPrimitiveArray(Integer.TYPE);
 
         assertThat(ints).containsOnly(INT);

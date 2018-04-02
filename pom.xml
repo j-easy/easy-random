@@ -32,7 +32,7 @@
         <hibernate-validator.version>6.0.8.Final</hibernate-validator.version>
         <javax.el.version>3.0.0</javax.el.version>
         <jackson.version>2.9.4</jackson.version>
-        <mockito-core.version>2.11.0</mockito-core.version>
+        <mockito.version>2.17.0</mockito.version>
         <junit-dataprovider.version>2.0</junit-dataprovider.version>
         <maven-surefire-plugin.version>2.19</maven-surefire-plugin.version>
         <maven-compiler-plugin.version>3.6.1</maven-compiler-plugin.version>
@@ -248,11 +248,6 @@
                 <version>${junit.version}</version>
             </dependency>
             <dependency>
-                <groupId>org.junit.vintage</groupId>
-                <artifactId>junit-vintage-engine</artifactId>
-                <version>${junit.version}</version>
-            </dependency>
-            <dependency>
                 <groupId>org.assertj</groupId>
                 <artifactId>assertj-core</artifactId>
                 <version>${assertj.version}</version>
@@ -260,7 +255,12 @@
             <dependency>
                 <groupId>org.mockito</groupId>
                 <artifactId>mockito-core</artifactId>
-                <version>${mockito-core.version}</version>
+                <version>${mockito.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.mockito</groupId>
+                <artifactId>mockito-junit-jupiter</artifactId>
+                <version>${mockito.version}</version>
             </dependency>
             <dependency>
                 <groupId>com.tngtech.junit.dataprovider</groupId>

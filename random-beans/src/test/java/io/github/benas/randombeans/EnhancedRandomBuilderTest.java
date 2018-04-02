@@ -31,18 +31,17 @@ import static org.mockito.Mockito.when;
 
 import java.util.function.Supplier;
 
-import org.junit.Before;
-import org.junit.Test;
-import org.junit.runner.RunWith;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Mock;
-import org.mockito.junit.MockitoJUnitRunner;
+import org.mockito.junit.jupiter.MockitoExtension;
 
 import io.github.benas.randombeans.api.EnhancedRandom;
 import io.github.benas.randombeans.api.Randomizer;
 import io.github.benas.randombeans.api.RandomizerRegistry;
 import io.github.benas.randombeans.beans.Human;
 
-@RunWith(MockitoJUnitRunner.class)
+@ExtendWith(MockitoExtension.class)
 @SuppressWarnings("unchecked")
 public class EnhancedRandomBuilderTest {
 
@@ -61,13 +60,6 @@ public class EnhancedRandomBuilderTest {
 
     private EnhancedRandomBuilder enhancedRandomBuilder;
 
-    @Before
-    public void setUp() {
-        when(randomizer.getRandomValue()).thenReturn(NAME);
-        when(supplier.get()).thenReturn(NAME);
-        when(humanRandomizer.getRandomValue()).thenReturn(human);
-    }
-
     @Test
     public void builtInstancesShouldBeDistinct() {
         enhancedRandomBuilder = aNewEnhancedRandomBuilder();
@@ -80,6 +72,8 @@ public class EnhancedRandomBuilderTest {
 
     @Test
     public void customRandomizerShouldBeRegisteredInAllBuiltInstances() {
+        when(randomizer.getRandomValue()).thenReturn(NAME);
+
         enhancedRandomBuilder = aNewEnhancedRandomBuilder();
 
         FieldDefinition<?, ?> fieldDefinition = field().named("name").ofType(String.class).inClass(Human.class).get();
@@ -98,6 +92,8 @@ public class EnhancedRandomBuilderTest {
 
     @Test
     public void customSupplierShouldBeRegisteredInAllBuiltInstances() {
+        when(supplier.get()).thenReturn(NAME);
+
         enhancedRandomBuilder = aNewEnhancedRandomBuilder();
 
         FieldDefinition<?, ?> fieldDefinition = field().named("name").ofType(String.class).inClass(Human.class).get();
@@ -116,6 +112,7 @@ public class EnhancedRandomBuilderTest {
 
     @Test
     public void customRandomizerRegistryShouldBeRegisteredInAllBuiltInstances() {
+        when(humanRandomizer.getRandomValue()).thenReturn(human);
         when(randomizerRegistry.getRandomizer(Human.class)).thenReturn(humanRandomizer);
         enhancedRandomBuilder = aNewEnhancedRandomBuilder().registerRandomizerRegistry(randomizerRegistry);
 

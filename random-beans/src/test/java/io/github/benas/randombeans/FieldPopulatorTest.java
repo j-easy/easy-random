@@ -35,11 +35,11 @@ import java.util.Map;
 
 import javax.xml.bind.JAXBElement;
 
-import org.junit.Before;
-import org.junit.Test;
-import org.junit.runner.RunWith;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Mock;
-import org.mockito.junit.MockitoJUnitRunner;
+import org.mockito.junit.jupiter.MockitoExtension;
 
 import io.github.benas.randombeans.api.Randomizer;
 import io.github.benas.randombeans.beans.ArrayBean;
@@ -49,7 +49,7 @@ import io.github.benas.randombeans.beans.MapBean;
 import io.github.benas.randombeans.beans.Person;
 import io.github.benas.randombeans.randomizers.misc.SkipRandomizer;
 
-@RunWith(MockitoJUnitRunner.class)
+@ExtendWith(MockitoExtension.class)
 @SuppressWarnings("unchecked")
 public class FieldPopulatorTest {
 
@@ -72,7 +72,7 @@ public class FieldPopulatorTest {
 
     private FieldPopulator fieldPopulator;
 
-    @Before
+    @BeforeEach
     public void setUp() {
         fieldPopulator = new FieldPopulator(enhancedRandom, randomizerProvider, arrayPopulator, collectionPopulator, mapPopulator);
     }

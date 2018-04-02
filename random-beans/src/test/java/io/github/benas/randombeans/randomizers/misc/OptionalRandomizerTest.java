@@ -26,15 +26,15 @@ package io.github.benas.randombeans.randomizers.misc;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.Mockito.when;
 
-import org.junit.Before;
-import org.junit.Test;
-import org.junit.runner.RunWith;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Mock;
-import org.mockito.junit.MockitoJUnitRunner;
+import org.mockito.junit.jupiter.MockitoExtension;
 
 import io.github.benas.randombeans.api.Randomizer;
 
-@RunWith(MockitoJUnitRunner.class)
+@ExtendWith(MockitoExtension.class)
 public class OptionalRandomizerTest {
 
     private static final String NAME = "foo";
@@ -44,7 +44,7 @@ public class OptionalRandomizerTest {
 
     private OptionalRandomizer<String> optionalRandomizer;
 
-    @Before
+    @BeforeEach
     public void setUp() {
         when(randomizer.getRandomValue()).thenReturn(NAME);
         optionalRandomizer = new OptionalRandomizer<>(randomizer, 100);

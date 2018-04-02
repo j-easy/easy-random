@@ -36,11 +36,11 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import org.junit.Before;
-import org.junit.Test;
-import org.junit.runner.RunWith;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Mock;
-import org.mockito.junit.MockitoJUnitRunner;
+import org.mockito.junit.jupiter.MockitoExtension;
 
 import io.github.benas.randombeans.api.EnhancedRandom;
 import io.github.benas.randombeans.api.ObjectGenerationException;
@@ -54,7 +54,7 @@ import io.github.benas.randombeans.beans.TypeVariableCollectionBean;
 import io.github.benas.randombeans.beans.WildCardCollectionBean;
 import lombok.Data;
 
-@RunWith(MockitoJUnitRunner.class)
+@ExtendWith(MockitoExtension.class)
 @SuppressWarnings({"unchecked", "rawtypes"})
 public class CollectionPopulatorTest {
 
@@ -68,7 +68,7 @@ public class CollectionPopulatorTest {
 
     private CollectionPopulator collectionPopulator;
 
-    @Before
+    @BeforeEach
     public void setUp() {
         ObjectFactory objectFactory = new ObjectFactory();
         collectionPopulator = new CollectionPopulator(enhancedRandom, objectFactory);

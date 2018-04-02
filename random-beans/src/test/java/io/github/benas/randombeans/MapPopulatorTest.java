@@ -35,11 +35,11 @@ import java.util.Map;
 import java.util.SortedMap;
 import java.util.TreeMap;
 
-import org.junit.Before;
-import org.junit.Test;
-import org.junit.runner.RunWith;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Mock;
-import org.mockito.junit.MockitoJUnitRunner;
+import org.mockito.junit.jupiter.MockitoExtension;
 
 import io.github.benas.randombeans.api.EnhancedRandom;
 import io.github.benas.randombeans.beans.CompositeMapBean;
@@ -50,7 +50,7 @@ import io.github.benas.randombeans.beans.Person;
 import io.github.benas.randombeans.beans.WildCardMapBean;
 import lombok.Data;
 
-@RunWith(MockitoJUnitRunner.class)
+@ExtendWith(MockitoExtension.class)
 @SuppressWarnings({"unchecked", "rawtypes"})
 public class MapPopulatorTest {
 
@@ -65,7 +65,7 @@ public class MapPopulatorTest {
 
     private MapPopulator mapPopulator;
 
-    @Before
+    @BeforeEach
     public void setUp() {
         ObjectFactory objectFactory = new ObjectFactory();
         mapPopulator = new MapPopulator(enhancedRandom, objectFactory);

@@ -48,12 +48,12 @@ import java.util.List;
 import java.util.Set;
 import java.util.stream.Stream;
 
-import org.junit.Before;
-import org.junit.Ignore;
-import org.junit.Test;
-import org.junit.runner.RunWith;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Disabled;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Mock;
-import org.mockito.junit.MockitoJUnitRunner;
+import org.mockito.junit.jupiter.MockitoExtension;
 
 import io.github.benas.randombeans.api.EnhancedRandom;
 import io.github.benas.randombeans.api.ObjectGenerationException;
@@ -71,7 +71,7 @@ import io.github.benas.randombeans.beans.TestEnum;
 import io.github.benas.randombeans.randomizers.misc.ConstantRandomizer;
 import io.github.benas.randombeans.util.ReflectionUtils;
 
-@RunWith(MockitoJUnitRunner.class)
+@ExtendWith(MockitoExtension.class)
 public class EnhancedRandomImplTest {
 
     private static final String FOO = "foo";
@@ -82,10 +82,9 @@ public class EnhancedRandomImplTest {
 
     private EnhancedRandom enhancedRandom;
 
-    @Before
+    @BeforeEach
     public void setUp() {
         enhancedRandom = aNewEnhancedRandom();
-        when(randomizer.getRandomValue()).thenReturn(FOO);
     }
 
     @Test
@@ -151,6 +150,8 @@ public class EnhancedRandomImplTest {
 
     @Test
     public void customRandomzierForFieldsShouldBeUsedToPopulateObjects() {
+        when(randomizer.getRandomValue()).thenReturn(FOO);
+
         FieldDefinition<?, ?> fieldDefinition = field().named("name").ofType(String.class).inClass(Human.class).get();
         enhancedRandom = aNewEnhancedRandomBuilder()
                 .randomize(fieldDefinition, randomizer)
@@ -164,6 +165,8 @@ public class EnhancedRandomImplTest {
 
     @Test
     public void customRandomzierForFieldsShouldBeUsedToPopulateFieldsWithOneModifier() {
+        when(randomizer.getRandomValue()).thenReturn(FOO);
+
         // Given
         FieldDefinition<?, ?> fieldDefinition = field().hasModifiers(Modifier.TRANSIENT).ofType(String.class).get();
         EnhancedRandom random = EnhancedRandomBuilder.aNewEnhancedRandomBuilder()
@@ -180,6 +183,7 @@ public class EnhancedRandomImplTest {
     @Test
     public void customRandomzierForFieldsShouldBeUsedToPopulateFieldsWithMultipleModifier() {
         // Given
+        when(randomizer.getRandomValue()).thenReturn(FOO);
         int modifiers = Modifier.TRANSIENT | Modifier.PROTECTED;
         FieldDefinition<?, ?> fieldDefinition = field().hasModifiers(modifiers).ofType(String.class).get();
         EnhancedRandom random = EnhancedRandomBuilder.aNewEnhancedRandomBuilder()
@@ -195,6 +199,8 @@ public class EnhancedRandomImplTest {
 
     @Test
     public void customRandomzierForTypesShouldBeUsedToPopulateObjects() {
+        when(randomizer.getRandomValue()).thenReturn(FOO);
+
         enhancedRandom = aNewEnhancedRandomBuilder()
                 .randomize(String.class, randomizer)
                 .build();
@@ -206,6 +212,8 @@ public class EnhancedRandomImplTest {
 
     @Test
     public void customRandomzierForTypesShouldBeUsedToPopulateFields() {
+        when(randomizer.getRandomValue()).thenReturn(FOO);
+
         enhancedRandom = aNewEnhancedRandomBuilder()
                 .randomize(String.class, randomizer)
                 .build();
@@ -291,7 +299,7 @@ public class EnhancedRandomImplTest {
         persons.forEach(this::validatePerson);
     }
 
-    @Ignore("Dummy test to see possible reasons of randomization failures")
+    @Disabled("Dummy test to see possible reasons of randomization failures")
     @Test
     public void tryToRandomizeAllPublicConcreteTypesInTheClasspath(){
         int success = 0;
