@@ -33,6 +33,7 @@ import java.lang.annotation.Annotation;
 import java.lang.reflect.*;
 import java.text.SimpleDateFormat;
 import java.util.*;
+import java.util.stream.Stream;
 
 import static io.github.benas.randombeans.util.DateUtils.DATE_FORMAT;
 import static java.lang.String.format;
@@ -428,8 +429,7 @@ public class ReflectionUtils {
     public static <T> Randomizer<T> newInstance(final Class<T> type, final RandomizerArgument[] randomizerArguments) {
         try {
             if (notEmpty(randomizerArguments)) {
-                Optional<Constructor<?>> matchingConstructor = asList(type.getConstructors())
-                        .stream()
+                Optional<Constructor<?>> matchingConstructor = Stream.of(type.getConstructors())
                         .filter(constructor -> hasSameArgumentNumber(constructor, randomizerArguments) &&
                                 hasSameArgumentTypes(constructor, randomizerArguments))
                         .findFirst();
