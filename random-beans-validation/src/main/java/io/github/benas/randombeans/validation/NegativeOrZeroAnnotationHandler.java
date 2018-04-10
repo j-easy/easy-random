@@ -27,22 +27,23 @@ import io.github.benas.randombeans.api.Randomizer;
 import io.github.benas.randombeans.randomizers.range.IntegerRangeRandomizer;
 import io.github.benas.randombeans.util.ReflectionUtils;
 
-import javax.validation.constraints.Positive;
+import javax.validation.constraints.Negative;
+import javax.validation.constraints.NegativeOrZero;
 import java.lang.reflect.Field;
 import java.util.Random;
 
-class PositiveAnnotationHandler implements BeanValidationAnnotationHandler {
+class NegativeOrZeroAnnotationHandler implements BeanValidationAnnotationHandler {
 
     private final Random random;
 
-    PositiveAnnotationHandler(final long seed) {
+    NegativeOrZeroAnnotationHandler(final long seed) {
         random = new Random(seed);
     }
 
     @Override
     public Randomizer<?> getRandomizer(Field field) {
-        if (ReflectionUtils.isAnnotationPresent(field, Positive.class)) {
-            return new IntegerRangeRandomizer(1, Integer.MAX_VALUE, random.nextLong());
+        if (ReflectionUtils.isAnnotationPresent(field, NegativeOrZero.class)) {
+            return new IntegerRangeRandomizer(Integer.MIN_VALUE, 0, random.nextLong());
         }
         return null;
     }

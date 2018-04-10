@@ -62,6 +62,11 @@ public class BeanValidationRandomizerRegistry implements RandomizerRegistry {
         annotationHandlers.put(Pattern.class, new PatternAnnotationHandler(seed));
         annotationHandlers.put(Size.class, new SizeAnnotationHandler(seed, charset));
         annotationHandlers.put(Positive.class, new PositiveAnnotationHandler(seed));
+        annotationHandlers.put(PositiveOrZero.class, new PositiveOrZeroAnnotationHandler(seed));
+        annotationHandlers.put(Negative.class, new NegativeAnnotationHandler(seed));
+        annotationHandlers.put(NegativeOrZero.class, new NegativeOrZeroAnnotationHandler(seed));
+        annotationHandlers.put(NotBlank.class, new NotBlankAnnotationHandler(seed));
+        annotationHandlers.put(Email.class, new EmailAnnotationHandler(seed));
     }
 
     @Override

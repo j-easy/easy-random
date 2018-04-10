@@ -56,6 +56,21 @@ class BeanValidationAnnotatedBean {
     @Positive
     private int positive;
 
+    @PositiveOrZero
+    private int positiveOrZero;
+
+    @Negative
+    private int negative;
+
+    @NegativeOrZero
+    private int negativeOrZero;
+
+    @NotBlank
+    private String notBlank;
+
+    @Email
+    private String email;
+
     @NotNull
     private String username;
 
@@ -176,23 +191,67 @@ class BeanValidationAnnotatedBean {
         this.positive = positive;
     }
 
+    public int getPositiveOrZero() {
+        return positiveOrZero;
+    }
+
+    public void setPositiveOrZero(int positiveOrZero) {
+        this.positiveOrZero = positiveOrZero;
+    }
+
+    public int getNegative() {
+        return negative;
+    }
+
+    public void setNegative(int negative) {
+        this.negative = negative;
+    }
+
+    public int getNegativeOrZero() {
+        return negativeOrZero;
+    }
+
+    public void setNegativeOrZero(int negativeOrZero) {
+        this.negativeOrZero = negativeOrZero;
+    }
+
+    public String getNotBlank() {
+        return notBlank;
+    }
+
+    public void setNotBlank(String notBlank) {
+        this.notBlank = notBlank;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
     @Override
     public String toString() {
-        final StringBuilder sb = new StringBuilder("BeanValidationAnnotatedBean{");
-        sb.append("unsupported=").append(unsupported);
-        sb.append(", active=").append(active);
-        sb.append(", maxDiscount=").append(maxDiscount);
-        sb.append(", minDiscount=").append(minDiscount);
-        sb.append(", eventDate=").append(eventDate);
-        sb.append(", birthday=").append(birthday);
-        sb.append(", maxQuantity=").append(maxQuantity);
-        sb.append(", minQuantity=").append(minQuantity);
-        sb.append(", username='").append(username).append('\'');
-        sb.append(", unusedString='").append(unusedString).append('\'');
-        sb.append(", briefMessage='").append(briefMessage).append('\'');
-        sb.append(", regexString=").append(regexString).append('\'');
-        sb.append(", positive=").append(positive).append('\'');
-        sb.append('}');
-        return sb.toString();
+        return "BeanValidationAnnotatedBean{" +
+                "unsupported=" + unsupported +
+                ", active=" + active +
+                ", maxDiscount=" + maxDiscount +
+                ", minDiscount=" + minDiscount +
+                ", eventDate=" + eventDate +
+                ", birthday=" + birthday +
+                ", maxQuantity=" + maxQuantity +
+                ", minQuantity=" + minQuantity +
+                ", positive=" + positive +
+                ", positiveOrZero=" + positiveOrZero +
+                ", negative=" + negative +
+                ", negativeOrZero=" + negativeOrZero +
+                ", notBlank='" + notBlank + '\'' +
+                ", email='" + email + '\'' +
+                ", username='" + username + '\'' +
+                ", unusedString='" + unusedString + '\'' +
+                ", briefMessage='" + briefMessage + '\'' +
+                ", regexString='" + regexString + '\'' +
+                '}';
     }
 }

@@ -67,7 +67,17 @@ public class BeanValidationTest {
 
         assertThat(bean.getEventDate()).isInTheFuture();// @Future Date eventDate;
 
-        assertThat(bean.getPositive()).isGreaterThanOrEqualTo(1);// @Positive int positive;
+        assertThat(bean.getPositive()).isGreaterThan(0);// @Positive int positive;
+
+        assertThat(bean.getPositiveOrZero()).isGreaterThanOrEqualTo(0);// @PositiveOrZero int positiveOrZero;
+
+        assertThat(bean.getNegative()).isLessThan(0);// @Negative int negative;
+
+        assertThat(bean.getNegativeOrZero()).isLessThanOrEqualTo(0);// @NegativeOrZero int negativeOrZero;
+
+        assertThat(bean.getNotBlank()).isNotBlank(); // @NotBlank String notBlank;
+
+        assertThat(bean.getEmail()).isNotBlank().contains(".", "@"); // @Email String email;
 
         assertThat(bean.getMaxQuantity()).isLessThanOrEqualTo(10);// @Max(10) int maxQuantity;
 
@@ -102,7 +112,17 @@ public class BeanValidationTest {
 
         assertThat(bean.getEventDate()).isInTheFuture();// @Future Date eventDate;
 
-        assertThat(bean.getPositive()).isGreaterThanOrEqualTo(1);// @Positive int positive;
+        assertThat(bean.getPositive()).isGreaterThan(0);// @Positive int positive;
+
+        assertThat(bean.getPositiveOrZero()).isGreaterThanOrEqualTo(0);// @PositiveOrZero int positiveOrZero;
+
+        assertThat(bean.getNegative()).isLessThan(0);// @Negative int negative;
+
+        assertThat(bean.getNegativeOrZero()).isLessThanOrEqualTo(0);// @NegativeOrZero int negativeOrZero;
+
+        assertThat(bean.getNotBlank()).isNotBlank(); // @NotBlank String notBlank;
+
+        assertThat(bean.getEmail()).isNotBlank().contains(".", "@"); // @Email String email;
 
         assertThat(bean.getMaxQuantity()).isLessThanOrEqualTo(10);// @Max(10) int maxQuantity;
 
@@ -144,7 +164,12 @@ public class BeanValidationTest {
         assertThat(bean.getMinQuantity()).isEqualTo(91531906);
         assertThat(bean.getBriefMessage()).isEqualTo("tguu");
         assertThat(bean.getRegexString()).isEqualTo("vuna");
-        assertThat(bean.getPositive()).isEqualTo(1368348779);
+        assertThat(bean.getPositive()).isEqualTo(91531902);
+        assertThat(bean.getPositiveOrZero()).isEqualTo(91531901);
+        assertThat(bean.getNegative()).isEqualTo(-2055951747);
+        assertThat(bean.getNegativeOrZero()).isEqualTo(-2055951747);
+        assertThat(bean.getEmail()).isEqualTo("jeffery.wuckert@yahoo.com");
+        assertThat(bean.getNotBlank()).isEqualTo("tg");
     }
 
     @Test
