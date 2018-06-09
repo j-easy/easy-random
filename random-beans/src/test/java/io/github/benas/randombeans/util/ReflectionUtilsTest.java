@@ -43,7 +43,8 @@ public class ReflectionUtilsTest {
 
     @Test
     public void testGetDeclaredFields() throws Exception {
-        if (System.getProperty("java.specification.version").startsWith("9")) {
+        String javaVersion = System.getProperty("java.specification.version");
+        if (javaVersion.startsWith("9") || javaVersion.startsWith("10")) {
             assertThat(ReflectionUtils.getDeclaredFields(Street.class)).hasSize(22);
         } else {
             assertThat(ReflectionUtils.getDeclaredFields(Street.class)).hasSize(20);
