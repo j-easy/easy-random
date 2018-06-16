@@ -29,7 +29,7 @@
         <joda-time.version>2.9.9</joda-time.version>
         <spring-context.version>4.3.10.RELEASE</spring-context.version>
         <objenesis.version>2.6</objenesis.version>
-        <fast-classpath-scanner.version>2.18.1</fast-classpath-scanner.version>
+        <fast-classpath-scanner.version>3.0.3</fast-classpath-scanner.version>
         <hibernate-validator.version>6.0.8.Final</hibernate-validator.version>
         <javax.el.version>3.0.0</javax.el.version>
         <jackson.version>2.9.5</jackson.version>
