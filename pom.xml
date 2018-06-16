@@ -35,7 +35,7 @@
         <jackson.version>2.9.5</jackson.version>
         <mockito.version>2.18.3</mockito.version>
         <junit-dataprovider.version>2.2</junit-dataprovider.version>
-        <maven-surefire-plugin.version>2.21.0</maven-surefire-plugin.version>
+        <maven-surefire-plugin.version>2.22.0</maven-surefire-plugin.version>
         <maven-compiler-plugin.version>3.6.1</maven-compiler-plugin.version>
         <maven-cobertura-plugin.version>2.7</maven-cobertura-plugin.version>
         <maven-coveralls-plugin.version>4.3.0</maven-coveralls-plugin.version>
@@ -304,18 +304,6 @@
                         </includes>
                         <reportFormat>html</reportFormat>
                     </configuration>
-                    <dependencies>
-                        <dependency>
-                            <groupId>org.junit.platform</groupId>
-                            <artifactId>junit-platform-surefire-provider</artifactId>
-                            <version>${junit.platform.version}</version>
-                        </dependency>
-                        <dependency>
-                            <groupId>org.junit.jupiter</groupId>
-                            <artifactId>junit-jupiter-engine</artifactId>
-                            <version>${junit.version}</version>
-                        </dependency>
-                    </dependencies>
                 </plugin>
                 <plugin>
                     <groupId>org.apache.maven.plugins</groupId>
