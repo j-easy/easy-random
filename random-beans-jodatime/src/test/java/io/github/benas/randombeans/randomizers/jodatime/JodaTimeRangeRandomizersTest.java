@@ -35,12 +35,8 @@ import org.joda.time.LocalDate;
 import org.joda.time.LocalDateTime;
 import org.joda.time.LocalTime;
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.TestTemplate;
-import org.junit.jupiter.api.extension.ExtendWith;
-
-import com.tngtech.junit.dataprovider.DataProvider;
-import com.tngtech.junit.dataprovider.UseDataProvider;
-import com.tngtech.junit.dataprovider.UseDataProviderExtension;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.MethodSource;
 
 import io.github.benas.randombeans.api.Randomizer;
 import io.github.benas.randombeans.randomizers.jodatime.range.JodaTimeDateTimeRangeRandomizer;
@@ -48,10 +44,8 @@ import io.github.benas.randombeans.randomizers.jodatime.range.JodaTimeLocalDateR
 import io.github.benas.randombeans.randomizers.jodatime.range.JodaTimeLocalDateTimeRangeRandomizer;
 import io.github.benas.randombeans.randomizers.jodatime.range.JodaTimeLocalTimeRangeRandomizer;
 
-@ExtendWith(UseDataProviderExtension.class)
 public class JodaTimeRangeRandomizersTest extends AbstractJodaTimeRandomizerTest {
 
-    @DataProvider
     public static Object[] generateRandomizers() {
         return new Object[] {
                 new JodaTimeDateTimeRangeRandomizer(),
@@ -61,8 +55,8 @@ public class JodaTimeRangeRandomizersTest extends AbstractJodaTimeRandomizerTest
         };
     }
 
-    @TestTemplate
-    @UseDataProvider("generateRandomizers")
+    @ParameterizedTest
+    @MethodSource("generateRandomizers")
     public void generatedTimeShouldNotBeNull(Randomizer<?> randomizer) {
         // when
         Object randomNumber = randomizer.getRandomValue();
@@ -70,7 +64,6 @@ public class JodaTimeRangeRandomizersTest extends AbstractJodaTimeRandomizerTest
         then(randomNumber).isNotNull();
     }
 
-    @DataProvider
     public static Object[][] generateRandomizersAndMinMax() {
         LocalDateTime localDateTimeMin = LocalDateTime.parse("2016-01-18T19:34:04.570");
         LocalDateTime localDateTimeMax = LocalDateTime.parse("2016-01-18T20:34:14.570");
@@ -88,8 +81,8 @@ public class JodaTimeRangeRandomizersTest extends AbstractJodaTimeRandomizerTest
         };
     }
 
-    @TestTemplate
-    @UseDataProvider("generateRandomizersAndMinMax")
+    @ParameterizedTest
+    @MethodSource("generateRandomizersAndMinMax")
     @SuppressWarnings({ "rawtypes", "unchecked" })
     public void shouldGenerateValuesBetweenMinAndMax(Randomizer<Comparable> randomizer, Comparable min, Comparable max) {
         // when
