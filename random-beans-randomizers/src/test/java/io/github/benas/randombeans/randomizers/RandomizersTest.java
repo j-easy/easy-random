@@ -46,19 +46,13 @@ import static org.assertj.core.api.BDDAssertions.then;
 
 import java.text.DecimalFormatSymbols;
 
-import org.junit.jupiter.api.TestTemplate;
-import org.junit.jupiter.api.extension.ExtendWith;
-
-import com.tngtech.junit.dataprovider.DataProvider;
-import com.tngtech.junit.dataprovider.UseDataProvider;
-import com.tngtech.junit.dataprovider.UseDataProviderExtension;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.MethodSource;
 
 import io.github.benas.randombeans.api.Randomizer;
 
-@ExtendWith(UseDataProviderExtension.class)
 public class RandomizersTest extends AbstractRandomizerTest<FakerBasedRandomizer<?>>{
 
-    @DataProvider
     public static Object[] generateRandomizers() {
         return new Object[] {
                 aNewCityRandomizer(),
@@ -83,8 +77,8 @@ public class RandomizersTest extends AbstractRandomizerTest<FakerBasedRandomizer
         };
     }
 
-    @TestTemplate
-    @UseDataProvider("generateRandomizers")
+    @ParameterizedTest
+    @MethodSource("generateRandomizers")
     public void generatedNumberShouldNotBeNull(Randomizer<?> randomizer) {
         // when
         Object randomNumber = randomizer.getRandomValue();
@@ -92,7 +86,6 @@ public class RandomizersTest extends AbstractRandomizerTest<FakerBasedRandomizer
         then(randomNumber).isNotNull();
     }
 
-    @DataProvider
     public static Object[][] generateSeededRandomizersAndTheirExpectedValues() {
         return new Object[][] {
                 { aNewCityRandomizer(SEED), "Candacemouth" },
@@ -117,8 +110,8 @@ public class RandomizersTest extends AbstractRandomizerTest<FakerBasedRandomizer
         };
     }
 
-    @TestTemplate
-    @UseDataProvider("generateSeededRandomizersAndTheirExpectedValues")
+    @ParameterizedTest
+    @MethodSource("generateSeededRandomizersAndTheirExpectedValues")
     public void shouldGenerateTheSameValueForTheSameSeed(Randomizer<?> randomizer, Object expected) {
         //when
         Object actual = randomizer.getRandomValue();
@@ -126,7 +119,6 @@ public class RandomizersTest extends AbstractRandomizerTest<FakerBasedRandomizer
         then(actual).isEqualTo(expected);
     }
 
-    @DataProvider
     public static Object[][] generateSeededRandomizersWithLocaleAndTheirExpectedValues() {
         return new Object[][] {
                 { aNewCityRandomizer(SEED, LOCALE), "Versailles" },
@@ -150,8 +142,8 @@ public class RandomizersTest extends AbstractRandomizerTest<FakerBasedRandomizer
         };
     }
 
-    @TestTemplate
-    @UseDataProvider("generateSeededRandomizersWithLocaleAndTheirExpectedValues")
+    @ParameterizedTest
+    @MethodSource("generateSeededRandomizersWithLocaleAndTheirExpectedValues")
     public void shouldGenerateTheSameValueForTheSameSeedForSameLocale(Randomizer<?> randomizer, Object expected) {
         //when
         Object actual = randomizer.getRandomValue();

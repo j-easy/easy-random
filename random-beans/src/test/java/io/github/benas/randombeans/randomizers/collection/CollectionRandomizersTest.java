@@ -35,21 +35,15 @@ import static org.mockito.Mockito.when;
 import java.util.Collection;
 
 import org.assertj.core.api.ThrowableAssert.ThrowingCallable;
-import org.junit.jupiter.api.TestTemplate;
-import org.junit.jupiter.api.extension.ExtendWith;
-
-import com.tngtech.junit.dataprovider.DataProvider;
-import com.tngtech.junit.dataprovider.UseDataProvider;
-import com.tngtech.junit.dataprovider.UseDataProviderExtension;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.MethodSource;
 
 import io.github.benas.randombeans.api.Randomizer;
 
-@ExtendWith(UseDataProviderExtension.class)
 public class CollectionRandomizersTest {
 
     private static final int collectionSize = 3;
 
-    @DataProvider
     public static Object[] generateCollectionRandomizers() {
         Randomizer<String> elementRandomizer = elementRandomizer();
         return new Object[] {
@@ -58,8 +52,8 @@ public class CollectionRandomizersTest {
                 aNewSetRandomizer(elementRandomizer) };
     }
 
-    @TestTemplate
-    @UseDataProvider("generateCollectionRandomizers")
+    @ParameterizedTest
+    @MethodSource("generateCollectionRandomizers")
     public <T> void generatedCollectionShouldNotBeNull(Randomizer<Collection<T>> collectionRandomizer) {
         // when
         Collection<T> randomCollection = collectionRandomizer.getRandomValue();
@@ -67,7 +61,6 @@ public class CollectionRandomizersTest {
         then(randomCollection).isNotNull();
     }
 
-    @DataProvider
     public static Object[] generateCollectionRandomizersWithSpecificSize() {
         return new Object[] {
                 aNewListRandomizer(elementRandomizer(), collectionSize),
@@ -75,8 +68,8 @@ public class CollectionRandomizersTest {
                 aNewSetRandomizer(elementRandomizer(), collectionSize) };
     }
 
-    @TestTemplate
-    @UseDataProvider("generateCollectionRandomizersWithSpecificSize")
+    @ParameterizedTest
+    @MethodSource("generateCollectionRandomizersWithSpecificSize")
     public <T> void generatedCollectionSizeShouldBeEqualToTheSpecifiedSize(Randomizer<Collection<T>> collectionRandomizer) {
         // when
         Collection<T> randomCollection = collectionRandomizer.getRandomValue();
@@ -84,7 +77,6 @@ public class CollectionRandomizersTest {
         then(randomCollection).hasSize(collectionSize);
     }
 
-    @DataProvider
     public static Object[] generateCollectionRandomizersForEmptyCollections() {
         return new Object[] {
                 aNewListRandomizer(elementRandomizer(), 0),
@@ -92,8 +84,8 @@ public class CollectionRandomizersTest {
                 aNewSetRandomizer(elementRandomizer(), 0) };
     }
 
-    @TestTemplate
-    @UseDataProvider("generateCollectionRandomizersForEmptyCollections")
+    @ParameterizedTest
+    @MethodSource("generateCollectionRandomizersForEmptyCollections")
     public <T> void shouldAllowGeneratingEmptyCollections(Randomizer<Collection<T>> collectionRandomizer) {
         // when
         Collection<T> randomCollection = collectionRandomizer.getRandomValue();
@@ -101,7 +93,6 @@ public class CollectionRandomizersTest {
         then(randomCollection).isEmpty();
     }
 
-    @DataProvider
     public static Object[] generateCollectionRandomizersWithIllegalSize() {
         Randomizer<String> elementRandomizer = elementRandomizer();
         int illegalSize = -1;
@@ -111,8 +102,8 @@ public class CollectionRandomizersTest {
                 (ThrowingCallable) () -> aNewSetRandomizer(elementRandomizer, illegalSize) };
     }
 
-    @TestTemplate
-    @UseDataProvider("generateCollectionRandomizersWithIllegalSize")
+    @ParameterizedTest
+    @MethodSource("generateCollectionRandomizersWithIllegalSize")
     public void specifiedSizeShouldBePositive(ThrowingCallable callable) {
         // when
         Throwable expectedException = catchThrowable(callable);

@@ -37,20 +37,14 @@ import static org.assertj.core.api.BDDAssertions.then;
 import java.math.BigDecimal;
 import java.math.BigInteger;
 
-import org.junit.jupiter.api.TestTemplate;
-import org.junit.jupiter.api.extension.ExtendWith;
-
-import com.tngtech.junit.dataprovider.DataProvider;
-import com.tngtech.junit.dataprovider.UseDataProvider;
-import com.tngtech.junit.dataprovider.UseDataProviderExtension;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.MethodSource;
 
 import io.github.benas.randombeans.api.Randomizer;
 import io.github.benas.randombeans.randomizers.AbstractRandomizerTest;
 
-@ExtendWith(UseDataProviderExtension.class)
 public class NumberRandomizersTest extends AbstractRandomizerTest<Object> {
 
-    @DataProvider
     public static Object[] generateRandomizers() {
         return new Object[] { 
                 aNewByteRandomizer(),
@@ -65,8 +59,8 @@ public class NumberRandomizersTest extends AbstractRandomizerTest<Object> {
         };
     }
 
-    @TestTemplate
-    @UseDataProvider("generateRandomizers")
+    @ParameterizedTest
+    @MethodSource("generateRandomizers")
     public void generatedNumberShouldNotBeNull(Randomizer<?> randomizer) {
         // when
         Object randomNumber = randomizer.getRandomValue();
@@ -74,7 +68,6 @@ public class NumberRandomizersTest extends AbstractRandomizerTest<Object> {
         then(randomNumber).isNotNull();
     }
 
-    @DataProvider
     public static Object[][] generateSeededRandomizersAndTheirExpectedValues() {
         return new Object[][] { 
                 { aNewByteRandomizer(SEED), (byte) -35 },
@@ -89,8 +82,8 @@ public class NumberRandomizersTest extends AbstractRandomizerTest<Object> {
         };
     }
 
-    @TestTemplate
-    @UseDataProvider("generateSeededRandomizersAndTheirExpectedValues")
+    @ParameterizedTest
+    @MethodSource("generateSeededRandomizersAndTheirExpectedValues")
     public void shouldGenerateTheSameValueForTheSameSeed(Randomizer<?> randomizer, Object expected) {
         //when
         Object actual = randomizer.getRandomValue();

@@ -32,21 +32,15 @@ import java.net.URI;
 import java.net.URL;
 
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.TestTemplate;
-import org.junit.jupiter.api.extension.ExtendWith;
-
-import com.tngtech.junit.dataprovider.DataProvider;
-import com.tngtech.junit.dataprovider.UseDataProvider;
-import com.tngtech.junit.dataprovider.UseDataProviderExtension;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.MethodSource;
 
 import io.github.benas.randombeans.api.Randomizer;
 import io.github.benas.randombeans.beans.Website;
 import io.github.benas.randombeans.randomizers.AbstractRandomizerTest;
 
-@ExtendWith(UseDataProviderExtension.class)
 public class NetRandomizersTest extends AbstractRandomizerTest<Randomizer<?>> {
 
-    @DataProvider
     public static Object[] generateRandomizers() {
         return new Object[] { 
                 aNewUriRandomizer(),
@@ -54,16 +48,15 @@ public class NetRandomizersTest extends AbstractRandomizerTest<Randomizer<?>> {
         };
     }
 
-    @TestTemplate
-    @UseDataProvider("generateRandomizers")
+    @ParameterizedTest
+    @MethodSource("generateRandomizers")
     public void generatedValueShouldNotBeNull(Randomizer<?> randomizer) {
         // when
         Object value = randomizer.getRandomValue();
 
         then(value).isNotNull();
     }
-    
-    @DataProvider
+
     public static Object[][] generateSeededRandomizersAndTheirExpectedValues() throws Exception {
         return new Object[][] { 
                 { aNewUriRandomizer(SEED), new URI("telnet://192.0.2.16:80/") },
@@ -71,8 +64,8 @@ public class NetRandomizersTest extends AbstractRandomizerTest<Randomizer<?>> {
         };
     }
 
-    @TestTemplate
-    @UseDataProvider("generateSeededRandomizersAndTheirExpectedValues")
+    @ParameterizedTest
+    @MethodSource("generateSeededRandomizersAndTheirExpectedValues")
     public void shouldGenerateTheSameValueForTheSameSeed(Randomizer<?> randomizer, Object expected) {
         //when
         Object actual = randomizer.getRandomValue();

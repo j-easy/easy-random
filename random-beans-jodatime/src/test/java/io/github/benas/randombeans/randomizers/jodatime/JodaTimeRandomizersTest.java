@@ -37,19 +37,13 @@ import org.joda.time.LocalDate;
 import org.joda.time.LocalDateTime;
 import org.joda.time.LocalTime;
 import org.joda.time.Period;
-import org.junit.jupiter.api.TestTemplate;
-import org.junit.jupiter.api.extension.ExtendWith;
-
-import com.tngtech.junit.dataprovider.DataProvider;
-import com.tngtech.junit.dataprovider.UseDataProvider;
-import com.tngtech.junit.dataprovider.UseDataProviderExtension;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.MethodSource;
 
 import io.github.benas.randombeans.api.Randomizer;
 
-@ExtendWith(UseDataProviderExtension.class)
 public class JodaTimeRandomizersTest extends AbstractJodaTimeRandomizerTest {
 
-    @DataProvider
     public static Object[] generateRandomizers() {
         return new Object[] {
                 aNewJodaTimeDurationRandomizer(),
@@ -61,8 +55,8 @@ public class JodaTimeRandomizersTest extends AbstractJodaTimeRandomizerTest {
         };
     }
 
-    @TestTemplate
-    @UseDataProvider("generateRandomizers")
+    @ParameterizedTest
+    @MethodSource("generateRandomizers")
     public void generatedTimeShouldNotBeNull(Randomizer<?> randomizer) {
         // when
         Object randomNumber = randomizer.getRandomValue();
@@ -70,7 +64,6 @@ public class JodaTimeRandomizersTest extends AbstractJodaTimeRandomizerTest {
         then(randomNumber).isNotNull();
     }
 
-    @DataProvider
     public static Object[][] generateSeededRandomizersAndTheirExpectedValues() {
         return new Object[][] {
             { aNewJodaTimeDurationRandomizer(SEED), new Duration(1718733244570L) },
@@ -82,8 +75,8 @@ public class JodaTimeRandomizersTest extends AbstractJodaTimeRandomizerTest {
         };
     }
 
-    @TestTemplate
-    @UseDataProvider("generateSeededRandomizersAndTheirExpectedValues")
+    @ParameterizedTest
+    @MethodSource("generateSeededRandomizersAndTheirExpectedValues")
     public void shouldGenerateTheSameValueForTheSameSeed(Randomizer<?> randomizer, Object expected) {
         //when
         Object actual = randomizer.getRandomValue();
