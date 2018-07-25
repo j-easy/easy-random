@@ -23,30 +23,24 @@
  */
 package io.github.benas.randombeans.util;
 
-import static io.github.benas.randombeans.util.ReflectionUtils.isAbstract;
-import static io.github.benas.randombeans.util.ReflectionUtils.isPublic;
-import static java.util.stream.Collectors.collectingAndThen;
-import static java.util.stream.Collectors.toList;
-
 import java.util.Collections;
 import java.util.List;
-import java.util.Objects;
 import java.util.concurrent.ConcurrentHashMap;
 
-import io.github.lukehutch.fastclasspathscanner.FastClasspathScanner;
-import io.github.lukehutch.fastclasspathscanner.scanner.ScanResult;
+import io.github.classgraph.ClassGraph;
+import io.github.classgraph.ClassInfoList;
+import io.github.classgraph.ScanResult;
 
 /**
- * Facade for {@link io.github.lukehutch.fastclasspathscanner.FastClasspathScanner}. It is a separate class from {@link ReflectionUtils},
+ * Facade for {@link io.github.classgraph.ClassGraph}. It is a separate class from {@link ReflectionUtils},
  * so that the classpath scanning - which can take a few seconds - is only done when necessary.
  *
  * @author Pascal Schumacher (https://github.com/PascalSchumacher)
  */
-abstract class FastClasspathScannerFacade {
+abstract class ClassGraphFacade {
 
     private static final ConcurrentHashMap<Class<?>, List<Class<?>>> typeToConcreteSubTypes = new ConcurrentHashMap<>();
-    // disable blacklisting of JRE system jars and system packages (java.* and sun.*)
-    private static final ScanResult scanResult = new FastClasspathScanner("!!").scan();
+    private static final ScanResult scanResult = new ClassGraph().enableSystemPackages().enableClassInfo().scan();
 
     /**
      * Searches the classpath for all public concrete subtypes of the given interface or abstract class.
@@ -55,22 +49,13 @@ abstract class FastClasspathScannerFacade {
      * @return a list of all concrete subtypes found
      */
     public static <T> List<Class<?>> getPublicConcreteSubTypesOf(final Class<T> type) {
-        return typeToConcreteSubTypes.computeIfAbsent(type, FastClasspathScannerFacade::searchForPublicConcreteSubTypesOf);
+        return typeToConcreteSubTypes.computeIfAbsent(type, ClassGraphFacade::searchForPublicConcreteSubTypesOf);
     }
 
     private static <T> List<Class<?>> searchForPublicConcreteSubTypesOf(final Class<T> type) {
-        List<String> subTypes = type.isInterface() ? scanResult.getNamesOfClassesImplementing(type) : scanResult.getNamesOfSubclassesOf(type);
-        return subTypes.stream().map(className -> {
-            try {
-                ClassLoader classloader = Thread.currentThread().getContextClassLoader();
-                if (classloader == null) {
-                    classloader = FastClasspathScannerFacade.class.getClassLoader();
-                }
-                return classloader.loadClass(className);
-            } catch (ClassNotFoundException | NoClassDefFoundError ignored) {
-                return null;
-            }
-        }).filter(Objects::nonNull).filter(currentSubType -> isPublic(currentSubType) && !(isAbstract(currentSubType)))
-            .collect(collectingAndThen(toList(), Collections::unmodifiableList));
+        String typeName = type.getCanonicalName();
+        ClassInfoList subTypes = type.isInterface() ? scanResult.getClassesImplementing(typeName) : scanResult.getSubclasses(typeName);
+        List<Class<?>> loadedSubTypes = subTypes.filter(subType -> subType.isPublic() && !subType.isAbstract()).loadClasses(true);
+        return Collections.unmodifiableList(loadedSubTypes);
     }
 }
