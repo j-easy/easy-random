@@ -25,6 +25,7 @@ package io.github.benas.randombeans.util;
 
 import static io.github.benas.randombeans.util.ReflectionUtils.isAbstract;
 import static io.github.benas.randombeans.util.ReflectionUtils.isPublic;
+import static java.util.stream.Collectors.collectingAndThen;
 import static java.util.stream.Collectors.toList;
 
 import java.util.Collections;
@@ -43,14 +44,9 @@ import io.github.lukehutch.fastclasspathscanner.scanner.ScanResult;
  */
 abstract class FastClasspathScannerFacade {
 
-    private static final ConcurrentHashMap<Class<?>, List<Class<?>>> typeToConcreteSubTypes;
-    private static final ScanResult scanResult;
-
-    static {
-        typeToConcreteSubTypes = new ConcurrentHashMap<>();
-        // disable blacklisting of JRE system jars and system packages (java.* and sun.*)
-        scanResult = new FastClasspathScanner("!!").scan();
-    }
+    private static final ConcurrentHashMap<Class<?>, List<Class<?>>> typeToConcreteSubTypes = new ConcurrentHashMap<>();
+    // disable blacklisting of JRE system jars and system packages (java.* and sun.*)
+    private static final ScanResult scanResult = new FastClasspathScanner("!!").scan();
 
     /**
      * Searches the classpath for all public concrete subtypes of the given interface or abstract class.
@@ -59,12 +55,7 @@ abstract class FastClasspathScannerFacade {
      * @return a list of all concrete subtypes found
      */
     public static <T> List<Class<?>> getPublicConcreteSubTypesOf(final Class<T> type) {
-        List<Class<?>> concreteSubTypes = typeToConcreteSubTypes.get(type);
-        if (concreteSubTypes == null) {
-            concreteSubTypes = searchForPublicConcreteSubTypesOf(type);
-            typeToConcreteSubTypes.putIfAbsent(type, Collections.unmodifiableList(concreteSubTypes));
-        }
-        return concreteSubTypes;
+        return typeToConcreteSubTypes.computeIfAbsent(type, FastClasspathScannerFacade::searchForPublicConcreteSubTypesOf);
     }
 
     private static <T> List<Class<?>> searchForPublicConcreteSubTypesOf(final Class<T> type) {
@@ -79,6 +70,7 @@ abstract class FastClasspathScannerFacade {
             } catch (ClassNotFoundException | NoClassDefFoundError ignored) {
                 return null;
             }
-        }).filter(Objects::nonNull).filter(currentSubType -> isPublic(currentSubType) && !(isAbstract(currentSubType))).collect(toList());
+        }).filter(Objects::nonNull).filter(currentSubType -> isPublic(currentSubType) && !(isAbstract(currentSubType)))
+            .collect(collectingAndThen(toList(), Collections::unmodifiableList));
     }
 }
