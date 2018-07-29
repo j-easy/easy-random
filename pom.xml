@@ -28,7 +28,7 @@
         <joda-time.version>2.9.9</joda-time.version>
         <spring-context.version>4.3.10.RELEASE</spring-context.version>
         <objenesis.version>2.6</objenesis.version>
-        <fast-classpath-scanner.version>3.0.3</fast-classpath-scanner.version>
+        <fast-classpath-scanner.version>3.1.13</fast-classpath-scanner.version>
         <hibernate-validator.version>6.0.8.Final</hibernate-validator.version>
         <javax.el.version>3.0.0</javax.el.version>
         <jackson.version>2.9.5</jackson.version>
@@ -350,9 +350,6 @@
             <activation>
                 <jdk>[9,)</jdk>
             </activation>
-            <properties>
-                <argLine>--add-modules java.xml.bind</argLine>
-            </properties>
             <build>
                 <plugins>
                     <plugin>

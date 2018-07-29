@@ -44,6 +44,8 @@ public class LocaleRandomizerTest extends AbstractRandomizerTest<Locale> {
         String javaVersion = System.getProperty("java.specification.version");
         if (javaVersion.startsWith("9") || javaVersion.startsWith("10")) {
             assertThat(aNewLocaleRandomizer(SEED).getRandomValue()).isEqualTo(new Locale("sw", "ke"));
+        } else if (javaVersion.startsWith("12")) {
+            assertThat(aNewLocaleRandomizer(SEED).getRandomValue()).isEqualTo(new Locale("en", "CK"));
         } else {
             assertThat(aNewLocaleRandomizer(SEED).getRandomValue()).isEqualTo(new Locale("nl", "be"));
         }

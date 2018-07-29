@@ -31,6 +31,7 @@ import java.lang.annotation.Retention;
 import java.lang.annotation.Target;
 import java.lang.reflect.Field;
 import java.lang.reflect.Method;
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -43,8 +44,8 @@ public class ReflectionUtilsTest {
 
     @Test
     public void testGetDeclaredFields() throws Exception {
-        String javaVersion = System.getProperty("java.specification.version");
-        if (javaVersion.startsWith("9") || javaVersion.startsWith("10")) {
+        BigDecimal javaVersion = new BigDecimal(System.getProperty("java.specification.version"));
+        if (javaVersion.compareTo(new BigDecimal("9")) >= 0) {
             assertThat(ReflectionUtils.getDeclaredFields(Street.class)).hasSize(22);
         } else {
             assertThat(ReflectionUtils.getDeclaredFields(Street.class)).hasSize(20);
