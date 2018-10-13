@@ -45,7 +45,9 @@ public class ReflectionUtilsTest {
     @Test
     public void testGetDeclaredFields() throws Exception {
         BigDecimal javaVersion = new BigDecimal(System.getProperty("java.specification.version"));
-        if (javaVersion.compareTo(new BigDecimal("9")) >= 0) {
+        if (javaVersion.compareTo(new BigDecimal("12")) >= 0) {
+            assertThat(ReflectionUtils.getDeclaredFields(Street.class)).hasSize(21);
+        } else if (javaVersion.compareTo(new BigDecimal("9")) >= 0) {
             assertThat(ReflectionUtils.getDeclaredFields(Street.class)).hasSize(22);
         } else {
             assertThat(ReflectionUtils.getDeclaredFields(Street.class)).hasSize(20);
