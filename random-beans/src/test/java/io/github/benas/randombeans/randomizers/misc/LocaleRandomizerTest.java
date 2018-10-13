@@ -26,6 +26,7 @@ package io.github.benas.randombeans.randomizers.misc;
 import static io.github.benas.randombeans.randomizers.misc.LocaleRandomizer.aNewLocaleRandomizer;
 import static org.assertj.core.api.Assertions.assertThat;
 
+import java.math.BigDecimal;
 import java.util.Locale;
 
 import org.junit.jupiter.api.Test;
@@ -41,11 +42,11 @@ public class LocaleRandomizerTest extends AbstractRandomizerTest<Locale> {
 
     @Test
     public void shouldGenerateTheSameValueForTheSameSeed() {
-        String javaVersion = System.getProperty("java.specification.version");
-        if (javaVersion.startsWith("9") || javaVersion.startsWith("10")) {
-            assertThat(aNewLocaleRandomizer(SEED).getRandomValue()).isEqualTo(new Locale("sw", "ke"));
-        } else if (javaVersion.startsWith("12")) {
+        BigDecimal javaVersion = new BigDecimal(System.getProperty("java.specification.version"));
+        if (javaVersion.compareTo(new BigDecimal("11")) >= 0) {
             assertThat(aNewLocaleRandomizer(SEED).getRandomValue()).isEqualTo(new Locale("en", "CK"));
+        } else if (javaVersion.compareTo(new BigDecimal("9")) >= 0) {
+            assertThat(aNewLocaleRandomizer(SEED).getRandomValue()).isEqualTo(new Locale("sw", "ke"));
         } else {
             assertThat(aNewLocaleRandomizer(SEED).getRandomValue()).isEqualTo(new Locale("nl", "be"));
         }
