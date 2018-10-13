@@ -3,6 +3,7 @@ jdk:
   - oraclejdk8
   - oraclejdk9
   - oraclejdk10
+  - openjdk11
   - openjdk-ea
 after_success:
   - mvn clean cobertura:cobertura coveralls:report
