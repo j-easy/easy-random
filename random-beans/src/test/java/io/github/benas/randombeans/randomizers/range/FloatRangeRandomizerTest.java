@@ -35,8 +35,8 @@ public class FloatRangeRandomizerTest extends AbstractRangeRandomizerTest<Float>
 
     @BeforeEach
     public void setUp() {
-        min = 1f;
-        max = 10f;
+        min = 0.001f;
+        max = 0.002f;
         randomizer = aNewFloatRangeRandomizer(min, max);
     }
 
@@ -73,6 +73,6 @@ public class FloatRangeRandomizerTest extends AbstractRangeRandomizerTest<Float>
         // when
         Float f = floatRangeRandomizer.getRandomValue();
 
-        then(f).isEqualTo(7F);
+        then(f).isEqualTo(0.0017231742f);
     }
 }

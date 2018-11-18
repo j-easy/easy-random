@@ -23,18 +23,12 @@
  */
 package io.github.benas.randombeans.randomizers.range;
 
-import io.github.benas.randombeans.api.Randomizer;
-
-import static java.lang.String.valueOf;
-
 /**
  * Generate a random {@link Float} in the given range.
  *
  * @author Mahmoud Ben Hassine (mahmoud.benhassine@icloud.com)
  */
-public class FloatRangeRandomizer implements Randomizer<Float> {
-
-    private final LongRangeRandomizer delegate;
+public class FloatRangeRandomizer extends AbstractRangeRandomizer<Float> {
 
     /**
      * Create a new {@link FloatRangeRandomizer}.
@@ -43,7 +37,7 @@ public class FloatRangeRandomizer implements Randomizer<Float> {
      * @param max max value
      */
     public FloatRangeRandomizer(final Float min, final Float max) {
-        delegate = new LongRangeRandomizer(min != null ? min.longValue() : null, max != null ? max.longValue() : null);
+        super(min, max);
     }
 
     /**
@@ -54,7 +48,24 @@ public class FloatRangeRandomizer implements Randomizer<Float> {
      * @param seed initial seed
      */
     public FloatRangeRandomizer(final Float min, final Float max, final long seed) {
-        delegate = new LongRangeRandomizer(min != null ? min.longValue() : null, max != null ? max.longValue() : null, seed);
+        super(min, max, seed);
+    }
+
+    @Override
+    protected void checkValues() {
+        if (min > max) {
+            throw new IllegalArgumentException("max must be greater than min");
+        }
+    }
+
+    @Override
+    protected Float getDefaultMinValue() {
+        return Float.MIN_VALUE;
+    }
+
+    @Override
+    protected Float getDefaultMaxValue() {
+        return Float.MAX_VALUE;
     }
 
     /**
@@ -82,6 +93,6 @@ public class FloatRangeRandomizer implements Randomizer<Float> {
 
     @Override
     public Float getRandomValue() {
-        return new Float(valueOf(delegate.getRandomValue()));
+        return (float) nextDouble(min, max);
     }
 }
