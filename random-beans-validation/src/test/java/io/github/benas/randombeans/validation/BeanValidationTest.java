@@ -158,7 +158,7 @@ public class BeanValidationTest {
  
         BeanValidationAnnotatedBean bean = random.nextObject(BeanValidationAnnotatedBean.class);
 
-        assertThat(bean.getUsername()).isEqualTo("eOMtThyhVNLWUZNRcBaQKxIy");
+        assertThat(bean.getUsername()).isEqualTo("eOMtThyhVNLWUZNRcBaQKxI");
         // uses DateRange with now as end, so test is not repeatable
         // assertThat(bean.getBirthday()).isEqualTo("2007-07-22T13:20:35.628");
         // uses DateRange with now as start, so test is not repeatable
@@ -169,7 +169,7 @@ public class BeanValidationTest {
         assertThat(bean.getMinDiscount()).isEqualTo(new BigDecimal(7662282876638370609146101740543801632384371011755725427644785896281033154465107481014236865090602870006608143292003443098160947481248487711461114361337135608579588927391230902925850523644737673724379044725003237691291118781433336121334962263919251188630152674215174880065707256545268445171714648124229156864D));
         assertThat(bean.getDiscount()).isEqualTo(new BigDecimal(0.182723708049134681008496272625052370131015777587890625));
         assertThat(bean.getMinQuantity()).isEqualTo(91531906);
-        assertThat(bean.getBriefMessage()).isEqualTo("tguu");
+        assertThat(bean.getBriefMessage()).isEqualTo("tg");
         assertThat(bean.getRegexString()).isEqualTo("vuna");
         assertThat(bean.getPositive()).isEqualTo(91531902);
         assertThat(bean.getPositiveOrZero()).isEqualTo(91531901);

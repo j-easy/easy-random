@@ -252,11 +252,11 @@ public class StringRandomizer extends AbstractRandomizer<String> {
 
     @Override
     public String getRandomValue() {
-        StringBuilder stringBuilder = new StringBuilder();
-        int length = minLength + random.nextInt(maxLength - minLength + 1);
+        int length = (int) nextDouble(minLength, maxLength);
+        char[] chars = new char[length];
         for (int i = 0; i < length; i++) {
-            stringBuilder.append(characterRandomizer.getRandomValue());
+            chars[i] = characterRandomizer.getRandomValue();
         }
-        return stringBuilder.toString();
+        return new String(chars);
     }
 }

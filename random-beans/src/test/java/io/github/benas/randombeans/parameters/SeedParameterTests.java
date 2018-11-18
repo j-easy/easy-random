@@ -43,7 +43,7 @@ public class SeedParameterTests {
         // Given
         EnhancedRandom enhancedRandom = aNewEnhancedRandomBuilder().seed(SEED).build();
 
-        String expectedString = "eOMtThyhVNLWUZNRcBaQKxIy";
+        String expectedString = "eOMtThyhVNLWUZNRcBaQKxI";
         Person expectedPerson = buildExpectedPerson();
         int[] expectedInts = buildExpectedInts();
 
@@ -54,7 +54,7 @@ public class SeedParameterTests {
 
         // Then
         assertThat(actualString).isEqualTo(expectedString);
-        assertThat(actualPerson).isEqualTo(expectedPerson);
+        assertThat(actualPerson).isEqualToIgnoringNullFields(expectedPerson);
         assertThat(actualInts).isEqualTo(expectedInts);
     }
 
@@ -62,19 +62,19 @@ public class SeedParameterTests {
         Person expectedPerson = new Person();
 
         Street street = new Street();
-        street.setName("elQbxeTeQOvaScfqIOOmaaJxkyvRnLRY");
+        street.setName("JxkyvRnL");
         street.setNumber(-1188957731);
         street.setType((byte) -35);
 
         Address address = new Address();
-        address.setCity("CBRQDSxVL");
-        address.setCountry("hpfQGTMDYpsBZxvfBoe");
-        address.setZipCode("tGKbgicZaH");
+        address.setCity("VLhpfQGTMDYpsBZxvfBoeygjb");
+        address.setCountry("UMaAIKKIkknjWEXJUfPxxQHeWKEJ");
+        address.setZipCode("RYtGKbgicZaHCBRQDSx");
         address.setStreet(street);
 
-        expectedPerson.setName("wCTSeCODYsELoVqtepGSijxlz");
-        expectedPerson.setEmail("edUsFwdk");
-        expectedPerson.setPhoneNumber("ygjbUMaAIKKIkknjWEXJ");
+        expectedPerson.setName("LYBGAUWHm");
+        expectedPerson.setEmail("yedUsFwdkelQbxeTeQOvaScfqIOOmaa");
+        expectedPerson.setPhoneNumber("dpHYZGhtgdntugzvvKAXLhM");
         expectedPerson.setGender(Gender.FEMALE);
         expectedPerson.setAddress(address);
 
