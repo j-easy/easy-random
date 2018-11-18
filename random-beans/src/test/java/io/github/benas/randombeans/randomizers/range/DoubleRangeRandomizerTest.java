@@ -73,7 +73,7 @@ public class DoubleRangeRandomizerTest extends AbstractRangeRandomizerTest<Doubl
         // when
         Double d = doubleRangeRandomizer.getRandomValue();
 
-        then(d).isEqualTo(7.0);
+        then(d).isEqualTo(7.508567826974321);
     }
 
 }

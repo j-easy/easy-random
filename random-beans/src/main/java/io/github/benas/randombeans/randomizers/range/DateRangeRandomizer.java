@@ -98,7 +98,7 @@ public class DateRangeRandomizer extends AbstractRangeRandomizer<Date> {
     public Date getRandomValue() {
         long minDateTime = min.getTime();
         long maxDateTime = max.getTime();
-        long randomDateTime = nextLong(minDateTime, maxDateTime);
+        long randomDateTime = (long) nextDouble((double) minDateTime, (double) maxDateTime);
         return new Date(randomDateTime);
     }
 

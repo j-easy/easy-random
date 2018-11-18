@@ -23,18 +23,12 @@
  */
 package io.github.benas.randombeans.randomizers.range;
 
-import io.github.benas.randombeans.api.Randomizer;
-
-import static java.lang.String.valueOf;
-
 /**
  * Generate a random {@link Double} in the given range.
  *
  * @author Mahmoud Ben Hassine (mahmoud.benhassine@icloud.com)
  */
-public class DoubleRangeRandomizer implements Randomizer<Double> {
-
-    private final LongRangeRandomizer delegate;
+public class DoubleRangeRandomizer extends AbstractRangeRandomizer<Double> {
 
     /**
      * Create a new {@link DoubleRangeRandomizer}.
@@ -43,7 +37,7 @@ public class DoubleRangeRandomizer implements Randomizer<Double> {
      * @param max max value
      */
     public DoubleRangeRandomizer(final Double min, final Double max) {
-        delegate = new LongRangeRandomizer(min != null ? min.longValue() : null, max != null ? max.longValue() : null);
+        super(min, max);
     }
 
     /**
@@ -54,7 +48,24 @@ public class DoubleRangeRandomizer implements Randomizer<Double> {
      * @param seed initial seed
      */
     public DoubleRangeRandomizer(final Double min, final Double max, final long seed) {
-        delegate = new LongRangeRandomizer(min != null ? min.longValue() : null, max != null ? max.longValue() : null, seed);
+        super(min, max, seed);
+    }
+
+    @Override
+    protected void checkValues() {
+        if (min > max) {
+            throw new IllegalArgumentException("max must be greater than min");
+        }
+    }
+
+    @Override
+    protected Double getDefaultMinValue() {
+        return Double.MIN_VALUE;
+    }
+
+    @Override
+    protected Double getDefaultMaxValue() {
+        return Double.MAX_VALUE;
     }
 
     /**
@@ -82,6 +93,6 @@ public class DoubleRangeRandomizer implements Randomizer<Double> {
 
     @Override
     public Double getRandomValue() {
-        return new Double(valueOf(delegate.getRandomValue()));
+        return nextDouble(min, max);
     }
 }

@@ -83,7 +83,7 @@ public class ByteRangeRandomizer extends AbstractRangeRandomizer<Byte> {
 
     @Override
     public Byte getRandomValue() {
-        return (byte) nextLong(min, max);
+        return (byte) nextDouble(min, max);
     }
 
     @Override

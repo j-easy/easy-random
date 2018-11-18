@@ -98,7 +98,7 @@ public class LocalDateRangeRandomizer extends AbstractRangeRandomizer<LocalDate>
     public LocalDate getRandomValue() {
         long minEpochDay = min.getLong(ChronoField.EPOCH_DAY);
         long maxEpochDay = max.getLong(ChronoField.EPOCH_DAY);
-        long randomEpochDay = nextLong(minEpochDay, maxEpochDay);
+        long randomEpochDay = (long) nextDouble(minEpochDay, maxEpochDay);
         return LocalDate.ofEpochDay(randomEpochDay);
     }
 

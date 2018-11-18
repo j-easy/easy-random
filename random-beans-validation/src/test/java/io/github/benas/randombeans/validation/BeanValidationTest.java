@@ -163,18 +163,18 @@ public class BeanValidationTest {
         // assertThat(bean.getBirthday()).isEqualTo("2007-07-22T13:20:35.628");
         // uses DateRange with now as start, so test is not repeatable
         // assertThat(bean.getEventDate()).isEqualTo("2017-07-22T13:20:35.628");
-        assertThat(bean.getMaxQuantity()).isEqualTo(-2055951746);
+        assertThat(bean.getMaxQuantity()).isEqualTo(-2055951745);
         assertThat(bean.getMinQuantity()).isEqualTo(91531906);
-        assertThat(bean.getMaxDiscount()).isEqualTo(new BigDecimal(30));
-        assertThat(bean.getMinDiscount()).isEqualTo(new BigDecimal(393126525614007301L));
-        //assertThat(bean.getDiscount()).isEqualTo(new BigDecimal(/* todo add assertion on actual value with the current seed */));
+        assertThat(bean.getMaxDiscount()).isEqualTo(new BigDecimal(1.2786858993971550457757757612853311002254486083984375));
+        assertThat(bean.getMinDiscount()).isEqualTo(new BigDecimal(7662282876638370609146101740543801632384371011755725427644785896281033154465107481014236865090602870006608143292003443098160947481248487711461114361337135608579588927391230902925850523644737673724379044725003237691291118781433336121334962263919251188630152674215174880065707256545268445171714648124229156864D));
+        assertThat(bean.getDiscount()).isEqualTo(new BigDecimal(0.182723708049134681008496272625052370131015777587890625));
         assertThat(bean.getMinQuantity()).isEqualTo(91531906);
         assertThat(bean.getBriefMessage()).isEqualTo("tguu");
         assertThat(bean.getRegexString()).isEqualTo("vuna");
         assertThat(bean.getPositive()).isEqualTo(91531902);
         assertThat(bean.getPositiveOrZero()).isEqualTo(91531901);
-        assertThat(bean.getNegative()).isEqualTo(-2055951747);
-        assertThat(bean.getNegativeOrZero()).isEqualTo(-2055951747);
+        assertThat(bean.getNegative()).isEqualTo(-2055951746);
+        assertThat(bean.getNegativeOrZero()).isEqualTo(-2055951746);
         assertThat(bean.getEmail()).isEqualTo("jeffery.wuckert@yahoo.com");
         assertThat(bean.getNotBlank()).isEqualTo("tg");
     }

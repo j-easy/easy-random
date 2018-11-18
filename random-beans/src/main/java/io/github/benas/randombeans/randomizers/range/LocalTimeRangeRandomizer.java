@@ -98,7 +98,7 @@ public class LocalTimeRangeRandomizer extends AbstractRangeRandomizer<LocalTime>
     public LocalTime getRandomValue() {
         long minSecondOfDay = min.getLong(ChronoField.SECOND_OF_DAY);
         long maxSecondOfDay = max.getLong(ChronoField.SECOND_OF_DAY);
-        long randomSecondOfDay = nextLong(minSecondOfDay, maxSecondOfDay);
+        long randomSecondOfDay = (long) nextDouble(minSecondOfDay, maxSecondOfDay);
         return LocalTime.ofSecondOfDay(randomSecondOfDay);
     }
 

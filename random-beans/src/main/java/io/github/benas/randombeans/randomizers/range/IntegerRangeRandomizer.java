@@ -83,7 +83,7 @@ public class IntegerRangeRandomizer extends AbstractRangeRandomizer<Integer> {
 
     @Override
     public Integer getRandomValue() {
-        return (int) nextLong(min, max);
+        return (int) nextDouble(min, max);
     }
 
     @Override

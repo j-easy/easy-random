@@ -97,7 +97,7 @@ public class SqlDateRangeRandomizer extends AbstractRangeRandomizer<Date> {
     public Date getRandomValue() {
         long minDateTime = min.getTime();
         long maxDateTime = max.getTime();
-        long randomDateTime = nextLong(minDateTime, maxDateTime);
+        long randomDateTime = (long) nextDouble(minDateTime, maxDateTime);
         return new Date(randomDateTime);
     }
 

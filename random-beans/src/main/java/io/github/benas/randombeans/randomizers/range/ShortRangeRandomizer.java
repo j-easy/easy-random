@@ -83,7 +83,7 @@ public class ShortRangeRandomizer extends AbstractRangeRandomizer<Short> {
 
     @Override
     public Short getRandomValue() {
-        return (short) nextLong(min, max);
+        return (short) nextDouble(min, max);
     }
 
     @Override

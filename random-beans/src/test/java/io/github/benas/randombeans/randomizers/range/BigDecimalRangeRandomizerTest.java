@@ -35,19 +35,19 @@ import org.junit.jupiter.api.Test;
 
 public class BigDecimalRangeRandomizerTest extends AbstractRangeRandomizerTest<BigDecimal> {
 
-    private Long min, max;
+    private Double min, max;
 
     @BeforeEach
     public void setUp() {
-        min = 1L;
-        max = 10L;
-        randomizer = aNewBigDecimalRangeRandomizer(min, max);
+        min = 1.1;
+        max = 9.9;
+        randomizer = new BigDecimalRangeRandomizer(min, max);
     }
 
     @Test
     public void generatedValueShouldBeWithinSpecifiedRange() {
         BigDecimal randomValue = randomizer.getRandomValue();
-        assertThat(randomValue.longValue()).isBetween(min, max);
+        assertThat(randomValue.doubleValue()).isBetween(min, max);
     }
 
     @Test
@@ -59,14 +59,14 @@ public class BigDecimalRangeRandomizerTest extends AbstractRangeRandomizerTest<B
     public void whenSpecifiedMinValueIsNullThenShouldUseDefaultMinValue() {
         randomizer = aNewBigDecimalRangeRandomizer(null, max);
         BigDecimal randomBigDecimal = randomizer.getRandomValue();
-        assertThat(randomBigDecimal.longValue()).isLessThanOrEqualTo(max);
+        assertThat(randomBigDecimal.doubleValue()).isLessThanOrEqualTo(max);
     }
 
     @Test
     public void whenSpecifiedMaxvalueIsNullThenShouldUseDefaultMaxValue() {
         randomizer = aNewBigDecimalRangeRandomizer(min, null);
         BigDecimal randomBigDecimal = randomizer.getRandomValue();
-        assertThat(randomBigDecimal.longValue()).isGreaterThanOrEqualTo(min);
+        assertThat(randomBigDecimal.doubleValue()).isGreaterThanOrEqualTo(min);
     }
 
     @Test
@@ -77,7 +77,7 @@ public class BigDecimalRangeRandomizerTest extends AbstractRangeRandomizerTest<B
         // when
         BigDecimal bigDecimal = bigDecimalRangeRandomizer.getRandomValue();
 
-        then(bigDecimal).isEqualTo(new BigDecimal("7"));
+        then(bigDecimal).isEqualTo(new BigDecimal("7.46393298637489266411648713983595371246337890625"));
     }
 
     @Test

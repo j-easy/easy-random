@@ -83,7 +83,7 @@ public class LongRangeRandomizer extends AbstractRangeRandomizer<Long> {
 
     @Override
     public Long getRandomValue() {
-        return nextLong(min, max);
+        return (long) nextDouble(min, max);
     }
 
     @Override

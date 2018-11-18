@@ -101,15 +101,15 @@ class DecimalMinMaxAnnotationHandler implements BeanValidationAnnotationHandler 
             }
             if (fieldType.equals(BigDecimal.class)) {
                 return new BigDecimalRangeRandomizer(
-                        minValue == null ? null : minValue.longValue(),
-                        maxValue == null ? null : maxValue.longValue(),
+                        minValue == null ? null : minValue.doubleValue(),
+                        maxValue == null ? null : maxValue.doubleValue(),
                         random.nextLong()
                 );
             }
             if (fieldType.equals(String.class)) {
                 BigDecimalRangeRandomizer delegate = new BigDecimalRangeRandomizer(
-                        minValue == null ? null : minValue.longValue(),
-                        maxValue == null ? null : maxValue.longValue(),
+                        minValue == null ? null : minValue.doubleValue(),
+                        maxValue == null ? null : maxValue.doubleValue(),
                         random.nextLong()
                 );
                 return new StringDelegatingRandomizer(delegate);
