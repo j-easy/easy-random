@@ -76,4 +76,17 @@ public class DoubleRangeRandomizerTest extends AbstractRangeRandomizerTest<Doubl
         then(d).isEqualTo(7.508567826974321);
     }
 
+    /* This test is for the first comment on https://stackoverflow.com/a/3680648/5019386. This test
+     * never fails (tested with IntelliJ's feature "Repeat Test Until Failure") */
+    /*
+    @Test
+    void testInfinity() {
+        // given
+        DoubleRangeRandomizer doubleRangeRandomizer = aNewDoubleRangeRandomizer(-Double.MAX_VALUE, Double.MAX_VALUE);
+
+        // when
+        Double d = doubleRangeRandomizer.getRandomValue();
+
+        then(d).isNotNull();
+    }*/
 }
