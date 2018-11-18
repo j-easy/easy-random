@@ -54,4 +54,24 @@ public abstract class AbstractRandomizer<T> implements Randomizer<T>  {
     public String toString() {
         return this.getClass().getSimpleName();
     }
+
+    /**
+     * Return a random double in the given range.
+     *
+     * @param min value
+     * @param max value
+     * @return random double in the given range
+     */
+    protected double nextDouble(final double min, final double max) {
+        double value = min + (random.nextDouble() * (max - min));
+        if (value < min) {
+            return min;
+        } else if (value > max) {
+            return max;
+        } else {
+            return value;
+        }
+        // NB: ThreadLocalRandom.current().nextDouble(min, max)) cannot be use because the seed is not configurable
+        // and is created per thread (see Javadoc)
+    }
 }

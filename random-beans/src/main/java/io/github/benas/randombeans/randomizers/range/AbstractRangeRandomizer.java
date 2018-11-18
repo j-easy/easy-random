@@ -62,17 +62,6 @@ public abstract class AbstractRangeRandomizer<T> extends AbstractRandomizer<T> {
         }
     }
 
-    protected double nextDouble(final double min, final double max) {
-        double value = min + (random.nextDouble() * (max - min));
-        if (value < min) {
-            return min;
-        } else if (value > max) {
-            return max;
-        } else {
-            return value;
-        }
-    }
-
     protected abstract void checkValues();
 
     protected abstract T getDefaultMinValue();
