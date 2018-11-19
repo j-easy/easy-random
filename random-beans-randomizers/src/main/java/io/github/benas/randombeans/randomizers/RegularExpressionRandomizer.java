@@ -76,7 +76,18 @@ public class RegularExpressionRandomizer extends FakerBasedRandomizer<String> {
 
     @Override
     public String getRandomValue() {
-        return faker.regexify(regularExpression);
+        return faker.regexify(removeLeadingAndTailingBoundaryMatchers(regularExpression));
     }
 
+    private static String removeLeadingAndTailingBoundaryMatchers(String regularExpression) {
+        String regularExpressionWithoutBoundaryMatchers = regularExpression;
+        int lastIndex = regularExpressionWithoutBoundaryMatchers.length() - 1;
+        if (regularExpressionWithoutBoundaryMatchers.indexOf('^') == 0) {
+            regularExpressionWithoutBoundaryMatchers = regularExpressionWithoutBoundaryMatchers.substring(1, lastIndex + 1);
+        }
+        if (regularExpressionWithoutBoundaryMatchers.lastIndexOf('$') == lastIndex) {
+            regularExpressionWithoutBoundaryMatchers = regularExpressionWithoutBoundaryMatchers.substring(0, lastIndex);
+        }
+        return regularExpressionWithoutBoundaryMatchers;
+    }
 }
