@@ -27,25 +27,58 @@ import java.lang.annotation.Annotation;
 import java.lang.reflect.Field;
 import java.util.Set;
 
-class AbstractRandomizerRegistry {
+/**
+ * Base class for randomizer registries.
+ *
+ * @author Mahmoud Ben Hassine
+ */
+public class AbstractRandomizerRegistry {
 
      /*
      * If a criteria (name, type, declaring class or present annotations) is not specified (ie is null),
      * return true to not include it in the combination
      */
 
+    /**
+     * Check if a {@code field} is of type {@code type}.
+     *
+     * @param field to check
+     * @param type against which the field type will be compared
+     * @return true if the field is of the given type, false otherwise
+     */
     protected boolean hasType(final Field field, final Class<?> type) {
         return type == null || field.getType().equals(type);
     }
 
+    /**
+     * Check if a {@code field} has the given {@code name}.
+     *
+     * @param field to check
+     * @param name of the field
+     * @return true if the field has the given name, false otherwise
+     */
     protected boolean hasName(final Field field, final String name) {
         return name == null || field.getName().equals(name);
     }
 
+    /**
+     * Check if a {@code field} is declared in the given class.
+     *
+     * @param field to check
+     * @param clazz in which the check will occur.
+     * @return true if the field is declared in the given class, false otherwise
+     */
     protected boolean isDeclaredInClass(final Field field, final Class<?> clazz) {
         return clazz == null || field.getDeclaringClass().equals(clazz);
     }
 
+    /**
+     * Check if a {@code field} is annotated with one of the given annotations.
+     *
+     * @param field to check
+     * @param annotations to check on the field
+     * @return true if the field is annotated with one of the given annotations, false otherwise
+     */
     protected boolean isAnnotatedWithOneOf(final Field field, final Set<Class<? extends Annotation>> annotations) {
         if (annotations.isEmpty()) {
             return true;
@@ -58,6 +91,13 @@ class AbstractRandomizerRegistry {
         return false;
     }
 
+    /**
+     * Check if a {@code field} has the given {@code modifiers}.
+     *
+     * @param field to check
+     * @param modifiers against which field modifiers will be checked
+     * @return true if the field has the given modifiers, false otherwise
+     */
     protected boolean hasAllModifiers(final Field field, final Integer modifiers){
         return modifiers == null || (modifiers & field.getModifiers()) == modifiers;
     }
