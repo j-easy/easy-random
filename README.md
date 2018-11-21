@@ -13,6 +13,8 @@
 [![Maven Central](https://maven-badges.herokuapp.com/maven-central/io.github.benas/random-beans/badge.svg?style=flat)](http://repo1.maven.org/maven2/io/github/benas/random-beans/3.7.0/)
 [![Javadocs](http://www.javadoc.io/badge/io.github.benas/random-beans.svg)](http://www.javadoc.io/doc/io.github.benas/random-beans)
 [![Gitter](https://badges.gitter.im/Join%20Chat.svg)](https://gitter.im/benas/random-beans)
+[![Code Quality: Java](https://img.shields.io/lgtm/grade/java/g/benas/random-beans.svg?logo=lgtm&logoWidth=18)](https://lgtm.com/projects/g/benas/random-beans/context:java)
+[![Total Alerts](https://img.shields.io/lgtm/alerts/g/benas/random-beans.svg?logo=lgtm&logoWidth=18)](https://lgtm.com/projects/g/benas/random-beans/alerts)
 
 </div>
 
