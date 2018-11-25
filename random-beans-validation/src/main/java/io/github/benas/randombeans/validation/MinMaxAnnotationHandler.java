@@ -100,8 +100,8 @@ class MinMaxAnnotationHandler implements BeanValidationAnnotationHandler {
             }
             if (fieldType.equals(BigDecimal.class)) {
                 return new BigDecimalRangeRandomizer(
-                        minValue == null ? null : minValue,
-                        maxValue == null ? null : maxValue,
+                        minValue == null ? null : minValue.doubleValue(),
+                        maxValue == null ? null : maxValue.doubleValue(),
                         random.nextLong()
                 );
             }
