@@ -70,7 +70,7 @@ public class OptionalRandomizer<T> extends AbstractRandomizer<T> {
 
     @Override
     public T getRandomValue() {
-        Integer randomPercent = random.nextInt(MAX_PERCENT);
+        int randomPercent = random.nextInt(MAX_PERCENT);
         if (randomPercent <= optionalPercent) {
             return delegate.getRandomValue();
         }
