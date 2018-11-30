@@ -28,6 +28,7 @@ import lombok.Value;
 import java.lang.annotation.Annotation;
 import java.util.HashSet;
 import java.util.Set;
+import java.util.function.Predicate;
 
 /**
  * Defines attributes used to identify fields.
@@ -39,7 +40,7 @@ import java.util.Set;
 @Value
 public class FieldDefinition<T, F> {
 
-    private final String name;
+    private final Predicate<String> namePattern;
 
     private final Class<F> type;
 
@@ -52,37 +53,37 @@ public class FieldDefinition<T, F> {
     /**
      * Create a new {@link FieldDefinition}.
      *
-     * @param name  the field name
-     * @param type  the filed type
+     * @param namePattern  to match field name
+     * @param type  the field type
      * @param clazz the declaring class type
      */
-    public FieldDefinition(String name, Class<F> type, Class<T> clazz) {
-        this(name, type, clazz, new HashSet<>());
+    public FieldDefinition(Predicate<String> namePattern, Class<F> type, Class<T> clazz) {
+        this(namePattern, type, clazz, new HashSet<>());
     }
 
     /**
      * Create a new {@link FieldDefinition}.
      *
-     * @param name  the field name
-     * @param type  the filed type
+     * @param namePattern  to match field name
+     * @param type  the field type
      * @param clazz the declaring class type
      * @param annotations annotations present on the field
      */
-    public FieldDefinition(String name, Class<F> type, Class<T> clazz, Set<Class <? extends Annotation>> annotations) {
-        this(name, type, clazz, annotations, null);
+    public FieldDefinition(Predicate<String> namePattern, Class<F> type, Class<T> clazz, Set<Class <? extends Annotation>> annotations) {
+        this(namePattern, type, clazz, annotations, null);
     }
 
     /**
      * Create a new {@link FieldDefinition}.
      *
-     * @param name  the field name
-     * @param type  the filed type
+     * @param namePattern  to match field name
+     * @param type  the field type
      * @param clazz the declaring class type
      * @param annotations annotations present on the field
      * @param modifiers the field modifiers
      */
-    public FieldDefinition(String name, Class<F> type, Class<T> clazz, Set<Class <? extends Annotation>> annotations, Integer modifiers) {
-        this.name = name;
+    public FieldDefinition(Predicate<String> namePattern, Class<F> type, Class<T> clazz, Set<Class <? extends Annotation>> annotations, Integer modifiers) {
+        this.namePattern = namePattern;
         this.type = type;
         this.clazz = clazz;
         this.annotations = annotations;

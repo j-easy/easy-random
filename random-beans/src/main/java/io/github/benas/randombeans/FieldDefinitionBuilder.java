@@ -27,6 +27,7 @@ import java.lang.annotation.Annotation;
 import java.util.Collections;
 import java.util.HashSet;
 import java.util.Set;
+import java.util.function.Predicate;
 
 /**
  * Builder for {@link FieldDefinition}.
@@ -36,6 +37,8 @@ import java.util.Set;
 public class FieldDefinitionBuilder {
 
     private String name;
+
+    private Predicate<String> namingPattern;
 
     private Class<?> type;
 
@@ -62,6 +65,19 @@ public class FieldDefinitionBuilder {
      */
     public FieldDefinitionBuilder named(String name) {
         this.name = name;
+        return this;
+    }
+
+    /**
+     * Specify the pattern for field name.
+     *
+     * Taken into account only when name is not set
+     *
+     * @param patternName to match field name
+     * @return the configured {@link FieldDefinitionBuilder}
+     */
+    public FieldDefinitionBuilder namingPattern(Predicate<String> patternName) {
+        this.namingPattern = patternName;
         return this;
     }
 
@@ -116,7 +132,11 @@ public class FieldDefinitionBuilder {
      * @return a new {@link FieldDefinition}
      */
     public FieldDefinition<?, ?> get() {
-        return new FieldDefinition<>(name, type, clazz, annotations, modifiers);
+        return new FieldDefinition<>(getNamingPattern(), type, clazz, annotations, modifiers);
+    }
+
+    private Predicate<String> getNamingPattern() {
+        return (name != null) ? s -> name.equals(s) : namingPattern;
     }
 
 }

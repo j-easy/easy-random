@@ -61,7 +61,7 @@ public class ExclusionRandomizerRegistry extends AbstractRandomizerRegistry impl
     @Override
     public Randomizer<?> getRandomizer(Field field) {
         for (FieldDefinition<?, ?> fieldDefinition : fieldDefinitions) {
-            if (hasName(field, fieldDefinition.getName()) &&
+            if (matches(field, fieldDefinition.getNamePattern()) &&
                     isDeclaredInClass(field, fieldDefinition.getClazz()) &&
                     hasType(field, fieldDefinition.getType()) &&
                     isAnnotatedWithOneOf(field, fieldDefinition.getAnnotations()) &&

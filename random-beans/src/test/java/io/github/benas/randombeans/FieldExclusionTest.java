@@ -275,7 +275,7 @@ public class FieldExclusionTest {
     @Test
     public void whenFieldIsExcluded_thenItsInlineInitializationShouldBeUsedAsIs() {
         enhancedRandom = aNewEnhancedRandomBuilder()
-            .exclude(new FieldDefinition<>("myList", List.class, InlineInitializationBean.class))
+            .exclude(new FieldDefinition<>("myList"::equals, List.class, InlineInitializationBean.class))
             .build();
 
         InlineInitializationBean bean = enhancedRandom.nextObject(InlineInitializationBean.class);
@@ -287,7 +287,7 @@ public class FieldExclusionTest {
     @Test
     public void whenFieldIsExcluded_thenItsInlineInitializationShouldBeUsedAsIs_EvenIfBeanHasNoPublicConstructor() {
         enhancedRandom = aNewEnhancedRandomBuilder()
-            .exclude(new FieldDefinition<>("myList", List.class, InlineInitializationBeanPrivateConstructor.class))
+            .exclude(new FieldDefinition<>("myList"::equals, List.class, InlineInitializationBeanPrivateConstructor.class))
             .build();
 
         InlineInitializationBeanPrivateConstructor bean = enhancedRandom.nextObject(InlineInitializationBeanPrivateConstructor.class);

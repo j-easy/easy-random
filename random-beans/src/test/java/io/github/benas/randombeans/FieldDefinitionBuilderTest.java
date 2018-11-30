@@ -23,16 +23,19 @@
  */
 package io.github.benas.randombeans;
 
-import static org.assertj.core.api.Assertions.assertThat;
-
+import io.github.benas.randombeans.beans.Human;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-import io.github.benas.randombeans.beans.Human;
+import java.util.function.Predicate;
+import java.util.regex.Pattern;
+
+import static org.assertj.core.api.Assertions.assertThat;
 
 public class FieldDefinitionBuilderTest {
 
     private static final String NAME = "name";
+    private static final Predicate<String> NAME_PATTERN = Pattern.compile("[^i][a-z]").asPredicate();
     private static final Class<String> TYPE = String.class;
     private static final Class<Human> CLASS = Human.class;
 
@@ -48,8 +51,33 @@ public class FieldDefinitionBuilderTest {
         FieldDefinition<?, ?> fieldDefinition = builder.named(NAME).ofType(TYPE).inClass(CLASS).get();
 
         assertThat(fieldDefinition).isNotNull();
-        assertThat(fieldDefinition.getName()).isEqualTo(NAME);
+        assertThat(fieldDefinition.getNamePattern().test(NAME)).isTrue();
         assertThat(fieldDefinition.getType()).isEqualTo(TYPE);
         assertThat(fieldDefinition.getClazz()).isEqualTo(CLASS);
+    }
+
+    @Test
+    public void testFieldDefinitionBuildingUsingCustomPattern() {
+        FieldDefinition<?, ?> fieldDefinition = builder.namingPattern(NAME_PATTERN).ofType(TYPE).inClass(CLASS).get();
+
+        assertThat(fieldDefinition).isNotNull();
+        assertThat(fieldDefinition.getType()).isEqualTo(TYPE);
+        assertThat(fieldDefinition.getClazz()).isEqualTo(CLASS);
+
+        assertThat(fieldDefinition.getNamePattern().test(NAME)).isTrue();
+        assertThat(fieldDefinition.getNamePattern().test("not-name")).isTrue();
+        assertThat(fieldDefinition.getNamePattern().test("id")).isFalse();
+    }
+
+    @Test
+    public void testFieldDefinitionShouldFavorSimpleNameOverPattern() {
+        FieldDefinition<?, ?> fieldDefinition = builder
+                .named(NAME)
+                .namingPattern(NAME_PATTERN)
+                .ofType(TYPE).inClass(CLASS).get();
+
+        assertThat(fieldDefinition.getNamePattern().test(NAME)).isTrue();
+        assertThat(fieldDefinition.getNamePattern().test("id")).isFalse();
+        assertThat(fieldDefinition.getNamePattern().test("not-name")).isFalse();
     }
 }

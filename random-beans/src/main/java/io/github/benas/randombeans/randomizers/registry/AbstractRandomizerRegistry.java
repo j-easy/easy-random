@@ -26,6 +26,7 @@ package io.github.benas.randombeans.randomizers.registry;
 import java.lang.annotation.Annotation;
 import java.lang.reflect.Field;
 import java.util.Set;
+import java.util.function.Predicate;
 
 /**
  * Base class for randomizer registries.
@@ -51,14 +52,14 @@ public class AbstractRandomizerRegistry {
     }
 
     /**
-     * Check if a {@code field} has the given {@code name}.
+     * Check if a {@code field} matches given {@code namePattern}.
      *
      * @param field to check
-     * @param name of the field
-     * @return true if the field has the given name, false otherwise
+     * @param namePattern to match
+     * @return true if matches given pattern, false otherwise
      */
-    protected boolean hasName(final Field field, final String name) {
-        return name == null || field.getName().equals(name);
+    protected boolean matches(final Field field, final Predicate<String> namePattern) {
+        return namePattern == null || namePattern.test(field.getName());
     }
 
     /**

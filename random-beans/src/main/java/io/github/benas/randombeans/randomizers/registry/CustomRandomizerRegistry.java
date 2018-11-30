@@ -53,7 +53,7 @@ public class CustomRandomizerRegistry extends AbstractRandomizerRegistry impleme
     @Override
     public Randomizer<?> getRandomizer(Field field) {
         for (FieldDefinition<?, ?> fieldDefinition : customFieldRandomizersRegistry.keySet()) {
-            if (hasName(field, fieldDefinition.getName()) &&
+            if (matches(field, fieldDefinition.getNamePattern()) &&
                     isDeclaredInClass(field, fieldDefinition.getClazz()) &&
                     hasType(field, fieldDefinition.getType()) &&
                     isAnnotatedWithOneOf(field, fieldDefinition.getAnnotations()) &&
