@@ -15,6 +15,7 @@
 [![Gitter](https://badges.gitter.im/Join%20Chat.svg)](https://gitter.im/benas/random-beans)
 [![Code Quality: Java](https://img.shields.io/lgtm/grade/java/g/benas/random-beans.svg?logo=lgtm&logoWidth=18)](https://lgtm.com/projects/g/benas/random-beans/context:java)
 [![Total Alerts](https://img.shields.io/lgtm/alerts/g/benas/random-beans.svg?logo=lgtm&logoWidth=18)](https://lgtm.com/projects/g/benas/random-beans/alerts)
+[![FOSSA Status](https://app.fossa.io/api/projects/git%2Bgithub.com%2Fbenas%2Frandom-beans.svg?type=shield)](https://app.fossa.io/projects/git%2Bgithub.com%2Fbenas%2Frandom-beans?ref=badge_shield)
 
 </div>
 
@@ -212,3 +213,7 @@ If you have any question, suggestion, or feedback, do not hesitate to use the [G
 * [Vincent Potucek](https://github.com/punkratz312)
 
 Thank you all for your contributions!
+
+
+## License
+[![FOSSA Status](https://app.fossa.io/api/projects/git%2Bgithub.com%2Fbenas%2Frandom-beans.svg?type=large)](https://app.fossa.io/projects/git%2Bgithub.com%2Fbenas%2Frandom-beans?ref=badge_large)
