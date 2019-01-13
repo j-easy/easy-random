@@ -20,21 +20,21 @@
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <java.version>1.8</java.version>
-        <lombok.version>1.18.0</lombok.version>
-        <junit.version>5.3.1</junit.version>
+        <lombok.version>1.18.4</lombok.version>
+        <junit.version>5.3.2</junit.version>
         <faker.version>0.16</faker.version>
-        <assertj.version>3.10.0</assertj.version>
+        <assertj.version>3.11.1</assertj.version>
         <validation-api.version>2.0.1.Final</validation-api.version>
-        <joda-time.version>2.9.9</joda-time.version>
-        <spring-context.version>4.3.10.RELEASE</spring-context.version>
+        <joda-time.version>2.10.1</joda-time.version>
+        <spring-context.version>4.3.22.RELEASE</spring-context.version>
         <objenesis.version>3.0.1</objenesis.version>
-        <classgraph.version>4.2.3</classgraph.version>
-        <hibernate-validator.version>6.0.8.Final</hibernate-validator.version>
+        <classgraph.version>4.6.13</classgraph.version>
+        <hibernate-validator.version>6.0.14.Final</hibernate-validator.version>
         <javax.el.version>3.0.0</javax.el.version>
-        <jackson.version>2.9.5</jackson.version>
-        <mockito.version>2.19.0</mockito.version>
+        <jackson.version>2.9.8</jackson.version>
+        <mockito.version>2.23.4</mockito.version>
         <maven-surefire-plugin.version>2.22.1</maven-surefire-plugin.version>
-        <maven-compiler-plugin.version>3.6.1</maven-compiler-plugin.version>
+        <maven-compiler-plugin.version>3.8.0</maven-compiler-plugin.version>
         <maven-cobertura-plugin.version>2.7</maven-cobertura-plugin.version>
         <maven-coveralls-plugin.version>4.3.0</maven-coveralls-plugin.version>
         <maven-release-plugin.version>2.5.3</maven-release-plugin.version>
