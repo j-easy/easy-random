@@ -27,6 +27,10 @@ import static io.github.benas.randombeans.EnhancedRandomBuilder.aNewEnhancedRand
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
+import io.github.benas.randombeans.annotation.RandomizerArgument;
+import io.github.benas.randombeans.api.EnhancedRandom;
+import io.github.benas.randombeans.randomizers.AbstractRandomizer;
+import lombok.Data;
 import org.junit.jupiter.api.Test;
 
 import io.github.benas.randombeans.api.ObjectGenerationException;
@@ -44,6 +48,59 @@ public class RandomizerAnnotationTest {
     // https://github.com/benas/random-beans/issues/131
     public void shouldThrowObjectGenerationExceptionWhenRandomizerUsedInRandomizerAnnotationHasNoDefaultConstructor() {
         assertThatThrownBy(() -> aNewEnhancedRandom().nextObject(Bar.class)).isInstanceOf(ObjectGenerationException.class);
+    }
+
+
+    @Test
+    void testRandomizerArgumentAsArray() {
+        Person person = EnhancedRandom.random(Person.class);
+
+        assertThat(person.getName()).isIn("foo", "bar");
+        assertThat(person.getAge()).isIn(1, 2, 3);
+    }
+
+    @Data
+    static class Person {
+
+        @io.github.benas.randombeans.annotation.Randomizer(value = MyStringRandomizer.class, args = {
+                @RandomizerArgument(value = "foo, bar", type = String[].class)
+        })
+        private String name;
+
+        @io.github.benas.randombeans.annotation.Randomizer(value = MyNumbersRandomizer.class, args = {
+                @RandomizerArgument(value = "1, 2, 3", type = Integer[].class)
+        })
+        private int age;
+    }
+
+    public static class MyStringRandomizer extends AbstractRandomizer<String> {
+
+        private String[] words;
+
+        public MyStringRandomizer(String[] words) {
+            this.words = words;
+        }
+
+        @Override
+        public String getRandomValue() {
+            int randomIndex = random.nextInt(words.length);
+            return words[randomIndex];
+        }
+    }
+
+    public static class MyNumbersRandomizer extends AbstractRandomizer<Integer> {
+
+        private Integer[] numbers;
+
+        public MyNumbersRandomizer(Integer[] numbers) {
+            this.numbers = numbers;
+        }
+
+        @Override
+        public Integer getRandomValue() {
+            int randomIndex = random.nextInt(numbers.length);
+            return numbers[randomIndex];
+        }
     }
 
     private class Bar {

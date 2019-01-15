@@ -466,7 +466,14 @@ public class ReflectionUtils {
         int numberOfArguments = declaredArguments.length;
         Object[] arguments = new Object[numberOfArguments];
         for (int i = 0; i < numberOfArguments; i++) {
-            arguments[i] = objectMapper.convertValue(declaredArguments[i].value(), declaredArguments[i].type());
+            Class<?> type = declaredArguments[i].type();
+            String argument = declaredArguments[i].value();
+            Object value = argument;
+            // issue 299: if argument type is array, split values before conversion
+            if (type.isArray()) {
+                value = Stream.of(argument.split(",")).map(String::trim).toArray();
+            }
+            arguments[i] = objectMapper.convertValue(value, type);
         }
         return arguments;
     }
