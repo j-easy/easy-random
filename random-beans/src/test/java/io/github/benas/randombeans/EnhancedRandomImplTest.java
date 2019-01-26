@@ -48,6 +48,7 @@ import java.util.List;
 import java.util.Set;
 import java.util.stream.Stream;
 
+import io.github.benas.randombeans.beans.*;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
@@ -58,16 +59,6 @@ import org.mockito.junit.jupiter.MockitoExtension;
 import io.github.benas.randombeans.api.EnhancedRandom;
 import io.github.benas.randombeans.api.ObjectGenerationException;
 import io.github.benas.randombeans.api.Randomizer;
-import io.github.benas.randombeans.beans.AbstractBean;
-import io.github.benas.randombeans.beans.Address;
-import io.github.benas.randombeans.beans.Gender;
-import io.github.benas.randombeans.beans.Human;
-import io.github.benas.randombeans.beans.ImmutableBean;
-import io.github.benas.randombeans.beans.Node;
-import io.github.benas.randombeans.beans.Person;
-import io.github.benas.randombeans.beans.Street;
-import io.github.benas.randombeans.beans.TestData;
-import io.github.benas.randombeans.beans.TestEnum;
 import io.github.benas.randombeans.randomizers.misc.ConstantRandomizer;
 import io.github.benas.randombeans.util.ReflectionUtils;
 
@@ -270,6 +261,17 @@ public class EnhancedRandomImplTest {
         }
 
         assertThat(distinctEnumBeans.size()).isGreaterThan(1);
+    }
+
+    @Test
+    public void fieldsOfTypeClassShouldBeSkipped() {
+        try {
+            TestBean testBean = enhancedRandom.nextObject(TestBean.class);
+            assertThat(testBean.getException()).isNotNull();
+            assertThat(testBean.getClazz()).isNull();
+        } catch (Exception e) {
+            fail("Should skip fields of type Class");
+        }
     }
 
     private void validatePerson(final Person person) {
