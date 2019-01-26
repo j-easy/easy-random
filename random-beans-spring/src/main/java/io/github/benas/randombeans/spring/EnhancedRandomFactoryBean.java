@@ -44,8 +44,11 @@ import static io.github.benas.randombeans.util.Constants.DEFAULT_DATES_RANGE;
 /**
  * Spring Factory Bean that creates {@link EnhancedRandom} instances.
  *
+ * @deprecated This class is deprecated as of v3.8 and will be removed in v4.0
+ *
  * @author Mahmoud Ben Hassine (mahmoud.benhassine@icloud.com)
  */
+@Deprecated
 public class EnhancedRandomFactoryBean implements FactoryBean<EnhancedRandom> {
 
     private List<RandomizerBean<?, ?>> randomizers = new ArrayList<>();
