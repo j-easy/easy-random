@@ -40,7 +40,7 @@ import io.github.classgraph.ScanResult;
 abstract class ClassGraphFacade {
 
     private static final ConcurrentHashMap<Class<?>, List<Class<?>>> typeToConcreteSubTypes = new ConcurrentHashMap<>();
-    private static final ScanResult scanResult = new ClassGraph().enableSystemPackages().enableClassInfo().scan();
+    private static final ScanResult scanResult = new ClassGraph().enableSystemJarsAndModules().enableClassInfo().scan();
 
     /**
      * Searches the classpath for all public concrete subtypes of the given interface or abstract class.
