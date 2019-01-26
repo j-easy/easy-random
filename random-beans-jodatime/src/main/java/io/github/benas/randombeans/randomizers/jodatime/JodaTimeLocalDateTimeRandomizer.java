@@ -29,8 +29,11 @@ import org.joda.time.LocalDateTime;
 /**
  * A {@link Randomizer} that generates random {@link LocalDateTime}.
  *
+ * @deprecated This class is deprecated as of v3.8 and will be removed in v4.0
+ *
  * @author Nikola Milivojevic (0dziga0@gmail.com)
  */
+@Deprecated
 public class JodaTimeLocalDateTimeRandomizer extends JodaTimeAbstractRandomizer<LocalDateTime> {
 
     /**

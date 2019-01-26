@@ -34,8 +34,11 @@ import static io.github.benas.randombeans.util.DateUtils.toDate;
 /**
  * Base class for joda time randomizers.
  *
+ * @deprecated This class is deprecated as of v3.8 and will be removed in v4.0
+ *
  * @author Mahmoud Ben Hassine (mahmoud.benhassine@icloud.com)
  */
+@Deprecated
 public abstract class JodaTimeAbstractRandomizer<T> implements Randomizer<T> {
 
     private final DateRangeRandomizer delegate;

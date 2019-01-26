@@ -33,8 +33,11 @@ import static java.lang.Math.abs;
 /**
  * A {@link Randomizer} that generates random {@link Interval}.
  *
+ * @deprecated This class is deprecated as of v3.8 and will be removed in v4.0
+ *
  * @author Nikola Milivojevic (0dziga0@gmail.com)
  */
+@Deprecated
 public class JodaTimeIntervalRandomizer extends JodaTimeAbstractRandomizer<Interval> {
 
     private final IntegerRandomizer delegate;

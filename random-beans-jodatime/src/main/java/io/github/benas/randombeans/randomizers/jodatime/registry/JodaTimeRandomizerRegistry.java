@@ -44,9 +44,12 @@ import static io.github.benas.randombeans.randomizers.jodatime.registry.JodaTime
 /**
  * A registry of randomizers for Joda Time types.
  *
+ * @deprecated This class is deprecated as of v3.8 and will be removed in v4.0
+ *
  * @author Rémi Alvergnat (toilal.dev@gmail.com)
  */
 @Priority(-3)
+@Deprecated
 public class JodaTimeRandomizerRegistry implements RandomizerRegistry {
 
     private final Map<Class<?>, Randomizer<?>> randomizers = new HashMap<>();
