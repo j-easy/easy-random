@@ -324,7 +324,7 @@
                 <configuration>
                     <header>licence-header-template.txt</header>
                     <properties>
-                        <currentYear>2017</currentYear>
+                        <currentYear>2019</currentYear>
                     </properties>
                     <strictCheck>true</strictCheck>
                     <includes>
