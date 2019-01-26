@@ -95,56 +95,40 @@
 
     <contributors>
         <contributor>
-            <name>Alberto Lagna</name>
-            <url>https://github.com/alagna</url>
-        </contributor>
-        <contributor>
             <name>Adriano Machado</name>
             <url>https://github.com/ammachado</url>
         </contributor>
         <contributor>
-            <name>Jose Manuel Prieto</name>
-            <url>https://github.com/prietopa</url>
+            <name>Alberto Lagna</name>
+            <url>https://github.com/alagna</url>
         </contributor>
         <contributor>
-            <name>Eric Taix</name>
-            <url>https://github.com/eric-taix</url>
-        </contributor>
-        <contributor>
-            <name>Nikola Milivojevic</name>
-            <url>https://github.com/dziga</url>
-        </contributor>
-        <contributor>
-            <name>Oleksandr Shcherbyna</name>
-            <url>https://github.com/sansherbina</url>
-        </contributor>
-        <contributor>
-            <name>Rémi Alvergnat</name>
-            <url>http://www.pragmasphere.com</url>
-        </contributor>
-        <contributor>
-            <name>Rodrigue Alcazar</name>
-            <url>https://github.com/rodriguealcazar</url>
-        </contributor>
-        <contributor>
-            <name>Fred Eckertson</name>
-            <url>https://github.com/feckertson</url>
-        </contributor>
-        <contributor>
-            <name>Rebecca McQuary</name>
-            <url>https://github.com/rmcquary</url>
-        </contributor>
-        <contributor>
-            <name>Vincent Potucek</name>
-            <url>https://github.com/punkratz312</url>
+            <name>Andrew Neal</name>
+            <url>https://github.com/aeneal</url>
         </contributor>
         <contributor>
             <name>Dovid Kopel</name>
             <url>https://github.com/dovidkopel</url>
         </contributor>
         <contributor>
-            <name>Valters Vingolds</name>
-            <url>https://github.com/valters</url>
+            <name>Eric Taix</name>
+            <url>https://github.com/eric-taix</url>
+        </contributor>
+        <contributor>
+            <name>euZebe</name>
+            <url>https://github.com/euzebe</url>
+        </contributor>
+        <contributor>
+            <name>Fred Eckertson</name>
+            <url>https://github.com/feckertson</url>
+        </contributor>
+        <contributor>
+            <name>huningd</name>
+            <url>https://github.com/huningd</url>
+        </contributor>
+        <contributor>
+            <name>Jose Manuel Prieto</name>
+            <url>https://github.com/prietopa</url>
         </contributor>
         <contributor>
             <name>kermit-the-frog</name>
@@ -155,16 +139,28 @@
             <url>https://github.com/LucasAndersson</url>
         </contributor>
         <contributor>
-            <name>euZebe</name>
-            <url>https://github.com/euzebe</url>
+            <name>Nikola Milivojevic</name>
+            <url>https://github.com/dziga</url>
+        </contributor>
+        <contributor>
+            <name>Oleksandr Shcherbyna</name>
+            <url>https://github.com/sansherbina</url>
         </contributor>
         <contributor>
             <name>Petromir Dzhunev</name>
             <url>https://github.com/petromir</url>
         </contributor>
         <contributor>
-            <name>de-x</name>
-            <url>http://huningd.github.io</url>
+            <name>Rebecca McQuary</name>
+            <url>https://github.com/rmcquary</url>
+        </contributor>
+        <contributor>
+            <name>Rémi Alvergnat</name>
+            <url>http://www.pragmasphere.com</url>
+        </contributor>
+        <contributor>
+            <name>Rodrigue Alcazar</name>
+            <url>https://github.com/rodriguealcazar</url>
         </contributor>
         <contributor>
             <name>Ryan Dunckel</name>
@@ -173,6 +169,14 @@
         <contributor>
             <name>Sam Van Overmeire</name>
             <url>https://github.com/VanOvermeire</url>
+        </contributor>
+        <contributor>
+            <name>Valters Vingolds</name>
+            <url>https://github.com/valters</url>
+        </contributor>
+        <contributor>
+            <name>Vincent Potucek</name>
+            <url>https://github.com/punkratz312</url>
         </contributor>
     </contributors>
 
