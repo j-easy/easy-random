@@ -28,7 +28,7 @@
         <joda-time.version>2.10.1</joda-time.version>
         <spring-context.version>4.3.22.RELEASE</spring-context.version>
         <objenesis.version>3.0.1</objenesis.version>
-        <classgraph.version>4.6.13</classgraph.version>
+        <classgraph.version>4.6.18</classgraph.version>
         <hibernate-validator.version>6.0.14.Final</hibernate-validator.version>
         <javax.el.version>3.0.0</javax.el.version>
         <jackson.version>2.9.8</jackson.version>
