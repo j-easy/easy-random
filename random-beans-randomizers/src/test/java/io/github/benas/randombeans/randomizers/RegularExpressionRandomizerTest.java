@@ -50,4 +50,15 @@ public class RegularExpressionRandomizerTest {
 
         then(actual).isEqualTo("A");
     }
+
+    @Test
+    public void leadingAndTailingBoundaryMatcherIsRemoved() {
+        //given
+        RegularExpressionRandomizer randomizer = new RegularExpressionRandomizer("^A$");
+
+        //when
+        String actual = randomizer.getRandomValue();
+
+        then(actual).isEqualTo("A");
+    }
 }
