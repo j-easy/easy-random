@@ -178,6 +178,10 @@
             <name>Vincent Potucek</name>
             <url>https://github.com/punkratz312</url>
         </contributor>
+        <contributor>
+            <name>Weronika Redlarska</name>
+            <url>https://github.com/weronika-redlarska</url>
+        </contributor>
     </contributors>
 
     <dependencyManagement>
