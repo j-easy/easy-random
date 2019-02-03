@@ -28,6 +28,7 @@ import static io.github.benas.randombeans.EnhancedRandomBuilder.aNewEnhancedRand
 import static org.assertj.core.api.Assertions.assertThat;
 
 import java.math.BigDecimal;
+import java.time.LocalDateTime;
 import java.util.Set;
 
 import javax.validation.ConstraintViolation;
@@ -65,7 +66,11 @@ public class BeanValidationTest {
 
         assertThat(bean.getBirthday()).isInThePast();// @Past Date birthday;
 
+        assertThat(bean.getBirthdayLocalDateTime()).isBefore(LocalDateTime.now());// @Past LocalDateTime birthdayLocalDateTime;
+
         assertThat(bean.getEventDate()).isInTheFuture();// @Future Date eventDate;
+
+        assertThat(bean.getEventLocalDateTime()).isAfter(LocalDateTime.now());// @Future LocalDateTime eventLocalDateTime;
 
         assertThat(bean.getPositive()).isGreaterThan(0);// @Positive int positive;
 

@@ -23,27 +23,31 @@
  */
 package io.github.benas.randombeans.validation;
 
-import io.github.benas.randombeans.api.Randomizer;
-import io.github.benas.randombeans.randomizers.range.DateRangeRandomizer;
-import io.github.benas.randombeans.util.Constants;
-
 import java.lang.reflect.Field;
-import java.util.Calendar;
-import java.util.Date;
-import java.util.Random;
+import java.time.LocalDate;
+
+import io.github.benas.randombeans.EnhancedRandomBuilder;
+import io.github.benas.randombeans.api.EnhancedRandom;
+import io.github.benas.randombeans.api.Randomizer;
+import io.github.benas.randombeans.util.Constants;
 
 class FutureAnnotationHandler implements BeanValidationAnnotationHandler {
 
-    private final Random random;
+    private final long seed;
+    private EnhancedRandom enhancedRandom;
 
     public FutureAnnotationHandler(long seed) {
-        random = new Random(seed);
+        this.seed = seed;
     }
 
     @Override
     public Randomizer<?> getRandomizer(Field field) {
-        Calendar calendar = Calendar.getInstance();
-        calendar.add(Calendar.YEAR, Constants.DEFAULT_DATE_RANGE);
-        return new DateRangeRandomizer(new Date(), calendar.getTime(), random.nextLong());
+        if (enhancedRandom == null) {
+            enhancedRandom = EnhancedRandomBuilder.aNewEnhancedRandomBuilder()
+                    .seed(seed)
+                    .dateRange(LocalDate.now(), LocalDate.now().plusYears(Constants.DEFAULT_DATE_RANGE))
+                    .build(); 
+        }
+        return () -> enhancedRandom.nextObject(field.getType());
     }
 }
