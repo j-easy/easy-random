@@ -175,7 +175,7 @@ public class BeanValidationTest {
         assertThat(bean.getPositiveOrZero()).isEqualTo(91531901);
         assertThat(bean.getNegative()).isEqualTo(-2055951746);
         assertThat(bean.getNegativeOrZero()).isEqualTo(-2055951746);
-        assertThat(bean.getEmail()).isEqualTo("jeffery.wuckert@yahoo.com");
+        assertThat(bean.getEmail()).isEqualTo("celine.schoen@hotmail.com");
         assertThat(bean.getNotBlank()).isEqualTo("tg");
     }
 
