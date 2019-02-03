@@ -25,6 +25,7 @@ package io.github.benas.randombeans.validation;
 
 import javax.validation.constraints.*;
 import java.math.BigDecimal;
+import java.time.LocalDateTime;
 import java.util.Date;
 
 class BeanValidationAnnotatedBean {
@@ -50,6 +51,9 @@ class BeanValidationAnnotatedBean {
 
     @Past
     private Date birthday;
+
+    @Past
+    private LocalDateTime birthdayLocalDateTime;
 
     @Max(10)
     private int maxQuantity;
@@ -136,6 +140,10 @@ class BeanValidationAnnotatedBean {
 
     public void setBirthday(Date birthday) {
         this.birthday = birthday;
+    }
+
+    public LocalDateTime getBirthdayLocalDateTime() {
+        return birthdayLocalDateTime;
     }
 
     public int getMaxQuantity() {

@@ -23,11 +23,15 @@
  */
 package io.github.benas.randombeans.validation;
 
+import io.github.benas.randombeans.api.EnhancedRandomParameters;
 import io.github.benas.randombeans.api.Randomizer;
 import io.github.benas.randombeans.randomizers.range.DateRangeRandomizer;
+import io.github.benas.randombeans.randomizers.registry.TimeRandomizerRegistry;
 import io.github.benas.randombeans.util.Constants;
+import io.github.benas.randombeans.util.Range;
 
 import java.lang.reflect.Field;
+import java.time.LocalDate;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.Random;
@@ -42,8 +46,16 @@ class PastAnnotationHandler implements BeanValidationAnnotationHandler {
 
     @Override
     public Randomizer<?> getRandomizer(Field field) {
-        Calendar calendar = Calendar.getInstance();
-        calendar.add(Calendar.YEAR, -Constants.DEFAULT_DATE_RANGE);
-        return new DateRangeRandomizer(calendar.getTime(), new Date(), random.nextLong());
+        if (field.getType().equals(Date.class)) {
+            Calendar calendar = Calendar.getInstance();
+            calendar.add(Calendar.YEAR, -Constants.DEFAULT_DATE_RANGE);
+            return new DateRangeRandomizer(calendar.getTime(), new Date(), random.nextLong());
+        } else {
+            EnhancedRandomParameters enhancedRandomParameters = new EnhancedRandomParameters();
+            enhancedRandomParameters.setDateRange(new Range<>(LocalDate.now().minusYears(Constants.DEFAULT_DATE_RANGE), LocalDate.now()));
+            TimeRandomizerRegistry timeRandomizerRegistry = new TimeRandomizerRegistry();
+            timeRandomizerRegistry.init(enhancedRandomParameters);
+            return timeRandomizerRegistry.getRandomizer(field);
+        }
     }
 }
