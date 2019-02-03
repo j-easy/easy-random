@@ -30,6 +30,7 @@ import io.github.benas.randombeans.api.RandomizerRegistry;
 import io.github.benas.randombeans.randomizers.range.LocalDateRangeRandomizer;
 import io.github.benas.randombeans.randomizers.range.LocalDateTimeRangeRandomizer;
 import io.github.benas.randombeans.randomizers.range.LocalTimeRangeRandomizer;
+import io.github.benas.randombeans.randomizers.range.OffsetDateTimeRangeRandomizer;
 import io.github.benas.randombeans.randomizers.range.YearRangeRandomizer;
 import io.github.benas.randombeans.randomizers.time.*;
 
@@ -66,7 +67,8 @@ public class TimeRandomizerRegistry implements RandomizerRegistry {
         randomizers.put(LocalDateTime.class, new LocalDateTimeRangeRandomizer(of(minDate, minTime), of(maxDate, maxTime), seed));
         randomizers.put(LocalTime.class, new LocalTimeRangeRandomizer(minTime, maxTime, seed));
         randomizers.put(MonthDay.class, new MonthDayRandomizer(seed));
-        randomizers.put(OffsetDateTime.class, new OffsetDateTimeRandomizer(seed));
+        randomizers.put(OffsetDateTime.class,
+                new OffsetDateTimeRangeRandomizer(toOffsetDateTime(minDate, minTime), toOffsetDateTime(maxDate, maxTime), seed));
         randomizers.put(OffsetTime.class, new OffsetTimeRandomizer(seed));
         randomizers.put(Period.class, new PeriodRandomizer(seed));
         randomizers.put(TimeZone.class, new TimeZoneRandomizer(seed));
@@ -76,6 +78,10 @@ public class TimeRandomizerRegistry implements RandomizerRegistry {
         randomizers.put(ZonedDateTime.class, new ZonedDateTimeRandomizer(seed));
         randomizers.put(ZoneOffset.class, new ZoneOffsetRandomizer(seed));
         randomizers.put(ZoneId.class, new ZoneIdRandomizer(seed));
+    }
+
+    private static OffsetDateTime toOffsetDateTime(LocalDate localDate, LocalTime localTime) {
+        return LocalDateTime.of(localDate, localTime).atOffset(OffsetDateTime.now().getOffset());
     }
 
     @Override
