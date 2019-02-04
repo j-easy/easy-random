@@ -75,6 +75,8 @@ public class BeanValidationTest {
 
         assertThat(bean.getEventLocalDateTime()).isAfter(LocalDateTime.now());// @Future LocalDateTime eventLocalDateTime;
 
+        assertThat(bean.getFutureOrPresent()).isAfterOrEqualsTo(new Date());// @FutureOrPresent Date eventDate;
+
         assertThat(bean.getPositive()).isGreaterThan(0);// @Positive int positive;
 
         assertThat(bean.getPositiveOrZero()).isGreaterThanOrEqualTo(0);// @PositiveOrZero int positiveOrZero;
