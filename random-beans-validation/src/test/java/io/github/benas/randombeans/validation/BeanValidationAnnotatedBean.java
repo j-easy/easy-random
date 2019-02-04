@@ -58,6 +58,9 @@ class BeanValidationAnnotatedBean {
     @Past
     private LocalDateTime birthdayLocalDateTime;
 
+    @PastOrPresent
+    private Date pastOrPresent;
+
     @Max(10)
     private int maxQuantity;
 
@@ -151,6 +154,10 @@ class BeanValidationAnnotatedBean {
 
     public LocalDateTime getBirthdayLocalDateTime() {
         return birthdayLocalDateTime;
+    }
+
+    public Date getPastOrPresent() {
+        return pastOrPresent;
     }
 
     public int getMaxQuantity() {
