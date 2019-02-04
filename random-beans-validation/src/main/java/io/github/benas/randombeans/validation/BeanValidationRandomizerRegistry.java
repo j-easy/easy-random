@@ -54,6 +54,7 @@ public class BeanValidationRandomizerRegistry implements RandomizerRegistry {
         annotationHandlers.put(AssertTrue.class, new AssertTrueAnnotationHandler());
         annotationHandlers.put(Null.class, new NullAnnotationHandler());
         annotationHandlers.put(Future.class, new FutureAnnotationHandler(seed));
+        annotationHandlers.put(FutureOrPresent.class, new FutureAnnotationHandler(seed));
         annotationHandlers.put(Past.class, new PastAnnotationHandler(seed));
         annotationHandlers.put(PastOrPresent.class, new PastAnnotationHandler(seed));
         annotationHandlers.put(Min.class, new MinMaxAnnotationHandler(seed));

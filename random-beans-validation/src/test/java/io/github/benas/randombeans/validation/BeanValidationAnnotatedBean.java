@@ -52,6 +52,9 @@ class BeanValidationAnnotatedBean {
     @Future
     private LocalDateTime eventLocalDateTime;
 
+    @FutureOrPresent
+    private Date futureOrPresent;
+
     @Past
     private Date birthday;
 
@@ -142,6 +145,10 @@ class BeanValidationAnnotatedBean {
 
     public LocalDateTime getEventLocalDateTime() {
         return eventLocalDateTime;
+    }
+
+    public Date getFutureOrPresent() {
+        return futureOrPresent;
     }
 
     public Date getBirthday() {
