@@ -45,66 +45,63 @@ class MinMaxAnnotationHandler implements BeanValidationAnnotationHandler {
     @Override
     public Randomizer<?> getRandomizer(Field field) {
         Class<?> fieldType = field.getType();
-        if (ReflectionUtils.isAnnotationPresent(field, Max.class) || ReflectionUtils
-                .isAnnotationPresent(field, Min.class)) {
-            Max maxAnnotation = ReflectionUtils
-                    .getAnnotation(field, Max.class);
-            Min minAnnotation = ReflectionUtils
-                    .getAnnotation(field, Min.class);
+        Max maxAnnotation = ReflectionUtils
+                .getAnnotation(field, Max.class);
+        Min minAnnotation = ReflectionUtils
+                .getAnnotation(field, Min.class);
 
-            Long maxValue = null;
-            Long minValue = null;
+        Long maxValue = null;
+        Long minValue = null;
 
-            if (maxAnnotation != null) {
-                maxValue = maxAnnotation.value();
-            }
+        if (maxAnnotation != null) {
+            maxValue = maxAnnotation.value();
+        }
 
-            if (minAnnotation != null) {
-                minValue = minAnnotation.value();
-            }
+        if (minAnnotation != null) {
+            minValue = minAnnotation.value();
+        }
 
-            if (fieldType.equals(Byte.TYPE) || fieldType.equals(Byte.class)) {
-                return new ByteRangeRandomizer(
-                        minValue == null ? null : minValue.byteValue(),
-                        maxValue == null ? null : maxValue.byteValue(),
-                        random.nextLong()
-                );
-            }
-            if (fieldType.equals(Short.TYPE) || fieldType.equals(Short.class)) {
-                return new ShortRangeRandomizer(
-                        minValue == null ? null : minValue.shortValue(),
-                        maxValue == null ? null : maxValue.shortValue(),
-                        random.nextLong()
-                );
-            }
-            if (fieldType.equals(Integer.TYPE) || fieldType.equals(Integer.class)) {
-                return new IntegerRangeRandomizer(
-                        minValue == null ? null : minValue.intValue(),
-                        maxValue == null ? null : maxValue.intValue(),
-                        random.nextLong()
-                );
-            }
-            if (fieldType.equals(Long.TYPE) || fieldType.equals(Long.class)) {
-                return new LongRangeRandomizer(
-                        minValue == null ? null : minValue,
-                        maxValue == null ? null : maxValue,
-                        random.nextLong()
-                );
-            }
-            if (fieldType.equals(BigInteger.class)) {
-                return new BigIntegerRangeRandomizer(
-                        minValue == null ? null : minValue.intValue(),
-                        maxValue == null ? null : maxValue.intValue(),
-                        random.nextLong()
-                );
-            }
-            if (fieldType.equals(BigDecimal.class)) {
-                return new BigDecimalRangeRandomizer(
-                        minValue == null ? null : minValue.doubleValue(),
-                        maxValue == null ? null : maxValue.doubleValue(),
-                        random.nextLong()
-                );
-            }
+        if (fieldType.equals(Byte.TYPE) || fieldType.equals(Byte.class)) {
+            return new ByteRangeRandomizer(
+                    minValue == null ? null : minValue.byteValue(),
+                    maxValue == null ? null : maxValue.byteValue(),
+                    random.nextLong()
+            );
+        }
+        if (fieldType.equals(Short.TYPE) || fieldType.equals(Short.class)) {
+            return new ShortRangeRandomizer(
+                    minValue == null ? null : minValue.shortValue(),
+                    maxValue == null ? null : maxValue.shortValue(),
+                    random.nextLong()
+            );
+        }
+        if (fieldType.equals(Integer.TYPE) || fieldType.equals(Integer.class)) {
+            return new IntegerRangeRandomizer(
+                    minValue == null ? null : minValue.intValue(),
+                    maxValue == null ? null : maxValue.intValue(),
+                    random.nextLong()
+            );
+        }
+        if (fieldType.equals(Long.TYPE) || fieldType.equals(Long.class)) {
+            return new LongRangeRandomizer(
+                    minValue == null ? null : minValue,
+                    maxValue == null ? null : maxValue,
+                    random.nextLong()
+            );
+        }
+        if (fieldType.equals(BigInteger.class)) {
+            return new BigIntegerRangeRandomizer(
+                    minValue == null ? null : minValue.intValue(),
+                    maxValue == null ? null : maxValue.intValue(),
+                    random.nextLong()
+            );
+        }
+        if (fieldType.equals(BigDecimal.class)) {
+            return new BigDecimalRangeRandomizer(
+                    minValue == null ? null : minValue.doubleValue(),
+                    maxValue == null ? null : maxValue.doubleValue(),
+                    random.nextLong()
+            );
         }
         return null;
     }

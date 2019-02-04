@@ -25,9 +25,7 @@ package io.github.benas.randombeans.validation;
 
 import io.github.benas.randombeans.api.Randomizer;
 import io.github.benas.randombeans.randomizers.range.IntegerRangeRandomizer;
-import io.github.benas.randombeans.util.ReflectionUtils;
 
-import javax.validation.constraints.PositiveOrZero;
 import java.lang.reflect.Field;
 import java.util.Random;
 
@@ -41,9 +39,6 @@ class PositiveOrZeroAnnotationHandler implements BeanValidationAnnotationHandler
 
     @Override
     public Randomizer<?> getRandomizer(Field field) {
-        if (ReflectionUtils.isAnnotationPresent(field, PositiveOrZero.class)) {
-            return new IntegerRangeRandomizer(0, Integer.MAX_VALUE, random.nextLong());
-        }
-        return null;
+        return new IntegerRangeRandomizer(0, Integer.MAX_VALUE, random.nextLong());
     }
 }

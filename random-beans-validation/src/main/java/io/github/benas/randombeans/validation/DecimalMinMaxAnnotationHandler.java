@@ -46,74 +46,71 @@ class DecimalMinMaxAnnotationHandler implements BeanValidationAnnotationHandler 
     @Override
     public Randomizer<?> getRandomizer(Field field) {
         Class<?> fieldType = field.getType();
-        if (ReflectionUtils.isAnnotationPresent(field, DecimalMin.class) || ReflectionUtils
-                .isAnnotationPresent(field, DecimalMax.class)) {
-            DecimalMax decimalMaxAnnotation = ReflectionUtils
-                    .getAnnotation(field, DecimalMax.class);
-            DecimalMin decimalMinAnnotation = ReflectionUtils
-                    .getAnnotation(field, DecimalMin.class);
+        DecimalMax decimalMaxAnnotation = ReflectionUtils
+                .getAnnotation(field, DecimalMax.class);
+        DecimalMin decimalMinAnnotation = ReflectionUtils
+                .getAnnotation(field, DecimalMin.class);
 
-            BigDecimal maxValue = null;
-            BigDecimal minValue = null;
+        BigDecimal maxValue = null;
+        BigDecimal minValue = null;
 
-            if (decimalMaxAnnotation != null) {
-                maxValue = new BigDecimal(decimalMaxAnnotation.value());
-            }
+        if (decimalMaxAnnotation != null) {
+            maxValue = new BigDecimal(decimalMaxAnnotation.value());
+        }
 
-            if (decimalMinAnnotation != null) {
-                minValue = new BigDecimal(decimalMinAnnotation.value());
-            }
+        if (decimalMinAnnotation != null) {
+            minValue = new BigDecimal(decimalMinAnnotation.value());
+        }
 
-            if (fieldType.equals(Byte.TYPE) || fieldType.equals(Byte.class)) {
-                return new ByteRangeRandomizer(
-                        minValue == null ? null : minValue.byteValue(),
-                        maxValue == null ? null : maxValue.byteValue(),
-                        random.nextLong()
-                );
-            }
-            if (fieldType.equals(Short.TYPE) || fieldType.equals(Short.class)) {
-                return new ShortRangeRandomizer(
-                        minValue == null ? null : minValue.shortValue(),
-                        maxValue == null ? null : maxValue.shortValue(),
-                        random.nextLong()
-                );
-            }
-            if (fieldType.equals(Integer.TYPE) || fieldType.equals(Integer.class)) {
-                return new IntegerRangeRandomizer(
-                        minValue == null ? null : minValue.intValue(),
-                        maxValue == null ? null : maxValue.intValue(),
-                        random.nextLong()
-                );
-            }
-            if (fieldType.equals(Long.TYPE) || fieldType.equals(Long.class)) {
-                return new LongRangeRandomizer(
-                        minValue == null ? null : minValue.longValue(),
-                        maxValue == null ? null : maxValue.longValue(),
-                        random.nextLong()
-                );
-            }
-            if (fieldType.equals(BigInteger.class)) {
-                return new BigIntegerRangeRandomizer(
-                        minValue == null ? null : minValue.intValue(),
-                        maxValue == null ? null : maxValue.intValue(),
-                        random.nextLong()
-                );
-            }
-            if (fieldType.equals(BigDecimal.class)) {
-                return new BigDecimalRangeRandomizer(
-                        minValue == null ? null : minValue.doubleValue(),
-                        maxValue == null ? null : maxValue.doubleValue(),
-                        random.nextLong()
-                );
-            }
-            if (fieldType.equals(String.class)) {
-                BigDecimalRangeRandomizer delegate = new BigDecimalRangeRandomizer(
-                        minValue == null ? null : minValue.doubleValue(),
-                        maxValue == null ? null : maxValue.doubleValue(),
-                        random.nextLong()
-                );
-                return new StringDelegatingRandomizer(delegate);
-            }
+        if (fieldType.equals(Byte.TYPE) || fieldType.equals(Byte.class)) {
+            return new ByteRangeRandomizer(
+                    minValue == null ? null : minValue.byteValue(),
+                    maxValue == null ? null : maxValue.byteValue(),
+                    random.nextLong()
+            );
+        }
+        if (fieldType.equals(Short.TYPE) || fieldType.equals(Short.class)) {
+            return new ShortRangeRandomizer(
+                    minValue == null ? null : minValue.shortValue(),
+                    maxValue == null ? null : maxValue.shortValue(),
+                    random.nextLong()
+            );
+        }
+        if (fieldType.equals(Integer.TYPE) || fieldType.equals(Integer.class)) {
+            return new IntegerRangeRandomizer(
+                    minValue == null ? null : minValue.intValue(),
+                    maxValue == null ? null : maxValue.intValue(),
+                    random.nextLong()
+            );
+        }
+        if (fieldType.equals(Long.TYPE) || fieldType.equals(Long.class)) {
+            return new LongRangeRandomizer(
+                    minValue == null ? null : minValue.longValue(),
+                    maxValue == null ? null : maxValue.longValue(),
+                    random.nextLong()
+            );
+        }
+        if (fieldType.equals(BigInteger.class)) {
+            return new BigIntegerRangeRandomizer(
+                    minValue == null ? null : minValue.intValue(),
+                    maxValue == null ? null : maxValue.intValue(),
+                    random.nextLong()
+            );
+        }
+        if (fieldType.equals(BigDecimal.class)) {
+            return new BigDecimalRangeRandomizer(
+                    minValue == null ? null : minValue.doubleValue(),
+                    maxValue == null ? null : maxValue.doubleValue(),
+                    random.nextLong()
+            );
+        }
+        if (fieldType.equals(String.class)) {
+            BigDecimalRangeRandomizer delegate = new BigDecimalRangeRandomizer(
+                    minValue == null ? null : minValue.doubleValue(),
+                    maxValue == null ? null : maxValue.doubleValue(),
+                    random.nextLong()
+            );
+            return new StringDelegatingRandomizer(delegate);
         }
         return null;
     }

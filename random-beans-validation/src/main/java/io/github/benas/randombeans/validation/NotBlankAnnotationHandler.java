@@ -25,9 +25,7 @@ package io.github.benas.randombeans.validation;
 
 import io.github.benas.randombeans.api.Randomizer;
 import io.github.benas.randombeans.randomizers.text.StringRandomizer;
-import io.github.benas.randombeans.util.ReflectionUtils;
 
-import javax.validation.constraints.NotBlank;
 import java.lang.reflect.Field;
 import java.util.Random;
 
@@ -41,9 +39,6 @@ class NotBlankAnnotationHandler implements BeanValidationAnnotationHandler {
 
     @Override
     public Randomizer<?> getRandomizer(Field field) {
-        if (ReflectionUtils.isAnnotationPresent(field, NotBlank.class)) {
-            return new StringRandomizer(random.nextLong());
-        }
-        return null;
+        return new StringRandomizer(random.nextLong());
     }
 }

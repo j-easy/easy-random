@@ -25,9 +25,7 @@ package io.github.benas.randombeans.validation;
 
 import io.github.benas.randombeans.api.Randomizer;
 import io.github.benas.randombeans.randomizers.EmailRandomizer;
-import io.github.benas.randombeans.util.ReflectionUtils;
 
-import javax.validation.constraints.Email;
 import java.lang.reflect.Field;
 import java.util.Random;
 
@@ -41,9 +39,6 @@ class EmailAnnotationHandler implements BeanValidationAnnotationHandler {
 
     @Override
     public Randomizer<?> getRandomizer(Field field) {
-        if (ReflectionUtils.isAnnotationPresent(field, Email.class)) {
-            return new EmailRandomizer(random.nextLong());
-        }
-        return null;
+        return new EmailRandomizer(random.nextLong());
     }
 }
