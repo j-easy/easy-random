@@ -272,6 +272,22 @@ class BeanValidationAnnotatedBean {
         this.discount = discount;
     }
 
+    public void setEventLocalDateTime(LocalDateTime eventLocalDateTime) {
+        this.eventLocalDateTime = eventLocalDateTime;
+    }
+
+    public void setFutureOrPresent(Date futureOrPresent) {
+        this.futureOrPresent = futureOrPresent;
+    }
+
+    public void setBirthdayLocalDateTime(LocalDateTime birthdayLocalDateTime) {
+        this.birthdayLocalDateTime = birthdayLocalDateTime;
+    }
+
+    public void setPastOrPresent(Date pastOrPresent) {
+        this.pastOrPresent = pastOrPresent;
+    }
+
     @Override
     public String toString() {
         return "BeanValidationAnnotatedBean{" +
@@ -281,7 +297,11 @@ class BeanValidationAnnotatedBean {
                 ", minDiscount=" + minDiscount +
                 ", discount=" + discount +
                 ", eventDate=" + eventDate +
+                ", eventLocalDateTime=" + eventLocalDateTime +
                 ", birthday=" + birthday +
+                ", birthdayLocalDateTime=" + birthdayLocalDateTime +
+                ", pastOrPresent=" + pastOrPresent +
+                ", futureOrPresent=" + futureOrPresent +
                 ", maxQuantity=" + maxQuantity +
                 ", minQuantity=" + minQuantity +
                 ", positive=" + positive +

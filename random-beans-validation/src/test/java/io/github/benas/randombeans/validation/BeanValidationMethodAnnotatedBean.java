@@ -25,6 +25,7 @@ package io.github.benas.randombeans.validation;
 
 import javax.validation.constraints.*;
 import java.math.BigDecimal;
+import java.time.LocalDateTime;
 import java.util.Date;
 
 class BeanValidationMethodAnnotatedBean {
@@ -52,8 +53,13 @@ class BeanValidationMethodAnnotatedBean {
     private String email;
 
     private Date eventDate;
+    private LocalDateTime eventLocalDateTime;
 
     private Date birthday;
+    private LocalDateTime birthdayLocalDateTime;
+
+    private Date pastOrPresent;
+    private Date futureOrPresent;
 
     private int maxQuantity;
 
@@ -159,6 +165,24 @@ class BeanValidationMethodAnnotatedBean {
         this.eventDate = eventDate;
     }
 
+    @Future
+    public LocalDateTime getEventLocalDateTime() {
+        return eventLocalDateTime;
+    }
+
+    public void setEventLocalDateTime(LocalDateTime eventLocalDateTime) {
+        this.eventLocalDateTime = eventLocalDateTime;
+    }
+
+    @FutureOrPresent
+    public Date getFutureOrPresent() {
+        return futureOrPresent;
+    }
+
+    public void setFutureOrPresent(Date futureOrPresent) {
+        this.futureOrPresent = futureOrPresent;
+    }
+
     @Past
     public Date getBirthday() {
         return birthday;
@@ -166,6 +190,24 @@ class BeanValidationMethodAnnotatedBean {
 
     public void setBirthday(Date birthday) {
         this.birthday = birthday;
+    }
+
+    @Past
+    public LocalDateTime getBirthdayLocalDateTime() {
+        return birthdayLocalDateTime;
+    }
+
+    public void setBirthdayLocalDateTime(LocalDateTime birthdayLocalDateTime) {
+        this.birthdayLocalDateTime = birthdayLocalDateTime;
+    }
+
+    @PastOrPresent
+    public Date getPastOrPresent() {
+        return pastOrPresent;
+    }
+
+    public void setPastOrPresent(Date pastOrPresent) {
+        this.pastOrPresent = pastOrPresent;
     }
 
     @Max(10)
@@ -255,7 +297,11 @@ class BeanValidationMethodAnnotatedBean {
                 ", notBlank='" + notBlank + '\'' +
                 ", email='" + email + '\'' +
                 ", eventDate=" + eventDate +
+                ", eventLocalDateTime=" + eventLocalDateTime +
                 ", birthday=" + birthday +
+                ", birthdayLocalDateTime=" + birthdayLocalDateTime +
+                ", pastOrPresent=" + pastOrPresent +
+                ", futureOrPresent=" + futureOrPresent +
                 ", maxQuantity=" + maxQuantity +
                 ", minQuantity=" + minQuantity +
                 ", username='" + username + '\'' +

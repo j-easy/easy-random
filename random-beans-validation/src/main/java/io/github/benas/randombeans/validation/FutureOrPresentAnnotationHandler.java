@@ -23,21 +23,20 @@
  */
 package io.github.benas.randombeans.validation;
 
-import java.lang.reflect.Field;
-import java.time.LocalDate;
-import java.time.temporal.ChronoUnit;
-
 import io.github.benas.randombeans.EnhancedRandomBuilder;
 import io.github.benas.randombeans.api.EnhancedRandom;
 import io.github.benas.randombeans.api.Randomizer;
 import io.github.benas.randombeans.util.Constants;
 
-class FutureAnnotationHandler implements BeanValidationAnnotationHandler {
+import java.lang.reflect.Field;
+import java.time.LocalDate;
+
+class FutureOrPresentAnnotationHandler implements BeanValidationAnnotationHandler {
 
     private final long seed;
     private EnhancedRandom enhancedRandom;
 
-    public FutureAnnotationHandler(long seed) {
+    public FutureOrPresentAnnotationHandler(long seed) {
         this.seed = seed;
     }
 
@@ -47,10 +46,7 @@ class FutureAnnotationHandler implements BeanValidationAnnotationHandler {
             LocalDate now = LocalDate.now();
             enhancedRandom = EnhancedRandomBuilder.aNewEnhancedRandomBuilder()
                     .seed(seed)
-                    .dateRange(
-                            now.plus(1, ChronoUnit.DAYS),
-                            now.plusYears(Constants.DEFAULT_DATE_RANGE)
-                    )
+                    .dateRange(now, now.plusYears(Constants.DEFAULT_DATE_RANGE))
                     .build(); 
         }
         return () -> enhancedRandom.nextObject(field.getType());

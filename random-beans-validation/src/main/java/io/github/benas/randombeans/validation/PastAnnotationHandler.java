@@ -25,6 +25,7 @@ package io.github.benas.randombeans.validation;
 
 import java.lang.reflect.Field;
 import java.time.LocalDate;
+import java.time.temporal.ChronoUnit;
 
 import io.github.benas.randombeans.EnhancedRandomBuilder;
 import io.github.benas.randombeans.api.EnhancedRandom;
@@ -43,9 +44,13 @@ class PastAnnotationHandler implements BeanValidationAnnotationHandler {
     @Override
     public Randomizer<?> getRandomizer(Field field) {
         if (enhancedRandom == null) {
+            LocalDate now = LocalDate.now();
             enhancedRandom = EnhancedRandomBuilder.aNewEnhancedRandomBuilder()
                     .seed(seed)
-                    .dateRange(LocalDate.now().minusYears(Constants.DEFAULT_DATE_RANGE), LocalDate.now())
+                    .dateRange(
+                            now.minusYears(Constants.DEFAULT_DATE_RANGE),
+                            now.minus(1, ChronoUnit.DAYS)
+                    )
                     .build();
         }
         return () -> enhancedRandom.nextObject(field.getType());
