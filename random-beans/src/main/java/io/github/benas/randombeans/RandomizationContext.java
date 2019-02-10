@@ -25,6 +25,7 @@ package io.github.benas.randombeans;
 
 import io.github.benas.randombeans.api.EnhancedRandom;
 import io.github.benas.randombeans.api.EnhancedRandomParameters;
+import io.github.benas.randombeans.api.RandomizerContext;
 
 import java.lang.reflect.Field;
 import java.util.*;
@@ -37,7 +38,7 @@ import static java.util.stream.Collectors.toList;
  *
  * @author Rémi Alvergnat (toilal.dev@gmail.com)
  */
-class RandomizationContext {
+class RandomizationContext implements RandomizerContext {
 
     private final EnhancedRandomParameters parameters;
 
@@ -47,7 +48,13 @@ class RandomizationContext {
 
     private final Stack<RandomizationContextStackItem> stack;
 
-    RandomizationContext(final EnhancedRandomParameters parameters, final String... excludedFields) {
+    private final Class<?> type;
+
+    private Object rootObject;
+    private Object randomizedObject;
+
+    RandomizationContext(final Class<?> type, final EnhancedRandomParameters parameters, final String... excludedFields) {
+        this.type = type;
         populatedBeans = new IdentityHashMap<>();
         stack = new Stack<>();
         this.parameters = parameters;
@@ -76,7 +83,8 @@ class RandomizationContext {
         return populatedBeans.containsKey(type) && populatedBeans.get(type).size() == parameters.getObjectPoolSize();
     }
 
-    Set<String> getExcludedFields() {
+    @Override
+    public Set<String> getExcludedFields() {
         return excludedFields;
     }
 
@@ -109,5 +117,42 @@ class RandomizationContext {
 
     private int nextInt(int startInclusive, int endExclusive) {
         return startInclusive + new Random().nextInt(endExclusive - startInclusive);
+    }
+
+    void setRandomizedObject(Object randomizedObject) {
+        if (this.rootObject == null) {
+            this.rootObject = randomizedObject;
+        }
+        this.randomizedObject = randomizedObject;
+    }
+
+    @Override
+    public Class<?> getType() {
+        return type;
+    }
+
+    @Override
+    public Object getCurrentObject() {
+        return randomizedObject;
+    }
+
+    @Override
+    public String getCurrentField() {
+        return String.join(".", getStackedFieldNames());
+    }
+
+    @Override
+    public int getRandomizationDepth() {
+        return stack.size();
+    }
+
+    @Override
+    public Object getRootObject() {
+        return this.rootObject;
+    }
+
+    @Override
+    public EnhancedRandomParameters getParameters() {
+        return parameters;
     }
 }

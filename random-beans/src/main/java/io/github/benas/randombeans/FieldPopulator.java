@@ -23,6 +23,7 @@
  */
 package io.github.benas.randombeans;
 
+import io.github.benas.randombeans.api.ContextAwareRandomizer;
 import io.github.benas.randombeans.api.ObjectGenerationException;
 import io.github.benas.randombeans.api.Randomizer;
 import io.github.benas.randombeans.randomizers.misc.SkipRandomizer;
@@ -70,6 +71,9 @@ class FieldPopulator {
         Randomizer<?> randomizer = getRandomizer(field);
         if (randomizer instanceof SkipRandomizer) {
             return;
+        }
+        if (randomizer instanceof ContextAwareRandomizer) {
+            ((ContextAwareRandomizer<?>) randomizer).setRandomizerContext(context);
         }
         context.pushStackItem(new RandomizationContextStackItem(target, field));
         if(!context.hasExceededRandomizationDepth()) {

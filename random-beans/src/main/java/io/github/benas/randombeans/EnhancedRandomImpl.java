@@ -75,7 +75,7 @@ class EnhancedRandomImpl extends EnhancedRandom {
 
     @Override
     public <T> T nextObject(final Class<T> type, final String... excludedFields) {
-        return doPopulateBean(type, new RandomizationContext(parameters, excludedFields));
+        return doPopulateBean(type, new RandomizationContext(type, parameters, excludedFields));
     }
 
     @Override
@@ -88,11 +88,14 @@ class EnhancedRandomImpl extends EnhancedRandom {
     }
 
     <T> T doPopulateBean(final Class<T> type, final RandomizationContext context) {
-        T result;
+        T result = null;
         try {
 
             Randomizer<?> randomizer = randomizerProvider.getRandomizerByType(type);
             if (randomizer != null) {
+                if (randomizer instanceof ContextAwareRandomizer) {
+                    ((ContextAwareRandomizer<?>) randomizer).setRandomizerContext(context);
+                }
                 return (T) randomizer.getRandomValue();
             }
 
@@ -108,6 +111,7 @@ class EnhancedRandomImpl extends EnhancedRandom {
 
             // create a new instance of the target type
             result = objectFactory.createInstance(type);
+            context.setRandomizedObject(result);
 
             // cache instance in the population context
             context.addPopulatedBean(type, result);

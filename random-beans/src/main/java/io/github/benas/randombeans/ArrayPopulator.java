@@ -23,6 +23,7 @@
  */
 package io.github.benas.randombeans;
 
+import io.github.benas.randombeans.api.ContextAwareRandomizer;
 import io.github.benas.randombeans.api.Randomizer;
 
 import java.lang.reflect.Array;
@@ -49,7 +50,7 @@ class ArrayPopulator {
     <T> Object getRandomArray(final Class<?> fieldType, final RandomizationContext context) {
         Class<?> componentType = fieldType.getComponentType();
         if (componentType.isPrimitive()) {
-            return getRandomPrimitiveArray(componentType);
+            return getRandomPrimitiveArray(componentType, context);
         }
         int randomSize = enhancedRandom.getRandomCollectionSize();
         T[] itemsList = (T[]) Array.newInstance(componentType, randomSize);
@@ -59,9 +60,12 @@ class ArrayPopulator {
         return itemsList;
     }
 
-    Object getRandomPrimitiveArray(final Class<?> primitiveType) {
+    Object getRandomPrimitiveArray(final Class<?> primitiveType, RandomizationContext context) {
         final int randomSize = abs((byte) enhancedRandom.nextInt());
         final Randomizer<?> randomizer = randomizerProvider.getRandomizerByType(primitiveType);
+        if (randomizer instanceof ContextAwareRandomizer) {
+            ((ContextAwareRandomizer<?>) randomizer).setRandomizerContext(context);
+        }
         final Object result = Array.newInstance(primitiveType, randomSize);
         for (int index = 0; index < randomSize; index++) {
             Array.set(result, index, randomizer.getRandomValue());

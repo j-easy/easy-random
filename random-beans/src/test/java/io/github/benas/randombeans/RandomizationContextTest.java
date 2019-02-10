@@ -28,6 +28,10 @@ import static org.mockito.Mockito.when;
 
 import java.lang.reflect.Field;
 
+import io.github.benas.randombeans.api.ContextAwareRandomizer;
+import io.github.benas.randombeans.api.EnhancedRandom;
+import io.github.benas.randombeans.api.RandomizerContext;
+import lombok.Data;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -51,7 +55,7 @@ public class RandomizationContextTest {
 
     @BeforeEach
     public void setUp() {
-        randomizationContext = new RandomizationContext(parameters);
+        randomizationContext = new RandomizationContext(Object.class, parameters);
     }
 
     @Test
@@ -114,7 +118,7 @@ public class RandomizationContextTest {
     public void whenCurrentStackSizeOverMaxRandomizationDepth_thenShouldExceedRandomizationDepth() throws NoSuchFieldException {
         // Given
         when(parameters.getRandomizationDepth()).thenReturn(1);
-        RandomizationContext customRandomizationContext = new RandomizationContext(parameters);
+        RandomizationContext customRandomizationContext = new RandomizationContext(Object.class, parameters);
         Field address = Person.class.getDeclaredField("address");
         customRandomizationContext.pushStackItem(new RandomizationContextStackItem(bean1, address));
         customRandomizationContext.pushStackItem(new RandomizationContextStackItem(bean2, address));
@@ -130,7 +134,7 @@ public class RandomizationContextTest {
     public void whenCurrentStackSizeLessMaxRandomizationDepth_thenShouldNotExceedRandomizationDepth() throws NoSuchFieldException {
         // Given
         when(parameters.getRandomizationDepth()).thenReturn(2);
-        RandomizationContext customRandomizationContext = new RandomizationContext(parameters);
+        RandomizationContext customRandomizationContext = new RandomizationContext(Object.class, parameters);
         Field address = Person.class.getDeclaredField("address");
         customRandomizationContext.pushStackItem(new RandomizationContextStackItem(bean1, address));
 
@@ -145,7 +149,7 @@ public class RandomizationContextTest {
     public void whenCurrentStackSizeEqualMaxRandomizationDepth_thenShouldNotExceedRandomizationDepth() throws NoSuchFieldException {
         // Given
         when(parameters.getRandomizationDepth()).thenReturn(2);
-        RandomizationContext customRandomizationContext = new RandomizationContext(parameters);
+        RandomizationContext customRandomizationContext = new RandomizationContext(Object.class, parameters);
         Field address = Person.class.getDeclaredField("address");
         customRandomizationContext.pushStackItem(new RandomizationContextStackItem(bean1, address));
         customRandomizationContext.pushStackItem(new RandomizationContextStackItem(bean2, address));
@@ -155,6 +159,69 @@ public class RandomizationContextTest {
 
         // Then
         assertThat(hasExceededRandomizationDepth).isFalse();
+    }
+
+    @Test
+    void testRandomizerContext() {
+        MyRandomizer randomizer = new MyRandomizer();
+        EnhancedRandom enhancedRandom = new EnhancedRandomBuilder()
+                .randomize(D.class, randomizer)
+                .build();
+
+        A a = enhancedRandom.nextObject(A.class, "excluded");
+
+        assertThat(a).isNotNull();
+        assertThat(a.excluded).isNull();
+        assertThat(a.b).isNotNull();
+        assertThat(a.b.c).isNotNull();
+        assertThat(a.b.c.d).isNotNull();
+        assertThat(a.b.c.d.name).isEqualTo("foo");
+    }
+
+    static class MyRandomizer implements ContextAwareRandomizer<D> {
+
+        private RandomizerContext context;
+
+        @Override
+        public void setRandomizerContext(RandomizerContext context) {
+            this.context = context;
+        }
+
+        @Override
+        public D getRandomValue() {
+            // At this level, the context should be as follows:
+            assertThat(context.getCurrentField()).isEqualTo("b.c.d");
+            assertThat(context.getRandomizationDepth()).isEqualTo(3);
+            assertThat(context.getType()).isEqualTo(A.class);
+            assertThat(context.getRootObject()).isInstanceOf(A.class);
+            assertThat(context.getCurrentObject()).isInstanceOf(C.class);
+            assertThat(context.getExcludedFields()).containsExactly("excluded");
+
+            D d = new D();
+            d.setName("foo");
+            return d;
+        }
+    }
+
+    @Data
+    static class A {
+        private B b;
+        private String excluded;
+    }
+
+    @Data
+    static class B {
+        private C c;
+    }
+
+    @Data
+    static class C {
+        private D d;
+    }
+
+    @Data
+    static class D {
+        private String name;
     }
 
 }

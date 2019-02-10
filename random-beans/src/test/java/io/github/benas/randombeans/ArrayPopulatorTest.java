@@ -78,7 +78,7 @@ public class ArrayPopulatorTest {
         when(randomizerProvider.getRandomizerByType(Integer.TYPE)).thenReturn(integerRandomizer);
         when(integerRandomizer.getRandomValue()).thenReturn(INT);
 
-        int[] ints = (int[]) arrayPopulator.getRandomPrimitiveArray(Integer.TYPE);
+        int[] ints = (int[]) arrayPopulator.getRandomPrimitiveArray(Integer.TYPE, context);
 
         assertThat(ints).containsOnly(INT);
     }
