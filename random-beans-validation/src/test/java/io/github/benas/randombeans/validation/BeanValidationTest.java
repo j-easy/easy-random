@@ -105,6 +105,10 @@ public class BeanValidationTest {
         assertThat(bean.getBriefMessage().length()).isBetween(2, 10);// @Size(min=2, max=10) String briefMessage;
 
         assertThat(bean.getRegexString()).matches("[a-z]{4}");
+
+        assertThat(bean.getNotEmptyCharSequence()).isNotBlank(); // @NotEmpty String notEmptyString
+
+        assertThat(bean.getNotEmptyArray()).isNotEmpty();// @NotEmpty String notEmptyArray
     }
 
     @Test
@@ -161,6 +165,10 @@ public class BeanValidationTest {
         assertThat(bean.getBriefMessage().length()).isBetween(2, 10);// @Size(min=2, max=10) String briefMessage;
 
         assertThat(bean.getRegexString()).matches("[a-z]{4}");
+
+        assertThat(bean.getNotEmptyCharSequence()).isNotBlank(); // @NotEmpty String notEmptyString
+
+        assertThat(bean.getNotEmptyArray()).isNotEmpty();// @NotEmpty String notEmptyArray
     }
 
     @Test
@@ -195,6 +203,8 @@ public class BeanValidationTest {
         assertThat(bean.getNegativeOrZero()).isEqualTo(-2055951746);
         assertThat(bean.getEmail()).isEqualTo("celine.schoen@hotmail.com");
         assertThat(bean.getNotBlank()).isEqualTo("tg");
+        assertThat(bean.getNotEmptyCharSequence()).isNotBlank();
+        assertThat(bean.getNotEmptyArray()).isNotEmpty();
     }
 
     @Test

@@ -26,6 +26,7 @@ package io.github.benas.randombeans.validation;
 import javax.validation.constraints.*;
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
+import java.util.Arrays;
 import java.util.Date;
 
 class BeanValidationMethodAnnotatedBean {
@@ -72,6 +73,10 @@ class BeanValidationMethodAnnotatedBean {
     private String briefMessage;
 
     private String regexString;
+
+    private String notEmptyCharSequence;
+
+    private String[] notEmptyArray;
 
     @AssertFalse
     public boolean isUnsupported() {
@@ -282,6 +287,24 @@ class BeanValidationMethodAnnotatedBean {
         this.email = email;
     }
 
+    @NotEmpty
+    public String getNotEmptyCharSequence() {
+        return notEmptyCharSequence;
+    }
+
+    public void setNotEmptyCharSequence(String notEmptyCharSequence) {
+        this.notEmptyCharSequence = notEmptyCharSequence;
+    }
+
+    @NotEmpty
+    public String[] getNotEmptyArray() {
+        return notEmptyArray;
+    }
+
+    public void setNotEmptyArray(String[] notEmptyArray) {
+        this.notEmptyArray = notEmptyArray;
+    }
+
     @Override
     public String toString() {
         return "BeanValidationMethodAnnotatedBean{" +
@@ -308,6 +331,8 @@ class BeanValidationMethodAnnotatedBean {
                 ", unusedString='" + unusedString + '\'' +
                 ", briefMessage='" + briefMessage + '\'' +
                 ", regexString='" + regexString + '\'' +
+                ", notEmptyCharSequence='" + notEmptyCharSequence + '\'' +
+                ", notEmptyArray='" + Arrays.toString(notEmptyArray) + '\'' +
                 '}';
     }
 }
