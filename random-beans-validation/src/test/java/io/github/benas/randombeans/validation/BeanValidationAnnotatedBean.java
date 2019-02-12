@@ -26,7 +26,6 @@ package io.github.benas.randombeans.validation;
 import javax.validation.constraints.*;
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
-import java.util.Arrays;
 import java.util.Date;
 
 class BeanValidationAnnotatedBean {
@@ -100,12 +99,6 @@ class BeanValidationAnnotatedBean {
     
     @Pattern(regexp="[a-z]{4}")
     private String regexString;
-
-    @NotEmpty
-    private String notEmptyCharSequence;
-
-    @NotEmpty
-    private String[] notEmptyArray;
 
     public BeanValidationAnnotatedBean() {
     }
@@ -295,22 +288,6 @@ class BeanValidationAnnotatedBean {
         this.pastOrPresent = pastOrPresent;
     }
 
-    public String getNotEmptyCharSequence() {
-        return notEmptyCharSequence;
-    }
-
-    public void setNotEmptyCharSequence(String notEmptyCharSequence) {
-        this.notEmptyCharSequence = notEmptyCharSequence;
-    }
-
-    public String[] getNotEmptyArray() {
-        return notEmptyArray;
-    }
-
-    public void setNotEmptyArray(String[] notEmptyArray) {
-        this.notEmptyArray = notEmptyArray;
-    }
-
     @Override
     public String toString() {
         return "BeanValidationAnnotatedBean{" +
@@ -337,8 +314,6 @@ class BeanValidationAnnotatedBean {
                 ", unusedString='" + unusedString + '\'' +
                 ", briefMessage='" + briefMessage + '\'' +
                 ", regexString='" + regexString + '\'' +
-                ", notEmptyCharSequence='" + notEmptyCharSequence + '\'' +
-                ", notEmptyArray='" + Arrays.toString(notEmptyArray) + '\'' +
                 '}';
     }
 }
