@@ -56,6 +56,7 @@ public class FieldDefinitionBuilder {
 
     /**
      * Specify the field name.
+     * The {@code name} can be a regular expression according to {@link java.util.regex.Pattern#compile(String)}.
      *
      * @param name the field name
      * @return the configured {@link FieldDefinitionBuilder}

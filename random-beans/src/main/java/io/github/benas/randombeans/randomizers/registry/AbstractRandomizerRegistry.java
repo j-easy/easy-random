@@ -52,13 +52,14 @@ public class AbstractRandomizerRegistry {
 
     /**
      * Check if a {@code field} has the given {@code name}.
+     * {@code name} can be a regular expression according to {@link java.util.regex.Pattern#compile(String)}.
      *
      * @param field to check
      * @param name of the field
-     * @return true if the field has the given name, false otherwise
+     * @return true if the field has the given name (or matches the given regex), false otherwise
      */
     protected boolean hasName(final Field field, final String name) {
-        return name == null || field.getName().equals(name);
+        return name == null || java.util.regex.Pattern.compile(name).matcher(field.getName()).matches();
     }
 
     /**
