@@ -454,6 +454,19 @@ public class EnhancedRandomBuilder {
     }
 
     /**
+     * With this parameter, random beans will not try to randomize abstract and interface types.
+     *
+     * Deactivated by default.
+     *
+     * @param ignoreAbstractTypes whether to ignore abstract and interface types or not
+     * @return a pre configured {@link EnhancedRandomBuilder} instance
+     */
+    public EnhancedRandomBuilder ignoreAbstractTypes(boolean ignoreAbstractTypes) {
+        parameters.setIgnoreAbstractTypes(ignoreAbstractTypes);
+        return this;
+    }
+
+    /**
      * Should default initialization of field values be overridden?
      * E.g. should the values of the {@code strings} and {@code integers} fields below be kept untouched
      *  or should they be randomized.

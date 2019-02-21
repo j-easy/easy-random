@@ -70,6 +70,7 @@ class EnhancedRandomImpl extends EnhancedRandom {
         enumRandomizersByType = new ConcurrentHashMap<>();
         fieldPopulator = new FieldPopulator(this, randomizerProvider, arrayPopulator, collectionPopulator, mapPopulator);
         fieldExclusionChecker = new FieldExclusionChecker();
+        parameters = new EnhancedRandomParameters();
     }
 
     @Override
@@ -121,7 +122,11 @@ class EnhancedRandomImpl extends EnhancedRandom {
 
             return result;
         } catch (InstantiationError | Exception e) {
-            throw new ObjectGenerationException("Unable to generate a random instance of type " + type, e);
+            if (!parameters.isIgnoreAbstractTypes()) {
+                throw new ObjectGenerationException("Unable to generate a random instance of type " + type, e);
+            } else {
+                return null;
+            }
         }
     }
 
