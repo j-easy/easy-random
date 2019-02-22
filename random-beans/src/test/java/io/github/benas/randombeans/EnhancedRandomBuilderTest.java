@@ -31,6 +31,7 @@ import static org.mockito.Mockito.when;
 
 import java.util.function.Supplier;
 
+import io.github.benas.randombeans.util.ReflectionUtils;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Mock;
@@ -49,8 +50,6 @@ public class EnhancedRandomBuilderTest {
 
     @Mock
     private Randomizer<String> randomizer;
-    @Mock
-    private Supplier<String> supplier;
     @Mock
     private Randomizer humanRandomizer;
     @Mock
@@ -92,12 +91,11 @@ public class EnhancedRandomBuilderTest {
 
     @Test
     public void customSupplierShouldBeRegisteredInAllBuiltInstances() {
-        when(supplier.get()).thenReturn(NAME);
-
+        Supplier<String> supplier =() -> NAME;
         enhancedRandomBuilder = aNewEnhancedRandomBuilder();
 
         FieldDefinition<?, ?> fieldDefinition = field().named("name").ofType(String.class).inClass(Human.class).get();
-        enhancedRandomBuilder.randomize(fieldDefinition, supplier);
+        enhancedRandomBuilder.randomize(fieldDefinition, ReflectionUtils.asRandomizer(supplier));
 
         EnhancedRandom enhancedRandom = enhancedRandomBuilder.build();
         Human human = enhancedRandom.nextObject(Human.class);

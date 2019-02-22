@@ -27,6 +27,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 import java.util.function.Supplier;
 
+import io.github.benas.randombeans.util.ReflectionUtils;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.junit.jupiter.MockitoExtension;
@@ -44,7 +45,7 @@ public class RandomizerProxyTest {
         MySupplier supplier = new MySupplier();
 
         // When
-        Randomizer<?> randomizer = RandomizerProxy.asRandomizer(supplier);
+        Randomizer<?> randomizer = ReflectionUtils.asRandomizer(supplier);
 
         // Then
         assertThat(randomizer.getRandomValue()).isInstanceOf(String.class).isEqualTo(FOO);
@@ -56,7 +57,7 @@ public class RandomizerProxyTest {
         Supplier<String> supplier = () -> FOO;
 
         // When
-        Randomizer<?> randomizer = RandomizerProxy.asRandomizer(supplier);
+        Randomizer<?> randomizer = ReflectionUtils.asRandomizer(supplier);
 
         // Then
         assertThat(randomizer.getRandomValue()).isInstanceOf(String.class).isEqualTo(FOO);

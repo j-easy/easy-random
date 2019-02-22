@@ -33,6 +33,7 @@ import java.lang.annotation.Annotation;
 import java.lang.reflect.*;
 import java.text.SimpleDateFormat;
 import java.util.*;
+import java.util.function.Supplier;
 import java.util.stream.Stream;
 
 import static io.github.benas.randombeans.util.DateUtils.DATE_FORMAT;
@@ -53,6 +54,38 @@ public class ReflectionUtils {
 
     static {
         objectMapper.setDateFormat(new SimpleDateFormat(DATE_FORMAT));
+    }
+
+    /**
+     * Create a dynamic proxy that adapts the given {@link Supplier} to a {@link Randomizer}.
+     * @param supplier to adapt
+     * @return the proxy randomizer
+     */
+    public static Randomizer<?> asRandomizer(final Supplier<?> supplier) {
+
+        class RandomizerProxy implements InvocationHandler {
+
+            private final Supplier<?> target;
+
+            private RandomizerProxy(final Supplier<?> target) {
+                this.target = target;
+            }
+
+            @Override
+            public Object invoke(final Object proxy, final Method method, final Object[] args) throws Throwable {
+                if ("getRandomValue".equals(method.getName())) {
+                    Method getMethod = target.getClass().getMethod("get");
+                    getMethod.setAccessible(true);
+                    return getMethod.invoke(target);
+                }
+                return null;
+            }
+        }
+
+        return (Randomizer<?>) Proxy.newProxyInstance(
+                Randomizer.class.getClassLoader(),
+                new Class[]{Randomizer.class},
+                new RandomizerProxy(supplier));
     }
 
     /**

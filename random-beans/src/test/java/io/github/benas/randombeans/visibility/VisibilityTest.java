@@ -24,6 +24,7 @@
 package io.github.benas.randombeans.visibility;
 
 import static io.github.benas.randombeans.EnhancedRandomBuilder.aNewEnhancedRandomBuilder;
+import static io.github.benas.randombeans.util.ReflectionUtils.asRandomizer;
 import static org.assertj.core.api.Assertions.assertThat;
 
 import java.util.function.Supplier;
@@ -36,7 +37,10 @@ public class VisibilityTest {
 
     @Test
     public void canPassSupplierLambdaFromOtherPackage() {
-        EnhancedRandom random = aNewEnhancedRandomBuilder().randomize(String.class, (Supplier<String>) () -> "test").build();
+        Supplier<String> supplier = () -> "test";
+        EnhancedRandom random = aNewEnhancedRandomBuilder()
+                .randomize(String.class, asRandomizer(supplier))
+                .build();
 
         String value = random.nextObject(String.class);
 
