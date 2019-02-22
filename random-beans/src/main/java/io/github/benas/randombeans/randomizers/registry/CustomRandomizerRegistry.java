@@ -33,6 +33,9 @@ import io.github.benas.randombeans.util.ReflectionUtils;
 import java.lang.reflect.Field;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.function.Predicate;
+
+import static io.github.benas.randombeans.FieldPredicates.*;
 
 /**
  * Registry of user defined randomizers.
@@ -40,9 +43,9 @@ import java.util.Map;
  * @author Mahmoud Ben Hassine (mahmoud.benhassine@icloud.com)
  */
 @Priority(-1)
-public class CustomRandomizerRegistry extends AbstractRandomizerRegistry implements RandomizerRegistry {
+public class CustomRandomizerRegistry implements RandomizerRegistry {
 
-    private final Map<FieldDefinition<?, ?>, Randomizer<?>> customFieldRandomizersRegistry = new HashMap<>();
+    private final Map<Predicate<Field>, Randomizer<?>> customFieldRandomizersRegistry = new HashMap<>();
     private final Map<Class<?>, Randomizer<?>> customTypeRandomizersRegistry = new HashMap<>();
 
     @Override
@@ -52,13 +55,9 @@ public class CustomRandomizerRegistry extends AbstractRandomizerRegistry impleme
 
     @Override
     public Randomizer<?> getRandomizer(Field field) {
-        for (FieldDefinition<?, ?> fieldDefinition : customFieldRandomizersRegistry.keySet()) {
-            if (hasName(field, fieldDefinition.getName()) &&
-                    isDeclaredInClass(field, fieldDefinition.getClazz()) &&
-                    hasType(field, fieldDefinition.getType()) &&
-                    isAnnotatedWithOneOf(field, fieldDefinition.getAnnotations()) &&
-                    hasAllModifiers(field, fieldDefinition.getModifiers())) {
-                return customFieldRandomizersRegistry.get(fieldDefinition);
+        for (Predicate<Field> fieldPredicate : customFieldRandomizersRegistry.keySet()) {
+            if (fieldPredicate.test(field)) {
+                return customFieldRandomizersRegistry.get(fieldPredicate);
             }
         }
         return getRandomizer(field.getType());
@@ -76,11 +75,26 @@ public class CustomRandomizerRegistry extends AbstractRandomizerRegistry impleme
     }
 
     public <T, F, R> void registerRandomizer(final FieldDefinition<T,F> fieldDefinition, final Randomizer<R> randomizer) {
-        customFieldRandomizersRegistry.put(fieldDefinition, randomizer);
+        customFieldRandomizersRegistry.put(toPredicate(fieldDefinition), randomizer);
     }
 
     public <T, R> void registerRandomizer(final Class<T> type, final Randomizer<R> randomizer) {
         customTypeRandomizersRegistry.put(type, randomizer);
+    }
+
+    public void registerRandomizer(final Predicate<Field> predicate, Randomizer<?> randomizer) {
+        customFieldRandomizersRegistry.put(predicate, randomizer);
+    }
+
+    // only for backward compatibility of FieldDefinition
+    private Predicate<Field> toPredicate(final FieldDefinition<?, ?> fieldDefinition) {
+        Class[] annotations = new Class[fieldDefinition.getAnnotations().size()];
+        return field -> named(fieldDefinition.getName())
+                .and(ofType(fieldDefinition.getType()))
+                .and(inClass(fieldDefinition.getClazz()))
+                .and(hasModifiers(fieldDefinition.getModifiers()))
+                .and(isAnnotatedWith(fieldDefinition.getAnnotations().toArray(annotations)))
+                .test(field);
     }
 
 }

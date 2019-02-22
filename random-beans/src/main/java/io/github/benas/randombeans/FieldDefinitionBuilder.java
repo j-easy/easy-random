@@ -32,7 +32,10 @@ import java.util.Set;
  * Builder for {@link FieldDefinition}.
  *
  * @author Mahmoud Ben Hassine (mahmoud.benhassine@icloud.com)
+ *
+ * @deprecated Use {@link FieldPredicates} instead to build specify fields.
  */
+@Deprecated
 public class FieldDefinitionBuilder {
 
     private String name;

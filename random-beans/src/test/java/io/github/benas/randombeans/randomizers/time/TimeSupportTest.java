@@ -24,6 +24,7 @@
 package io.github.benas.randombeans.randomizers.time;
 
 import static io.github.benas.randombeans.EnhancedRandomBuilder.aNewEnhancedRandom;
+import static io.github.benas.randombeans.FieldPredicates.*;
 import static org.assertj.core.api.Assertions.assertThat;
 
 import java.time.Instant;
@@ -32,7 +33,6 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import io.github.benas.randombeans.EnhancedRandomBuilder;
-import io.github.benas.randombeans.FieldDefinitionBuilder;
 import io.github.benas.randombeans.api.EnhancedRandom;
 import io.github.benas.randombeans.beans.TimeBean;
 
@@ -56,7 +56,8 @@ public class TimeSupportTest {
     // https://github.com/benas/random-beans/issues/135
     public void threeTenRandomizersCanBeOverriddenByCustomRandomizers() {
         EnhancedRandom customEnhancedRandom = EnhancedRandomBuilder.aNewEnhancedRandomBuilder()
-                .exclude(FieldDefinitionBuilder.field().named("instant").ofType(Instant.class).inClass(TimeBean.class).get()).build();
+                .excludeField(named("instant").and(ofType(Instant.class)).and(inClass(TimeBean.class)))
+                .build();
 
         TimeBean timeBean = customEnhancedRandom.nextObject(TimeBean.class);
 

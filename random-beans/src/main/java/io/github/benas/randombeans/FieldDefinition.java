@@ -35,8 +35,11 @@ import java.util.Set;
  * @param <T> The declaring class type
  * @param <F> The field type
  * @author Mahmoud Ben Hassine (mahmoud.benhassine@icloud.com)
+ *
+ * @deprecated use {@link FieldPredicates} instead to define a field.
  */
 @Value
+@Deprecated
 public class FieldDefinition<T, F> {
 
     private final String name;

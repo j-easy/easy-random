@@ -32,6 +32,7 @@ import java.util.Set;
  *
  * @author Mahmoud Ben Hassine
  */
+@Deprecated
 public class AbstractRandomizerRegistry {
 
      /*

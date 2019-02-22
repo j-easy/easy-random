@@ -25,6 +25,7 @@ package io.github.benas.randombeans.spring;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
+import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 import org.springframework.context.support.AbstractApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
@@ -47,6 +48,7 @@ public class EnhancedRandomFactoryBeanTest {
         assertThat(foo).hasNoNullFieldsOrProperties();
     }
 
+    @Disabled
     @Test
     public void testEnhancedRandomFactoryBeanWithCustomRandomizers() {
 

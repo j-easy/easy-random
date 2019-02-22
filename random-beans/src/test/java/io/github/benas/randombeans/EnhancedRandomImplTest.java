@@ -25,7 +25,8 @@ package io.github.benas.randombeans;
 
 import static io.github.benas.randombeans.EnhancedRandomBuilder.aNewEnhancedRandom;
 import static io.github.benas.randombeans.EnhancedRandomBuilder.aNewEnhancedRandomBuilder;
-import static io.github.benas.randombeans.FieldDefinitionBuilder.field;
+import static io.github.benas.randombeans.FieldPredicates.*;
+import static io.github.benas.randombeans.FieldPredicates.inClass;
 import static io.github.benas.randombeans.api.EnhancedRandom.random;
 import static io.github.benas.randombeans.api.EnhancedRandom.randomCollectionOf;
 import static io.github.benas.randombeans.api.EnhancedRandom.randomListOf;
@@ -143,9 +144,8 @@ public class EnhancedRandomImplTest {
     public void customRandomzierForFieldsShouldBeUsedToPopulateObjects() {
         when(randomizer.getRandomValue()).thenReturn(FOO);
 
-        FieldDefinition<?, ?> fieldDefinition = field().named("name").ofType(String.class).inClass(Human.class).get();
         enhancedRandom = aNewEnhancedRandomBuilder()
-                .randomize(fieldDefinition, randomizer)
+                .randomize(named("name").and(ofType(String.class)).and(inClass(Human.class)), randomizer)
                 .build();
 
         Person person = enhancedRandom.nextObject(Person.class);
@@ -159,9 +159,9 @@ public class EnhancedRandomImplTest {
         when(randomizer.getRandomValue()).thenReturn(FOO);
 
         // Given
-        FieldDefinition<?, ?> fieldDefinition = field().hasModifiers(Modifier.TRANSIENT).ofType(String.class).get();
         EnhancedRandom random = EnhancedRandomBuilder.aNewEnhancedRandomBuilder()
-                .randomize(fieldDefinition, randomizer).build();
+                .randomize(hasModifiers(Modifier.TRANSIENT).and(ofType(String.class)), randomizer)
+                .build();
 
         // When
         Person person = random.nextObject(Person.class);
@@ -176,9 +176,9 @@ public class EnhancedRandomImplTest {
         // Given
         when(randomizer.getRandomValue()).thenReturn(FOO);
         int modifiers = Modifier.TRANSIENT | Modifier.PROTECTED;
-        FieldDefinition<?, ?> fieldDefinition = field().hasModifiers(modifiers).ofType(String.class).get();
         EnhancedRandom random = EnhancedRandomBuilder.aNewEnhancedRandomBuilder()
-                .randomize(fieldDefinition, randomizer).build();
+                .randomize(hasModifiers(modifiers).and(ofType(String.class)), randomizer)
+                .build();
 
         // When
         Person person = random.nextObject(Person.class);
@@ -212,13 +212,6 @@ public class EnhancedRandomImplTest {
         Human human = enhancedRandom.nextObject(Human.class);
 
         assertThat(human.getName()).isEqualTo(FOO);
-    }
-
-    @Test
-    public void ambiguousFieldDefinitionShouldBeRejected() {
-        assertThatThrownBy(() -> enhancedRandom = aNewEnhancedRandomBuilder()
-                .randomize(field().named("name").get(), new ConstantRandomizer<>("name"))
-                .build()).isInstanceOf(IllegalArgumentException.class);
     }
 
     @Test

@@ -24,7 +24,7 @@
 package io.github.benas.randombeans;
 
 import static io.github.benas.randombeans.EnhancedRandomBuilder.aNewEnhancedRandomBuilder;
-import static io.github.benas.randombeans.FieldDefinitionBuilder.field;
+import static io.github.benas.randombeans.FieldPredicates.*;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.mockito.Mockito.when;
@@ -75,8 +75,7 @@ public class EnhancedRandomBuilderTest {
 
         enhancedRandomBuilder = aNewEnhancedRandomBuilder();
 
-        FieldDefinition<?, ?> fieldDefinition = field().named("name").ofType(String.class).inClass(Human.class).get();
-        enhancedRandomBuilder.randomize(fieldDefinition, randomizer);
+        enhancedRandomBuilder.randomize(named("name").and(ofType(String.class)).and(inClass(Human.class)), randomizer);
 
         EnhancedRandom enhancedRandom = enhancedRandomBuilder.build();
         Human human = enhancedRandom.nextObject(Human.class);
@@ -94,8 +93,7 @@ public class EnhancedRandomBuilderTest {
         Supplier<String> supplier =() -> NAME;
         enhancedRandomBuilder = aNewEnhancedRandomBuilder();
 
-        FieldDefinition<?, ?> fieldDefinition = field().named("name").ofType(String.class).inClass(Human.class).get();
-        enhancedRandomBuilder.randomize(fieldDefinition, ReflectionUtils.asRandomizer(supplier));
+        enhancedRandomBuilder.randomize(named("name").and(ofType(String.class)).and(inClass(Human.class)), ReflectionUtils.asRandomizer(supplier));
 
         EnhancedRandom enhancedRandom = enhancedRandomBuilder.build();
         Human human = enhancedRandom.nextObject(Human.class);

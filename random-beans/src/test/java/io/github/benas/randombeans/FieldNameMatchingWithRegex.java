@@ -27,7 +27,8 @@ import io.github.benas.randombeans.api.EnhancedRandom;
 import io.github.benas.randombeans.api.Randomizer;
 import org.junit.jupiter.api.Test;
 
-import static io.github.benas.randombeans.FieldDefinitionBuilder.field;
+import static io.github.benas.randombeans.FieldPredicates.named;
+import static io.github.benas.randombeans.FieldPredicates.ofType;
 import static org.assertj.core.api.Assertions.assertThat;
 
 public class FieldNameMatchingWithRegex {
@@ -52,7 +53,7 @@ public class FieldNameMatchingWithRegex {
         // given
         EnhancedRandom enhancedRandom = new EnhancedRandomBuilder()
                 .randomize(
-                        field().named("name.*").ofType(String.class).get(),
+                        named("name.*").and(ofType(String.class)),
                         (Randomizer<String>) () -> "foo")
                 .build();
 
@@ -75,7 +76,7 @@ public class FieldNameMatchingWithRegex {
         // given
         EnhancedRandom enhancedRandom = new EnhancedRandomBuilder()
                 .randomize(
-                        field().named("name").ofType(String.class).get(),
+                        named("name.*").and(ofType(String.class)),
                         (Randomizer<String>) () -> "foo")
                 .build();
 

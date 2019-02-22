@@ -25,7 +25,7 @@ package io.github.benas.randombeans;
 
 import static io.github.benas.randombeans.EnhancedRandomBuilder.aNewEnhancedRandom;
 import static io.github.benas.randombeans.EnhancedRandomBuilder.aNewEnhancedRandomBuilder;
-import static io.github.benas.randombeans.FieldDefinitionBuilder.field;
+import static io.github.benas.randombeans.FieldPredicates.*;
 import static org.assertj.core.api.Assertions.assertThat;
 
 import java.lang.reflect.Modifier;
@@ -65,9 +65,8 @@ public class FieldExclusionTest {
     @Test
     public void excludedFieldsUsingSkipRandomizerShouldNotBePopulated() {
         // given
-        FieldDefinition<?, ?> fieldDefinition = field().named("name").ofType(String.class).inClass(Human.class).get();
         enhancedRandom = aNewEnhancedRandomBuilder()
-                .exclude(fieldDefinition)
+                .excludeField(named("name").and(ofType(String.class)).and(inClass(Human.class)))
                 .build();
 
         // when
@@ -82,7 +81,7 @@ public class FieldExclusionTest {
     public void excludedFieldsUsingFieldDefinitionShouldNotBePopulated() {
         // given
         enhancedRandom = aNewEnhancedRandomBuilder()
-                .exclude(field().named("name").get())
+                .excludeField(named("name"))
                 .build();
 
         // when
@@ -121,7 +120,7 @@ public class FieldExclusionTest {
     public void fieldsExcludedWithAnnotationViaFieldDefinitionShouldNotBePopulated() {
         // given
         enhancedRandom = aNewEnhancedRandomBuilder()
-                .exclude(field().isAnnotatedWith(Deprecated.class).get())
+                .excludeField(isAnnotatedWith(Deprecated.class))
                 .build();
 
         // when
@@ -136,7 +135,7 @@ public class FieldExclusionTest {
     public void fieldsExcludedFromTypeViaFieldDefinitionShouldNotBePopulated() {
         // given
         enhancedRandom = aNewEnhancedRandomBuilder()
-                .exclude(field().inClass(Address.class).get())
+                .excludeField(inClass(Address.class))
                 .build();
 
         // when
@@ -275,7 +274,7 @@ public class FieldExclusionTest {
     @Test
     public void whenFieldIsExcluded_thenItsInlineInitializationShouldBeUsedAsIs() {
         enhancedRandom = aNewEnhancedRandomBuilder()
-            .exclude(new FieldDefinition<>("myList", List.class, InlineInitializationBean.class))
+            .excludeField(named("myList").and(ofType(List.class)).and(inClass(InlineInitializationBean.class)))
             .build();
 
         InlineInitializationBean bean = enhancedRandom.nextObject(InlineInitializationBean.class);
@@ -287,7 +286,7 @@ public class FieldExclusionTest {
     @Test
     public void whenFieldIsExcluded_thenItsInlineInitializationShouldBeUsedAsIs_EvenIfBeanHasNoPublicConstructor() {
         enhancedRandom = aNewEnhancedRandomBuilder()
-            .exclude(new FieldDefinition<>("myList", List.class, InlineInitializationBeanPrivateConstructor.class))
+            .excludeField(named("myList").and(ofType(List.class)).and(inClass(InlineInitializationBeanPrivateConstructor.class)))
             .build();
 
         InlineInitializationBeanPrivateConstructor bean = enhancedRandom.nextObject(InlineInitializationBeanPrivateConstructor.class);
@@ -299,7 +298,7 @@ public class FieldExclusionTest {
     public void fieldsExcludedWithOneModifierShouldNotBePopulated() {
         // given
         enhancedRandom = aNewEnhancedRandomBuilder()
-                .exclude(field().hasModifiers(Modifier.TRANSIENT).get())
+                .excludeField(hasModifiers(Modifier.TRANSIENT))
                 .build();
 
         // when
@@ -314,7 +313,7 @@ public class FieldExclusionTest {
     public void fieldsExcludedWithTwoModifiersShouldNotBePopulated() {
         // given
         enhancedRandom = aNewEnhancedRandomBuilder()
-                .exclude(field().hasModifiers(Modifier.TRANSIENT | Modifier.PROTECTED).get())
+                .excludeField(hasModifiers(Modifier.TRANSIENT | Modifier.PROTECTED))
                 .build();
 
         // when
@@ -329,7 +328,7 @@ public class FieldExclusionTest {
     public void fieldsExcludedWithTwoModifiersShouldBePopulatedIfOneModifierIsNotFit() {
         // given
         enhancedRandom = aNewEnhancedRandomBuilder()
-                .exclude(field().hasModifiers(Modifier.TRANSIENT | Modifier.PUBLIC).get())
+                .excludeField(hasModifiers(Modifier.TRANSIENT | Modifier.PUBLIC))
                 .build();
 
         // when
