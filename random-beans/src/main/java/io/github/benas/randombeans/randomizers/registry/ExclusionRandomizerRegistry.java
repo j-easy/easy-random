@@ -24,6 +24,8 @@
 package io.github.benas.randombeans.randomizers.registry;
 
 import io.github.benas.randombeans.FieldDefinition;
+import io.github.benas.randombeans.FieldPredicates;
+import io.github.benas.randombeans.TypePredicates;
 import io.github.benas.randombeans.annotation.Exclude;
 import io.github.benas.randombeans.annotation.Priority;
 import io.github.benas.randombeans.api.EnhancedRandomParameters;
@@ -46,14 +48,16 @@ import static io.github.benas.randombeans.FieldPredicates.*;
 @Priority(0)
 public class ExclusionRandomizerRegistry implements RandomizerRegistry {
 
-    private Set<Predicate<Field>> predicates = new HashSet<>();
+    private Set<Predicate<Field>> fieldPredicates = new HashSet<>();
+    private Set<Predicate<Class<?>>> typePredicates = new HashSet<>();
 
     /**
      * {@inheritDoc}
      */
     @Override
     public void init(EnhancedRandomParameters parameters) {
-        predicates.add(isAnnotatedWith(Exclude.class));
+        fieldPredicates.add(FieldPredicates.isAnnotatedWith(Exclude.class));
+        typePredicates.add(TypePredicates.isAnnotatedWith(Exclude.class));
     }
 
     /**
@@ -61,7 +65,7 @@ public class ExclusionRandomizerRegistry implements RandomizerRegistry {
      */
     @Override
     public Randomizer<?> getRandomizer(Field field) {
-        for (Predicate<Field> fieldPredicate : predicates) {
+        for (Predicate<Field> fieldPredicate : fieldPredicates) {
             if (fieldPredicate.test(field)) {
                 return new SkipRandomizer();
             }
@@ -74,6 +78,11 @@ public class ExclusionRandomizerRegistry implements RandomizerRegistry {
      */
     @Override
     public Randomizer<?> getRandomizer(Class<?> clazz) {
+        for (Predicate<Class<?>> typePredicate : typePredicates) {
+            if (typePredicate.test(clazz)) {
+                return new SkipRandomizer();
+            }
+        }
         return null;
     }
 
@@ -84,7 +93,7 @@ public class ExclusionRandomizerRegistry implements RandomizerRegistry {
      */
     @Deprecated
     public void addFieldDefinition(final FieldDefinition<?, ?> fieldDefinition) {
-        predicates.add(toPredicate(fieldDefinition));
+        fieldPredicates.add(toPredicate(fieldDefinition));
     }
 
     /**
@@ -92,8 +101,17 @@ public class ExclusionRandomizerRegistry implements RandomizerRegistry {
      *
      * @param predicate to add
      */
-    public void addPredicate(Predicate<Field> predicate) {
-        predicates.add(predicate);
+    public void addFieldPredicate(Predicate<Field> predicate) {
+        fieldPredicates.add(predicate);
+    }
+
+    /**
+     * Add a type predicate.
+     *
+     * @param predicate to add
+     */
+    public void addTypePredicate(Predicate<Class<?>> predicate) {
+        typePredicates.add(predicate);
     }
 
     // only for backward compatibility of FieldDefinition

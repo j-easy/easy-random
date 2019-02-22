@@ -209,14 +209,33 @@ public class EnhancedRandomBuilder {
     }
 
     /**
+     * Exclude a type from being randomized.
+     *
+     * @param predicate to identify the type to exclude
+     * @return a pre configured {@link EnhancedRandomBuilder} instance
+     *
+     * @see FieldPredicates
+     */
+    public EnhancedRandomBuilder excludeType(Predicate<Class<?>> predicate) {
+        exclusionRandomizerRegistry.addTypePredicate(predicate);
+        return this;
+    }
+
+    /**
      * Exclude types from being populated.
      *
      * @param types the types to exclude
      * @return a pre configured {@link EnhancedRandomBuilder} instance
+     *
+     * @see TypePredicates
+     *
+     * @deprecated use {@link EnhancedRandomBuilder#excludeType(java.util.function.Predicate)} instead. For example:
+     * excludeType(TypePredicates#ofType(type1).or(TypePredicates#ofType(type2)))
      */
+    @Deprecated
     public EnhancedRandomBuilder exclude(Class<?>... types) {
         for (Class<?> type : types) {
-            exclusionRandomizerRegistry.addPredicate(ofType(type));
+            exclusionRandomizerRegistry.addFieldPredicate(ofType(type));
         }
         return this;
     }
