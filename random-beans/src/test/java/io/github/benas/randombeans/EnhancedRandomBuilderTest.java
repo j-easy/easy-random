@@ -110,7 +110,7 @@ public class EnhancedRandomBuilderTest {
     public void customRandomizerRegistryShouldBeRegisteredInAllBuiltInstances() {
         when(humanRandomizer.getRandomValue()).thenReturn(human);
         when(randomizerRegistry.getRandomizer(Human.class)).thenReturn(humanRandomizer);
-        enhancedRandomBuilder = aNewEnhancedRandomBuilder().registerRandomizerRegistry(randomizerRegistry);
+        enhancedRandomBuilder = aNewEnhancedRandomBuilder().randomizerRegistry(randomizerRegistry);
 
         EnhancedRandom enhancedRandom = enhancedRandomBuilder.build();
         Human actual = enhancedRandom.nextObject(Human.class);

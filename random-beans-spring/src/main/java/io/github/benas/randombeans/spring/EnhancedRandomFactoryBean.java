@@ -87,7 +87,7 @@ public class EnhancedRandomFactoryBean implements FactoryBean<EnhancedRandom> {
         for (Map.Entry<Class<?>, Randomizer<?>> entry : mappings.entrySet()) {
             enhancedRandomBuilder.randomize(entry.getKey(), entry.getValue());
         }
-        registries.forEach(enhancedRandomBuilder::registerRandomizerRegistry);
+        registries.forEach(enhancedRandomBuilder::randomizerRegistry);
 
         enhancedRandomBuilder.seed(seed);
         enhancedRandomBuilder.charset(charset);

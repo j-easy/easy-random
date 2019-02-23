@@ -433,8 +433,21 @@ public class EnhancedRandomBuilder {
      *
      * @param registry the {@link RandomizerRegistry} to register
      * @return a pre configured {@link EnhancedRandomBuilder} instance
+     *
+     * @deprecated use {@link EnhancedRandomBuilder#randomizerRegistry(io.github.benas.randombeans.api.RandomizerRegistry)} instead
      */
+    @Deprecated
     public EnhancedRandomBuilder registerRandomizerRegistry(final RandomizerRegistry registry) {
+        return randomizerRegistry(registry);
+    }
+
+    /**
+     * Register a {@link RandomizerRegistry}.
+     *
+     * @param registry the {@link RandomizerRegistry} to register
+     * @return a pre configured {@link EnhancedRandomBuilder} instance
+     */
+    public EnhancedRandomBuilder randomizerRegistry(final RandomizerRegistry registry) {
         userRegistries.add(registry);
         return this;
     }
