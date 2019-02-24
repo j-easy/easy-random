@@ -43,9 +43,7 @@
 
     <modules>
         <module>random-beans</module>
-        <module>random-beans-spring</module>
         <module>random-beans-validation</module>
-        <module>random-beans-jodatime</module>
         <module>random-beans-randomizers</module>
     </modules>
 

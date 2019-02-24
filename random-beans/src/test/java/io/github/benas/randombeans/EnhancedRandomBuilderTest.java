@@ -141,7 +141,7 @@ public class EnhancedRandomBuilderTest {
     public void shouldConfigureExclusionOfTypesFromBuilder() {
         enhancedRandomBuilder = aNewEnhancedRandomBuilder();
 
-        EnhancedRandom enhancedRandom = enhancedRandomBuilder.exclude(String.class, Long.class).build();
+        EnhancedRandom enhancedRandom = enhancedRandomBuilder.excludeField(FieldPredicates.ofType(String.class).or(FieldPredicates.ofType(Long.class))).build();
 
         Human randomHuman = enhancedRandom.nextObject(Human.class);
 

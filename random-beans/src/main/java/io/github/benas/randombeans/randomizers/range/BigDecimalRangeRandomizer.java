@@ -44,17 +44,6 @@ public class BigDecimalRangeRandomizer implements Randomizer<BigDecimal> {
      * @param min min value
      * @param max max value
      */
-    @Deprecated
-    public BigDecimalRangeRandomizer(final Long min, final Long max) {
-        delegate = new DoubleRangeRandomizer(min.doubleValue(), max.doubleValue());
-    }
-
-    /**
-     * Create a new {@link BigDecimalRangeRandomizer}.
-     *
-     * @param min min value
-     * @param max max value
-     */
     public BigDecimalRangeRandomizer(final Double min, final Double max) {
         delegate = new DoubleRangeRandomizer(min, max);
     }
@@ -66,33 +55,8 @@ public class BigDecimalRangeRandomizer implements Randomizer<BigDecimal> {
      * @param max  max value
      * @param seed initial seed
      */
-    @Deprecated
-    public BigDecimalRangeRandomizer(final Long min, final Long max, final long seed) {
-        delegate = new DoubleRangeRandomizer(min.doubleValue(), max.doubleValue(), seed);
-    }
-
-    /**
-     * Create a new {@link BigDecimalRangeRandomizer}.
-     *
-     * @param min  min value
-     * @param max  max value
-     * @param seed initial seed
-     */
     public BigDecimalRangeRandomizer(final Double min, final Double max, final long seed) {
         delegate = new DoubleRangeRandomizer(min, max, seed);
-    }
-
-    /**
-     * Create a new {@link BigDecimalRangeRandomizer}. The default rounding mode is {@link RoundingMode#HALF_UP}.
-     *
-     * @param min   min value
-     * @param max   max value
-     * @param scale of the {@code BigDecimal} value to be returned.
-     */
-    @Deprecated
-    public BigDecimalRangeRandomizer(final Long min, final Long max, final Integer scale) {
-        delegate = new DoubleRangeRandomizer(min.doubleValue(), max.doubleValue());
-        this.scale = scale;
     }
 
     /**
@@ -114,18 +78,6 @@ public class BigDecimalRangeRandomizer implements Randomizer<BigDecimal> {
      * @param max max value
      * @return a new {@link BigDecimalRangeRandomizer}.
      */
-    @Deprecated
-    public static BigDecimalRangeRandomizer aNewBigDecimalRangeRandomizer(final Long min, final Long max) {
-        return new BigDecimalRangeRandomizer(min, max);
-    }
-
-    /**
-     * Create a new {@link BigDecimalRangeRandomizer}.
-     *
-     * @param min min value
-     * @param max max value
-     * @return a new {@link BigDecimalRangeRandomizer}.
-     */
     public static BigDecimalRangeRandomizer aNewBigDecimalRangeRandomizer(final Double min, final Double max) {
         return new BigDecimalRangeRandomizer(min, max);
     }
@@ -138,34 +90,8 @@ public class BigDecimalRangeRandomizer implements Randomizer<BigDecimal> {
      * @param seed initial seed
      * @return a new {@link BigDecimalRangeRandomizer}.
      */
-    @Deprecated
-    public static BigDecimalRangeRandomizer aNewBigDecimalRangeRandomizer(final Long min, final Long max, final long seed) {
-        return new BigDecimalRangeRandomizer(min, max, seed);
-    }
-
-    /**
-     * Create a new {@link BigDecimalRangeRandomizer}.
-     *
-     * @param min  min value
-     * @param max  max value
-     * @param seed initial seed
-     * @return a new {@link BigDecimalRangeRandomizer}.
-     */
     public static BigDecimalRangeRandomizer aNewBigDecimalRangeRandomizer(final Double min, final Double max, final long seed) {
         return new BigDecimalRangeRandomizer(min, max, seed);
-    }
-
-    /**
-     * Create a new {@link BigDecimalRangeRandomizer}.The default rounding mode is {@link RoundingMode#HALF_UP}.
-     *
-     * @param min   min value
-     * @param max   max value
-     * @param scale of the {@code BigDecimal} value to be returned.
-     * @return a new {@link BigDecimalRangeRandomizer}.
-     */
-    @Deprecated
-    public static BigDecimalRangeRandomizer aNewBigDecimalRangeRandomizer(final Long min, final Long max, final Integer scale) {
-        return new BigDecimalRangeRandomizer(min, max, scale);
     }
 
     /**
