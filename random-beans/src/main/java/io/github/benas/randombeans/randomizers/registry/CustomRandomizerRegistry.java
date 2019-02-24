@@ -23,7 +23,6 @@
  */
 package io.github.benas.randombeans.randomizers.registry;
 
-import io.github.benas.randombeans.FieldDefinition;
 import io.github.benas.randombeans.annotation.Priority;
 import io.github.benas.randombeans.api.EnhancedRandomParameters;
 import io.github.benas.randombeans.api.Randomizer;
@@ -34,8 +33,6 @@ import java.lang.reflect.Field;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.function.Predicate;
-
-import static io.github.benas.randombeans.FieldPredicates.*;
 
 /**
  * Registry of user defined randomizers.
@@ -65,7 +62,7 @@ public class CustomRandomizerRegistry implements RandomizerRegistry {
 
     @Override
     public Randomizer<?> getRandomizer(Class<?> type) {
-        // issue 241: primitive type were ignored: try to get randomizer by primtive type, if not, then try by wrapper type
+        // issue 241: primitive type were ignored: try to get randomizer by primitive type, if not, then try by wrapper type
         Randomizer<?> randomizer = customTypeRandomizersRegistry.get(type);
         if( randomizer == null) {
             Class<?> wrapperType = type.isPrimitive() ? ReflectionUtils.getWrapperType(type) : type;
@@ -74,27 +71,12 @@ public class CustomRandomizerRegistry implements RandomizerRegistry {
         return randomizer;
     }
 
-    public <T, F, R> void registerRandomizer(final FieldDefinition<T,F> fieldDefinition, final Randomizer<R> randomizer) {
-        customFieldRandomizersRegistry.put(toPredicate(fieldDefinition), randomizer);
-    }
-
     public <T, R> void registerRandomizer(final Class<T> type, final Randomizer<R> randomizer) {
         customTypeRandomizersRegistry.put(type, randomizer);
     }
 
     public void registerRandomizer(final Predicate<Field> predicate, Randomizer<?> randomizer) {
         customFieldRandomizersRegistry.put(predicate, randomizer);
-    }
-
-    // only for backward compatibility of FieldDefinition
-    private Predicate<Field> toPredicate(final FieldDefinition<?, ?> fieldDefinition) {
-        Class[] annotations = new Class[fieldDefinition.getAnnotations().size()];
-        return field -> named(fieldDefinition.getName())
-                .and(ofType(fieldDefinition.getType()))
-                .and(inClass(fieldDefinition.getClazz()))
-                .and(hasModifiers(fieldDefinition.getModifiers()))
-                .and(isAnnotatedWith(fieldDefinition.getAnnotations().toArray(annotations)))
-                .test(field);
     }
 
 }

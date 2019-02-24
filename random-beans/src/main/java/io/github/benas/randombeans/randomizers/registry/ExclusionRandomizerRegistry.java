@@ -23,7 +23,6 @@
  */
 package io.github.benas.randombeans.randomizers.registry;
 
-import io.github.benas.randombeans.FieldDefinition;
 import io.github.benas.randombeans.FieldPredicates;
 import io.github.benas.randombeans.TypePredicates;
 import io.github.benas.randombeans.annotation.Exclude;
@@ -38,10 +37,8 @@ import java.util.HashSet;
 import java.util.Set;
 import java.util.function.Predicate;
 
-import static io.github.benas.randombeans.FieldPredicates.*;
-
 /**
- * A {@link RandomizerRegistry} to exclude fields using a {@link FieldDefinition}.
+ * A {@link RandomizerRegistry} to exclude fields using a {@link Predicate}.
  *
  * @author Mahmoud Ben Hassine (mahmoud.benhassine@icloud.com)
  */
@@ -87,16 +84,6 @@ public class ExclusionRandomizerRegistry implements RandomizerRegistry {
     }
 
     /**
-     * Add a field definition.
-     *
-     * @param fieldDefinition to add
-     */
-    @Deprecated
-    public void addFieldDefinition(final FieldDefinition<?, ?> fieldDefinition) {
-        fieldPredicates.add(toPredicate(fieldDefinition));
-    }
-
-    /**
      * Add a field predicate.
      *
      * @param predicate to add
@@ -112,17 +99,6 @@ public class ExclusionRandomizerRegistry implements RandomizerRegistry {
      */
     public void addTypePredicate(Predicate<Class<?>> predicate) {
         typePredicates.add(predicate);
-    }
-
-    // only for backward compatibility of FieldDefinition
-    private Predicate<Field> toPredicate(final FieldDefinition<?, ?> fieldDefinition) {
-        Class[] annotations = new Class[fieldDefinition.getAnnotations().size()];
-        return field -> named(fieldDefinition.getName())
-                .and(ofType(fieldDefinition.getType()))
-                .and(inClass(fieldDefinition.getClazz()))
-                .and(hasModifiers(fieldDefinition.getModifiers()))
-                .and(isAnnotatedWith(fieldDefinition.getAnnotations().toArray(annotations)))
-                .test(field);
     }
 
 }

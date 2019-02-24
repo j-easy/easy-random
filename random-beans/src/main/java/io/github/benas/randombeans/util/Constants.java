@@ -36,20 +36,6 @@ import static java.time.ZonedDateTime.of;
 public abstract class Constants {
 
     /**
-     * Minimum collection size.
-     * @deprecated use {@link Constants#DEFAULT_COLLECTION_SIZE_RANGE} instead
-     */
-    @Deprecated
-    public static final int MIN_COLLECTION_SIZE = 1;
-
-    /**
-     * Maximum collection size.
-     * @deprecated use {@link Constants#DEFAULT_COLLECTION_SIZE_RANGE} instead
-     */
-    @Deprecated
-    public static final int MAX_COLLECTION_SIZE = Byte.MAX_VALUE;
-
-    /**
      * Default collection size range.
      */
     public static final Range<Integer> DEFAULT_COLLECTION_SIZE_RANGE = new Range<>(1, 100);
@@ -65,20 +51,6 @@ public abstract class Constants {
     public static final int DEFAULT_RANDOMIZATION_DEPTH = Integer.MAX_VALUE;
 
     /**
-     * Maximum string size.
-     * @deprecated use {@link Constants#DEFAULT_STRING_LENGTH_RANGE} instead
-     */
-    @Deprecated
-    public static final int MAX_STRING_LENGTH = 32;
-
-    /**
-     * Minimum string size.
-     * @deprecated use {@link Constants#DEFAULT_STRING_LENGTH_RANGE} instead
-     */
-    @Deprecated
-    public static final int MIN_STRING_LENGTH = 1;
-
-    /**
      * Default string length size.
      */
     public static final Range<Integer> DEFAULT_STRING_LENGTH_RANGE = new Range<>(1, 32);
@@ -92,18 +64,6 @@ public abstract class Constants {
      * Reference date around which random dates will be generated.
      */
     private static final ZonedDateTime REFERENCE_DATE = of(2020, 1, 1, 0, 0, 0, 0, ZoneId.of("UTC+1"));
-
-    /**
-     * The date of ten years before {@link Constants#REFERENCE_DATE}.
-     */
-    @Deprecated
-    public static final ZonedDateTime TEN_YEARS_AGO = REFERENCE_DATE.minusYears(DEFAULT_DATE_RANGE);
-
-    /**
-     * The date of ten years after the {@link Constants#REFERENCE_DATE}.
-     */
-    @Deprecated
-    public static final ZonedDateTime IN_TEN_YEARS = REFERENCE_DATE.plusYears(DEFAULT_DATE_RANGE);
 
     /**
      * Default dates range.
