@@ -8,14 +8,14 @@
         <version>9</version>
     </parent>
 
-    <groupId>io.github.benas</groupId>
-    <artifactId>random-beans-parent</artifactId>
+    <groupId>org.jeasy</groupId>
+    <artifactId>easy-random</artifactId>
     <version>4.0.0-SNAPSHOT</version>
     <packaging>pom</packaging>
 
-    <name>Random Beans</name>
-    <description>Random Beans is a library to generate random Java beans</description>
-    <url>https://github.com/benas/random-beans</url>
+    <name>Easy Random</name>
+    <description>Easy Random is a library to generate random Java beans</description>
+    <url>https://github.com/j-easy/easy-random</url>
 
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
@@ -42,26 +42,26 @@
     </properties>
 
     <modules>
-        <module>random-beans</module>
-        <module>random-beans-validation</module>
-        <module>random-beans-randomizers</module>
+        <module>easy-random-core</module>
+        <module>easy-random-bean-validation</module>
+        <module>easy-random-randomizers</module>
     </modules>
 
     <scm>
-        <url>git@github.com:benas/random-beans.git</url>
-        <connection>scm:git:git@github.com:benas/random-beans.git</connection>
-        <developerConnection>scm:git:git@github.com:benas/random-beans.git</developerConnection>
+        <url>git@github.com:j-easy/easy-random.git</url>
+        <connection>scm:git:git@github.com:j-easy/easy-random.git</connection>
+        <developerConnection>scm:git:git@github.com:j-easy/easy-random.git</developerConnection>
         <tag>HEAD</tag>
     </scm>
 
     <ciManagement>
         <system>Travis CI</system>
-        <url>https://travis-ci.org/benas/random-beans</url>
+        <url>https://travis-ci.org/j-easy/easy-random</url>
     </ciManagement>
 
     <issueManagement>
         <system>GitHub</system>
-        <url>https://github.com/benas/random-beans/issues</url>
+        <url>https://github.com/j-easy/easy-random/issues</url>
     </issueManagement>
 
     <licenses>
@@ -185,13 +185,13 @@
     <dependencyManagement>
         <dependencies>
             <dependency>
-                <groupId>io.github.benas</groupId>
-                <artifactId>random-beans</artifactId>
+                <groupId>org.jeasy</groupId>
+                <artifactId>easy-random-core</artifactId>
                 <version>${project.version}</version>
             </dependency>
             <dependency>
-                <groupId>io.github.benas</groupId>
-                <artifactId>random-beans-randomizers</artifactId>
+                <groupId>org.jeasy</groupId>
+                <artifactId>easy-random-randomizers</artifactId>
                 <version>${project.version}</version>
             </dependency>
             <dependency>
