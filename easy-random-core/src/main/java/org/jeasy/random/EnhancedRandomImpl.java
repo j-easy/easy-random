@@ -43,7 +43,7 @@ import static org.jeasy.random.util.ReflectionUtils.*;
 @SuppressWarnings({ "rawtypes", "unchecked" })
 class EnhancedRandomImpl extends EnhancedRandom {
 
-    private EnhancedRandomParameters parameters;
+    private EasyRandomParameters parameters;
 
     private final FieldPopulator fieldPopulator;
 
@@ -70,7 +70,7 @@ class EnhancedRandomImpl extends EnhancedRandom {
         enumRandomizersByType = new ConcurrentHashMap<>();
         fieldPopulator = new FieldPopulator(this, randomizerProvider, arrayPopulator, collectionPopulator, mapPopulator);
         fieldExclusionChecker = new FieldExclusionChecker();
-        parameters = new EnhancedRandomParameters();
+        parameters = new EasyRandomParameters();
     }
 
     @Override
@@ -177,7 +177,7 @@ class EnhancedRandomImpl extends EnhancedRandom {
         return nextInt((maxCollectionSize - minCollectionSize) + 1) + minCollectionSize;
     }
 
-    public void setParameters(EnhancedRandomParameters parameters) {
+    public void setParameters(EasyRandomParameters parameters) {
         this.parameters = parameters;
         super.setSeed(parameters.getSeed());
         fieldPopulator.setScanClasspathForConcreteTypes(parameters.isScanClasspathForConcreteTypes());

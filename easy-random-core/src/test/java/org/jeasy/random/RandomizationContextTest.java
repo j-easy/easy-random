@@ -38,7 +38,7 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
-import org.jeasy.random.api.EnhancedRandomParameters;
+import org.jeasy.random.api.EasyRandomParameters;
 import org.jeasy.random.beans.Address;
 import org.jeasy.random.beans.Person;
 
@@ -48,7 +48,7 @@ public class RandomizationContextTest {
     @Mock
     private Object bean1, bean2;
     @Mock
-    private EnhancedRandomParameters parameters;
+    private EasyRandomParameters parameters;
 
     private RandomizationContext randomizationContext;
 
@@ -59,14 +59,14 @@ public class RandomizationContextTest {
 
     @Test
     public void whenATypeHasBeenRandomized_thenHasPopulatedBeanShouldReturnTrueOnlyWhenTheObjectPoolIsFilled() {
-        when(parameters.getObjectPoolSize()).thenReturn(EnhancedRandomParameters.DEFAULT_OBJECT_POOL_SIZE);
+        when(parameters.getObjectPoolSize()).thenReturn(EasyRandomParameters.DEFAULT_OBJECT_POOL_SIZE);
 
         // Only one instance has been randomized => should be considered as not randomized yet
         randomizationContext.addPopulatedBean(String.class, "bean" + 0);
         assertThat(randomizationContext.hasAlreadyRandomizedType(String.class)).isFalse();
 
         // When the object pool size is filled => should be considered as already randomized
-        for (int i = 1; i < EnhancedRandomParameters.DEFAULT_OBJECT_POOL_SIZE; i++) {
+        for (int i = 1; i < EasyRandomParameters.DEFAULT_OBJECT_POOL_SIZE; i++) {
             randomizationContext.addPopulatedBean(String.class, "bean" + i);
         }
         assertThat(randomizationContext.hasAlreadyRandomizedType(String.class)).isTrue();
@@ -86,7 +86,7 @@ public class RandomizationContextTest {
 
     @Test
     public void whenATypeHasBeenRandomized_thenTheRandomizedBeanShouldBeRetrievedFromTheObjectPool() {
-        when(parameters.getObjectPoolSize()).thenReturn(EnhancedRandomParameters.DEFAULT_OBJECT_POOL_SIZE);
+        when(parameters.getObjectPoolSize()).thenReturn(EasyRandomParameters.DEFAULT_OBJECT_POOL_SIZE);
 
         // Given
         randomizationContext.addPopulatedBean(String.class, bean1);

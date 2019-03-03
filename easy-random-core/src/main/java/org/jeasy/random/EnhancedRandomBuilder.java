@@ -24,7 +24,7 @@
 package org.jeasy.random;
 
 import org.jeasy.random.api.EnhancedRandom;
-import org.jeasy.random.api.EnhancedRandomParameters;
+import org.jeasy.random.api.EasyRandomParameters;
 import org.jeasy.random.api.Randomizer;
 import org.jeasy.random.api.RandomizerRegistry;
 import org.jeasy.random.randomizers.registry.CustomRandomizerRegistry;
@@ -53,7 +53,7 @@ public class EnhancedRandomBuilder {
 
     private final Set<RandomizerRegistry> userRegistries;
 
-    private final EnhancedRandomParameters parameters;
+    private final EasyRandomParameters parameters;
 
     /**
      * Create a new {@link EnhancedRandomBuilder}.
@@ -62,7 +62,7 @@ public class EnhancedRandomBuilder {
         customRandomizerRegistry = new CustomRandomizerRegistry();
         exclusionRandomizerRegistry = new ExclusionRandomizerRegistry();
         userRegistries = new LinkedHashSet<>();
-        parameters = new EnhancedRandomParameters();
+        parameters = new EasyRandomParameters();
     }
 
     /**

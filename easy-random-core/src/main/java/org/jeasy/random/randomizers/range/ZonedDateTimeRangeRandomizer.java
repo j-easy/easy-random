@@ -26,7 +26,7 @@ package org.jeasy.random.randomizers.range;
 import java.time.Instant;
 import java.time.ZonedDateTime;
 
-import org.jeasy.random.api.EnhancedRandomParameters;
+import org.jeasy.random.api.EasyRandomParameters;
 
 /**
  * Generate a random {@link ZonedDateTime} in the given range.
@@ -86,12 +86,12 @@ public class ZonedDateTimeRangeRandomizer extends AbstractRangeRandomizer<ZonedD
 
     @Override
     protected ZonedDateTime getDefaultMinValue() {
-        return EnhancedRandomParameters.DEFAULT_DATES_RANGE.getMin();
+        return EasyRandomParameters.DEFAULT_DATES_RANGE.getMin();
     }
 
     @Override
     protected ZonedDateTime getDefaultMaxValue() {
-        return EnhancedRandomParameters.DEFAULT_DATES_RANGE.getMax();
+        return EasyRandomParameters.DEFAULT_DATES_RANGE.getMax();
     }
 
     @Override

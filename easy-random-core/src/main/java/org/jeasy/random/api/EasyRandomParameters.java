@@ -38,7 +38,7 @@ import static java.time.ZonedDateTime.of;
  * @author Mahmoud Ben Hassine (mahmoud.benhassine@icloud.com)
  */
 @Data
-public class EnhancedRandomParameters {
+public class EasyRandomParameters {
 
     /**
      * Default seed.
@@ -98,7 +98,7 @@ public class EnhancedRandomParameters {
     private Range<LocalDate> dateRange;
     private Range<LocalTime> timeRange;
 
-    public EnhancedRandomParameters() {
+    public EasyRandomParameters() {
         seed = DEFAULT_SEED;
         charset = DEFAULT_CHARSET;
         scanClasspathForConcreteTypes = false;
