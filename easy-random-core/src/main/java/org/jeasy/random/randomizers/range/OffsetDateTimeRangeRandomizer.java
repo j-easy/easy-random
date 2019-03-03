@@ -26,7 +26,7 @@ package org.jeasy.random.randomizers.range;
 import java.time.Instant;
 import java.time.OffsetDateTime;
 
-import org.jeasy.random.util.Constants;
+import org.jeasy.random.api.EnhancedRandomParameters;
 
 /**
  * Generate a random {@link OffsetDateTime} in the given range.
@@ -86,12 +86,12 @@ public class OffsetDateTimeRangeRandomizer extends AbstractRangeRandomizer<Offse
 
     @Override
     protected OffsetDateTime getDefaultMinValue() {
-        return Constants.DEFAULT_DATES_RANGE.getMin().toOffsetDateTime();
+        return EnhancedRandomParameters.DEFAULT_DATES_RANGE.getMin().toOffsetDateTime();
     }
 
     @Override
     protected OffsetDateTime getDefaultMaxValue() {
-        return Constants.DEFAULT_DATES_RANGE.getMax().toOffsetDateTime();
+        return EnhancedRandomParameters.DEFAULT_DATES_RANGE.getMax().toOffsetDateTime();
     }
 
     @Override
@@ -103,6 +103,6 @@ public class OffsetDateTimeRangeRandomizer extends AbstractRangeRandomizer<Offse
         int maxNanoSeconds = max.getNano();
         long nanoSeconds = (long) nextDouble(minNanoSeconds, maxNanoSeconds);
         return OffsetDateTime.ofInstant(Instant.ofEpochSecond(seconds, nanoSeconds),
-                Constants.DEFAULT_DATES_RANGE.getMin().getZone());
+                EnhancedRandomParameters.DEFAULT_DATES_RANGE.getMin().getZone());
     }
 }

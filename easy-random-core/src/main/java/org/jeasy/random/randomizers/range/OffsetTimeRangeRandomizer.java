@@ -27,7 +27,7 @@ import java.time.LocalTime;
 import java.time.OffsetTime;
 import java.time.temporal.ChronoField;
 
-import org.jeasy.random.util.Constants;
+import org.jeasy.random.api.EnhancedRandomParameters;
 
 /**
  * Generate a random {@link OffsetTime} in the given range.
@@ -87,12 +87,12 @@ public class OffsetTimeRangeRandomizer extends AbstractRangeRandomizer<OffsetTim
 
     @Override
     protected OffsetTime getDefaultMinValue() {
-        return Constants.DEFAULT_DATES_RANGE.getMin().toOffsetDateTime().toOffsetTime();
+        return EnhancedRandomParameters.DEFAULT_DATES_RANGE.getMin().toOffsetDateTime().toOffsetTime();
     }
 
     @Override
     protected OffsetTime getDefaultMaxValue() {
-        return Constants.DEFAULT_DATES_RANGE.getMax().toOffsetDateTime().toOffsetTime();
+        return EnhancedRandomParameters.DEFAULT_DATES_RANGE.getMax().toOffsetDateTime().toOffsetTime();
     }
 
     @Override
@@ -100,7 +100,7 @@ public class OffsetTimeRangeRandomizer extends AbstractRangeRandomizer<OffsetTim
         long minSecondOfDay = min.getLong(ChronoField.SECOND_OF_DAY);
         long maxSecondOfDay = max.getLong(ChronoField.SECOND_OF_DAY);
         long randomSecondOfDay = (long) nextDouble(minSecondOfDay, maxSecondOfDay);
-        return OffsetTime.of(LocalTime.ofSecondOfDay(randomSecondOfDay), Constants.DEFAULT_DATES_RANGE.getMin().getOffset());
+        return OffsetTime.of(LocalTime.ofSecondOfDay(randomSecondOfDay), EnhancedRandomParameters.DEFAULT_DATES_RANGE.getMin().getOffset());
     }
 
 }
