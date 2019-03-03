@@ -26,7 +26,7 @@ package org.jeasy.random.randomizers.range;
 import java.time.Year;
 import java.time.temporal.ChronoField;
 
-import org.jeasy.random.util.Constants;
+import org.jeasy.random.api.EnhancedRandomParameters;
 
 /**
  * Generate a random {@link Year} in the given range.
@@ -86,12 +86,12 @@ public class YearRangeRandomizer extends AbstractRangeRandomizer<Year> {
 
     @Override
     protected Year getDefaultMinValue() {
-        return Year.of(Constants.DEFAULT_DATES_RANGE.getMin().getYear());
+        return Year.of(EnhancedRandomParameters.DEFAULT_DATES_RANGE.getMin().getYear());
     }
 
     @Override
     protected Year getDefaultMaxValue() {
-        return Year.of(Constants.DEFAULT_DATES_RANGE.getMax().getYear());
+        return Year.of(EnhancedRandomParameters.DEFAULT_DATES_RANGE.getMax().getYear());
     }
 
     @Override

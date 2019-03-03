@@ -29,10 +29,9 @@ import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 import java.time.ZonedDateTime;
 
+import org.jeasy.random.api.EnhancedRandomParameters;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-
-import org.jeasy.random.util.Constants;
 
 public class ZonedDateTimeRangeRandomizerTest extends AbstractRangeRandomizerTest<ZonedDateTime> {
 
@@ -40,8 +39,8 @@ public class ZonedDateTimeRangeRandomizerTest extends AbstractRangeRandomizerTes
 
     @BeforeEach
     public void setUp() {
-        minZonedDateTime = Constants.DEFAULT_DATES_RANGE.getMin().minusYears(50);
-        maxZonedDateTime = Constants.DEFAULT_DATES_RANGE.getMax().plusYears(50);
+        minZonedDateTime = EnhancedRandomParameters.DEFAULT_DATES_RANGE.getMin().minusYears(50);
+        maxZonedDateTime = EnhancedRandomParameters.DEFAULT_DATES_RANGE.getMax().plusYears(50);
         randomizer = aNewZonedDateTimeRangeRandomizer(minZonedDateTime, maxZonedDateTime);
     }
 
