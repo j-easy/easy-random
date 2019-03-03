@@ -24,7 +24,7 @@
 package org.jeasy.random;
 
 import org.jeasy.random.api.EnhancedRandom;
-import org.jeasy.random.api.EnhancedRandomParameters;
+import org.jeasy.random.api.EasyRandomParameters;
 import org.jeasy.random.api.RandomizerContext;
 
 import java.lang.reflect.Field;
@@ -40,7 +40,7 @@ import static java.util.stream.Collectors.toList;
  */
 class RandomizationContext implements RandomizerContext {
 
-    private final EnhancedRandomParameters parameters;
+    private final EasyRandomParameters parameters;
 
     private final Set<String> excludedFields;
 
@@ -53,7 +53,7 @@ class RandomizationContext implements RandomizerContext {
     private Object rootObject;
     private Object randomizedObject;
 
-    RandomizationContext(final Class<?> type, final EnhancedRandomParameters parameters, final String... excludedFields) {
+    RandomizationContext(final Class<?> type, final EasyRandomParameters parameters, final String... excludedFields) {
         this.type = type;
         populatedBeans = new IdentityHashMap<>();
         stack = new Stack<>();
@@ -152,7 +152,7 @@ class RandomizationContext implements RandomizerContext {
     }
 
     @Override
-    public EnhancedRandomParameters getParameters() {
+    public EasyRandomParameters getParameters() {
         return parameters;
     }
 }

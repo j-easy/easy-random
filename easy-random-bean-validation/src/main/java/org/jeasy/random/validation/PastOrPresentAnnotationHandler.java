@@ -25,7 +25,7 @@ package org.jeasy.random.validation;
 
 import org.jeasy.random.EnhancedRandomBuilder;
 import org.jeasy.random.api.EnhancedRandom;
-import org.jeasy.random.api.EnhancedRandomParameters;
+import org.jeasy.random.api.EasyRandomParameters;
 import org.jeasy.random.api.Randomizer;
 
 import java.lang.reflect.Field;
@@ -46,7 +46,7 @@ class PastOrPresentAnnotationHandler implements BeanValidationAnnotationHandler 
             LocalDate now = LocalDate.now();
             enhancedRandom = EnhancedRandomBuilder.aNewEnhancedRandomBuilder()
                     .seed(seed)
-                    .dateRange(now.minusYears(EnhancedRandomParameters.DEFAULT_DATE_RANGE), now)
+                    .dateRange(now.minusYears(EasyRandomParameters.DEFAULT_DATE_RANGE), now)
                     .build();
         }
         return () -> enhancedRandom.nextObject(field.getType());

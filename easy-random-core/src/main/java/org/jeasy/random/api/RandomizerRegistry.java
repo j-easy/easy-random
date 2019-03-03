@@ -37,7 +37,7 @@ public interface RandomizerRegistry {
      *
      * @param parameters of the {@link EnhancedRandom} instance being configured
      */
-    void init(EnhancedRandomParameters parameters);
+    void init(EasyRandomParameters parameters);
 
     /**
      * Retrieves a randomizer for the given field.

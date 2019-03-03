@@ -73,6 +73,6 @@ public interface RandomizerContext {
      * Return the currently used parameters by the enclosing {@link EnhancedRandom}.
      * @return currently used parameters
      */
-    EnhancedRandomParameters getParameters();
+    EasyRandomParameters getParameters();
 
 }

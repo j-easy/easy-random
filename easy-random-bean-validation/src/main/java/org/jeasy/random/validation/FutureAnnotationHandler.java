@@ -29,7 +29,7 @@ import java.time.temporal.ChronoUnit;
 
 import org.jeasy.random.EnhancedRandomBuilder;
 import org.jeasy.random.api.EnhancedRandom;
-import org.jeasy.random.api.EnhancedRandomParameters;
+import org.jeasy.random.api.EasyRandomParameters;
 import org.jeasy.random.api.Randomizer;
 
 class FutureAnnotationHandler implements BeanValidationAnnotationHandler {
@@ -49,7 +49,7 @@ class FutureAnnotationHandler implements BeanValidationAnnotationHandler {
                     .seed(seed)
                     .dateRange(
                             now.plus(1, ChronoUnit.DAYS),
-                            now.plusYears(EnhancedRandomParameters.DEFAULT_DATE_RANGE)
+                            now.plusYears(EasyRandomParameters.DEFAULT_DATE_RANGE)
                     )
                     .build(); 
         }

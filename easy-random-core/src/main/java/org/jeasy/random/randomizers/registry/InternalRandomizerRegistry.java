@@ -24,7 +24,7 @@
 package org.jeasy.random.randomizers.registry;
 
 import org.jeasy.random.annotation.Priority;
-import org.jeasy.random.api.EnhancedRandomParameters;
+import org.jeasy.random.api.EasyRandomParameters;
 import org.jeasy.random.api.Randomizer;
 import org.jeasy.random.api.RandomizerRegistry;
 import org.jeasy.random.randomizers.misc.BooleanRandomizer;
@@ -68,7 +68,7 @@ public class InternalRandomizerRegistry implements RandomizerRegistry {
     private final Map<Class<?>, Randomizer<?>> randomizers = new HashMap<>();
 
     @Override
-    public void init(EnhancedRandomParameters parameters) {
+    public void init(EasyRandomParameters parameters) {
         long seed = parameters.getSeed();
         Charset charset = parameters.getCharset();
         randomizers.put(String.class, new StringRandomizer(charset, parameters.getStringLengthRange().getMin(), parameters.getStringLengthRange().getMax(), seed));
