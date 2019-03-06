@@ -27,7 +27,6 @@ import org.jeasy.random.api.Randomizer;
 import org.jeasy.random.api.RandomizerRegistry;
 import org.jeasy.random.randomizers.registry.CustomRandomizerRegistry;
 import org.jeasy.random.randomizers.registry.ExclusionRandomizerRegistry;
-import org.jeasy.random.util.Range;
 import lombok.Data;
 
 import java.lang.reflect.Field;
@@ -442,5 +441,23 @@ public class EasyRandomParameters {
     public EasyRandomParameters overrideDefaultInitialization(boolean overrideDefaultInitialization) {
         setOverrideDefaultInitialization(overrideDefaultInitialization);
         return this;
+    }
+
+    /**
+     * Utility class to hold a range of values.
+     *
+     * @author Mahmoud Ben Hassine (mahmoud.benhassine@icloud.com)
+     * @param <T> type of values
+     */
+    @Data
+    public static class Range<T> {
+
+        private T min;
+        private T max;
+
+        public Range(T min, T max) {
+            this.min = min;
+            this.max = max;
+        }
     }
 }
