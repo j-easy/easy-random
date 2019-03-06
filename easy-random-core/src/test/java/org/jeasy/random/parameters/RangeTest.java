@@ -21,17 +21,18 @@
  *   OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  *   THE SOFTWARE.
  */
-package org.jeasy.random.util;
+package org.jeasy.random.parameters;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
+import org.jeasy.random.EasyRandomParameters;
 import org.junit.jupiter.api.Test;
 
 public class RangeTest {
 
     @Test
     public void testRange() {
-        Range<Integer> range = new Range<>(1, 10);
+        EasyRandomParameters.Range<Integer> range = new EasyRandomParameters.Range<>(1, 10);
 
         assertThat(range.getMin()).isEqualTo(1);
         assertThat(range.getMax()).isEqualTo(10);
