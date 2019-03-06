@@ -59,9 +59,11 @@ public class ReflectionUtils {
     /**
      * Create a dynamic proxy that adapts the given {@link Supplier} to a {@link Randomizer}.
      * @param supplier to adapt
+     * @param <T> target type
      * @return the proxy randomizer
      */
-    public static Randomizer<?> asRandomizer(final Supplier<?> supplier) {
+    @SuppressWarnings("unchecked")
+    public static <T> Randomizer<T> asRandomizer(final Supplier<T> supplier) {
 
         class RandomizerProxy implements InvocationHandler {
 
@@ -82,7 +84,7 @@ public class ReflectionUtils {
             }
         }
 
-        return (Randomizer<?>) Proxy.newProxyInstance(
+        return (Randomizer<T>) Proxy.newProxyInstance(
                 Randomizer.class.getClassLoader(),
                 new Class[]{Randomizer.class},
                 new RandomizerProxy(supplier));

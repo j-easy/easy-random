@@ -23,7 +23,6 @@
  */
 package org.jeasy.random;
 
-import org.jeasy.random.api.Randomizer;
 import org.junit.jupiter.api.Test;
 
 import static org.jeasy.random.FieldPredicates.named;
@@ -76,7 +75,7 @@ public class FieldNameMatchingWithRegex {
         EasyRandomParameters parameters = new EasyRandomParameters()
                 .randomize(
                         named("name.*").and(ofType(String.class)),
-                        (Randomizer<String>) () -> "foo");
+                        () -> "foo");
         EasyRandom easyRandom = new EasyRandom(parameters);
 
         // when

@@ -112,7 +112,7 @@ public class EasyRandom extends Random {
     }
 
     <T> T doPopulateBean(final Class<T> type, final RandomizationContext context) {
-        T result = null;
+        T result;
         try {
 
             Randomizer<?> randomizer = randomizerProvider.getRandomizerByType(type);
