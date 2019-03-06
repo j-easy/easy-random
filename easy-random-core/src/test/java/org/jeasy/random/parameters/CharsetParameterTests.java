@@ -23,7 +23,6 @@
  */
 package org.jeasy.random.parameters;
 
-import static org.jeasy.random.EnhancedRandomBuilder.aNewEnhancedRandomBuilder;
 import static org.jeasy.random.util.CharacterUtils.collectPrintableCharactersOf;
 import static org.jeasy.random.util.CharacterUtils.filterLetters;
 import static org.assertj.core.api.Assertions.assertThat;
@@ -32,9 +31,10 @@ import java.nio.charset.Charset;
 import java.nio.charset.StandardCharsets;
 import java.util.List;
 
+import org.jeasy.random.EasyRandom;
+import org.jeasy.random.EasyRandomParameters;
 import org.junit.jupiter.api.Test;
 
-import org.jeasy.random.api.EnhancedRandom;
 import org.jeasy.random.beans.Person;
 
 public class CharsetParameterTests {
@@ -44,10 +44,11 @@ public class CharsetParameterTests {
         // Given
         Charset charset = StandardCharsets.UTF_8;
         List<Character> letters = filterLetters(collectPrintableCharactersOf(charset));
-        EnhancedRandom enhancedRandom = aNewEnhancedRandomBuilder().charset(charset).build();
+        EasyRandomParameters parameters = new EasyRandomParameters().charset(charset);
+        EasyRandom easyRandom = new EasyRandom(parameters);
 
         // When
-        Person person = enhancedRandom.nextObject(Person.class);
+        Person person = easyRandom.nextObject(Person.class);
 
         // Then
         char[] chars = person.getName().toCharArray();

@@ -27,7 +27,7 @@ import java.time.LocalTime;
 import java.time.OffsetTime;
 import java.time.temporal.ChronoField;
 
-import org.jeasy.random.api.EasyRandomParameters;
+import org.jeasy.random.EasyRandomParameters;
 
 /**
  * Generate a random {@link OffsetTime} in the given range.

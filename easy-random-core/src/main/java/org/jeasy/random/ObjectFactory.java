@@ -26,8 +26,6 @@ package org.jeasy.random;
 import org.objenesis.Objenesis;
 import org.objenesis.ObjenesisStd;
 
-import org.jeasy.random.api.ObjectGenerationException;
-
 import java.lang.reflect.Constructor;
 import java.util.Collection;
 import java.util.concurrent.ArrayBlockingQueue;

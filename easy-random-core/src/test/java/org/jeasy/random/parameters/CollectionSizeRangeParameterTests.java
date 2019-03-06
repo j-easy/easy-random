@@ -23,40 +23,38 @@
  */
 package org.jeasy.random.parameters;
 
-import static org.jeasy.random.EnhancedRandomBuilder.aNewEnhancedRandomBuilder;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 import java.util.ArrayList;
 
+import org.jeasy.random.EasyRandom;
+import org.jeasy.random.EasyRandomParameters;
 import org.junit.jupiter.api.Test;
-
-import org.jeasy.random.api.EnhancedRandom;
 
 public class CollectionSizeRangeParameterTests {
 
     @Test
     public void shouldNotAllowNegativeMinCollectionSize() {
-        assertThatThrownBy(() -> aNewEnhancedRandomBuilder().collectionSizeRange(-1, 10).build()).isInstanceOf(IllegalArgumentException.class);
+        assertThatThrownBy(() -> new EasyRandomParameters().collectionSizeRange(-1, 10)).isInstanceOf(IllegalArgumentException.class);
     }
 
     @Test
     public void shouldNotAllowMinCollectionSizeGreaterThanMaxCollectionSize() {
-        assertThatThrownBy(() -> aNewEnhancedRandomBuilder().collectionSizeRange(2, 1).build()).isInstanceOf(IllegalArgumentException.class);
+        assertThatThrownBy(() -> new EasyRandomParameters().collectionSizeRange(2, 1)).isInstanceOf(IllegalArgumentException.class);
     }
 
     @Test
     public void generatedCollectionSizeShouldBeInSpecifiedRange() {
-        EnhancedRandom enhancedRandom = aNewEnhancedRandomBuilder().collectionSizeRange(0, 10).build();
-
-        assertThat(enhancedRandom.nextObject(ArrayList.class).size()).isBetween(0, 10);
+        EasyRandomParameters parameters = new EasyRandomParameters().collectionSizeRange(0, 10);
+        assertThat(new EasyRandom(parameters).nextObject(ArrayList.class).size()).isBetween(0, 10);
     }
 
     @Test // https://github.com/j-easy/easy-random/issues/191
     public void collectionSizeRangeShouldWorkForArrays() {
-        EnhancedRandom enhancedRandom = aNewEnhancedRandomBuilder().collectionSizeRange(0, 10).build();
+        EasyRandomParameters parameters = new EasyRandomParameters().collectionSizeRange(0, 10);
 
-        String[] strArr = enhancedRandom.nextObject(String[].class);
+        String[] strArr = new EasyRandom(parameters).nextObject(String[].class);
 
         assertThat(strArr.length).isLessThanOrEqualTo(10);
     }

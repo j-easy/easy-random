@@ -29,7 +29,6 @@ import static org.mockito.Mockito.when;
 import java.lang.reflect.Field;
 
 import org.jeasy.random.api.ContextAwareRandomizer;
-import org.jeasy.random.api.EnhancedRandom;
 import org.jeasy.random.api.RandomizerContext;
 import lombok.Data;
 import org.junit.jupiter.api.BeforeEach;
@@ -38,7 +37,6 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
-import org.jeasy.random.api.EasyRandomParameters;
 import org.jeasy.random.beans.Address;
 import org.jeasy.random.beans.Person;
 
@@ -162,13 +160,15 @@ public class RandomizationContextTest {
 
     @Test
     void testRandomizerContext() {
+        // given
         MyRandomizer randomizer = new MyRandomizer();
-        EnhancedRandom enhancedRandom = new EnhancedRandomBuilder()
-                .randomize(D.class, randomizer)
-                .build();
+        EasyRandomParameters parameters = new EasyRandomParameters().randomize(D.class, randomizer);
+        EasyRandom easyRandom = new EasyRandom(parameters);
 
-        A a = enhancedRandom.nextObject(A.class, "excluded");
+        // when
+        A a = easyRandom.nextObject(A.class, "excluded");
 
+        // then
         assertThat(a).isNotNull();
         assertThat(a.excluded).isNull();
         assertThat(a.b).isNotNull();

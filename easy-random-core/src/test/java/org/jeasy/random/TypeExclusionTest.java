@@ -23,7 +23,6 @@
  */
 package org.jeasy.random;
 
-import org.jeasy.random.api.EnhancedRandom;
 import org.jeasy.random.beans.Address;
 import org.jeasy.random.beans.Website;
 import lombok.Data;
@@ -37,16 +36,16 @@ public class TypeExclusionTest {
     @Test
     void testTypeExclusion() {
         // given
-        EnhancedRandom enhancedRandom = new EnhancedRandomBuilder()
+        EasyRandomParameters parameters = new EasyRandomParameters()
                 .excludeType(
                         inPackage("org.jeasy.random.beans")
-                        .or(isInterface())
-                        .or(isAbstract())
-                )
-                .build();
+                                .or(isInterface())
+                                .or(isAbstract())
+                );
+        EasyRandom easyRandom = new EasyRandom(parameters);
 
         // when
-        Foo foo = enhancedRandom.nextObject(Foo.class);
+        Foo foo = easyRandom.nextObject(Foo.class);
 
         // then
         assertThat(foo).isNotNull();

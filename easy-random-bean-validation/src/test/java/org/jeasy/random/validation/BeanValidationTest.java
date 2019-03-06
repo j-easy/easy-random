@@ -23,8 +23,6 @@
  */
 package org.jeasy.random.validation;
 
-import static org.jeasy.random.EnhancedRandomBuilder.aNewEnhancedRandom;
-import static org.jeasy.random.EnhancedRandomBuilder.aNewEnhancedRandomBuilder;
 import static org.assertj.core.api.Assertions.assertThat;
 
 import java.math.BigDecimal;
@@ -37,23 +35,23 @@ import javax.validation.Validation;
 import javax.validation.Validator;
 import javax.validation.ValidatorFactory;
 
+import org.jeasy.random.EasyRandom;
+import org.jeasy.random.EasyRandomParameters;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-import org.jeasy.random.api.EnhancedRandom;
-
 public class BeanValidationTest {
 
-    private EnhancedRandom enhancedRandom;
+    private EasyRandom easyRandom;
 
     @BeforeEach
     public void setUp() {
-        enhancedRandom = aNewEnhancedRandom();
+        easyRandom = new EasyRandom();
     }
 
     @Test
     public void generatedValuesShouldBeValidAccordingToValidationConstraints() {
-        BeanValidationAnnotatedBean bean = enhancedRandom.nextObject(BeanValidationAnnotatedBean.class);
+        BeanValidationAnnotatedBean bean = easyRandom.nextObject(BeanValidationAnnotatedBean.class);
 
         assertThat(bean).isNotNull();
 
@@ -109,7 +107,7 @@ public class BeanValidationTest {
 
     @Test
     public void generatedValuesShouldBeValidAccordingToValidationConstraintsOnMethod() {
-        BeanValidationMethodAnnotatedBean bean = enhancedRandom.nextObject(BeanValidationMethodAnnotatedBean.class);
+        BeanValidationMethodAnnotatedBean bean = easyRandom.nextObject(BeanValidationMethodAnnotatedBean.class);
 
         assertThat(bean).isNotNull();
 
@@ -165,14 +163,15 @@ public class BeanValidationTest {
 
     @Test
     public void generatedValuesForBeanWithoutReadMethod() {
-        BeanValidationWithoutReadMethodBean bean = enhancedRandom.nextObject(BeanValidationWithoutReadMethodBean.class);
+        BeanValidationWithoutReadMethodBean bean = easyRandom.nextObject(BeanValidationWithoutReadMethodBean.class);
  
         assertThat(bean).hasNoNullFieldsOrProperties();
     }
 
     @Test
     public void shouldGenerateTheSameValueForTheSameSeed() {
-        EnhancedRandom random = aNewEnhancedRandomBuilder().seed(123L).build();
+        EasyRandomParameters parameters = new EasyRandomParameters().seed(123L);
+        EasyRandom random = new EasyRandom(parameters);
  
         BeanValidationAnnotatedBean bean = random.nextObject(BeanValidationAnnotatedBean.class);
 
@@ -199,7 +198,7 @@ public class BeanValidationTest {
 
     @Test
     public void generatedBeanShouldBeValidUsingBeanValidationAPI() {
-        BeanValidationAnnotatedBean bean = enhancedRandom.nextObject(BeanValidationAnnotatedBean.class);
+        BeanValidationAnnotatedBean bean = easyRandom.nextObject(BeanValidationAnnotatedBean.class);
 
         ValidatorFactory validatorFactory = Validation.buildDefaultValidatorFactory();
         Validator validator = validatorFactory.getValidator();

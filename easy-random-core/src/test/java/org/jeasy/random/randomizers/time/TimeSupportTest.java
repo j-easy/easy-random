@@ -23,31 +23,30 @@
  */
 package org.jeasy.random.randomizers.time;
 
-import static org.jeasy.random.EnhancedRandomBuilder.aNewEnhancedRandom;
 import static org.jeasy.random.FieldPredicates.*;
 import static org.assertj.core.api.Assertions.assertThat;
 
 import java.time.Instant;
 
+import org.jeasy.random.EasyRandom;
+import org.jeasy.random.EasyRandomParameters;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-import org.jeasy.random.EnhancedRandomBuilder;
-import org.jeasy.random.api.EnhancedRandom;
 import org.jeasy.random.beans.TimeBean;
 
 public class TimeSupportTest {
 
-    private EnhancedRandom enhancedRandom;
+    private EasyRandom easyRandom;
 
     @BeforeEach
     public void setUp() {
-        enhancedRandom = aNewEnhancedRandom();
+        easyRandom = new EasyRandom();
     }
 
     @Test
     public void threeTenTypesShouldBePopulated() {
-        TimeBean timeBean = enhancedRandom.nextObject(TimeBean.class);
+        TimeBean timeBean = easyRandom.nextObject(TimeBean.class);
 
         assertThat(timeBean).hasNoNullFieldsOrProperties();
     }
@@ -55,11 +54,11 @@ public class TimeSupportTest {
     @Test
     // https://github.com/j-easy/easy-random/issues/135
     public void threeTenRandomizersCanBeOverriddenByCustomRandomizers() {
-        EnhancedRandom customEnhancedRandom = EnhancedRandomBuilder.aNewEnhancedRandomBuilder()
-                .excludeField(named("instant").and(ofType(Instant.class)).and(inClass(TimeBean.class)))
-                .build();
+        EasyRandomParameters parameters = new EasyRandomParameters()
+                .excludeField(named("instant").and(ofType(Instant.class)).and(inClass(TimeBean.class)));
+        easyRandom = new EasyRandom(parameters);
 
-        TimeBean timeBean = customEnhancedRandom.nextObject(TimeBean.class);
+        TimeBean timeBean = easyRandom.nextObject(TimeBean.class);
 
         assertThat(timeBean.getInstant()).isNull();
     }

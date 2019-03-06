@@ -27,7 +27,7 @@ import java.time.YearMonth;
 import java.time.ZonedDateTime;
 import java.time.temporal.ChronoField;
 
-import org.jeasy.random.api.EasyRandomParameters;
+import org.jeasy.random.EasyRandomParameters;
 
 /**
  * Generate a random {@link YearMonth} in the given range.

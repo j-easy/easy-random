@@ -28,11 +28,11 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.assertj.core.api.BDDAssertions.then;
 
+import org.jeasy.random.EasyRandom;
+import org.jeasy.random.EasyRandomParameters;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-import org.jeasy.random.EnhancedRandomBuilder;
-import org.jeasy.random.api.EnhancedRandom;
 import org.jeasy.random.beans.Street;
 
 public class IntegerRangeRandomizerTest extends AbstractRangeRandomizerTest<Integer> {
@@ -86,31 +86,29 @@ public class IntegerRangeRandomizerTest extends AbstractRangeRandomizerTest<Inte
 
     @Test
     public void generatedValueShouldBeWithinSpecifiedRange_whenUsedToRandomizePrimitiveIntegerType() {
-        EnhancedRandom enhancedRandom = EnhancedRandomBuilder.aNewEnhancedRandomBuilder()
-                .randomize(int.class, new IntegerRangeRandomizer(min, max))
-                .build();
+        EasyRandomParameters parameters = new EasyRandomParameters()
+                .randomize(int.class, new IntegerRangeRandomizer(min, max));
+        EasyRandom easyRandom = new EasyRandom(parameters);
 
-        int integer = enhancedRandom.nextObject(int.class);
+        int integer = easyRandom.nextObject(int.class);
         assertThat(integer).isBetween(min, max);
     }
 
     @Test
     public void generatedValueShouldBeWithinSpecifiedRange_whenUsedToRandomizeWrapperIntegerType() {
-        EnhancedRandom enhancedRandom = EnhancedRandomBuilder.aNewEnhancedRandomBuilder()
-                .randomize(Integer.class, new IntegerRangeRandomizer(min, max))
-                .build();
+        EasyRandomParameters parameters = new EasyRandomParameters().randomize(Integer.class, new IntegerRangeRandomizer(min, max));
+        EasyRandom easyRandom = new EasyRandom(parameters);
 
-        Integer integer = enhancedRandom.nextObject(Integer.class);
+        Integer integer = easyRandom.nextObject(Integer.class);
         assertThat(integer).isBetween(min, max);
     }
 
     @Test
     public void generatedValueShouldBeWithinSpecifiedRange_whenUsedToRandomizeNonIntegerType() {
-        EnhancedRandom enhancedRandom = EnhancedRandomBuilder.aNewEnhancedRandomBuilder()
-                .randomize(Integer.class, new IntegerRangeRandomizer(min, max))
-                .build();
+        EasyRandomParameters parameters = new EasyRandomParameters().randomize(Integer.class, new IntegerRangeRandomizer(min, max));
+        EasyRandom easyRandom = new EasyRandom(parameters);
 
-        Street street = enhancedRandom.nextObject(Street.class);
+        Street street = easyRandom.nextObject(Street.class);
         assertThat(street.getNumber()).isBetween(min, max);
     }
 

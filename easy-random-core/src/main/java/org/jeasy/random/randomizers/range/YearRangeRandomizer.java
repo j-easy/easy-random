@@ -26,7 +26,7 @@ package org.jeasy.random.randomizers.range;
 import java.time.Year;
 import java.time.temporal.ChronoField;
 
-import org.jeasy.random.api.EasyRandomParameters;
+import org.jeasy.random.EasyRandomParameters;
 
 /**
  * Generate a random {@link Year} in the given range.

@@ -23,8 +23,6 @@
  */
 package org.jeasy.random;
 
-import org.jeasy.random.EnhancedRandomBuilder;
-import org.jeasy.random.api.EnhancedRandom;
 import org.jeasy.random.api.Randomizer;
 import org.junit.jupiter.api.Test;
 
@@ -52,14 +50,14 @@ public class FieldNameMatchingWithRegex {
     @Test
     void testFieldDefinitionWithNameAsRegexp() {
         // given
-        EnhancedRandom enhancedRandom = new EnhancedRandomBuilder()
+        EasyRandomParameters parameters = new EasyRandomParameters()
                 .randomize(
                         named("name.*").and(ofType(String.class)),
-                        (Randomizer<String>) () -> "foo")
-                .build();
+                        () -> "foo");
+        EasyRandom easyRandom = new EasyRandom(parameters);
 
         // when
-        Foo foo = enhancedRandom.nextObject(Foo.class);
+        Foo foo = easyRandom.nextObject(Foo.class);
 
         // then
         assertThat(foo.getName1()).isEqualTo("foo");
@@ -75,14 +73,14 @@ public class FieldNameMatchingWithRegex {
     @Test
     void testFieldDefinitionWithNameNotAsRegexp() {
         // given
-        EnhancedRandom enhancedRandom = new EnhancedRandomBuilder()
+        EasyRandomParameters parameters = new EasyRandomParameters()
                 .randomize(
                         named("name.*").and(ofType(String.class)),
-                        (Randomizer<String>) () -> "foo")
-                .build();
+                        (Randomizer<String>) () -> "foo");
+        EasyRandom easyRandom = new EasyRandom(parameters);
 
         // when
-        Foo foo = enhancedRandom.nextObject(Foo.class);
+        Foo foo = easyRandom.nextObject(Foo.class);
 
         // then
         assertThat(foo.getBar().getName()).isEqualTo("foo");

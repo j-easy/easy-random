@@ -23,33 +23,9 @@
  */
 package org.jeasy.random;
 
-import static org.jeasy.random.EnhancedRandomBuilder.aNewEnhancedRandom;
-import static org.jeasy.random.EnhancedRandomBuilder.aNewEnhancedRandomBuilder;
-import static org.jeasy.random.FieldPredicates.*;
-import static org.jeasy.random.FieldPredicates.inClass;
-import static org.jeasy.random.api.EnhancedRandom.random;
-import static org.jeasy.random.api.EnhancedRandom.randomCollectionOf;
-import static org.jeasy.random.api.EnhancedRandom.randomListOf;
-import static org.jeasy.random.api.EnhancedRandom.randomSetOf;
-import static org.jeasy.random.api.EnhancedRandom.randomStreamOf;
-import static java.sql.Timestamp.valueOf;
-import static java.time.LocalDateTime.of;
-import static java.util.Arrays.asList;
-import static java.util.stream.Collectors.toList;
-import static org.assertj.core.api.Assertions.assertThat;
-import static org.assertj.core.api.Assertions.assertThatThrownBy;
-import static org.assertj.core.api.Assertions.fail;
-import static org.assertj.core.api.BDDAssertions.then;
-import static org.mockito.Mockito.when;
-
-import java.lang.reflect.Modifier;
-import java.util.Collection;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
-import java.util.stream.Stream;
-
+import org.jeasy.random.api.Randomizer;
 import org.jeasy.random.beans.*;
+import org.jeasy.random.util.ReflectionUtils;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
@@ -57,60 +33,44 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
-import org.jeasy.random.api.EnhancedRandom;
-import org.jeasy.random.api.ObjectGenerationException;
-import org.jeasy.random.api.Randomizer;
-import org.jeasy.random.util.ReflectionUtils;
+import java.lang.reflect.Modifier;
+import java.util.Collection;
+import java.util.HashSet;
+import java.util.List;
+import java.util.stream.Stream;
+
+import static java.sql.Timestamp.valueOf;
+import static java.time.LocalDateTime.of;
+import static java.util.Arrays.asList;
+import static org.assertj.core.api.Assertions.*;
+import static org.assertj.core.api.BDDAssertions.then;
+import static org.jeasy.random.FieldPredicates.*;
+import static org.mockito.Mockito.when;
 
 @ExtendWith(MockitoExtension.class)
-public class EnhancedRandomImplTest {
+public class EasyRandomTest {
 
     private static final String FOO = "foo";
-    private static final int SIZE = 5;
 
     @Mock
     private Randomizer<String> randomizer;
 
-    private EnhancedRandom enhancedRandom;
+    private EasyRandom easyRandom;
 
     @BeforeEach
     public void setUp() {
-        enhancedRandom = aNewEnhancedRandom();
+        easyRandom = new EasyRandom();
     }
 
     @Test
     public void generatedBeansShouldBeCorrectlyPopulated() {
-        Person person = enhancedRandom.nextObject(Person.class);
+        Person person = easyRandom.nextObject(Person.class);
         validatePerson(person);
     }
 
     @Test
-    public void generatedStreamOfBeansShouldBeCorrectlyPopulated() {
-        Stream<Person> persons = randomStreamOf(SIZE, Person.class);
-        validatePersons(persons.collect(toList()), SIZE);
-    }
-
-    @Test
-    public void generatedListOfBeansShouldBeCorrectlyPopulated() {
-        List<Person> persons = randomListOf(SIZE, Person.class);
-        validatePersons(persons, SIZE);
-    }
-
-    @Test
-    public void generatedSetOfBeansShouldBeCorrectlyPopulated() {
-        Set<Person> persons = randomSetOf(SIZE, Person.class);
-        validatePersons(persons, SIZE);
-    }
-
-    @Test
-    public void generatedCollectionOfBeansShouldBeCorrectlyPopulated() {
-        Collection<Person> persons = randomCollectionOf(SIZE, Person.class);
-        validatePersons(persons, SIZE);
-    }
-
-    @Test
     public void finalFieldsShouldBePopulated() {
-        Person person = enhancedRandom.nextObject(Person.class);
+        Person person = easyRandom.nextObject(Person.class);
 
         assertThat(person).isNotNull();
         assertThat(person.getId()).isNotNull();
@@ -119,7 +79,7 @@ public class EnhancedRandomImplTest {
     @Test
     public void staticFieldsShouldNotBePopulated() {
         try {
-            Human human = enhancedRandom.nextObject(Human.class);
+            Human human = easyRandom.nextObject(Human.class);
             assertThat(human).isNotNull();
         } catch (Exception e) {
             fail("Should be able to populate types with private static final fields.", e);
@@ -128,13 +88,13 @@ public class EnhancedRandomImplTest {
 
     @Test
     public void immutableBeansShouldBePopulated() {
-        final ImmutableBean immutableBean = enhancedRandom.nextObject(ImmutableBean.class);
+        final ImmutableBean immutableBean = easyRandom.nextObject(ImmutableBean.class);
         assertThat(immutableBean).hasNoNullFieldsOrProperties();
     }
 
     @Test
     public void generatedBeansNumberShouldBeEqualToSpecifiedNumber() {
-        Stream<Person> persons = enhancedRandom.objects(Person.class, 2);
+        Stream<Person> persons = easyRandom.objects(Person.class, 2);
 
         assertThat(persons).hasSize(2).hasOnlyElementsOfType(Person.class);
     }
@@ -143,11 +103,11 @@ public class EnhancedRandomImplTest {
     public void customRandomzierForFieldsShouldBeUsedToPopulateObjects() {
         when(randomizer.getRandomValue()).thenReturn(FOO);
 
-        enhancedRandom = aNewEnhancedRandomBuilder()
-                .randomize(named("name").and(ofType(String.class)).and(inClass(Human.class)), randomizer)
-                .build();
+        EasyRandomParameters parameters = new EasyRandomParameters()
+                .randomize(named("name").and(ofType(String.class)).and(inClass(Human.class)), randomizer);
+        easyRandom = new EasyRandom(parameters);
 
-        Person person = enhancedRandom.nextObject(Person.class);
+        Person person = easyRandom.nextObject(Person.class);
 
         assertThat(person).isNotNull();
         assertThat(person.getName()).isEqualTo(FOO);
@@ -158,12 +118,12 @@ public class EnhancedRandomImplTest {
         when(randomizer.getRandomValue()).thenReturn(FOO);
 
         // Given
-        EnhancedRandom random = EnhancedRandomBuilder.aNewEnhancedRandomBuilder()
-                .randomize(hasModifiers(Modifier.TRANSIENT).and(ofType(String.class)), randomizer)
-                .build();
+        EasyRandomParameters parameters = new EasyRandomParameters()
+                .randomize(hasModifiers(Modifier.TRANSIENT).and(ofType(String.class)), randomizer);
+        easyRandom = new EasyRandom(parameters);
 
         // When
-        Person person = random.nextObject(Person.class);
+        Person person = easyRandom.nextObject(Person.class);
 
         // Then
         assertThat(person.getEmail()).isEqualTo(FOO);
@@ -175,12 +135,12 @@ public class EnhancedRandomImplTest {
         // Given
         when(randomizer.getRandomValue()).thenReturn(FOO);
         int modifiers = Modifier.TRANSIENT | Modifier.PROTECTED;
-        EnhancedRandom random = EnhancedRandomBuilder.aNewEnhancedRandomBuilder()
-                .randomize(hasModifiers(modifiers).and(ofType(String.class)), randomizer)
-                .build();
+        EasyRandomParameters parameters = new EasyRandomParameters()
+                .randomize(hasModifiers(modifiers).and(ofType(String.class)), randomizer);
+        easyRandom = new EasyRandom(parameters);
 
         // When
-        Person person = random.nextObject(Person.class);
+        Person person = easyRandom.nextObject(Person.class);
 
         // Then
         assertThat(person.getEmail()).isEqualTo(FOO);
@@ -191,11 +151,11 @@ public class EnhancedRandomImplTest {
     public void customRandomzierForTypesShouldBeUsedToPopulateObjects() {
         when(randomizer.getRandomValue()).thenReturn(FOO);
 
-        enhancedRandom = aNewEnhancedRandomBuilder()
-                .randomize(String.class, randomizer)
-                .build();
+        EasyRandomParameters parameters = new EasyRandomParameters()
+                .randomize(String.class, randomizer);
+        easyRandom = new EasyRandom(parameters);
 
-        String string = enhancedRandom.nextObject(String.class);
+        String string = easyRandom.nextObject(String.class);
 
         assertThat(string).isEqualTo(FOO);
     }
@@ -204,42 +164,42 @@ public class EnhancedRandomImplTest {
     public void customRandomzierForTypesShouldBeUsedToPopulateFields() {
         when(randomizer.getRandomValue()).thenReturn(FOO);
 
-        enhancedRandom = aNewEnhancedRandomBuilder()
-                .randomize(String.class, randomizer)
-                .build();
+        EasyRandomParameters parameters = new EasyRandomParameters()
+                .randomize(String.class, randomizer);
+        easyRandom = new EasyRandom(parameters);
 
-        Human human = enhancedRandom.nextObject(Human.class);
+        Human human = easyRandom.nextObject(Human.class);
 
         assertThat(human.getName()).isEqualTo(FOO);
     }
 
     @Test
     public void whenSpecifiedNumberOfBeansToGenerateIsNegative_thenShouldThrowAnIllegalArgumentException() {
-        assertThatThrownBy(() -> enhancedRandom.objects(Person.class, -2)).isInstanceOf(IllegalArgumentException.class);
+        assertThatThrownBy(() -> easyRandom.objects(Person.class, -2)).isInstanceOf(IllegalArgumentException.class);
     }
 
     @Test
     public void whenUnableToInstantiateField_thenShouldThrowObjectGenerationException() {
-        assertThatThrownBy(() -> enhancedRandom.nextObject(AbstractBean.class)).isInstanceOf(ObjectGenerationException.class);
+        assertThatThrownBy(() -> easyRandom.nextObject(AbstractBean.class)).isInstanceOf(ObjectGenerationException.class);
     }
 
     @Test
     public void beansWithRecursiveStructureMustNotCauseStackOverflowException() {
-        Node node = enhancedRandom.nextObject(Node.class);
+        Node node = easyRandom.nextObject(Node.class);
 
         assertThat(node).hasNoNullFieldsOrProperties();
     }
 
     @Test
     public void objectTypeMustBeCorrectlyPopulated() {
-        Object object = enhancedRandom.nextObject(Object.class);
+        Object object = easyRandom.nextObject(Object.class);
 
         assertThat(object).isNotNull();
     }
 
     @Test
     public void annotatedRandomizerArgumentsShouldBeCorrectlyParsed() {
-        TestData data = random(TestData.class);
+        TestData data = easyRandom.nextObject(TestData.class);
 
         then(data.getDate()).isBetween(valueOf(of(2016, 1, 10, 0, 0, 0)), valueOf(of(2016, 1, 30, 23, 59, 59)));
         then(data.getPrice()).isBetween(200, 500);
@@ -249,7 +209,7 @@ public class EnhancedRandomImplTest {
     public void nextEnumShouldNotAlwaysReturnTheSameValue() {
         HashSet<TestEnum> distinctEnumBeans = new HashSet<>();
         for (int i = 0; i < 10; i++) {
-            distinctEnumBeans.add(enhancedRandom.nextObject(TestEnum.class));
+            distinctEnumBeans.add(easyRandom.nextObject(TestEnum.class));
         }
 
         assertThat(distinctEnumBeans.size()).isGreaterThan(1);
@@ -258,7 +218,7 @@ public class EnhancedRandomImplTest {
     @Test
     public void fieldsOfTypeClassShouldBeSkipped() {
         try {
-            TestBean testBean = enhancedRandom.nextObject(TestBean.class);
+            TestBean testBean = easyRandom.nextObject(TestBean.class);
             assertThat(testBean.getException()).isNotNull();
             assertThat(testBean.getClazz()).isNull();
         } catch (Exception e) {
@@ -302,7 +262,7 @@ public class EnhancedRandomImplTest {
         System.out.println("Found " + publicConcreteTypes.size() + " public concrete types in the classpath");
         for (Class<?> aClass : publicConcreteTypes) {
             try {
-                enhancedRandom.nextObject(aClass);
+                easyRandom.nextObject(aClass);
                 System.out.println(aClass.getName() + " has been successfully randomized");
                 success++;
             } catch (Throwable e) {

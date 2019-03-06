@@ -23,16 +23,15 @@
  */
 package org.jeasy.random.parameters;
 
-import static org.jeasy.random.EnhancedRandomBuilder.aNewEnhancedRandomBuilder;
-import static org.assertj.core.api.Assertions.assertThat;
-
-import org.junit.jupiter.api.Test;
-
-import org.jeasy.random.api.EnhancedRandom;
+import org.jeasy.random.EasyRandom;
+import org.jeasy.random.EasyRandomParameters;
 import org.jeasy.random.beans.Address;
 import org.jeasy.random.beans.Gender;
 import org.jeasy.random.beans.Person;
 import org.jeasy.random.beans.Street;
+import org.junit.jupiter.api.Test;
+
+import static org.assertj.core.api.Assertions.assertThat;
 
 public class SeedParameterTests {
 
@@ -41,16 +40,17 @@ public class SeedParameterTests {
     @Test
     public void generatedObjectShouldBeAlwaysTheSameForTheSameSeed() {
         // Given
-        EnhancedRandom enhancedRandom = aNewEnhancedRandomBuilder().seed(SEED).build();
+        EasyRandomParameters parameters = new EasyRandomParameters().seed(SEED);
+        EasyRandom easyRandom = new EasyRandom(parameters);
 
         String expectedString = "eOMtThyhVNLWUZNRcBaQKxI";
         Person expectedPerson = buildExpectedPerson();
         int[] expectedInts = buildExpectedInts();
 
         // When
-        String actualString = enhancedRandom.nextObject(String.class);
-        Person actualPerson = enhancedRandom.nextObject(Person.class);
-        int[] actualInts = enhancedRandom.nextObject(int[].class);
+        String actualString = easyRandom.nextObject(String.class);
+        Person actualPerson = easyRandom.nextObject(Person.class);
+        int[] actualInts = easyRandom.nextObject(int[].class);
 
         // Then
         assertThat(actualString).isEqualTo(expectedString);

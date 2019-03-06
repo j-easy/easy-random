@@ -23,9 +23,8 @@
  */
 package org.jeasy.random.validation;
 
-import org.jeasy.random.EnhancedRandomBuilder;
-import org.jeasy.random.api.EnhancedRandom;
-import org.jeasy.random.api.EasyRandomParameters;
+import org.jeasy.random.EasyRandom;
+import org.jeasy.random.EasyRandomParameters;
 import org.jeasy.random.api.Randomizer;
 
 import java.lang.reflect.Field;
@@ -34,7 +33,7 @@ import java.time.LocalDate;
 class FutureOrPresentAnnotationHandler implements BeanValidationAnnotationHandler {
 
     private final long seed;
-    private EnhancedRandom enhancedRandom;
+    private EasyRandom easyRandom;
 
     public FutureOrPresentAnnotationHandler(long seed) {
         this.seed = seed;
@@ -42,13 +41,13 @@ class FutureOrPresentAnnotationHandler implements BeanValidationAnnotationHandle
 
     @Override
     public Randomizer<?> getRandomizer(Field field) {
-        if (enhancedRandom == null) {
+        if (easyRandom == null) {
             LocalDate now = LocalDate.now();
-            enhancedRandom = EnhancedRandomBuilder.aNewEnhancedRandomBuilder()
+            EasyRandomParameters parameters = new EasyRandomParameters()
                     .seed(seed)
-                    .dateRange(now, now.plusYears(EasyRandomParameters.DEFAULT_DATE_RANGE))
-                    .build(); 
+                    .dateRange(now, now.plusYears(EasyRandomParameters.DEFAULT_DATE_RANGE));
+            easyRandom = new EasyRandom(parameters);
         }
-        return () -> enhancedRandom.nextObject(field.getType());
+        return () -> easyRandom.nextObject(field.getType());
     }
 }

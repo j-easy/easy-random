@@ -23,7 +23,6 @@
  */
 package org.jeasy.random;
 
-import static org.jeasy.random.EnhancedRandomBuilder.aNewEnhancedRandom;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.entry;
 import static org.mockito.Mockito.when;
@@ -41,7 +40,6 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
-import org.jeasy.random.api.EnhancedRandom;
 import org.jeasy.random.beans.CompositeMapBean;
 import org.jeasy.random.beans.CustomMap;
 import org.jeasy.random.beans.EnumMapBean;
@@ -61,14 +59,14 @@ public class MapPopulatorTest {
     @Mock
     private RandomizationContext context;
     @Mock
-    private EnhancedRandomImpl enhancedRandom;
+    private EasyRandom easyRandom;
 
     private MapPopulator mapPopulator;
 
     @BeforeEach
     public void setUp() {
         ObjectFactory objectFactory = new ObjectFactory();
-        mapPopulator = new MapPopulator(enhancedRandom, objectFactory);
+        mapPopulator = new MapPopulator(easyRandom, objectFactory);
     }
 
     /*
@@ -102,8 +100,8 @@ public class MapPopulatorTest {
     @Test
     public void typedInterfaceMapTypesMightBePopulated() throws Exception {
         // Given
-        when(enhancedRandom.getRandomCollectionSize()).thenReturn(SIZE);
-        when(enhancedRandom.doPopulateBean(String.class, context)).thenReturn(FOO, BAR);
+        when(easyRandom.getRandomCollectionSize()).thenReturn(SIZE);
+        when(easyRandom.doPopulateBean(String.class, context)).thenReturn(FOO, BAR);
         Field field = Foo.class.getDeclaredField("typedMap");
 
         // When
@@ -116,8 +114,8 @@ public class MapPopulatorTest {
     @Test
     public void typedConcreteMapTypesMightBePopulated() throws Exception {
         // Given
-        when(enhancedRandom.getRandomCollectionSize()).thenReturn(SIZE);
-        when(enhancedRandom.doPopulateBean(String.class, context)).thenReturn(FOO, BAR);
+        when(easyRandom.getRandomCollectionSize()).thenReturn(SIZE);
+        when(easyRandom.doPopulateBean(String.class, context)).thenReturn(FOO, BAR);
         Field field = Foo.class.getDeclaredField("typedConcreteMap");
 
         // When
@@ -137,8 +135,8 @@ public class MapPopulatorTest {
     @Test
     public void notAddNullKeysToMap() throws NoSuchFieldException {
         // Given
-        when(enhancedRandom.getRandomCollectionSize()).thenReturn(SIZE);
-        when(enhancedRandom.doPopulateBean(String.class, context)).thenReturn(null);
+        when(easyRandom.getRandomCollectionSize()).thenReturn(SIZE);
+        when(easyRandom.doPopulateBean(String.class, context)).thenReturn(null);
         Field field = Foo.class.getDeclaredField("typedConcreteMap");
 
         // When
@@ -162,9 +160,9 @@ public class MapPopulatorTest {
 
     @Test
     public void rawMapInterfacesShouldBeEmpty() {
-        EnhancedRandom enhancedRandom = aNewEnhancedRandom();
+        EasyRandom easyRandom = new EasyRandom();
 
-        final MapBean mapBean = enhancedRandom.nextObject(MapBean.class);
+        final MapBean mapBean = easyRandom.nextObject(MapBean.class);
 
         assertThat(mapBean).isNotNull();
 
@@ -177,9 +175,9 @@ public class MapPopulatorTest {
 
     @Test
     public void typedMapInterfacesShouldNotBeEmpty() {
-        EnhancedRandom enhancedRandom = aNewEnhancedRandom();
+        EasyRandom easyRandom = new EasyRandom();
 
-        final MapBean mapBean = enhancedRandom.nextObject(MapBean.class);
+        final MapBean mapBean = easyRandom.nextObject(MapBean.class);
 
         assertThat(mapBean).isNotNull();
 
@@ -201,9 +199,9 @@ public class MapPopulatorTest {
 
     @Test
     public void rawMapClassesShouldBeEmpty() {
-        EnhancedRandom enhancedRandom = aNewEnhancedRandom();
+        EasyRandom easyRandom = new EasyRandom();
 
-        final MapBean mapBean = enhancedRandom.nextObject(MapBean.class);
+        final MapBean mapBean = easyRandom.nextObject(MapBean.class);
 
         assertThat(mapBean).isNotNull();
 
@@ -218,9 +216,9 @@ public class MapPopulatorTest {
 
     @Test
     public void typedMapClassesShouldNotBeEmpty() {
-        EnhancedRandom enhancedRandom = aNewEnhancedRandom();
+        EasyRandom easyRandom = new EasyRandom();
 
-        final MapBean mapBean = enhancedRandom.nextObject(MapBean.class);
+        final MapBean mapBean = easyRandom.nextObject(MapBean.class);
 
         assertThat(mapBean).isNotNull();
 
@@ -248,9 +246,9 @@ public class MapPopulatorTest {
 
     @Test
     public void wildcardTypedMapInterfacesShouldBeEmpty() {
-        EnhancedRandom enhancedRandom = aNewEnhancedRandom();
+        EasyRandom easyRandom = new EasyRandom();
 
-        final WildCardMapBean wildCardMapBean = enhancedRandom.nextObject(WildCardMapBean.class);
+        final WildCardMapBean wildCardMapBean = easyRandom.nextObject(WildCardMapBean.class);
 
         assertThat(wildCardMapBean).isNotNull();
 
@@ -272,9 +270,9 @@ public class MapPopulatorTest {
 
     @Test
     public void wildcardTypedMapClassesShouldBeEmpty() {
-        EnhancedRandom enhancedRandom = aNewEnhancedRandom();
+        EasyRandom easyRandom = new EasyRandom();
 
-        final WildCardMapBean wildCardMapBean = enhancedRandom.nextObject(WildCardMapBean.class);
+        final WildCardMapBean wildCardMapBean = easyRandom.nextObject(WildCardMapBean.class);
 
         assertThat(wildCardMapBean).isNotNull();
 
@@ -302,9 +300,9 @@ public class MapPopulatorTest {
 
     @Test
     public void compositeMapTypesShouldBeEmpty() {
-        EnhancedRandom enhancedRandom = aNewEnhancedRandom();
+        EasyRandom easyRandom = new EasyRandom();
 
-        CompositeMapBean compositeMapBean = enhancedRandom.nextObject(CompositeMapBean.class);
+        CompositeMapBean compositeMapBean = easyRandom.nextObject(CompositeMapBean.class);
 
         assertThat(compositeMapBean.getPersonToNicknames()).isEmpty();
         assertThat(compositeMapBean.getPersonToAccounts()).isEmpty();
@@ -313,9 +311,9 @@ public class MapPopulatorTest {
 
     @Test
     public void userDefinedMapTypeShouldBePopulated() throws Exception {
-        EnhancedRandom enhancedRandom = aNewEnhancedRandom();
+        EasyRandom easyRandom = new EasyRandom();
 
-        CustomMap customMap = enhancedRandom.nextObject(CustomMap.class);
+        CustomMap customMap = easyRandom.nextObject(CustomMap.class);
 
         assertThat(customMap).isNotNull();
         assertThat(customMap.getName()).isNotNull();
@@ -323,9 +321,9 @@ public class MapPopulatorTest {
 
     @Test
     public void enumMapTypeShouldBePopulated() throws Exception {
-        EnhancedRandom enhancedRandom = aNewEnhancedRandom();
+        EasyRandom easyRandom = new EasyRandom();
 
-        EnumMapBean enumMapBean = enhancedRandom.nextObject(EnumMapBean.class);
+        EnumMapBean enumMapBean = easyRandom.nextObject(EnumMapBean.class);
 
         assertThat(enumMapBean).isNotNull();
         assertThat(enumMapBean.getTypedEnumMap()).isNotNull();
