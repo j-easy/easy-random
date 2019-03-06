@@ -164,6 +164,9 @@ public class EasyRandomParameters {
         return objectPoolSize;
     }
     public void setObjectPoolSize(int objectPoolSize) {
+        if (objectPoolSize < 1) {
+            throw new IllegalArgumentException("objectPoolSize must be >= 1");
+        }
         this.objectPoolSize = objectPoolSize;
     }
 
@@ -171,6 +174,9 @@ public class EasyRandomParameters {
         return randomizationDepth;
     }
     public void setRandomizationDepth(int randomizationDepth) {
+        if (randomizationDepth < 1) {
+            throw new IllegalArgumentException("randomizationDepth must be >= 1");
+        }
         this.randomizationDepth = randomizationDepth;
     }
 
@@ -178,6 +184,7 @@ public class EasyRandomParameters {
         return charset;
     }
     public void setCharset(Charset charset) {
+        Objects.requireNonNull(charset, "Charset must not be null");
         this.charset = charset;
     }
 
@@ -360,6 +367,9 @@ public class EasyRandomParameters {
      * @return the current {@link EasyRandomParameters} instance for method chaining
      */
     public EasyRandomParameters dateRange(final LocalDate min, final LocalDate max) {
+        if (min.isAfter(max)) {
+            throw new IllegalArgumentException("Min date should be before max date");
+        }
         setDateRange(new Range<>(min, max));
         return this;
     }
@@ -372,6 +382,9 @@ public class EasyRandomParameters {
      * @return the current {@link EasyRandomParameters} instance for method chaining
      */
     public EasyRandomParameters timeRange(final LocalTime min, final LocalTime max) {
+        if (min.isAfter(max)) {
+            throw new IllegalArgumentException("Min time should be before max time");
+        }
         setTimeRange(new Range<>(min, max));
         return this;
     }
@@ -383,6 +396,7 @@ public class EasyRandomParameters {
      * @return the current {@link EasyRandomParameters} instance for method chaining
      */
     public EasyRandomParameters randomizerRegistry(final RandomizerRegistry registry) {
+        Objects.requireNonNull(registry, "Registry must not be null");
         userRegistries.add(registry);
         return this;
     }
