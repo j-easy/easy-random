@@ -23,26 +23,27 @@
  */
 package org.jeasy.random.parameters;
 
-import org.jeasy.random.api.EnhancedRandom;
-import org.jeasy.random.api.ObjectGenerationException;
+import org.jeasy.random.EasyRandom;
+import org.jeasy.random.EasyRandomParameters;
+import org.jeasy.random.ObjectGenerationException;
 import lombok.Data;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.Test;
 
 import java.util.concurrent.Callable;
 
-import static org.jeasy.random.EnhancedRandomBuilder.aNewEnhancedRandomBuilder;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 public class IgnoreAbstractTypesParameterTests {
 
-    private EnhancedRandom enhancedRandom;
+    private EasyRandom easyRandom;
 
     @Test
     void whenIgnoreAbstractTypesIsActivated_thenShouldReturnNull() {
-        enhancedRandom = aNewEnhancedRandomBuilder().ignoreAbstractTypes(true).build();
+        EasyRandomParameters parameters = new EasyRandomParameters().ignoreAbstractTypes(true);
+        easyRandom = new EasyRandom(parameters);
 
-        Foo foo = enhancedRandom.nextObject(Foo.class);
+        Foo foo = easyRandom.nextObject(Foo.class);
 
         Assertions.assertThat(foo).isNotNull();
         Assertions.assertThat(foo.getName()).isNotNull();
@@ -51,9 +52,10 @@ public class IgnoreAbstractTypesParameterTests {
 
     @Test
     void whenIgnoreAbstractTypesIsDeactivated_thenShouldThrowObjectGenerationException() {
-        enhancedRandom = aNewEnhancedRandomBuilder().ignoreAbstractTypes(false).build();
+        EasyRandomParameters parameters = new EasyRandomParameters().ignoreAbstractTypes(false);
+        easyRandom = new EasyRandom(parameters);
 
-        assertThatThrownBy(() -> enhancedRandom.nextObject(Foo.class)).isInstanceOf(ObjectGenerationException.class);
+        assertThatThrownBy(() -> easyRandom.nextObject(Foo.class)).isInstanceOf(ObjectGenerationException.class);
     }
 
     @Data

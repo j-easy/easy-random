@@ -23,8 +23,6 @@
  */
 package org.jeasy.random;
 
-import static org.jeasy.random.EnhancedRandomBuilder.aNewEnhancedRandom;
-import static org.jeasy.random.EnhancedRandomBuilder.aNewEnhancedRandomBuilder;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.mockito.Mockito.when;
@@ -42,8 +40,6 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
-import org.jeasy.random.api.EnhancedRandom;
-import org.jeasy.random.api.ObjectGenerationException;
 import org.jeasy.random.beans.CollectionBean;
 import org.jeasy.random.beans.CompositeCollectionBean;
 import org.jeasy.random.beans.CustomList;
@@ -64,14 +60,14 @@ public class CollectionPopulatorTest {
     @Mock
     private RandomizationContext context;
     @Mock
-    private EnhancedRandomImpl enhancedRandom;
+    private EasyRandom easyRandom;
 
     private CollectionPopulator collectionPopulator;
 
     @BeforeEach
     public void setUp() {
         ObjectFactory objectFactory = new ObjectFactory();
-        collectionPopulator = new CollectionPopulator(enhancedRandom, objectFactory);
+        collectionPopulator = new CollectionPopulator(easyRandom, objectFactory);
     }
 
     /*
@@ -104,8 +100,8 @@ public class CollectionPopulatorTest {
     @Test
     public void typedInterfaceCollectionTypesMightBePopulated() throws Exception {
         // Given
-        when(enhancedRandom.getRandomCollectionSize()).thenReturn(SIZE);
-        when(enhancedRandom.doPopulateBean(String.class, context)).thenReturn(STRING);
+        when(easyRandom.getRandomCollectionSize()).thenReturn(SIZE);
+        when(easyRandom.doPopulateBean(String.class, context)).thenReturn(STRING);
         Field field = Foo.class.getDeclaredField("typedInterfaceList");
 
         // When
@@ -119,8 +115,8 @@ public class CollectionPopulatorTest {
     @Test
     public void typedConcreteCollectionTypesMightBePopulated() throws Exception {
         // Given
-        when(enhancedRandom.getRandomCollectionSize()).thenReturn(SIZE);
-        when(enhancedRandom.doPopulateBean(String.class, context)).thenReturn(STRING);
+        when(easyRandom.getRandomCollectionSize()).thenReturn(SIZE);
+        when(easyRandom.doPopulateBean(String.class, context)).thenReturn(STRING);
         Field field = Foo.class.getDeclaredField("typedConcreteList");
 
         // When
@@ -153,9 +149,9 @@ public class CollectionPopulatorTest {
 
     @Test
     public void rawCollectionInterfacesShouldBeEmpty() {
-        EnhancedRandom enhancedRandom = aNewEnhancedRandom();
+        EasyRandom easyRandom = new EasyRandom();
 
-        final CollectionBean collectionsBean = enhancedRandom.nextObject(CollectionBean.class);
+        final CollectionBean collectionsBean = easyRandom.nextObject(CollectionBean.class);
 
         assertThat(collectionsBean).isNotNull();
 
@@ -173,9 +169,9 @@ public class CollectionPopulatorTest {
 
     @Test
     public void unboundedWildCardTypedCollectionInterfacesShouldBeEmpty() {
-        EnhancedRandom enhancedRandom = aNewEnhancedRandom();
+        EasyRandom easyRandom = new EasyRandom();
 
-        final WildCardCollectionBean collectionsBean = enhancedRandom.nextObject(WildCardCollectionBean.class);
+        final WildCardCollectionBean collectionsBean = easyRandom.nextObject(WildCardCollectionBean.class);
 
         assertThat(collectionsBean).isNotNull();
 
@@ -193,9 +189,9 @@ public class CollectionPopulatorTest {
 
     @Test
     public void boundedWildCardTypedCollectionInterfacesShouldBeEmpty() {
-        EnhancedRandom enhancedRandom = aNewEnhancedRandom();
+        EasyRandom easyRandom = new EasyRandom();
 
-        final WildCardCollectionBean collectionsBean = enhancedRandom.nextObject(WildCardCollectionBean.class);
+        final WildCardCollectionBean collectionsBean = easyRandom.nextObject(WildCardCollectionBean.class);
 
         assertThat(collectionsBean).isNotNull();
 
@@ -213,9 +209,9 @@ public class CollectionPopulatorTest {
 
     @Test
     public void typedCollectionInterfacesShouldNotBeEmpty() {
-        EnhancedRandom enhancedRandom = aNewEnhancedRandom();
+        EasyRandom easyRandom = new EasyRandom();
 
-        final CollectionBean collectionsBean = enhancedRandom.nextObject(CollectionBean.class);
+        final CollectionBean collectionsBean = easyRandom.nextObject(CollectionBean.class);
 
         assertThat(collectionsBean).isNotNull();
 
@@ -233,9 +229,9 @@ public class CollectionPopulatorTest {
 
     @Test
     public void rawCollectionClassesShouldBeEmpty() {
-        EnhancedRandom enhancedRandom = aNewEnhancedRandom();
+        EasyRandom easyRandom = new EasyRandom();
 
-        final CollectionBean collectionsBean = enhancedRandom.nextObject(CollectionBean.class);
+        final CollectionBean collectionsBean = easyRandom.nextObject(CollectionBean.class);
 
         assertThat(collectionsBean).isNotNull();
 
@@ -260,9 +256,9 @@ public class CollectionPopulatorTest {
 
     @Test
     public void unboundedWildCardTypedCollectionClassesShouldBeEmpty() {
-        EnhancedRandom enhancedRandom = aNewEnhancedRandom();
+        EasyRandom easyRandom = new EasyRandom();
 
-        final WildCardCollectionBean collectionsBean = enhancedRandom.nextObject(WildCardCollectionBean.class);
+        final WildCardCollectionBean collectionsBean = easyRandom.nextObject(WildCardCollectionBean.class);
 
         assertThat(collectionsBean).isNotNull();
 
@@ -287,9 +283,9 @@ public class CollectionPopulatorTest {
 
     @Test
     public void boundedWildCardTypedCollectionClassesShouldBeEmpty() {
-        EnhancedRandom enhancedRandom = aNewEnhancedRandom();
+        EasyRandom easyRandom = new EasyRandom();
 
-        final WildCardCollectionBean collectionsBean = enhancedRandom.nextObject(WildCardCollectionBean.class);
+        final WildCardCollectionBean collectionsBean = easyRandom.nextObject(WildCardCollectionBean.class);
 
         assertThat(collectionsBean).isNotNull();
 
@@ -314,9 +310,9 @@ public class CollectionPopulatorTest {
 
     @Test
     public void typedCollectionClassesShouldNoBeEmpty() {
-        EnhancedRandom enhancedRandom = aNewEnhancedRandom();
+        EasyRandom easyRandom = new EasyRandom();
 
-        final CollectionBean collectionsBean = enhancedRandom.nextObject(CollectionBean.class);
+        final CollectionBean collectionsBean = easyRandom.nextObject(CollectionBean.class);
 
         assertThat(collectionsBean).isNotNull();
 
@@ -341,9 +337,9 @@ public class CollectionPopulatorTest {
 
     @Test
     public void compositeCollectionTypesShouldBeEmpty() {
-        EnhancedRandom enhancedRandom = aNewEnhancedRandom();
+        EasyRandom easyRandom = new EasyRandom();
 
-        CompositeCollectionBean compositeCollectionBean = enhancedRandom.nextObject(CompositeCollectionBean.class);
+        CompositeCollectionBean compositeCollectionBean = easyRandom.nextObject(CompositeCollectionBean.class);
 
         assertThat(compositeCollectionBean.getListOfLists()).isEmpty();
         assertThat(compositeCollectionBean.getTypedListOfLists()).isEmpty();
@@ -355,51 +351,55 @@ public class CollectionPopulatorTest {
 
     @Test
     public void synchronousQueueTypeMustBeRejected() {
-        EnhancedRandom enhancedRandom = aNewEnhancedRandom();
+        EasyRandom easyRandom = new EasyRandom();
 
-        assertThatThrownBy(() -> enhancedRandom.nextObject(SynchronousQueueBean.class)).isInstanceOf(ObjectGenerationException.class);
+        assertThatThrownBy(() -> easyRandom.nextObject(SynchronousQueueBean.class)).isInstanceOf(ObjectGenerationException.class);
     }
 
     @Test
     public void delayedQueueTypeMustBeRejected() {
-        EnhancedRandom enhancedRandom = aNewEnhancedRandom();
+        EasyRandom easyRandom = new EasyRandom();
 
-        assertThatThrownBy(() -> enhancedRandom.nextObject(DelayedQueueBean.class)).isInstanceOf(ObjectGenerationException.class);
+        assertThatThrownBy(() -> easyRandom.nextObject(DelayedQueueBean.class)).isInstanceOf(ObjectGenerationException.class);
     }
 
     @Test
     public void rawInterfaceCollectionTypesMustBeGeneratedEmpty() {
-        EnhancedRandom enhancedRandom = aNewEnhancedRandomBuilder().scanClasspathForConcreteTypes(true).build();
-        List<?> list = enhancedRandom.nextObject(List.class);
+        EasyRandomParameters parameters = new EasyRandomParameters().scanClasspathForConcreteTypes(true);
+        easyRandom = new EasyRandom(parameters);
+        List<?> list = easyRandom.nextObject(List.class);
         assertThat(list).isEmpty();
     }
 
     @Test
     public void rawConcreteCollectionTypesMustBeGeneratedEmpty() {
-        EnhancedRandom enhancedRandom = aNewEnhancedRandomBuilder().scanClasspathForConcreteTypes(true).build();
-        ArrayList<?> list = enhancedRandom.nextObject(ArrayList.class);
+        EasyRandomParameters parameters = new EasyRandomParameters().scanClasspathForConcreteTypes(true);
+        easyRandom = new EasyRandom(parameters);
+        ArrayList<?> list = easyRandom.nextObject(ArrayList.class);
         assertThat(list).isEmpty();
     }
 
     @Test
     public void rawInterfaceMapTypesMustBeGeneratedEmpty() {
-        EnhancedRandom  enhancedRandom = aNewEnhancedRandomBuilder().scanClasspathForConcreteTypes(true).build();
-        Map<?, ?> map = enhancedRandom.nextObject(Map.class);
+        EasyRandomParameters parameters = new EasyRandomParameters().scanClasspathForConcreteTypes(true);
+        easyRandom = new EasyRandom(parameters);
+        Map<?, ?> map = easyRandom.nextObject(Map.class);
         assertThat(map).isEmpty();
     }
 
     @Test
     public void rawConcreteMapTypesMustBeGeneratedEmpty() {
-        EnhancedRandom  enhancedRandom = aNewEnhancedRandomBuilder().scanClasspathForConcreteTypes(true).build();
-        HashMap<?, ?> map = enhancedRandom.nextObject(HashMap.class);
+        EasyRandomParameters parameters = new EasyRandomParameters().scanClasspathForConcreteTypes(true);
+        easyRandom = new EasyRandom(parameters);
+        HashMap<?, ?> map = easyRandom.nextObject(HashMap.class);
         assertThat(map).isEmpty();
     }
 
     @Test
     public void userDefinedCollectionTypeShouldBePopulated() throws Exception {
-        EnhancedRandom enhancedRandom = aNewEnhancedRandom();
+        EasyRandom easyRandom = new EasyRandom();
 
-        CustomList customList = enhancedRandom.nextObject(CustomList.class);
+        CustomList customList = easyRandom.nextObject(CustomList.class);
 
         assertThat(customList).isNotNull();
         assertThat(customList.getName()).isNotNull();
@@ -407,8 +407,8 @@ public class CollectionPopulatorTest {
 
     @Test
     public void typeVariableCollectionTypesMustBeGeneratedEmpty() {
-        EnhancedRandom  enhancedRandom = aNewEnhancedRandom();
-        TypeVariableCollectionBean<String, String> bean = enhancedRandom.nextObject(TypeVariableCollectionBean.class);
+        EasyRandom easyRandom = new EasyRandom();
+        TypeVariableCollectionBean<String, String> bean = easyRandom.nextObject(TypeVariableCollectionBean.class);
         assertThat(bean.getCollection()).isEmpty();
         assertThat(bean.getList()).isEmpty();
         assertThat(bean.getSet()).isEmpty();

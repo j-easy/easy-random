@@ -23,7 +23,6 @@
  */
 package org.jeasy.random;
 
-import static org.jeasy.random.EnhancedRandomBuilder.aNewEnhancedRandom;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.Mockito.when;
 
@@ -35,7 +34,6 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
-import org.jeasy.random.api.EnhancedRandom;
 import org.jeasy.random.api.Randomizer;
 import org.jeasy.random.beans.ArrayBean;
 import org.jeasy.random.beans.Person;
@@ -49,7 +47,7 @@ public class ArrayPopulatorTest {
     @Mock
     private RandomizationContext context;
     @Mock
-    private EnhancedRandomImpl enhancedRandom;
+    private EasyRandom easyRandom;
     @Mock
     private RandomizerProvider randomizerProvider;
     @Mock
@@ -59,13 +57,13 @@ public class ArrayPopulatorTest {
 
     @BeforeEach
     public void setUp() {
-        arrayPopulator = new ArrayPopulator(enhancedRandom, randomizerProvider);
+        arrayPopulator = new ArrayPopulator(easyRandom, randomizerProvider);
     }
 
     @Test
     public void getRandomArray() {
-        when(enhancedRandom.getRandomCollectionSize()).thenReturn(INT);
-        when(enhancedRandom.doPopulateBean(String.class, context)).thenReturn(STRING);
+        when(easyRandom.getRandomCollectionSize()).thenReturn(INT);
+        when(easyRandom.doPopulateBean(String.class, context)).thenReturn(STRING);
 
         String[] strings = (String[]) arrayPopulator.getRandomArray(String[].class, context);
 
@@ -74,7 +72,7 @@ public class ArrayPopulatorTest {
 
     @Test
     public void getRandomPrimitiveArray() {
-        when(enhancedRandom.nextInt()).thenReturn(INT);
+        when(easyRandom.nextInt()).thenReturn(INT);
         when(randomizerProvider.getRandomizerByType(Integer.TYPE)).thenReturn(integerRandomizer);
         when(integerRandomizer.getRandomValue()).thenReturn(INT);
 
@@ -89,27 +87,27 @@ public class ArrayPopulatorTest {
 
     @Test
     public void testArrayPopulation() {
-        EnhancedRandom enhancedRandom = aNewEnhancedRandom();
+        EasyRandom easyRandom = new EasyRandom();
 
-        final String[] strings = enhancedRandom.nextObject(String[].class);
+        final String[] strings = easyRandom.nextObject(String[].class);
 
         assertThat(strings).isNotNull();
     }
 
     @Test
     public void testPrimitiveArrayPopulation() {
-        EnhancedRandom enhancedRandom = aNewEnhancedRandom();
+        EasyRandom easyRandom = new EasyRandom();
 
-        final int[] ints = enhancedRandom.nextObject(int[].class);
+        final int[] ints = easyRandom.nextObject(int[].class);
 
         assertThat(ints).isNotNull();
     }
 
     @Test
     public void primitiveArraysShouldBeCorrectlyPopulated() {
-        EnhancedRandom enhancedRandom = aNewEnhancedRandom();
+        EasyRandom easyRandom = new EasyRandom();
 
-        final ArrayBean bean = enhancedRandom.nextObject(ArrayBean.class);
+        final ArrayBean bean = easyRandom.nextObject(ArrayBean.class);
 
         // primitive types
         assertThat(toObjectArray(bean.getByteArray())).hasOnlyElementsOfType(Byte.class);
@@ -124,9 +122,9 @@ public class ArrayPopulatorTest {
 
     @Test
     public void wrapperTypeArraysShouldBeCorrectlyPopulated() {
-        EnhancedRandom enhancedRandom = aNewEnhancedRandom();
+        EasyRandom easyRandom = new EasyRandom();
 
-        final ArrayBean bean = enhancedRandom.nextObject(ArrayBean.class);
+        final ArrayBean bean = easyRandom.nextObject(ArrayBean.class);
 
         // wrapper types
         assertThat(bean.getBytes()).hasOnlyElementsOfType(Byte.class);
@@ -141,9 +139,9 @@ public class ArrayPopulatorTest {
 
     @Test
     public void arraysWithCustomTypesShouldBeCorrectlyPopulated() {
-        EnhancedRandom enhancedRandom = aNewEnhancedRandom();
+        EasyRandom easyRandom = new EasyRandom();
 
-        final ArrayBean bean = enhancedRandom.nextObject(ArrayBean.class);
+        final ArrayBean bean = easyRandom.nextObject(ArrayBean.class);
 
         // custom types
         assertThat(bean.getStrings()).doesNotContain(null, "");

@@ -37,12 +37,12 @@ import static java.lang.Math.abs;
  */
 class ArrayPopulator {
 
-    private final EnhancedRandomImpl enhancedRandom;
+    private final EasyRandom easyRandom;
 
     private final RandomizerProvider randomizerProvider;
 
-    ArrayPopulator(final EnhancedRandomImpl enhancedRandom, final RandomizerProvider randomizerProvider) {
-        this.enhancedRandom = enhancedRandom;
+    ArrayPopulator(final EasyRandom easyRandom, final RandomizerProvider randomizerProvider) {
+        this.easyRandom = easyRandom;
         this.randomizerProvider = randomizerProvider;
     }
 
@@ -52,16 +52,16 @@ class ArrayPopulator {
         if (componentType.isPrimitive()) {
             return getRandomPrimitiveArray(componentType, context);
         }
-        int randomSize = enhancedRandom.getRandomCollectionSize();
+        int randomSize = easyRandom.getRandomCollectionSize();
         T[] itemsList = (T[]) Array.newInstance(componentType, randomSize);
         for (int i = 0; i < randomSize; i++) {
-            itemsList[i] = (T) enhancedRandom.doPopulateBean(fieldType.getComponentType(), context);
+            itemsList[i] = (T) easyRandom.doPopulateBean(fieldType.getComponentType(), context);
         }
         return itemsList;
     }
 
     Object getRandomPrimitiveArray(final Class<?> primitiveType, RandomizationContext context) {
-        final int randomSize = abs((byte) enhancedRandom.nextInt());
+        final int randomSize = abs((byte) easyRandom.nextInt());
         final Randomizer<?> randomizer = randomizerProvider.getRandomizerByType(primitiveType);
         if (randomizer instanceof ContextAwareRandomizer) {
             ((ContextAwareRandomizer<?>) randomizer).setRandomizerContext(context);

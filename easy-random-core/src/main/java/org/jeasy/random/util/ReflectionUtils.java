@@ -25,7 +25,7 @@ package org.jeasy.random.util;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.jeasy.random.annotation.RandomizerArgument;
-import org.jeasy.random.api.ObjectGenerationException;
+import org.jeasy.random.ObjectGenerationException;
 import org.jeasy.random.api.Randomizer;
 import lombok.experimental.UtilityClass;
 

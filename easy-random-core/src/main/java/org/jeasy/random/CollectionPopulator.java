@@ -38,18 +38,18 @@ import static org.jeasy.random.util.ReflectionUtils.*;
  */
 class CollectionPopulator {
 
-    private final EnhancedRandomImpl enhancedRandom;
+    private final EasyRandom easyRandom;
 
     private final ObjectFactory objectFactory;
 
-    CollectionPopulator(final EnhancedRandomImpl enhancedRandom, final ObjectFactory objectFactory) {
-        this.enhancedRandom = enhancedRandom;
+    CollectionPopulator(final EasyRandom easyRandom, final ObjectFactory objectFactory) {
+        this.easyRandom = easyRandom;
         this.objectFactory = objectFactory;
     }
 
     @SuppressWarnings({"unchecked", "rawtypes"})
     Collection<?> getRandomCollection(final Field field, final RandomizationContext context) {
-        int randomSize = enhancedRandom.getRandomCollectionSize();
+        int randomSize = easyRandom.getRandomCollectionSize();
         Class<?> fieldType = field.getType();
         Type fieldGenericType = field.getGenericType();
         Collection collection;
@@ -65,7 +65,7 @@ class CollectionPopulator {
             Type type = parameterizedType.getActualTypeArguments()[0];
             if (isPopulatable(type)) {
                 for (int i = 0; i < randomSize; i++) {
-                    Object item = enhancedRandom.doPopulateBean((Class<?>) type, context);
+                    Object item = easyRandom.doPopulateBean((Class<?>) type, context);
                     collection.add(item);
                 }
 

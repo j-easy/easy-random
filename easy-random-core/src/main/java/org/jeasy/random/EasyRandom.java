@@ -27,21 +27,19 @@ import org.jeasy.random.api.*;
 import org.jeasy.random.randomizers.misc.EnumRandomizer;
 
 import java.lang.reflect.Field;
-import java.util.List;
-import java.util.Map;
-import java.util.Set;
+import java.util.*;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.stream.Stream;
 
 import static org.jeasy.random.util.ReflectionUtils.*;
 
 /**
- * The core implementation of the {@link EnhancedRandom} abstract class.
+ * Extension of {@link java.util.Random} that is able to generate random Java objects.
  *
  * @author Mahmoud Ben Hassine (mahmoud.benhassine@icloud.com)
  */
 @SuppressWarnings({ "rawtypes", "unchecked" })
-class EnhancedRandomImpl extends EnhancedRandom {
+public class EasyRandom extends Random {
 
     private EasyRandomParameters parameters;
 
@@ -61,24 +59,50 @@ class EnhancedRandomImpl extends EnhancedRandom {
 
     private final FieldExclusionChecker fieldExclusionChecker;
 
-    EnhancedRandomImpl(final Set<RandomizerRegistry> registries) {
-        objectFactory = new ObjectFactory();
+    public EasyRandom() {
+        this(new EasyRandomParameters());
+    }
+
+    public EasyRandom(final EasyRandomParameters easyRandomParameters) {
+        Objects.requireNonNull(easyRandomParameters, "Parameters must not be null");
+        super.setSeed(easyRandomParameters.getSeed());
+        LinkedHashSet<RandomizerRegistry> registries = setupRandomizerRegistries(easyRandomParameters);
         randomizerProvider = new RandomizerProvider(registries);
+        objectFactory = new ObjectFactory();
+        objectFactory.setScanClasspathForConcreteTypes(easyRandomParameters.isScanClasspathForConcreteTypes());
         arrayPopulator = new ArrayPopulator(this, randomizerProvider);
         collectionPopulator = new CollectionPopulator(this, objectFactory);
         mapPopulator = new MapPopulator(this, objectFactory);
         enumRandomizersByType = new ConcurrentHashMap<>();
         fieldPopulator = new FieldPopulator(this, randomizerProvider, arrayPopulator, collectionPopulator, mapPopulator);
+        fieldPopulator.setScanClasspathForConcreteTypes(easyRandomParameters.isScanClasspathForConcreteTypes());
         fieldExclusionChecker = new FieldExclusionChecker();
-        parameters = new EasyRandomParameters();
+        this.parameters = easyRandomParameters;
     }
 
-    @Override
+    /**
+     * Generate a random instance of the given type.
+     *
+     * @param type           the type for which an instance will be generated
+     * @param excludedFields the name of fields to exclude
+     * @param <T>            the actual type of the target object
+     * @return a random instance of the given type
+     * @throws ObjectGenerationException when unable to populate an instance of the given type
+     */
     public <T> T nextObject(final Class<T> type, final String... excludedFields) {
         return doPopulateBean(type, new RandomizationContext(type, parameters, excludedFields));
     }
 
-    @Override
+    /**
+     * Generate a stream of random instances of the given type.
+     *
+     * @param type           the type for which instances will be generated
+     * @param streamSize         the number of instances to generate
+     * @param excludedFields the name of fields to exclude
+     * @param <T>            the actual type of the target objects
+     * @return a stream of random instances of the given type
+     * @throws ObjectGenerationException when unable to populate an instance of the given type
+     */
     public <T> Stream<T> objects(final Class<T> type, final int streamSize, final String... excludedFields) {
         if (streamSize < 0) {
             throw new IllegalArgumentException("The stream size must be positive");
@@ -120,6 +144,12 @@ class EnhancedRandomImpl extends EnhancedRandom {
             List<Field> fields = getDeclaredFields(result);
             // we can not use type here, because with classpath scanning enabled the result can be a subtype
             fields.addAll(getInheritedFields(result.getClass()));
+
+            // inner classes (and static nested classes) have a field named "this$0" that references the enclosing class.
+            // This field should be excluded
+            if (type.getEnclosingClass() != null) {
+                fields.removeIf(field -> field.getName().equals("this$0"));
+            }
 
             // populate fields with random data
             populateFields(fields, result, context);
@@ -177,11 +207,20 @@ class EnhancedRandomImpl extends EnhancedRandom {
         return nextInt((maxCollectionSize - minCollectionSize) + 1) + minCollectionSize;
     }
 
-    public void setParameters(EasyRandomParameters parameters) {
-        this.parameters = parameters;
-        super.setSeed(parameters.getSeed());
-        fieldPopulator.setScanClasspathForConcreteTypes(parameters.isScanClasspathForConcreteTypes());
-        objectFactory.setScanClasspathForConcreteTypes(parameters.isScanClasspathForConcreteTypes());
+    private LinkedHashSet<RandomizerRegistry> setupRandomizerRegistries(EasyRandomParameters parameters) {
+        LinkedHashSet<RandomizerRegistry> registries = new LinkedHashSet<>();
+        registries.add(parameters.getCustomRandomizerRegistry());
+        registries.add(parameters.getExclusionRandomizerRegistry());
+        registries.addAll(parameters.getUserRegistries());
+        registries.addAll(loadRegistries());
+        registries.forEach(registry -> registry.init(parameters));
+        return registries;
+    }
+
+    private Collection<RandomizerRegistry> loadRegistries() {
+        List<RandomizerRegistry> registries = new ArrayList<>();
+        ServiceLoader.load(RandomizerRegistry.class).forEach(registries::add);
+        return registries;
     }
 
 }

@@ -25,7 +25,7 @@ package org.jeasy.random.randomizers.registry;
 
 import org.jeasy.random.annotation.Priority;
 import org.jeasy.random.annotation.RandomizerArgument;
-import org.jeasy.random.api.EasyRandomParameters;
+import org.jeasy.random.EasyRandomParameters;
 import org.jeasy.random.api.Randomizer;
 import org.jeasy.random.api.RandomizerRegistry;
 import org.jeasy.random.util.ReflectionUtils;

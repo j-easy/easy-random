@@ -23,8 +23,6 @@
  */
 package org.jeasy.random;
 
-import org.jeasy.random.api.EnhancedRandom;
-import org.jeasy.random.api.EasyRandomParameters;
 import org.jeasy.random.api.RandomizerContext;
 
 import java.lang.reflect.Field;
@@ -33,7 +31,7 @@ import java.util.*;
 import static java.util.stream.Collectors.toList;
 
 /**
- * Context object for a single call on {@link EnhancedRandom#nextObject(Class, String...)}.
+ * Context object for a single call on {@link EasyRandom#nextObject(Class, String...)}.
  * It contains a map acting as a cache of populated beans to avoid infinite recursion.
  *
  * @author Rémi Alvergnat (toilal.dev@gmail.com)

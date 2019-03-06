@@ -23,6 +23,9 @@
  */
 package org.jeasy.random.api;
 
+import org.jeasy.random.EasyRandom;
+import org.jeasy.random.EasyRandomParameters;
+
 import java.lang.reflect.Field;
 
 /**
@@ -35,7 +38,7 @@ public interface RandomizerRegistry {
     /**
      * Initialize the registry.
      *
-     * @param parameters of the {@link EnhancedRandom} instance being configured
+     * @param parameters of the {@link EasyRandom} instance being configured
      */
     void init(EasyRandomParameters parameters);
 

@@ -23,8 +23,8 @@
  */
 package org.jeasy.random.context;
 
-import org.jeasy.random.EnhancedRandomBuilder;
-import org.jeasy.random.api.EnhancedRandom;
+import org.jeasy.random.EasyRandom;
+import org.jeasy.random.EasyRandomParameters;
 import org.junit.jupiter.api.Test;
 
 import static org.jeasy.random.FieldPredicates.*;
@@ -36,13 +36,13 @@ public class ContextAwareRandomizationTests {
     void testContextAwareRandomization() {
         // given
         String[] names = {"james", "daniel"};
-        EnhancedRandom enhancedRandom = new EnhancedRandomBuilder()
+        EasyRandomParameters parameters = new EasyRandomParameters()
                 .randomize(named("firstName").and(ofType(String.class)).and(inClass(Person.class)), new FirstNameRandomizer(names))
-                .randomize(named("lastName").and(ofType(String.class)).and(inClass(Person.class)), new LastNameRandomizer())
-                .build();
+                .randomize(named("lastName").and(ofType(String.class)).and(inClass(Person.class)), new LastNameRandomizer());
+        EasyRandom easyRandom = new EasyRandom(parameters);
 
         // when
-        Person person = enhancedRandom.nextObject(Person.class, "nickname");
+        Person person = easyRandom.nextObject(Person.class, "nickname");
 
         // then
         String firstName = person.getFirstName();
@@ -63,15 +63,15 @@ public class ContextAwareRandomizationTests {
         // given
         String[] names = {"james", "daniel"};
         String[] countries = {"france", "germany", "belgium"};
-        EnhancedRandom enhancedRandom = new EnhancedRandomBuilder()
+        EasyRandomParameters parameters = new EasyRandomParameters()
                 .randomize(named("firstName").and(ofType(String.class)), new FirstNameRandomizer(names))
                 .randomize(named("lastName").and(ofType(String.class)), new LastNameRandomizer())
                 .randomize(ofType(Country.class), new CountryRandomizer(countries))
-                .randomize(ofType(City.class), new CityRandomizer())
-                .build();
+                .randomize(ofType(City.class), new CityRandomizer());
+        EasyRandom easyRandom = new EasyRandom(parameters);
 
         // when
-        Person person = enhancedRandom.nextObject(Person.class, "nickname");
+        Person person = easyRandom.nextObject(Person.class, "nickname");
 
         // then
         if (person.getFirstName().equalsIgnoreCase("james")) {

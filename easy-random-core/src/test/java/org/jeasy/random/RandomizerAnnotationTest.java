@@ -23,37 +23,34 @@
  */
 package org.jeasy.random;
 
-import static org.jeasy.random.EnhancedRandomBuilder.aNewEnhancedRandom;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 import org.jeasy.random.annotation.RandomizerArgument;
-import org.jeasy.random.api.EnhancedRandom;
 import org.jeasy.random.randomizers.AbstractRandomizer;
 import lombok.Data;
 import org.junit.jupiter.api.Test;
 
-import org.jeasy.random.api.ObjectGenerationException;
 import org.jeasy.random.api.Randomizer;
 
 public class RandomizerAnnotationTest {
 
     @Test
     public void fieldAnnotatedWithRandomizerShouldBePopulatedWithValuesGeneratedByTheDeclaredRandomizer() {
-        Foo foo = aNewEnhancedRandom().nextObject(Foo.class);
+        Foo foo = new EasyRandom().nextObject(Foo.class);
         assertThat(foo.getName()).isEqualTo("foo");
     }
 
     @Test
     // https://github.com/j-easy/easy-random/issues/131
     public void shouldThrowObjectGenerationExceptionWhenRandomizerUsedInRandomizerAnnotationHasNoDefaultConstructor() {
-        assertThatThrownBy(() -> aNewEnhancedRandom().nextObject(Bar.class)).isInstanceOf(ObjectGenerationException.class);
+        assertThatThrownBy(() -> new EasyRandom().nextObject(Bar.class)).isInstanceOf(ObjectGenerationException.class);
     }
 
 
     @Test
     void testRandomizerArgumentAsArray() {
-        Person person = EnhancedRandom.random(Person.class);
+        Person person = new EasyRandom().nextObject(Person.class);
 
         assertThat(person.getName()).isIn("foo", "bar");
         assertThat(person.getAge()).isIn(1, 2, 3);

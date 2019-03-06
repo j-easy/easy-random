@@ -23,13 +23,12 @@
  */
 package org.jeasy.random;
 
-import org.jeasy.random.api.EnhancedRandom;
 import lombok.Data;
 
 import java.lang.reflect.Field;
 
 /**
- * Context object holding the data of a recursion step in {@link EnhancedRandom#nextObject(Class, String...)}.
+ * Context object holding the data of a recursion step in {@link EasyRandom#nextObject(Class, String...)}.
  *
  * @author Rémi Alvergnat (toilal.dev@gmail.com)
  */

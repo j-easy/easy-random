@@ -27,7 +27,7 @@ import org.jeasy.random.FieldPredicates;
 import org.jeasy.random.TypePredicates;
 import org.jeasy.random.annotation.Exclude;
 import org.jeasy.random.annotation.Priority;
-import org.jeasy.random.api.EasyRandomParameters;
+import org.jeasy.random.EasyRandomParameters;
 import org.jeasy.random.api.Randomizer;
 import org.jeasy.random.api.RandomizerRegistry;
 import org.jeasy.random.randomizers.misc.SkipRandomizer;

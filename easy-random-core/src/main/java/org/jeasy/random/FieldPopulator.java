@@ -24,7 +24,6 @@
 package org.jeasy.random;
 
 import org.jeasy.random.api.ContextAwareRandomizer;
-import org.jeasy.random.api.ObjectGenerationException;
 import org.jeasy.random.api.Randomizer;
 import org.jeasy.random.randomizers.misc.SkipRandomizer;
 
@@ -38,7 +37,7 @@ import static org.jeasy.random.util.ReflectionUtils.*;
  * Component that encapsulate the logic of generating a random value for a given field.
  * It collaborates with a:
  * <ul>
- *     <li>{@link EnhancedRandomImpl} whenever the field is a user defined type.</li>
+ *     <li>{@link EasyRandom} whenever the field is a user defined type.</li>
  *     <li>{@link ArrayPopulator} whenever the field is an array type.</li>
  *     <li>{@link CollectionPopulator}, {@link MapPopulator} whenever the field is a collection type.</li>
  * </ul>
@@ -46,7 +45,7 @@ import static org.jeasy.random.util.ReflectionUtils.*;
  */
 class FieldPopulator {
 
-    private final EnhancedRandomImpl beanPopulator;
+    private final EasyRandom easyRandom;
 
     private final ArrayPopulator arrayPopulator;
 
@@ -58,9 +57,9 @@ class FieldPopulator {
 
     private boolean scanClasspathForConcreteTypes;
 
-    FieldPopulator(final EnhancedRandomImpl beanPopulator, final RandomizerProvider randomizerProvider,
+    FieldPopulator(final EasyRandom easyRandom, final RandomizerProvider randomizerProvider,
                    final ArrayPopulator arrayPopulator, final CollectionPopulator collectionPopulator, final MapPopulator mapPopulator) {
-        this.beanPopulator = beanPopulator;
+        this.easyRandom = easyRandom;
         this.randomizerProvider = randomizerProvider;
         this.arrayPopulator = arrayPopulator;
         this.collectionPopulator = collectionPopulator;
@@ -120,10 +119,10 @@ class FieldPopulator {
                 if (randomConcreteSubType == null) {
                     throw new ObjectGenerationException("Unable to find a matching concrete subtype of type: " + fieldType);
                 } else {
-                    value = beanPopulator.doPopulateBean(randomConcreteSubType, context);
+                    value = easyRandom.doPopulateBean(randomConcreteSubType, context);
                 }
             } else {
-                value = beanPopulator.doPopulateBean(fieldType, context);
+                value = easyRandom.doPopulateBean(fieldType, context);
             }
         }
         return value;

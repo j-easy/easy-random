@@ -23,6 +23,9 @@
  */
 package org.jeasy.random.api;
 
+import org.jeasy.random.EasyRandom;
+import org.jeasy.random.EasyRandomParameters;
+
 import java.util.Set;
 
 /**
@@ -34,13 +37,13 @@ import java.util.Set;
 public interface RandomizerContext {
 
     /**
-     * Return the target type (first parameter of {@link EnhancedRandom#nextObject(Class, String...)}).
+     * Return the target type (first parameter of {@link EasyRandom#nextObject(Class, String...)}).
      * @return target type
      */
     Class<?> getType();
 
     /**
-     * Get the set of excluded fields (varargs of {@link EnhancedRandom#nextObject(Class, String...)}).
+     * Get the set of excluded fields (varargs of {@link EasyRandom#nextObject(Class, String...)}).
      * @return set of excluded fields
      */
     Set<String> getExcludedFields();
@@ -70,7 +73,7 @@ public interface RandomizerContext {
     int getRandomizationDepth();
 
     /**
-     * Return the currently used parameters by the enclosing {@link EnhancedRandom}.
+     * Return the currently used parameters by the enclosing {@link EasyRandom}.
      * @return currently used parameters
      */
     EasyRandomParameters getParameters();

@@ -41,18 +41,18 @@ import static org.jeasy.random.util.ReflectionUtils.*;
  */
 class MapPopulator {
 
-    private final EnhancedRandomImpl enhancedRandom;
+    private final EasyRandom easyRandom;
 
     private final ObjectFactory objectFactory;
 
-    MapPopulator(final EnhancedRandomImpl enhancedRandom, final ObjectFactory objectFactory) {
-        this.enhancedRandom = enhancedRandom;
+    MapPopulator(final EasyRandom easyRandom, final ObjectFactory objectFactory) {
+        this.easyRandom = easyRandom;
         this.objectFactory = objectFactory;
     }
 
     @SuppressWarnings("unchecked")
     Map<?, ?> getRandomMap(final Field field, final RandomizationContext context) {
-        int randomSize = enhancedRandom.getRandomCollectionSize();
+        int randomSize = easyRandom.getRandomCollectionSize();
         Class<?> fieldType = field.getType();
         Type fieldGenericType = field.getGenericType();
         Map<Object, Object> map;
@@ -83,8 +83,8 @@ class MapPopulator {
             Type valueType = parameterizedType.getActualTypeArguments()[1];
             if (isPopulatable(keyType) && isPopulatable(valueType)) {
                 for (int index = 0; index < randomSize; index++) {
-                    Object randomKey = enhancedRandom.doPopulateBean((Class<?>) keyType, context);
-                    Object randomValue = enhancedRandom.doPopulateBean((Class<?>) valueType, context);
+                    Object randomKey = easyRandom.doPopulateBean((Class<?>) keyType, context);
+                    Object randomValue = easyRandom.doPopulateBean((Class<?>) valueType, context);
                     if(randomKey != null) {
                         map.put(randomKey, randomValue);
                     }

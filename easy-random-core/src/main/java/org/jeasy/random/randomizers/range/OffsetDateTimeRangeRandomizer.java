@@ -26,7 +26,7 @@ package org.jeasy.random.randomizers.range;
 import java.time.Instant;
 import java.time.OffsetDateTime;
 
-import org.jeasy.random.api.EasyRandomParameters;
+import org.jeasy.random.EasyRandomParameters;
 
 /**
  * Generate a random {@link OffsetDateTime} in the given range.

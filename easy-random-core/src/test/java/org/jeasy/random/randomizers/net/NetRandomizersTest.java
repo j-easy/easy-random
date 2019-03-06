@@ -23,7 +23,6 @@
  */
 package org.jeasy.random.randomizers.net;
 
-import static org.jeasy.random.EnhancedRandomBuilder.aNewEnhancedRandom;
 import static org.jeasy.random.randomizers.net.UriRandomizer.aNewUriRandomizer;
 import static org.jeasy.random.randomizers.net.UrlRandomizer.aNewUrlRandomizer;
 import static org.assertj.core.api.BDDAssertions.then;
@@ -31,6 +30,7 @@ import static org.assertj.core.api.BDDAssertions.then;
 import java.net.URI;
 import java.net.URL;
 
+import org.jeasy.random.EasyRandom;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.MethodSource;
@@ -76,7 +76,7 @@ public class NetRandomizersTest extends AbstractRandomizerTest<Randomizer<?>> {
     @Test
     public void javaNetTypesShouldBePopulated() {
         // when
-        Website website = aNewEnhancedRandom().nextObject(Website.class);
+        Website website = new EasyRandom().nextObject(Website.class);
 
         then(website).hasNoNullFieldsOrProperties();
     }

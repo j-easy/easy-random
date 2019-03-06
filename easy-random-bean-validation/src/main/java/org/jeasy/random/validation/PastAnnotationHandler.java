@@ -27,15 +27,14 @@ import java.lang.reflect.Field;
 import java.time.LocalDate;
 import java.time.temporal.ChronoUnit;
 
-import org.jeasy.random.EnhancedRandomBuilder;
-import org.jeasy.random.api.EnhancedRandom;
-import org.jeasy.random.api.EasyRandomParameters;
+import org.jeasy.random.EasyRandom;
+import org.jeasy.random.EasyRandomParameters;
 import org.jeasy.random.api.Randomizer;
 
 class PastAnnotationHandler implements BeanValidationAnnotationHandler {
 
     private final long seed;
-    private EnhancedRandom enhancedRandom;
+    private EasyRandom easyRandom;
 
     public PastAnnotationHandler(long seed) {
         this.seed = seed;
@@ -43,16 +42,16 @@ class PastAnnotationHandler implements BeanValidationAnnotationHandler {
 
     @Override
     public Randomizer<?> getRandomizer(Field field) {
-        if (enhancedRandom == null) {
+        if (easyRandom == null) {
             LocalDate now = LocalDate.now();
-            enhancedRandom = EnhancedRandomBuilder.aNewEnhancedRandomBuilder()
+            EasyRandomParameters parameters = new EasyRandomParameters()
                     .seed(seed)
                     .dateRange(
                             now.minusYears(EasyRandomParameters.DEFAULT_DATE_RANGE),
                             now.minus(1, ChronoUnit.DAYS)
-                    )
-                    .build();
+                    );
+            easyRandom = new EasyRandom(parameters);
         }
-        return () -> enhancedRandom.nextObject(field.getType());
+        return () -> easyRandom.nextObject(field.getType());
     }
 }

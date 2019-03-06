@@ -21,7 +21,7 @@
  *   OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  *   THE SOFTWARE.
  */
-package org.jeasy.random.api;
+package org.jeasy.random;
 
 /**
  * Exception thrown when Easy Random is unable to generate an instance of a given type.

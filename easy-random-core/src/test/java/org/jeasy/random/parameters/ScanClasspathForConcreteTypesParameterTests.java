@@ -23,18 +23,17 @@
  */
 package org.jeasy.random.parameters;
 
-import static org.jeasy.random.EnhancedRandomBuilder.aNewEnhancedRandomBuilder;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.assertj.core.api.BDDAssertions.then;
 
 import java.util.Date;
 
+import org.jeasy.random.EasyRandom;
+import org.jeasy.random.EasyRandomParameters;
 import org.junit.jupiter.api.Test;
 
-import org.jeasy.random.EnhancedRandomBuilder;
-import org.jeasy.random.api.EnhancedRandom;
-import org.jeasy.random.api.ObjectGenerationException;
+import org.jeasy.random.ObjectGenerationException;
 import org.jeasy.random.beans.Ape;
 import org.jeasy.random.beans.Bar;
 import org.jeasy.random.beans.ClassUsingAbstractEnum;
@@ -48,20 +47,22 @@ import org.jeasy.random.beans.SocialPerson;
 
 public class ScanClasspathForConcreteTypesParameterTests {
 
-    private EnhancedRandom enhancedRandom;
+    private EasyRandom easyRandom;
 
     @Test
     public void whenScanClasspathForConcreteTypesIsDisabled_thenShouldFailToPopulateInterfacesAndAbstractClasses() {
-        enhancedRandom = aNewEnhancedRandomBuilder().scanClasspathForConcreteTypes(false).build();
+        EasyRandomParameters parameters = new EasyRandomParameters().scanClasspathForConcreteTypes(false);
+        easyRandom = new EasyRandom(parameters);
 
-        assertThatThrownBy(() -> enhancedRandom.nextObject(Mamals.class)).isInstanceOf(ObjectGenerationException.class);
+        assertThatThrownBy(() -> easyRandom.nextObject(Mamals.class)).isInstanceOf(ObjectGenerationException.class);
     }
 
     @Test
     public void whenScanClasspathForConcreteTypesIsEnabled_thenShouldPopulateInterfacesAndAbstractClasses() {
-        enhancedRandom = aNewEnhancedRandomBuilder().scanClasspathForConcreteTypes(true).build();
+        EasyRandomParameters parameters = new EasyRandomParameters().scanClasspathForConcreteTypes(true);
+        easyRandom = new EasyRandom(parameters);
 
-        Mamals mamals = enhancedRandom.nextObject(Mamals.class);
+        Mamals mamals = easyRandom.nextObject(Mamals.class);
 
         assertThat(mamals.getMamal()).isOfAnyClassIn(Human.class, Ape.class, Person.class, SocialPerson.class);
         assertThat(mamals.getMamalImpl()).isOfAnyClassIn(Human.class, Ape.class, Person.class, SocialPerson.class);
@@ -69,9 +70,10 @@ public class ScanClasspathForConcreteTypesParameterTests {
 
     @Test
     public void whenScanClasspathForConcreteTypesIsEnabled_thenShouldPopulateConcreteTypesForFieldsWithGenericParameters() {
-        enhancedRandom = aNewEnhancedRandomBuilder().scanClasspathForConcreteTypes(true).build();
+        EasyRandomParameters parameters = new EasyRandomParameters().scanClasspathForConcreteTypes(true);
+        easyRandom = new EasyRandom(parameters);
 
-        ComparableBean comparableBean = enhancedRandom.nextObject(ComparableBean.class);
+        ComparableBean comparableBean = easyRandom.nextObject(ComparableBean.class);
 
         assertThat(comparableBean.getDateComparable()).isOfAnyClassIn(ComparableBean.AlwaysEqual.class, Date.class);
     }
@@ -79,10 +81,11 @@ public class ScanClasspathForConcreteTypesParameterTests {
     @Test
     public void whenScanClasspathForConcreteTypesIsEnabled_thenShouldPopulateAbstractTypesWithConcreteSubTypes() {
         // Given
-        enhancedRandom = EnhancedRandomBuilder.aNewEnhancedRandomBuilder().scanClasspathForConcreteTypes(true).build();
+        EasyRandomParameters parameters = new EasyRandomParameters().scanClasspathForConcreteTypes(true);
+        easyRandom = new EasyRandom(parameters);
 
         // When
-        Bar bar = enhancedRandom.nextObject(Bar.class);
+        Bar bar = easyRandom.nextObject(Bar.class);
 
         // Then
         assertThat(bar).isNotNull();
@@ -94,10 +97,11 @@ public class ScanClasspathForConcreteTypesParameterTests {
     @Test
     public void whenScanClasspathForConcreteTypesIsEnabled_thenShouldPopulateFieldsOfAbstractTypeWithConcreteSubTypes() {
         // Given
-        enhancedRandom = EnhancedRandomBuilder.aNewEnhancedRandomBuilder().scanClasspathForConcreteTypes(true).build();
+        EasyRandomParameters parameters = new EasyRandomParameters().scanClasspathForConcreteTypes(true);
+        easyRandom = new EasyRandom(parameters);
 
         // When
-        Foo foo = enhancedRandom.nextObject(Foo.class);
+        Foo foo = easyRandom.nextObject(Foo.class);
 
         // Then
         assertThat(foo).isNotNull();
@@ -107,9 +111,10 @@ public class ScanClasspathForConcreteTypesParameterTests {
 
     @Test
     public void whenScanClasspathForConcreteTypesIsEnabled_thenShouldPopulateAbstractEnumeration() {
-        EnhancedRandom random = EnhancedRandomBuilder.aNewEnhancedRandomBuilder().scanClasspathForConcreteTypes(true).build();
+        EasyRandomParameters parameters = new EasyRandomParameters().ignoreAbstractTypes(true);
+        easyRandom = new EasyRandom(parameters);
 
-        ClassUsingAbstractEnum randomValue = random.nextObject(ClassUsingAbstractEnum.class);
+        ClassUsingAbstractEnum randomValue = easyRandom.nextObject(ClassUsingAbstractEnum.class);
 
         then(randomValue.getTestEnum()).isNotNull();
     }
