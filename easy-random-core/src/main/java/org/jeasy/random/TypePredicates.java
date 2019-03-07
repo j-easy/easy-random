@@ -28,11 +28,10 @@ import java.lang.reflect.Modifier;
 import java.util.function.Predicate;
 
 /**
- * Common predicates to identify types. Usually used in combination to define a collection
- * of types. For example:
+ * Common predicates to identify types. Usually used in combination to define a collection of types. For example:
  *
  *<pre>
- *     Predicate<Class<?>> predicate = inPackage("java.util").or(inPackage("com.sun"));
+ *     Predicate&lt;Class&lt;?&gt;&gt; predicate = inPackage("java.util").or(inPackage("com.sun"));
  *</pre>
  *
  * @author Mahmoud Ben Hassine (mahmoud.benhassine@icloud.com)
@@ -144,7 +143,9 @@ public class TypePredicates {
     /**
      * Create a predicate to check if a type is is assignable from another type.
      *
-     * @return a predicate to check if a type is assignable from another type
+     * @param type to check
+     *
+     * @return a predicate to check if a type is is assignable from another type.
      */
     public static Predicate<Class<?>> isAssignableFrom(Class<?> type) {
         return clazz -> clazz.isAssignableFrom(type);

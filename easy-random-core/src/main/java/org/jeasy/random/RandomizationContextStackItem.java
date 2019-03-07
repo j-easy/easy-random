@@ -28,7 +28,7 @@ import lombok.Data;
 import java.lang.reflect.Field;
 
 /**
- * Context object holding the data of a recursion step in {@link EasyRandom#nextObject(Class, String...)}.
+ * Context object holding the data of a recursion step in {@link EasyRandom#nextObject(Class)}.
  *
  * @author Rémi Alvergnat (toilal.dev@gmail.com)
  */

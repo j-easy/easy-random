@@ -33,7 +33,7 @@ import java.util.regex.Pattern;
  * in an object graph. For example:
  *
  *<pre>
- *     Predicate<Field> predicate = named("name").and(ofType(String.class)).and(inClass(Person.class));
+ *     Predicate&lt;Field&gt; predicate = named("name").and(ofType(String.class)).and(inClass(Person.class));
  *</pre>
  *
  * @author Mahmoud Ben Hassine (mahmoud.benhassine@icloud.com)
