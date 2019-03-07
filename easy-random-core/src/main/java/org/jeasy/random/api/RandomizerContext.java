@@ -26,8 +26,6 @@ package org.jeasy.random.api;
 import org.jeasy.random.EasyRandom;
 import org.jeasy.random.EasyRandomParameters;
 
-import java.util.Set;
-
 /**
  * A context object for a {@link Randomizer}.
  * This interface provides information about the randomization context.
@@ -37,16 +35,10 @@ import java.util.Set;
 public interface RandomizerContext {
 
     /**
-     * Return the target type (first parameter of {@link EasyRandom#nextObject(Class, String...)}).
+     * Return the target type (parameter of {@link EasyRandom#nextObject(Class)}).
      * @return target type
      */
     Class<?> getType();
-
-    /**
-     * Get the set of excluded fields (varargs of {@link EasyRandom#nextObject(Class, String...)}).
-     * @return set of excluded fields
-     */
-    Set<String> getExcludedFields();
 
     /**
      * Return the root object being randomized (instance of {@link RandomizerContext#getType()}.

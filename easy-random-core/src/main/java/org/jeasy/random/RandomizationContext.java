@@ -31,7 +31,7 @@ import java.util.*;
 import static java.util.stream.Collectors.toList;
 
 /**
- * Context object for a single call on {@link EasyRandom#nextObject(Class, String...)}.
+ * Context object for a single call on {@link EasyRandom#nextObject(Class)}.
  * It contains a map acting as a cache of populated beans to avoid infinite recursion.
  *
  * @author Rémi Alvergnat (toilal.dev@gmail.com)
@@ -39,8 +39,6 @@ import static java.util.stream.Collectors.toList;
 class RandomizationContext implements RandomizerContext {
 
     private final EasyRandomParameters parameters;
-
-    private final Set<String> excludedFields;
 
     private final Map<Class<?>, List<Object>> populatedBeans;
 
@@ -51,12 +49,11 @@ class RandomizationContext implements RandomizerContext {
     private Object rootObject;
     private Object randomizedObject;
 
-    RandomizationContext(final Class<?> type, final EasyRandomParameters parameters, final String... excludedFields) {
+    RandomizationContext(final Class<?> type, final EasyRandomParameters parameters) {
         this.type = type;
         populatedBeans = new IdentityHashMap<>();
         stack = new Stack<>();
         this.parameters = parameters;
-        this.excludedFields = new HashSet<>(toLowerCase(Arrays.asList(excludedFields)));
     }
 
     void addPopulatedBean(final Class<?> type, Object object) {
@@ -79,11 +76,6 @@ class RandomizationContext implements RandomizerContext {
 
     boolean hasAlreadyRandomizedType(final Class<?> type) {
         return populatedBeans.containsKey(type) && populatedBeans.get(type).size() == parameters.getObjectPoolSize();
-    }
-
-    @Override
-    public Set<String> getExcludedFields() {
-        return excludedFields;
     }
 
     void pushStackItem(final RandomizationContextStackItem field) {

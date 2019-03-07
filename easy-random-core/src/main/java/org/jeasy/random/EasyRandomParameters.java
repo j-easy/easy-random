@@ -107,6 +107,8 @@ public class EasyRandomParameters {
     private CustomRandomizerRegistry customRandomizerRegistry;
     private ExclusionRandomizerRegistry exclusionRandomizerRegistry;
     private Set<RandomizerRegistry> userRegistries;
+    private Set<Predicate<Field>> fieldExclusionPredicates;
+    private Set<Predicate<Class<?>>> typeExclusionPredicates;
 
     public EasyRandomParameters() {
         seed = DEFAULT_SEED;
@@ -123,6 +125,8 @@ public class EasyRandomParameters {
         customRandomizerRegistry = new CustomRandomizerRegistry();
         exclusionRandomizerRegistry = new ExclusionRandomizerRegistry();
         userRegistries = new LinkedHashSet<>();
+        fieldExclusionPredicates = new HashSet<>();
+        typeExclusionPredicates = new HashSet<>();
     }
 
     public Range<Integer> getCollectionSizeRange() {
@@ -209,6 +213,14 @@ public class EasyRandomParameters {
         this.ignoreAbstractTypes = ignoreAbstractTypes;
     }
 
+    public Set<Predicate<Field>> getFieldExclusionPredicates() {
+        return fieldExclusionPredicates;
+    }
+
+    public Set<Predicate<Class<?>>> getTypeExclusionPredicates() {
+        return typeExclusionPredicates;
+    }
+
     CustomRandomizerRegistry getCustomRandomizerRegistry() {
         return customRandomizerRegistry;
     }
@@ -233,6 +245,8 @@ public class EasyRandomParameters {
      * @see FieldPredicates
      */
     public <T> EasyRandomParameters randomize(Predicate<Field> predicate, Randomizer<T> randomizer) {
+        Objects.requireNonNull(predicate, "Predicate must not be null");
+        Objects.requireNonNull(randomizer, "Randomizer must not be null");
         customRandomizerRegistry.registerRandomizer(predicate, randomizer);
         return this;
     }
@@ -246,6 +260,8 @@ public class EasyRandomParameters {
      * @return the current {@link EasyRandomParameters} instance for method chaining
      */
     public <T> EasyRandomParameters randomize(Class<T> type, Randomizer<T> randomizer) {
+        Objects.requireNonNull(type, "Type must not be null");
+        Objects.requireNonNull(randomizer, "Randomizer must not be null");
         customRandomizerRegistry.registerRandomizer(type, randomizer);
         return this;
     }
@@ -259,6 +275,8 @@ public class EasyRandomParameters {
      * @see FieldPredicates
      */
     public EasyRandomParameters excludeField(Predicate<Field> predicate) {
+        Objects.requireNonNull(predicate, "Predicate must not be null");
+        fieldExclusionPredicates.add(predicate);
         exclusionRandomizerRegistry.addFieldPredicate(predicate);
         return this;
     }
@@ -272,6 +290,8 @@ public class EasyRandomParameters {
      * @see FieldPredicates
      */
     public EasyRandomParameters excludeType(Predicate<Class<?>> predicate) {
+        Objects.requireNonNull(predicate, "Predicate must not be null");
+        typeExclusionPredicates.add(predicate);
         exclusionRandomizerRegistry.addTypePredicate(predicate);
         return this;
     }
@@ -458,7 +478,6 @@ public class EasyRandomParameters {
     /**
      * Utility class to hold a range of values.
      *
-     * @author Mahmoud Ben Hassine (mahmoud.benhassine@icloud.com)
      * @param <T> type of values
      */
     @Data

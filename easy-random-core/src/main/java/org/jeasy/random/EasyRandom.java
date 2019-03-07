@@ -84,13 +84,12 @@ public class EasyRandom extends Random {
      * Generate a random instance of the given type.
      *
      * @param type           the type for which an instance will be generated
-     * @param excludedFields the name of fields to exclude
      * @param <T>            the actual type of the target object
      * @return a random instance of the given type
      * @throws ObjectGenerationException when unable to populate an instance of the given type
      */
-    public <T> T nextObject(final Class<T> type, final String... excludedFields) {
-        return doPopulateBean(type, new RandomizationContext(type, parameters, excludedFields));
+    public <T> T nextObject(final Class<T> type) {
+        return doPopulateBean(type, new RandomizationContext(type, parameters));
     }
 
     /**
@@ -98,17 +97,16 @@ public class EasyRandom extends Random {
      *
      * @param type           the type for which instances will be generated
      * @param streamSize         the number of instances to generate
-     * @param excludedFields the name of fields to exclude
      * @param <T>            the actual type of the target objects
      * @return a stream of random instances of the given type
      * @throws ObjectGenerationException when unable to populate an instance of the given type
      */
-    public <T> Stream<T> objects(final Class<T> type, final int streamSize, final String... excludedFields) {
+    public <T> Stream<T> objects(final Class<T> type, final int streamSize) {
         if (streamSize < 0) {
             throw new IllegalArgumentException("The stream size must be positive");
         }
         
-        return Stream.generate(() -> nextObject(type, excludedFields)).limit(streamSize);
+        return Stream.generate(() -> nextObject(type)).limit(streamSize);
     }
 
     <T> T doPopulateBean(final Class<T> type, final RandomizationContext context) {
