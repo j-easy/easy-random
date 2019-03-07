@@ -23,37 +23,42 @@
  */
 package org.jeasy.random;
 
+import static org.assertj.core.api.Assertions.assertThat;
+
 import java.lang.reflect.Field;
-import java.util.Set;
-import java.util.function.Predicate;
 
-import static org.jeasy.random.util.ReflectionUtils.isStatic;
+import org.jeasy.random.api.RandomizerContext;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
+import org.mockito.Mock;
+import org.mockito.junit.jupiter.MockitoExtension;
 
-/**
- * Component that encapsulates the logic of field exclusion in a given population context.
- * This class implements exclusion rules in the predefined order.
- *
- * @author Mahmoud Ben Hassine (mahmoud.benhassine@icloud.com)
- */
-class FieldExclusionChecker {
+import org.jeasy.random.beans.Human;
 
-    /**
-     * Given the current population context, should the field be excluded from being populated ?
-     *
-     * @param field the field to check
-     * @param context the current population context
-     * @return true if the field should be excluded, false otherwise
-     */
-    boolean shouldBeExcluded(final Field field, final RandomizationContext context) {
-        if (isStatic(field)) {
-            return true;
-        }
-        Set<Predicate<Field>> fieldExclusionPredicates = context.getParameters().getFieldExclusionPredicates();
-        for (Predicate<Field> fieldExclusionPredicate : fieldExclusionPredicates) {
-            if (fieldExclusionPredicate.test(field)) {
-                return true;
-            }
-        }
-        return false;
+@ExtendWith(MockitoExtension.class)
+public class ExclusionCheckerTest {
+
+    @Mock
+    private RandomizerContext randomizerContext;
+
+    private ExclusionChecker checker;
+
+    @BeforeEach
+    public void setUp() {
+        checker = new ExclusionChecker();
     }
+
+    @Test
+    public void staticFieldsShouldBeExcluded() throws NoSuchFieldException {
+        // Given
+        Field field = Human.class.getDeclaredField("SERIAL_VERSION_UID");
+
+        // When
+        boolean actual = checker.shouldBeExcluded(field, randomizerContext);
+
+        // Then
+        assertThat(actual).isTrue();
+    }
+
 }
