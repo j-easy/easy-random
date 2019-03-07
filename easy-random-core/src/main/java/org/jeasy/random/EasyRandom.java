@@ -57,7 +57,7 @@ public class EasyRandom extends Random {
 
     private final ObjectFactory objectFactory;
 
-    private final FieldExclusionChecker fieldExclusionChecker;
+    private final ExclusionChecker exclusionChecker;
 
     public EasyRandom() {
         this(new EasyRandomParameters());
@@ -76,7 +76,7 @@ public class EasyRandom extends Random {
         enumRandomizersByType = new ConcurrentHashMap<>();
         fieldPopulator = new FieldPopulator(this, randomizerProvider, arrayPopulator, collectionPopulator, mapPopulator);
         fieldPopulator.setScanClasspathForConcreteTypes(easyRandomParameters.isScanClasspathForConcreteTypes());
-        fieldExclusionChecker = new FieldExclusionChecker();
+        exclusionChecker = new ExclusionChecker();
         this.parameters = easyRandomParameters;
     }
 
@@ -105,11 +105,15 @@ public class EasyRandom extends Random {
         if (streamSize < 0) {
             throw new IllegalArgumentException("The stream size must be positive");
         }
-        
+
         return Stream.generate(() -> nextObject(type)).limit(streamSize);
     }
 
     <T> T doPopulateBean(final Class<T> type, final RandomizationContext context) {
+        if (exclusionChecker.shouldBeExcluded(type, context)) {
+            return null;
+        }
+
         T result;
         try {
 
@@ -188,12 +192,13 @@ public class EasyRandom extends Random {
     }
 
     private <T> void populateField(final Field field, final T result, final RandomizationContext context) throws IllegalAccessException {
-        if (!fieldExclusionChecker.shouldBeExcluded(field, context)) {
-            if (!parameters.isOverrideDefaultInitialization() && getFieldValue(result, field) != null && !isPrimitiveFieldWithDefaultValue(result, field)) {
-              return;
-            }
-            fieldPopulator.populateField(result, field, context);
+        if (exclusionChecker.shouldBeExcluded(field, context)) {
+            return;
         }
+        if (!parameters.isOverrideDefaultInitialization() && getFieldValue(result, field) != null && !isPrimitiveFieldWithDefaultValue(result, field)) {
+          return;
+        }
+        fieldPopulator.populateField(result, field, context);
     }
 
     int getRandomCollectionSize() {
