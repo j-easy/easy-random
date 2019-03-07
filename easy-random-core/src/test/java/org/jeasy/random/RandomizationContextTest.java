@@ -193,8 +193,8 @@ public class RandomizationContextTest {
         public D getRandomValue() {
             // At this level, the context should be as follows:
             assertThat(context.getCurrentField()).isEqualTo("b.c.d");
-            assertThat(context.getRandomizationDepth()).isEqualTo(3);
-            assertThat(context.getType()).isEqualTo(A.class);
+            assertThat(context.getCurrentRandomizationDepth()).isEqualTo(3);
+            assertThat(context.getTargetType()).isEqualTo(A.class);
             assertThat(context.getRootObject()).isInstanceOf(A.class);
             assertThat(context.getCurrentObject()).isInstanceOf(C.class);
 

@@ -117,7 +117,7 @@ class RandomizationContext implements RandomizerContext {
     }
 
     @Override
-    public Class<?> getType() {
+    public Class<?> getTargetType() {
         return type;
     }
 
@@ -132,7 +132,7 @@ class RandomizationContext implements RandomizerContext {
     }
 
     @Override
-    public int getRandomizationDepth() {
+    public int getCurrentRandomizationDepth() {
         return stack.size();
     }
 
