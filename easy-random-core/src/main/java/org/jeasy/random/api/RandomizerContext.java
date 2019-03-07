@@ -38,10 +38,10 @@ public interface RandomizerContext {
      * Return the target type (parameter of {@link EasyRandom#nextObject(Class)}).
      * @return target type
      */
-    Class<?> getType();
+    Class<?> getTargetType();
 
     /**
-     * Return the root object being randomized (instance of {@link RandomizerContext#getType()}.
+     * Return the root object being randomized (instance of {@link RandomizerContext#getTargetType()}.
      * @return root object being randomized
      */
     Object getRootObject();
@@ -62,7 +62,7 @@ public interface RandomizerContext {
      * Get the current level in the hierarchy of the object graph.
      * @return current level in the hierarchy of the object graph.
      */
-    int getRandomizationDepth();
+    int getCurrentRandomizationDepth();
 
     /**
      * Return the currently used parameters by the enclosing {@link EasyRandom}.
