@@ -23,6 +23,7 @@
  */
 package org.jeasy.random;
 
+import org.jeasy.random.api.ExclusionPolicy;
 import org.jeasy.random.api.Randomizer;
 import org.jeasy.random.api.RandomizerRegistry;
 import org.jeasy.random.randomizers.registry.CustomRandomizerRegistry;
@@ -104,6 +105,9 @@ public class EasyRandomParameters {
     private Range<Integer> stringLengthRange;
     private Range<LocalDate> dateRange;
     private Range<LocalTime> timeRange;
+    private ExclusionPolicy exclusionPolicy;
+
+    // internal params
     private CustomRandomizerRegistry customRandomizerRegistry;
     private ExclusionRandomizerRegistry exclusionRandomizerRegistry;
     private Set<RandomizerRegistry> userRegistries;
@@ -127,6 +131,7 @@ public class EasyRandomParameters {
         userRegistries = new LinkedHashSet<>();
         fieldExclusionPredicates = new HashSet<>();
         typeExclusionPredicates = new HashSet<>();
+        exclusionPolicy = new ExclusionChecker();
     }
 
     public Range<Integer> getCollectionSizeRange() {
@@ -213,6 +218,13 @@ public class EasyRandomParameters {
         this.ignoreAbstractTypes = ignoreAbstractTypes;
     }
 
+    public ExclusionPolicy getExclusionPolicy() {
+        return exclusionPolicy;
+    }
+    public void setExclusionPolicy(ExclusionPolicy exclusionPolicy) {
+        this.exclusionPolicy = exclusionPolicy;
+    }
+
     public Set<Predicate<Field>> getFieldExclusionPredicates() {
         return fieldExclusionPredicates;
     }
@@ -293,6 +305,18 @@ public class EasyRandomParameters {
         Objects.requireNonNull(predicate, "Predicate must not be null");
         typeExclusionPredicates.add(predicate);
         exclusionRandomizerRegistry.addTypePredicate(predicate);
+        return this;
+    }
+
+    /**
+     * Provide a custom exclusion policy.
+     *
+     * @param exclusionPolicy to use
+     * @return the current {@link EasyRandomParameters} instance for method chaining
+     */
+    public EasyRandomParameters exclusionPolicy(ExclusionPolicy exclusionPolicy) {
+        Objects.requireNonNull(exclusionPolicy, "Exclusion policy must not be null");
+        this.exclusionPolicy = exclusionPolicy;
         return this;
     }
 
