@@ -57,7 +57,7 @@ public class EasyRandom extends Random {
 
     private final ObjectFactory objectFactory;
 
-    private final ExclusionChecker exclusionChecker;
+    private final ExclusionPolicy exclusionPolicy;
 
     public EasyRandom() {
         this(new EasyRandomParameters());
@@ -76,7 +76,7 @@ public class EasyRandom extends Random {
         enumRandomizersByType = new ConcurrentHashMap<>();
         fieldPopulator = new FieldPopulator(this, randomizerProvider, arrayPopulator, collectionPopulator, mapPopulator);
         fieldPopulator.setScanClasspathForConcreteTypes(easyRandomParameters.isScanClasspathForConcreteTypes());
-        exclusionChecker = new ExclusionChecker();
+        exclusionPolicy = easyRandomParameters.getExclusionPolicy();
         this.parameters = easyRandomParameters;
     }
 
@@ -110,7 +110,7 @@ public class EasyRandom extends Random {
     }
 
     <T> T doPopulateBean(final Class<T> type, final RandomizationContext context) {
-        if (exclusionChecker.shouldBeExcluded(type, context)) {
+        if (exclusionPolicy.shouldBeExcluded(type, context)) {
             return null;
         }
 
@@ -192,7 +192,7 @@ public class EasyRandom extends Random {
     }
 
     private <T> void populateField(final Field field, final T result, final RandomizationContext context) throws IllegalAccessException {
-        if (exclusionChecker.shouldBeExcluded(field, context)) {
+        if (exclusionPolicy.shouldBeExcluded(field, context)) {
             return;
         }
         if (!parameters.isOverrideDefaultInitialization() && getFieldValue(result, field) != null && !isPrimitiveFieldWithDefaultValue(result, field)) {
