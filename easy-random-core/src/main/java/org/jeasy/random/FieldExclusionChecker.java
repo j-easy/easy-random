@@ -25,6 +25,7 @@ package org.jeasy.random;
 
 import java.lang.reflect.Field;
 import java.util.Set;
+import java.util.function.Predicate;
 
 import static org.jeasy.random.util.ReflectionUtils.isStatic;
 
@@ -47,10 +48,12 @@ class FieldExclusionChecker {
         if (isStatic(field)) {
             return true;
         }
-        Set<String> excludedFields = context.getExcludedFields();
-        if (excludedFields.isEmpty()) {
-            return false;
+        Set<Predicate<Field>> fieldExclusionPredicates = context.getParameters().getFieldExclusionPredicates();
+        for (Predicate<Field> fieldExclusionPredicate : fieldExclusionPredicates) {
+            if (fieldExclusionPredicate.test(field)) {
+                return true;
+            }
         }
-        return excludedFields.contains(context.getFieldFullName(field));
+        return false;
     }
 }

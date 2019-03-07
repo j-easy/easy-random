@@ -24,6 +24,7 @@
 package org.jeasy.random;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.jeasy.random.FieldPredicates.named;
 import static org.mockito.Mockito.when;
 
 import java.lang.reflect.Field;
@@ -162,11 +163,13 @@ public class RandomizationContextTest {
     void testRandomizerContext() {
         // given
         MyRandomizer randomizer = new MyRandomizer();
-        EasyRandomParameters parameters = new EasyRandomParameters().randomize(D.class, randomizer);
+        EasyRandomParameters parameters = new EasyRandomParameters()
+                .randomize(D.class, randomizer)
+                .excludeField(named("excluded"));
         EasyRandom easyRandom = new EasyRandom(parameters);
 
         // when
-        A a = easyRandom.nextObject(A.class, "excluded");
+        A a = easyRandom.nextObject(A.class);
 
         // then
         assertThat(a).isNotNull();
@@ -194,7 +197,6 @@ public class RandomizationContextTest {
             assertThat(context.getType()).isEqualTo(A.class);
             assertThat(context.getRootObject()).isInstanceOf(A.class);
             assertThat(context.getCurrentObject()).isInstanceOf(C.class);
-            assertThat(context.getExcludedFields()).containsExactly("excluded");
 
             D d = new D();
             d.setName("foo");

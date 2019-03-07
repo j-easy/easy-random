@@ -30,15 +30,16 @@ import java.lang.reflect.Modifier;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.jeasy.random.api.ContextAwareRandomizer;
+import org.jeasy.random.api.RandomizerContext;
+import org.jeasy.random.beans.*;
+import org.jeasy.random.beans.exclusion.A;
+import org.jeasy.random.beans.exclusion.B;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.junit.jupiter.MockitoExtension;
 
-import org.jeasy.random.beans.Address;
-import org.jeasy.random.beans.Human;
-import org.jeasy.random.beans.Person;
-import org.jeasy.random.beans.Website;
 import org.jeasy.random.beans.exclusion.C;
 
 @ExtendWith(MockitoExtension.class)
@@ -53,8 +54,15 @@ public class FieldExclusionTest {
 
     @Test
     public void excludedFieldsShouldNotBePopulated() {
-        Person person = easyRandom.nextObject(Person.class, "name");
+        // given
+        EasyRandomParameters parameters = new EasyRandomParameters()
+                .excludeField(named("name"));
+        easyRandom = new EasyRandom(parameters);
 
+        // when
+        Person person = easyRandom.nextObject(Person.class);
+
+        //then
         assertThat(person).isNotNull();
         assertThat(person.getName()).isNull();
     }
@@ -95,8 +103,15 @@ public class FieldExclusionTest {
 
     @Test
     public void excludedDottedFieldsShouldNotBePopulated() {
-        Person person = easyRandom.nextObject(Person.class, "address.street.name");
+        // given
+        EasyRandomParameters parameters = new EasyRandomParameters()
+                .excludeField(named("name").and(inClass(Street.class)));
+        easyRandom = new EasyRandom(parameters);
 
+        // when
+        Person person = easyRandom.nextObject(Person.class);
+
+        // then
         assertThat(person).isNotNull();
         assertThat(person.getAddress()).isNotNull();
         assertThat(person.getAddress().getStreet()).isNotNull();
@@ -147,7 +162,11 @@ public class FieldExclusionTest {
 
     @Test
     public void testFirstLevelExclusion() {
-        C c = easyRandom.nextObject(C.class, "b2");
+        EasyRandomParameters parameters = new EasyRandomParameters()
+                .excludeField(named("b2").and(inClass(C.class)));
+        easyRandom = new EasyRandom(parameters);
+
+        C c = easyRandom.nextObject(C.class);
 
         assertThat(c).isNotNull();
 
@@ -165,8 +184,25 @@ public class FieldExclusionTest {
     }
 
     @Test
-    public void testSecondLevelExclusion() {
-        C c = easyRandom.nextObject(C.class, "b2.a2");
+    public void testSecondLevelExclusion() { // goal: exclude only b2.a2
+        EasyRandomParameters parameters = new EasyRandomParameters()
+                .randomize(ofType(A.class).and(inClass(B.class)), new ContextAwareRandomizer<A>() {
+                    private RandomizerContext context;
+                    @Override
+                    public void setRandomizerContext(RandomizerContext context) {
+                        this.context = context;
+                    }
+
+                    @Override
+                    public A getRandomValue() {
+                        if (context.getCurrentField().equals("b2.a2")) {
+                            return null;
+                        }
+                        return new EasyRandom().nextObject(A.class);
+                    }
+                });
+        easyRandom = new EasyRandom(parameters);
+        C c = easyRandom.nextObject(C.class);
 
         assertThat(c).isNotNull();
 
@@ -188,8 +224,25 @@ public class FieldExclusionTest {
     }
 
     @Test
-    public void testThirdLevelExclusion() {
-        C c = easyRandom.nextObject(C.class, "b2.a2.s2");
+    public void testThirdLevelExclusion() { // goal: exclude only b2.a2.s2
+        EasyRandomParameters parameters = new EasyRandomParameters()
+                .randomize(FieldPredicates.named("s2").and(inClass(A.class)), new ContextAwareRandomizer<String>() {
+                    private RandomizerContext context;
+                    @Override
+                    public void setRandomizerContext(RandomizerContext context) {
+                        this.context = context;
+                    }
+
+                    @Override
+                    public String getRandomValue() {
+                        if (context.getCurrentField().equals("b2.a2.s2")) {
+                            return null;
+                        }
+                        return new EasyRandom().nextObject(String.class);
+                    }
+                });
+        easyRandom = new EasyRandom(parameters);
+        C c = easyRandom.nextObject(C.class);
 
         // B1 and its "children" must not be null
         assertThat(c.getB1()).isNotNull();
@@ -211,7 +264,11 @@ public class FieldExclusionTest {
 
     @Test
     public void testFirstLevelCollectionExclusion() {
-        C c = easyRandom.nextObject(C.class, "b3");
+        EasyRandomParameters parameters = new EasyRandomParameters()
+                .excludeField(FieldPredicates.named("b3").and(inClass(C.class)));
+        easyRandom = new EasyRandom(parameters);
+
+        C c = easyRandom.nextObject(C.class);
 
         assertThat(c).isNotNull();
 
@@ -238,8 +295,26 @@ public class FieldExclusionTest {
     }
 
     @Test
-    public void testSecondLevelCollectionExclusion() {
-        C c = easyRandom.nextObject(C.class, "b3.a2"); // b3.a2 does not make sense, should be ignored
+    public void testSecondLevelCollectionExclusion() { // b3.a2 does not make sense, should be ignored
+        EasyRandomParameters parameters = new EasyRandomParameters()
+                .randomize(FieldPredicates.named("a2").and(inClass(B.class)), new ContextAwareRandomizer<A>() {
+                    private RandomizerContext context;
+                    @Override
+                    public void setRandomizerContext(RandomizerContext context) {
+                        this.context = context;
+                    }
+
+                    @Override
+                    public A getRandomValue() {
+                        if (context.getCurrentField().equals("b3.a2")) {
+                            return null;
+                        }
+                        return new EasyRandom().nextObject(A.class);
+                    }
+                });
+        easyRandom = new EasyRandom(parameters);
+
+        C c = easyRandom.nextObject(C.class);
 
         assertThat(c).isNotNull();
 
@@ -252,7 +327,7 @@ public class FieldExclusionTest {
         assertThat(c.getB1().getA2().getS1()).isNotNull();
         assertThat(c.getB1().getA2().getS2()).isNotNull();
 
-        // B1 and its "children" must not be null
+        // B2 and its "children" must not be null
         assertThat(c.getB2()).isNotNull();
         assertThat(c.getB2().getA1()).isNotNull();
         assertThat(c.getB2().getA1().getS1()).isNotNull();
