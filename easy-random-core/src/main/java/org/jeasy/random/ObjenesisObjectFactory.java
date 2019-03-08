@@ -23,34 +23,30 @@
  */
 package org.jeasy.random;
 
+import org.jeasy.random.api.ObjectFactory;
+import org.jeasy.random.api.RandomizerContext;
 import org.objenesis.Objenesis;
 import org.objenesis.ObjenesisStd;
 
 import java.lang.reflect.Constructor;
-import java.util.Collection;
-import java.util.concurrent.ArrayBlockingQueue;
-import java.util.concurrent.DelayQueue;
-import java.util.concurrent.SynchronousQueue;
 
 import static org.jeasy.random.util.CollectionUtils.randomElementOf;
 import static org.jeasy.random.util.ReflectionUtils.getPublicConcreteSubTypesOf;
 import static org.jeasy.random.util.ReflectionUtils.isAbstract;
 
 /**
- * Factory to create "fancy" objects: immutable beans, generic types, abstract and interface types.
- * Encapsulates the logic of type introspection, classpath scanning for abstract types, etc
+ * Objenesis based factory to create "fancy" objects: immutable java beans, generic types, abstract and interface types.
  *
  * @author Mahmoud Ben Hassine (mahmoud.benhassine@icloud.com)
  */
 @SuppressWarnings({"unchecked"})
-class ObjectFactory {
+class ObjenesisObjectFactory implements ObjectFactory {
 
     private final Objenesis objenesis = new ObjenesisStd();
 
-    private boolean scanClasspathForConcreteTypes;
-
-    <T> T createInstance(final Class<T> type) {
-        if (scanClasspathForConcreteTypes && isAbstract(type)) {
+    @Override
+    public <T> T createInstance(Class<T> type, RandomizerContext context) {
+        if (context.getParameters().isScanClasspathForConcreteTypes() && isAbstract(type)) {
             Class<?> randomConcreteSubType = randomElementOf(getPublicConcreteSubTypesOf((type)));
             if (randomConcreteSubType == null) {
                 throw new InstantiationError("Unable to find a matching concrete subtype of type: " + type + " in the classpath");
@@ -61,7 +57,7 @@ class ObjectFactory {
             try {
                 return createNewInstance(type);
             } catch (Error e) {
-                throw new ObjectGenerationException("Unable to create an instance of type: " + type, e);
+                throw new ObjectCreationException("Unable to create an instance of type: " + type, e);
             }
         }
     }
@@ -78,35 +74,4 @@ class ObjectFactory {
         }
     }
 
-    Collection<?> createEmptyCollectionForType(Class<?> fieldType, int initialSize) {
-        rejectUnsupportedTypes(fieldType);
-        Collection<?> collection;
-        try {
-            collection = (Collection<?>) fieldType.newInstance();
-        } catch (InstantiationException | IllegalAccessException e) {
-            // Creating an ArrayBlockingQueue with objenesis by-passes the constructor.
-            // This leads to inconsistent state of the collection (locks are not initialized) that causes NPE at elements insertion time..
-            if (fieldType.equals(ArrayBlockingQueue.class)) {
-                collection = new ArrayBlockingQueue<>(initialSize);
-            } else {
-                collection = (Collection<?>) objenesis.newInstance(fieldType);
-            }
-        }
-        return collection;
-    }
-
-    void setScanClasspathForConcreteTypes(boolean scanClasspathForConcreteTypes) {
-        this.scanClasspathForConcreteTypes = scanClasspathForConcreteTypes;
-    }
-
-    private void rejectUnsupportedTypes(Class<?> type) {
-        if (type.equals(SynchronousQueue.class)) {
-            // SynchronousQueue is not supported since it requires a consuming thread at insertion time
-            throw new UnsupportedOperationException(SynchronousQueue.class.getName() + " type is not supported");
-        }
-        if (type.equals(DelayQueue.class)) {
-            // DelayQueue is not supported since it requires creating dummy delayed objects
-            throw new UnsupportedOperationException(DelayQueue.class.getName() + " type is not supported");
-        }
-    }
 }

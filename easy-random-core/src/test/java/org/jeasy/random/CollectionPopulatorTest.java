@@ -33,6 +33,9 @@ import java.util.Collection;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.concurrent.ArrayBlockingQueue;
+import java.util.concurrent.DelayQueue;
+import java.util.concurrent.SynchronousQueue;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -54,6 +57,7 @@ import lombok.Data;
 @SuppressWarnings({"unchecked", "rawtypes"})
 public class CollectionPopulatorTest {
 
+    private static final int INITIAL_CAPACITY = 10;
     private static final int SIZE = 2;
     private static final String STRING = "foo";
 
@@ -66,8 +70,7 @@ public class CollectionPopulatorTest {
 
     @BeforeEach
     public void setUp() {
-        ObjectFactory objectFactory = new ObjectFactory();
-        collectionPopulator = new CollectionPopulator(easyRandom, objectFactory);
+        collectionPopulator = new CollectionPopulator(easyRandom);
     }
 
     /*
@@ -353,14 +356,14 @@ public class CollectionPopulatorTest {
     public void synchronousQueueTypeMustBeRejected() {
         EasyRandom easyRandom = new EasyRandom();
 
-        assertThatThrownBy(() -> easyRandom.nextObject(SynchronousQueueBean.class)).isInstanceOf(ObjectGenerationException.class);
+        assertThatThrownBy(() -> easyRandom.nextObject(SynchronousQueueBean.class)).isInstanceOf(ObjectCreationException.class);
     }
 
     @Test
     public void delayedQueueTypeMustBeRejected() {
         EasyRandom easyRandom = new EasyRandom();
 
-        assertThatThrownBy(() -> easyRandom.nextObject(DelayedQueueBean.class)).isInstanceOf(ObjectGenerationException.class);
+        assertThatThrownBy(() -> easyRandom.nextObject(DelayedQueueBean.class)).isInstanceOf(ObjectCreationException.class);
     }
 
     @Test
@@ -413,6 +416,25 @@ public class CollectionPopulatorTest {
         assertThat(bean.getList()).isEmpty();
         assertThat(bean.getSet()).isEmpty();
         assertThat(bean.getMap()).isEmpty();
+    }
+
+
+    @Test
+    public void createEmptyCollectionForArrayBlockingQueue() {
+        Collection<?> collection = collectionPopulator.createEmptyCollectionForType(ArrayBlockingQueue.class, INITIAL_CAPACITY);
+
+        assertThat(collection).isInstanceOf(ArrayBlockingQueue.class).isEmpty();
+        assertThat(((ArrayBlockingQueue<?>) collection).remainingCapacity()).isEqualTo(INITIAL_CAPACITY);
+    }
+
+    @Test
+    public void synchronousQueueShouldBeRejected() {
+        assertThatThrownBy(() -> collectionPopulator.createEmptyCollectionForType(SynchronousQueue.class, INITIAL_CAPACITY)).isInstanceOf(UnsupportedOperationException.class);
+    }
+
+    @Test
+    public void delayQueueShouldBeRejected() {
+        assertThatThrownBy(() -> collectionPopulator.createEmptyCollectionForType(DelayQueue.class, INITIAL_CAPACITY)).isInstanceOf(UnsupportedOperationException.class);
     }
 
     private void assertContainsOnlyNonEmptyPersons(Collection<Person> persons) {

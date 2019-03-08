@@ -180,7 +180,7 @@ public class EasyRandomTest {
 
     @Test
     public void whenUnableToInstantiateField_thenShouldThrowObjectGenerationException() {
-        assertThatThrownBy(() -> easyRandom.nextObject(AbstractBean.class)).isInstanceOf(ObjectGenerationException.class);
+        assertThatThrownBy(() -> easyRandom.nextObject(AbstractBean.class)).isInstanceOf(ObjectCreationException.class);
     }
 
     @Test

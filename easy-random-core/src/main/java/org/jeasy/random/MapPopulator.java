@@ -23,6 +23,8 @@
  */
 package org.jeasy.random;
 
+import org.jeasy.random.api.ObjectFactory;
+
 import java.lang.reflect.Field;
 import java.lang.reflect.ParameterizedType;
 import java.lang.reflect.Type;
@@ -72,7 +74,7 @@ class MapPopulator {
                         return null;
                     }
                 } else {
-                    map = (Map<Object, Object>) objectFactory.createInstance(fieldType);
+                    map = (Map<Object, Object>) objectFactory.createInstance(fieldType, context);
                 }
             }
         }

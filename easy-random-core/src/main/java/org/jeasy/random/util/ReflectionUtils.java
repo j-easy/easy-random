@@ -25,7 +25,7 @@ package org.jeasy.random.util;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.jeasy.random.annotation.RandomizerArgument;
-import org.jeasy.random.ObjectGenerationException;
+import org.jeasy.random.ObjectCreationException;
 import org.jeasy.random.api.Randomizer;
 import lombok.experimental.UtilityClass;
 
@@ -474,7 +474,7 @@ public class ReflectionUtils {
             }
             return (Randomizer<T>) type.newInstance();
         } catch (IllegalAccessException | InvocationTargetException | InstantiationException e) {
-            throw new ObjectGenerationException(format("Could not create Randomizer of type: %s with constructor arguments: %s", type, Arrays.toString(randomizerArguments)), e);
+            throw new ObjectCreationException(format("Could not create Randomizer of type: %s with constructor arguments: %s", type, Arrays.toString(randomizerArguments)), e);
         }
     }
 

@@ -24,6 +24,7 @@
 package org.jeasy.random;
 
 import org.jeasy.random.api.ExclusionPolicy;
+import org.jeasy.random.api.ObjectFactory;
 import org.jeasy.random.api.Randomizer;
 import org.jeasy.random.api.RandomizerRegistry;
 import org.jeasy.random.randomizers.registry.CustomRandomizerRegistry;
@@ -106,6 +107,7 @@ public class EasyRandomParameters {
     private Range<LocalDate> dateRange;
     private Range<LocalTime> timeRange;
     private ExclusionPolicy exclusionPolicy;
+    private ObjectFactory objectFactory;
 
     // internal params
     private CustomRandomizerRegistry customRandomizerRegistry;
@@ -132,6 +134,7 @@ public class EasyRandomParameters {
         fieldExclusionPredicates = new HashSet<>();
         typeExclusionPredicates = new HashSet<>();
         exclusionPolicy = new ExclusionChecker();
+        objectFactory = new ObjenesisObjectFactory();
     }
 
     public Range<Integer> getCollectionSizeRange() {
@@ -222,7 +225,16 @@ public class EasyRandomParameters {
         return exclusionPolicy;
     }
     public void setExclusionPolicy(ExclusionPolicy exclusionPolicy) {
+        Objects.requireNonNull(exclusionPolicy, "Exclusion policy must not be null");
         this.exclusionPolicy = exclusionPolicy;
+    }
+
+    public ObjectFactory getObjectFactory() {
+        return objectFactory;
+    }
+    public void setObjectFactory(ObjectFactory objectFactory) {
+        Objects.requireNonNull(objectFactory, "Object factory must not be null");
+        this.objectFactory = objectFactory;
     }
 
     public Set<Predicate<Field>> getFieldExclusionPredicates() {
@@ -315,8 +327,18 @@ public class EasyRandomParameters {
      * @return the current {@link EasyRandomParameters} instance for method chaining
      */
     public EasyRandomParameters exclusionPolicy(ExclusionPolicy exclusionPolicy) {
-        Objects.requireNonNull(exclusionPolicy, "Exclusion policy must not be null");
-        this.exclusionPolicy = exclusionPolicy;
+        setExclusionPolicy(exclusionPolicy);
+        return this;
+    }
+
+    /**
+     * Provide a custom object factory.
+     *
+     * @param objectFactory to use
+     * @return the current {@link EasyRandomParameters} instance for method chaining
+     */
+    public EasyRandomParameters objectFactory(ObjectFactory objectFactory) {
+        setObjectFactory(objectFactory);
         return this;
     }
 
