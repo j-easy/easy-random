@@ -34,6 +34,7 @@ import java.util.Map;
 import java.util.SortedMap;
 import java.util.TreeMap;
 
+import org.jeasy.random.api.ObjectFactory;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -65,7 +66,7 @@ public class MapPopulatorTest {
 
     @BeforeEach
     public void setUp() {
-        ObjectFactory objectFactory = new ObjectFactory();
+        ObjectFactory objectFactory = new ObjenesisObjectFactory();
         mapPopulator = new MapPopulator(easyRandom, objectFactory);
     }
 

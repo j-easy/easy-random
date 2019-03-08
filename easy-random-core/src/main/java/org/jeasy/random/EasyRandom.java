@@ -68,10 +68,9 @@ public class EasyRandom extends Random {
         super.setSeed(easyRandomParameters.getSeed());
         LinkedHashSet<RandomizerRegistry> registries = setupRandomizerRegistries(easyRandomParameters);
         randomizerProvider = new RandomizerProvider(registries);
-        objectFactory = new ObjectFactory();
-        objectFactory.setScanClasspathForConcreteTypes(easyRandomParameters.isScanClasspathForConcreteTypes());
+        objectFactory = easyRandomParameters.getObjectFactory();
         arrayPopulator = new ArrayPopulator(this, randomizerProvider);
-        collectionPopulator = new CollectionPopulator(this, objectFactory);
+        collectionPopulator = new CollectionPopulator(this);
         mapPopulator = new MapPopulator(this, objectFactory);
         enumRandomizersByType = new ConcurrentHashMap<>();
         fieldPopulator = new FieldPopulator(this, randomizerProvider, arrayPopulator, collectionPopulator, mapPopulator);
@@ -86,7 +85,7 @@ public class EasyRandom extends Random {
      * @param type           the type for which an instance will be generated
      * @param <T>            the actual type of the target object
      * @return a random instance of the given type
-     * @throws ObjectGenerationException when unable to populate an instance of the given type
+     * @throws ObjectCreationException when unable to create a new instance of the given type
      */
     public <T> T nextObject(final Class<T> type) {
         return doPopulateBean(type, new RandomizationContext(type, parameters));
@@ -99,7 +98,7 @@ public class EasyRandom extends Random {
      * @param streamSize         the number of instances to generate
      * @param <T>            the actual type of the target objects
      * @return a stream of random instances of the given type
-     * @throws ObjectGenerationException when unable to populate an instance of the given type
+     * @throws ObjectCreationException when unable to create a new instance of the given type
      */
     public <T> Stream<T> objects(final Class<T> type, final int streamSize) {
         if (streamSize < 0) {
@@ -136,7 +135,7 @@ public class EasyRandom extends Random {
             }
 
             // create a new instance of the target type
-            result = objectFactory.createInstance(type);
+            result = objectFactory.createInstance(type, context);
             context.setRandomizedObject(result);
 
             // cache instance in the population context
@@ -159,7 +158,7 @@ public class EasyRandom extends Random {
             return result;
         } catch (InstantiationError | Exception e) {
             if (!parameters.isIgnoreAbstractTypes()) {
-                throw new ObjectGenerationException("Unable to generate a random instance of type " + type, e);
+                throw new ObjectCreationException("Unable to create a random instance of type " + type, e);
             } else {
                 return null;
             }

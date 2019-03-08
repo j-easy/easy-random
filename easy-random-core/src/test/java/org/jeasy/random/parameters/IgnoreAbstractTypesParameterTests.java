@@ -25,7 +25,7 @@ package org.jeasy.random.parameters;
 
 import org.jeasy.random.EasyRandom;
 import org.jeasy.random.EasyRandomParameters;
-import org.jeasy.random.ObjectGenerationException;
+import org.jeasy.random.ObjectCreationException;
 import lombok.Data;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.Test;
@@ -55,7 +55,7 @@ public class IgnoreAbstractTypesParameterTests {
         EasyRandomParameters parameters = new EasyRandomParameters().ignoreAbstractTypes(false);
         easyRandom = new EasyRandom(parameters);
 
-        assertThatThrownBy(() -> easyRandom.nextObject(Foo.class)).isInstanceOf(ObjectGenerationException.class);
+        assertThatThrownBy(() -> easyRandom.nextObject(Foo.class)).isInstanceOf(ObjectCreationException.class);
     }
 
     @Data

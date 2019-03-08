@@ -44,7 +44,7 @@ public class RandomizerAnnotationTest {
     @Test
     // https://github.com/j-easy/easy-random/issues/131
     public void shouldThrowObjectGenerationExceptionWhenRandomizerUsedInRandomizerAnnotationHasNoDefaultConstructor() {
-        assertThatThrownBy(() -> new EasyRandom().nextObject(Bar.class)).isInstanceOf(ObjectGenerationException.class);
+        assertThatThrownBy(() -> new EasyRandom().nextObject(Bar.class)).isInstanceOf(ObjectCreationException.class);
     }
 
 

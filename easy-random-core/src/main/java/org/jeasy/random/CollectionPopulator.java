@@ -23,6 +23,8 @@
  */
 package org.jeasy.random;
 
+import org.objenesis.ObjenesisStd;
+
 import java.lang.reflect.Field;
 import java.lang.reflect.ParameterizedType;
 import java.lang.reflect.Type;
@@ -40,11 +42,8 @@ class CollectionPopulator {
 
     private final EasyRandom easyRandom;
 
-    private final ObjectFactory objectFactory;
-
-    CollectionPopulator(final EasyRandom easyRandom, final ObjectFactory objectFactory) {
+    CollectionPopulator(final EasyRandom easyRandom) {
         this.easyRandom = easyRandom;
-        this.objectFactory = objectFactory;
     }
 
     @SuppressWarnings({"unchecked", "rawtypes"})
@@ -57,7 +56,7 @@ class CollectionPopulator {
         if (isInterface(fieldType)) {
             collection = getEmptyImplementationForCollectionInterface(fieldType);
         } else {
-            collection = objectFactory.createEmptyCollectionForType(fieldType, randomSize);
+            collection = createEmptyCollectionForType(fieldType, randomSize);
         }
 
         if (isParameterizedType(fieldGenericType)) { // populate only parametrized types, raw types will be empty
@@ -73,6 +72,33 @@ class CollectionPopulator {
         }
         return collection;
 
+    }
+
+    Collection<?> createEmptyCollectionForType(Class<?> fieldType, int initialSize) {
+        rejectUnsupportedTypes(fieldType);
+        Collection<?> collection;
+        try {
+            collection = (Collection<?>) fieldType.newInstance();
+        } catch (InstantiationException | IllegalAccessException e) {
+            if (fieldType.equals(ArrayBlockingQueue.class)) {
+                collection = new ArrayBlockingQueue<>(initialSize);
+            } else {
+                // FIXME objenesis should be a field to be created only once + can we avoid objenesis at all in this class?
+                collection = (Collection<?>) new ObjenesisStd().newInstance(fieldType);
+            }
+        }
+        return collection;
+    }
+
+    private void rejectUnsupportedTypes(Class<?> type) {
+        if (type.equals(SynchronousQueue.class)) {
+            // SynchronousQueue is not supported since it requires a consuming thread at insertion time
+            throw new UnsupportedOperationException(SynchronousQueue.class.getName() + " type is not supported");
+        }
+        if (type.equals(DelayQueue.class)) {
+            // DelayQueue is not supported since it requires creating dummy delayed objects
+            throw new UnsupportedOperationException(DelayQueue.class.getName() + " type is not supported");
+        }
     }
 
     Collection<?> getEmptyImplementationForCollectionInterface(final Class<?> collectionInterface) {

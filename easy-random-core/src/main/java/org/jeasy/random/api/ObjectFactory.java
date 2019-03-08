@@ -21,22 +21,27 @@
  *   OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  *   THE SOFTWARE.
  */
-package org.jeasy.random;
+package org.jeasy.random.api;
+
+import org.jeasy.random.ObjectCreationException;
 
 /**
- * Exception thrown when Easy Random is unable to generate an instance of a given type.
+ * Strategy interface for object creation.
  *
  * @author Mahmoud Ben Hassine (mahmoud.benhassine@icloud.com)
+ * @since 4.0
  */
-public class ObjectGenerationException extends RuntimeException {
+public interface ObjectFactory {
 
-    private static final long serialVersionUID = -9049778508557432869L;
+    /**
+     * Create a new instance of {@code type} in the given randomization context.
+     *
+     * @param type to create
+     * @param context current randomization context
+     * @param <T> generic type
+     * @return new instance of the given type
+     * @throws ObjectCreationException when unable to create an instance of the given type
+     */
+    <T> T createInstance(final Class<T> type, final RandomizerContext context) throws ObjectCreationException;
 
-    public ObjectGenerationException(String message) {
-        super(message);
-    }
-
-    public ObjectGenerationException(String message, Throwable cause) {
-        super(message, cause);
-    }
 }

@@ -33,7 +33,7 @@ import org.jeasy.random.EasyRandom;
 import org.jeasy.random.EasyRandomParameters;
 import org.junit.jupiter.api.Test;
 
-import org.jeasy.random.ObjectGenerationException;
+import org.jeasy.random.ObjectCreationException;
 import org.jeasy.random.beans.Ape;
 import org.jeasy.random.beans.Bar;
 import org.jeasy.random.beans.ClassUsingAbstractEnum;
@@ -54,7 +54,7 @@ public class ScanClasspathForConcreteTypesParameterTests {
         EasyRandomParameters parameters = new EasyRandomParameters().scanClasspathForConcreteTypes(false);
         easyRandom = new EasyRandom(parameters);
 
-        assertThatThrownBy(() -> easyRandom.nextObject(Mamals.class)).isInstanceOf(ObjectGenerationException.class);
+        assertThatThrownBy(() -> easyRandom.nextObject(Mamals.class)).isInstanceOf(ObjectCreationException.class);
     }
 
     @Test

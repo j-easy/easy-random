@@ -23,58 +23,42 @@
  */
 package org.jeasy.random;
 
+import org.jeasy.random.api.RandomizerContext;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
+import org.mockito.Answers;
+import org.mockito.Mock;
+import org.mockito.Mockito;
+import org.mockito.junit.jupiter.MockitoExtension;
+
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
-import java.util.Collection;
-import java.util.concurrent.ArrayBlockingQueue;
-import java.util.concurrent.DelayQueue;
-import java.util.concurrent.SynchronousQueue;
+@ExtendWith(MockitoExtension.class)
+public class ObjenesisObjectFactoryTest {
 
-import org.jeasy.random.ObjectFactory;
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Test;
+    @Mock(answer = Answers.RETURNS_DEEP_STUBS)
+    private RandomizerContext context;
 
-public class ObjectFactoryTest {
-
-    private static final int INITIAL_CAPACITY = 10;
-
-    private ObjectFactory objectFactory;
+    private ObjenesisObjectFactory objenesisObjectFactory;
 
     @BeforeEach
     public void setUp() {
-        objectFactory = new ObjectFactory();
+        objenesisObjectFactory = new ObjenesisObjectFactory();
     }
 
     @Test
     public void concreteClassesShouldBeCreatedAsExpected() {
-        String string = objectFactory.createInstance(String.class);
+        String string = objenesisObjectFactory.createInstance(String.class, context);
 
         assertThat(string).isNotNull();
     }
 
     @Test
     public void whenNoConcreteTypeIsFound_thenShouldThrowAnInstantiationError() {
-        objectFactory.setScanClasspathForConcreteTypes(true);
-        assertThatThrownBy(() -> objectFactory.createInstance(AbstractFoo.class)).isInstanceOf(InstantiationError.class);
-    }
-
-    @Test
-    public void createEmptyCollectionForArrayBlockingQueue() {
-        Collection<?> collection = objectFactory.createEmptyCollectionForType(ArrayBlockingQueue.class, INITIAL_CAPACITY);
-
-        assertThat(collection).isInstanceOf(ArrayBlockingQueue.class).isEmpty();
-        assertThat(((ArrayBlockingQueue<?>) collection).remainingCapacity()).isEqualTo(INITIAL_CAPACITY);
-    }
-
-    @Test
-    public void synchronousQueueShouldBeRejected() {
-        assertThatThrownBy(() -> objectFactory.createEmptyCollectionForType(SynchronousQueue.class, INITIAL_CAPACITY)).isInstanceOf(UnsupportedOperationException.class);
-    }
-
-    @Test
-    public void delayQueueShouldBeRejected() {
-        assertThatThrownBy(() -> objectFactory.createEmptyCollectionForType(DelayQueue.class, INITIAL_CAPACITY)).isInstanceOf(UnsupportedOperationException.class);
+        Mockito.when(context.getParameters().isScanClasspathForConcreteTypes()).thenReturn(true);
+        assertThatThrownBy(() -> objenesisObjectFactory.createInstance(AbstractFoo.class, context)).isInstanceOf(InstantiationError.class);
     }
 
     private abstract class AbstractFoo {

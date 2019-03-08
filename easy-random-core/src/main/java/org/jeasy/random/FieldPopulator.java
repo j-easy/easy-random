@@ -82,10 +82,11 @@ class FieldPopulator {
             } else {
                 try {
                     value = generateRandomValue(field, context);
-                } catch (ObjectGenerationException e) {
+                } catch (ObjectCreationException e) {
                     String exceptionMessage = String.format("Unable to create type: %s for field: %s of class: %s",
                           field.getType().getName(), field.getName(), target.getClass().getName());
-                    throw new ObjectGenerationException(exceptionMessage, e);
+                    // FIXME catch ObjectCreationException and throw ObjectCreationException ?
+                    throw new ObjectCreationException(exceptionMessage, e);
                 }
             }
             setProperty(target, field, value);
@@ -117,7 +118,7 @@ class FieldPopulator {
             if (scanClasspathForConcreteTypes && isAbstract(fieldType) && !isEnumType(fieldType) /*enums can be abstract, but can not inherit*/) {
                 Class<?> randomConcreteSubType = randomElementOf(filterSameParameterizedTypes(getPublicConcreteSubTypesOf(fieldType), fieldGenericType));
                 if (randomConcreteSubType == null) {
-                    throw new ObjectGenerationException("Unable to find a matching concrete subtype of type: " + fieldType);
+                    throw new ObjectCreationException("Unable to find a matching concrete subtype of type: " + fieldType);
                 } else {
                     value = easyRandom.doPopulateBean(randomConcreteSubType, context);
                 }
