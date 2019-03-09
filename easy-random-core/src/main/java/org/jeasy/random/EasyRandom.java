@@ -76,7 +76,6 @@ public class EasyRandom extends Random {
         mapPopulator = new MapPopulator(this, objectFactory);
         enumRandomizersByType = new ConcurrentHashMap<>();
         fieldPopulator = new FieldPopulator(this, this.randomizerProvider, arrayPopulator, collectionPopulator, mapPopulator);
-        fieldPopulator.setScanClasspathForConcreteTypes(easyRandomParameters.isScanClasspathForConcreteTypes());
         exclusionPolicy = easyRandomParameters.getExclusionPolicy();
         this.parameters = easyRandomParameters;
     }
