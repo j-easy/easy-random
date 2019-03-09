@@ -25,6 +25,7 @@ package org.jeasy.random;
 
 import org.jeasy.random.api.ContextAwareRandomizer;
 import org.jeasy.random.api.Randomizer;
+import org.jeasy.random.api.RandomizerProvider;
 
 import java.lang.reflect.Array;
 
@@ -62,7 +63,7 @@ class ArrayPopulator {
 
     Object getRandomPrimitiveArray(final Class<?> primitiveType, RandomizationContext context) {
         final int randomSize = abs((byte) easyRandom.nextInt());
-        final Randomizer<?> randomizer = randomizerProvider.getRandomizerByType(primitiveType);
+        final Randomizer<?> randomizer = randomizerProvider.getRandomizerByType(primitiveType, context);
         if (randomizer instanceof ContextAwareRandomizer) {
             ((ContextAwareRandomizer<?>) randomizer).setRandomizerContext(context);
         }

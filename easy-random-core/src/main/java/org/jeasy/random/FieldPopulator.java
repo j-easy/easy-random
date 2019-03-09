@@ -25,6 +25,7 @@ package org.jeasy.random;
 
 import org.jeasy.random.api.ContextAwareRandomizer;
 import org.jeasy.random.api.Randomizer;
+import org.jeasy.random.api.RandomizerProvider;
 import org.jeasy.random.randomizers.misc.SkipRandomizer;
 
 import java.lang.reflect.Field;
@@ -67,7 +68,7 @@ class FieldPopulator {
     }
 
     void populateField(final Object target, final Field field, final RandomizationContext context) throws IllegalAccessException {
-        Randomizer<?> randomizer = getRandomizer(field);
+        Randomizer<?> randomizer = getRandomizer(field, context);
         if (randomizer instanceof SkipRandomizer) {
             return;
         }
@@ -94,11 +95,11 @@ class FieldPopulator {
         context.popStackItem();
     }
 
-    private Randomizer<?> getRandomizer(Field field) {
+    private Randomizer<?> getRandomizer(Field field, RandomizationContext context) {
         // issue 241: if there is no custom randomizer by field, then check by type
-        Randomizer<?> randomizer = randomizerProvider.getRandomizerByField(field);
+        Randomizer<?> randomizer = randomizerProvider.getRandomizerByField(field, context);
         if (randomizer == null) {
-            randomizer = randomizerProvider.getRandomizerByType(field.getType());
+            randomizer = randomizerProvider.getRandomizerByType(field.getType(), context);
         }
         return randomizer;
     }

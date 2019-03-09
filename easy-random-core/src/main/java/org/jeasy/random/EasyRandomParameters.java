@@ -23,10 +23,7 @@
  */
 package org.jeasy.random;
 
-import org.jeasy.random.api.ExclusionPolicy;
-import org.jeasy.random.api.ObjectFactory;
-import org.jeasy.random.api.Randomizer;
-import org.jeasy.random.api.RandomizerRegistry;
+import org.jeasy.random.api.*;
 import org.jeasy.random.randomizers.registry.CustomRandomizerRegistry;
 import org.jeasy.random.randomizers.registry.ExclusionRandomizerRegistry;
 import lombok.Data;
@@ -108,6 +105,7 @@ public class EasyRandomParameters {
     private Range<LocalTime> timeRange;
     private ExclusionPolicy exclusionPolicy;
     private ObjectFactory objectFactory;
+    private RandomizerProvider randomizerProvider;
 
     // internal params
     private CustomRandomizerRegistry customRandomizerRegistry;
@@ -237,6 +235,14 @@ public class EasyRandomParameters {
         this.objectFactory = objectFactory;
     }
 
+    public RandomizerProvider getRandomizerProvider() {
+        return randomizerProvider;
+    }
+    public void setRandomizerProvider(RandomizerProvider randomizerProvider) {
+        Objects.requireNonNull(objectFactory, "Randomizer provider must not be null");
+        this.randomizerProvider = randomizerProvider;
+    }
+
     public Set<Predicate<Field>> getFieldExclusionPredicates() {
         return fieldExclusionPredicates;
     }
@@ -339,6 +345,17 @@ public class EasyRandomParameters {
      */
     public EasyRandomParameters objectFactory(ObjectFactory objectFactory) {
         setObjectFactory(objectFactory);
+        return this;
+    }
+
+    /**
+     * Provide a custom randomizer provider.
+     *
+     * @param randomizerProvider to use
+     * @return the current {@link EasyRandomParameters} instance for method chaining
+     */
+    public EasyRandomParameters randomizerProvider(RandomizerProvider randomizerProvider) {
+        setRandomizerProvider(randomizerProvider);
         return this;
     }
 

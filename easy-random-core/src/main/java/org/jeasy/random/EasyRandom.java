@@ -67,13 +67,15 @@ public class EasyRandom extends Random {
         Objects.requireNonNull(easyRandomParameters, "Parameters must not be null");
         super.setSeed(easyRandomParameters.getSeed());
         LinkedHashSet<RandomizerRegistry> registries = setupRandomizerRegistries(easyRandomParameters);
-        randomizerProvider = new RandomizerProvider(registries);
+        RandomizerProvider customRandomizerProvider = easyRandomParameters.getRandomizerProvider();
+        randomizerProvider = customRandomizerProvider == null ? new RegistriesRandomizerProvider() : customRandomizerProvider;
+        randomizerProvider.setRandomizerRegistries(registries);
         objectFactory = easyRandomParameters.getObjectFactory();
-        arrayPopulator = new ArrayPopulator(this, randomizerProvider);
+        arrayPopulator = new ArrayPopulator(this, this.randomizerProvider);
         collectionPopulator = new CollectionPopulator(this);
         mapPopulator = new MapPopulator(this, objectFactory);
         enumRandomizersByType = new ConcurrentHashMap<>();
-        fieldPopulator = new FieldPopulator(this, randomizerProvider, arrayPopulator, collectionPopulator, mapPopulator);
+        fieldPopulator = new FieldPopulator(this, this.randomizerProvider, arrayPopulator, collectionPopulator, mapPopulator);
         fieldPopulator.setScanClasspathForConcreteTypes(easyRandomParameters.isScanClasspathForConcreteTypes());
         exclusionPolicy = easyRandomParameters.getExclusionPolicy();
         this.parameters = easyRandomParameters;
@@ -116,7 +118,7 @@ public class EasyRandom extends Random {
         T result;
         try {
 
-            Randomizer<?> randomizer = randomizerProvider.getRandomizerByType(type);
+            Randomizer<?> randomizer = randomizerProvider.getRandomizerByType(type, context);
             if (randomizer != null) {
                 if (randomizer instanceof ContextAwareRandomizer) {
                     ((ContextAwareRandomizer<?>) randomizer).setRandomizerContext(context);

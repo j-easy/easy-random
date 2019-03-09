@@ -49,7 +49,7 @@ public class ArrayPopulatorTest {
     @Mock
     private EasyRandom easyRandom;
     @Mock
-    private RandomizerProvider randomizerProvider;
+    private RegistriesRandomizerProvider randomizerProvider;
     @Mock
     private Randomizer integerRandomizer;
 
@@ -73,7 +73,7 @@ public class ArrayPopulatorTest {
     @Test
     public void getRandomPrimitiveArray() {
         when(easyRandom.nextInt()).thenReturn(INT);
-        when(randomizerProvider.getRandomizerByType(Integer.TYPE)).thenReturn(integerRandomizer);
+        when(randomizerProvider.getRandomizerByType(Integer.TYPE, context)).thenReturn(integerRandomizer);
         when(integerRandomizer.getRandomValue()).thenReturn(INT);
 
         int[] ints = (int[]) arrayPopulator.getRandomPrimitiveArray(Integer.TYPE, context);
