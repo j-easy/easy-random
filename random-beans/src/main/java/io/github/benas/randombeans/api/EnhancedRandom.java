@@ -49,7 +49,9 @@ public abstract class EnhancedRandom extends Random {
      * @param excludedFields the name of fields to exclude
      * @param <T>            the target type
      * @return a random instance of the given type
+     * @deprecated will be removed in v4. Use {@link EnhancedRandom#nextObject(java.lang.Class, java.lang.String...)} instead
      */
+    @Deprecated
     public static <T> T random(final Class<T> type, final String... excludedFields) {
         return aNewEnhancedRandom().nextObject(type, excludedFields);
     }
@@ -64,7 +66,9 @@ public abstract class EnhancedRandom extends Random {
      * @param <T>            the actual type of the target objects
      * @return a stream of random instances of the given type
      * @throws ObjectGenerationException when unable to populate an instance of the given type
+     * @deprecated will be removed in v4. Use {@link EnhancedRandom#objects(java.lang.Class, int, java.lang.String...)} instead
      */
+    @Deprecated
     public static <T> Stream<T> randomStreamOf(final int amount, final Class<T> type, final String... excludedFields) {
         return aNewEnhancedRandom().objects(type, amount, excludedFields);
     }
@@ -79,7 +83,9 @@ public abstract class EnhancedRandom extends Random {
      * @param <T>            the actual type of the target objects
      * @return a list of random instances of the given type
      * @throws ObjectGenerationException when unable to populate an instance of the given type
+     * @deprecated will be removed in v4. Use {@link EnhancedRandom#objects(java.lang.Class, int, java.lang.String...)} instead
      */
+    @Deprecated
     public static <T> List<T> randomListOf(final int amount, final Class<T> type, final String... excludedFields) {
         return randomStreamOf(amount, type, excludedFields).collect(toList());
     }
@@ -94,7 +100,9 @@ public abstract class EnhancedRandom extends Random {
      * @param <T>            the actual type of the target objects
      * @return a set of random instances of the given type
      * @throws ObjectGenerationException when unable to populate an instance of the given type
+     * @deprecated will be removed in v4. Use {@link EnhancedRandom#objects(java.lang.Class, int, java.lang.String...)} instead
      */
+    @Deprecated
     public static <T> Set<T> randomSetOf(final int amount, final Class<T> type, final String... excludedFields) {
         return randomStreamOf(amount, type, excludedFields).collect(toSet());
     }
@@ -109,7 +117,9 @@ public abstract class EnhancedRandom extends Random {
      * @param <T>            the actual type of the target objects
      * @return a collection of random instances of the given type
      * @throws ObjectGenerationException when unable to populate an instance of the given type
+     * @deprecated will be removed in v4. Use {@link EnhancedRandom#objects(java.lang.Class, int, java.lang.String...)} instead
      */
+    @Deprecated
     public static <T> Collection<T> randomCollectionOf(final int amount, final Class<T> type, final String... excludedFields) {
         return randomListOf(amount, type, excludedFields);
     }
