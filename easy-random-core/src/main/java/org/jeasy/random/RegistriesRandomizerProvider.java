@@ -24,6 +24,8 @@
 package org.jeasy.random;
 
 import org.jeasy.random.api.Randomizer;
+import org.jeasy.random.api.RandomizerContext;
+import org.jeasy.random.api.RandomizerProvider;
 import org.jeasy.random.api.RandomizerRegistry;
 
 import java.lang.reflect.Field;
@@ -34,23 +36,26 @@ import java.util.*;
  *
  * @author Mahmoud Ben Hassine (mahmoud.benhassine@icloud.com)
  */
-class RandomizerProvider {
+class RegistriesRandomizerProvider implements RandomizerProvider {
 
     private final List<RandomizerRegistry> registries = new ArrayList<>();
 
     private final Comparator<Object> priorityComparator = new PriorityComparator();
 
-    RandomizerProvider(final Set<RandomizerRegistry> registries) {
-        this.registries.addAll(registries);
-        this.registries.sort(priorityComparator);
-    }
-
-    Randomizer<?> getRandomizerByField(final Field field) {
+    @Override
+    public Randomizer<?> getRandomizerByField(Field field, RandomizerContext context) {
         return getRandomizer(new ByFieldProvider(field));
     }
 
-    Randomizer<?> getRandomizerByType(final Class<?> type) {
-        return getRandomizer(new ByTypeProvider(type));
+    @Override
+    public <T> Randomizer<T> getRandomizerByType(Class<T> type, RandomizerContext context) {
+        return (Randomizer<T>) getRandomizer(new ByTypeProvider(type));
+    }
+
+    @Override
+    public void setRandomizerRegistries(Set<RandomizerRegistry> randomizerRegistries) {
+        this.registries.addAll(randomizerRegistries);
+        this.registries.sort(priorityComparator);
     }
 
     private Randomizer<?> getRandomizer(final Provider provider) {

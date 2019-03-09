@@ -29,6 +29,7 @@ import static org.mockito.Mockito.when;
 
 import java.lang.reflect.Field;
 
+import org.jeasy.random.api.RandomizerContext;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -41,18 +42,21 @@ import org.jeasy.random.beans.Foo;
 
 @ExtendWith(MockitoExtension.class)
 @SuppressWarnings("unchecked")
-public class RandomizerProviderTest {
+public class RegistriesRandomizerProviderTest {
 
     @Mock
     private RandomizerRegistry randomizerRegistry;
     @Mock
     private Randomizer randomizer;
+    @Mock
+    private RandomizerContext context;
 
-    private RandomizerProvider randomizerProvider;
+    private RegistriesRandomizerProvider randomizerProvider;
 
     @BeforeEach
     public void setUp() {
-        randomizerProvider = new RandomizerProvider(singleton(randomizerRegistry));
+        randomizerProvider = new RegistriesRandomizerProvider();
+        randomizerProvider.setRandomizerRegistries(singleton(randomizerRegistry));
     }
 
     @Test
@@ -62,7 +66,7 @@ public class RandomizerProviderTest {
         when(randomizerRegistry.getRandomizer(field)).thenReturn(randomizer);
 
         // When
-        Randomizer<?> actual = randomizerProvider.getRandomizerByField(field);
+        Randomizer<?> actual = randomizerProvider.getRandomizerByField(field, context);
 
         // Then
         assertThat(actual).isEqualTo(randomizer);
@@ -75,7 +79,7 @@ public class RandomizerProviderTest {
         when(randomizerRegistry.getRandomizer(type)).thenReturn(randomizer);
 
         // When
-        Randomizer<?> actual = randomizerProvider.getRandomizerByType(type);
+        Randomizer<?> actual = randomizerProvider.getRandomizerByType(type, context);
 
         // Then
         assertThat(actual).isEqualTo(randomizer);
