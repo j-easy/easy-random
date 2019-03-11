@@ -34,13 +34,13 @@ import java.util.concurrent.Callable;
 import static io.github.benas.randombeans.EnhancedRandomBuilder.aNewEnhancedRandomBuilder;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
-public class IgnoreAbstractTypesParameterTests {
+public class IgnoreRandomizationErrorsParameterTests {
 
     private EnhancedRandom enhancedRandom;
 
     @Test
-    void whenIgnoreAbstractTypesIsActivated_thenShouldReturnNull() {
-        enhancedRandom = aNewEnhancedRandomBuilder().ignoreAbstractTypes(true).build();
+    void whenIgnoreRandomizationErrorsIsActivated_thenShouldReturnNull() {
+        enhancedRandom = aNewEnhancedRandomBuilder().ignoreRandomizationErrors(true).build();
 
         Foo foo = enhancedRandom.nextObject(Foo.class);
 
@@ -50,8 +50,8 @@ public class IgnoreAbstractTypesParameterTests {
     }
 
     @Test
-    void whenIgnoreAbstractTypesIsDeactivated_thenShouldThrowObjectGenerationException() {
-        enhancedRandom = aNewEnhancedRandomBuilder().ignoreAbstractTypes(false).build();
+    void whenIgnoreRandomizationErrorsIsDeactivated_thenShouldThrowObjectGenerationException() {
+        enhancedRandom = aNewEnhancedRandomBuilder().ignoreRandomizationErrors(false).build();
 
         assertThatThrownBy(() -> enhancedRandom.nextObject(Foo.class)).isInstanceOf(ObjectGenerationException.class);
     }

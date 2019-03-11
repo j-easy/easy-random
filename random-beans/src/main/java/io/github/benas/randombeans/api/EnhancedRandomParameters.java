@@ -49,7 +49,7 @@ public class EnhancedRandomParameters {
     private Charset charset;
     private boolean scanClasspathForConcreteTypes;
     private boolean overrideDefaultInitialization;
-    private boolean ignoreAbstractTypes;
+    private boolean ignoreRandomizationErrors;
     private Range<Integer> collectionSizeRange;
     private Range<Integer> stringLengthRange;
     private Range<LocalDate> dateRange;
@@ -60,7 +60,7 @@ public class EnhancedRandomParameters {
         charset = StandardCharsets.US_ASCII;
         scanClasspathForConcreteTypes = false;
         overrideDefaultInitialization = false;
-        ignoreAbstractTypes = false;
+        ignoreRandomizationErrors = false;
         objectPoolSize = Constants.DEFAULT_OBJECT_POOL_SIZE;
         randomizationDepth = Constants.DEFAULT_RANDOMIZATION_DEPTH;
         dateRange = new Range<>(DEFAULT_DATES_RANGE.getMin().toLocalDate(), DEFAULT_DATES_RANGE.getMax().toLocalDate());

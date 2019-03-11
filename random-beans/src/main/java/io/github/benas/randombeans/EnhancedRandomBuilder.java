@@ -467,15 +467,15 @@ public class EnhancedRandomBuilder {
     }
 
     /**
-     * With this parameter, random beans will not try to randomize abstract and interface types.
+     * With this parameter, any randomization error will be silently ignored and the corresponding field will be set to null.
      *
      * Deactivated by default.
      *
-     * @param ignoreAbstractTypes whether to ignore abstract and interface types or not
+     * @param ignoreRandomizationErrors whether to silently ignore randomization errors or not
      * @return a pre configured {@link EnhancedRandomBuilder} instance
      */
-    public EnhancedRandomBuilder ignoreAbstractTypes(boolean ignoreAbstractTypes) {
-        parameters.setIgnoreAbstractTypes(ignoreAbstractTypes);
+    public EnhancedRandomBuilder ignoreRandomizationErrors(boolean ignoreRandomizationErrors) {
+        parameters.setIgnoreRandomizationErrors(ignoreRandomizationErrors);
         return this;
     }
 
