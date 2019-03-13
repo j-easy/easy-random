@@ -34,13 +34,13 @@ import java.util.concurrent.Callable;
 
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
-public class IgnoreAbstractTypesParameterTests {
+public class IgnoreRandomizationErrorsParameterTests {
 
     private EasyRandom easyRandom;
 
     @Test
-    void whenIgnoreAbstractTypesIsActivated_thenShouldReturnNull() {
-        EasyRandomParameters parameters = new EasyRandomParameters().ignoreAbstractTypes(true);
+    void whenIgnoreRandomizationErrorsIsActivated_thenShouldReturnNull() {
+        EasyRandomParameters parameters = new EasyRandomParameters().ignoreRandomizationErrors(true);
         easyRandom = new EasyRandom(parameters);
 
         Foo foo = easyRandom.nextObject(Foo.class);
@@ -51,8 +51,8 @@ public class IgnoreAbstractTypesParameterTests {
     }
 
     @Test
-    void whenIgnoreAbstractTypesIsDeactivated_thenShouldThrowObjectGenerationException() {
-        EasyRandomParameters parameters = new EasyRandomParameters().ignoreAbstractTypes(false);
+    void whenIgnoreRandomizationErrorsIsDeactivated_thenShouldThrowObjectGenerationException() {
+        EasyRandomParameters parameters = new EasyRandomParameters().ignoreRandomizationErrors(false);
         easyRandom = new EasyRandom(parameters);
 
         assertThatThrownBy(() -> easyRandom.nextObject(Foo.class)).isInstanceOf(ObjectCreationException.class);

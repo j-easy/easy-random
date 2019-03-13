@@ -98,7 +98,7 @@ public class EasyRandomParameters {
     private Charset charset;
     private boolean scanClasspathForConcreteTypes;
     private boolean overrideDefaultInitialization;
-    private boolean ignoreAbstractTypes;
+    private boolean ignoreRandomizationErrors;
     private Range<Integer> collectionSizeRange;
     private Range<Integer> stringLengthRange;
     private Range<LocalDate> dateRange;
@@ -119,7 +119,7 @@ public class EasyRandomParameters {
         charset = DEFAULT_CHARSET;
         scanClasspathForConcreteTypes = false;
         overrideDefaultInitialization = false;
-        ignoreAbstractTypes = false;
+        ignoreRandomizationErrors = false;
         objectPoolSize = DEFAULT_OBJECT_POOL_SIZE;
         randomizationDepth = DEFAULT_RANDOMIZATION_DEPTH;
         dateRange = new Range<>(DEFAULT_DATES_RANGE.getMin().toLocalDate(), DEFAULT_DATES_RANGE.getMax().toLocalDate());
@@ -212,11 +212,11 @@ public class EasyRandomParameters {
         this.overrideDefaultInitialization = overrideDefaultInitialization;
     }
 
-    public boolean isIgnoreAbstractTypes() {
-        return ignoreAbstractTypes;
+    public boolean isIgnoreRandomizationErrors() {
+        return ignoreRandomizationErrors;
     }
-    public void setIgnoreAbstractTypes(boolean ignoreAbstractTypes) {
-        this.ignoreAbstractTypes = ignoreAbstractTypes;
+    public void setIgnoreRandomizationErrors(boolean ignoreRandomizationErrors) {
+        this.ignoreRandomizationErrors = ignoreRandomizationErrors;
     }
 
     public ExclusionPolicy getExclusionPolicy() {
@@ -499,15 +499,15 @@ public class EasyRandomParameters {
     }
 
     /**
-     * With this parameter, easy random will not try to randomize abstract and interface types.
+     * With this parameter, any randomization error will be silently ignored and the corresponding field will be set to null.
      *
      * Deactivated by default.
      *
-     * @param ignoreAbstractTypes whether to ignore abstract and interface types or not
+     * @param ignoreRandomizationErrors whether to silently ignore randomization errors or not
      * @return the current {@link EasyRandomParameters} instance for method chaining
      */
-    public EasyRandomParameters ignoreAbstractTypes(boolean ignoreAbstractTypes) {
-        setIgnoreAbstractTypes(ignoreAbstractTypes);
+    public EasyRandomParameters ignoreRandomizationErrors(boolean ignoreRandomizationErrors) {
+        setIgnoreRandomizationErrors(ignoreRandomizationErrors);
         return this;
     }
 
