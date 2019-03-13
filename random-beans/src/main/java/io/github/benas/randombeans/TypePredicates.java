@@ -32,7 +32,7 @@ import java.util.function.Predicate;
  * of types. For example:
  *
  *<pre>
- *     Predicate<Class<?>> predicate = inPackage("java.util").or(inPackage("com.sun"));
+ *     Predicate&lt;Class&lt;?&gt;&gt; predicate = inPackage("java.util").or(inPackage("com.sun"));
  *</pre>
  *
  * @author Mahmoud Ben Hassine (mahmoud.benhassine@icloud.com)
