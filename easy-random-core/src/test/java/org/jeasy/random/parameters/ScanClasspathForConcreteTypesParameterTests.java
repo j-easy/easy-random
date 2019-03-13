@@ -111,7 +111,7 @@ public class ScanClasspathForConcreteTypesParameterTests {
 
     @Test
     public void whenScanClasspathForConcreteTypesIsEnabled_thenShouldPopulateAbstractEnumeration() {
-        EasyRandomParameters parameters = new EasyRandomParameters().ignoreAbstractTypes(true);
+        EasyRandomParameters parameters = new EasyRandomParameters().scanClasspathForConcreteTypes(true);
         easyRandom = new EasyRandom(parameters);
 
         ClassUsingAbstractEnum randomValue = easyRandom.nextObject(ClassUsingAbstractEnum.class);

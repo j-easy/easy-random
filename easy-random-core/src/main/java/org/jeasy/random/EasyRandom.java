@@ -157,11 +157,11 @@ public class EasyRandom extends Random {
             populateFields(fields, result, context);
 
             return result;
-        } catch (InstantiationError | Exception e) {
-            if (!parameters.isIgnoreAbstractTypes()) {
-                throw new ObjectCreationException("Unable to create a random instance of type " + type, e);
-            } else {
+        } catch (Throwable e) {
+            if (parameters.isIgnoreRandomizationErrors()) {
                 return null;
+            } else {
+                throw new ObjectCreationException("Unable to create a random instance of type " + type, e);
             }
         }
     }
