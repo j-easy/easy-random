@@ -22,8 +22,9 @@
 
 ## Latest news
 
+* 14/03/2019: RIP Random Beans, long live Easy Random! Random Beans has been renamed to Easy Random and is now part of the [jeasy.org](jeasy.org) family.
+* 13/03/2019: Version 3.9.0 is out! Checkout what's new in the [change log](https://github.com/j-easy/easy-random/releases).
 * 27/01/2019: Version 3.8.0 is finally out! Checkout what's new in the [change log](https://github.com/j-easy/easy-random/releases).
-* 19/06/2017: Version 3.7.0 is released. Checkout what's new in the [change log](https://github.com/j-easy/easy-random/releases).
 
 # What is Easy Random ?
 
@@ -57,7 +58,8 @@ EasyRandomParameters parameters = new EasyRandomParameters()
    .stringLengthRange(5, 50)
    .collectionSizeRange(1, 10)
    .scanClasspathForConcreteTypes(true)
-   .overrideDefaultInitialization(false);
+   .overrideDefaultInitialization(false)
+   .ignoreRandomizationErrors(true);
 
 EasyRandom easyRandom = new EasyRandom(parameters);
 ```
@@ -72,9 +74,7 @@ Easy Random allows you to control how to generate random data through the [`org.
 ```java
 EasyRandomParameters parameters = new EasyRandomParameters()
    .randomize(String.class, () -> "foo")
-   .excludeField(named("age").and(ofType(Integer.class)).and(inClass(Person.class)))
-   // set other parameters
-   .build();
+   .excludeField(named("age").and(ofType(Integer.class)).and(inClass(Person.class)));
 
 EasyRandom easyRandom = new EasyRandom(parameters);
 Person person = easyRandom.nextObject(Person.class);
@@ -95,7 +95,9 @@ You can of course use your own `java.util.function.Predicate` in combination wit
 Populating a Java object with random data can look easy at first glance, unless your domain model involves many related classes.
 In the previous example, let's suppose the `Person` type is defined as follows:
 
-![](https://github.com/j-easy/easy-random/raw/master/site/person.png)
+<p align="center">
+    <img src="https://raw.githubusercontent.com/wiki/j-easy/easy-random/images/person.png">
+</p>
 
 **Without** Easy Random, you would write the following code in order to create an instance of the `Person` class:
 
@@ -127,8 +129,8 @@ person.setGender(Gender.MALE);
 person.setAddress(address);
 ```
 
-With Easy Random, generating a random `Person` object is done with `easyRandom.nextObject(Person.class)`. The library will **recursively** populate
-all the object graph. That's a big difference!
+With Easy Random, generating a random `Person` object is done with `easyRandom.nextObject(Person.class)`.
+The library will **recursively** populate all the object graph. That's a big difference!
 
 ## How can this be useful ?
 
