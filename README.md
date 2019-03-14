@@ -13,8 +13,6 @@
 [![Maven Central](https://maven-badges.herokuapp.com/maven-central/org.jeasy/easy-random-core/badge.svg?style=flat)](http://repo1.maven.org/maven2/org/jeasy/easy-random-core/4.0.0/)
 [![Javadocs](http://www.javadoc.io/badge/org.jeasy/easy-random-core.svg)](http://www.javadoc.io/doc/org.jeasy/easy-random-core)
 [![Gitter](https://badges.gitter.im/Join%20Chat.svg)](https://gitter.im/j-easy/easy-random)
-[![Code Quality: Java](https://img.shields.io/lgtm/grade/java/g/j-easy/easy-random.svg?logo=lgtm&logoWidth=18)](https://lgtm.com/projects/g/j-easy/easy-random/context:java)
-[![Total Alerts](https://img.shields.io/lgtm/alerts/g/j-easy/easy-random.svg?logo=lgtm&logoWidth=18)](https://lgtm.com/projects/g/j-easy/easy-random/alerts)
 
 </div>
 
