@@ -1,6 +1,6 @@
 Thank you for taking time to open this issue :smile:
 
-Please provide as much context as possible to help us fixing the issue (at least random-beans version you are using).
+Please provide as much context as possible to help us fixing the issue (at least easy-random version you are using).
 
 * If you are reporting a bug, the best way is to provide a failing test.
 * If you are requesting a feature, don't hesitate to explain in detail your suggestion with code examples.
