@@ -10,7 +10,7 @@
 
     <groupId>org.jeasy</groupId>
     <artifactId>easy-random</artifactId>
-    <version>4.0.0-SNAPSHOT</version>
+    <version>4.0.0.RC1-SNAPSHOT</version>
     <packaging>pom</packaging>
 
     <name>Easy Random</name>
