@@ -2,7 +2,7 @@
 
 <div align="center">
     <b><em>Easy Random</em></b><br>
-    Because life is too short to generate random Java&trade; beans by hand..
+    The simple, stupid random Java&trade; beans generator
 </div>
 
 <div align="center">
@@ -20,7 +20,7 @@
 
 ## Latest news
 
-* 14/03/2019: Random Beans has been renamed to Easy Random and is now part of the [jeasy.org](jeasy.org) family.
+* 14/03/2019: Random Beans has been renamed to Easy Random and is now part of [jeasy.org](http://www.jeasy.org).
 Version 4.0.0.RC1 has been released! See what's new in the [change log](https://github.com/j-easy/easy-random/releases).
 * 13/03/2019: Version 3.9.0 is out! Checkout what's new in the [change log](https://github.com/j-easy/easy-random/releases).
 * 27/01/2019: Version 3.8.0 is finally out! Checkout what's new in the [change log](https://github.com/j-easy/easy-random/releases).
