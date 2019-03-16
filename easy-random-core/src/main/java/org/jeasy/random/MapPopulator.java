@@ -28,11 +28,8 @@ import org.jeasy.random.api.ObjectFactory;
 import java.lang.reflect.Field;
 import java.lang.reflect.ParameterizedType;
 import java.lang.reflect.Type;
-import java.util.*;
-import java.util.concurrent.ConcurrentHashMap;
-import java.util.concurrent.ConcurrentMap;
-import java.util.concurrent.ConcurrentNavigableMap;
-import java.util.concurrent.ConcurrentSkipListMap;
+import java.util.EnumMap;
+import java.util.Map;
 
 import static org.jeasy.random.util.ReflectionUtils.*;
 
@@ -92,20 +89,6 @@ class MapPopulator {
                     }
                 }
             }
-        }
-        return map;
-    }
-
-    Map<?, ?> getEmptyImplementationForMapInterface(final Class<?> mapInterface) {
-        Map<?, ?> map = new HashMap<>();
-        if (ConcurrentNavigableMap.class.isAssignableFrom(mapInterface)) {
-            map = new ConcurrentSkipListMap<>();
-        } else if (ConcurrentMap.class.isAssignableFrom(mapInterface)) {
-            map = new ConcurrentHashMap<>();
-        } else if (NavigableMap.class.isAssignableFrom(mapInterface)) {
-            map = new TreeMap<>();
-        } else if (SortedMap.class.isAssignableFrom(mapInterface)) {
-            map = new TreeMap<>();
         }
         return map;
     }

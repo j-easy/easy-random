@@ -101,6 +101,11 @@ public class BeanValidationTest {
         assertThat(bean.getMinQuantity()).isGreaterThanOrEqualTo(5);// @Min(5) int minQuantity;
 
         assertThat(bean.getBriefMessage().length()).isBetween(2, 10);// @Size(min=2, max=10) String briefMessage;
+        assertThat(bean.getSizedCollection().size()).isBetween(2, 10);// @Size(min=2, max=10) String sizedCollection;
+        assertThat(bean.getSizedList().size()).isBetween(2, 10);// @Size(min=2, max=10) String sizedList;
+        assertThat(bean.getSizedSet().size()).isBetween(2, 10);// @Size(min=2, max=10) String sizedSet;
+        assertThat(bean.getSizedMap().size()).isBetween(2, 10);// @Size(min=2, max=10) String sizedMap;
+        assertThat(bean.getSizedArray().length).isBetween(2, 10);// @Size(min=2, max=10) String sizedArray;
 
         assertThat(bean.getRegexString()).matches("[a-z]{4}");
     }
@@ -157,6 +162,11 @@ public class BeanValidationTest {
         assertThat(bean.getMinQuantity()).isGreaterThanOrEqualTo(5);// @Min(5) int minQuantity;
 
         assertThat(bean.getBriefMessage().length()).isBetween(2, 10);// @Size(min=2, max=10) String briefMessage;
+        assertThat(bean.getSizedCollection().size()).isBetween(2, 10);// @Size(min=2, max=10) String sizedCollection;
+        assertThat(bean.getSizedList().size()).isBetween(2, 10);// @Size(min=2, max=10) String sizedList;
+        assertThat(bean.getSizedSet().size()).isBetween(2, 10);// @Size(min=2, max=10) String sizedSet;
+        assertThat(bean.getSizedMap().size()).isBetween(2, 10);// @Size(min=2, max=10) String sizedMap;
+        assertThat(bean.getSizedArray().length).isBetween(2, 10);// @Size(min=2, max=10) String sizedArray;
 
         assertThat(bean.getRegexString()).matches("[a-z]{4}");
     }

@@ -57,7 +57,6 @@ import lombok.Data;
 @SuppressWarnings({"unchecked", "rawtypes"})
 public class CollectionPopulatorTest {
 
-    private static final int INITIAL_CAPACITY = 10;
     private static final int SIZE = 2;
     private static final String STRING = "foo";
 
@@ -128,13 +127,6 @@ public class CollectionPopulatorTest {
 
         // Then
         assertThat(collection).containsExactly(STRING, STRING);
-    }
-
-    @Test
-    public void getEmptyImplementationForCollectionInterface() {
-        Collection<?> collection = collectionPopulator.getEmptyImplementationForCollectionInterface(List.class);
-
-        assertThat(collection).isInstanceOf(ArrayList.class).isEmpty();
     }
 
     @Data
@@ -416,25 +408,6 @@ public class CollectionPopulatorTest {
         assertThat(bean.getList()).isEmpty();
         assertThat(bean.getSet()).isEmpty();
         assertThat(bean.getMap()).isEmpty();
-    }
-
-
-    @Test
-    public void createEmptyCollectionForArrayBlockingQueue() {
-        Collection<?> collection = collectionPopulator.createEmptyCollectionForType(ArrayBlockingQueue.class, INITIAL_CAPACITY);
-
-        assertThat(collection).isInstanceOf(ArrayBlockingQueue.class).isEmpty();
-        assertThat(((ArrayBlockingQueue<?>) collection).remainingCapacity()).isEqualTo(INITIAL_CAPACITY);
-    }
-
-    @Test
-    public void synchronousQueueShouldBeRejected() {
-        assertThatThrownBy(() -> collectionPopulator.createEmptyCollectionForType(SynchronousQueue.class, INITIAL_CAPACITY)).isInstanceOf(UnsupportedOperationException.class);
-    }
-
-    @Test
-    public void delayQueueShouldBeRejected() {
-        assertThatThrownBy(() -> collectionPopulator.createEmptyCollectionForType(DelayQueue.class, INITIAL_CAPACITY)).isInstanceOf(UnsupportedOperationException.class);
     }
 
     private void assertContainsOnlyNonEmptyPersons(Collection<Person> persons) {

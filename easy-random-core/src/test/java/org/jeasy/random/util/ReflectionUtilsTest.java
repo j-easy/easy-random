@@ -32,15 +32,19 @@ import java.lang.annotation.Target;
 import java.lang.reflect.Field;
 import java.lang.reflect.Method;
 import java.math.BigDecimal;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
+import java.util.concurrent.ArrayBlockingQueue;
+import java.util.concurrent.DelayQueue;
+import java.util.concurrent.SynchronousQueue;
 
 import static java.lang.annotation.ElementType.*;
 import static java.lang.annotation.RetentionPolicy.RUNTIME;
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 public class ReflectionUtilsTest {
+
+    private static final int INITIAL_CAPACITY = 10;
 
     @Test
     public void testGetDeclaredFields() throws Exception {
@@ -185,6 +189,38 @@ public class ReflectionUtilsTest {
 
         field = AnnotatedBean.class.getDeclaredField("noAnnotation");
         assertThat(ReflectionUtils.isAnnotationPresent(field, NotNull.class)).isFalse();
+    }
+
+    @Test
+    public void testGetEmptyImplementationForCollectionInterface() {
+        Collection<?> collection = ReflectionUtils.getEmptyImplementationForCollectionInterface(List.class);
+
+        assertThat(collection).isInstanceOf(ArrayList.class).isEmpty();
+    }
+
+    @Test
+    public void createEmptyCollectionForArrayBlockingQueue() {
+        Collection<?> collection = ReflectionUtils.createEmptyCollectionForType(ArrayBlockingQueue.class, INITIAL_CAPACITY);
+
+        assertThat(collection).isInstanceOf(ArrayBlockingQueue.class).isEmpty();
+        assertThat(((ArrayBlockingQueue<?>) collection).remainingCapacity()).isEqualTo(INITIAL_CAPACITY);
+    }
+
+    @Test
+    public void synchronousQueueShouldBeRejected() {
+        assertThatThrownBy(() -> ReflectionUtils.createEmptyCollectionForType(SynchronousQueue.class, INITIAL_CAPACITY)).isInstanceOf(UnsupportedOperationException.class);
+    }
+
+    @Test
+    public void delayQueueShouldBeRejected() {
+        assertThatThrownBy(() -> ReflectionUtils.createEmptyCollectionForType(DelayQueue.class, INITIAL_CAPACITY)).isInstanceOf(UnsupportedOperationException.class);
+    }
+
+    @Test
+    public void getEmptyImplementationForMapInterface() {
+        Map<?, ?> map = ReflectionUtils.getEmptyImplementationForMapInterface(SortedMap.class);
+
+        assertThat(map).isInstanceOf(TreeMap.class).isEmpty();
     }
 
     @SuppressWarnings("unused")

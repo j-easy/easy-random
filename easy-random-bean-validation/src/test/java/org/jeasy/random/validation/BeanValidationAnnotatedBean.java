@@ -23,11 +23,14 @@
  */
 package org.jeasy.random.validation;
 
+import lombok.Data;
+
 import javax.validation.constraints.*;
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
-import java.util.Date;
+import java.util.*;
 
+@Data
 class BeanValidationAnnotatedBean {
 
     @AssertFalse
@@ -96,224 +99,23 @@ class BeanValidationAnnotatedBean {
 
     @Size(min=2, max=10)
     private String briefMessage;
-    
+
+    @Size(min=2, max=10)
+    private Collection<String> sizedCollection;
+
+    @Size(min=2, max=10)
+    private List<String> sizedList;
+
+    @Size(min=2, max=10)
+    private Set<String> sizedSet;
+
+    @Size(min=2, max=10)
+    private Map<String, Integer> sizedMap;
+
+    @Size(min=2, max=10)
+    private String[] sizedArray;
+
     @Pattern(regexp="[a-z]{4}")
     private String regexString;
 
-    public BeanValidationAnnotatedBean() {
-    }
-
-    public boolean isUnsupported() {
-        return unsupported;
-    }
-
-    public void setUnsupported(boolean unsupported) {
-        this.unsupported = unsupported;
-    }
-
-    public boolean isActive() {
-        return active;
-    }
-
-    public void setActive(boolean active) {
-        this.active = active;
-    }
-
-    public BigDecimal getMaxDiscount() {
-        return maxDiscount;
-    }
-
-    public void setMaxDiscount(BigDecimal maxDiscount) {
-        this.maxDiscount = maxDiscount;
-    }
-
-    public BigDecimal getMinDiscount() {
-        return minDiscount;
-    }
-
-    public void setMinDiscount(BigDecimal minDiscount) {
-        this.minDiscount = minDiscount;
-    }
-
-    public Date getEventDate() {
-        return eventDate;
-    }
-
-    public void setEventDate(Date eventDate) {
-        this.eventDate = eventDate;
-    }
-
-    public LocalDateTime getEventLocalDateTime() {
-        return eventLocalDateTime;
-    }
-
-    public Date getFutureOrPresent() {
-        return futureOrPresent;
-    }
-
-    public Date getBirthday() {
-        return birthday;
-    }
-
-    public void setBirthday(Date birthday) {
-        this.birthday = birthday;
-    }
-
-    public LocalDateTime getBirthdayLocalDateTime() {
-        return birthdayLocalDateTime;
-    }
-
-    public Date getPastOrPresent() {
-        return pastOrPresent;
-    }
-
-    public int getMaxQuantity() {
-        return maxQuantity;
-    }
-
-    public void setMaxQuantity(int maxQuantity) {
-        this.maxQuantity = maxQuantity;
-    }
-
-    public int getMinQuantity() {
-        return minQuantity;
-    }
-
-    public void setMinQuantity(int minQuantity) {
-        this.minQuantity = minQuantity;
-    }
-
-    public String getUsername() {
-        return username;
-    }
-
-    public void setUsername(String username) {
-        this.username = username;
-    }
-
-    public String getUnusedString() {
-        return unusedString;
-    }
-
-    public void setUnusedString(String unusedString) {
-        this.unusedString = unusedString;
-    }
-
-    public String getBriefMessage() {
-        return briefMessage;
-    }
-
-    public void setBriefMessage(String briefMessage) {
-        this.briefMessage = briefMessage;
-    }
-
-
-    public String getRegexString() {
-		return regexString;
-	}
-
-	public void setRegexString(String regexString) {
-		this.regexString = regexString;
-	}
-
-    public int getPositive() {
-        return positive;
-    }
-
-    public void setPositive(int positive) {
-        this.positive = positive;
-    }
-
-    public int getPositiveOrZero() {
-        return positiveOrZero;
-    }
-
-    public void setPositiveOrZero(int positiveOrZero) {
-        this.positiveOrZero = positiveOrZero;
-    }
-
-    public int getNegative() {
-        return negative;
-    }
-
-    public void setNegative(int negative) {
-        this.negative = negative;
-    }
-
-    public int getNegativeOrZero() {
-        return negativeOrZero;
-    }
-
-    public void setNegativeOrZero(int negativeOrZero) {
-        this.negativeOrZero = negativeOrZero;
-    }
-
-    public String getNotBlank() {
-        return notBlank;
-    }
-
-    public void setNotBlank(String notBlank) {
-        this.notBlank = notBlank;
-    }
-
-    public String getEmail() {
-        return email;
-    }
-
-    public void setEmail(String email) {
-        this.email = email;
-    }
-
-    public BigDecimal getDiscount() {
-        return discount;
-    }
-
-    public void setDiscount(BigDecimal discount) {
-        this.discount = discount;
-    }
-
-    public void setEventLocalDateTime(LocalDateTime eventLocalDateTime) {
-        this.eventLocalDateTime = eventLocalDateTime;
-    }
-
-    public void setFutureOrPresent(Date futureOrPresent) {
-        this.futureOrPresent = futureOrPresent;
-    }
-
-    public void setBirthdayLocalDateTime(LocalDateTime birthdayLocalDateTime) {
-        this.birthdayLocalDateTime = birthdayLocalDateTime;
-    }
-
-    public void setPastOrPresent(Date pastOrPresent) {
-        this.pastOrPresent = pastOrPresent;
-    }
-
-    @Override
-    public String toString() {
-        return "BeanValidationAnnotatedBean{" +
-                "unsupported=" + unsupported +
-                ", active=" + active +
-                ", maxDiscount=" + maxDiscount +
-                ", minDiscount=" + minDiscount +
-                ", discount=" + discount +
-                ", eventDate=" + eventDate +
-                ", eventLocalDateTime=" + eventLocalDateTime +
-                ", birthday=" + birthday +
-                ", birthdayLocalDateTime=" + birthdayLocalDateTime +
-                ", pastOrPresent=" + pastOrPresent +
-                ", futureOrPresent=" + futureOrPresent +
-                ", maxQuantity=" + maxQuantity +
-                ", minQuantity=" + minQuantity +
-                ", positive=" + positive +
-                ", positiveOrZero=" + positiveOrZero +
-                ", negative=" + negative +
-                ", negativeOrZero=" + negativeOrZero +
-                ", notBlank='" + notBlank + '\'' +
-                ", email='" + email + '\'' +
-                ", username='" + username + '\'' +
-                ", unusedString='" + unusedString + '\'' +
-                ", briefMessage='" + briefMessage + '\'' +
-                ", regexString='" + regexString + '\'' +
-                '}';
-    }
 }

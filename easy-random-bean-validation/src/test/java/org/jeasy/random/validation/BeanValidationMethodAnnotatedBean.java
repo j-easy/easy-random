@@ -26,7 +26,7 @@ package org.jeasy.random.validation;
 import javax.validation.constraints.*;
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
-import java.util.Date;
+import java.util.*;
 
 class BeanValidationMethodAnnotatedBean {
 
@@ -70,6 +70,16 @@ class BeanValidationMethodAnnotatedBean {
     private String unusedString;
 
     private String briefMessage;
+
+    private Collection<String> sizedCollection;
+
+    private List<String> sizedList;
+
+    private Set<String> sizedSet;
+
+    private Map<String, Integer> sizedMap;
+
+    private String[] sizedArray;
 
     private String regexString;
 
@@ -282,6 +292,51 @@ class BeanValidationMethodAnnotatedBean {
         this.email = email;
     }
 
+    @Size(min=2, max=10)
+    public Collection<String> getSizedCollection() {
+        return sizedCollection;
+    }
+
+    public void setSizedCollection(Collection<String> sizedCollection) {
+        this.sizedCollection = sizedCollection;
+    }
+
+    @Size(min=2, max=10)
+    public List<String> getSizedList() {
+        return sizedList;
+    }
+
+    public void setSizedList(List<String> sizedList) {
+        this.sizedList = sizedList;
+    }
+
+    @Size(min=2, max=10)
+    public Set<String> getSizedSet() {
+        return sizedSet;
+    }
+
+    public void setSizedSet(Set<String> sizedSet) {
+        this.sizedSet = sizedSet;
+    }
+
+    @Size(min=2, max=10)
+    public Map<String, Integer> getSizedMap() {
+        return sizedMap;
+    }
+
+    public void setSizedMap(Map<String, Integer> sizedMap) {
+        this.sizedMap = sizedMap;
+    }
+
+    @Size(min=2, max=10)
+    public String[] getSizedArray() {
+        return sizedArray;
+    }
+
+    public void setSizedArray(String[] sizedArray) {
+        this.sizedArray = sizedArray;
+    }
+
     @Override
     public String toString() {
         return "BeanValidationMethodAnnotatedBean{" +
@@ -307,6 +362,11 @@ class BeanValidationMethodAnnotatedBean {
                 ", username='" + username + '\'' +
                 ", unusedString='" + unusedString + '\'' +
                 ", briefMessage='" + briefMessage + '\'' +
+                ", sizedCollection=" + sizedCollection +
+                ", sizedList=" + sizedList +
+                ", sizedSet=" + sizedSet +
+                ", sizedMap=" + sizedMap +
+                ", sizedArray=" + Arrays.toString(sizedArray) +
                 ", regexString='" + regexString + '\'' +
                 '}';
     }

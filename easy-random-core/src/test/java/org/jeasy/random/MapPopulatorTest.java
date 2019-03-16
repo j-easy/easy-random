@@ -127,13 +127,6 @@ public class MapPopulatorTest {
     }
 
     @Test
-    public void getEmptyImplementationForMapInterface() {
-        Map<?, ?> map = mapPopulator.getEmptyImplementationForMapInterface(SortedMap.class);
-
-        assertThat(map).isInstanceOf(TreeMap.class).isEmpty();
-    }
-
-    @Test
     public void notAddNullKeysToMap() throws NoSuchFieldException {
         // Given
         when(easyRandom.getRandomCollectionSize()).thenReturn(SIZE);

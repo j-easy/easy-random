@@ -23,27 +23,39 @@
  */
 package org.jeasy.random.validation;
 
+import org.jeasy.random.EasyRandom;
+import org.jeasy.random.EasyRandomParameters;
 import org.jeasy.random.api.Randomizer;
+import org.jeasy.random.randomizers.range.IntegerRangeRandomizer;
 import org.jeasy.random.randomizers.text.StringRandomizer;
 import org.jeasy.random.util.ReflectionUtils;
+import org.objenesis.ObjenesisStd;
 
 import javax.validation.constraints.Size;
+import java.lang.reflect.Array;
 import java.lang.reflect.Field;
+import java.lang.reflect.ParameterizedType;
+import java.lang.reflect.Type;
 import java.nio.charset.Charset;
-import java.util.Random;
+import java.util.Collection;
+import java.util.EnumMap;
+import java.util.Map;
+
+import static org.jeasy.random.util.ReflectionUtils.*;
 
 class SizeAnnotationHandler implements BeanValidationAnnotationHandler {
 
-    private final Random random;
-
+    private long seed;
     private Charset charset;
+    private EasyRandom easyRandom;
 
-    public SizeAnnotationHandler(long seed, Charset charset) {
-        random = new Random(seed);
+    SizeAnnotationHandler(long seed, Charset charset) {
+        this.seed = seed;
         this.charset = charset;
     }
 
     @Override
+    @SuppressWarnings({"unchecked"})
     public Randomizer<?> getRandomizer(Field field) {
         Class<?> fieldType = field.getType();
         Size sizeAnnotation = ReflectionUtils
@@ -51,8 +63,96 @@ class SizeAnnotationHandler implements BeanValidationAnnotationHandler {
 
         final int min = sizeAnnotation.min();
         final int max = sizeAnnotation.max();
+        if (easyRandom == null) {
+            EasyRandomParameters parameters = new EasyRandomParameters()
+                    .seed(this.seed)
+                    .charset(this.charset)
+                    .collectionSizeRange(min, max)
+                    .stringLengthRange(min, max);
+            easyRandom = new EasyRandom(parameters);
+        }
+
         if (fieldType.equals(String.class)) {
-            return new StringRandomizer(charset, min, max, random.nextLong());
+            return new StringRandomizer(charset, min, max, easyRandom.nextLong());
+        }
+
+        if (isArrayType(fieldType)) {
+            return (Randomizer<Object>) () -> {
+                int randomSize = new IntegerRangeRandomizer(min, max, seed).getRandomValue();
+                Object[] itemsList = (Object[]) Array.newInstance(field.getType().getComponentType(), randomSize);
+                for (int i = 0; i < randomSize; i++) {
+                    itemsList[i] = (Object) easyRandom.nextObject(fieldType.getComponentType());
+                }
+                return itemsList;
+            };
+        }
+
+        if (isCollectionType(fieldType)) {
+            return (Randomizer<Object>) () -> {
+                int randomSize = new IntegerRangeRandomizer(min, max, seed).getRandomValue();
+                Type fieldGenericType = field.getGenericType();
+                Collection collection;
+
+                if (isInterface(fieldType)) {
+                    collection = getEmptyImplementationForCollectionInterface(fieldType);
+                } else {
+                    collection = createEmptyCollectionForType(fieldType, randomSize);
+                }
+                if (isParameterizedType(fieldGenericType)) {
+                    ParameterizedType parameterizedType = (ParameterizedType) fieldGenericType;
+                    Type type = parameterizedType.getActualTypeArguments()[0];
+                    if (isPopulatable(type)) {
+                        for (int i = 0; i < randomSize; i++) {
+                            Object item = easyRandom.nextObject((Class<?>) type);
+                            collection.add(item);
+                        }
+
+                    }
+                }
+                return collection;
+            };
+        }
+        if (isMapType(fieldType)) {
+            return (Randomizer<Object>) () -> {
+                int randomSize = new IntegerRangeRandomizer(min, max, seed).getRandomValue();
+                Type fieldGenericType = field.getGenericType();
+                Map<Object, Object> map;
+
+                if (isInterface(fieldType)) {
+                    map = (Map<Object, Object>) getEmptyImplementationForMapInterface(fieldType);
+                } else {
+                    try {
+                        map = (Map<Object, Object>) fieldType.newInstance();
+                    } catch (InstantiationException | IllegalAccessException e) {
+                        if (fieldType.isAssignableFrom(EnumMap.class)) {
+                            if (isParameterizedType(fieldGenericType)) {
+                                Type type = ((ParameterizedType) fieldGenericType).getActualTypeArguments()[0];
+                                map = new EnumMap((Class<?>)type);
+                            } else {
+                                return null;
+                            }
+                        } else {
+                            map = (Map<Object, Object>) new ObjenesisStd().newInstance(fieldType);
+                        }
+                    }
+                }
+
+                if (isParameterizedType(fieldGenericType)) { // populate only parameterized types, raw types will be empty
+                    ParameterizedType parameterizedType = (ParameterizedType) fieldGenericType;
+                    Type keyType = parameterizedType.getActualTypeArguments()[0];
+                    Type valueType = parameterizedType.getActualTypeArguments()[1];
+                    if (isPopulatable(keyType) && isPopulatable(valueType)) {
+                        for (int index = 0; index < randomSize; index++) {
+                            Object randomKey = easyRandom.nextObject((Class<?>) keyType);
+                            Object randomValue = easyRandom.nextObject((Class<?>) valueType);
+                            if(randomKey != null) {
+                                map.put(randomKey, randomValue);
+                            }
+                        }
+                    }
+                }
+                return map;
+            };
         }
         return null;
     }

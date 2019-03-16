@@ -28,11 +28,13 @@ import org.jeasy.random.annotation.RandomizerArgument;
 import org.jeasy.random.ObjectCreationException;
 import org.jeasy.random.api.Randomizer;
 import lombok.experimental.UtilityClass;
+import org.objenesis.ObjenesisStd;
 
 import java.lang.annotation.Annotation;
 import java.lang.reflect.*;
 import java.text.SimpleDateFormat;
 import java.util.*;
+import java.util.concurrent.*;
 import java.util.function.Supplier;
 import java.util.stream.Stream;
 
@@ -417,6 +419,70 @@ public class ReflectionUtils {
     public static boolean isAnnotationPresent(Field field, Class<? extends Annotation> annotationType) {
         final Optional<Method> readMethod = getReadMethod(field);
         return field.isAnnotationPresent(annotationType) || readMethod.isPresent() && readMethod.get().isAnnotationPresent(annotationType);
+    }
+
+    public static Collection<?> getEmptyImplementationForCollectionInterface(final Class<?> collectionInterface) {
+        Collection<?> collection = new ArrayList<>();
+        if (List.class.isAssignableFrom(collectionInterface)) {
+            collection = new ArrayList<>();
+        } else if (NavigableSet.class.isAssignableFrom(collectionInterface)) {
+            collection = new TreeSet<>();
+        } else if (SortedSet.class.isAssignableFrom(collectionInterface)) {
+            collection = new TreeSet<>();
+        } else if (Set.class.isAssignableFrom(collectionInterface)) {
+            collection = new HashSet<>();
+        } else if (BlockingDeque.class.isAssignableFrom(collectionInterface)) {
+            collection = new LinkedBlockingDeque<>();
+        } else if (Deque.class.isAssignableFrom(collectionInterface)) {
+            collection = new ArrayDeque<>();
+        } else if (TransferQueue.class.isAssignableFrom(collectionInterface)) {
+            collection = new LinkedTransferQueue<>();
+        } else if (BlockingQueue.class.isAssignableFrom(collectionInterface)) {
+            collection = new LinkedBlockingQueue<>();
+        } else if (Queue.class.isAssignableFrom(collectionInterface)) {
+            collection = new LinkedList<>();
+        }
+        return collection;
+    }
+
+    public static Collection<?> createEmptyCollectionForType(Class<?> fieldType, int initialSize) {
+        rejectUnsupportedTypes(fieldType);
+        Collection<?> collection;
+        try {
+            collection = (Collection<?>) fieldType.newInstance();
+        } catch (InstantiationException | IllegalAccessException e) {
+            if (fieldType.equals(ArrayBlockingQueue.class)) {
+                collection = new ArrayBlockingQueue<>(initialSize);
+            } else {
+                collection = (Collection<?>) new ObjenesisStd().newInstance(fieldType);
+            }
+        }
+        return collection;
+    }
+
+    public static Map<?, ?> getEmptyImplementationForMapInterface(final Class<?> mapInterface) {
+        Map<?, ?> map = new HashMap<>();
+        if (ConcurrentNavigableMap.class.isAssignableFrom(mapInterface)) {
+            map = new ConcurrentSkipListMap<>();
+        } else if (ConcurrentMap.class.isAssignableFrom(mapInterface)) {
+            map = new ConcurrentHashMap<>();
+        } else if (NavigableMap.class.isAssignableFrom(mapInterface)) {
+            map = new TreeMap<>();
+        } else if (SortedMap.class.isAssignableFrom(mapInterface)) {
+            map = new TreeMap<>();
+        }
+        return map;
+    }
+
+    private void rejectUnsupportedTypes(Class<?> type) {
+        if (type.equals(SynchronousQueue.class)) {
+            // SynchronousQueue is not supported since it requires a consuming thread at insertion time
+            throw new UnsupportedOperationException(SynchronousQueue.class.getName() + " type is not supported");
+        }
+        if (type.equals(DelayQueue.class)) {
+            // DelayQueue is not supported since it requires creating dummy delayed objects
+            throw new UnsupportedOperationException(DelayQueue.class.getName() + " type is not supported");
+        }
     }
 
     /**

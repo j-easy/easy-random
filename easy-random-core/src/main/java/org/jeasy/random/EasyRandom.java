@@ -25,6 +25,7 @@ package org.jeasy.random;
 
 import org.jeasy.random.api.*;
 import org.jeasy.random.randomizers.misc.EnumRandomizer;
+import org.jeasy.random.util.ReflectionUtils;
 
 import java.lang.reflect.Field;
 import java.util.*;
@@ -177,10 +178,10 @@ public class EasyRandom extends Random {
             return (T) arrayPopulator.getRandomArray(type, context);
         }
         if (isCollectionType(type)) {
-            return (T) collectionPopulator.getEmptyImplementationForCollectionInterface(type);
+            return (T) ReflectionUtils.getEmptyImplementationForCollectionInterface(type);
         }
         if (isMapType(type)) {
-            return (T) mapPopulator.getEmptyImplementationForMapInterface(type);
+            return (T) ReflectionUtils.getEmptyImplementationForMapInterface(type);
         }
         return null;
     }
