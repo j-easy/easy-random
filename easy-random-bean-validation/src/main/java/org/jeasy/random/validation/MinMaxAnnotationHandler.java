@@ -38,7 +38,7 @@ class MinMaxAnnotationHandler implements BeanValidationAnnotationHandler {
 
     private final Random random;
 
-    public MinMaxAnnotationHandler(long seed) {
+    MinMaxAnnotationHandler(long seed) {
         random = new Random(seed);
     }
 

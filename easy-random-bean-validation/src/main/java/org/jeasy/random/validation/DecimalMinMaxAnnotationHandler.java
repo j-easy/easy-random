@@ -39,7 +39,7 @@ class DecimalMinMaxAnnotationHandler implements BeanValidationAnnotationHandler 
 
     private final Random random;
 
-    public DecimalMinMaxAnnotationHandler(long seed) {
+    DecimalMinMaxAnnotationHandler(long seed) {
         random = new Random(seed);
     }
 

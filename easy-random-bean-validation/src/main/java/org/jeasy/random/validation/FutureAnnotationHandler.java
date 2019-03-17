@@ -36,7 +36,7 @@ class FutureAnnotationHandler implements BeanValidationAnnotationHandler {
     private final long seed;
     private EasyRandom easyRandom;
 
-    public FutureAnnotationHandler(long seed) {
+    FutureAnnotationHandler(long seed) {
         this.seed = seed;
     }
 

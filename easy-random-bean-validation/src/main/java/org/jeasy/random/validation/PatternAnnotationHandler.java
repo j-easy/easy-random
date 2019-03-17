@@ -35,7 +35,7 @@ class PatternAnnotationHandler implements BeanValidationAnnotationHandler {
 
     private final Random random;
 
-    public PatternAnnotationHandler(long seed) {
+    PatternAnnotationHandler(long seed) {
         random = new Random(seed);
     }
 

@@ -48,10 +48,6 @@ public class EasyRandom extends Random {
 
     private final ArrayPopulator arrayPopulator;
 
-    private final CollectionPopulator collectionPopulator;
-
-    private final MapPopulator mapPopulator;
-
     private final Map<Class, EnumRandomizer> enumRandomizersByType;
 
     private final RandomizerProvider randomizerProvider;
@@ -73,8 +69,8 @@ public class EasyRandom extends Random {
         randomizerProvider.setRandomizerRegistries(registries);
         objectFactory = easyRandomParameters.getObjectFactory();
         arrayPopulator = new ArrayPopulator(this);
-        collectionPopulator = new CollectionPopulator(this);
-        mapPopulator = new MapPopulator(this, objectFactory);
+        CollectionPopulator collectionPopulator = new CollectionPopulator(this);
+        MapPopulator mapPopulator = new MapPopulator(this, objectFactory);
         enumRandomizersByType = new ConcurrentHashMap<>();
         fieldPopulator = new FieldPopulator(this, this.randomizerProvider, arrayPopulator, collectionPopulator, mapPopulator);
         exclusionPolicy = easyRandomParameters.getExclusionPolicy();

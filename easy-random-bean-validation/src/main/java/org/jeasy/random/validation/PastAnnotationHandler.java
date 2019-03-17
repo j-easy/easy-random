@@ -36,7 +36,7 @@ class PastAnnotationHandler implements BeanValidationAnnotationHandler {
     private final long seed;
     private EasyRandom easyRandom;
 
-    public PastAnnotationHandler(long seed) {
+    PastAnnotationHandler(long seed) {
         this.seed = seed;
     }
 

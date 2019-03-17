@@ -35,7 +35,7 @@ class PastOrPresentAnnotationHandler implements BeanValidationAnnotationHandler 
     private final long seed;
     private EasyRandom easyRandom;
 
-    public PastOrPresentAnnotationHandler(long seed) {
+    PastOrPresentAnnotationHandler(long seed) {
         this.seed = seed;
     }
 
