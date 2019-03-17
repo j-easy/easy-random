@@ -56,10 +56,18 @@ public class EasyRandom extends Random {
 
     private final ExclusionPolicy exclusionPolicy;
 
+    /**
+     * Create a new {@link EasyRandom} instance with default parameters.
+     */
     public EasyRandom() {
         this(new EasyRandomParameters());
     }
 
+    /**
+     * Create a new {@link EasyRandom} instance.
+     *
+     * @param easyRandomParameters randomization parameters
+     */
     public EasyRandom(final EasyRandomParameters easyRandomParameters) {
         Objects.requireNonNull(easyRandomParameters, "Parameters must not be null");
         super.setSeed(easyRandomParameters.getSeed());

@@ -114,6 +114,9 @@ public class EasyRandomParameters {
     private Set<Predicate<Field>> fieldExclusionPredicates;
     private Set<Predicate<Class<?>>> typeExclusionPredicates;
 
+    /**
+     * Create a new {@link EasyRandomParameters} with default values.
+     */
     public EasyRandomParameters() {
         seed = DEFAULT_SEED;
         charset = DEFAULT_CHARSET;

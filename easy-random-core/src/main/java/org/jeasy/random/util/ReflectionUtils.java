@@ -421,6 +421,12 @@ public class ReflectionUtils {
         return field.isAnnotationPresent(annotationType) || readMethod.isPresent() && readMethod.get().isAnnotationPresent(annotationType);
     }
 
+    /**
+     * Return an empty implementation for a {@link Collection} type.
+     *
+     * @param collectionInterface for which an empty implementation should be returned
+     * @return empty implementation for the collection interface
+     */
     public static Collection<?> getEmptyImplementationForCollectionInterface(final Class<?> collectionInterface) {
         Collection<?> collection = new ArrayList<>();
         if (List.class.isAssignableFrom(collectionInterface)) {
@@ -445,6 +451,12 @@ public class ReflectionUtils {
         return collection;
     }
 
+    /**
+     * Create an empty collection for the given type.
+     * @param fieldType for which an empty collection should we created
+     * @param initialSize initial size of the collection
+     * @return empty collection
+     */
     public static Collection<?> createEmptyCollectionForType(Class<?> fieldType, int initialSize) {
         rejectUnsupportedTypes(fieldType);
         Collection<?> collection;
@@ -460,6 +472,11 @@ public class ReflectionUtils {
         return collection;
     }
 
+    /**
+     * Return an empty implementation for the given {@link Map} interface.
+     * @param mapInterface for which an empty implementation should be returned
+     * @return empty implementation for the given {@link Map} interface.
+     */
     public static Map<?, ?> getEmptyImplementationForMapInterface(final Class<?> mapInterface) {
         Map<?, ?> map = new HashMap<>();
         if (ConcurrentNavigableMap.class.isAssignableFrom(mapInterface)) {

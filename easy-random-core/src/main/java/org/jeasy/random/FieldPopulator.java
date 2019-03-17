@@ -40,8 +40,10 @@ import static org.jeasy.random.util.ReflectionUtils.*;
  * <ul>
  *     <li>{@link EasyRandom} whenever the field is a user defined type.</li>
  *     <li>{@link ArrayPopulator} whenever the field is an array type.</li>
- *     <li>{@link CollectionPopulator}, {@link MapPopulator} whenever the field is a collection type.</li>
+ *     <li>{@link CollectionPopulator} whenever the field is a collection type.</li>
+ *     <li>{@link CollectionPopulator}whenever the field is a map type.</li>
  * </ul>
+ *
  * @author Mahmoud Ben Hassine (mahmoud.benhassine@icloud.com)
  */
 class FieldPopulator {
