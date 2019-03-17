@@ -61,11 +61,13 @@ public class MapPopulatorTest {
     private RandomizationContext context;
     @Mock
     private EasyRandom easyRandom;
+    private EasyRandomParameters parameters;
 
     private MapPopulator mapPopulator;
 
     @BeforeEach
     public void setUp() {
+        parameters = new EasyRandomParameters().collectionSizeRange(SIZE, SIZE);
         ObjectFactory objectFactory = new ObjenesisObjectFactory();
         mapPopulator = new MapPopulator(easyRandom, objectFactory);
     }
@@ -77,6 +79,7 @@ public class MapPopulatorTest {
     @Test
     public void rawInterfaceMapTypesMustBeGeneratedEmpty() throws Exception {
         // Given
+        when(context.getParameters()).thenReturn(parameters);
         Field field = Foo.class.getDeclaredField("rawMap");
 
         // When
@@ -89,6 +92,7 @@ public class MapPopulatorTest {
     @Test
     public void rawConcreteMapTypesMustBeGeneratedEmpty() throws Exception {
         // Given
+        when(context.getParameters()).thenReturn(parameters);
         Field field = Foo.class.getDeclaredField("concreteMap");
 
         // When
@@ -101,7 +105,7 @@ public class MapPopulatorTest {
     @Test
     public void typedInterfaceMapTypesMightBePopulated() throws Exception {
         // Given
-        when(easyRandom.getRandomCollectionSize()).thenReturn(SIZE);
+        when(context.getParameters()).thenReturn(parameters);
         when(easyRandom.doPopulateBean(String.class, context)).thenReturn(FOO, BAR);
         Field field = Foo.class.getDeclaredField("typedMap");
 
@@ -115,7 +119,7 @@ public class MapPopulatorTest {
     @Test
     public void typedConcreteMapTypesMightBePopulated() throws Exception {
         // Given
-        when(easyRandom.getRandomCollectionSize()).thenReturn(SIZE);
+        when(context.getParameters()).thenReturn(parameters);
         when(easyRandom.doPopulateBean(String.class, context)).thenReturn(FOO, BAR);
         Field field = Foo.class.getDeclaredField("typedConcreteMap");
 
@@ -129,7 +133,7 @@ public class MapPopulatorTest {
     @Test
     public void notAddNullKeysToMap() throws NoSuchFieldException {
         // Given
-        when(easyRandom.getRandomCollectionSize()).thenReturn(SIZE);
+        when(context.getParameters()).thenReturn(parameters);
         when(easyRandom.doPopulateBean(String.class, context)).thenReturn(null);
         Field field = Foo.class.getDeclaredField("typedConcreteMap");
 

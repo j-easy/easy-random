@@ -23,13 +23,9 @@
  */
 package org.jeasy.random;
 
-import org.jeasy.random.api.ContextAwareRandomizer;
-import org.jeasy.random.api.Randomizer;
-import org.jeasy.random.api.RandomizerProvider;
+import org.jeasy.random.randomizers.range.IntegerRangeRandomizer;
 
 import java.lang.reflect.Array;
-
-import static java.lang.Math.abs;
 
 /**
  * Random array populator.
@@ -40,37 +36,23 @@ class ArrayPopulator {
 
     private final EasyRandom easyRandom;
 
-    private final RandomizerProvider randomizerProvider;
-
-    ArrayPopulator(final EasyRandom easyRandom, final RandomizerProvider randomizerProvider) {
+    ArrayPopulator(final EasyRandom easyRandom) {
         this.easyRandom = easyRandom;
-        this.randomizerProvider = randomizerProvider;
     }
 
-    @SuppressWarnings("unchecked")
-    <T> Object getRandomArray(final Class<?> fieldType, final RandomizationContext context) {
+    Object getRandomArray(final Class<?> fieldType, final RandomizationContext context) {
         Class<?> componentType = fieldType.getComponentType();
-        if (componentType.isPrimitive()) {
-            return getRandomPrimitiveArray(componentType, context);
-        }
-        int randomSize = easyRandom.getRandomCollectionSize();
-        T[] itemsList = (T[]) Array.newInstance(componentType, randomSize);
+        int randomSize = getRandomArraySize(context.getParameters());
+        Object result = Array.newInstance(componentType, randomSize);
         for (int i = 0; i < randomSize; i++) {
-            itemsList[i] = (T) easyRandom.doPopulateBean(fieldType.getComponentType(), context);
-        }
-        return itemsList;
-    }
-
-    Object getRandomPrimitiveArray(final Class<?> primitiveType, RandomizationContext context) {
-        final int randomSize = abs((byte) easyRandom.nextInt());
-        final Randomizer<?> randomizer = randomizerProvider.getRandomizerByType(primitiveType, context);
-        if (randomizer instanceof ContextAwareRandomizer) {
-            ((ContextAwareRandomizer<?>) randomizer).setRandomizerContext(context);
-        }
-        final Object result = Array.newInstance(primitiveType, randomSize);
-        for (int index = 0; index < randomSize; index++) {
-            Array.set(result, index, randomizer.getRandomValue());
+            Object randomElement = easyRandom.doPopulateBean(componentType, context);
+            Array.set(result, i, randomElement);
         }
         return result;
+    }
+
+    private int getRandomArraySize(EasyRandomParameters parameters) {
+        EasyRandomParameters.Range<Integer> collectionSizeRange = parameters.getCollectionSizeRange();
+        return new IntegerRangeRandomizer(collectionSizeRange.getMin(), collectionSizeRange.getMax(), parameters.getSeed()).getRandomValue();
     }
 }

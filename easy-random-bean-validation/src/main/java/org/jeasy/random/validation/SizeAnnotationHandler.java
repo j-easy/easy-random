@@ -76,14 +76,17 @@ class SizeAnnotationHandler implements BeanValidationAnnotationHandler {
             return new StringRandomizer(charset, min, max, easyRandom.nextLong());
         }
 
+        // FIXME: There should be away to reuse code from ArrayPopulator/CollectionPopulator/MapPopulator *without* making them public
+
         if (isArrayType(fieldType)) {
             return (Randomizer<Object>) () -> {
                 int randomSize = new IntegerRangeRandomizer(min, max, seed).getRandomValue();
-                Object[] itemsList = (Object[]) Array.newInstance(field.getType().getComponentType(), randomSize);
+                Object result = Array.newInstance(field.getType().getComponentType(), randomSize);
                 for (int i = 0; i < randomSize; i++) {
-                    itemsList[i] = (Object) easyRandom.nextObject(fieldType.getComponentType());
+                    Object randomElement = easyRandom.nextObject(fieldType.getComponentType());
+                    Array.set(result, i, randomElement);
                 }
-                return itemsList;
+                return result;
             };
         }
 
@@ -98,7 +101,7 @@ class SizeAnnotationHandler implements BeanValidationAnnotationHandler {
                 } else {
                     collection = createEmptyCollectionForType(fieldType, randomSize);
                 }
-                if (isParameterizedType(fieldGenericType)) {
+                if (isParameterizedType(fieldGenericType)) { // populate only parameterized types, raw types will be empty
                     ParameterizedType parameterizedType = (ParameterizedType) fieldGenericType;
                     Type type = parameterizedType.getActualTypeArguments()[0];
                     if (isPopulatable(type)) {

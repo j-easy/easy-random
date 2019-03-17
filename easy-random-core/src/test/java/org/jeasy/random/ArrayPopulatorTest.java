@@ -34,7 +34,6 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
-import org.jeasy.random.api.Randomizer;
 import org.jeasy.random.beans.ArrayBean;
 import org.jeasy.random.beans.Person;
 
@@ -48,37 +47,22 @@ public class ArrayPopulatorTest {
     private RandomizationContext context;
     @Mock
     private EasyRandom easyRandom;
-    @Mock
-    private RegistriesRandomizerProvider randomizerProvider;
-    @Mock
-    private Randomizer integerRandomizer;
 
     private ArrayPopulator arrayPopulator;
 
     @BeforeEach
     public void setUp() {
-        arrayPopulator = new ArrayPopulator(easyRandom, randomizerProvider);
+        arrayPopulator = new ArrayPopulator(easyRandom);
     }
 
     @Test
     public void getRandomArray() {
-        when(easyRandom.getRandomCollectionSize()).thenReturn(INT);
+        when(context.getParameters()).thenReturn(new EasyRandomParameters().collectionSizeRange(INT, INT));
         when(easyRandom.doPopulateBean(String.class, context)).thenReturn(STRING);
 
         String[] strings = (String[]) arrayPopulator.getRandomArray(String[].class, context);
 
         assertThat(strings).containsOnly(STRING);
-    }
-
-    @Test
-    public void getRandomPrimitiveArray() {
-        when(easyRandom.nextInt()).thenReturn(INT);
-        when(randomizerProvider.getRandomizerByType(Integer.TYPE, context)).thenReturn(integerRandomizer);
-        when(integerRandomizer.getRandomValue()).thenReturn(INT);
-
-        int[] ints = (int[]) arrayPopulator.getRandomPrimitiveArray(Integer.TYPE, context);
-
-        assertThat(ints).containsOnly(INT);
     }
 
     /*

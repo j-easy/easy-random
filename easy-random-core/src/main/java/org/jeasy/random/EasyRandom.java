@@ -72,7 +72,7 @@ public class EasyRandom extends Random {
         randomizerProvider = customRandomizerProvider == null ? new RegistriesRandomizerProvider() : customRandomizerProvider;
         randomizerProvider.setRandomizerRegistries(registries);
         objectFactory = easyRandomParameters.getObjectFactory();
-        arrayPopulator = new ArrayPopulator(this, this.randomizerProvider);
+        arrayPopulator = new ArrayPopulator(this);
         collectionPopulator = new CollectionPopulator(this);
         mapPopulator = new MapPopulator(this, objectFactory);
         enumRandomizersByType = new ConcurrentHashMap<>();
@@ -200,15 +200,6 @@ public class EasyRandom extends Random {
           return;
         }
         fieldPopulator.populateField(result, field, context);
-    }
-
-    int getRandomCollectionSize() {
-        int minCollectionSize = parameters.getCollectionSizeRange().getMin();
-        int maxCollectionSize = parameters.getCollectionSizeRange().getMax();
-        if (minCollectionSize == maxCollectionSize) {
-            return minCollectionSize;
-        }
-        return nextInt((maxCollectionSize - minCollectionSize) + 1) + minCollectionSize;
     }
 
     private LinkedHashSet<RandomizerRegistry> setupRandomizerRegistries(EasyRandomParameters parameters) {

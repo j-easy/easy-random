@@ -64,11 +64,13 @@ public class CollectionPopulatorTest {
     private RandomizationContext context;
     @Mock
     private EasyRandom easyRandom;
+    private EasyRandomParameters parameters;
 
     private CollectionPopulator collectionPopulator;
 
     @BeforeEach
     public void setUp() {
+        parameters = new EasyRandomParameters().collectionSizeRange(SIZE, SIZE);
         collectionPopulator = new CollectionPopulator(easyRandom);
     }
 
@@ -78,6 +80,7 @@ public class CollectionPopulatorTest {
     @Test
     public void rawInterfaceCollectionTypesMustBeReturnedEmpty() throws Exception {
         // Given
+        when(context.getParameters()).thenReturn(parameters);
         Field field = Foo.class.getDeclaredField("rawInterfaceList");
 
         // When
@@ -90,6 +93,7 @@ public class CollectionPopulatorTest {
     @Test
     public void rawConcreteCollectionTypesMustBeReturnedEmpty() throws Exception {
         // Given
+        when(context.getParameters()).thenReturn(parameters);
         Field field = Foo.class.getDeclaredField("rawConcreteList");
 
         // When
@@ -102,7 +106,7 @@ public class CollectionPopulatorTest {
     @Test
     public void typedInterfaceCollectionTypesMightBePopulated() throws Exception {
         // Given
-        when(easyRandom.getRandomCollectionSize()).thenReturn(SIZE);
+        when(context.getParameters()).thenReturn(parameters);
         when(easyRandom.doPopulateBean(String.class, context)).thenReturn(STRING);
         Field field = Foo.class.getDeclaredField("typedInterfaceList");
 
@@ -117,7 +121,7 @@ public class CollectionPopulatorTest {
     @Test
     public void typedConcreteCollectionTypesMightBePopulated() throws Exception {
         // Given
-        when(easyRandom.getRandomCollectionSize()).thenReturn(SIZE);
+        when(context.getParameters()).thenReturn(parameters);
         when(easyRandom.doPopulateBean(String.class, context)).thenReturn(STRING);
         Field field = Foo.class.getDeclaredField("typedConcreteList");
 
