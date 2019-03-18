@@ -42,6 +42,8 @@ class BeanValidationMethodAnnotatedBean {
 
     private int positive;
 
+    private int positiveAndMax;
+
     private int positiveOrZero;
 
     private int negative;
@@ -138,6 +140,15 @@ class BeanValidationMethodAnnotatedBean {
         this.positive = positive;
     }
 
+    @Positive
+    @Max(255)
+    public int getPositiveAndMax() {
+        return positiveAndMax;
+    }
+
+    public void setPositiveAndMax(final int positiveAndMax) {
+        this.positiveAndMax = positiveAndMax;
+    }
 
     @PositiveOrZero
     public int getPositiveOrZero() {

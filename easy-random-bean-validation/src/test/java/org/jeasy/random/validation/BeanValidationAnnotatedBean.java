@@ -76,6 +76,10 @@ class BeanValidationAnnotatedBean {
     @Positive
     private int positive;
 
+    @Positive
+    @Max(255)
+    private int positiveWithMax;
+
     @PositiveOrZero
     private int positiveOrZero;
 
