@@ -27,14 +27,14 @@ Version 4.0.0.RC1 has been released! See what's new in the [change log](https://
 
 # What is Easy Random ?
 
-Easy Random is a library that generates random Java beans. Let's say you have a class `Person` and you want to generate a random instance of it, here we go:
+Easy Random is a library that generates random Java beans. You can think of it as an [ObjectMother](https://martinfowler.com/bliki/ObjectMother.html) for the JVM. Let's say you have a class `Person` and you want to generate a random instance of it, here we go:
 
 ```java
 EasyRandom easyRandom = new EasyRandom();
 Person person = easyRandom.nextObject(Person.class);
 ```
 
-The method `EasyRandom.nextObject` is able to generate random instances of any given type.
+The method `EasyRandom#nextObject` is able to generate random instances of any given type.
 
 # What is this EasyRandom API?
 
@@ -67,8 +67,7 @@ For more details about these parameters, please refer to the [configuration para
 
 In most cases, default options are enough and you can use the default constructor of `EasyRandom`.
 
-Easy Random allows you to control how to generate random data through the [`org.jeasy.random.api.Randomizer`](https://github.com/j-easy/easy-random/blob/master/easy-random-core/src/main/java/org/jeasy/random/api/Randomizer.java) interface
- and makes it easy to exclude some fields from the object graph using a `java.util.function.Predicate`:
+Easy Random allows you to control how to generate random data through the [`org.jeasy.random.api.Randomizer`](https://github.com/j-easy/easy-random/blob/master/easy-random-core/src/main/java/org/jeasy/random/api/Randomizer.java) interface and makes it easy to exclude some fields from the object graph using a `java.util.function.Predicate`:
 
 ```java
 EasyRandomParameters parameters = new EasyRandomParameters()
@@ -82,7 +81,7 @@ Person person = easyRandom.nextObject(Person.class);
 In the previous example, Easy Random will:
 
 * Set all fields of type `String` to `foo` (using the `Randomizer` defined as a lambda expression)
-* Exclude any field named `age` of type `Integer` in class `Person`.
+* Exclude the field named `age` of type `Integer` in class `Person`.
 
 The static methods `named`, `ofType` and `inClass` are defined in [`org.jeasy.random.FieldPredicates`](https://github.com/j-easy/easy-random/blob/master/easy-random-core/src/main/java/org/jeasy/random/FieldPredicates.java) 
 which provides common predicates you can use in combination to define exactly which fields to exclude.
@@ -91,8 +90,7 @@ You can of course use your own `java.util.function.Predicate` in combination wit
 
 # Why Easy Random ?
 
-Populating a Java object with random data can look easy at first glance, unless your domain model involves many related classes.
-In the previous example, let's suppose the `Person` type is defined as follows:
+Populating a Java object with random data can look easy at first glance, unless your domain model involves many related classes. In the previous example, let's suppose the `Person` type is defined as follows:
 
 <p align="center">
     <img src="https://raw.githubusercontent.com/wiki/j-easy/easy-random/images/person.png">
@@ -128,13 +126,12 @@ person.setGender(Gender.MALE);
 person.setAddress(address);
 ```
 
-With Easy Random, generating a random `Person` object is done with `easyRandom.nextObject(Person.class)`.
+**With** Easy Random, generating a random `Person` object is done with `new EasyRandom().nextObject(Person.class)`.
 The library will **recursively** populate all the object graph. That's a big difference!
 
 ## How can this be useful ?
 
-Sometimes, the test fixture does not really matter to the test logic. For example, if we want to test the result of a new sorting algorithm,
- we can generate random input data and assert the output is sorted, regardless of the data itself:
+Sometimes, the test fixture does not really matter to the test logic. For example, if we want to test the result of a new sorting algorithm, we can generate random input data and assert the output is sorted, regardless of the data itself:
 
 ```java
 @org.junit.Test
