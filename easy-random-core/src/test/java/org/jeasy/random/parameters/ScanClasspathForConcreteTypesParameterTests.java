@@ -29,6 +29,7 @@ import static org.assertj.core.api.BDDAssertions.then;
 
 import java.util.Date;
 
+import org.assertj.core.api.Assertions;
 import org.jeasy.random.EasyRandom;
 import org.jeasy.random.EasyRandomParameters;
 import org.junit.jupiter.api.Test;
@@ -118,4 +119,32 @@ public class ScanClasspathForConcreteTypesParameterTests {
 
         then(randomValue.getTestEnum()).isNotNull();
     }
+
+    // issue https://github.com/j-easy/easy-random/issues/353
+
+    @Test
+    void testScanClasspathForConcreteTypes_whenConcreteTypeIsAnInnerClass() {
+        EasyRandomParameters parameters =
+                new EasyRandomParameters().scanClasspathForConcreteTypes(true);
+        EasyRandom easyRandom = new EasyRandom(parameters);
+
+        Foobar foobar = easyRandom.nextObject(Foobar.class);
+
+        Assertions.assertThat(foobar).isNotNull();
+        Assertions.assertThat(foobar.getToto()).isNotNull();
+    }
+
+    public class Foobar {
+
+        public abstract class Toto {}
+
+        public class TotoImpl extends Toto {}
+
+        private Toto toto;
+
+        public Toto getToto() {
+            return toto;
+        }
+    }
+
 }

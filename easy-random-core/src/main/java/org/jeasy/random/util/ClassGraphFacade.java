@@ -53,7 +53,7 @@ abstract class ClassGraphFacade {
     }
 
     private static <T> List<Class<?>> searchForPublicConcreteSubTypesOf(final Class<T> type) {
-        String typeName = type.getCanonicalName();
+        String typeName = type.getName();
         ClassInfoList subTypes = type.isInterface() ? scanResult.getClassesImplementing(typeName) : scanResult.getSubclasses(typeName);
         List<Class<?>> loadedSubTypes = subTypes.filter(subType -> subType.isPublic() && !subType.isAbstract()).loadClasses(true);
         return Collections.unmodifiableList(loadedSubTypes);
