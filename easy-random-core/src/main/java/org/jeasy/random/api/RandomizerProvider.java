@@ -31,7 +31,7 @@ import java.util.Set;
  * Implementations may (or may not) use registries to provide randomizers.
  *
  * The added value of this interface compared to a simple {@link RandomizerRegistry} is that
- * it gives access to the current context and allows fine grained ranomizer selection based on that context.
+ * it gives access to the current context and allows fine grained randomizer selection based on that context.
  *
  * @author Mahmoud Ben Hassine (mahmoud.benhassine@icloud.com)
  */
