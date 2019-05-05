@@ -3,7 +3,7 @@
     <parent>
         <artifactId>easy-random</artifactId>
         <groupId>org.jeasy</groupId>
-        <version>4.0.0.RC2-SNAPSHOT</version>
+        <version>4.0.0</version>
     </parent>
     <modelVersion>4.0.0</modelVersion>
 
@@ -16,7 +16,7 @@
         <url>git@github.com:j-easy/easy-random.git</url>
         <connection>scm:git:git@github.com:j-easy/easy-random.git</connection>
         <developerConnection>scm:git:git@github.com:j-easy/easy-random.git</developerConnection>
-        <tag>HEAD</tag>
+        <tag>easy-random-4.0.0</tag>
     </scm>
 
     <ciManagement>
