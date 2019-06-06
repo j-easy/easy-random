@@ -30,10 +30,13 @@ import static org.jeasy.random.randomizers.CreditCardNumberRandomizer.aNewCredit
 import static org.jeasy.random.randomizers.EmailRandomizer.aNewEmailRandomizer;
 import static org.jeasy.random.randomizers.FirstNameRandomizer.aNewFirstNameRandomizer;
 import static org.jeasy.random.randomizers.FullNameRandomizer.aNewFullNameRandomizer;
+import static org.jeasy.random.randomizers.Ipv4AddressRandomizer.aNewIpv4AddressRandomizer;
+import static org.jeasy.random.randomizers.Ipv6AddressRandomizer.aNewIpv6AddressRandomizer;
 import static org.jeasy.random.randomizers.IsbnRandomizer.aNewIsbnRandomizer;
 import static org.jeasy.random.randomizers.LastNameRandomizer.aNewLastNameRandomizer;
 import static org.jeasy.random.randomizers.LatitudeRandomizer.aNewLatitudeRandomizer;
 import static org.jeasy.random.randomizers.LongitudeRandomizer.aNewLongitudeRandomizer;
+import static org.jeasy.random.randomizers.MacAddressRandomizer.aNewMacAddressRandomizer;
 import static org.jeasy.random.randomizers.ParagraphRandomizer.aNewParagraphRandomizer;
 import static org.jeasy.random.randomizers.PhoneNumberRandomizer.aNewPhoneNumberRandomizer;
 import static org.jeasy.random.randomizers.RegularExpressionRandomizer.aNewRegularExpressionRandomizer;
@@ -62,10 +65,13 @@ public class RandomizersTest extends AbstractRandomizerTest<FakerBasedRandomizer
                 aNewEmailRandomizer(),
                 aNewFirstNameRandomizer(),
                 aNewFullNameRandomizer(),
+                aNewIpv4AddressRandomizer(),
+                aNewIpv6AddressRandomizer(),
                 aNewIsbnRandomizer(),
                 aNewLastNameRandomizer(),
                 aNewLatitudeRandomizer(),
                 aNewLongitudeRandomizer(),
+                aNewMacAddressRandomizer(),
                 aNewPhoneNumberRandomizer(),
                 aNewRegularExpressionRandomizer("\\d+[A-Z]{5}"),
                 aNewParagraphRandomizer(),
@@ -95,10 +101,13 @@ public class RandomizersTest extends AbstractRandomizerTest<FakerBasedRandomizer
                 { aNewEmailRandomizer(SEED), "jacob.hansen@hotmail.com" }, 
                 { aNewFirstNameRandomizer(SEED), "Jacob" },
                 { aNewFullNameRandomizer(SEED), "Breanna Mills" },
+                { aNewIpv4AddressRandomizer(SEED), "16.188.76.229" },
+                { aNewIpv6AddressRandomizer(SEED), "b3f4:4994:c9e8:b21a:c493:e923:f711:1115" },
                 { aNewIsbnRandomizer(SEED), "9781797845005" },
                 { aNewLastNameRandomizer(SEED), "Durgan" },
                 { aNewLatitudeRandomizer(SEED), "40" + new DecimalFormatSymbols().getDecimalSeparator() + "171357" },
                 { aNewLongitudeRandomizer(SEED), "80" + new DecimalFormatSymbols().getDecimalSeparator() + "342713" },
+                { aNewMacAddressRandomizer(SEED), "b3:f4:49:94:c9:e8" },
                 { aNewParagraphRandomizer(SEED), "Totam assumenda eius autem similique. Aut voluptatem enim praesentium. Suscipit cupiditate doloribus debitis dolor. Cumque sapiente occaecati. Quos maiores quae." },
                 { aNewPhoneNumberRandomizer(SEED), "1-069-574-7539" },
                 { aNewRegularExpressionRandomizer("\\d+[A-Z]{5}", SEED), "8UYSMT" },
@@ -128,10 +137,13 @@ public class RandomizersTest extends AbstractRandomizerTest<FakerBasedRandomizer
                 { aNewEmailRandomizer(SEED, LOCALE), "alice.masson@hotmail.fr" }, 
                 { aNewFirstNameRandomizer(SEED, LOCALE), "Alice" },
                 { aNewFullNameRandomizer(SEED, LOCALE), "Masson Emilie" },
+                { aNewIpv4AddressRandomizer(SEED, LOCALE), "16.188.76.229" },
+                { aNewIpv6AddressRandomizer(SEED, LOCALE), "b3f4:4994:c9e8:b21a:c493:e923:f711:1115" },
                 { aNewIsbnRandomizer(SEED, LOCALE), "9781797845005" },
                 { aNewLastNameRandomizer(SEED, LOCALE), "Faure" },
                 { aNewLatitudeRandomizer(SEED, LOCALE), "40" + new DecimalFormatSymbols().getDecimalSeparator() + "171357" }, // should really be "40.171357", seems like a bug in java-faker
                 { aNewLongitudeRandomizer(SEED, LOCALE), "80" + new DecimalFormatSymbols().getDecimalSeparator() + "342713" }, // should really be "80.342713", seems like a bug in java-faker
+                { aNewMacAddressRandomizer(SEED, LOCALE), "b3:f4:49:94:c9:e8" },
                 { aNewParagraphRandomizer(SEED, LOCALE), "Totam assumenda eius autem similique. Aut voluptatem enim praesentium. Suscipit cupiditate doloribus debitis dolor. Cumque sapiente occaecati. Quos maiores quae." },
                 { aNewPhoneNumberRandomizer(SEED, LOCALE), "03 06 95 74 75" },
                 { aNewSentenceRandomizer(SEED, LOCALE), "Dolor totam assumenda eius autem." },
