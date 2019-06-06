@@ -37,7 +37,7 @@ import org.mockito.junit.jupiter.MockitoExtension;
 import org.jeasy.random.api.Randomizer;
 
 @ExtendWith(MockitoExtension.class)
-public class StringDelegatingRandomizerTest {
+class StringDelegatingRandomizerTest {
 
     @Mock
     private Randomizer<Object> delegate;
@@ -47,13 +47,13 @@ public class StringDelegatingRandomizerTest {
     private StringDelegatingRandomizer stringDelegatingRandomizer;
 
     @BeforeEach
-    public void setUp() {
+    void setUp() {
         stringDelegatingRandomizer = aNewStringDelegatingRandomizer(delegate);
         when(delegate.getRandomValue()).thenReturn(object);
     }
 
     @Test
-    public void generatedValueShouldTheSameAs() {
+    void generatedValueShouldTheSameAs() {
         String actual = stringDelegatingRandomizer.getRandomValue();
 
         assertThat(actual).isEqualTo(valueOf(object));

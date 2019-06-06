@@ -31,10 +31,10 @@ import org.junit.jupiter.api.Test;
 
 import org.jeasy.random.beans.Person;
 
-public class StringLengthRangeParameterTests {
+class StringLengthRangeParameterTests {
 
     @Test
-    public void testStringLengthRange() {
+    void testStringLengthRange() {
         // Given
         int minStringLength = 3;
         int maxStringLength = 50;

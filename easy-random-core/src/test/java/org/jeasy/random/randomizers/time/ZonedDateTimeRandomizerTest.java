@@ -32,10 +32,10 @@ import org.junit.jupiter.api.Test;
 
 import org.jeasy.random.randomizers.AbstractRandomizerTest;
 
-public class ZonedDateTimeRandomizerTest extends AbstractRandomizerTest<ZonedDateTime> {
+class ZonedDateTimeRandomizerTest extends AbstractRandomizerTest<ZonedDateTime> {
 
     @Test
-    public void generatedValueShouldNotBeNull() {
+    void generatedValueShouldNotBeNull() {
         // given
         ZonedDateTimeRandomizer zonedDateTimeRandomizer = aNewZonedDateTimeRandomizer();
 
@@ -46,7 +46,7 @@ public class ZonedDateTimeRandomizerTest extends AbstractRandomizerTest<ZonedDat
     }
 
     @Test
-    public void shouldGenerateTheSameValueForTheSameSeed() {
+    void shouldGenerateTheSameValueForTheSameSeed() {
         // given
         ZonedDateTimeRandomizer firstSeededZonedDateTimeRandomizer = aNewZonedDateTimeRandomizer(SEED);
         ZonedDateTimeRandomizer secondSeededZonedDateTimeRandomizer = aNewZonedDateTimeRandomizer(SEED);

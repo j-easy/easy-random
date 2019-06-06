@@ -40,17 +40,17 @@ import org.jeasy.random.EasyRandomParameters;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-public class BeanValidationTest {
+class BeanValidationTest {
 
     private EasyRandom easyRandom;
 
     @BeforeEach
-    public void setUp() {
+    void setUp() {
         easyRandom = new EasyRandom();
     }
 
     @Test
-    public void generatedValuesShouldBeValidAccordingToValidationConstraints() {
+    void generatedValuesShouldBeValidAccordingToValidationConstraints() {
         BeanValidationAnnotatedBean bean = easyRandom.nextObject(BeanValidationAnnotatedBean.class);
 
         assertThat(bean).isNotNull();
@@ -111,7 +111,7 @@ public class BeanValidationTest {
     }
 
     @Test
-    public void generatedValuesShouldBeValidAccordingToValidationConstraintsOnMethod() {
+    void generatedValuesShouldBeValidAccordingToValidationConstraintsOnMethod() {
         BeanValidationMethodAnnotatedBean bean = easyRandom.nextObject(BeanValidationMethodAnnotatedBean.class);
 
         assertThat(bean).isNotNull();
@@ -172,14 +172,14 @@ public class BeanValidationTest {
     }
 
     @Test
-    public void generatedValuesForBeanWithoutReadMethod() {
+    void generatedValuesForBeanWithoutReadMethod() {
         BeanValidationWithoutReadMethodBean bean = easyRandom.nextObject(BeanValidationWithoutReadMethodBean.class);
  
         assertThat(bean).hasNoNullFieldsOrProperties();
     }
 
     @Test
-    public void shouldGenerateTheSameValueForTheSameSeed() {
+    void shouldGenerateTheSameValueForTheSameSeed() {
         EasyRandomParameters parameters = new EasyRandomParameters().seed(123L);
         EasyRandom random = new EasyRandom(parameters);
  
@@ -207,7 +207,7 @@ public class BeanValidationTest {
     }
 
     @Test
-    public void generatedBeanShouldBeValidUsingBeanValidationAPI() {
+    void generatedBeanShouldBeValidUsingBeanValidationAPI() {
         BeanValidationAnnotatedBean bean = easyRandom.nextObject(BeanValidationAnnotatedBean.class);
 
         ValidatorFactory validatorFactory = Validation.buildDefaultValidatorFactory();

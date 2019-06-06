@@ -33,20 +33,20 @@ import org.junit.jupiter.api.Test;
 
 import org.jeasy.random.randomizers.AbstractRandomizerTest;
 
-public class ZoneIdRandomizerTest extends AbstractRandomizerTest<ZoneId> {
+class ZoneIdRandomizerTest extends AbstractRandomizerTest<ZoneId> {
 
     @BeforeEach
-    public void setUp() {
+    void setUp() {
         randomizer = aNewZoneIdRandomizer(SEED);
     }
 
     @Test
-    public void generatedValueShouldNotBeNull() {
+    void generatedValueShouldNotBeNull() {
         assertThat(randomizer.getRandomValue()).isNotNull();
     }
 
     @Test
-    public void shouldGenerateTheSameValueForTheSameSeed() {
+    void shouldGenerateTheSameValueForTheSameSeed() {
         // we can not use a canned value, because values returned by the randomizer differ between locales/jdks
         ZoneId firstZoneId = aNewZoneIdRandomizer(SEED).getRandomValue();
         ZoneId secondZoneId = aNewZoneIdRandomizer(SEED).getRandomValue();

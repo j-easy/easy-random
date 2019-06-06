@@ -33,25 +33,25 @@ import org.junit.jupiter.api.Test;
 import org.jeasy.random.randomizers.AbstractRandomizerTest;
 import org.jeasy.random.randomizers.time.MinuteRandomizer;
 
-public class MinuteRandomizerTest extends AbstractRandomizerTest<Integer> {
+class MinuteRandomizerTest extends AbstractRandomizerTest<Integer> {
 
     @BeforeEach
-    public void setUp() {
+    void setUp() {
         randomizer = new MinuteRandomizer();
     }
 
     @Test
-    public void generatedValueShouldNotBeNull() {
+    void generatedValueShouldNotBeNull() {
         assertThat(randomizer.getRandomValue()).isNotNull();
     }
 
     @Test
-    public void generatedValueShouldBeWithinRange() {
+    void generatedValueShouldBeWithinRange() {
         assertThat(randomizer.getRandomValue()).isBetween(MIN_MINUTE, MAX_MINUTE);
     }
 
     @Test
-    public void shouldGenerateTheSameValueForTheSameSeed() {
+    void shouldGenerateTheSameValueForTheSameSeed() {
         // Given
         randomizer = new MinuteRandomizer(SEED);
         Integer expected = 42;

@@ -32,10 +32,10 @@ import org.junit.jupiter.api.Test;
 
 import org.jeasy.random.randomizers.AbstractRandomizerTest;
 
-public class BigDecimalRandomizerTest extends AbstractRandomizerTest<BigDecimal> {
+class BigDecimalRandomizerTest extends AbstractRandomizerTest<BigDecimal> {
 
     @Test
-    public void generatedValueShouldHaveProvidedPositiveScale() {
+    void generatedValueShouldHaveProvidedPositiveScale() {
         // given
         Integer scale = 1;
         BigDecimalRandomizer bigDecimalRandomizer = aNewBigDecimalRandomizer(scale);
@@ -47,7 +47,7 @@ public class BigDecimalRandomizerTest extends AbstractRandomizerTest<BigDecimal>
     }
 
     @Test
-    public void generatedValueShouldHaveProvidedNegativeScale() {
+    void generatedValueShouldHaveProvidedNegativeScale() {
         // given
         Integer scale = -1;
         BigDecimalRandomizer bigDecimalRangeRandomizer = aNewBigDecimalRandomizer(scale);

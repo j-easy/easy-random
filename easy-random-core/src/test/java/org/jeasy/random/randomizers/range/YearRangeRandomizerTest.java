@@ -32,29 +32,29 @@ import java.time.Year;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-public class YearRangeRandomizerTest extends AbstractRangeRandomizerTest<Year> {
+class YearRangeRandomizerTest extends AbstractRangeRandomizerTest<Year> {
 
     private Year minYear, maxYear;
 
     @BeforeEach
-    public void setUp() {
+    void setUp() {
         minYear = Year.of(1000);
         maxYear = Year.of(3000);
         randomizer = aNewYearRangeRandomizer(minYear, maxYear);
     }
 
     @Test
-    public void generatedYearShouldNotBeNull() {
+    void generatedYearShouldNotBeNull() {
         assertThat(randomizer.getRandomValue()).isNotNull();
     }
 
     @Test
-    public void generatedYearShouldBeWithinSpecifiedRange() {
+    void generatedYearShouldBeWithinSpecifiedRange() {
         assertThat(randomizer.getRandomValue()).isBetween(minYear, maxYear);
     }
 
     @Test
-    public void generatedYearShouldBeAlwaysTheSameForTheSameSeed() {
+    void generatedYearShouldBeAlwaysTheSameForTheSameSeed() {
         // Given
         randomizer = aNewYearRangeRandomizer(minYear, maxYear, SEED);
         Year expected = Year.of(2446);
@@ -67,12 +67,12 @@ public class YearRangeRandomizerTest extends AbstractRangeRandomizerTest<Year> {
     }
 
     @Test
-    public void whenSpecifiedMinYearIsAfterMaxYear_thenShouldThrowIllegalArgumentException() {
+    void whenSpecifiedMinYearIsAfterMaxYear_thenShouldThrowIllegalArgumentException() {
         assertThatThrownBy(() -> aNewYearRangeRandomizer(maxYear, minYear)).isInstanceOf(IllegalArgumentException.class);
     }
 
     @Test
-    public void whenSpecifiedMinYearIsNull_thenShouldUseDefaultMinValue() {
+    void whenSpecifiedMinYearIsNull_thenShouldUseDefaultMinValue() {
         // Given
         randomizer = aNewYearRangeRandomizer(null, maxYear);
 
@@ -84,7 +84,7 @@ public class YearRangeRandomizerTest extends AbstractRangeRandomizerTest<Year> {
     }
 
     @Test
-    public void whenSpecifiedMaxYearIsNull_thenShouldUseDefaultMaxValue() {
+    void whenSpecifiedMaxYearIsNull_thenShouldUseDefaultMaxValue() {
         // Given
         randomizer = aNewYearRangeRandomizer(minYear, null);
 

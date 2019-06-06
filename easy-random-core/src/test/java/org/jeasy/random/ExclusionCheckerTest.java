@@ -37,7 +37,7 @@ import org.mockito.junit.jupiter.MockitoExtension;
 import org.jeasy.random.beans.Human;
 
 @ExtendWith(MockitoExtension.class)
-public class ExclusionCheckerTest {
+class ExclusionCheckerTest {
 
     @Mock
     private RandomizerContext randomizerContext;
@@ -45,12 +45,12 @@ public class ExclusionCheckerTest {
     private ExclusionChecker checker;
 
     @BeforeEach
-    public void setUp() {
+    void setUp() {
         checker = new ExclusionChecker();
     }
 
     @Test
-    public void staticFieldsShouldBeExcluded() throws NoSuchFieldException {
+    void staticFieldsShouldBeExcluded() throws NoSuchFieldException {
         // Given
         Field field = Human.class.getDeclaredField("SERIAL_VERSION_UID");
 

@@ -33,44 +33,44 @@ import java.math.BigDecimal;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-public class BigDecimalRangeRandomizerTest extends AbstractRangeRandomizerTest<BigDecimal> {
+class BigDecimalRangeRandomizerTest extends AbstractRangeRandomizerTest<BigDecimal> {
 
     private Double min, max;
 
     @BeforeEach
-    public void setUp() {
+    void setUp() {
         min = 1.1;
         max = 9.9;
         randomizer = new BigDecimalRangeRandomizer(min, max);
     }
 
     @Test
-    public void generatedValueShouldBeWithinSpecifiedRange() {
+    void generatedValueShouldBeWithinSpecifiedRange() {
         BigDecimal randomValue = randomizer.getRandomValue();
         assertThat(randomValue.doubleValue()).isBetween(min, max);
     }
 
     @Test
-    public void whenSpecifiedMinValueIsAfterMaxValueThenThrowIllegalArgumentException() {
+    void whenSpecifiedMinValueIsAfterMaxValueThenThrowIllegalArgumentException() {
         assertThatThrownBy(() -> aNewBigDecimalRangeRandomizer(max, min)).isInstanceOf(IllegalArgumentException.class);
     }
 
     @Test
-    public void whenSpecifiedMinValueIsNullThenShouldUseDefaultMinValue() {
+    void whenSpecifiedMinValueIsNullThenShouldUseDefaultMinValue() {
         randomizer = aNewBigDecimalRangeRandomizer(null, max);
         BigDecimal randomBigDecimal = randomizer.getRandomValue();
         assertThat(randomBigDecimal.doubleValue()).isLessThanOrEqualTo(max);
     }
 
     @Test
-    public void whenSpecifiedMaxvalueIsNullThenShouldUseDefaultMaxValue() {
+    void whenSpecifiedMaxvalueIsNullThenShouldUseDefaultMaxValue() {
         randomizer = aNewBigDecimalRangeRandomizer(min, null);
         BigDecimal randomBigDecimal = randomizer.getRandomValue();
         assertThat(randomBigDecimal.doubleValue()).isGreaterThanOrEqualTo(min);
     }
 
     @Test
-    public void shouldAlwaysGenerateTheSameValueForTheSameSeed() {
+    void shouldAlwaysGenerateTheSameValueForTheSameSeed() {
         // given
         BigDecimalRangeRandomizer bigDecimalRangeRandomizer = aNewBigDecimalRangeRandomizer(min, max, SEED);
 
@@ -81,7 +81,7 @@ public class BigDecimalRangeRandomizerTest extends AbstractRangeRandomizerTest<B
     }
 
     @Test
-    public void generatedValueShouldHaveProvidedPositiveScale() {
+    void generatedValueShouldHaveProvidedPositiveScale() {
         // given
         Integer scale = 2;
         BigDecimalRangeRandomizer bigDecimalRangeRandomizer = aNewBigDecimalRangeRandomizer(min, max, scale);
@@ -93,7 +93,7 @@ public class BigDecimalRangeRandomizerTest extends AbstractRangeRandomizerTest<B
     }
 
     @Test
-    public void generatedValueShouldHaveProvidedNegativeScale() {
+    void generatedValueShouldHaveProvidedNegativeScale() {
         // given
         Integer scale = -2;
         BigDecimalRangeRandomizer bigDecimalRangeRandomizer = aNewBigDecimalRangeRandomizer(min, max, scale);

@@ -32,15 +32,15 @@ import org.junit.jupiter.api.Test;
 
 import org.jeasy.random.randomizers.AbstractRandomizerTest;
 
-public class EnumRandomizerTest extends AbstractRandomizerTest<EnumRandomizerTest.Gender> {
+class EnumRandomizerTest extends AbstractRandomizerTest<EnumRandomizerTest.Gender> {
 
     @Test
-    public void generatedValueShouldBeOfTheSpecifiedEnum() {
+    void generatedValueShouldBeOfTheSpecifiedEnum() {
         assertThat(aNewEnumRandomizer(Gender.class).getRandomValue()).isIn(Gender.values());
     }
 
     @Test
-    public void shouldAlwaysGenerateTheSameValueForTheSameSeed() {
+    void shouldAlwaysGenerateTheSameValueForTheSameSeed() {
         assertThat(aNewEnumRandomizer(Gender.class, SEED).getRandomValue()).isEqualTo(FEMALE);
     }
 
@@ -49,7 +49,7 @@ public class EnumRandomizerTest extends AbstractRandomizerTest<EnumRandomizerTes
     }
 
     @Test
-    public void should_return_a_value_different_from_the_excluded_one() {
+    void should_return_a_value_different_from_the_excluded_one() {
         Gender valueToExclude = Gender.MALE;
         Gender randomElement = aNewEnumRandomizer(Gender.class, valueToExclude).getRandomValue();
         assertThat(randomElement).isNotNull();
@@ -57,7 +57,7 @@ public class EnumRandomizerTest extends AbstractRandomizerTest<EnumRandomizerTes
     }
 
     @Test
-    public void should_throw_an_exception_when_all_values_are_excluded() {
+    void should_throw_an_exception_when_all_values_are_excluded() {
         assertThatThrownBy(() -> aNewEnumRandomizer(Gender.class, Gender.values())).isInstanceOf(IllegalArgumentException.class);
     }
 }

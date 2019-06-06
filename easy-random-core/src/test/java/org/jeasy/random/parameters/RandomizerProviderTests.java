@@ -37,7 +37,7 @@ import java.util.Set;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-public class RandomizerProviderTests {
+class RandomizerProviderTests {
 
     @Test
     void testCustomRandomizerProvider() {

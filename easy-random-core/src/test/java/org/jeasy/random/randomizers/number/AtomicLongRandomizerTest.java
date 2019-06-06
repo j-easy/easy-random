@@ -32,10 +32,10 @@ import org.junit.jupiter.api.Test;
 
 import org.jeasy.random.randomizers.AbstractRandomizerTest;
 
-public class AtomicLongRandomizerTest extends AbstractRandomizerTest<AtomicLong> {
+class AtomicLongRandomizerTest extends AbstractRandomizerTest<AtomicLong> {
 
     @Test
-    public void generateValueShouldNotBeNull() {
+    void generateValueShouldNotBeNull() {
         // given
         AtomicLongRandomizer atomicLongRandomizer = aNewAtomicLongRandomizer();
         
@@ -46,7 +46,7 @@ public class AtomicLongRandomizerTest extends AbstractRandomizerTest<AtomicLong>
     }
 
     @Test
-    public void shouldGenerateTheSameValueForTheSameSeed() {
+    void shouldGenerateTheSameValueForTheSameSeed() {
         // given
         AtomicLongRandomizer atomicLongRandomizer = aNewAtomicLongRandomizer(SEED);
         

@@ -36,7 +36,7 @@ import org.mockito.junit.jupiter.MockitoExtension;
 import org.jeasy.random.api.Randomizer;
 
 @ExtendWith(MockitoExtension.class)
-public class MapRandomizerTest {
+class MapRandomizerTest {
 
     @Mock
     private Randomizer<Integer> keyRandomizer;
@@ -44,33 +44,33 @@ public class MapRandomizerTest {
     private Randomizer<String> valueRandomizer;
 
     @Test
-    public void generatedMapShouldNotBeEmpty() {
+    void generatedMapShouldNotBeEmpty() {
         assertThat(aNewMapRandomizer(keyRandomizer, valueRandomizer).getRandomValue()).isNotEmpty();
     }
 
     @Test
-    public void generatedMapSizeShouldBeEqualToTheSpecifiedSize() {
+    void generatedMapSizeShouldBeEqualToTheSpecifiedSize() {
         when(keyRandomizer.getRandomValue()).thenReturn(1, 2, 3);
         assertThat(aNewMapRandomizer(keyRandomizer, valueRandomizer, 3).getRandomValue()).hasSize(3);
     }
 
     @Test
-    public void specifiedSizeCanBeZero() {
+    void specifiedSizeCanBeZero() {
         assertThat(aNewMapRandomizer(keyRandomizer, valueRandomizer, 0).getRandomValue()).isEmpty();
     }
 
     @Test
-    public void specifiedSizeShouldBePositive() {
+    void specifiedSizeShouldBePositive() {
         assertThatThrownBy(() -> aNewMapRandomizer(keyRandomizer, valueRandomizer, -3)).isInstanceOf(IllegalArgumentException.class);
     }
 
     @Test
-    public void nullKeyRandomizer() {
+    void nullKeyRandomizer() {
         assertThatThrownBy(() -> aNewMapRandomizer(null, valueRandomizer, 3)).isInstanceOf(NullPointerException.class);
     }
 
     @Test
-    public void nullValueRandomizer() {
+    void nullValueRandomizer() {
         assertThatThrownBy(() -> aNewMapRandomizer(keyRandomizer, null, 3)).isInstanceOf(NullPointerException.class);
     }
 }

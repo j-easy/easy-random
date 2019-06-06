@@ -31,42 +31,42 @@ import static org.assertj.core.api.BDDAssertions.then;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-public class FloatRangeRandomizerTest extends AbstractRangeRandomizerTest<Float> {
+class FloatRangeRandomizerTest extends AbstractRangeRandomizerTest<Float> {
 
     @BeforeEach
-    public void setUp() {
+    void setUp() {
         min = 0.001f;
         max = 0.002f;
         randomizer = aNewFloatRangeRandomizer(min, max);
     }
 
     @Test
-    public void generatedValueShouldBeWithinSpecifiedRange() {
+    void generatedValueShouldBeWithinSpecifiedRange() {
         Float randomValue = randomizer.getRandomValue();
         assertThat(randomValue).isBetween(min, max);
     }
 
     @Test
-    public void whenSpecifiedMinValueIsAfterMaxValueThenThrowIllegalArgumentException() {
+    void whenSpecifiedMinValueIsAfterMaxValueThenThrowIllegalArgumentException() {
         assertThatThrownBy(() -> aNewFloatRangeRandomizer(max, min)).isInstanceOf(IllegalArgumentException.class);
     }
 
     @Test
-    public void whenSpecifiedMinValueIsNullThenShouldUseDefaultMinValue() {
+    void whenSpecifiedMinValueIsNullThenShouldUseDefaultMinValue() {
         randomizer = aNewFloatRangeRandomizer(null, max);
         Float randomFloat = randomizer.getRandomValue();
         assertThat(randomFloat).isLessThanOrEqualTo(max);
     }
 
     @Test
-    public void whenSpecifiedMaxvalueIsNullThenShouldUseDefaultMaxValue() {
+    void whenSpecifiedMaxvalueIsNullThenShouldUseDefaultMaxValue() {
         randomizer = aNewFloatRangeRandomizer(min, null);
         Float randomFloat = randomizer.getRandomValue();
         assertThat(randomFloat).isGreaterThanOrEqualTo(min);
     }
 
     @Test
-    public void shouldAlwaysGenerateTheSameValueForTheSameSeed() {
+    void shouldAlwaysGenerateTheSameValueForTheSameSeed() {
         // given
         FloatRangeRandomizer floatRangeRandomizer = aNewFloatRangeRandomizer(min, max, SEED);
         

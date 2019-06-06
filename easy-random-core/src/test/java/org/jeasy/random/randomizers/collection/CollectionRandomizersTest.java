@@ -40,11 +40,11 @@ import org.junit.jupiter.params.provider.MethodSource;
 
 import org.jeasy.random.api.Randomizer;
 
-public class CollectionRandomizersTest {
+class CollectionRandomizersTest {
 
     private static final int collectionSize = 3;
 
-    public static Object[] generateCollectionRandomizers() {
+    static Object[] generateCollectionRandomizers() {
         Randomizer<String> elementRandomizer = elementRandomizer();
         return new Object[] {
                 aNewListRandomizer(elementRandomizer),
@@ -54,14 +54,14 @@ public class CollectionRandomizersTest {
 
     @ParameterizedTest
     @MethodSource("generateCollectionRandomizers")
-    public <T> void generatedCollectionShouldNotBeNull(Randomizer<Collection<T>> collectionRandomizer) {
+    <T> void generatedCollectionShouldNotBeNull(Randomizer<Collection<T>> collectionRandomizer) {
         // when
         Collection<T> randomCollection = collectionRandomizer.getRandomValue();
 
         then(randomCollection).isNotNull();
     }
 
-    public static Object[] generateCollectionRandomizersWithSpecificSize() {
+    static Object[] generateCollectionRandomizersWithSpecificSize() {
         return new Object[] {
                 aNewListRandomizer(elementRandomizer(), collectionSize),
                 aNewQueueRandomizer(elementRandomizer(), collectionSize),
@@ -70,14 +70,14 @@ public class CollectionRandomizersTest {
 
     @ParameterizedTest
     @MethodSource("generateCollectionRandomizersWithSpecificSize")
-    public <T> void generatedCollectionSizeShouldBeEqualToTheSpecifiedSize(Randomizer<Collection<T>> collectionRandomizer) {
+    <T> void generatedCollectionSizeShouldBeEqualToTheSpecifiedSize(Randomizer<Collection<T>> collectionRandomizer) {
         // when
         Collection<T> randomCollection = collectionRandomizer.getRandomValue();
 
         then(randomCollection).hasSize(collectionSize);
     }
 
-    public static Object[] generateCollectionRandomizersForEmptyCollections() {
+    static Object[] generateCollectionRandomizersForEmptyCollections() {
         return new Object[] {
                 aNewListRandomizer(elementRandomizer(), 0),
                 aNewQueueRandomizer(elementRandomizer(), 0),
@@ -86,14 +86,14 @@ public class CollectionRandomizersTest {
 
     @ParameterizedTest
     @MethodSource("generateCollectionRandomizersForEmptyCollections")
-    public <T> void shouldAllowGeneratingEmptyCollections(Randomizer<Collection<T>> collectionRandomizer) {
+    <T> void shouldAllowGeneratingEmptyCollections(Randomizer<Collection<T>> collectionRandomizer) {
         // when
         Collection<T> randomCollection = collectionRandomizer.getRandomValue();
 
         then(randomCollection).isEmpty();
     }
 
-    public static Object[] generateCollectionRandomizersWithIllegalSize() {
+    static Object[] generateCollectionRandomizersWithIllegalSize() {
         Randomizer<String> elementRandomizer = elementRandomizer();
         int illegalSize = -1;
         return new Object[] { 
@@ -104,7 +104,7 @@ public class CollectionRandomizersTest {
 
     @ParameterizedTest
     @MethodSource("generateCollectionRandomizersWithIllegalSize")
-    public void specifiedSizeShouldBePositive(ThrowingCallable callable) {
+    void specifiedSizeShouldBePositive(ThrowingCallable callable) {
         // when
         Throwable expectedException = catchThrowable(callable);
 
@@ -113,7 +113,7 @@ public class CollectionRandomizersTest {
     }
 
     @SuppressWarnings("unchecked")
-    public static Randomizer<String> elementRandomizer() {
+    static Randomizer<String> elementRandomizer() {
         Randomizer<String> elementRandomizer = mock(Randomizer.class);
         when(elementRandomizer.getRandomValue()).thenReturn("a", "b", "c");
         return elementRandomizer;

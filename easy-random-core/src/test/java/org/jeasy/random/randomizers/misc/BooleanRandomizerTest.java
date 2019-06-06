@@ -30,15 +30,15 @@ import org.junit.jupiter.api.Test;
 
 import org.jeasy.random.randomizers.AbstractRandomizerTest;
 
-public class BooleanRandomizerTest extends AbstractRandomizerTest<Boolean> {
+class BooleanRandomizerTest extends AbstractRandomizerTest<Boolean> {
 
     @Test
-    public void generatedBooleanShouldNotBeNull() {
+    void generatedBooleanShouldNotBeNull() {
         assertThat(aNewBooleanRandomizer().getRandomValue()).isNotNull();
     }
 
     @Test
-    public void shouldGenerateTheSameValueForTheSameSeed() {
+    void shouldGenerateTheSameValueForTheSameSeed() {
         assertThat(aNewBooleanRandomizer(SEED).getRandomValue()).isTrue();
     }
 }

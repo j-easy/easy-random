@@ -33,44 +33,44 @@ import java.math.BigInteger;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-public class BigIntegerRangeRandomizerTest extends AbstractRangeRandomizerTest<BigInteger> {
+class BigIntegerRangeRandomizerTest extends AbstractRangeRandomizerTest<BigInteger> {
 
     private Integer min, max;
 
     @BeforeEach
-    public void setUp() {
+    void setUp() {
         min = 1;
         max = 10;
         randomizer = aNewBigIntegerRangeRandomizer(min, max);
     }
 
     @Test
-    public void generatedValueShouldBeWithinSpecifiedRange() {
+    void generatedValueShouldBeWithinSpecifiedRange() {
         BigInteger randomValue = randomizer.getRandomValue();
         assertThat(randomValue.intValue()).isBetween(min, max);
     }
 
     @Test
-    public void whenSpecifiedMinValueIsAfterMaxValueThenThrowIllegalArgumentException() {
+    void whenSpecifiedMinValueIsAfterMaxValueThenThrowIllegalArgumentException() {
         assertThatThrownBy(() -> aNewBigIntegerRangeRandomizer(max, min)).isInstanceOf(IllegalArgumentException.class);
     }
 
     @Test
-    public void whenSpecifiedMinValueIsNullThenShouldUseDefaultMinValue() {
+    void whenSpecifiedMinValueIsNullThenShouldUseDefaultMinValue() {
         randomizer = aNewBigIntegerRangeRandomizer(null, max);
         BigInteger radomBigInteger = randomizer.getRandomValue();
         assertThat(radomBigInteger.intValue()).isLessThanOrEqualTo(max);
     }
 
     @Test
-    public void whenSpecifiedMaxvalueIsNullThenShouldUseDefaultMaxValue() {
+    void whenSpecifiedMaxvalueIsNullThenShouldUseDefaultMaxValue() {
         randomizer = aNewBigIntegerRangeRandomizer(min, null);
         BigInteger radomBigInteger = randomizer.getRandomValue();
         assertThat(radomBigInteger.intValue()).isGreaterThanOrEqualTo(min);
     }
 
     @Test
-    public void shouldAlwaysGenerateTheSameValueForTheSameSeed() {
+    void shouldAlwaysGenerateTheSameValueForTheSameSeed() {
         // given
         BigIntegerRangeRandomizer bigIntegerRangeRandomizer = aNewBigIntegerRangeRandomizer(min, max, SEED);
         

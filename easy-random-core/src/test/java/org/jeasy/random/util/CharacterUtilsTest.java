@@ -31,10 +31,10 @@ import java.util.List;
 
 import org.junit.jupiter.api.Test;
 
-public class CharacterUtilsTest {
+class CharacterUtilsTest {
 
     @Test
-    public void testFilterLetters() {
+    void testFilterLetters() {
         List<Character> characters = filterLetters(asList('a', 'b', '1'));
 
         assertThat(characters).containsExactly('a', 'b');

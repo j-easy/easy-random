@@ -27,10 +27,10 @@ import static org.assertj.core.api.BDDAssertions.then;
 
 import org.junit.jupiter.api.Test;
 
-public class RegularExpressionRandomizerTest {
+class RegularExpressionRandomizerTest {
 
     @Test
-    public void leadingBoundaryMatcherIsRemoved() {
+    void leadingBoundaryMatcherIsRemoved() {
         //given
         RegularExpressionRandomizer randomizer = new RegularExpressionRandomizer("^A");
 
@@ -41,7 +41,7 @@ public class RegularExpressionRandomizerTest {
     }
 
     @Test
-    public void tailingBoundaryMatcherIsRemoved() {
+    void tailingBoundaryMatcherIsRemoved() {
         //given
         RegularExpressionRandomizer randomizer = new RegularExpressionRandomizer("A$");
 
@@ -52,7 +52,7 @@ public class RegularExpressionRandomizerTest {
     }
 
     @Test
-    public void leadingAndTailingBoundaryMatcherIsRemoved() {
+    void leadingAndTailingBoundaryMatcherIsRemoved() {
         //given
         RegularExpressionRandomizer randomizer = new RegularExpressionRandomizer("^A$");
 

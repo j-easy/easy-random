@@ -33,12 +33,12 @@ import org.junit.jupiter.api.Test;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-public class SeedParameterTests {
+class SeedParameterTests {
 
     private static final long SEED = 123L;
 
     @Test
-    public void generatedObjectShouldBeAlwaysTheSameForTheSameSeed() {
+    void generatedObjectShouldBeAlwaysTheSameForTheSameSeed() {
         // Given
         EasyRandomParameters parameters = new EasyRandomParameters().seed(SEED);
         EasyRandom easyRandom = new EasyRandom(parameters);

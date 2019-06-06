@@ -32,29 +32,29 @@ import java.time.LocalTime;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-public class LocalTimeRangeRandomizerTest extends AbstractRangeRandomizerTest<LocalTime> {
+class LocalTimeRangeRandomizerTest extends AbstractRangeRandomizerTest<LocalTime> {
 
     private LocalTime minTime, maxTime;
 
     @BeforeEach
-    public void setUp() {
+    void setUp() {
         minTime = LocalTime.MIN;
         maxTime = LocalTime.MAX;
         randomizer = aNewLocalTimeRangeRandomizer(minTime, maxTime);
     }
 
     @Test
-    public void generatedLocalTimeShouldNotBeNull() {
+    void generatedLocalTimeShouldNotBeNull() {
         assertThat(randomizer.getRandomValue()).isNotNull();
     }
 
     @Test
-    public void generatedLocalTimeShouldBeWithinSpecifiedRange() {
+    void generatedLocalTimeShouldBeWithinSpecifiedRange() {
         assertThat(randomizer.getRandomValue()).isBetween(minTime, maxTime);
     }
 
     @Test
-    public void generatedLocalTimeShouldBeAlwaysTheSameForTheSameSeed() {
+    void generatedLocalTimeShouldBeAlwaysTheSameForTheSameSeed() {
         // Given
         randomizer = aNewLocalTimeRangeRandomizer(minTime, maxTime, SEED);
         LocalTime expected = LocalTime.ofSecondOfDay(62481);
@@ -67,12 +67,12 @@ public class LocalTimeRangeRandomizerTest extends AbstractRangeRandomizerTest<Lo
     }
 
     @Test
-    public void whenSpecifiedMinTimeIsAfterMaxDate_thenShouldThrowIllegalArgumentException() {
+    void whenSpecifiedMinTimeIsAfterMaxDate_thenShouldThrowIllegalArgumentException() {
         assertThatThrownBy(() -> aNewLocalTimeRangeRandomizer(maxTime, minTime)).isInstanceOf(IllegalArgumentException.class);
     }
 
     @Test
-    public void whenSpecifiedMinTimeIsNull_thenShouldUseDefaultMinValue() {
+    void whenSpecifiedMinTimeIsNull_thenShouldUseDefaultMinValue() {
         // Given
         randomizer = aNewLocalTimeRangeRandomizer(null, maxTime);
 
@@ -84,7 +84,7 @@ public class LocalTimeRangeRandomizerTest extends AbstractRangeRandomizerTest<Lo
     }
 
     @Test
-    public void whenSpecifiedMaxTimeIsNull_thenShouldUseDefaultMaxValue() {
+    void whenSpecifiedMaxTimeIsNull_thenShouldUseDefaultMaxValue() {
         // Given
         randomizer = aNewLocalTimeRangeRandomizer(minTime, null);
 

@@ -30,17 +30,17 @@ import static org.assertj.core.api.BDDAssertions.then;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-public class GenericStringRandomizerTest extends AbstractRandomizerTest<String> {
+class GenericStringRandomizerTest extends AbstractRandomizerTest<String> {
 
     private String[] words;
 
     @BeforeEach
-    public void setUp() {
+    void setUp() {
         words = new String[]{"foo", "bar"};
     }
 
     @Test
-    public void randomValueShouldBeGeneratedFromTheGivenWords() {
+    void randomValueShouldBeGeneratedFromTheGivenWords() {
         // given
         randomizer = aNewGenericStringRandomizer(words);
 
@@ -51,7 +51,7 @@ public class GenericStringRandomizerTest extends AbstractRandomizerTest<String> 
     }
 
     @Test
-    public void randomValueShouldBeAlwaysTheSameForTheSameSeed() {
+    void randomValueShouldBeAlwaysTheSameForTheSameSeed() {
         // given
         randomizer = aNewGenericStringRandomizer(words, SEED);
 

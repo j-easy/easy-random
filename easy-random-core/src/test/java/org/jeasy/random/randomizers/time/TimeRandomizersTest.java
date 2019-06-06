@@ -71,9 +71,9 @@ import org.junit.jupiter.params.provider.MethodSource;
 import org.jeasy.random.api.Randomizer;
 import org.jeasy.random.randomizers.AbstractRandomizerTest;
 
-public class TimeRandomizersTest extends AbstractRandomizerTest<Randomizer<?>> {
+class TimeRandomizersTest extends AbstractRandomizerTest<Randomizer<?>> {
 
-    public static Object[] generateRandomizers() {
+    static Object[] generateRandomizers() {
         return new Object[] {
                 aNewDurationRandomizer(),
                 aNewLocalDateRandomizer(),
@@ -98,14 +98,14 @@ public class TimeRandomizersTest extends AbstractRandomizerTest<Randomizer<?>> {
 
     @ParameterizedTest
     @MethodSource("generateRandomizers")
-    public void generatedTimeShouldNotBeNull(Randomizer<?> randomizer) {
+    void generatedTimeShouldNotBeNull(Randomizer<?> randomizer) {
         // when
         Object randomNumber = randomizer.getRandomValue();
 
         then(randomNumber).isNotNull();
     }
 
-    public static Object[][] generateSeededRandomizersAndTheirExpectedValues() {
+    static Object[][] generateSeededRandomizersAndTheirExpectedValues() {
         Calendar expectedCalendar = Calendar.getInstance();
         expectedCalendar.setTime(new Date(1718733244570L));
 
@@ -136,7 +136,7 @@ public class TimeRandomizersTest extends AbstractRandomizerTest<Randomizer<?>> {
 
     @ParameterizedTest
     @MethodSource("generateSeededRandomizersAndTheirExpectedValues")
-    public void shouldGenerateTheSameValueForTheSameSeed(Randomizer<?> randomizer, Object expected) {
+    void shouldGenerateTheSameValueForTheSameSeed(Randomizer<?> randomizer, Object expected) {
         //when
         Object actual = randomizer.getRandomValue();
 

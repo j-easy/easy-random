@@ -31,10 +31,10 @@ import org.junit.jupiter.api.Test;
 
 import org.jeasy.random.beans.PersonTuple;
 
-public class MaxObjectPoolSizeTests {
+class MaxObjectPoolSizeTests {
 
     @Test
-    public void testMaxObjectPoolSize() {
+    void testMaxObjectPoolSize() {
         // Given
         EasyRandomParameters parameters = new EasyRandomParameters().objectPoolSize(1);
         EasyRandom easyRandom = new EasyRandom(parameters);

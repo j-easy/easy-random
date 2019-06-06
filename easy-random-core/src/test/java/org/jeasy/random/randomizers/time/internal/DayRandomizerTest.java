@@ -33,25 +33,25 @@ import org.junit.jupiter.api.Test;
 import org.jeasy.random.randomizers.AbstractRandomizerTest;
 import org.jeasy.random.randomizers.time.DayRandomizer;
 
-public class DayRandomizerTest extends AbstractRandomizerTest<Integer> {
+class DayRandomizerTest extends AbstractRandomizerTest<Integer> {
 
     @BeforeEach
-    public void setUp() {
+    void setUp() {
         randomizer = new DayRandomizer();
     }
 
     @Test
-    public void generatedValueShouldNotBeNull() {
+    void generatedValueShouldNotBeNull() {
         assertThat(randomizer.getRandomValue()).isNotNull();
     }
 
     @Test
-    public void generatedValueShouldBeWithinRange() {
+    void generatedValueShouldBeWithinRange() {
         assertThat(randomizer.getRandomValue()).isBetween(MIN_DAY, MAX_DAY);
     }
 
     @Test
-    public void shouldGenerateTheSameValueForTheSameSeed() {
+    void shouldGenerateTheSameValueForTheSameSeed() {
         // Given
         randomizer = new DayRandomizer(SEED);
         Integer expected = 20;

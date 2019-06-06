@@ -33,15 +33,15 @@ import org.junit.jupiter.api.Test;
 
 import org.jeasy.random.randomizers.AbstractRandomizerTest;
 
-public class UUIDRandomizerTest extends AbstractRandomizerTest<Locale> {
+class UUIDRandomizerTest extends AbstractRandomizerTest<Locale> {
 
     @Test
-    public void shouldGenerateRandomUUID() {
+    void shouldGenerateRandomUUID() {
         assertThat(aNewUUIDRandomizer().getRandomValue()).isNotNull();
     }
 
     @Test
-    public void shouldGenerateTheSameValueForTheSameSeed() {
+    void shouldGenerateTheSameValueForTheSameSeed() {
         assertThat(aNewUUIDRandomizer(SEED).getRandomValue()).isEqualTo(new UUID(-5106534569952410475L, -167885730524958550L));
     }
 }

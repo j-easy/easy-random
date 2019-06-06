@@ -32,26 +32,26 @@ import org.jeasy.random.EasyRandom;
 import org.jeasy.random.EasyRandomParameters;
 import org.junit.jupiter.api.Test;
 
-public class CollectionSizeRangeParameterTests {
+class CollectionSizeRangeParameterTests {
 
     @Test
-    public void shouldNotAllowNegativeMinCollectionSize() {
+    void shouldNotAllowNegativeMinCollectionSize() {
         assertThatThrownBy(() -> new EasyRandomParameters().collectionSizeRange(-1, 10)).isInstanceOf(IllegalArgumentException.class);
     }
 
     @Test
-    public void shouldNotAllowMinCollectionSizeGreaterThanMaxCollectionSize() {
+    void shouldNotAllowMinCollectionSizeGreaterThanMaxCollectionSize() {
         assertThatThrownBy(() -> new EasyRandomParameters().collectionSizeRange(2, 1)).isInstanceOf(IllegalArgumentException.class);
     }
 
     @Test
-    public void generatedCollectionSizeShouldBeInSpecifiedRange() {
+    void generatedCollectionSizeShouldBeInSpecifiedRange() {
         EasyRandomParameters parameters = new EasyRandomParameters().collectionSizeRange(0, 10);
         assertThat(new EasyRandom(parameters).nextObject(ArrayList.class).size()).isBetween(0, 10);
     }
 
     @Test // https://github.com/j-easy/easy-random/issues/191
-    public void collectionSizeRangeShouldWorkForArrays() {
+    void collectionSizeRangeShouldWorkForArrays() {
         EasyRandomParameters parameters = new EasyRandomParameters().collectionSizeRange(0, 10);
 
         String[] strArr = new EasyRandom(parameters).nextObject(String[].class);

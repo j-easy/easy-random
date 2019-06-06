@@ -33,29 +33,29 @@ import java.time.ZoneOffset;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-public class OffsetTimeRangeRandomizerTest extends AbstractRangeRandomizerTest<OffsetTime> {
+class OffsetTimeRangeRandomizerTest extends AbstractRangeRandomizerTest<OffsetTime> {
 
     private OffsetTime minTime, maxTime;
 
     @BeforeEach
-    public void setUp() {
+    void setUp() {
         minTime = OffsetTime.MIN;
         maxTime = OffsetTime.MAX;
         randomizer = aNewOffsetTimeRangeRandomizer(minTime, maxTime);
     }
 
     @Test
-    public void generatedOffsetTimeShouldNotBeNull() {
+    void generatedOffsetTimeShouldNotBeNull() {
         assertThat(randomizer.getRandomValue()).isNotNull();
     }
 
     @Test
-    public void generatedOffsetTimeShouldBeWithinSpecifiedRange() {
+    void generatedOffsetTimeShouldBeWithinSpecifiedRange() {
         assertThat(randomizer.getRandomValue()).isBetween(minTime, maxTime);
     }
 
     @Test
-    public void generatedOffsetTimeShouldBeAlwaysTheSameForTheSameSeed() {
+    void generatedOffsetTimeShouldBeAlwaysTheSameForTheSameSeed() {
         // Given
         randomizer = aNewOffsetTimeRangeRandomizer(minTime, maxTime, SEED);
         OffsetTime expected = OffsetTime.of(17, 21, 21, 0, ZoneOffset.ofHours(1));
@@ -68,12 +68,12 @@ public class OffsetTimeRangeRandomizerTest extends AbstractRangeRandomizerTest<O
     }
 
     @Test
-    public void whenSpecifiedMinTimeIsAfterMaxDate_thenShouldThrowIllegalArgumentException() {
+    void whenSpecifiedMinTimeIsAfterMaxDate_thenShouldThrowIllegalArgumentException() {
         assertThatThrownBy(() -> aNewOffsetTimeRangeRandomizer(maxTime, minTime)).isInstanceOf(IllegalArgumentException.class);
     }
 
     @Test
-    public void whenSpecifiedMinTimeIsNull_thenShouldUseDefaultMinValue() {
+    void whenSpecifiedMinTimeIsNull_thenShouldUseDefaultMinValue() {
         // Given
         randomizer = aNewOffsetTimeRangeRandomizer(null, maxTime);
 
@@ -85,7 +85,7 @@ public class OffsetTimeRangeRandomizerTest extends AbstractRangeRandomizerTest<O
     }
 
     @Test
-    public void whenSpecifiedMaxTimeIsNull_thenShouldUseDefaultMaxValue() {
+    void whenSpecifiedMaxTimeIsNull_thenShouldUseDefaultMaxValue() {
         // Given
         randomizer = aNewOffsetTimeRangeRandomizer(minTime, null);
 

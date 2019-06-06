@@ -31,10 +31,10 @@ import org.junit.jupiter.api.Test;
 
 import org.jeasy.random.beans.BeanWithDefaultFieldValues;
 
-public class OverrideDefaultInitializationParameterTests {
+class OverrideDefaultInitializationParameterTests {
 
     @Test
-    public void whenOverrideDefaultInitializationParameterIsFalse_thenShouldKeepDefaultFieldValues() {
+    void whenOverrideDefaultInitializationParameterIsFalse_thenShouldKeepDefaultFieldValues() {
         // Given
         EasyRandomParameters parameters = new EasyRandomParameters().overrideDefaultInitialization(false);
         EasyRandom easyRandom = new EasyRandom(parameters);
@@ -48,7 +48,7 @@ public class OverrideDefaultInitializationParameterTests {
     }
 
     @Test
-    public void whenOverrideDefaultInitializationParameterIsTrue_thenShouldRandomizeFields() {
+    void whenOverrideDefaultInitializationParameterIsTrue_thenShouldRandomizeFields() {
         // Given
         EasyRandomParameters parameters = new EasyRandomParameters().overrideDefaultInitialization(true);
         EasyRandom easyRandom = new EasyRandom(parameters);
@@ -62,7 +62,7 @@ public class OverrideDefaultInitializationParameterTests {
     }
 
     @Test
-    public void shouldNotOverrideDefaultFieldValuesByDefault() {
+    void shouldNotOverrideDefaultFieldValuesByDefault() {
         // When
         BeanWithDefaultFieldValues bean = new EasyRandom().nextObject(BeanWithDefaultFieldValues.class);
 

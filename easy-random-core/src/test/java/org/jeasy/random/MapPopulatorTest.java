@@ -51,7 +51,7 @@ import lombok.Data;
 
 @ExtendWith(MockitoExtension.class)
 @SuppressWarnings({"unchecked", "rawtypes"})
-public class MapPopulatorTest {
+class MapPopulatorTest {
 
     private static final int SIZE = 1;
     private static final String FOO = "foo";
@@ -66,7 +66,7 @@ public class MapPopulatorTest {
     private MapPopulator mapPopulator;
 
     @BeforeEach
-    public void setUp() {
+    void setUp() {
         parameters = new EasyRandomParameters().collectionSizeRange(SIZE, SIZE);
         ObjectFactory objectFactory = new ObjenesisObjectFactory();
         mapPopulator = new MapPopulator(easyRandom, objectFactory);
@@ -77,7 +77,7 @@ public class MapPopulatorTest {
      */
 
     @Test
-    public void rawInterfaceMapTypesMustBeGeneratedEmpty() throws Exception {
+    void rawInterfaceMapTypesMustBeGeneratedEmpty() throws Exception {
         // Given
         when(context.getParameters()).thenReturn(parameters);
         Field field = Foo.class.getDeclaredField("rawMap");
@@ -90,7 +90,7 @@ public class MapPopulatorTest {
     }
 
     @Test
-    public void rawConcreteMapTypesMustBeGeneratedEmpty() throws Exception {
+    void rawConcreteMapTypesMustBeGeneratedEmpty() throws Exception {
         // Given
         when(context.getParameters()).thenReturn(parameters);
         Field field = Foo.class.getDeclaredField("concreteMap");
@@ -103,7 +103,7 @@ public class MapPopulatorTest {
     }
 
     @Test
-    public void typedInterfaceMapTypesMightBePopulated() throws Exception {
+    void typedInterfaceMapTypesMightBePopulated() throws Exception {
         // Given
         when(context.getParameters()).thenReturn(parameters);
         when(easyRandom.doPopulateBean(String.class, context)).thenReturn(FOO, BAR);
@@ -117,7 +117,7 @@ public class MapPopulatorTest {
     }
 
     @Test
-    public void typedConcreteMapTypesMightBePopulated() throws Exception {
+    void typedConcreteMapTypesMightBePopulated() throws Exception {
         // Given
         when(context.getParameters()).thenReturn(parameters);
         when(easyRandom.doPopulateBean(String.class, context)).thenReturn(FOO, BAR);
@@ -131,7 +131,7 @@ public class MapPopulatorTest {
     }
 
     @Test
-    public void notAddNullKeysToMap() throws NoSuchFieldException {
+    void notAddNullKeysToMap() throws NoSuchFieldException {
         // Given
         when(context.getParameters()).thenReturn(parameters);
         when(easyRandom.doPopulateBean(String.class, context)).thenReturn(null);
@@ -157,7 +157,7 @@ public class MapPopulatorTest {
      */
 
     @Test
-    public void rawMapInterfacesShouldBeEmpty() {
+    void rawMapInterfacesShouldBeEmpty() {
         EasyRandom easyRandom = new EasyRandom();
 
         final MapBean mapBean = easyRandom.nextObject(MapBean.class);
@@ -172,7 +172,7 @@ public class MapPopulatorTest {
     }
 
     @Test
-    public void typedMapInterfacesShouldNotBeEmpty() {
+    void typedMapInterfacesShouldNotBeEmpty() {
         EasyRandom easyRandom = new EasyRandom();
 
         final MapBean mapBean = easyRandom.nextObject(MapBean.class);
@@ -196,7 +196,7 @@ public class MapPopulatorTest {
     }
 
     @Test
-    public void rawMapClassesShouldBeEmpty() {
+    void rawMapClassesShouldBeEmpty() {
         EasyRandom easyRandom = new EasyRandom();
 
         final MapBean mapBean = easyRandom.nextObject(MapBean.class);
@@ -213,7 +213,7 @@ public class MapPopulatorTest {
     }
 
     @Test
-    public void typedMapClassesShouldNotBeEmpty() {
+    void typedMapClassesShouldNotBeEmpty() {
         EasyRandom easyRandom = new EasyRandom();
 
         final MapBean mapBean = easyRandom.nextObject(MapBean.class);
@@ -243,7 +243,7 @@ public class MapPopulatorTest {
     }
 
     @Test
-    public void wildcardTypedMapInterfacesShouldBeEmpty() {
+    void wildcardTypedMapInterfacesShouldBeEmpty() {
         EasyRandom easyRandom = new EasyRandom();
 
         final WildCardMapBean wildCardMapBean = easyRandom.nextObject(WildCardMapBean.class);
@@ -267,7 +267,7 @@ public class MapPopulatorTest {
     }
 
     @Test
-    public void wildcardTypedMapClassesShouldBeEmpty() {
+    void wildcardTypedMapClassesShouldBeEmpty() {
         EasyRandom easyRandom = new EasyRandom();
 
         final WildCardMapBean wildCardMapBean = easyRandom.nextObject(WildCardMapBean.class);
@@ -297,7 +297,7 @@ public class MapPopulatorTest {
     }
 
     @Test
-    public void compositeMapTypesShouldBeEmpty() {
+    void compositeMapTypesShouldBeEmpty() {
         EasyRandom easyRandom = new EasyRandom();
 
         CompositeMapBean compositeMapBean = easyRandom.nextObject(CompositeMapBean.class);
@@ -308,7 +308,7 @@ public class MapPopulatorTest {
     }
 
     @Test
-    public void userDefinedMapTypeShouldBePopulated() throws Exception {
+    void userDefinedMapTypeShouldBePopulated() {
         EasyRandom easyRandom = new EasyRandom();
 
         CustomMap customMap = easyRandom.nextObject(CustomMap.class);
@@ -318,7 +318,7 @@ public class MapPopulatorTest {
     }
 
     @Test
-    public void enumMapTypeShouldBePopulated() throws Exception {
+    void enumMapTypeShouldBePopulated() {
         EasyRandom easyRandom = new EasyRandom();
 
         EnumMapBean enumMapBean = easyRandom.nextObject(EnumMapBean.class);

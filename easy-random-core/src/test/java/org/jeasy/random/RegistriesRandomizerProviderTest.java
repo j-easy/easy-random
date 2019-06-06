@@ -42,7 +42,7 @@ import org.jeasy.random.beans.Foo;
 
 @ExtendWith(MockitoExtension.class)
 @SuppressWarnings("unchecked")
-public class RegistriesRandomizerProviderTest {
+class RegistriesRandomizerProviderTest {
 
     @Mock
     private RandomizerRegistry randomizerRegistry;
@@ -54,13 +54,13 @@ public class RegistriesRandomizerProviderTest {
     private RegistriesRandomizerProvider randomizerProvider;
 
     @BeforeEach
-    public void setUp() {
+    void setUp() {
         randomizerProvider = new RegistriesRandomizerProvider();
         randomizerProvider.setRandomizerRegistries(singleton(randomizerRegistry));
     }
 
     @Test
-    public void theProviderShouldReturnTheSameRandomizerRegisteredForTheGivenField() throws NoSuchFieldException {
+    void theProviderShouldReturnTheSameRandomizerRegisteredForTheGivenField() throws NoSuchFieldException {
         // Given
         Field field = Foo.class.getDeclaredField("bar");
         when(randomizerRegistry.getRandomizer(field)).thenReturn(randomizer);
@@ -73,7 +73,7 @@ public class RegistriesRandomizerProviderTest {
     }
 
     @Test
-    public void theProviderShouldReturnTheSameRandomizerRegisteredForTheGivenType() {
+    void theProviderShouldReturnTheSameRandomizerRegisteredForTheGivenType() {
         // Given
         Class<String> type = String.class;
         when(randomizerRegistry.getRandomizer(type)).thenReturn(randomizer);

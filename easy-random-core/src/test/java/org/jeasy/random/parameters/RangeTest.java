@@ -28,10 +28,10 @@ import static org.assertj.core.api.Assertions.assertThat;
 import org.jeasy.random.EasyRandomParameters;
 import org.junit.jupiter.api.Test;
 
-public class RangeTest {
+class RangeTest {
 
     @Test
-    public void testRange() {
+    void testRange() {
         EasyRandomParameters.Range<Integer> range = new EasyRandomParameters.Range<>(1, 10);
 
         assertThat(range.getMin()).isEqualTo(1);

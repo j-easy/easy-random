@@ -33,20 +33,20 @@ import org.junit.jupiter.api.Test;
 
 import org.jeasy.random.randomizers.AbstractRandomizerTest;
 
-public class TimeZoneRandomizerTest extends AbstractRandomizerTest<TimeZone> {
+class TimeZoneRandomizerTest extends AbstractRandomizerTest<TimeZone> {
 
     @BeforeEach
-    public void setUp() {
+    void setUp() {
         randomizer = aNewTimeZoneRandomizer(SEED);
     }
 
     @Test
-    public void generatedValueShouldNotBeNull() {
+    void generatedValueShouldNotBeNull() {
         assertThat(randomizer.getRandomValue()).isNotNull();
     }
 
     @Test
-    public void shouldGenerateTheSameValueForTheSameSeed() {
+    void shouldGenerateTheSameValueForTheSameSeed() {
         // we can not use a canned value, because the available TimeZones differ between locales/jdks
         TimeZone firstTimeZone = aNewTimeZoneRandomizer(SEED).getRandomValue();
         TimeZone secondTimeZone = aNewTimeZoneRandomizer(SEED).getRandomValue();

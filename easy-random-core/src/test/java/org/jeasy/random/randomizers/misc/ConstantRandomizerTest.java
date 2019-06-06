@@ -28,10 +28,10 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 import org.junit.jupiter.api.Test;
 
-public class ConstantRandomizerTest {
+class ConstantRandomizerTest {
 
     @Test
-    public void shouldAlwaysGenerateTheSameValue() {
+    void shouldAlwaysGenerateTheSameValue() {
         assertThat(aNewConstantRandomizer("a").getRandomValue()).isEqualTo("a");
     }
 }

@@ -43,9 +43,9 @@ import org.junit.jupiter.params.provider.MethodSource;
 import org.jeasy.random.api.Randomizer;
 import org.jeasy.random.randomizers.AbstractRandomizerTest;
 
-public class NumberRandomizersTest extends AbstractRandomizerTest<Object> {
+class NumberRandomizersTest extends AbstractRandomizerTest<Object> {
 
-    public static Object[] generateRandomizers() {
+    static Object[] generateRandomizers() {
         return new Object[] { 
                 aNewByteRandomizer(),
                 aNewShortRandomizer(),
@@ -61,14 +61,14 @@ public class NumberRandomizersTest extends AbstractRandomizerTest<Object> {
 
     @ParameterizedTest
     @MethodSource("generateRandomizers")
-    public void generatedNumberShouldNotBeNull(Randomizer<?> randomizer) {
+    void generatedNumberShouldNotBeNull(Randomizer<?> randomizer) {
         // when
         Object randomNumber = randomizer.getRandomValue();
 
         then(randomNumber).isNotNull();
     }
 
-    public static Object[][] generateSeededRandomizersAndTheirExpectedValues() {
+    static Object[][] generateSeededRandomizersAndTheirExpectedValues() {
         return new Object[][] { 
                 { aNewByteRandomizer(SEED), (byte) -35 },
                 { aNewShortRandomizer(SEED), (short) -3619 },
@@ -84,7 +84,7 @@ public class NumberRandomizersTest extends AbstractRandomizerTest<Object> {
 
     @ParameterizedTest
     @MethodSource("generateSeededRandomizersAndTheirExpectedValues")
-    public void shouldGenerateTheSameValueForTheSameSeed(Randomizer<?> randomizer, Object expected) {
+    void shouldGenerateTheSameValueForTheSameSeed(Randomizer<?> randomizer, Object expected) {
         //when
         Object actual = randomizer.getRandomValue();
 
