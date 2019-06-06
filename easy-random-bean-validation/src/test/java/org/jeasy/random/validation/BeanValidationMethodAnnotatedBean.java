@@ -81,6 +81,8 @@ class BeanValidationMethodAnnotatedBean {
 
     private String[] sizedArray;
 
+    private String sizedString;
+
     private String regexString;
 
     @AssertFalse
@@ -337,6 +339,15 @@ class BeanValidationMethodAnnotatedBean {
         this.sizedArray = sizedArray;
     }
 
+    @Size(min=2)
+    public String getSizedString() {
+        return sizedString;
+    }
+
+    public void setSizedString(String sizedString) {
+        this.sizedString = sizedString;
+    }
+
     @Override
     public String toString() {
         return "BeanValidationMethodAnnotatedBean{" +
@@ -367,6 +378,7 @@ class BeanValidationMethodAnnotatedBean {
                 ", sizedSet=" + sizedSet +
                 ", sizedMap=" + sizedMap +
                 ", sizedArray=" + Arrays.toString(sizedArray) +
+                ", sizedString=" + sizedString +
                 ", regexString='" + regexString + '\'' +
                 '}';
     }
