@@ -31,42 +31,42 @@ import static org.assertj.core.api.BDDAssertions.then;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-public class ShortRangeRandomizerTest extends AbstractRangeRandomizerTest<Short> {
+class ShortRangeRandomizerTest extends AbstractRangeRandomizerTest<Short> {
 
     @BeforeEach
-    public void setUp() {
+    void setUp() {
         min = (short) 1;
         max = (short) 10;
         randomizer = aNewShortRangeRandomizer(min, max);
     }
 
     @Test
-    public void generatedValueShouldBeWithinSpecifiedRange() {
+    void generatedValueShouldBeWithinSpecifiedRange() {
         Short randomValue = randomizer.getRandomValue();
         assertThat(randomValue).isBetween(min, max);
     }
 
     @Test
-    public void whenSpecifiedMinValueIsAfterMaxValueThenThrowIllegalArgumentException() {
+    void whenSpecifiedMinValueIsAfterMaxValueThenThrowIllegalArgumentException() {
         assertThatThrownBy(() -> aNewShortRangeRandomizer(max, min)).isInstanceOf(IllegalArgumentException.class);
     }
 
     @Test
-    public void whenSpecifiedMinValueIsNullThenShouldUseDefaultMinValue() {
+    void whenSpecifiedMinValueIsNullThenShouldUseDefaultMinValue() {
         randomizer = aNewShortRangeRandomizer(null, max);
         Short randomShort = randomizer.getRandomValue();
         assertThat(randomShort).isLessThanOrEqualTo(max);
     }
 
     @Test
-    public void whenSpecifiedMaxvalueIsNullThenShouldUseDefaultMaxValue() {
+    void whenSpecifiedMaxvalueIsNullThenShouldUseDefaultMaxValue() {
         randomizer = aNewShortRangeRandomizer(min, null);
         Short randomShort = randomizer.getRandomValue();
         assertThat(randomShort).isGreaterThanOrEqualTo(min);
     }
 
     @Test
-    public void shouldAlwaysGenerateTheSameValueForTheSameSeed() {
+    void shouldAlwaysGenerateTheSameValueForTheSameSeed() {
         // given
         ShortRangeRandomizer shortRangeRandomizer = aNewShortRangeRandomizer(min, max, SEED);
         

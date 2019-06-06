@@ -52,7 +52,7 @@ import org.jeasy.random.randomizers.misc.SkipRandomizer;
 
 @ExtendWith(MockitoExtension.class)
 @SuppressWarnings("unchecked")
-public class FieldPopulatorTest {
+class FieldPopulatorTest {
 
     private static final String NAME = "foo";
 
@@ -74,12 +74,12 @@ public class FieldPopulatorTest {
     private FieldPopulator fieldPopulator;
 
     @BeforeEach
-    public void setUp() {
+    void setUp() {
         fieldPopulator = new FieldPopulator(easyRandom, randomizerProvider, arrayPopulator, collectionPopulator, mapPopulator);
     }
 
     @Test
-    public void whenSkipRandomizerIsRegisteredForTheField_thenTheFieldShouldBeSkipped() throws Exception {
+    void whenSkipRandomizerIsRegisteredForTheField_thenTheFieldShouldBeSkipped() throws Exception {
         // Given
         Field name = Human.class.getDeclaredField("name");
         Human human = new Human();
@@ -94,7 +94,7 @@ public class FieldPopulatorTest {
     }
 
     @Test
-    public void whenCustomRandomizerIsRegisteredForTheField_thenTheFieldShouldBePopulatedWithTheRandomValue() throws Exception {
+    void whenCustomRandomizerIsRegisteredForTheField_thenTheFieldShouldBePopulatedWithTheRandomValue() throws Exception {
         // Given
         Field name = Human.class.getDeclaredField("name");
         Human human = new Human();
@@ -109,7 +109,7 @@ public class FieldPopulatorTest {
     }
 
     @Test
-    public void whenTheFieldIsOfTypeArray_thenShouldDelegatePopulationToArrayPopulator() throws Exception {
+    void whenTheFieldIsOfTypeArray_thenShouldDelegatePopulationToArrayPopulator() throws Exception {
         // Given
         Field strings = ArrayBean.class.getDeclaredField("strings");
         ArrayBean arrayBean = new ArrayBean();
@@ -124,7 +124,7 @@ public class FieldPopulatorTest {
     }
 
     @Test
-    public void whenTheFieldIsOfTypeCollection_thenShouldDelegatePopulationToCollectionPopulator() throws Exception {
+    void whenTheFieldIsOfTypeCollection_thenShouldDelegatePopulationToCollectionPopulator() throws Exception {
         // Given
         Field strings = CollectionBean.class.getDeclaredField("typedCollection");
         CollectionBean collectionBean = new CollectionBean();
@@ -138,7 +138,7 @@ public class FieldPopulatorTest {
     }
 
     @Test
-    public void whenTheFieldIsOfTypeMap_thenShouldDelegatePopulationToMapPopulator() throws Exception {
+    void whenTheFieldIsOfTypeMap_thenShouldDelegatePopulationToMapPopulator() throws Exception {
         // Given
         Field strings = MapBean.class.getDeclaredField("typedMap");
         MapBean mapBean = new MapBean();
@@ -152,7 +152,7 @@ public class FieldPopulatorTest {
     }
 
     @Test
-    public void whenRandomizationDepthIsExceeded_thenFieldsAreNotInitialized() throws Exception {
+    void whenRandomizationDepthIsExceeded_thenFieldsAreNotInitialized() throws Exception {
         // Given
         Field name = Human.class.getDeclaredField("name");
         Human human = new Human();
@@ -167,7 +167,7 @@ public class FieldPopulatorTest {
 
     @Test //https://github.com/j-easy/easy-random/issues/221
     @Disabled("Objenesis is able to create an instance of JAXBElement type. Hence no error is thrown as expected in this test")
-    public void shouldFailWithNiceErrorMessageWhenUnableToCreateFieldValue() throws Exception {
+    void shouldFailWithNiceErrorMessageWhenUnableToCreateFieldValue() throws Exception {
       // Given
       FieldPopulator fieldPopulator = new FieldPopulator(new EasyRandom(), randomizerProvider, arrayPopulator, collectionPopulator, mapPopulator);
       Field jaxbElementField = JaxbElementFieldBean.class.getDeclaredField("jaxbElementField");

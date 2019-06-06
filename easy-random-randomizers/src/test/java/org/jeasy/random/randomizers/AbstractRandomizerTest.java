@@ -27,7 +27,7 @@ import java.util.Locale;
 
 import org.jeasy.random.api.Randomizer;
 
-public class AbstractRandomizerTest<T> {
+class AbstractRandomizerTest<T> {
 
     static final long SEED = 123L;
     static final Locale LOCALE = Locale.FRANCE;

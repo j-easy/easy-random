@@ -34,29 +34,29 @@ import java.time.LocalTime;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-public class LocalDateTimeRangeRandomizerTest extends AbstractRangeRandomizerTest<LocalDateTime> {
+class LocalDateTimeRangeRandomizerTest extends AbstractRangeRandomizerTest<LocalDateTime> {
 
     private LocalDateTime minDateTime, maxDateTime;
 
     @BeforeEach
-    public void setUp() {
+    void setUp() {
         minDateTime = LocalDateTime.MIN;
         maxDateTime = LocalDateTime.MAX;
         randomizer = aNewLocalDateTimeRangeRandomizer(minDateTime, maxDateTime);
     }
 
     @Test
-    public void generatedLocalDateTimeShouldNotBeNull() {
+    void generatedLocalDateTimeShouldNotBeNull() {
         assertThat(randomizer.getRandomValue()).isNotNull();
     }
 
     @Test
-    public void generatedLocalDateTimeShouldBeWithinSpecifiedRange() {
+    void generatedLocalDateTimeShouldBeWithinSpecifiedRange() {
         assertThat(randomizer.getRandomValue()).isBetween(minDateTime, maxDateTime);
     }
 
     @Test
-    public void generatedLocalDateTimeShouldBeAlwaysTheSameForTheSameSeed() {
+    void generatedLocalDateTimeShouldBeAlwaysTheSameForTheSameSeed() {
         // Given
         randomizer = aNewLocalDateTimeRangeRandomizer(minDateTime, maxDateTime, SEED);
         LocalDateTime expected = LocalDateTime.of(LocalDate.ofEpochDay(163024688248L), LocalTime.ofSecondOfDay(62481));
@@ -69,12 +69,12 @@ public class LocalDateTimeRangeRandomizerTest extends AbstractRangeRandomizerTes
     }
 
     @Test
-    public void whenSpecifiedMinDateTimeIsAfterMaxDateTime_thenShouldThrowIllegalArgumentException() {
+    void whenSpecifiedMinDateTimeIsAfterMaxDateTime_thenShouldThrowIllegalArgumentException() {
         assertThatThrownBy(() -> aNewLocalDateTimeRangeRandomizer(maxDateTime, minDateTime)).isInstanceOf(IllegalArgumentException.class);
     }
 
     @Test
-    public void whenSpecifiedMinDateTimeIsNull_thenShouldUseDefaultMinValue() {
+    void whenSpecifiedMinDateTimeIsNull_thenShouldUseDefaultMinValue() {
         // Given
         randomizer = aNewLocalDateTimeRangeRandomizer(null, maxDateTime);
 
@@ -86,7 +86,7 @@ public class LocalDateTimeRangeRandomizerTest extends AbstractRangeRandomizerTes
     }
 
     @Test
-    public void whenSpecifiedMaxDateTimeIsNull_thenShouldUseDefaultMaxValue() {
+    void whenSpecifiedMaxDateTimeIsNull_thenShouldUseDefaultMaxValue() {
         // Given
         randomizer = aNewLocalDateTimeRangeRandomizer(minDateTime, null);
 

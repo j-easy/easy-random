@@ -51,9 +51,9 @@ import org.junit.jupiter.params.provider.MethodSource;
 
 import org.jeasy.random.api.Randomizer;
 
-public class RandomizersTest extends AbstractRandomizerTest<FakerBasedRandomizer<?>>{
+class RandomizersTest extends AbstractRandomizerTest<FakerBasedRandomizer<?>>{
 
-    public static Object[] generateRandomizers() {
+    static Object[] generateRandomizers() {
         return new Object[] {
                 aNewCityRandomizer(),
                 aNewCompanyRandomizer(),
@@ -79,14 +79,14 @@ public class RandomizersTest extends AbstractRandomizerTest<FakerBasedRandomizer
 
     @ParameterizedTest
     @MethodSource("generateRandomizers")
-    public void generatedNumberShouldNotBeNull(Randomizer<?> randomizer) {
+    void generatedNumberShouldNotBeNull(Randomizer<?> randomizer) {
         // when
         Object randomNumber = randomizer.getRandomValue();
 
         then(randomNumber).isNotNull();
     }
 
-    public static Object[][] generateSeededRandomizersAndTheirExpectedValues() {
+    static Object[][] generateSeededRandomizersAndTheirExpectedValues() {
         return new Object[][] {
                 { aNewCityRandomizer(SEED), "Breannaberg" },
                 { aNewCompanyRandomizer(SEED), "Hegmann, Hansen and Mills" },
@@ -112,14 +112,14 @@ public class RandomizersTest extends AbstractRandomizerTest<FakerBasedRandomizer
 
     @ParameterizedTest
     @MethodSource("generateSeededRandomizersAndTheirExpectedValues")
-    public void shouldGenerateTheSameValueForTheSameSeed(Randomizer<?> randomizer, Object expected) {
+    void shouldGenerateTheSameValueForTheSameSeed(Randomizer<?> randomizer, Object expected) {
         //when
         Object actual = randomizer.getRandomValue();
 
         then(actual).isEqualTo(expected);
     }
 
-    public static Object[][] generateSeededRandomizersWithLocaleAndTheirExpectedValues() {
+    static Object[][] generateSeededRandomizersWithLocaleAndTheirExpectedValues() {
         return new Object[][] {
                 { aNewCityRandomizer(SEED, LOCALE), "Versailles" },
                 { aNewCompanyRandomizer(SEED, LOCALE), "Masson et Lambert" },
@@ -144,7 +144,7 @@ public class RandomizersTest extends AbstractRandomizerTest<FakerBasedRandomizer
 
     @ParameterizedTest
     @MethodSource("generateSeededRandomizersWithLocaleAndTheirExpectedValues")
-    public void shouldGenerateTheSameValueForTheSameSeedForSameLocale(Randomizer<?> randomizer, Object expected) {
+    void shouldGenerateTheSameValueForTheSameSeedForSameLocale(Randomizer<?> randomizer, Object expected) {
         //when
         Object actual = randomizer.getRandomValue();
 

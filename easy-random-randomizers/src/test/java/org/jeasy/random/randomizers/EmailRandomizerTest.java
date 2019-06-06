@@ -31,10 +31,10 @@ import java.util.Locale;
 
 import org.junit.jupiter.api.Test;
 
-public class EmailRandomizerTest {
+class EmailRandomizerTest {
 
     @Test
-    public void whenSafeModeIsEnabled_thenDomainNameShouldBeInvalid() throws Exception {
+    void whenSafeModeIsEnabled_thenDomainNameShouldBeInvalid() {
         // given
         EmailRandomizer emailRandomizer = EmailRandomizer.aNewEmailRandomizer(123L, Locale.ENGLISH, true);
 
@@ -46,7 +46,7 @@ public class EmailRandomizerTest {
     }
 
     @Test
-    public void whenSafeModeIsDisabled_thenDomainNameShouldBeValid() throws Exception {
+    void whenSafeModeIsDisabled_thenDomainNameShouldBeValid() {
         // given
         List<String> expectedDomains = Arrays.asList("gmail.com", "yahoo.com", "hotmail.com"); // see en:faker:internet:free_email: in faker's en.yml
         EmailRandomizer emailRandomizer = EmailRandomizer.aNewEmailRandomizer(123L, Locale.ENGLISH, false);

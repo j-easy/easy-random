@@ -32,29 +32,29 @@ import java.util.Date;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-public class DateRangeRandomizerTest extends AbstractRangeRandomizerTest<Date> {
+class DateRangeRandomizerTest extends AbstractRangeRandomizerTest<Date> {
 
     private Date minDate, maxDate;
 
     @BeforeEach
-    public void setUp() {
+    void setUp() {
         minDate = new Date(1460448795091L);
         maxDate = new Date(1460448795179L);
         randomizer = aNewDateRangeRandomizer(minDate, maxDate);
     }
 
     @Test
-    public void generatedDateShouldNotBeNull() {
+    void generatedDateShouldNotBeNull() {
         assertThat(randomizer.getRandomValue()).isNotNull();
     }
 
     @Test
-    public void generatedDateShouldBeWithinSpecifiedRange() {
+    void generatedDateShouldBeWithinSpecifiedRange() {
         assertThat(randomizer.getRandomValue()).isBetween(minDate, maxDate);
     }
 
     @Test
-    public void generatedDateShouldBeAlwaysTheSameForTheSameSeed() {
+    void generatedDateShouldBeAlwaysTheSameForTheSameSeed() {
         // Given
         randomizer = aNewDateRangeRandomizer(minDate, maxDate, SEED);
         Date expected = new Date(1460448795154L);
@@ -67,12 +67,12 @@ public class DateRangeRandomizerTest extends AbstractRangeRandomizerTest<Date> {
     }
 
     @Test
-    public void whenSpecifiedMinDateIsAfterMaxDate_thenShouldThrowIllegalArgumentException() {
+    void whenSpecifiedMinDateIsAfterMaxDate_thenShouldThrowIllegalArgumentException() {
         assertThatThrownBy(() -> aNewDateRangeRandomizer(maxDate, minDate)).isInstanceOf(IllegalArgumentException.class);
     }
 
     @Test
-    public void whenSpecifiedMinDateIsNull_thenShouldUseDefaultMinValue() {
+    void whenSpecifiedMinDateIsNull_thenShouldUseDefaultMinValue() {
         // Given
         randomizer = aNewDateRangeRandomizer(null, maxDate);
 
@@ -84,7 +84,7 @@ public class DateRangeRandomizerTest extends AbstractRangeRandomizerTest<Date> {
     }
 
     @Test
-    public void whenSpecifiedMaxDateIsNull_thenShouldUseDefaultMaxValue() {
+    void whenSpecifiedMaxDateIsNull_thenShouldUseDefaultMaxValue() {
         // Given
         randomizer = aNewDateRangeRandomizer(minDate, null);
 

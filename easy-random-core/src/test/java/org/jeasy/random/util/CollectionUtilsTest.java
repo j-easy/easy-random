@@ -28,10 +28,10 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 import org.junit.jupiter.api.Test;
 
-public class CollectionUtilsTest {
+class CollectionUtilsTest {
 
     @Test
-    public void testRandomElementOf() {
+    void testRandomElementOf() {
         // Given
         String[] elements = {"foo", "bar"};
 

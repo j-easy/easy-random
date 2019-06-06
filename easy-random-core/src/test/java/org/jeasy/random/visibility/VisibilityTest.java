@@ -32,10 +32,10 @@ import org.jeasy.random.EasyRandom;
 import org.jeasy.random.EasyRandomParameters;
 import org.junit.jupiter.api.Test;
 
-public class VisibilityTest {
+class VisibilityTest {
 
     @Test
-    public void canPassSupplierLambdaFromOtherPackage() {
+    void canPassSupplierLambdaFromOtherPackage() {
         Supplier<String> supplier = () -> "test";
         EasyRandomParameters parameters = new EasyRandomParameters()
                 .randomize(String.class, asRandomizer(supplier));

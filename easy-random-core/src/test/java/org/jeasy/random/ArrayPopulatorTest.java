@@ -38,7 +38,7 @@ import org.jeasy.random.beans.ArrayBean;
 import org.jeasy.random.beans.Person;
 
 @ExtendWith(MockitoExtension.class)
-public class ArrayPopulatorTest {
+class ArrayPopulatorTest {
 
     private static final int INT = 10;
     private static final String STRING = "FOO";
@@ -51,12 +51,12 @@ public class ArrayPopulatorTest {
     private ArrayPopulator arrayPopulator;
 
     @BeforeEach
-    public void setUp() {
+    void setUp() {
         arrayPopulator = new ArrayPopulator(easyRandom);
     }
 
     @Test
-    public void getRandomArray() {
+    void getRandomArray() {
         when(context.getParameters()).thenReturn(new EasyRandomParameters().collectionSizeRange(INT, INT));
         when(easyRandom.doPopulateBean(String.class, context)).thenReturn(STRING);
 
@@ -70,7 +70,7 @@ public class ArrayPopulatorTest {
      */
 
     @Test
-    public void testArrayPopulation() {
+    void testArrayPopulation() {
         EasyRandom easyRandom = new EasyRandom();
 
         final String[] strings = easyRandom.nextObject(String[].class);
@@ -79,7 +79,7 @@ public class ArrayPopulatorTest {
     }
 
     @Test
-    public void testPrimitiveArrayPopulation() {
+    void testPrimitiveArrayPopulation() {
         EasyRandom easyRandom = new EasyRandom();
 
         final int[] ints = easyRandom.nextObject(int[].class);
@@ -88,7 +88,7 @@ public class ArrayPopulatorTest {
     }
 
     @Test
-    public void primitiveArraysShouldBeCorrectlyPopulated() {
+    void primitiveArraysShouldBeCorrectlyPopulated() {
         EasyRandom easyRandom = new EasyRandom();
 
         final ArrayBean bean = easyRandom.nextObject(ArrayBean.class);
@@ -105,7 +105,7 @@ public class ArrayPopulatorTest {
     }
 
     @Test
-    public void wrapperTypeArraysShouldBeCorrectlyPopulated() {
+    void wrapperTypeArraysShouldBeCorrectlyPopulated() {
         EasyRandom easyRandom = new EasyRandom();
 
         final ArrayBean bean = easyRandom.nextObject(ArrayBean.class);
@@ -122,7 +122,7 @@ public class ArrayPopulatorTest {
     }
 
     @Test
-    public void arraysWithCustomTypesShouldBeCorrectlyPopulated() {
+    void arraysWithCustomTypesShouldBeCorrectlyPopulated() {
         EasyRandom easyRandom = new EasyRandom();
 
         final ArrayBean bean = easyRandom.nextObject(ArrayBean.class);

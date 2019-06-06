@@ -34,10 +34,10 @@ import org.junit.jupiter.api.Test;
 
 import org.jeasy.random.beans.TimeBean;
 
-public class DateTimeRangeParameterTests {
+class DateTimeRangeParameterTests {
 
     @Test
-    public void testDateRange() {
+    void testDateRange() {
         // Given
         LocalDate minDate = LocalDate.of(2016, 1, 1);
         LocalDate maxDate = LocalDate.of(2016, 1, 31);
@@ -51,7 +51,7 @@ public class DateTimeRangeParameterTests {
     }
 
     @Test
-    public void testTimeRange() {
+    void testTimeRange() {
         // Given
         LocalTime minTime = LocalTime.of(15, 0, 0);
         LocalTime maxTime = LocalTime.of(18, 0, 0);

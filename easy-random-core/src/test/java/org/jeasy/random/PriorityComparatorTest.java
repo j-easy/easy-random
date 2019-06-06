@@ -34,7 +34,7 @@ import org.junit.jupiter.api.Test;
 
 import org.jeasy.random.annotation.Priority;
 
-public class PriorityComparatorTest {
+class PriorityComparatorTest {
 
     private PriorityComparator priorityComparator;
 
@@ -43,14 +43,14 @@ public class PriorityComparatorTest {
     private Bar bar;
 
     @BeforeEach
-    public void setUp() {
+    void setUp() {
         priorityComparator = new PriorityComparator();
         foo = new Foo();
         bar = new Bar();
     }
 
     @Test
-    public void testCompare() {
+    void testCompare() {
         assertThat(priorityComparator.compare(foo, bar)).isGreaterThan(0);
 
         List<Object> objects = Arrays.asList(foo,bar);

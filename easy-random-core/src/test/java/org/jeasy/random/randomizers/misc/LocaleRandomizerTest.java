@@ -33,15 +33,15 @@ import org.junit.jupiter.api.Test;
 
 import org.jeasy.random.randomizers.AbstractRandomizerTest;
 
-public class LocaleRandomizerTest extends AbstractRandomizerTest<Locale> {
+class LocaleRandomizerTest extends AbstractRandomizerTest<Locale> {
 
     @Test
-    public void shouldGenerateRandomLocale() {
+    void shouldGenerateRandomLocale() {
         assertThat(aNewLocaleRandomizer().getRandomValue()).isIn(Locale.getAvailableLocales());
     }
 
     @Test
-    public void shouldGenerateTheSameValueForTheSameSeed() {
+    void shouldGenerateTheSameValueForTheSameSeed() {
         BigDecimal javaVersion = new BigDecimal(System.getProperty("java.specification.version"));
         if (javaVersion.compareTo(new BigDecimal("13")) >= 0) {
             assertThat(aNewLocaleRandomizer(SEED).getRandomValue()).isEqualTo(new Locale("zh", "CN"));

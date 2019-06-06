@@ -35,7 +35,7 @@ import org.mockito.junit.jupiter.MockitoExtension;
 import org.jeasy.random.api.Randomizer;
 
 @ExtendWith(MockitoExtension.class)
-public class OptionalRandomizerTest {
+class OptionalRandomizerTest {
 
     private static final String NAME = "foo";
 
@@ -45,13 +45,13 @@ public class OptionalRandomizerTest {
     private OptionalRandomizer<String> optionalRandomizer;
 
     @BeforeEach
-    public void setUp() {
+    void setUp() {
         when(randomizer.getRandomValue()).thenReturn(NAME);
         optionalRandomizer = new OptionalRandomizer<>(randomizer, 100);
     }
 
     @Test
-    public void whenOptionalPercentIsOneHundredThenShouldGenerateValue()  {
+    void whenOptionalPercentIsOneHundredThenShouldGenerateValue()  {
         assertThat(optionalRandomizer.getRandomValue())
                 .isEqualTo(NAME);
     }

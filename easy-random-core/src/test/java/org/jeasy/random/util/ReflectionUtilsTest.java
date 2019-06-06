@@ -42,12 +42,12 @@ import static java.lang.annotation.RetentionPolicy.RUNTIME;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
-public class ReflectionUtilsTest {
+class ReflectionUtilsTest {
 
     private static final int INITIAL_CAPACITY = 10;
 
     @Test
-    public void testGetDeclaredFields() throws Exception {
+    void testGetDeclaredFields() {
         BigDecimal javaVersion = new BigDecimal(System.getProperty("java.specification.version"));
         if (javaVersion.compareTo(new BigDecimal("12")) >= 0) {
             assertThat(ReflectionUtils.getDeclaredFields(Street.class)).hasSize(21);
@@ -59,17 +59,17 @@ public class ReflectionUtilsTest {
     }
 
     @Test
-    public void testGetInheritedFields() throws Exception {
+    void testGetInheritedFields() {
         assertThat(ReflectionUtils.getInheritedFields(SocialPerson.class)).hasSize(11);
     }
 
     @Test
-    public void testIsStatic() throws Exception {
+    void testIsStatic() throws Exception {
         assertThat(ReflectionUtils.isStatic(Human.class.getField("SERIAL_VERSION_UID"))).isTrue();
     }
 
     @Test
-    public void testIsInterface() throws Exception {
+    void testIsInterface() {
         assertThat(ReflectionUtils.isInterface(List.class)).isTrue();
         assertThat(ReflectionUtils.isInterface(Mammal.class)).isTrue();
 
@@ -78,50 +78,50 @@ public class ReflectionUtilsTest {
     }
 
     @Test
-    public void testIsAbstract() throws Exception {
+    void testIsAbstract() {
         assertThat(ReflectionUtils.isAbstract(Foo.class)).isFalse();
 
         assertThat(ReflectionUtils.isAbstract(Bar.class)).isTrue();
     }
 
     @Test
-    public void testIsPublic() throws Exception {
+    void testIsPublic() {
         assertThat(ReflectionUtils.isPublic(Foo.class)).isTrue();
         assertThat(ReflectionUtils.isPublic(Dummy.class)).isFalse();
     }
 
     @Test
-    public void testIsArrayType() throws Exception {
+    void testIsArrayType() {
         assertThat(ReflectionUtils.isArrayType(int[].class)).isTrue();
         assertThat(ReflectionUtils.isArrayType(Foo.class)).isFalse();
     }
 
     @Test
-    public void testIsEnumType() throws Exception {
+    void testIsEnumType() {
         assertThat(ReflectionUtils.isEnumType(Gender.class)).isTrue();
         assertThat(ReflectionUtils.isEnumType(Foo.class)).isFalse();
     }
 
     @Test
-    public void testIsCollectionType() throws Exception {
+    void testIsCollectionType() {
         assertThat(ReflectionUtils.isCollectionType(CustomList.class)).isTrue();
         assertThat(ReflectionUtils.isCollectionType(Foo.class)).isFalse();
     }
 
     @Test
-    public void testIsMapType() throws Exception {
+    void testIsMapType() {
         assertThat(ReflectionUtils.isMapType(CustomMap.class)).isTrue();
         assertThat(ReflectionUtils.isMapType(Foo.class)).isFalse();
     }
 
     @Test
-    public void testIsJdkBuiltIn() throws Exception {
+    void testIsJdkBuiltIn() {
         assertThat(ReflectionUtils.isJdkBuiltIn(ArrayList.class)).isTrue();
         assertThat(ReflectionUtils.isJdkBuiltIn(CustomList.class)).isFalse();
     }
 
     @Test
-    public void getWrapperTypeTest() throws Exception {
+    void getWrapperTypeTest() {
         assertThat(ReflectionUtils.getWrapperType(Byte.TYPE)).isEqualTo(Byte.class);
         assertThat(ReflectionUtils.getWrapperType(Short.TYPE)).isEqualTo(Short.class);
         assertThat(ReflectionUtils.getWrapperType(Integer.TYPE)).isEqualTo(Integer.class);
@@ -134,7 +134,7 @@ public class ReflectionUtilsTest {
     }
 
     @Test
-    public void testIsPrimitiveFieldWithDefaultValue() throws Exception {
+    void testIsPrimitiveFieldWithDefaultValue() throws Exception {
         Class<PrimitiveFieldsWithDefaultValuesBean> defaultValueClass = PrimitiveFieldsWithDefaultValuesBean.class;
         PrimitiveFieldsWithDefaultValuesBean defaultValueBean = new PrimitiveFieldsWithDefaultValuesBean();
         assertThat(ReflectionUtils.isPrimitiveFieldWithDefaultValue(defaultValueBean, defaultValueClass.getField("bool"))).isTrue();
@@ -159,7 +159,7 @@ public class ReflectionUtilsTest {
     }
 
     @Test
-    public void testGetReadMethod() throws NoSuchFieldException {
+    void testGetReadMethod() throws NoSuchFieldException {
         assertThat(ReflectionUtils.getReadMethod(PrimitiveFieldsWithDefaultValuesBean.class.getDeclaredField("b"))).isEmpty();
         final Optional<Method> readMethod =
                 ReflectionUtils.getReadMethod(Foo.class.getDeclaredField("bar"));
@@ -168,7 +168,7 @@ public class ReflectionUtilsTest {
     }
 
     @Test
-    public void testGetAnnotation() throws NoSuchMethodException, NoSuchFieldException {
+    void testGetAnnotation() throws NoSuchFieldException {
         Field field = AnnotatedBean.class.getDeclaredField("fieldAnnotation");
         assertThat(ReflectionUtils.getAnnotation(field, NotNull.class)).isInstanceOf(NotNull.class);
 
@@ -180,7 +180,7 @@ public class ReflectionUtilsTest {
     }
 
     @Test
-    public void testIsAnnotationPresent() throws NoSuchMethodException, NoSuchFieldException {
+    void testIsAnnotationPresent() throws NoSuchFieldException {
         Field field = AnnotatedBean.class.getDeclaredField("fieldAnnotation");
         assertThat(ReflectionUtils.isAnnotationPresent(field, NotNull.class)).isTrue();
 
@@ -192,14 +192,14 @@ public class ReflectionUtilsTest {
     }
 
     @Test
-    public void testGetEmptyImplementationForCollectionInterface() {
+    void testGetEmptyImplementationForCollectionInterface() {
         Collection<?> collection = ReflectionUtils.getEmptyImplementationForCollectionInterface(List.class);
 
         assertThat(collection).isInstanceOf(ArrayList.class).isEmpty();
     }
 
     @Test
-    public void createEmptyCollectionForArrayBlockingQueue() {
+    void createEmptyCollectionForArrayBlockingQueue() {
         Collection<?> collection = ReflectionUtils.createEmptyCollectionForType(ArrayBlockingQueue.class, INITIAL_CAPACITY);
 
         assertThat(collection).isInstanceOf(ArrayBlockingQueue.class).isEmpty();
@@ -207,17 +207,17 @@ public class ReflectionUtilsTest {
     }
 
     @Test
-    public void synchronousQueueShouldBeRejected() {
+    void synchronousQueueShouldBeRejected() {
         assertThatThrownBy(() -> ReflectionUtils.createEmptyCollectionForType(SynchronousQueue.class, INITIAL_CAPACITY)).isInstanceOf(UnsupportedOperationException.class);
     }
 
     @Test
-    public void delayQueueShouldBeRejected() {
+    void delayQueueShouldBeRejected() {
         assertThatThrownBy(() -> ReflectionUtils.createEmptyCollectionForType(DelayQueue.class, INITIAL_CAPACITY)).isInstanceOf(UnsupportedOperationException.class);
     }
 
     @Test
-    public void getEmptyImplementationForMapInterface() {
+    void getEmptyImplementationForMapInterface() {
         Map<?, ?> map = ReflectionUtils.getEmptyImplementationForMapInterface(SortedMap.class);
 
         assertThat(map).isInstanceOf(TreeMap.class).isEmpty();

@@ -25,7 +25,7 @@ package org.jeasy.random.randomizers.range;
 
 import org.jeasy.random.randomizers.AbstractRandomizerTest;
 
-public abstract class AbstractRangeRandomizerTest<T> extends AbstractRandomizerTest<T> {
+abstract class AbstractRangeRandomizerTest<T> extends AbstractRandomizerTest<T> {
 
     T min, max;
 

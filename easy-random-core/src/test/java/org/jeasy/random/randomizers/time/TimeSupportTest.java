@@ -35,17 +35,17 @@ import org.junit.jupiter.api.Test;
 
 import org.jeasy.random.beans.TimeBean;
 
-public class TimeSupportTest {
+class TimeSupportTest {
 
     private EasyRandom easyRandom;
 
     @BeforeEach
-    public void setUp() {
+    void setUp() {
         easyRandom = new EasyRandom();
     }
 
     @Test
-    public void threeTenTypesShouldBePopulated() {
+    void threeTenTypesShouldBePopulated() {
         TimeBean timeBean = easyRandom.nextObject(TimeBean.class);
 
         assertThat(timeBean).hasNoNullFieldsOrProperties();
@@ -53,7 +53,7 @@ public class TimeSupportTest {
 
     @Test
     // https://github.com/j-easy/easy-random/issues/135
-    public void threeTenRandomizersCanBeOverriddenByCustomRandomizers() {
+    void threeTenRandomizersCanBeOverriddenByCustomRandomizers() {
         EasyRandomParameters parameters = new EasyRandomParameters()
                 .excludeField(named("instant").and(ofType(Instant.class)).and(inClass(TimeBean.class)));
         easyRandom = new EasyRandom(parameters);

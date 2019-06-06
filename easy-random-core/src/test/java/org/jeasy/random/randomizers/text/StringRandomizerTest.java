@@ -31,20 +31,20 @@ import org.junit.jupiter.api.Test;
 
 import org.jeasy.random.randomizers.AbstractRandomizerTest;
 
-public class StringRandomizerTest extends AbstractRandomizerTest<String> {
+class StringRandomizerTest extends AbstractRandomizerTest<String> {
 
     @BeforeEach
-    public void setUp() {
+    void setUp() {
         randomizer = aNewStringRandomizer();
     }
 
     @Test
-    public void generatedValueMustNotBeNull() {
+    void generatedValueMustNotBeNull() {
         assertThat(randomizer.getRandomValue()).isNotNull();
     }
 
     @Test
-    public void shouldGenerateTheSameValueForTheSameSeed() {
+    void shouldGenerateTheSameValueForTheSameSeed() {
         // Given
         randomizer = aNewStringRandomizer(SEED);
         String expected = "eOMtThyhVNLWUZNRcBaQKxI";
@@ -57,7 +57,7 @@ public class StringRandomizerTest extends AbstractRandomizerTest<String> {
     }
 
     @Test
-    public void theLengthOfTheGeneratedValueShouldBeLowerThanTheSpecifiedMaxLength() {
+    void theLengthOfTheGeneratedValueShouldBeLowerThanTheSpecifiedMaxLength() {
         // Given
         final int maxLength = 10;
         randomizer = aNewStringRandomizer(maxLength, SEED);
@@ -72,7 +72,7 @@ public class StringRandomizerTest extends AbstractRandomizerTest<String> {
     }
 
     @Test
-    public void theLengthOfTheGeneratedValueShouldBeGreaterThanTheSpecifiedMinLength() {
+    void theLengthOfTheGeneratedValueShouldBeGreaterThanTheSpecifiedMinLength() {
         // Given
         final int minLength = 3;
         final int maxLength = 10;

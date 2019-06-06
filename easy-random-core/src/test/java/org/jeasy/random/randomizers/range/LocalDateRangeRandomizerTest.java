@@ -32,29 +32,29 @@ import java.time.LocalDate;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-public class LocalDateRangeRandomizerTest extends AbstractRangeRandomizerTest<LocalDate> {
+class LocalDateRangeRandomizerTest extends AbstractRangeRandomizerTest<LocalDate> {
 
     private LocalDate minDate, maxDate;
 
     @BeforeEach
-    public void setUp() {
+    void setUp() {
         minDate = LocalDate.MIN;
         maxDate = LocalDate.MAX;
         randomizer = aNewLocalDateRangeRandomizer(minDate, maxDate);
     }
 
     @Test
-    public void generatedLocalDateShouldNotBeNull() {
+    void generatedLocalDateShouldNotBeNull() {
         assertThat(randomizer.getRandomValue()).isNotNull();
     }
 
     @Test
-    public void generatedLocalDateShouldBeWithinSpecifiedRange() {
+    void generatedLocalDateShouldBeWithinSpecifiedRange() {
         assertThat(randomizer.getRandomValue()).isBetween(minDate, maxDate);
     }
 
     @Test
-    public void generatedLocalDateShouldBeAlwaysTheSameForTheSameSeed() {
+    void generatedLocalDateShouldBeAlwaysTheSameForTheSameSeed() {
         // Given
         randomizer = aNewLocalDateRangeRandomizer(minDate, maxDate, SEED);
         LocalDate expected = LocalDate.ofEpochDay(163024688248L);
@@ -67,12 +67,12 @@ public class LocalDateRangeRandomizerTest extends AbstractRangeRandomizerTest<Lo
     }
 
     @Test
-    public void whenSpecifiedMinDateIsAfterMaxDate_thenShouldThrowIllegalArgumentException() {
+    void whenSpecifiedMinDateIsAfterMaxDate_thenShouldThrowIllegalArgumentException() {
         assertThatThrownBy(() -> aNewLocalDateRangeRandomizer(maxDate, minDate)).isInstanceOf(IllegalArgumentException.class);
     }
 
     @Test
-    public void whenSpecifiedMinDateIsNull_thenShouldUseDefaultMinValue() {
+    void whenSpecifiedMinDateIsNull_thenShouldUseDefaultMinValue() {
         // Given
         randomizer = aNewLocalDateRangeRandomizer(null, maxDate);
 
@@ -84,7 +84,7 @@ public class LocalDateRangeRandomizerTest extends AbstractRangeRandomizerTest<Lo
     }
 
     @Test
-    public void whenSpecifiedMaxDateIsNull_thenShouldUseDefaultMaxValue() {
+    void whenSpecifiedMaxDateIsNull_thenShouldUseDefaultMaxValue() {
         // Given
         randomizer = aNewLocalDateRangeRandomizer(minDate, null);
 

@@ -33,29 +33,29 @@ import java.sql.Date;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-public class SqlDateRangeRandomizerTest extends AbstractRangeRandomizerTest<Date> {
+class SqlDateRangeRandomizerTest extends AbstractRangeRandomizerTest<Date> {
 
     private Date minDate, maxDate;
 
     @BeforeEach
-    public void setUp() {
+    void setUp() {
         minDate = new Date(1460448795091L);
         maxDate = new Date(1460448795179L);
         randomizer = aNewSqlDateRangeRandomizer(minDate, maxDate);
     }
 
     @Test
-    public void generatedDateShouldNotBeNull() {
+    void generatedDateShouldNotBeNull() {
         assertThat(randomizer.getRandomValue()).isNotNull();
     }
 
     @Test
-    public void generatedDateShouldBeWithinSpecifiedRange() {
+    void generatedDateShouldBeWithinSpecifiedRange() {
         assertThat(randomizer.getRandomValue()).isBetween(minDate, maxDate);
     }
 
     @Test
-    public void generatedDateShouldBeAlwaysTheSameForTheSameSeed() {
+    void generatedDateShouldBeAlwaysTheSameForTheSameSeed() {
         // Given
         randomizer = aNewSqlDateRangeRandomizer(minDate, maxDate, SEED);
         Date expected = new Date(1460448795154L);
@@ -68,12 +68,12 @@ public class SqlDateRangeRandomizerTest extends AbstractRangeRandomizerTest<Date
     }
 
     @Test
-    public void whenSpecifiedMinDateIsAfterMaxDate_thenShouldThrowIllegalArgumentException() {
+    void whenSpecifiedMinDateIsAfterMaxDate_thenShouldThrowIllegalArgumentException() {
         assertThatThrownBy(() -> aNewDateRangeRandomizer(maxDate, minDate)).isInstanceOf(IllegalArgumentException.class);
     }
 
     @Test
-    public void whenSpecifiedMinDateIsNull_thenShouldUseDefaultMinValue() {
+    void whenSpecifiedMinDateIsNull_thenShouldUseDefaultMinValue() {
         // Given
         randomizer = aNewSqlDateRangeRandomizer(null, maxDate);
 
@@ -85,7 +85,7 @@ public class SqlDateRangeRandomizerTest extends AbstractRangeRandomizerTest<Date
     }
 
     @Test
-    public void whenSpecifiedMaxDateIsNull_thenShouldUseDefaultMaxValue() {
+    void whenSpecifiedMaxDateIsNull_thenShouldUseDefaultMaxValue() {
         // Given
         randomizer = aNewSqlDateRangeRandomizer(minDate, null);
 

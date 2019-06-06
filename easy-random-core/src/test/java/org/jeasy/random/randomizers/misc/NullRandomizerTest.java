@@ -28,10 +28,10 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 import org.junit.jupiter.api.Test;
 
-public class NullRandomizerTest {
+class NullRandomizerTest {
 
     @Test
-    public void generatedValueShouldBeNull() {
+    void generatedValueShouldBeNull() {
         assertThat(aNewNullRandomizer().getRandomValue()).isNull();
     }
 

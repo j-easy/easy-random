@@ -37,10 +37,10 @@ import org.junit.jupiter.api.Test;
 
 import org.jeasy.random.beans.Person;
 
-public class CharsetParameterTests {
+class CharsetParameterTests {
 
     @Test
-    public void testCharset() {
+    void testCharset() {
         // Given
         Charset charset = StandardCharsets.UTF_8;
         List<Character> letters = filterLetters(collectPrintableCharactersOf(charset));

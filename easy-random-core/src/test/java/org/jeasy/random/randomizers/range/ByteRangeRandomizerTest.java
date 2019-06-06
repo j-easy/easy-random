@@ -31,42 +31,42 @@ import static org.assertj.core.api.BDDAssertions.then;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-public class ByteRangeRandomizerTest extends AbstractRangeRandomizerTest<Byte> {
+class ByteRangeRandomizerTest extends AbstractRangeRandomizerTest<Byte> {
 
     @BeforeEach
-    public void setUp() {
+    void setUp() {
         min = (byte) 1;
         max = (byte) 10;
         randomizer = aNewByteRangeRandomizer(min, max);
     }
 
     @Test
-    public void generatedValueShouldBeWithinSpecifiedRange() {
+    void generatedValueShouldBeWithinSpecifiedRange() {
         Byte randomValue = randomizer.getRandomValue();
         assertThat(randomValue).isBetween(min, max);
     }
 
     @Test
-    public void whenSpecifiedMinValueIsAfterMaxValueThenThrowIllegalArgumentException() {
+    void whenSpecifiedMinValueIsAfterMaxValueThenThrowIllegalArgumentException() {
         assertThatThrownBy(() -> aNewByteRangeRandomizer(max, min)).isInstanceOf(IllegalArgumentException.class);
     }
 
     @Test
-    public void whenSpecifiedMinValueIsNullThenShouldUseDefaultMinValue() {
+    void whenSpecifiedMinValueIsNullThenShouldUseDefaultMinValue() {
         randomizer = aNewByteRangeRandomizer(null, max);
         Byte randomByte = randomizer.getRandomValue();
         assertThat(randomByte).isLessThanOrEqualTo(max);
     }
 
     @Test
-    public void whenSpecifiedMaxvalueIsNullThenShouldUseDefaultMaxValue() {
+    void whenSpecifiedMaxvalueIsNullThenShouldUseDefaultMaxValue() {
         randomizer = aNewByteRangeRandomizer(min, null);
         Byte randomByte = randomizer.getRandomValue();
         assertThat(randomByte).isGreaterThanOrEqualTo(min);
     }
 
     @Test
-    public void shouldAlwaysGenerateTheSameValueForTheSameSeed() {
+    void shouldAlwaysGenerateTheSameValueForTheSameSeed() {
         // given
         ByteRangeRandomizer byteRangeRandomizer = aNewByteRangeRandomizer(min, max, SEED);
         

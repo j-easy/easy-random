@@ -48,7 +48,7 @@ import static org.jeasy.random.FieldPredicates.*;
 import static org.mockito.Mockito.when;
 
 @ExtendWith(MockitoExtension.class)
-public class EasyRandomTest {
+class EasyRandomTest {
 
     private static final String FOO = "foo";
 
@@ -58,18 +58,18 @@ public class EasyRandomTest {
     private EasyRandom easyRandom;
 
     @BeforeEach
-    public void setUp() {
+    void setUp() {
         easyRandom = new EasyRandom();
     }
 
     @Test
-    public void generatedBeansShouldBeCorrectlyPopulated() {
+    void generatedBeansShouldBeCorrectlyPopulated() {
         Person person = easyRandom.nextObject(Person.class);
         validatePerson(person);
     }
 
     @Test
-    public void finalFieldsShouldBePopulated() {
+    void finalFieldsShouldBePopulated() {
         Person person = easyRandom.nextObject(Person.class);
 
         assertThat(person).isNotNull();
@@ -77,7 +77,7 @@ public class EasyRandomTest {
     }
 
     @Test
-    public void staticFieldsShouldNotBePopulated() {
+    void staticFieldsShouldNotBePopulated() {
         try {
             Human human = easyRandom.nextObject(Human.class);
             assertThat(human).isNotNull();
@@ -87,20 +87,20 @@ public class EasyRandomTest {
     }
 
     @Test
-    public void immutableBeansShouldBePopulated() {
+    void immutableBeansShouldBePopulated() {
         final ImmutableBean immutableBean = easyRandom.nextObject(ImmutableBean.class);
         assertThat(immutableBean).hasNoNullFieldsOrProperties();
     }
 
     @Test
-    public void generatedBeansNumberShouldBeEqualToSpecifiedNumber() {
+    void generatedBeansNumberShouldBeEqualToSpecifiedNumber() {
         Stream<Person> persons = easyRandom.objects(Person.class, 2);
 
         assertThat(persons).hasSize(2).hasOnlyElementsOfType(Person.class);
     }
 
     @Test
-    public void customRandomzierForFieldsShouldBeUsedToPopulateObjects() {
+    void customRandomzierForFieldsShouldBeUsedToPopulateObjects() {
         when(randomizer.getRandomValue()).thenReturn(FOO);
 
         EasyRandomParameters parameters = new EasyRandomParameters()
@@ -114,7 +114,7 @@ public class EasyRandomTest {
     }
 
     @Test
-    public void customRandomzierForFieldsShouldBeUsedToPopulateFieldsWithOneModifier() {
+    void customRandomzierForFieldsShouldBeUsedToPopulateFieldsWithOneModifier() {
         when(randomizer.getRandomValue()).thenReturn(FOO);
 
         // Given
@@ -131,7 +131,7 @@ public class EasyRandomTest {
     }
 
     @Test
-    public void customRandomzierForFieldsShouldBeUsedToPopulateFieldsWithMultipleModifier() {
+    void customRandomzierForFieldsShouldBeUsedToPopulateFieldsWithMultipleModifier() {
         // Given
         when(randomizer.getRandomValue()).thenReturn(FOO);
         int modifiers = Modifier.TRANSIENT | Modifier.PROTECTED;
@@ -148,7 +148,7 @@ public class EasyRandomTest {
     }
 
     @Test
-    public void customRandomzierForTypesShouldBeUsedToPopulateObjects() {
+    void customRandomzierForTypesShouldBeUsedToPopulateObjects() {
         when(randomizer.getRandomValue()).thenReturn(FOO);
 
         EasyRandomParameters parameters = new EasyRandomParameters()
@@ -161,7 +161,7 @@ public class EasyRandomTest {
     }
 
     @Test
-    public void customRandomzierForTypesShouldBeUsedToPopulateFields() {
+    void customRandomzierForTypesShouldBeUsedToPopulateFields() {
         when(randomizer.getRandomValue()).thenReturn(FOO);
 
         EasyRandomParameters parameters = new EasyRandomParameters()
@@ -174,31 +174,31 @@ public class EasyRandomTest {
     }
 
     @Test
-    public void whenSpecifiedNumberOfBeansToGenerateIsNegative_thenShouldThrowAnIllegalArgumentException() {
+    void whenSpecifiedNumberOfBeansToGenerateIsNegative_thenShouldThrowAnIllegalArgumentException() {
         assertThatThrownBy(() -> easyRandom.objects(Person.class, -2)).isInstanceOf(IllegalArgumentException.class);
     }
 
     @Test
-    public void whenUnableToInstantiateField_thenShouldThrowObjectGenerationException() {
+    void whenUnableToInstantiateField_thenShouldThrowObjectGenerationException() {
         assertThatThrownBy(() -> easyRandom.nextObject(AbstractBean.class)).isInstanceOf(ObjectCreationException.class);
     }
 
     @Test
-    public void beansWithRecursiveStructureMustNotCauseStackOverflowException() {
+    void beansWithRecursiveStructureMustNotCauseStackOverflowException() {
         Node node = easyRandom.nextObject(Node.class);
 
         assertThat(node).hasNoNullFieldsOrProperties();
     }
 
     @Test
-    public void objectTypeMustBeCorrectlyPopulated() {
+    void objectTypeMustBeCorrectlyPopulated() {
         Object object = easyRandom.nextObject(Object.class);
 
         assertThat(object).isNotNull();
     }
 
     @Test
-    public void annotatedRandomizerArgumentsShouldBeCorrectlyParsed() {
+    void annotatedRandomizerArgumentsShouldBeCorrectlyParsed() {
         TestData data = easyRandom.nextObject(TestData.class);
 
         then(data.getDate()).isBetween(valueOf(of(2016, 1, 10, 0, 0, 0)), valueOf(of(2016, 1, 30, 23, 59, 59)));
@@ -206,7 +206,7 @@ public class EasyRandomTest {
     }
 
     @Test
-    public void nextEnumShouldNotAlwaysReturnTheSameValue() {
+    void nextEnumShouldNotAlwaysReturnTheSameValue() {
         HashSet<TestEnum> distinctEnumBeans = new HashSet<>();
         for (int i = 0; i < 10; i++) {
             distinctEnumBeans.add(easyRandom.nextObject(TestEnum.class));
@@ -216,7 +216,7 @@ public class EasyRandomTest {
     }
 
     @Test
-    public void fieldsOfTypeClassShouldBeSkipped() {
+    void fieldsOfTypeClassShouldBeSkipped() {
         try {
             TestBean testBean = easyRandom.nextObject(TestBean.class);
             assertThat(testBean.getException()).isNotNull();
@@ -248,14 +248,14 @@ public class EasyRandomTest {
         assertThat(street.getType()).isNotNull();
     }
 
-    private void validatePersons(final Collection<Person> persons, final int expectedSize) {
+    void validatePersons(final Collection<Person> persons, final int expectedSize) {
         assertThat(persons).hasSize(expectedSize);
         persons.forEach(this::validatePerson);
     }
 
     @Disabled("Dummy test to see possible reasons of randomization failures")
     @Test
-    public void tryToRandomizeAllPublicConcreteTypesInTheClasspath(){
+    void tryToRandomizeAllPublicConcreteTypesInTheClasspath(){
         int success = 0;
         int failure = 0;
         List<Class<?>> publicConcreteTypes = ReflectionUtils.getPublicConcreteSubTypesOf(Object.class);

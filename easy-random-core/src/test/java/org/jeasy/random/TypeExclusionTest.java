@@ -31,7 +31,7 @@ import org.junit.jupiter.api.Test;
 import static org.jeasy.random.TypePredicates.*;
 import static org.assertj.core.api.Assertions.assertThat;
 
-public class TypeExclusionTest {
+class TypeExclusionTest {
 
     @Test
     void testTypeExclusion() {

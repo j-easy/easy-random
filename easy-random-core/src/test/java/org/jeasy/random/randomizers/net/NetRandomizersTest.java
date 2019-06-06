@@ -39,9 +39,9 @@ import org.jeasy.random.api.Randomizer;
 import org.jeasy.random.beans.Website;
 import org.jeasy.random.randomizers.AbstractRandomizerTest;
 
-public class NetRandomizersTest extends AbstractRandomizerTest<Randomizer<?>> {
+class NetRandomizersTest extends AbstractRandomizerTest<Randomizer<?>> {
 
-    public static Object[] generateRandomizers() {
+    static Object[] generateRandomizers() {
         return new Object[] { 
                 aNewUriRandomizer(),
                 aNewUrlRandomizer()
@@ -50,14 +50,14 @@ public class NetRandomizersTest extends AbstractRandomizerTest<Randomizer<?>> {
 
     @ParameterizedTest
     @MethodSource("generateRandomizers")
-    public void generatedValueShouldNotBeNull(Randomizer<?> randomizer) {
+    void generatedValueShouldNotBeNull(Randomizer<?> randomizer) {
         // when
         Object value = randomizer.getRandomValue();
 
         then(value).isNotNull();
     }
 
-    public static Object[][] generateSeededRandomizersAndTheirExpectedValues() throws Exception {
+    static Object[][] generateSeededRandomizersAndTheirExpectedValues() throws Exception {
         return new Object[][] { 
                 { aNewUriRandomizer(SEED), new URI("telnet://192.0.2.16:80/") },
                 { aNewUrlRandomizer(SEED), new URL("http://www.google.com") }
@@ -66,7 +66,7 @@ public class NetRandomizersTest extends AbstractRandomizerTest<Randomizer<?>> {
 
     @ParameterizedTest
     @MethodSource("generateSeededRandomizersAndTheirExpectedValues")
-    public void shouldGenerateTheSameValueForTheSameSeed(Randomizer<?> randomizer, Object expected) {
+    void shouldGenerateTheSameValueForTheSameSeed(Randomizer<?> randomizer, Object expected) {
         //when
         Object actual = randomizer.getRandomValue();
 
@@ -74,7 +74,7 @@ public class NetRandomizersTest extends AbstractRandomizerTest<Randomizer<?>> {
     }
 
     @Test
-    public void javaNetTypesShouldBePopulated() {
+    void javaNetTypesShouldBePopulated() {
         // when
         Website website = new EasyRandom().nextObject(Website.class);
 

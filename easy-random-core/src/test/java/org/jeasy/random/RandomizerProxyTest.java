@@ -35,12 +35,12 @@ import org.mockito.junit.jupiter.MockitoExtension;
 import org.jeasy.random.api.Randomizer;
 
 @ExtendWith(MockitoExtension.class)
-public class RandomizerProxyTest {
+class RandomizerProxyTest {
 
     private  static final String FOO = "foo";
 
     @Test
-    public void theRandomizerProxyShouldBehaveLikeTheSupplier() {
+    void theRandomizerProxyShouldBehaveLikeTheSupplier() {
         // Given
         MySupplier supplier = new MySupplier();
 
@@ -52,7 +52,7 @@ public class RandomizerProxyTest {
     }
 
     @Test
-    public void theRandomizerProxyShouldBehaveLikeTheSupplierDefinedWithLambda() {
+    void theRandomizerProxyShouldBehaveLikeTheSupplierDefinedWithLambda() {
         // Given
         Supplier<String> supplier = () -> FOO;
 

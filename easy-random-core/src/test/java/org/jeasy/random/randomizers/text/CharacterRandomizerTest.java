@@ -31,20 +31,20 @@ import org.junit.jupiter.api.Test;
 
 import org.jeasy.random.randomizers.AbstractRandomizerTest;
 
-public class CharacterRandomizerTest extends AbstractRandomizerTest<Character> {
+class CharacterRandomizerTest extends AbstractRandomizerTest<Character> {
 
     @BeforeEach
-    public void setUp() {
+    void setUp() {
         randomizer = aNewCharacterRandomizer();
     }
 
     @Test
-    public void generatedValueMustNotBeNull() {
+    void generatedValueMustNotBeNull() {
         assertThat(randomizer.getRandomValue()).isNotNull();
     }
 
     @Test
-    public void shouldGenerateTheSameValueForTheSameSeed() {
+    void shouldGenerateTheSameValueForTheSameSeed() {
         // Given
         randomizer = aNewCharacterRandomizer(SEED);
         char expected = 'e';
@@ -57,7 +57,7 @@ public class CharacterRandomizerTest extends AbstractRandomizerTest<Character> {
     }
 
     @Test
-    public void shouldGenerateOnlyAlphabeticLetters() {
+    void shouldGenerateOnlyAlphabeticLetters() {
         assertThat(randomizer.getRandomValue()).isBetween('A', 'z');
     }
 

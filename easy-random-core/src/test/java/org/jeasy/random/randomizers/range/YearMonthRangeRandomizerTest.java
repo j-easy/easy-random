@@ -32,29 +32,29 @@ import java.time.YearMonth;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-public class YearMonthRangeRandomizerTest extends AbstractRangeRandomizerTest<YearMonth> {
+class YearMonthRangeRandomizerTest extends AbstractRangeRandomizerTest<YearMonth> {
 
     private YearMonth minYearMonth, maxYearMonth;
 
     @BeforeEach
-    public void setUp() {
+    void setUp() {
         minYearMonth = YearMonth.of(1000, 1);
         maxYearMonth = YearMonth.of(3000, 12);
         randomizer = aNewYearMonthRangeRandomizer(minYearMonth, maxYearMonth);
     }
 
     @Test
-    public void generatedYearMonthShouldNotBeNull() {
+    void generatedYearMonthShouldNotBeNull() {
         assertThat(randomizer.getRandomValue()).isNotNull();
     }
 
     @Test
-    public void generatedYearMonthShouldBeWithinSpecifiedRange() {
+    void generatedYearMonthShouldBeWithinSpecifiedRange() {
         assertThat(randomizer.getRandomValue()).isBetween(minYearMonth, maxYearMonth);
     }
 
     @Test
-    public void generatedYearMonthShouldBeAlwaysTheSameForTheSameSeed() {
+    void generatedYearMonthShouldBeAlwaysTheSameForTheSameSeed() {
         // Given
         randomizer = aNewYearMonthRangeRandomizer(minYearMonth, maxYearMonth, SEED);
         YearMonth expected = YearMonth.of(2446, 11);
@@ -67,12 +67,12 @@ public class YearMonthRangeRandomizerTest extends AbstractRangeRandomizerTest<Ye
     }
 
     @Test
-    public void whenSpecifiedMinYearMonthIsAfterMaxYearMonth_thenShouldThrowIllegalArgumentException() {
+    void whenSpecifiedMinYearMonthIsAfterMaxYearMonth_thenShouldThrowIllegalArgumentException() {
         assertThatThrownBy(() -> aNewYearMonthRangeRandomizer(maxYearMonth, minYearMonth)).isInstanceOf(IllegalArgumentException.class);
     }
 
     @Test
-    public void whenSpecifiedMinYearMonthIsNull_thenShouldUseDefaultMinValue() {
+    void whenSpecifiedMinYearMonthIsNull_thenShouldUseDefaultMinValue() {
         // Given
         randomizer = aNewYearMonthRangeRandomizer(null, maxYearMonth);
 
@@ -84,7 +84,7 @@ public class YearMonthRangeRandomizerTest extends AbstractRangeRandomizerTest<Ye
     }
 
     @Test
-    public void whenSpecifiedMaxYearMonthIsNull_thenShouldUseDefaultMaxValue() {
+    void whenSpecifiedMaxYearMonthIsNull_thenShouldUseDefaultMaxValue() {
         // Given
         randomizer = aNewYearMonthRangeRandomizer(minYearMonth, null);
 

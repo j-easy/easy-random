@@ -52,12 +52,12 @@ public class RandomizationContextTest {
     private RandomizationContext randomizationContext;
 
     @BeforeEach
-    public void setUp() {
+    void setUp() {
         randomizationContext = new RandomizationContext(Object.class, parameters);
     }
 
     @Test
-    public void whenATypeHasBeenRandomized_thenHasPopulatedBeanShouldReturnTrueOnlyWhenTheObjectPoolIsFilled() {
+    void whenATypeHasBeenRandomized_thenHasPopulatedBeanShouldReturnTrueOnlyWhenTheObjectPoolIsFilled() {
         when(parameters.getObjectPoolSize()).thenReturn(EasyRandomParameters.DEFAULT_OBJECT_POOL_SIZE);
 
         // Only one instance has been randomized => should be considered as not randomized yet
@@ -72,7 +72,7 @@ public class RandomizationContextTest {
     }
 
     @Test
-    public void whenATypeHasNotBeenRandomizedYet_thenHasPopulatedBeanShouldReturnFalse() {
+    void whenATypeHasNotBeenRandomizedYet_thenHasPopulatedBeanShouldReturnFalse() {
         // Given
         randomizationContext.addPopulatedBean(String.class, bean1);
 
@@ -84,7 +84,7 @@ public class RandomizationContextTest {
     }
 
     @Test
-    public void whenATypeHasBeenRandomized_thenTheRandomizedBeanShouldBeRetrievedFromTheObjectPool() {
+    void whenATypeHasBeenRandomized_thenTheRandomizedBeanShouldBeRetrievedFromTheObjectPool() {
         when(parameters.getObjectPoolSize()).thenReturn(EasyRandomParameters.DEFAULT_OBJECT_POOL_SIZE);
 
         // Given
@@ -99,7 +99,7 @@ public class RandomizationContextTest {
     }
 
     @Test
-    public void stackedFieldNamesShouldBeCorrectlyEncoded() throws NoSuchFieldException {
+    void stackedFieldNamesShouldBeCorrectlyEncoded() throws NoSuchFieldException {
         // Given
         Field address = Person.class.getDeclaredField("address");
         randomizationContext.pushStackItem(new RandomizationContextStackItem(null, address));
@@ -113,7 +113,7 @@ public class RandomizationContextTest {
     }
 
     @Test
-    public void whenCurrentStackSizeOverMaxRandomizationDepth_thenShouldExceedRandomizationDepth() throws NoSuchFieldException {
+    void whenCurrentStackSizeOverMaxRandomizationDepth_thenShouldExceedRandomizationDepth() throws NoSuchFieldException {
         // Given
         when(parameters.getRandomizationDepth()).thenReturn(1);
         RandomizationContext customRandomizationContext = new RandomizationContext(Object.class, parameters);
@@ -129,7 +129,7 @@ public class RandomizationContextTest {
     }
 
     @Test
-    public void whenCurrentStackSizeLessMaxRandomizationDepth_thenShouldNotExceedRandomizationDepth() throws NoSuchFieldException {
+    void whenCurrentStackSizeLessMaxRandomizationDepth_thenShouldNotExceedRandomizationDepth() throws NoSuchFieldException {
         // Given
         when(parameters.getRandomizationDepth()).thenReturn(2);
         RandomizationContext customRandomizationContext = new RandomizationContext(Object.class, parameters);
@@ -144,7 +144,7 @@ public class RandomizationContextTest {
     }
 
     @Test
-    public void whenCurrentStackSizeEqualMaxRandomizationDepth_thenShouldNotExceedRandomizationDepth() throws NoSuchFieldException {
+    void whenCurrentStackSizeEqualMaxRandomizationDepth_thenShouldNotExceedRandomizationDepth() throws NoSuchFieldException {
         // Given
         when(parameters.getRandomizationDepth()).thenReturn(2);
         RandomizationContext customRandomizationContext = new RandomizationContext(Object.class, parameters);

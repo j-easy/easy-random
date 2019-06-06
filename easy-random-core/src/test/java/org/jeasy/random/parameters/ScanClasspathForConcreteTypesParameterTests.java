@@ -46,12 +46,12 @@ import org.jeasy.random.beans.Mamals;
 import org.jeasy.random.beans.Person;
 import org.jeasy.random.beans.SocialPerson;
 
-public class ScanClasspathForConcreteTypesParameterTests {
+class ScanClasspathForConcreteTypesParameterTests {
 
     private EasyRandom easyRandom;
 
     @Test
-    public void whenScanClasspathForConcreteTypesIsDisabled_thenShouldFailToPopulateInterfacesAndAbstractClasses() {
+    void whenScanClasspathForConcreteTypesIsDisabled_thenShouldFailToPopulateInterfacesAndAbstractClasses() {
         EasyRandomParameters parameters = new EasyRandomParameters().scanClasspathForConcreteTypes(false);
         easyRandom = new EasyRandom(parameters);
 
@@ -59,7 +59,7 @@ public class ScanClasspathForConcreteTypesParameterTests {
     }
 
     @Test
-    public void whenScanClasspathForConcreteTypesIsEnabled_thenShouldPopulateInterfacesAndAbstractClasses() {
+    void whenScanClasspathForConcreteTypesIsEnabled_thenShouldPopulateInterfacesAndAbstractClasses() {
         EasyRandomParameters parameters = new EasyRandomParameters().scanClasspathForConcreteTypes(true);
         easyRandom = new EasyRandom(parameters);
 
@@ -70,7 +70,7 @@ public class ScanClasspathForConcreteTypesParameterTests {
     }
 
     @Test
-    public void whenScanClasspathForConcreteTypesIsEnabled_thenShouldPopulateConcreteTypesForFieldsWithGenericParameters() {
+    void whenScanClasspathForConcreteTypesIsEnabled_thenShouldPopulateConcreteTypesForFieldsWithGenericParameters() {
         EasyRandomParameters parameters = new EasyRandomParameters().scanClasspathForConcreteTypes(true);
         easyRandom = new EasyRandom(parameters);
 
@@ -80,7 +80,7 @@ public class ScanClasspathForConcreteTypesParameterTests {
     }
 
     @Test
-    public void whenScanClasspathForConcreteTypesIsEnabled_thenShouldPopulateAbstractTypesWithConcreteSubTypes() {
+    void whenScanClasspathForConcreteTypesIsEnabled_thenShouldPopulateAbstractTypesWithConcreteSubTypes() {
         // Given
         EasyRandomParameters parameters = new EasyRandomParameters().scanClasspathForConcreteTypes(true);
         easyRandom = new EasyRandom(parameters);
@@ -96,7 +96,7 @@ public class ScanClasspathForConcreteTypesParameterTests {
     }
 
     @Test
-    public void whenScanClasspathForConcreteTypesIsEnabled_thenShouldPopulateFieldsOfAbstractTypeWithConcreteSubTypes() {
+    void whenScanClasspathForConcreteTypesIsEnabled_thenShouldPopulateFieldsOfAbstractTypeWithConcreteSubTypes() {
         // Given
         EasyRandomParameters parameters = new EasyRandomParameters().scanClasspathForConcreteTypes(true);
         easyRandom = new EasyRandom(parameters);
@@ -111,7 +111,7 @@ public class ScanClasspathForConcreteTypesParameterTests {
     }
 
     @Test
-    public void whenScanClasspathForConcreteTypesIsEnabled_thenShouldPopulateAbstractEnumeration() {
+    void whenScanClasspathForConcreteTypesIsEnabled_thenShouldPopulateAbstractEnumeration() {
         EasyRandomParameters parameters = new EasyRandomParameters().scanClasspathForConcreteTypes(true);
         easyRandom = new EasyRandom(parameters);
 

@@ -28,10 +28,10 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 import org.junit.jupiter.api.Test;
 
-public class SkipRandomizerTest {
+class SkipRandomizerTest {
 
     @Test
-    public void generatedValueShouldBeNull() {
+    void generatedValueShouldBeNull() {
         assertThat(aNewSkipRandomizer().getRandomValue()).isNull();
     }
 }

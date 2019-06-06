@@ -31,10 +31,10 @@ import org.junit.jupiter.api.Test;
 
 import org.jeasy.random.beans.Person;
 
-public class RandomizationDepthParameterTests {
+class RandomizationDepthParameterTests {
 
     @Test
-    public void testRandomizationDepth() {
+    void testRandomizationDepth() {
         // Given
         EasyRandomParameters parameters = new EasyRandomParameters().randomizationDepth(2);
         EasyRandom easyRandom = new EasyRandom(parameters);

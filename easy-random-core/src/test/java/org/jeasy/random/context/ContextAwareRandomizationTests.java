@@ -30,7 +30,7 @@ import org.junit.jupiter.api.Test;
 import static org.jeasy.random.FieldPredicates.*;
 import static org.assertj.core.api.Assertions.assertThat;
 
-public class ContextAwareRandomizationTests {
+class ContextAwareRandomizationTests {
 
     @Test
     void testContextAwareRandomization() {

@@ -33,17 +33,17 @@ import org.junit.jupiter.api.Test;
 
 import org.jeasy.random.api.Randomizer;
 
-public class RandomizerAnnotationTest {
+class RandomizerAnnotationTest {
 
     @Test
-    public void fieldAnnotatedWithRandomizerShouldBePopulatedWithValuesGeneratedByTheDeclaredRandomizer() {
+    void fieldAnnotatedWithRandomizerShouldBePopulatedWithValuesGeneratedByTheDeclaredRandomizer() {
         Foo foo = new EasyRandom().nextObject(Foo.class);
         assertThat(foo.getName()).isEqualTo("foo");
     }
 
     @Test
     // https://github.com/j-easy/easy-random/issues/131
-    public void shouldThrowObjectGenerationExceptionWhenRandomizerUsedInRandomizerAnnotationHasNoDefaultConstructor() {
+    void shouldThrowObjectGenerationExceptionWhenRandomizerUsedInRandomizerAnnotationHasNoDefaultConstructor() {
         assertThatThrownBy(() -> new EasyRandom().nextObject(Bar.class)).isInstanceOf(ObjectCreationException.class);
     }
 
