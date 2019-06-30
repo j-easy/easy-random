@@ -43,7 +43,9 @@ public class LocaleRandomizerTest extends AbstractRandomizerTest<Locale> {
     @Test
     public void shouldGenerateTheSameValueForTheSameSeed() {
         BigDecimal javaVersion = new BigDecimal(System.getProperty("java.specification.version"));
-        if (javaVersion.compareTo(new BigDecimal("11")) >= 0) {
+        if (javaVersion.compareTo(new BigDecimal("14")) >= 0) {
+            assertThat(aNewLocaleRandomizer(SEED).getRandomValue()).isEqualTo(new Locale("zh", "CN"));
+        } else if (javaVersion.compareTo(new BigDecimal("11")) >= 0) {
             assertThat(aNewLocaleRandomizer(SEED).getRandomValue()).isEqualTo(new Locale("en", "CK"));
         } else if (javaVersion.compareTo(new BigDecimal("9")) >= 0) {
             assertThat(aNewLocaleRandomizer(SEED).getRandomValue()).isEqualTo(new Locale("sw", "ke"));
