@@ -42,7 +42,7 @@ import static org.jeasy.random.util.ReflectionUtils.*;
 @SuppressWarnings({ "rawtypes", "unchecked" })
 public class EasyRandom extends Random {
 
-    private EasyRandomParameters parameters;
+    private final EasyRandomParameters parameters;
 
     private final FieldPopulator fieldPopulator;
 
@@ -82,7 +82,7 @@ public class EasyRandom extends Random {
         enumRandomizersByType = new ConcurrentHashMap<>();
         fieldPopulator = new FieldPopulator(this, this.randomizerProvider, arrayPopulator, collectionPopulator, mapPopulator);
         exclusionPolicy = easyRandomParameters.getExclusionPolicy();
-        this.parameters = easyRandomParameters;
+        parameters = easyRandomParameters;
     }
 
     /**
