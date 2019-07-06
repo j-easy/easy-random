@@ -56,10 +56,30 @@ class RandomizerAnnotationTest {
         assertThat(person.getAge()).isIn(1, 2, 3);
     }
 
+
+    @Test
+    void testRandomizerIsReused() {
+        MyStringRandomizer.resetNumConstructorCalled();
+
+        EasyRandom easyRandom = new EasyRandom();
+
+        Person firstRandomPerson = easyRandom.nextObject(Person.class);
+        Person secondRandomPerson = easyRandom.nextObject(Person.class);
+
+        // If the randomizer would not be reused, then
+
+        // The names would be equal, since the seed of MyStringRandomizer is a constant
+        assertThat(firstRandomPerson.getName()).isNotEqualTo(secondRandomPerson.getName());
+
+        // The constructor would have been called multiple times
+        assertThat(MyStringRandomizer.getNumConstructorCalled()).isEqualTo(1);
+    }
+
     @Data
     static class Person {
 
         @org.jeasy.random.annotation.Randomizer(value = MyStringRandomizer.class, args = {
+                @RandomizerArgument(value = "123", type = long.class),
                 @RandomizerArgument(value = "foo, bar", type = String[].class)
         })
         private String name;
@@ -73,15 +93,26 @@ class RandomizerAnnotationTest {
     public static class MyStringRandomizer extends AbstractRandomizer<String> {
 
         private String[] words;
+        private static int numConstructorCalled = 0;
 
-        public MyStringRandomizer(String[] words) {
+        public MyStringRandomizer(final long seed, String[] words) {
+            super(seed);
             this.words = words;
+            numConstructorCalled += 1;
         }
 
         @Override
         public String getRandomValue() {
             int randomIndex = random.nextInt(words.length);
             return words[randomIndex];
+        }
+
+        static int getNumConstructorCalled() {
+            return numConstructorCalled;
+        }
+
+        static void resetNumConstructorCalled() {
+            numConstructorCalled = 0;
         }
     }
 
