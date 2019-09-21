@@ -47,7 +47,8 @@ public class FieldPredicates {
      * @return Predicate to check that a field has a certain name pattern
      */
     public static Predicate<Field> named(final String name) {
-        return field -> Pattern.compile(name).matcher(field.getName()).matches();
+        final Pattern pattern = Pattern.compile(name);
+        return field -> pattern.matcher(field.getName()).matches();
     }
 
     /**
