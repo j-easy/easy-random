@@ -59,7 +59,7 @@ class LocalDateTimeRangeRandomizerTest extends AbstractRangeRandomizerTest<Local
     void generatedLocalDateTimeShouldBeAlwaysTheSameForTheSameSeed() {
         // Given
         randomizer = aNewLocalDateTimeRangeRandomizer(minDateTime, maxDateTime, SEED);
-        LocalDateTime expected = LocalDateTime.of(LocalDate.ofEpochDay(163024688248L), LocalTime.ofSecondOfDay(62481));
+        LocalDateTime expected = LocalDateTime.parse("+446348406-04-09T17:28:52");
 
         // When
         LocalDateTime randomValue = randomizer.getRandomValue();
@@ -95,6 +95,20 @@ class LocalDateTimeRangeRandomizerTest extends AbstractRangeRandomizerTest<Local
 
         // Then
         assertThat(randomValue).isAfterOrEqualTo(minDateTime);
+    }
+    @Test
+    void whenMaxDateIsAfterMidnight_thenShouldNotThrowException() {
+        minDateTime = LocalDateTime.parse("2019-10-21T23:33:44");
+        maxDateTime = LocalDateTime.parse("2019-10-22T00:33:22");
+
+        // Given
+        randomizer = aNewLocalDateTimeRangeRandomizer(minDateTime, maxDateTime);
+
+        // when
+        LocalDateTime randomValue = randomizer.getRandomValue();
+
+        // Then
+        assertThat(randomValue).isBetween(minDateTime, maxDateTime);
     }
 
 }
