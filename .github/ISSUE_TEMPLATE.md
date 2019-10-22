@@ -1,4 +1,4 @@
-Thank you for taking time to open this issue! Please check the [know limitations](https://github.com/j-easy/easy-random/wiki/known-limitations) section before opening an issue.
+Thank you for taking time to open this issue! Please check the [known limitations](https://github.com/j-easy/easy-random/wiki/known-limitations) section before opening an issue.
 
 Please provide as much context as possible to help us fixing the issue (at least easy-random version you are using).
 
