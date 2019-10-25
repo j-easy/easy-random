@@ -8,6 +8,6 @@ You have probably already checked the following points, but as a reminder, pleas
 
 You may add the reference of the issue in your commit message.
 
-Don't hesitate to add your name to the contributors list in the `README.md` and parent `pom.xml` files.
+Don't hesitate to add your name to the contributors list in the `README.md` file.
 
 Many thanks upfront!
