@@ -23,9 +23,14 @@
  */
 package org.jeasy.random.randomizers.range;
 
-import java.time.LocalDate;
+import org.jeasy.random.EasyRandomParameters;
+
+import java.time.Instant;
 import java.time.LocalDateTime;
-import java.time.LocalTime;
+import java.time.OffsetDateTime;
+import java.time.ZoneId;
+import java.time.ZoneOffset;
+import java.time.zone.ZoneRules;
 
 /**
  * Generate a random {@link LocalDateTime} in the given range.
@@ -33,10 +38,6 @@ import java.time.LocalTime;
  * @author Mahmoud Ben Hassine (mahmoud.benhassine@icloud.com)
  */
 public class LocalDateTimeRangeRandomizer extends AbstractRangeRandomizer<LocalDateTime> {
-
-    private final LocalDateRangeRandomizer localDateRangeRandomizer;
-
-    private final LocalTimeRangeRandomizer localTimeRangeRandomizer;
 
     /**
      * Create a new {@link LocalDateTimeRangeRandomizer}.
@@ -46,8 +47,6 @@ public class LocalDateTimeRangeRandomizer extends AbstractRangeRandomizer<LocalD
      */
     public LocalDateTimeRangeRandomizer(final LocalDateTime min, final LocalDateTime max) {
         super(min, max);
-        localDateRangeRandomizer = new LocalDateRangeRandomizer(this.min.toLocalDate(), this.max.toLocalDate());
-        localTimeRangeRandomizer = new LocalTimeRangeRandomizer(this.min.toLocalTime(), this.max.toLocalTime());
     }
 
     /**
@@ -59,8 +58,6 @@ public class LocalDateTimeRangeRandomizer extends AbstractRangeRandomizer<LocalD
      */
     public LocalDateTimeRangeRandomizer(final LocalDateTime min, final LocalDateTime max, final long seed) {
         super(min, max, seed);
-        localDateRangeRandomizer = new LocalDateRangeRandomizer(this.min.toLocalDate(), this.max.toLocalDate(), seed);
-        localTimeRangeRandomizer = new LocalTimeRangeRandomizer(this.min.toLocalTime(), this.max.toLocalTime(), seed);
     }
 
     /**
@@ -105,9 +102,16 @@ public class LocalDateTimeRangeRandomizer extends AbstractRangeRandomizer<LocalD
 
     @Override
     public LocalDateTime getRandomValue() {
-        LocalDate randomLocalDate = localDateRangeRandomizer.getRandomValue();
-        LocalTime randomLocalTime = localTimeRangeRandomizer.getRandomValue();
-        return LocalDateTime.of(randomLocalDate, randomLocalTime);
+
+        long minSeconds = min.toEpochSecond(ZoneOffset.UTC);
+        long maxSeconds = max.toEpochSecond(ZoneOffset.UTC);
+        long seconds = (long) nextDouble(minSeconds, maxSeconds);
+        int minNanoSeconds = min.getNano();
+        int maxNanoSeconds = max.getNano();
+        long nanoSeconds = (long) nextDouble(minNanoSeconds, maxNanoSeconds);
+        Instant instant = Instant.ofEpochSecond(seconds, nanoSeconds);
+
+        return LocalDateTime.ofInstant(instant, ZoneOffset.UTC);
     }
 
 }
