@@ -195,6 +195,7 @@ If you have any question, suggestion, or feedback, do not hesitate to use the [G
 * [euZebe](https://github.com/euzebe)
 * [Fred Eckertson](https://github.com/feckertson)
 * [huningd](https://github.com/huningd)
+* [Johan Kindgren](https://github.com/johkin)
 * [Joren Inghelbrecht](https://github.com/joinghel)
 * [Jose Manuel Prieto](https://github.com/prietopa)
 * [kermit-the-frog](https://github.com/kermit-the-frog)
