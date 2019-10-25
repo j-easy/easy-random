@@ -36,21 +36,18 @@ import java.util.Locale;
  */
 public abstract class FakerBasedRandomizer<T> extends AbstractRandomizer<T> {
 
-    final Faker faker;
+    protected final Faker faker;
 
-    FakerBasedRandomizer() {
+    protected FakerBasedRandomizer() {
         faker = new Faker(Locale.ENGLISH);
     }
 
-    FakerBasedRandomizer(final long seed) {
+    protected FakerBasedRandomizer(final long seed) {
         this(seed, Locale.ENGLISH);
     }
 
-    FakerBasedRandomizer(final long seed, final Locale locale) {
+    protected FakerBasedRandomizer(final long seed, final Locale locale) {
         super(seed);
         faker = new Faker(locale, random);
     }
-
-    @Override
-    public abstract T getRandomValue();
 }
