@@ -198,6 +198,7 @@ If you have any question, suggestion, or feedback, do not hesitate to use the [G
 * [Jose Manuel Prieto](https://github.com/prietopa)
 * [kermit-the-frog](https://github.com/kermit-the-frog)
 * [Lucas Andersson](https://github.com/LucasAndersson)
+* [Michael Düsterhus](https://github.com/reitzmichnicht)
 * [Nikola Milivojevic](https://github.com/dziga)
 * [Oleksandr Shcherbyna](https://github.com/sansherbina)
 * [Petromir Dzhunev](https://github.com/petromir)

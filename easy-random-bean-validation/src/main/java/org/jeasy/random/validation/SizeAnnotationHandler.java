@@ -62,7 +62,7 @@ class SizeAnnotationHandler implements BeanValidationAnnotationHandler {
                 .getAnnotation(field, Size.class);
 
         final int min = sizeAnnotation.min();
-        final int max = sizeAnnotation.max();
+        final int max = sizeAnnotation.max() == Integer.MAX_VALUE ? 255 : sizeAnnotation.max();
         if (easyRandom == null) {
             EasyRandomParameters parameters = new EasyRandomParameters()
                     .seed(this.seed)

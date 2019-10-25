@@ -106,6 +106,7 @@ class BeanValidationTest {
         assertThat(bean.getSizedSet().size()).isBetween(2, 10);// @Size(min=2, max=10) String sizedSet;
         assertThat(bean.getSizedMap().size()).isBetween(2, 10);// @Size(min=2, max=10) String sizedMap;
         assertThat(bean.getSizedArray().length).isBetween(2, 10);// @Size(min=2, max=10) String sizedArray;
+        assertThat(bean.getSizedString().length()).isBetween(2, 255);// @Size(min=2) String sizedString;
 
         assertThat(bean.getRegexString()).matches("[a-z]{4}");
     }
@@ -167,6 +168,7 @@ class BeanValidationTest {
         assertThat(bean.getSizedSet().size()).isBetween(2, 10);// @Size(min=2, max=10) String sizedSet;
         assertThat(bean.getSizedMap().size()).isBetween(2, 10);// @Size(min=2, max=10) String sizedMap;
         assertThat(bean.getSizedArray().length).isBetween(2, 10);// @Size(min=2, max=10) String sizedArray;
+        assertThat(bean.getSizedString().length()).isBetween(2, 255);// @Size(min=2) String sizedString;
 
         assertThat(bean.getRegexString()).matches("[a-z]{4}");
     }

@@ -115,6 +115,9 @@ class BeanValidationAnnotatedBean {
     @Size(min=2, max=10)
     private String[] sizedArray;
 
+    @Size(min=2)
+    private String sizedString;
+
     @Pattern(regexp="[a-z]{4}")
     private String regexString;
 
