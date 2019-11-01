@@ -28,6 +28,7 @@ import org.jeasy.random.randomizers.range.IntegerRangeRandomizer;
 
 import java.time.Duration;
 import java.time.temporal.ChronoUnit;
+import java.time.temporal.TemporalUnit;
 
 /**
  * A {@link Randomizer} that generates random {@link Duration}.
@@ -40,25 +41,53 @@ public class DurationRandomizer implements Randomizer<Duration> {
     private static final int MAX_AMOUNT = 100;
 
     private final IntegerRangeRandomizer amountRandomizer;
+    private final TemporalUnit unit;
 
     /**
      * Create a new {@link DurationRandomizer}.
+     * Generated {@link Duration} objects will use {@link ChronoUnit#HOURS}.
      */
     public DurationRandomizer() {
-        amountRandomizer = new IntegerRangeRandomizer(MIN_AMOUNT, MAX_AMOUNT);
+        this(ChronoUnit.HOURS);
+    }
+
+    /**
+     * Create a new {@link DurationRandomizer}.
+     *
+     * @param unit the temporal unit for created durations
+     */
+    public DurationRandomizer(final TemporalUnit unit) {
+        this(new IntegerRangeRandomizer(MIN_AMOUNT, MAX_AMOUNT), unit);
+    }
+
+    /**
+     * Create a new {@link DurationRandomizer}.
+     * Generated {@link Duration} objects will use {@link ChronoUnit#HOURS}.
+     *
+     * @param seed initial seed
+     */
+    public DurationRandomizer(final long seed) {
+        this(seed, ChronoUnit.HOURS);
     }
 
     /**
      * Create a new {@link DurationRandomizer}.
      *
      * @param seed initial seed
+     * @param unit the temporal unit for created durations
      */
-    public DurationRandomizer(final long seed) {
-        amountRandomizer = new IntegerRangeRandomizer(MIN_AMOUNT, MAX_AMOUNT, seed);
+    public DurationRandomizer(final long seed, final TemporalUnit unit) {
+        this(new IntegerRangeRandomizer(MIN_AMOUNT, MAX_AMOUNT, seed), unit);
+    }
+
+    private DurationRandomizer(final IntegerRangeRandomizer amountRandomizer, final TemporalUnit unit) {
+        this.amountRandomizer = amountRandomizer;
+        this.unit = requireValid(unit);
     }
 
     /**
      * Create a new {@link DurationRandomizer}.
+     * Generated {@link Duration} objects will use {@link ChronoUnit#HOURS}.
      *
      * @return a new {@link DurationRandomizer}.
      */
@@ -69,6 +98,17 @@ public class DurationRandomizer implements Randomizer<Duration> {
     /**
      * Create a new {@link DurationRandomizer}.
      *
+     * @param unit the temporal unit for created durations
+     * @return a new {@link DurationRandomizer}.
+     */
+    public static DurationRandomizer aNewDurationRandomizer(TemporalUnit unit) {
+        return new DurationRandomizer(unit);
+    }
+
+    /**
+     * Create a new {@link DurationRandomizer}.
+     * Generated {@link Duration} objects will use {@link ChronoUnit#HOURS}.
+     *
      * @param seed initial seed
      * @return a new {@link DurationRandomizer}.
      */
@@ -76,10 +116,27 @@ public class DurationRandomizer implements Randomizer<Duration> {
         return new DurationRandomizer(seed);
     }
 
+    /**
+     * Create a new {@link DurationRandomizer}.
+     *
+     * @param seed initial seed
+     * @param unit the temporal unit for created durations
+     * @return a new {@link DurationRandomizer}.
+     */
+    public static DurationRandomizer aNewDurationRandomizer(final long seed, final TemporalUnit unit) {
+        return new DurationRandomizer(seed, unit);
+    }
+
     @Override
     public Duration getRandomValue() {
         int randomAmount = amountRandomizer.getRandomValue();
-        return Duration.of(randomAmount, ChronoUnit.HOURS);
+        return Duration.of(randomAmount, unit);
     }
 
+    private static TemporalUnit requireValid(TemporalUnit unit) {
+        if (unit.isDurationEstimated() && unit != ChronoUnit.DAYS) {
+            throw new IllegalArgumentException("Temporal unit " + unit + " can't be used to create Duration objects");
+        }
+        return unit;
+    }
 }
