@@ -23,6 +23,7 @@
  */
 package org.jeasy.random.randomizers.time;
 
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.jeasy.random.randomizers.time.CalendarRandomizer.aNewCalendarRandomizer;
 import static org.jeasy.random.randomizers.time.DateRandomizer.aNewDateRandomizer;
 import static org.jeasy.random.randomizers.time.DurationRandomizer.aNewDurationRandomizer;
@@ -43,6 +44,7 @@ import static org.jeasy.random.randomizers.time.YearRandomizer.aNewYearRandomize
 import static org.jeasy.random.randomizers.time.ZoneOffsetRandomizer.aNewZoneOffsetRandomizer;
 import static java.time.LocalDateTime.of;
 import static java.time.ZoneOffset.ofTotalSeconds;
+import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.BDDAssertions.then;
 
 import java.sql.Time;
@@ -65,6 +67,7 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.GregorianCalendar;
 
+import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.MethodSource;
 
@@ -114,6 +117,8 @@ class TimeRandomizersTest extends AbstractRandomizerTest<Randomizer<?>> {
 
         return new Object[][] {
                 { aNewDurationRandomizer(SEED), Duration.of(72L, ChronoUnit.HOURS) },
+                { aNewDurationRandomizer(SEED, ChronoUnit.MINUTES), Duration.of(72L, ChronoUnit.MINUTES) },
+                { aNewDurationRandomizer(SEED, ChronoUnit.MILLIS), Duration.of(72L, ChronoUnit.MILLIS) },
                 { aNewLocalDateRandomizer(SEED), LocalDate.of(2024, Month.MARCH, 20) },
                 { aNewMonthDayRandomizer(SEED), MonthDay.of(Month.MARCH, 20) },
                 { aNewLocalTimeRandomizer(SEED), LocalTime.of(16, 42, 58) },
@@ -141,5 +146,29 @@ class TimeRandomizersTest extends AbstractRandomizerTest<Randomizer<?>> {
         Object actual = randomizer.getRandomValue();
 
         then(actual).isEqualTo(expected);
+    }
+
+    @Test
+    void shouldAllowToCreateDurationRandomizerWithSuitableTemporalUnits() {
+        assertThat(aNewDurationRandomizer(ChronoUnit.NANOS).getRandomValue()).isGreaterThanOrEqualTo(Duration.ZERO);
+        assertThat(aNewDurationRandomizer(ChronoUnit.MICROS).getRandomValue()).isGreaterThanOrEqualTo(Duration.ZERO);
+        assertThat(aNewDurationRandomizer(ChronoUnit.MILLIS).getRandomValue()).isGreaterThanOrEqualTo(Duration.ZERO);
+        assertThat(aNewDurationRandomizer(ChronoUnit.SECONDS).getRandomValue()).isGreaterThanOrEqualTo(Duration.ZERO);
+        assertThat(aNewDurationRandomizer(ChronoUnit.MINUTES).getRandomValue()).isGreaterThanOrEqualTo(Duration.ZERO);
+        assertThat(aNewDurationRandomizer(ChronoUnit.HOURS).getRandomValue()).isGreaterThanOrEqualTo(Duration.ZERO);
+        assertThat(aNewDurationRandomizer(ChronoUnit.HALF_DAYS).getRandomValue()).isGreaterThanOrEqualTo(Duration.ZERO);
+        assertThat(aNewDurationRandomizer(ChronoUnit.DAYS).getRandomValue()).isGreaterThanOrEqualTo(Duration.ZERO);
+    }
+
+    @Test
+    void shouldDisallowToCreateDurationRandomizerWithEstimatedTemporalUnits() {
+        assertThatThrownBy(() -> aNewDurationRandomizer(ChronoUnit.WEEKS)).isInstanceOf(IllegalArgumentException.class);
+        assertThatThrownBy(() -> aNewDurationRandomizer(ChronoUnit.MONTHS)).isInstanceOf(IllegalArgumentException.class);
+        assertThatThrownBy(() -> aNewDurationRandomizer(ChronoUnit.YEARS)).isInstanceOf(IllegalArgumentException.class);
+        assertThatThrownBy(() -> aNewDurationRandomizer(ChronoUnit.DECADES)).isInstanceOf(IllegalArgumentException.class);
+        assertThatThrownBy(() -> aNewDurationRandomizer(ChronoUnit.CENTURIES)).isInstanceOf(IllegalArgumentException.class);
+        assertThatThrownBy(() -> aNewDurationRandomizer(ChronoUnit.MILLENNIA)).isInstanceOf(IllegalArgumentException.class);
+        assertThatThrownBy(() -> aNewDurationRandomizer(ChronoUnit.ERAS)).isInstanceOf(IllegalArgumentException.class);
+        assertThatThrownBy(() -> aNewDurationRandomizer(ChronoUnit.FOREVER)).isInstanceOf(IllegalArgumentException.class);
     }
 }
