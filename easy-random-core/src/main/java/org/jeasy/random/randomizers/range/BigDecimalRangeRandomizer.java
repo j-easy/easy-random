@@ -37,6 +37,7 @@ public class BigDecimalRangeRandomizer implements Randomizer<BigDecimal> {
 
     private final DoubleRangeRandomizer delegate;
     private Integer scale;
+    private RoundingMode roundingMode = RoundingMode.HALF_UP;
 
     /**
      * Create a new {@link BigDecimalRangeRandomizer}.
@@ -74,6 +75,47 @@ public class BigDecimalRangeRandomizer implements Randomizer<BigDecimal> {
     /**
      * Create a new {@link BigDecimalRangeRandomizer}.
      *
+     * @param min   min value
+     * @param max   max value
+     * @param scale of the {@code BigDecimal} value to be returned.
+     * @param roundingMode of the {@code BigDecimal} value to be returned.
+     */
+    public BigDecimalRangeRandomizer(final Double min, final Double max, final Integer scale, final RoundingMode roundingMode) {
+        delegate = new DoubleRangeRandomizer(min, max, scale);
+        this.roundingMode = roundingMode;
+    }
+
+    /**
+     * Create a new {@link BigDecimalRangeRandomizer}. The default rounding mode is {@link RoundingMode#HALF_UP}.
+     *
+     * @param min   min value
+     * @param max   max value
+     * @param seed initial seed
+     * @param scale of the {@code BigDecimal} value to be returned.
+     */
+    public BigDecimalRangeRandomizer(final Double min, final Double max, final long seed, final Integer scale) {
+        delegate = new DoubleRangeRandomizer(min, max, seed);
+        this.scale = scale;
+    }
+
+    /**
+     * Create a new {@link BigDecimalRangeRandomizer}.
+     *
+     * @param min   min value
+     * @param max   max value
+     * @param seed initial seed
+     * @param scale of the {@code BigDecimal} value to be returned.
+     * @param roundingMode of the {@code BigDecimal} value to be returned.
+     */
+    public BigDecimalRangeRandomizer(final Double min, final Double max, final long seed, final Integer scale, final RoundingMode roundingMode) {
+        delegate = new DoubleRangeRandomizer(min, max, seed);
+        this.scale = scale;
+        this.roundingMode = roundingMode;
+    }
+
+    /**
+     * Create a new {@link BigDecimalRangeRandomizer}.
+     *
      * @param min min value
      * @param max max value
      * @return a new {@link BigDecimalRangeRandomizer}.
@@ -106,12 +148,52 @@ public class BigDecimalRangeRandomizer implements Randomizer<BigDecimal> {
         return new BigDecimalRangeRandomizer(min, max, scale);
     }
 
+    /**
+     * Create a new {@link BigDecimalRangeRandomizer}.
+     *
+     * @param min   min value
+     * @param max   max value
+     * @param scale of the {@code BigDecimal} value to be returned.
+     * @param roundingMode of the {@code BigDecimal} value to be returned.
+     * @return a new {@link BigDecimalRangeRandomizer}.
+     */
+    public static BigDecimalRangeRandomizer aNewBigDecimalRangeRandomizer(final Double min, final Double max, final Integer scale, final RoundingMode roundingMode) {
+        return new BigDecimalRangeRandomizer(min, max, scale, roundingMode);
+    }
+
+    /**
+     * Create a new {@link BigDecimalRangeRandomizer}. The default rounding mode is {@link RoundingMode#HALF_UP}.
+     *
+     * @param min   min value
+     * @param max   max value
+     * @param seed initial seed
+     * @param scale of the {@code BigDecimal} value to be returned.
+     * @return a new {@link BigDecimalRangeRandomizer}.
+     */
+    public static BigDecimalRangeRandomizer aNewBigDecimalRangeRandomizer(final Double min, final Double max, final long seed, final Integer scale) {
+        return new BigDecimalRangeRandomizer(min, max, seed, scale);
+    }
+
+    /**
+     * Create a new {@link BigDecimalRangeRandomizer}.
+     *
+     * @param min   min value
+     * @param max   max value
+     * @param seed initial seed
+     * @param scale of the {@code BigDecimal} value to be returned.
+     * @param roundingMode of the {@code BigDecimal} value to be returned.
+     * @return a new {@link BigDecimalRangeRandomizer}.
+     */
+    public static BigDecimalRangeRandomizer aNewBigDecimalRangeRandomizer(final Double min, final Double max, final long seed, final Integer scale, final RoundingMode roundingMode) {
+        return new BigDecimalRangeRandomizer(min, max, seed, scale, roundingMode);
+    }
+
     @Override
     public BigDecimal getRandomValue() {
         Double delegateRandomValue = delegate.getRandomValue();
         BigDecimal randomValue = new BigDecimal(delegateRandomValue);
         if (scale != null) {
-            randomValue = randomValue.setScale(this.scale, RoundingMode.HALF_UP); // FIXME As of v3.8, there is no way to configure RoundingMode
+            randomValue = randomValue.setScale(this.scale, this.roundingMode);
         }
         return randomValue;
     }

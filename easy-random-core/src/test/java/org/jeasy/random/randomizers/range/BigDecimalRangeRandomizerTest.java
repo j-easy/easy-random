@@ -29,6 +29,7 @@ import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.assertj.core.api.BDDAssertions.then;
 
 import java.math.BigDecimal;
+import java.math.RoundingMode;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -102,5 +103,19 @@ class BigDecimalRangeRandomizerTest extends AbstractRangeRandomizerTest<BigDecim
         BigDecimal bigDecimal = bigDecimalRangeRandomizer.getRandomValue();
 
         then(bigDecimal.scale()).isEqualTo(scale);
+    }
+
+    @Test
+    void testCustomRoundingMode() {
+        // given
+        Integer scale = 2;
+        int seed = 123;
+        RoundingMode roundingMode = RoundingMode.DOWN;
+        BigDecimalRangeRandomizer bigDecimalRangeRandomizer = aNewBigDecimalRangeRandomizer(min, max, seed, scale, roundingMode);
+
+        // when
+        BigDecimal bigDecimal = bigDecimalRangeRandomizer.getRandomValue();
+
+        then(bigDecimal).isEqualTo(new BigDecimal("7.46"));
     }
 }
