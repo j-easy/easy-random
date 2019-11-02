@@ -37,6 +37,7 @@ public class BigDecimalRandomizer implements Randomizer<BigDecimal> {
 
     private final DoubleRandomizer delegate;
     private Integer scale;
+    private RoundingMode roundingMode = RoundingMode.HALF_UP;
 
     /**
      * Create a new {@link BigDecimalRandomizer}.
@@ -62,6 +63,29 @@ public class BigDecimalRandomizer implements Randomizer<BigDecimal> {
     public BigDecimalRandomizer(final Integer scale) {
         delegate = new DoubleRandomizer();
         this.scale = scale;
+    }
+
+    /**
+     * Create a new {@link BigDecimalRandomizer}.
+     *
+     * @param scale of the {@code BigDecimal} value to be returned.
+     * @param roundingMode of the {@code BigDecimal} value to be returned.
+     */
+    public BigDecimalRandomizer(final Integer scale, final RoundingMode roundingMode) {
+        this(scale);
+        this.roundingMode = roundingMode;
+    }
+
+    /**
+     * Create a new {@link BigDecimalRandomizer}.
+     *
+     * @param scale of the {@code BigDecimal} value to be returned.
+     * @param roundingMode of the {@code BigDecimal} value to be returned.
+     */
+    public BigDecimalRandomizer(final long seed, final Integer scale, final RoundingMode roundingMode) {
+        this(seed);
+        this.scale = scale;
+        this.roundingMode = roundingMode;
     }
 
     /**
@@ -93,11 +117,34 @@ public class BigDecimalRandomizer implements Randomizer<BigDecimal> {
         return new BigDecimalRandomizer(scale);
     }
 
+    /**
+     * Create a new {@link BigDecimalRandomizer}.
+     *
+     * @param scale of the {@code BigDecimal} value to be returned.
+     * @param roundingMode of the {@code BigDecimal} value to be returned.
+     * @return a new {@link BigDecimalRandomizer}.
+     */
+    public static BigDecimalRandomizer aNewBigDecimalRandomizer(final Integer scale, final RoundingMode roundingMode) {
+        return new BigDecimalRandomizer(scale, roundingMode);
+    }
+
+    /**
+     * Create a new {@link BigDecimalRandomizer}.
+     *
+     * @param seed initial seed
+     * @param scale of the {@code BigDecimal} value to be returned.
+     * @param roundingMode of the {@code BigDecimal} value to be returned.
+     * @return a new {@link BigDecimalRandomizer}.
+     */
+    public static BigDecimalRandomizer aNewBigDecimalRandomizer(final long seed, final Integer scale, final RoundingMode roundingMode) {
+        return new BigDecimalRandomizer(seed, scale, roundingMode);
+    }
+
     @Override
     public BigDecimal getRandomValue() {
         BigDecimal randomValue = new BigDecimal(delegate.getRandomValue());
         if (scale != null) {
-            randomValue = randomValue.setScale(this.scale, RoundingMode.HALF_UP);
+            randomValue = randomValue.setScale(this.scale, this.roundingMode);
         }
         return randomValue;
     }

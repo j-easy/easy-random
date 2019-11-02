@@ -27,6 +27,7 @@ import static org.jeasy.random.randomizers.number.BigDecimalRandomizer.aNewBigDe
 import static org.assertj.core.api.BDDAssertions.then;
 
 import java.math.BigDecimal;
+import java.math.RoundingMode;
 
 import org.junit.jupiter.api.Test;
 
@@ -56,5 +57,19 @@ class BigDecimalRandomizerTest extends AbstractRandomizerTest<BigDecimal> {
         BigDecimal bigDecimal = bigDecimalRangeRandomizer.getRandomValue();
 
         then(bigDecimal.scale()).isEqualTo(scale);
+    }
+
+    @Test
+    void testCustomRoundingMode() {
+        // given
+        long initialSeed = 123;
+        Integer scale = 1;
+        RoundingMode roundingMode = RoundingMode.DOWN;
+        BigDecimalRandomizer bigDecimalRandomizer = aNewBigDecimalRandomizer(initialSeed, scale, roundingMode);
+
+        // when
+        BigDecimal bigDecimal = bigDecimalRandomizer.getRandomValue();
+
+        then(bigDecimal).isEqualTo(new BigDecimal("0.7"));
     }
 }
