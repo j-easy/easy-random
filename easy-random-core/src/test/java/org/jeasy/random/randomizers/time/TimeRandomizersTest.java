@@ -107,7 +107,7 @@ class TimeRandomizersTest extends AbstractRandomizerTest<Randomizer<?>> {
 
     static Object[][] generateSeededRandomizersAndTheirExpectedValues() {
         Calendar expectedCalendar = Calendar.getInstance();
-        expectedCalendar.setTime(new Date(1718733244570L));
+        expectedCalendar.setTime(new Date(1718736844570L));
 
         GregorianCalendar expectedGregorianCalendar = new GregorianCalendar();
         expectedGregorianCalendar.setTimeInMillis(5106534569952410475L);
@@ -122,15 +122,15 @@ class TimeRandomizersTest extends AbstractRandomizerTest<Randomizer<?>> {
                 { aNewYearMonthRandomizer(SEED), YearMonth.of(2024, Month.MARCH) },
                 { aNewZoneOffsetRandomizer(SEED), ZoneOffset.ofTotalSeconds(28923) },
                 { aNewCalendarRandomizer(SEED), expectedCalendar },
-                { aNewDateRandomizer(SEED), new Date(1718733244570L) },
+                { aNewDateRandomizer(SEED), new Date(1718736844570L) },
                 { aNewGregorianCalendarRandomizer(SEED), expectedGregorianCalendar },
-                { aNewInstantRandomizer(SEED), Instant.ofEpochSecond(1718733244L, 570000000) },
+                { aNewInstantRandomizer(SEED), Instant.ofEpochSecond(1718736844L, 570000000) },
                 { aNewLocalDateTimeRandomizer(SEED), LocalDateTime.of(2024, Month.MARCH, 20, 16, 42, 58, 0) },
                 { aNewOffsetDateTimeRandomizer(SEED), OffsetDateTime.of(of(2024, Month.MARCH, 20, 16, 42, 58, 0), ofTotalSeconds(28923)) },
                 { aNewOffsetTimeRandomizer(SEED), OffsetTime.of(LocalTime.of(16, 42, 58, 0), ofTotalSeconds(28923)) },
-                { aNewSqlDateRandomizer(SEED), new java.sql.Date(1718733244570L) },
-                { aNewSqlTimeRandomizer(SEED), new Time(1718733244570L) },
-                { aNewSqlTimestampRandomizer(SEED), new Timestamp(1718733244570L) }
+                { aNewSqlDateRandomizer(SEED), new java.sql.Date(1718736844570L) },
+                { aNewSqlTimeRandomizer(SEED), new Time(1718736844570L) },
+                { aNewSqlTimestampRandomizer(SEED), new Timestamp(1718736844570L) }
         };
     }
 

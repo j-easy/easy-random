@@ -83,8 +83,7 @@ public class EasyRandomParameters {
     /**
      * Reference date around which random dates will be generated.
      */
-    // FIXME why UTC+1 and not just UTC?
-    private static final ZonedDateTime REFERENCE_DATE = of(2020, 1, 1, 0, 0, 0, 0, ZoneId.of("UTC+1"));
+    private static final ZonedDateTime REFERENCE_DATE = of(2020, 1, 1, 0, 0, 0, 0, ZoneId.of("UTC"));
 
     /**
      * Default dates range.

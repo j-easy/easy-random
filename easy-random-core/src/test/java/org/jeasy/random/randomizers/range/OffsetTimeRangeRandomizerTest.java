@@ -58,7 +58,7 @@ class OffsetTimeRangeRandomizerTest extends AbstractRangeRandomizerTest<OffsetTi
     void generatedOffsetTimeShouldBeAlwaysTheSameForTheSameSeed() {
         // Given
         randomizer = aNewOffsetTimeRangeRandomizer(minTime, maxTime, SEED);
-        OffsetTime expected = OffsetTime.of(17, 21, 21, 0, ZoneOffset.ofHours(1));
+        OffsetTime expected = OffsetTime.of(17, 21, 21, 0, ZoneOffset.UTC);
 
         // When
         OffsetTime randomValue = randomizer.getRandomValue();
