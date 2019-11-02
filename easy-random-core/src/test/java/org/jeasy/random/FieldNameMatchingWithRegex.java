@@ -74,7 +74,7 @@ public class FieldNameMatchingWithRegex {
         // given
         EasyRandomParameters parameters = new EasyRandomParameters()
                 .randomize(
-                        named("name.*").and(ofType(String.class)),
+                        named("name").and(ofType(String.class)),
                         () -> "foo");
         EasyRandom easyRandom = new EasyRandom(parameters);
 
