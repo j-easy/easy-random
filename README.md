@@ -202,6 +202,7 @@ If you have any question, suggestion, or feedback, do not hesitate to use the [G
 * [Lucas Andersson](https://github.com/LucasAndersson)
 * [Michael Düsterhus](https://github.com/reitzmichnicht)
 * [Nikola Milivojevic](https://github.com/dziga)
+* [nrenzoni](https://github.com/nrenzoni)
 * [Oleksandr Shcherbyna](https://github.com/sansherbina)
 * [Petromir Dzhunev](https://github.com/petromir)
 * [Rebecca McQuary](https://github.com/rmcquary)

@@ -23,10 +23,15 @@
  */
 package org.jeasy.random;
 
+import static java.lang.annotation.ElementType.FIELD;
+import static java.lang.annotation.RetentionPolicy.RUNTIME;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.jeasy.random.FieldPredicates.named;
 import static org.mockito.Mockito.when;
 
+import java.lang.annotation.Documented;
+import java.lang.annotation.Retention;
+import java.lang.annotation.Target;
 import java.lang.reflect.Field;
 
 import org.jeasy.random.api.ContextAwareRandomizer;
@@ -165,6 +170,7 @@ public class RandomizationContextTest {
         MyRandomizer randomizer = new MyRandomizer();
         EasyRandomParameters parameters = new EasyRandomParameters()
                 .randomize(D.class, randomizer)
+                .randomize(FieldPredicates.isAnnotatedWith(ExampleAnnotation.class), new ERandomizer())
                 .excludeField(named("excluded"));
         EasyRandom easyRandom = new EasyRandom(parameters);
 
@@ -176,8 +182,10 @@ public class RandomizationContextTest {
         assertThat(a.excluded).isNull();
         assertThat(a.b).isNotNull();
         assertThat(a.b.c).isNotNull();
+        assertThat(a.b.e).isNotNull();
         assertThat(a.b.c.d).isNotNull();
         assertThat(a.b.c.d.name).isEqualTo("foo");
+        assertThat(a.b.e.name).isEqualTo("bar");
     }
 
     static class MyRandomizer implements ContextAwareRandomizer<D> {
@@ -204,6 +212,37 @@ public class RandomizationContextTest {
         }
     }
 
+    static class ERandomizer implements ContextAwareRandomizer<E> {
+
+        private RandomizerContext context;
+
+        @Override
+        public void setRandomizerContext(RandomizerContext context) {
+            this.context = context;
+        }
+
+        @Override
+        public E getRandomValue() {
+            // At this level, the context should be as follows:
+            assertThat(context.getCurrentField()).isEqualTo("b.e");
+            assertThat(context.getCurrentRandomizationDepth()).isEqualTo(2);
+            assertThat(context.getTargetType()).isEqualTo(A.class);
+            assertThat(context.getRootObject()).isInstanceOf(A.class);
+            assertThat(context.getCurrentObject()).isInstanceOf(B.class);
+
+            E e = new E();
+            String currentField = context.getCurrentField();
+            Object currentObject = context.getCurrentObject();
+            try {
+                String substring = currentField.substring(currentField.lastIndexOf(".") + 1);
+                e.name = currentObject.getClass().getDeclaredField(substring).getAnnotation(ExampleAnnotation.class).value();
+            } catch (NoSuchFieldException ex) {
+                e.name = "default";
+            }
+            return e;
+        }
+    }
+
     @Data
     static class A {
         private B b;
@@ -213,6 +252,9 @@ public class RandomizationContextTest {
     @Data
     static class B {
         private C c;
+
+        @ExampleAnnotation("bar")
+        private E e;
     }
 
     @Data
@@ -223,6 +265,18 @@ public class RandomizationContextTest {
     @Data
     static class D {
         private String name;
+    }
+
+    @Data
+    static class E {
+        private String name;
+    }
+
+    @Target({FIELD})
+    @Retention(RUNTIME)
+    @Documented
+    public @interface ExampleAnnotation {
+        String value();
     }
 
 }
