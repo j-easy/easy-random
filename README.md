@@ -10,7 +10,7 @@
 [![MIT license](http://img.shields.io/badge/license-MIT-brightgreen.svg?style=flat)](http://opensource.org/licenses/MIT)
 [![Coverage Status](https://coveralls.io/repos/j-easy/easy-random/badge.svg?branch=master&service=github)](https://coveralls.io/github/j-easy/easy-random?branch=master)
 [![Build Status](https://travis-ci.org/j-easy/easy-random.svg?branch=master)](https://travis-ci.org/j-easy/easy-random)
-[![Maven Central](https://maven-badges.herokuapp.com/maven-central/org.jeasy/easy-random-core/badge.svg?style=flat)](http://repo1.maven.org/maven2/org/jeasy/easy-random-core/4.0.0/)
+[![Maven Central](https://maven-badges.herokuapp.com/maven-central/org.jeasy/easy-random-core/badge.svg?style=flat)](http://repo1.maven.org/maven2/org/jeasy/easy-random-core/4.1.0/)
 [![Javadocs](http://www.javadoc.io/badge/org.jeasy/easy-random-core.svg)](http://www.javadoc.io/doc/org.jeasy/easy-random-core)
 [![Gitter](https://badges.gitter.im/Join%20Chat.svg)](https://gitter.im/j-easy/easy-random)
 
@@ -20,6 +20,7 @@
 
 ## Latest news
 
+* 04/11/2019: Easy Random v4.1.0 is released! See what's new in the [change log](https://github.com/j-easy/easy-random/releases).
 * 05/05/2019: Random Beans has been renamed to Easy Random and is now part of [jeasy.org](http://www.jeasy.org).
 Version 4.0.0 has been released! See what's new in the [change log](https://github.com/j-easy/easy-random/releases).
 * 13/03/2019: Version 3.9.0 is out! Checkout what's new in the [change log](https://github.com/j-easy/easy-random/releases).
