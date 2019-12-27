@@ -27,6 +27,7 @@ import lombok.Data;
 
 import javax.validation.constraints.*;
 import java.math.BigDecimal;
+import java.time.Instant;
 import java.time.LocalDateTime;
 import java.util.*;
 
@@ -63,6 +64,9 @@ class BeanValidationAnnotatedBean {
 
     @Past
     private LocalDateTime birthdayLocalDateTime;
+
+    @Past
+    private Instant pastInstant;
 
     @PastOrPresent
     private Date pastOrPresent;
