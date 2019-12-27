@@ -25,6 +25,7 @@ package org.jeasy.random.validation;
 
 import javax.validation.constraints.*;
 import java.math.BigDecimal;
+import java.time.Instant;
 import java.time.LocalDateTime;
 import java.util.*;
 
@@ -60,6 +61,8 @@ class BeanValidationMethodAnnotatedBean {
 
     private Date pastOrPresent;
     private Date futureOrPresent;
+
+    private Instant pastInstant;
 
     private int maxQuantity;
 
@@ -211,6 +214,15 @@ class BeanValidationMethodAnnotatedBean {
 
     public void setBirthdayLocalDateTime(LocalDateTime birthdayLocalDateTime) {
         this.birthdayLocalDateTime = birthdayLocalDateTime;
+    }
+
+    @Past
+    public Instant getPastInstant() {
+        return pastInstant;
+    }
+
+    public void setPastInstant(Instant pastInstant) {
+        this.pastInstant = pastInstant;
     }
 
     @PastOrPresent

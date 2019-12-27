@@ -27,6 +27,7 @@ import org.jeasy.random.annotation.Priority;
 import org.jeasy.random.EasyRandomParameters;
 import org.jeasy.random.api.Randomizer;
 import org.jeasy.random.api.RandomizerRegistry;
+import org.jeasy.random.randomizers.range.InstantRangeRandomizer;
 import org.jeasy.random.randomizers.range.LocalDateRangeRandomizer;
 import org.jeasy.random.randomizers.range.LocalDateTimeRangeRandomizer;
 import org.jeasy.random.randomizers.range.LocalTimeRangeRandomizer;
@@ -65,7 +66,7 @@ public class TimeRandomizerRegistry implements RandomizerRegistry {
         LocalTime maxTime = parameters.getTimeRange().getMax();
         randomizers.put(Duration.class, new DurationRandomizer(seed));
         randomizers.put(GregorianCalendar.class, new GregorianCalendarRandomizer(seed));
-        randomizers.put(Instant.class, new InstantRandomizer(seed));
+        randomizers.put(Instant.class, new InstantRangeRandomizer(minDate.atStartOfDay(ZoneId.systemDefault()).toInstant(), maxDate.atStartOfDay(ZoneId.systemDefault()).toInstant(), seed));
         randomizers.put(LocalDate.class, new LocalDateRangeRandomizer(minDate, maxDate, seed));
         randomizers.put(LocalDateTime.class, new LocalDateTimeRangeRandomizer(of(minDate, minTime), of(maxDate, maxTime), seed));
         randomizers.put(LocalTime.class, new LocalTimeRangeRandomizer(minTime, maxTime, seed));

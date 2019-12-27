@@ -233,6 +233,7 @@ If you have any question, suggestion, or feedback, do not hesitate to use the [G
 * [Vincent Potucek](https://github.com/punkratz312)
 * [Weronika Redlarska](https://github.com/weronika-redlarska)
 * [Konstantin Lutovich](https://github.com/lutovich)
+* [Steven_Van_Ophem](https://github.com/stevenvanophem)
 
 Thank you all for your contributions!
 
