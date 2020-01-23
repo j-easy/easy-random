@@ -170,6 +170,7 @@ There are many other uses cases where Easy Random can be useful, you can find a 
 ## Extensions
 
 * [JUnit extension](https://glytching.github.io/junit-extensions/randomBeans): Use Easy Random to generate random data in JUnit tests (courtesy of [glytching](https://github.com/glytching))
+* [Vavr extension](https://github.com/xShadov/easy-random-vavr-extension): This extension adds support to randomize [Vavr](https://github.com/vavr-io/vavr) types (courtesy of [xShadov](https://github.com/xShadov))
 
 ## Contribution
 
