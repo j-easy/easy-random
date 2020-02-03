@@ -37,6 +37,7 @@ import java.lang.reflect.Modifier;
 import java.util.Collection;
 import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 import java.util.stream.Stream;
 
 import static java.sql.Timestamp.valueOf;
@@ -276,4 +277,20 @@ class EasyRandomTest {
         System.out.println("Failure: " + failure);
     }
 
+    @Test
+    void generateCollectionsOfDifferentSize() {
+        Set<Integer> collectionsSizes = new HashSet<>();
+        for (int i = 0; i < 100; i++) {
+            final SomeClass someClass = new EasyRandom().nextObject(SomeClass.class);
+            collectionsSizes.add(someClass.lorem.size());
+        }
+
+        assertThat(collectionsSizes.size()).isGreaterThan(1);
+    }
+}
+
+class SomeClass {
+    int number;
+    String text;
+    List<String> lorem;
 }
