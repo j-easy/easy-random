@@ -205,14 +205,14 @@ public class EasyRandom extends Random {
     }
 
     private <T> void populateFields(final List<Field> fields, final T result, final RandomizationContext context)
-        throws IllegalAccessException, IntrospectionException, InvocationTargetException {
+        throws IllegalAccessException, IntrospectionException, InvocationTargetException, NoSuchMethodException {
         for (final Field field : fields) {
             populateField(field, result, context);
         }
     }
 
     private <T> void populateField(final Field field, final T result, final RandomizationContext context)
-        throws IllegalAccessException, IntrospectionException, InvocationTargetException {
+        throws IllegalAccessException, IntrospectionException, InvocationTargetException, NoSuchMethodException {
         if (exclusionPolicy.shouldBeExcluded(field, context)) {
             return;
         }

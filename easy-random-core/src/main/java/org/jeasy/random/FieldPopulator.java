@@ -78,7 +78,7 @@ class FieldPopulator {
     }
 
     void populateField(final Object target, final Field field, final RandomizationContext context)
-        throws IllegalAccessException, IntrospectionException, InvocationTargetException {
+        throws IllegalAccessException, IntrospectionException, InvocationTargetException, NoSuchMethodException {
         Randomizer<?> randomizer = getRandomizer(field, context);
         if (randomizer instanceof SkipRandomizer) {
             return;
