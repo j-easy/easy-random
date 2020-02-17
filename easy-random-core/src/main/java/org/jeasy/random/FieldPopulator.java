@@ -23,9 +23,12 @@
  */
 package org.jeasy.random;
 
+import java.beans.IntrospectionException;
+import java.lang.reflect.InvocationTargetException;
 import org.jeasy.random.api.ContextAwareRandomizer;
 import org.jeasy.random.api.Randomizer;
 import org.jeasy.random.api.RandomizerProvider;
+import org.jeasy.random.populators.property.PropertyPopulator;
 import org.jeasy.random.randomizers.misc.SkipRandomizer;
 
 import java.lang.reflect.Field;
@@ -57,17 +60,25 @@ class FieldPopulator {
     private final MapPopulator mapPopulator;
 
     private final RandomizerProvider randomizerProvider;
+    
+    private final PropertyPopulator propertyPopulator;
 
-    FieldPopulator(final EasyRandom easyRandom, final RandomizerProvider randomizerProvider,
-                   final ArrayPopulator arrayPopulator, final CollectionPopulator collectionPopulator, final MapPopulator mapPopulator) {
+    FieldPopulator(final EasyRandom easyRandom, 
+                   final RandomizerProvider randomizerProvider,
+                   final ArrayPopulator arrayPopulator,
+                   final CollectionPopulator collectionPopulator,
+                   final MapPopulator mapPopulator,
+                   final PropertyPopulator propertyPopulator) {
         this.easyRandom = easyRandom;
         this.randomizerProvider = randomizerProvider;
         this.arrayPopulator = arrayPopulator;
         this.collectionPopulator = collectionPopulator;
         this.mapPopulator = mapPopulator;
+        this.propertyPopulator = propertyPopulator;
     }
 
-    void populateField(final Object target, final Field field, final RandomizationContext context) throws IllegalAccessException {
+    void populateField(final Object target, final Field field, final RandomizationContext context)
+        throws IllegalAccessException, IntrospectionException, InvocationTargetException {
         Randomizer<?> randomizer = getRandomizer(field, context);
         if (randomizer instanceof SkipRandomizer) {
             return;
@@ -90,7 +101,7 @@ class FieldPopulator {
                     throw new ObjectCreationException(exceptionMessage, e);
                 }
             }
-            setProperty(target, field, value);
+            propertyPopulator.poulateField(target, field, value);
         }
         context.popStackItem();
     }

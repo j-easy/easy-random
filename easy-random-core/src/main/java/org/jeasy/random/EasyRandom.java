@@ -23,7 +23,11 @@
  */
 package org.jeasy.random;
 
+import java.beans.IntrospectionException;
+import java.lang.reflect.InvocationTargetException;
 import org.jeasy.random.api.*;
+import org.jeasy.random.populators.property.PropertyPopulator;
+import org.jeasy.random.populators.property.PropertyReflectionPopulator;
 import org.jeasy.random.randomizers.misc.EnumRandomizer;
 import org.jeasy.random.util.ReflectionUtils;
 
@@ -55,6 +59,8 @@ public class EasyRandom extends Random {
     private final ObjectFactory objectFactory;
 
     private final ExclusionPolicy exclusionPolicy;
+    
+    private final PropertyPopulator propertyPopulator;
 
     /**
      * Create a new {@link EasyRandom} instance with default parameters.
@@ -74,13 +80,21 @@ public class EasyRandom extends Random {
         LinkedHashSet<RandomizerRegistry> registries = setupRandomizerRegistries(easyRandomParameters);
         RandomizerProvider customRandomizerProvider = easyRandomParameters.getRandomizerProvider();
         randomizerProvider = customRandomizerProvider == null ? new RegistriesRandomizerProvider() : customRandomizerProvider;
+        PropertyPopulator customPropertyPopulator = easyRandomParameters.getPropertyPopulator();
+        propertyPopulator = customPropertyPopulator
+            == null ?  new PropertyReflectionPopulator(): customPropertyPopulator;
         randomizerProvider.setRandomizerRegistries(registries);
         objectFactory = easyRandomParameters.getObjectFactory();
         arrayPopulator = new ArrayPopulator(this);
         CollectionPopulator collectionPopulator = new CollectionPopulator(this);
         MapPopulator mapPopulator = new MapPopulator(this, objectFactory);
         enumRandomizersByType = new ConcurrentHashMap<>();
-        fieldPopulator = new FieldPopulator(this, this.randomizerProvider, arrayPopulator, collectionPopulator, mapPopulator);
+        fieldPopulator = new FieldPopulator(this,
+            this.randomizerProvider,
+            arrayPopulator, 
+            collectionPopulator, 
+            mapPopulator,
+            propertyPopulator);
         exclusionPolicy = easyRandomParameters.getExclusionPolicy();
         parameters = easyRandomParameters;
     }
@@ -190,13 +204,15 @@ public class EasyRandom extends Random {
         return null;
     }
 
-    private <T> void populateFields(final List<Field> fields, final T result, final RandomizationContext context) throws IllegalAccessException {
+    private <T> void populateFields(final List<Field> fields, final T result, final RandomizationContext context)
+        throws IllegalAccessException, IntrospectionException, InvocationTargetException {
         for (final Field field : fields) {
             populateField(field, result, context);
         }
     }
 
-    private <T> void populateField(final Field field, final T result, final RandomizationContext context) throws IllegalAccessException {
+    private <T> void populateField(final Field field, final T result, final RandomizationContext context)
+        throws IllegalAccessException, IntrospectionException, InvocationTargetException {
         if (exclusionPolicy.shouldBeExcluded(field, context)) {
             return;
         }

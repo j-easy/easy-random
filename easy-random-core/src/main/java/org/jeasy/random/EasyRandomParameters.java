@@ -24,6 +24,7 @@
 package org.jeasy.random;
 
 import org.jeasy.random.api.*;
+import org.jeasy.random.populators.property.PropertyPopulator;
 import org.jeasy.random.randomizers.registry.CustomRandomizerRegistry;
 import org.jeasy.random.randomizers.registry.ExclusionRandomizerRegistry;
 import lombok.Data;
@@ -105,6 +106,7 @@ public class EasyRandomParameters {
     private ExclusionPolicy exclusionPolicy;
     private ObjectFactory objectFactory;
     private RandomizerProvider randomizerProvider;
+    private PropertyPopulator propertyPopulator;
 
     // internal params
     private CustomRandomizerRegistry customRandomizerRegistry;
@@ -245,6 +247,15 @@ public class EasyRandomParameters {
         this.randomizerProvider = randomizerProvider;
     }
 
+    public PropertyPopulator getPropertyPopulator() {
+        return propertyPopulator;
+    }
+
+    public void setPropertyPopulator(PropertyPopulator propertyPopulator) {
+        Objects.requireNonNull(objectFactory, "Property populater must not be null");
+        this.propertyPopulator = propertyPopulator;
+    }
+
     public Set<Predicate<Field>> getFieldExclusionPredicates() {
         return fieldExclusionPredicates;
     }
@@ -358,6 +369,17 @@ public class EasyRandomParameters {
      */
     public EasyRandomParameters randomizerProvider(RandomizerProvider randomizerProvider) {
         setRandomizerProvider(randomizerProvider);
+        return this;
+    }
+
+    /**
+     * Provide a custom property populator.
+     *
+     * @param propertyPopulator to use
+     * @return the current {@link EasyRandomParameters} instance for method chaining
+     */
+    public EasyRandomParameters propertyPopulator(PropertyPopulator propertyPopulator) {
+        setPropertyPopulator(propertyPopulator);
         return this;
     }
 

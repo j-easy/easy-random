@@ -35,6 +35,8 @@ import java.util.Map;
 
 import javax.xml.bind.JAXBElement;
 
+import org.jeasy.random.populators.property.PropertyPopulator;
+import org.jeasy.random.populators.property.PropertyReflectionPopulator;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
@@ -70,12 +72,17 @@ class FieldPopulatorTest {
     private CollectionPopulator collectionPopulator;
     @Mock
     private MapPopulator mapPopulator;
-
+    private PropertyPopulator propertyPopulator = new PropertyReflectionPopulator();
     private FieldPopulator fieldPopulator;
 
     @BeforeEach
     void setUp() {
-        fieldPopulator = new FieldPopulator(easyRandom, randomizerProvider, arrayPopulator, collectionPopulator, mapPopulator);
+        fieldPopulator = new FieldPopulator(easyRandom, 
+            randomizerProvider, 
+            arrayPopulator, 
+            collectionPopulator,
+            mapPopulator,
+            propertyPopulator);
     }
 
     @Test
@@ -169,7 +176,7 @@ class FieldPopulatorTest {
     @Disabled("Objenesis is able to create an instance of JAXBElement type. Hence no error is thrown as expected in this test")
     void shouldFailWithNiceErrorMessageWhenUnableToCreateFieldValue() throws Exception {
       // Given
-      FieldPopulator fieldPopulator = new FieldPopulator(new EasyRandom(), randomizerProvider, arrayPopulator, collectionPopulator, mapPopulator);
+      FieldPopulator fieldPopulator = new FieldPopulator(new EasyRandom(), randomizerProvider, arrayPopulator, collectionPopulator, mapPopulator,propertyPopulator);
       Field jaxbElementField = JaxbElementFieldBean.class.getDeclaredField("jaxbElementField");
       JaxbElementFieldBean jaxbElementFieldBean = new JaxbElementFieldBean();
 

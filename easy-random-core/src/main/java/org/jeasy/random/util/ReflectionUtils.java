@@ -24,6 +24,8 @@
 package org.jeasy.random.util;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import java.beans.IntrospectionException;
+import java.beans.PropertyDescriptor;
 import org.jeasy.random.annotation.RandomizerArgument;
 import org.jeasy.random.ObjectCreationException;
 import org.jeasy.random.api.Randomizer;
@@ -132,6 +134,22 @@ public class ReflectionUtils {
         field.setAccessible(true);
         field.set(object, value);
         field.setAccessible(access);
+    }
+
+    /**
+     * Set a value in a field of a target object by calling the setter method.
+     *
+     * @param object instance to call the setter method
+     * @param field  field to call the setter method
+     * @param value  value to set
+     * @throws IllegalAccessException if the setter cannot be invoked
+     */
+    public static void callSetter(Object object, Field field, Object value)
+        throws IntrospectionException, InvocationTargetException, IllegalAccessException {
+        PropertyDescriptor pd;
+        pd = new PropertyDescriptor(field.getName(), object.getClass());
+        pd.getWriteMethod().invoke(object, value);
+
     }
 
     /**
