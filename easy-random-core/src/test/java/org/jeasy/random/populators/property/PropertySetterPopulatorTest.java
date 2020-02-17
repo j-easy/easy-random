@@ -27,9 +27,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 import java.lang.reflect.Field;
 
-import org.assertj.core.api.Assertions;
-import org.immutables.value.Value.Immutable;
-import org.immutables.value.Value.Modifiable;
+
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -46,15 +44,15 @@ public class PropertySetterPopulatorTest {
   public void testPoulateField() throws Exception {
     // Setup
 
-    ModifiableBean modifiableBean = ModifiableBean.create();
-    final Field field = ModifiableBean.class.getDeclaredField("name");
+    Bean bean = new Bean();
+    final Field field = Bean.class.getDeclaredField("name");
     String newPropertyValue = "value";
 
     // Run the test
-    propertySetterPopulatorUnderTest.poulateField(modifiableBean, field, newPropertyValue);
+    propertySetterPopulatorUnderTest.poulateField(bean, field, newPropertyValue);
 
     // Verify the results
-    assertThat(modifiableBean.getName()).isEqualTo(newPropertyValue);
+    assertThat(bean.getName()).isEqualTo(newPropertyValue);
   }
 
 
