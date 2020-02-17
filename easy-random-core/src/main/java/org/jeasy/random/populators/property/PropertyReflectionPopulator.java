@@ -27,6 +27,14 @@ import java.lang.reflect.Field;
 
 public class PropertyReflectionPopulator implements PropertyPopulator {
 
+  /**
+   * Set a value (accessible or not accessible) in a field of a target object.
+   *
+   * @param object instance to set the property on
+   * @param field  field to set the property on
+   * @param value  value to set
+   * @throws IllegalAccessException if the property cannot be set
+   */
   @Override
   public void poulateField(Object object, Field field, Object value)
       throws IllegalAccessException {

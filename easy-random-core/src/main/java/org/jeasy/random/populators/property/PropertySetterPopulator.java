@@ -24,15 +24,22 @@
 package org.jeasy.random.populators.property;
 
 import java.beans.IntrospectionException;
-import java.beans.PropertyDescriptor;
 import java.lang.reflect.Field;
 import java.lang.reflect.InvocationTargetException;
 
 public class PropertySetterPopulator implements PropertyPopulator {
 
+  /**
+   * Set a value in a field of a target object by calling the setter method.
+   *
+   * @param object instance to call the setter method
+   * @param field  field to call the setter method
+   * @param value  value to set
+   * @throws IllegalAccessException if the setter cannot be invoked
+   */
   @Override
   public void poulateField(Object object, Field field, Object value)
-      throws IllegalAccessException, IntrospectionException, InvocationTargetException, NoSuchMethodException {
+      throws IllegalAccessException, InvocationTargetException, NoSuchMethodException {
     String methodName = "set" + capitalize(field.getName());
     object
         .getClass()

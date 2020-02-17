@@ -120,38 +120,7 @@ public class ReflectionUtils {
         }
         return inheritedFields;
     }
-
-    /**
-     * Set a value (accessible or not accessible) in a field of a target object.
-     *
-     * @param object instance to set the property on
-     * @param field  field to set the property on
-     * @param value  value to set
-     * @throws IllegalAccessException if the property cannot be set
-     */
-    public static void setProperty(final Object object, final Field field, final Object value) throws IllegalAccessException {
-        boolean access = field.isAccessible();
-        field.setAccessible(true);
-        field.set(object, value);
-        field.setAccessible(access);
-    }
-
-    /**
-     * Set a value in a field of a target object by calling the setter method.
-     *
-     * @param object instance to call the setter method
-     * @param field  field to call the setter method
-     * @param value  value to set
-     * @throws IllegalAccessException if the setter cannot be invoked
-     */
-    public static void callSetter(Object object, Field field, Object value)
-        throws IntrospectionException, InvocationTargetException, IllegalAccessException {
-        PropertyDescriptor pd;
-        pd = new PropertyDescriptor(field.getName(), object.getClass());
-        pd.getWriteMethod().invoke(object, value);
-
-    }
-
+    
     /**
      * Get the value (accessible or not accessible) of a field of a target object.
      *
