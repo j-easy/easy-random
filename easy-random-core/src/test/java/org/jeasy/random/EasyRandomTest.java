@@ -34,10 +34,7 @@ import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
 import java.lang.reflect.Modifier;
-import java.util.Collection;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
 import java.util.stream.Stream;
 
 import static java.sql.Timestamp.valueOf;
@@ -278,14 +275,33 @@ class EasyRandomTest {
     }
 
     @Test
-    void generateCollectionsOfDifferentSize() {
+    void generateCollectionsOfDifferentSize_whenReusingEasyRandomInstance() {
         Set<Integer> collectionsSizes = new HashSet<>();
+        EasyRandom easyRandom = new EasyRandom();
         for (int i = 0; i < 100; i++) {
-            final SomeClass someClass = new EasyRandom().nextObject(SomeClass.class);
+            final SomeClass someClass = easyRandom.nextObject(SomeClass.class);
             collectionsSizes.add(someClass.lorem.size());
         }
 
         assertThat(collectionsSizes.size()).isGreaterThan(1);
+    }
+
+    @Test
+    void collectionSizesAreRepeatable_whenFixedSeedIsUsed() {
+        long seed = new Random().nextInt();
+        EasyRandomParameters parameters = new EasyRandomParameters();
+        parameters.seed(seed);
+        EasyRandom first = new EasyRandom(parameters);
+        EasyRandom second = new EasyRandom(parameters);
+        List<Integer> firstResult = new ArrayList<>();
+        List<Integer> secondResult = new ArrayList<>();
+
+        for(int i = 0; i<100; i++) {
+            firstResult.add(first.nextObject(SomeClass.class).lorem.size());
+            secondResult.add(second.nextObject(SomeClass.class).lorem.size());
+        }
+
+        assertThat(firstResult).isEqualTo(secondResult);
     }
 }
 

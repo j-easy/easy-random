@@ -77,7 +77,7 @@ public class EasyRandom extends Random {
         randomizerProvider.setRandomizerRegistries(registries);
         objectFactory = easyRandomParameters.getObjectFactory();
         arrayPopulator = new ArrayPopulator(this);
-        CollectionPopulator collectionPopulator = new CollectionPopulator(this);
+        CollectionPopulator collectionPopulator = new CollectionPopulator(this, easyRandomParameters);
         MapPopulator mapPopulator = new MapPopulator(this, objectFactory);
         enumRandomizersByType = new ConcurrentHashMap<>();
         fieldPopulator = new FieldPopulator(this, this.randomizerProvider, arrayPopulator, collectionPopulator, mapPopulator);

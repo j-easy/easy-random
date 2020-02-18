@@ -40,14 +40,17 @@ import static org.jeasy.random.util.ReflectionUtils.*;
 class CollectionPopulator {
 
     private final EasyRandom easyRandom;
+    private final IntegerRangeRandomizer integerRangeRandomizer;
 
-    CollectionPopulator(final EasyRandom easyRandom) {
+    CollectionPopulator(final EasyRandom easyRandom, EasyRandomParameters parameters) {
         this.easyRandom = easyRandom;
+        EasyRandomParameters.Range<Integer> collectionSizeRange = parameters.getCollectionSizeRange();
+        integerRangeRandomizer = new IntegerRangeRandomizer(collectionSizeRange.getMin(), collectionSizeRange.getMax(), parameters.getSeed());
     }
 
     @SuppressWarnings({"unchecked", "rawtypes"})
     Collection<?> getRandomCollection(final Field field, final RandomizationContext context) {
-        int randomSize = getRandomCollectionSize(context.getParameters());
+        int randomSize = getRandomCollectionSize();
         Class<?> fieldType = field.getType();
         Type fieldGenericType = field.getGenericType();
         Collection collection;
@@ -73,8 +76,7 @@ class CollectionPopulator {
 
     }
 
-    private int getRandomCollectionSize(EasyRandomParameters parameters) {
-        EasyRandomParameters.Range<Integer> collectionSizeRange = parameters.getCollectionSizeRange();
-        return new IntegerRangeRandomizer(collectionSizeRange.getMin(), collectionSizeRange.getMax(), parameters.getSeed()).getRandomValue();
+    private int getRandomCollectionSize() {
+        return integerRangeRandomizer.getRandomValue();
     }
 }

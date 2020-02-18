@@ -25,72 +25,58 @@ package org.jeasy.random.parameters;
 
 import org.jeasy.random.EasyRandom;
 import org.jeasy.random.EasyRandomParameters;
-import org.jeasy.random.beans.Address;
-import org.jeasy.random.beans.Gender;
 import org.jeasy.random.beans.Person;
-import org.jeasy.random.beans.Street;
 import org.junit.jupiter.api.Test;
+
+import java.util.Random;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
 class SeedParameterTests {
 
-    private static final long SEED = 123L;
+    private EasyRandomParameters parameters = new EasyRandomParameters().seed((long) new Random().nextInt());
+    private EasyRandom randomA = new EasyRandom(parameters);
+    private EasyRandom randomB = new EasyRandom(parameters);
 
     @Test
-    void generatedObjectShouldBeAlwaysTheSameForTheSameSeed() {
-        // Given
-        EasyRandomParameters parameters = new EasyRandomParameters().seed(SEED);
-        EasyRandom easyRandom = new EasyRandom(parameters);
+    void generated_String_ShouldBeAlwaysTheSameForTheSameSeed() {
+        //when
+        String firstStringA = randomA.nextObject(String.class);
+        String firstStringB = randomB.nextObject(String.class);
+        String secondStringA = randomA.nextObject(String.class);
+        String secondStringB = randomB.nextObject(String.class);
 
-        String expectedString = "eOMtThyhVNLWUZNRcBaQKxI";
-        Person expectedPerson = buildExpectedPerson();
-        int[] expectedInts = buildExpectedInts();
-
-        // When
-        String actualString = easyRandom.nextObject(String.class);
-        Person actualPerson = easyRandom.nextObject(Person.class);
-        int[] actualInts = easyRandom.nextObject(int[].class);
-
-        // Then
-        assertThat(actualString).isEqualTo(expectedString);
-        assertThat(actualPerson).isEqualToIgnoringNullFields(expectedPerson);
-        assertThat(actualInts).isEqualTo(expectedInts);
+        //then
+        assertThat(firstStringA).isEqualTo(firstStringB);
+        assertThat(firstStringA).isNotEqualTo(secondStringA);
+        assertThat(secondStringA).isEqualTo(secondStringB);
     }
 
-    private Person buildExpectedPerson() {
-        Person expectedPerson = new Person();
+    @Test
+    void generated_Bean_ShouldBeAlwaysTheSameForTheSameSeed() {
+        //when
+        Person firstBeanA = randomA.nextObject(Person.class);
+        Person firstBeanB = randomB.nextObject(Person.class);
+        Person secondBeanA = randomA.nextObject(Person.class);
+        Person secondBeanB = randomB.nextObject(Person.class);
 
-        Street street = new Street();
-        street.setName("JxkyvRnL");
-        street.setNumber(-1188957731);
-        street.setType((byte) -35);
-
-        Address address = new Address();
-        address.setCity("VLhpfQGTMDYpsBZxvfBoeygjb");
-        address.setCountry("UMaAIKKIkknjWEXJUfPxxQHeWKEJ");
-        address.setZipCode("RYtGKbgicZaHCBRQDSx");
-        address.setStreet(street);
-
-        expectedPerson.setName("B");
-        expectedPerson.setEmail("yedUsFwdkelQbxeTeQOvaScfqIOOmaa");
-        expectedPerson.setPhoneNumber("dpHYZGhtgdntugzvvKAXLhM");
-        expectedPerson.setGender(Gender.FEMALE);
-        expectedPerson.setAddress(address);
-
-        return expectedPerson;
+        //then
+        assertThat(firstBeanA).isEqualTo(firstBeanB);
+        assertThat(firstBeanA).isNotEqualTo(secondBeanA);
+        assertThat(secondBeanA).isEqualTo(secondBeanB);
     }
 
-    private int[] buildExpectedInts() {
-        return new int[]{
-                -535098017, -1935747844, -1219562352, 696711130, 308881275, -1366603797, -875052456, 1149563170, -1809396988,
-                1041944832, -394597452, -1708209621, 639583273, 930399700, -106429739, 1967925707, 281732816, 382363784,
-                298577043, 525072488, 389778123, 1452179944, 1823070661, -292028230, -539486391, -1383466546, -1824914989,
-                8083668, 1702941070, 2146898372, 1109455496, -82323612, 656237286, -851237395, 1118538028, -924378823,
-                1982908886, 61937700, 1885923537, 1007147781, 907979413, 2048182629, -1656946195, 610315108, 143700666,
-                1887585643, -1336180951, 481114396, -1356725194, -648969061, 323234679, 672907686, -228467837, 1719789600,
-                1876370794, -260807699, -1315052259, 1788269654, -1389857855, -736339116, -1594362319, -1447490197, -1826631868,
-                132343550, 1666325652, -964773309, 812299731, 1789518152, 114768374, 796275100, 135535291, -1663939686
-        };
+    @Test
+    void generated_Array_ShouldBeAlwaysTheSameForTheSameSeed() {
+        //when
+        int[] firstArrayA = randomA.nextObject(int[].class);
+        int[] firstArrayB = randomB.nextObject(int[].class);
+        int[] secondArrayA = randomA.nextObject(int[].class);
+        int[] secondArrayB = randomB.nextObject(int[].class);
+
+        //then
+        assertThat(firstArrayA).isEqualTo(firstArrayB);
+        assertThat(firstArrayA).isNotEqualTo(secondArrayA);
+        assertThat(secondArrayA).isEqualTo(secondArrayB);
     }
 }

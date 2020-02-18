@@ -33,9 +33,6 @@ import java.util.Collection;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.concurrent.ArrayBlockingQueue;
-import java.util.concurrent.DelayQueue;
-import java.util.concurrent.SynchronousQueue;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -71,7 +68,7 @@ class CollectionPopulatorTest {
     @BeforeEach
     void setUp() {
         parameters = new EasyRandomParameters().collectionSizeRange(SIZE, SIZE);
-        collectionPopulator = new CollectionPopulator(easyRandom);
+        collectionPopulator = new CollectionPopulator(easyRandom, parameters);
     }
 
     /*
@@ -80,7 +77,6 @@ class CollectionPopulatorTest {
     @Test
     void rawInterfaceCollectionTypesMustBeReturnedEmpty() throws Exception {
         // Given
-        when(context.getParameters()).thenReturn(parameters);
         Field field = Foo.class.getDeclaredField("rawInterfaceList");
 
         // When
@@ -93,7 +89,6 @@ class CollectionPopulatorTest {
     @Test
     void rawConcreteCollectionTypesMustBeReturnedEmpty() throws Exception {
         // Given
-        when(context.getParameters()).thenReturn(parameters);
         Field field = Foo.class.getDeclaredField("rawConcreteList");
 
         // When
@@ -106,7 +101,6 @@ class CollectionPopulatorTest {
     @Test
     void typedInterfaceCollectionTypesMightBePopulated() throws Exception {
         // Given
-        when(context.getParameters()).thenReturn(parameters);
         when(easyRandom.doPopulateBean(String.class, context)).thenReturn(STRING);
         Field field = Foo.class.getDeclaredField("typedInterfaceList");
 
@@ -121,7 +115,6 @@ class CollectionPopulatorTest {
     @Test
     void typedConcreteCollectionTypesMightBePopulated() throws Exception {
         // Given
-        when(context.getParameters()).thenReturn(parameters);
         when(easyRandom.doPopulateBean(String.class, context)).thenReturn(STRING);
         Field field = Foo.class.getDeclaredField("typedConcreteList");
 
