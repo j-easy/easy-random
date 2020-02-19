@@ -36,7 +36,7 @@ Person person = easyRandom.nextObject(Person.class);
 
 The method `EasyRandom#nextObject` is able to generate random instances of any given type.
 
-# What is this EasyRandom API?
+# What is this EasyRandom API ?
 
 The `java.util.Random` API provides 7 methods to generate random data: `nextInt()`, `nextLong()`, `nextDouble()`, `nextFloat()`, `nextBytes()`, `nextBoolean()` and `nextGaussian()`.
 What if you need to generate a random `String`? Or say a random instance of your domain object?
@@ -171,6 +171,24 @@ There are many other uses cases where Easy Random can be useful, you can find a 
 
 * [JUnit extension](https://glytching.github.io/junit-extensions/randomBeans): Use Easy Random to generate random data in JUnit tests (courtesy of [glytching](https://github.com/glytching))
 * [Vavr extension](https://github.com/xShadov/easy-random-vavr-extension): This extension adds support to randomize [Vavr](https://github.com/vavr-io/vavr) types (courtesy of [xShadov](https://github.com/xShadov))
+
+## Articles and blog posts
+
+* [Easy testing with ObjectMothers and EasyRandom](https://www.jworks.io/easy-testing-with-objectmothers-and-easyrandom/)
+* [Quick Guide to EasyRandom in Java](https://www.baeldung.com/java-easy-random)
+* [Top secrets of the efficient test data preparation](https://waverleysoftware.com/blog/test-data-preparation/)
+* [Random Data Generators for API Testing in Java](https://techblog.dotdash.com/random-data-generators-for-api-testing-in-java-369c99075208)
+* [EasyRandom 4.0 Released](https://www.jworks.io/easyrandom-4-0-released/)
+* [Type Erasure Revisited](https://www.beyondjava.net/type-erasure-revisited)
+* [Generate Random Test Data With jPopulator](https://www.beyondjava.net/newsflash-generate-random-test-data-jpopulator)
+
+## Who is using Easy Random ?
+
+* [Netflix](https://github.com/Netflix/AWSObjectMapper/blob/master/build.gradle#L71)
+* [JetBrains](https://github.com/JetBrains/intellij-community/blob/master/plugins/gradle/tooling-extension-impl/testSources/org/jetbrains/plugins/gradle/tooling/serialization/ToolingSerializerTest.kt#L8)
+* [Mulesoft](https://github.com/mulesoft/mule-wsc-connector/blob/master/pom.xml#L170)
+* [Easy Cucumber](https://github.com/osvaldjr/easy-cucumber/blob/master/pom.xml#L122)
+* [Open Network Automation Platform](https://github.com/onap/vid/blob/master/vid-app-common/pom.xml#L550)
 
 ## Contribution
 
