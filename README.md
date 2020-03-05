@@ -23,7 +23,6 @@
 * 04/11/2019: Easy Random v4.1.0 is released! See what's new in the [change log](https://github.com/j-easy/easy-random/releases).
 * 05/05/2019: Random Beans has been renamed to Easy Random and is now part of [jeasy.org](http://www.jeasy.org).
 Version 4.0.0 has been released! See what's new in the [change log](https://github.com/j-easy/easy-random/releases).
-* 13/03/2019: Version 3.9.0 is out! Checkout what's new in the [change log](https://github.com/j-easy/easy-random/releases).
 
 # What is Easy Random ?
 
@@ -184,11 +183,11 @@ There are many other uses cases where Easy Random can be useful, you can find a 
 
 ## Who is using Easy Random ?
 
-* [Netflix](https://github.com/Netflix/AWSObjectMapper/blob/master/build.gradle#L71)
-* [JetBrains](https://github.com/JetBrains/intellij-community/blob/master/plugins/gradle/tooling-extension-impl/testSources/org/jetbrains/plugins/gradle/tooling/serialization/ToolingSerializerTest.kt#L8)
-* [Mulesoft](https://github.com/mulesoft/mule-wsc-connector/blob/master/pom.xml#L170)
-* [Easy Cucumber](https://github.com/osvaldjr/easy-cucumber/blob/master/pom.xml#L122)
-* [Open Network Automation Platform](https://github.com/onap/vid/blob/master/vid-app-common/pom.xml#L550)
+* [Netflix](https://github.com/Netflix/AWSObjectMapper/blob/v1.11.723/build.gradle#L71)
+* [JetBrains](https://github.com/JetBrains/intellij-community/blob/201.6073/plugins/gradle/tooling-extension-impl/testSources/org/jetbrains/plugins/gradle/tooling/serialization/ToolingSerializerTest.kt#L8)
+* [Mulesoft](https://github.com/mulesoft/mule-wsc-connector/blob/1.5.6/src/test/java/org/mule/extension/ws/ConfigEqualsTestCase.java#L14)
+* [Easy Cucumber](https://github.com/osvaldjr/easy-cucumber/blob/0.0.18/pom.xml#L122)
+* [Open Network Automation Platform](https://github.com/onap/vid/blob/6.0.3/vid-app-common/src/test/java/org/onap/vid/controller/MsoControllerTest.java#L43)
 
 ## Contribution
 
