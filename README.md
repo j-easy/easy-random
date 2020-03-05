@@ -234,6 +234,7 @@ If you have any question, suggestion, or feedback, do not hesitate to use the [G
 * [Weronika Redlarska](https://github.com/weronika-redlarska)
 * [Konstantin Lutovich](https://github.com/lutovich)
 * [Steven_Van_Ophem](https://github.com/stevenvanophem)
+* [Jean-Michel Leclercq](https://github.com/LeJeanbono)
 
 Thank you all for your contributions!
 
