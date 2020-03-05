@@ -117,6 +117,9 @@ public class EnumRandomizer<E extends Enum<E>> extends AbstractRandomizer<E> {
      */
     @Override
     public E getRandomValue() {
+        if (enumConstants.size() == 0) {
+            return null;
+        }
         int randomIndex = random.nextInt(enumConstants.size());
         return enumConstants.get(randomIndex);
     }

@@ -60,4 +60,12 @@ public class EnumRandomizerTest extends AbstractRandomizerTest<EnumRandomizerTes
     public void should_throw_an_exception_when_all_values_are_excluded() {
         assertThatThrownBy(() -> aNewEnumRandomizer(Gender.class, Gender.values())).isInstanceOf(IllegalArgumentException.class);
     }
+
+    public enum Empty {}
+
+    @Test
+    public void should_return_null_for_empty_enum() {
+        Empty randomElement = aNewEnumRandomizer(Empty.class).getRandomValue();
+        assertThat(randomElement).isNull();
+    }
 }
