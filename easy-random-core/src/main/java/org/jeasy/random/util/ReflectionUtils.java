@@ -30,6 +30,8 @@ import org.jeasy.random.api.Randomizer;
 import lombok.experimental.UtilityClass;
 import org.objenesis.ObjenesisStd;
 
+import java.beans.IntrospectionException;
+import java.beans.PropertyDescriptor;
 import java.lang.annotation.Annotation;
 import java.lang.reflect.*;
 import java.text.SimpleDateFormat;
@@ -120,7 +122,9 @@ public class ReflectionUtils {
     }
 
     /**
-     * Set a value (accessible or not accessible) in a field of a target object.
+     * Set a value in a field of a target object. If the target object provides 
+     * a setter for the field, this setter will be used. Otherwise, the field
+     * will be set using reflection.
      *
      * @param object instance to set the property on
      * @param field  field to set the property on
@@ -128,6 +132,28 @@ public class ReflectionUtils {
      * @throws IllegalAccessException if the property cannot be set
      */
     public static void setProperty(final Object object, final Field field, final Object value) throws IllegalAccessException {
+        try {
+            PropertyDescriptor propertyDescriptor = new PropertyDescriptor(field.getName(), object.getClass());
+            Method setter = propertyDescriptor.getWriteMethod();
+            if (setter != null) {
+                setter.invoke(object, value);
+            } else {
+                setFieldValue(object, field, value);
+            }
+        } catch (IntrospectionException | InvocationTargetException | IllegalAccessException e) {
+            setFieldValue(object, field, value);
+        }
+    }
+
+    /**
+     * Set a value (accessible or not accessible) in a field of a target object.
+     *
+     * @param object instance to set the property on
+     * @param field  field to set the property on
+     * @param value  value to set
+     * @throws IllegalAccessException if the property cannot be set
+     */
+    public static void setFieldValue(final Object object, final Field field, final Object value) throws IllegalAccessException {
         boolean access = field.isAccessible();
         field.setAccessible(true);
         field.set(object, value);
