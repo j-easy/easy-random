@@ -72,7 +72,7 @@ class SeedParameterTests {
         address.setZipCode("RYtGKbgicZaHCBRQDSx");
         address.setStreet(street);
 
-        expectedPerson.setName("B");
+        expectedPerson.setName("lGnpmpDuLcCWwviSUKnVxGJJtsu");
         expectedPerson.setEmail("yedUsFwdkelQbxeTeQOvaScfqIOOmaa");
         expectedPerson.setPhoneNumber("dpHYZGhtgdntugzvvKAXLhM");
         expectedPerson.setGender(Gender.FEMALE);

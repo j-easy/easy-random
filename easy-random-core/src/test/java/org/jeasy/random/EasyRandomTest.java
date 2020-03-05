@@ -225,6 +225,21 @@ class EasyRandomTest {
             fail("Should skip fields of type Class");
         }
     }
+    
+    @Test
+    void differentCollectionsShouldBeRandomizedWithDifferentSizes() {
+        // given
+        class Foo {
+            List<String> names;
+            List<String> addresses;
+        }
+        
+        // when
+        Foo foo = new EasyRandom().nextObject(Foo.class);
+        
+        // then
+        assertThat(foo.names.size()).isNotEqualTo(foo.addresses.size());
+    }
 
     private void validatePerson(final Person person) {
         assertThat(person).isNotNull();
