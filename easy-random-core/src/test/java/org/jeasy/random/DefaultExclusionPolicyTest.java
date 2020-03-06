@@ -37,16 +37,16 @@ import org.mockito.junit.jupiter.MockitoExtension;
 import org.jeasy.random.beans.Human;
 
 @ExtendWith(MockitoExtension.class)
-class ExclusionCheckerTest {
+class DefaultExclusionPolicyTest {
 
     @Mock
     private RandomizerContext randomizerContext;
 
-    private ExclusionChecker checker;
+    private DefaultExclusionPolicy exclusionPolicy;
 
     @BeforeEach
     void setUp() {
-        checker = new ExclusionChecker();
+        exclusionPolicy = new DefaultExclusionPolicy();
     }
 
     @Test
@@ -55,7 +55,7 @@ class ExclusionCheckerTest {
         Field field = Human.class.getDeclaredField("SERIAL_VERSION_UID");
 
         // When
-        boolean actual = checker.shouldBeExcluded(field, randomizerContext);
+        boolean actual = exclusionPolicy.shouldBeExcluded(field, randomizerContext);
 
         // Then
         assertThat(actual).isTrue();

@@ -38,7 +38,7 @@ import static org.jeasy.random.util.ReflectionUtils.*;
  *
  * @author Mahmoud Ben Hassine (mahmoud.benhassine@icloud.com)
  */
-class ExclusionChecker implements ExclusionPolicy {
+public class DefaultExclusionPolicy implements ExclusionPolicy {
 
     /**
      * Given the current randomization context, should the field be excluded from being populated ?

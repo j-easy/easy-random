@@ -133,7 +133,7 @@ public class EasyRandomParameters {
         userRegistries = new LinkedHashSet<>();
         fieldExclusionPredicates = new HashSet<>();
         typeExclusionPredicates = new HashSet<>();
-        exclusionPolicy = new ExclusionChecker();
+        exclusionPolicy = new DefaultExclusionPolicy();
         objectFactory = new ObjenesisObjectFactory();
     }
 
