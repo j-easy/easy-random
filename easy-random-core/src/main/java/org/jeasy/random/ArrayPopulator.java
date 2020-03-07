@@ -53,6 +53,6 @@ class ArrayPopulator {
 
     private int getRandomArraySize(EasyRandomParameters parameters) {
         EasyRandomParameters.Range<Integer> collectionSizeRange = parameters.getCollectionSizeRange();
-        return new IntegerRangeRandomizer(collectionSizeRange.getMin(), collectionSizeRange.getMax(), parameters.getSeed()).getRandomValue();
+        return new IntegerRangeRandomizer(collectionSizeRange.getMin(), collectionSizeRange.getMax(), easyRandom.nextLong()).getRandomValue();
     }
 }
