@@ -235,6 +235,7 @@ If you have any question, suggestion, or feedback, do not hesitate to use the [G
 * [Konstantin Lutovich](https://github.com/lutovich)
 * [Steven_Van_Ophem](https://github.com/stevenvanophem)
 * [Jean-Michel Leclercq](https://github.com/LeJeanbono)
+* [Marian Jureczko](https://github.com/mjureczko)
 
 Thank you all for your contributions!
 
