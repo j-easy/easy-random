@@ -239,6 +239,21 @@ class EasyRandomTest {
         assertThat(foo.names.size()).isNotEqualTo(foo.addresses.size());
     }
 
+    @Test
+    void differentArraysShouldBeRandomizedWithDifferentSizes() {
+        // given
+        class Foo {
+            String[] names;
+            String[] addresses;
+        }
+
+        // when
+        Foo foo = new EasyRandom().nextObject(Foo.class);
+
+        // then
+        assertThat(foo.names.length).isNotEqualTo(foo.addresses.length);
+    }
+
     private void validatePerson(final Person person) {
         assertThat(person).isNotNull();
         assertThat(person.getEmail()).isNotEmpty();
@@ -289,37 +304,4 @@ class EasyRandomTest {
         System.out.println("Failure: " + failure);
     }
 
-    @Test
-    void generateArraysOfDifferentSize_whenReusingEasyRandomInstance() {
-        Set<Integer> collectionsSizes = new HashSet<>();
-        EasyRandom easyRandom = new EasyRandom();
-        for (int i = 0; i < 100; i++) {
-            final SomeClass someClass = easyRandom.nextObject(SomeClass.class);
-            collectionsSizes.add(someClass.array.length);
-        }
-
-        assertThat(collectionsSizes.size()).isGreaterThan(1);
-    }
-
-    @Test
-    void arraySizesAreRepeatable_whenFixedSeedIsUsed() {
-        long seed = new Random().nextInt();
-        EasyRandomParameters parameters = new EasyRandomParameters();
-        parameters.seed(seed);
-        EasyRandom first = new EasyRandom(parameters);
-        EasyRandom second = new EasyRandom(parameters);
-        List<Integer> firstResult = new ArrayList<>();
-        List<Integer> secondResult = new ArrayList<>();
-
-        for(int i = 0; i<100; i++) {
-            firstResult.add(first.nextObject(SomeClass.class).array.length);
-            secondResult.add(second.nextObject(SomeClass.class).array.length);
-        }
-
-        assertThat(firstResult).isEqualTo(secondResult);
-    }
-}
-
-class SomeClass {
-    String[] array;
 }
