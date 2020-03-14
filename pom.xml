@@ -28,7 +28,7 @@
         <classgraph.version>4.8.65</classgraph.version>
         <hibernate-validator.version>6.1.2.Final</hibernate-validator.version>
         <javax.el.version>3.0.0</javax.el.version>
-        <mockito.version>3.3.0</mockito.version>
+        <mockito.version>3.3.3</mockito.version>
         <maven-surefire-plugin.version>2.22.2</maven-surefire-plugin.version>
         <maven-compiler-plugin.version>3.8.1</maven-compiler-plugin.version>
         <maven-cobertura-plugin.version>2.7</maven-cobertura-plugin.version>
