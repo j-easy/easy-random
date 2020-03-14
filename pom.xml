@@ -10,7 +10,7 @@
 
     <groupId>org.jeasy</groupId>
     <artifactId>easy-random</artifactId>
-    <version>4.2.0</version>
+    <version>4.2.1-SNAPSHOT</version>
     <packaging>pom</packaging>
 
     <name>Easy Random</name>
@@ -47,7 +47,7 @@
         <url>git@github.com:j-easy/easy-random.git</url>
         <connection>scm:git:git@github.com:j-easy/easy-random.git</connection>
         <developerConnection>scm:git:git@github.com:j-easy/easy-random.git</developerConnection>
-        <tag>easy-random-4.2.0</tag>
+        <tag>HEAD</tag>
     </scm>
 
     <ciManagement>
