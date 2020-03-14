@@ -47,7 +47,6 @@ import org.jeasy.random.beans.EnumMapBean;
 import org.jeasy.random.beans.MapBean;
 import org.jeasy.random.beans.Person;
 import org.jeasy.random.beans.WildCardMapBean;
-import lombok.Data;
 
 @ExtendWith(MockitoExtension.class)
 @SuppressWarnings({"unchecked", "rawtypes"})
@@ -144,12 +143,46 @@ class MapPopulatorTest {
         assertThat(randomMap).isEmpty();
     }
 
-    @Data
     class Foo {
         private Map rawMap;
         private HashMap concreteMap;
         private Map<String, String> typedMap;
         private HashMap<String, String> typedConcreteMap;
+
+        public Foo() {
+        }
+
+        public Map getRawMap() {
+            return this.rawMap;
+        }
+
+        public HashMap getConcreteMap() {
+            return this.concreteMap;
+        }
+
+        public Map<String, String> getTypedMap() {
+            return this.typedMap;
+        }
+
+        public HashMap<String, String> getTypedConcreteMap() {
+            return this.typedConcreteMap;
+        }
+
+        public void setRawMap(Map rawMap) {
+            this.rawMap = rawMap;
+        }
+
+        public void setConcreteMap(HashMap concreteMap) {
+            this.concreteMap = concreteMap;
+        }
+
+        public void setTypedMap(Map<String, String> typedMap) {
+            this.typedMap = typedMap;
+        }
+
+        public void setTypedConcreteMap(HashMap<String, String> typedConcreteMap) {
+            this.typedConcreteMap = typedConcreteMap;
+        }
     }
 
     /*

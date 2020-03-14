@@ -31,20 +31,80 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 public class FieldNameMatchingWithRegex {
 
-    @lombok.Data
     public class Foo {
         private String name1;
         private String name2;
         private String nickname;
         private String job;
         private Bar bar;
-    }
 
-    @lombok.Data
+		public Foo() {
+		}
+
+		public String getName1() {
+			return this.name1;
+		}
+
+		public String getName2() {
+			return this.name2;
+		}
+
+		public String getNickname() {
+			return this.nickname;
+		}
+
+		public String getJob() {
+			return this.job;
+		}
+
+		public Bar getBar() {
+			return this.bar;
+		}
+
+		public void setName1(String name1) {
+			this.name1 = name1;
+		}
+
+		public void setName2(String name2) {
+			this.name2 = name2;
+		}
+
+		public void setNickname(String nickname) {
+			this.nickname = nickname;
+		}
+
+		public void setJob(String job) {
+			this.job = job;
+		}
+
+		public void setBar(Bar bar) {
+			this.bar = bar;
+		}
+	}
+
     public class Bar {
         private String name;
         private String address;
-    }
+
+		public Bar() {
+		}
+
+		public String getName() {
+			return this.name;
+		}
+
+		public String getAddress() {
+			return this.address;
+		}
+
+		public void setName(String name) {
+			this.name = name;
+		}
+
+		public void setAddress(String address) {
+			this.address = address;
+		}
+	}
 
     @Test
     void testFieldDefinitionWithNameAsRegexp() {

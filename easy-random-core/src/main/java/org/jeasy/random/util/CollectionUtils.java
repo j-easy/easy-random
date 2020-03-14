@@ -23,8 +23,6 @@
  */
 package org.jeasy.random.util;
 
-import lombok.experimental.UtilityClass;
-
 import java.util.List;
 import java.util.Random;
 
@@ -33,8 +31,10 @@ import java.util.Random;
  *
  * @author Mahmoud Ben Hassine (mahmoud.benhassine@icloud.com)
  */
-@UtilityClass
-public class CollectionUtils {
+public final class CollectionUtils {
+
+    private CollectionUtils() {
+    }
 
     /**
      * Get a random element from the list.

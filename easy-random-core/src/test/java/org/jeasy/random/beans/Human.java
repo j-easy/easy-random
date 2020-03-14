@@ -23,9 +23,6 @@
  */
 package org.jeasy.random.beans;
 
-import lombok.Data;
-
-@Data
 public class Human implements Mammal {
 
     public static final long SERIAL_VERSION_UID = 593716507559065802L;
@@ -34,8 +31,18 @@ public class Human implements Mammal {
 
     protected String name;
 
-    public Long getId() {
+	public Human() {
+	}
+
+	public Long getId() {
         return id;
     }
 
+	public String getName() {
+		return this.name;
+	}
+
+	public void setName(String name) {
+		this.name = name;
+	}
 }

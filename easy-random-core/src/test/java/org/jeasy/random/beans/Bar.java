@@ -23,12 +23,20 @@
  */
 package org.jeasy.random.beans;
 
-import lombok.Data;
-
-@Data
 public abstract class Bar {
 
     private Integer i;
 
-    public abstract String getName();
+	public Bar() {
+	}
+
+	public abstract String getName();
+
+	public Integer getI() {
+		return this.i;
+	}
+
+	public void setI(Integer i) {
+		this.i = i;
+	}
 }

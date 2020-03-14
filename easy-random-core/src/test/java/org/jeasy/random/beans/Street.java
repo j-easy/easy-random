@@ -23,9 +23,8 @@
  */
 package org.jeasy.random.beans;
 
-import lombok.Data;
+import java.util.Objects;
 
-@Data
 public class Street {
 
     private int number;
@@ -34,5 +33,46 @@ public class Street {
 
     private String name;
 
+	public Street() {
+	}
 
+
+	public int getNumber() {
+		return this.number;
+	}
+
+	public byte getType() {
+		return this.type;
+	}
+
+	public String getName() {
+		return this.name;
+	}
+
+	public void setNumber(int number) {
+		this.number = number;
+	}
+
+	public void setType(byte type) {
+		this.type = type;
+	}
+
+	public void setName(String name) {
+		this.name = name;
+	}
+
+	@Override
+	public boolean equals(Object o) {
+		if (this == o) return true;
+		if (o == null || getClass() != o.getClass()) return false;
+		Street street = (Street) o;
+		return number == street.number &&
+				type == street.type &&
+				Objects.equals(name, street.name);
+	}
+
+	@Override
+	public int hashCode() {
+		return Objects.hash(number, type, name);
+	}
 }

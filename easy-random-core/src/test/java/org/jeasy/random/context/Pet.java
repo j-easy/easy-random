@@ -23,10 +23,26 @@
  */
 package org.jeasy.random.context;
 
-import lombok.Data;
-
-@Data
 public class Pet {
     private String firstName;
     private String lastName;
+
+	public Pet() {
+	}
+
+	public String getFirstName() {
+		return this.firstName;
+	}
+
+	public String getLastName() {
+		return this.lastName;
+	}
+
+	public void setFirstName(String firstName) {
+		this.firstName = firstName;
+	}
+
+	public void setLastName(String lastName) {
+		this.lastName = lastName;
+	}
 }

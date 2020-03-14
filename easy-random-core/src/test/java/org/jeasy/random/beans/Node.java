@@ -23,11 +23,8 @@
  */
 package org.jeasy.random.beans;
 
-import lombok.Data;
-
 import java.util.List;
 
-@Data
 public class Node {
 
     private String value;
@@ -35,4 +32,39 @@ public class Node {
     private Node left, right;
 
     private List<Node> parents;
+
+	public Node() {
+	}
+
+	public String getValue() {
+		return this.value;
+	}
+
+	public Node getLeft() {
+		return this.left;
+	}
+
+	public Node getRight() {
+		return this.right;
+	}
+
+	public List<Node> getParents() {
+		return this.parents;
+	}
+
+	public void setValue(String value) {
+		this.value = value;
+	}
+
+	public void setLeft(Node left) {
+		this.left = left;
+	}
+
+	public void setRight(Node right) {
+		this.right = right;
+	}
+
+	public void setParents(List<Node> parents) {
+		this.parents = parents;
+	}
 }

@@ -25,7 +25,6 @@ package org.jeasy.random;
 
 import org.jeasy.random.beans.Address;
 import org.jeasy.random.beans.Website;
-import lombok.Data;
 import org.junit.jupiter.api.Test;
 
 import static org.jeasy.random.TypePredicates.*;
@@ -57,14 +56,56 @@ class TypeExclusionTest {
         assertThat(foo.getBaz()).isNull();
     }
 
-    @Data
     static class Foo {
         private String name;
         private Address address;
         private Website website;
         private Bar bar;
         private Baz baz;
-    }
+
+		public Foo() {
+		}
+
+		public String getName() {
+			return this.name;
+		}
+
+		public Address getAddress() {
+			return this.address;
+		}
+
+		public Website getWebsite() {
+			return this.website;
+		}
+
+		public Bar getBar() {
+			return this.bar;
+		}
+
+		public Baz getBaz() {
+			return this.baz;
+		}
+
+		public void setName(String name) {
+			this.name = name;
+		}
+
+		public void setAddress(Address address) {
+			this.address = address;
+		}
+
+		public void setWebsite(Website website) {
+			this.website = website;
+		}
+
+		public void setBar(Bar bar) {
+			this.bar = bar;
+		}
+
+		public void setBaz(Baz baz) {
+			this.baz = baz;
+		}
+	}
 
     interface Bar { }
 

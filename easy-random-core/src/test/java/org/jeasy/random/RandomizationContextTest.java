@@ -36,7 +36,6 @@ import java.lang.reflect.Field;
 
 import org.jeasy.random.api.ContextAwareRandomizer;
 import org.jeasy.random.api.RandomizerContext;
-import lombok.Data;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -243,34 +242,100 @@ public class RandomizationContextTest {
         }
     }
 
-    @Data
     static class A {
         private B b;
         private String excluded;
-    }
 
-    @Data
+		public A() {
+		}
+
+		public B getB() {
+			return this.b;
+		}
+
+		public String getExcluded() {
+			return this.excluded;
+		}
+
+		public void setB(B b) {
+			this.b = b;
+		}
+
+		public void setExcluded(String excluded) {
+			this.excluded = excluded;
+		}
+	}
+
     static class B {
         private C c;
 
         @ExampleAnnotation("bar")
         private E e;
-    }
 
-    @Data
+		public B() {
+		}
+
+		public C getC() {
+			return this.c;
+		}
+
+		public E getE() {
+			return this.e;
+		}
+
+		public void setC(C c) {
+			this.c = c;
+		}
+
+		public void setE(E e) {
+			this.e = e;
+		}
+	}
+
     static class C {
         private D d;
-    }
 
-    @Data
+		public C() {
+		}
+
+		public D getD() {
+			return this.d;
+		}
+
+		public void setD(D d) {
+			this.d = d;
+		}
+	}
+
     static class D {
         private String name;
-    }
 
-    @Data
+		public D() {
+		}
+
+		public String getName() {
+			return this.name;
+		}
+
+		public void setName(String name) {
+			this.name = name;
+		}
+	}
+
     static class E {
         private String name;
-    }
+
+		public E() {
+		}
+
+		public String getName() {
+			return this.name;
+		}
+
+		public void setName(String name) {
+			this.name = name;
+		}
+	}
 
     @Target({FIELD})
     @Retention(RUNTIME)

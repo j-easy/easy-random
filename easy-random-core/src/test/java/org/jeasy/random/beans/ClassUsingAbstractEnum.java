@@ -23,10 +23,18 @@
  */
 package org.jeasy.random.beans;
 
-import lombok.Data;
-
-@Data
 public class ClassUsingAbstractEnum {
 
     private AbstractEnum testEnum;
+
+	public ClassUsingAbstractEnum() {
+	}
+
+	public AbstractEnum getTestEnum() {
+		return this.testEnum;
+	}
+
+	public void setTestEnum(AbstractEnum testEnum) {
+		this.testEnum = testEnum;
+	}
 }

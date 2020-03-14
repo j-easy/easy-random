@@ -23,16 +23,24 @@
  */
 package org.jeasy.random.beans;
 
-import lombok.Data;
-
 import java.util.Date;
 
-@Data
 public class ComparableBean {
 
     private Comparable<Date> dateComparable;
 
-    public static class AlwaysEqual implements Comparable<Date> {
+	public ComparableBean() {
+	}
+
+	public Comparable<Date> getDateComparable() {
+		return this.dateComparable;
+	}
+
+	public void setDateComparable(Comparable<Date> dateComparable) {
+		this.dateComparable = dateComparable;
+	}
+
+	public static class AlwaysEqual implements Comparable<Date> {
         @Override
         public int compareTo(Date o) {
             return 0;

@@ -23,8 +23,6 @@
  */
 package org.jeasy.random.util;
 
-import lombok.experimental.UtilityClass;
-
 import java.nio.charset.Charset;
 import java.util.ArrayList;
 import java.util.List;
@@ -36,8 +34,10 @@ import static java.util.stream.Collectors.toList;
  *
  * @author Pascal Schumacher (https://github.com/PascalSchumacher)
  */
-@UtilityClass
-public class CharacterUtils {
+public final class CharacterUtils {
+
+    private CharacterUtils() {
+    }
 
     /**
      * Returns a list of all printable charaters of the given charset.

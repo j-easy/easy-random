@@ -23,15 +23,12 @@
  */
 package org.jeasy.random.validation;
 
-import lombok.Data;
-
 import javax.validation.constraints.*;
 import java.math.BigDecimal;
 import java.time.Instant;
 import java.time.LocalDateTime;
 import java.util.*;
 
-@Data
 class BeanValidationAnnotatedBean {
 
     @AssertFalse
@@ -125,4 +122,246 @@ class BeanValidationAnnotatedBean {
     @Pattern(regexp="[a-z]{4}")
     private String regexString;
 
+    public BeanValidationAnnotatedBean() {
+    }
+
+    public boolean isUnsupported() {
+        return this.unsupported;
+    }
+
+    public boolean isActive() {
+        return this.active;
+    }
+
+    public BigDecimal getMaxDiscount() {
+        return this.maxDiscount;
+    }
+
+    public BigDecimal getMinDiscount() {
+        return this.minDiscount;
+    }
+
+    public BigDecimal getDiscount() {
+        return this.discount;
+    }
+
+    public Date getEventDate() {
+        return this.eventDate;
+    }
+
+    public LocalDateTime getEventLocalDateTime() {
+        return this.eventLocalDateTime;
+    }
+
+    public Date getFutureOrPresent() {
+        return this.futureOrPresent;
+    }
+
+    public Date getBirthday() {
+        return this.birthday;
+    }
+
+    public LocalDateTime getBirthdayLocalDateTime() {
+        return this.birthdayLocalDateTime;
+    }
+
+    public Instant getPastInstant() {
+        return this.pastInstant;
+    }
+
+    public Date getPastOrPresent() {
+        return this.pastOrPresent;
+    }
+
+    public int getMaxQuantity() {
+        return this.maxQuantity;
+    }
+
+    public int getMinQuantity() {
+        return this.minQuantity;
+    }
+
+    public int getPositive() {
+        return this.positive;
+    }
+
+    public int getPositiveOrZero() {
+        return this.positiveOrZero;
+    }
+
+    public int getNegative() {
+        return this.negative;
+    }
+
+    public int getNegativeOrZero() {
+        return this.negativeOrZero;
+    }
+
+    public String getNotBlank() {
+        return this.notBlank;
+    }
+
+    public String getEmail() {
+        return this.email;
+    }
+
+    public String getUsername() {
+        return this.username;
+    }
+
+    public String getUnusedString() {
+        return this.unusedString;
+    }
+
+    public String getBriefMessage() {
+        return this.briefMessage;
+    }
+
+    public Collection<String> getSizedCollection() {
+        return this.sizedCollection;
+    }
+
+    public List<String> getSizedList() {
+        return this.sizedList;
+    }
+
+    public Set<String> getSizedSet() {
+        return this.sizedSet;
+    }
+
+    public Map<String, Integer> getSizedMap() {
+        return this.sizedMap;
+    }
+
+    public String[] getSizedArray() {
+        return this.sizedArray;
+    }
+
+    public String getSizedString() {
+        return this.sizedString;
+    }
+
+    public String getRegexString() {
+        return this.regexString;
+    }
+
+    public void setUnsupported(boolean unsupported) {
+        this.unsupported = unsupported;
+    }
+
+    public void setActive(boolean active) {
+        this.active = active;
+    }
+
+    public void setMaxDiscount(BigDecimal maxDiscount) {
+        this.maxDiscount = maxDiscount;
+    }
+
+    public void setMinDiscount(BigDecimal minDiscount) {
+        this.minDiscount = minDiscount;
+    }
+
+    public void setDiscount(BigDecimal discount) {
+        this.discount = discount;
+    }
+
+    public void setEventDate(Date eventDate) {
+        this.eventDate = eventDate;
+    }
+
+    public void setEventLocalDateTime(LocalDateTime eventLocalDateTime) {
+        this.eventLocalDateTime = eventLocalDateTime;
+    }
+
+    public void setFutureOrPresent(Date futureOrPresent) {
+        this.futureOrPresent = futureOrPresent;
+    }
+
+    public void setBirthday(Date birthday) {
+        this.birthday = birthday;
+    }
+
+    public void setBirthdayLocalDateTime(LocalDateTime birthdayLocalDateTime) {
+        this.birthdayLocalDateTime = birthdayLocalDateTime;
+    }
+
+    public void setPastInstant(Instant pastInstant) {
+        this.pastInstant = pastInstant;
+    }
+
+    public void setPastOrPresent(Date pastOrPresent) {
+        this.pastOrPresent = pastOrPresent;
+    }
+
+    public void setMaxQuantity(int maxQuantity) {
+        this.maxQuantity = maxQuantity;
+    }
+
+    public void setMinQuantity(int minQuantity) {
+        this.minQuantity = minQuantity;
+    }
+
+    public void setPositive(int positive) {
+        this.positive = positive;
+    }
+
+    public void setPositiveOrZero(int positiveOrZero) {
+        this.positiveOrZero = positiveOrZero;
+    }
+
+    public void setNegative(int negative) {
+        this.negative = negative;
+    }
+
+    public void setNegativeOrZero(int negativeOrZero) {
+        this.negativeOrZero = negativeOrZero;
+    }
+
+    public void setNotBlank(String notBlank) {
+        this.notBlank = notBlank;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
+    public void setUsername(String username) {
+        this.username = username;
+    }
+
+    public void setUnusedString(String unusedString) {
+        this.unusedString = unusedString;
+    }
+
+    public void setBriefMessage(String briefMessage) {
+        this.briefMessage = briefMessage;
+    }
+
+    public void setSizedCollection(Collection<String> sizedCollection) {
+        this.sizedCollection = sizedCollection;
+    }
+
+    public void setSizedList(List<String> sizedList) {
+        this.sizedList = sizedList;
+    }
+
+    public void setSizedSet(Set<String> sizedSet) {
+        this.sizedSet = sizedSet;
+    }
+
+    public void setSizedMap(Map<String, Integer> sizedMap) {
+        this.sizedMap = sizedMap;
+    }
+
+    public void setSizedArray(String[] sizedArray) {
+        this.sizedArray = sizedArray;
+    }
+
+    public void setSizedString(String sizedString) {
+        this.sizedString = sizedString;
+    }
+
+    public void setRegexString(String regexString) {
+        this.regexString = regexString;
+    }
 }

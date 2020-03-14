@@ -26,7 +26,6 @@ package org.jeasy.random;
 import org.jeasy.random.api.*;
 import org.jeasy.random.randomizers.registry.CustomRandomizerRegistry;
 import org.jeasy.random.randomizers.registry.ExclusionRandomizerRegistry;
-import lombok.Data;
 
 import java.lang.reflect.Field;
 import java.nio.charset.Charset;
@@ -545,7 +544,6 @@ public class EasyRandomParameters {
      *
      * @param <T> type of values
      */
-    @Data
     public static class Range<T> {
 
         private T min;
@@ -553,6 +551,22 @@ public class EasyRandomParameters {
 
         public Range(T min, T max) {
             this.min = min;
+            this.max = max;
+        }
+
+        public T getMin() {
+            return min;
+        }
+
+        public void setMin(T min) {
+            this.min = min;
+        }
+
+        public T getMax() {
+            return max;
+        }
+
+        public void setMax(T max) {
             this.max = max;
         }
     }

@@ -23,11 +23,21 @@
  */
 package org.jeasy.random.context;
 
-import lombok.AllArgsConstructor;
-import lombok.Data;
-
-@Data
-@AllArgsConstructor
 public class Country {
     private String name;
+
+    public Country(String name) {
+        this.name = name;
+    }
+
+    public Country() {
+    }
+
+    public String getName() {
+        return this.name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
 }

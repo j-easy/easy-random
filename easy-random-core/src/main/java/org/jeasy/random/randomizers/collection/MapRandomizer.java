@@ -24,7 +24,6 @@
 package org.jeasy.random.randomizers.collection;
 
 import org.jeasy.random.api.Randomizer;
-import lombok.NonNull;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -64,7 +63,13 @@ public class MapRandomizer<K, V> implements Randomizer<Map<K, V>> {
      * @param valueRandomizer the randomizer for values
      * @param nbEntries       the number of entries to generate
      */
-    public MapRandomizer(@NonNull final Randomizer<K> keyRandomizer, @NonNull final Randomizer<V> valueRandomizer, final int nbEntries) {
+    public MapRandomizer(final Randomizer<K> keyRandomizer, final Randomizer<V> valueRandomizer, final int nbEntries) {
+        if (keyRandomizer == null) {
+            throw new IllegalArgumentException("keyRandomizer must not be null");
+        }
+        if (valueRandomizer == null) {
+            throw new IllegalArgumentException("valueRandomizer must not be null");
+        }
         checkArguments(nbEntries);
         this.keyRandomizer = keyRandomizer;
         this.valueRandomizer = valueRandomizer;

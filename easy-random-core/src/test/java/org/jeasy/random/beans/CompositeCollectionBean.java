@@ -23,12 +23,9 @@
  */
 package org.jeasy.random.beans;
 
-import lombok.Data;
-
 import java.util.*;
 import java.util.concurrent.LinkedBlockingQueue;
 
-@Data
 public class CompositeCollectionBean {
 
     private List<List<String>> listOfLists;
@@ -40,5 +37,55 @@ public class CompositeCollectionBean {
     private Queue<Queue<String>> queueOfQueues;
     private LinkedBlockingQueue<Queue<String>> typedQueueOdQueues;
 
+	public CompositeCollectionBean() {
+	}
 
+
+	public List<List<String>> getListOfLists() {
+		return this.listOfLists;
+	}
+
+	public ArrayList<LinkedList<Person>> getTypedListOfLists() {
+		return this.typedListOfLists;
+	}
+
+	public Set<Set<String>> getSetOfSets() {
+		return this.setOfSets;
+	}
+
+	public HashSet<LinkedHashSet<String>> getTypedSetOfSets() {
+		return this.typedSetOfSets;
+	}
+
+	public Queue<Queue<String>> getQueueOfQueues() {
+		return this.queueOfQueues;
+	}
+
+	public LinkedBlockingQueue<Queue<String>> getTypedQueueOdQueues() {
+		return this.typedQueueOdQueues;
+	}
+
+	public void setListOfLists(List<List<String>> listOfLists) {
+		this.listOfLists = listOfLists;
+	}
+
+	public void setTypedListOfLists(ArrayList<LinkedList<Person>> typedListOfLists) {
+		this.typedListOfLists = typedListOfLists;
+	}
+
+	public void setSetOfSets(Set<Set<String>> setOfSets) {
+		this.setOfSets = setOfSets;
+	}
+
+	public void setTypedSetOfSets(HashSet<LinkedHashSet<String>> typedSetOfSets) {
+		this.typedSetOfSets = typedSetOfSets;
+	}
+
+	public void setQueueOfQueues(Queue<Queue<String>> queueOfQueues) {
+		this.queueOfQueues = queueOfQueues;
+	}
+
+	public void setTypedQueueOdQueues(LinkedBlockingQueue<Queue<String>> typedQueueOdQueues) {
+		this.typedQueueOdQueues = typedQueueOdQueues;
+	}
 }

@@ -23,21 +23,36 @@
  */
 package org.jeasy.random.beans;
 
-import lombok.Data;
-
 import java.util.concurrent.DelayQueue;
 import java.util.concurrent.Delayed;
 import java.util.concurrent.TimeUnit;
 
 @SuppressWarnings("rawtypes")
-@Data
 public class DelayedQueueBean {
 
     private DelayQueue delayQueue;
     private DelayQueue<DummyDelayed> typedDelayQueue;
 
+	public DelayedQueueBean() {
+	}
 
-    private class DummyDelayed implements Delayed {
+	public DelayQueue getDelayQueue() {
+		return this.delayQueue;
+	}
+
+	public DelayQueue<DummyDelayed> getTypedDelayQueue() {
+		return this.typedDelayQueue;
+	}
+
+	public void setDelayQueue(DelayQueue delayQueue) {
+		this.delayQueue = delayQueue;
+	}
+
+	public void setTypedDelayQueue(DelayQueue<DummyDelayed> typedDelayQueue) {
+		this.typedDelayQueue = typedDelayQueue;
+	}
+
+	private class DummyDelayed implements Delayed {
 
         @Override
         public long getDelay(TimeUnit timeUnit) {

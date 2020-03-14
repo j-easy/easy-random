@@ -23,12 +23,9 @@
  */
 package org.jeasy.random.beans;
 
-import lombok.Data;
-
 import java.net.URI;
 import java.net.URL;
 
-@Data
 public class Website {
 
     private String name;
@@ -40,4 +37,40 @@ public class Website {
     @Deprecated
     private String provider;
 
+	public Website() {
+	}
+
+	public String getName() {
+		return this.name;
+	}
+
+	public URL getUrl() {
+		return this.url;
+	}
+
+	public URI getUri() {
+		return this.uri;
+	}
+
+	@Deprecated
+	public String getProvider() {
+		return this.provider;
+	}
+
+	public void setName(String name) {
+		this.name = name;
+	}
+
+	public void setUrl(URL url) {
+		this.url = url;
+	}
+
+	public void setUri(URI uri) {
+		this.uri = uri;
+	}
+
+	@Deprecated
+	public void setProvider(String provider) {
+		this.provider = provider;
+	}
 }

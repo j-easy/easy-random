@@ -26,7 +26,6 @@ package org.jeasy.random.parameters;
 import org.jeasy.random.EasyRandom;
 import org.jeasy.random.EasyRandomParameters;
 import org.jeasy.random.ObjectCreationException;
-import lombok.Data;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.Test;
 
@@ -58,9 +57,27 @@ class IgnoreRandomizationErrorsParameterTests {
         assertThatThrownBy(() -> easyRandom.nextObject(Foo.class)).isInstanceOf(ObjectCreationException.class);
     }
 
-    @Data
     static class Foo {
         private String name;
         private Callable<String> callable;
-    }
+
+		public Foo() {
+		}
+
+		public String getName() {
+			return this.name;
+		}
+
+		public Callable<String> getCallable() {
+			return this.callable;
+		}
+
+		public void setName(String name) {
+			this.name = name;
+		}
+
+		public void setCallable(Callable<String> callable) {
+			this.callable = callable;
+		}
+	}
 }

@@ -23,7 +23,6 @@
  */
 package org.jeasy.random.parameters;
 
-import lombok.Data;
 import org.jeasy.random.EasyRandom;
 import org.jeasy.random.EasyRandomParameters;
 import org.jeasy.random.api.Randomizer;
@@ -89,9 +88,27 @@ class RandomizerProviderTests {
         assertThat(foo.getBestFriend().getBestFriend().getName()).isNull();
     }
 
-    @Data
     static class Foo {
         private String name;
         private Foo bestFriend;
-    }
+
+		public Foo() {
+		}
+
+		public String getName() {
+			return this.name;
+		}
+
+		public Foo getBestFriend() {
+			return this.bestFriend;
+		}
+
+		public void setName(String name) {
+			this.name = name;
+		}
+
+		public void setBestFriend(Foo bestFriend) {
+			this.bestFriend = bestFriend;
+		}
+	}
 }

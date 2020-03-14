@@ -23,9 +23,6 @@
  */
 package org.jeasy.random.context;
 
-import lombok.Data;
-
-@Data
 public class Person {
     private String firstName;
     private String lastName;
@@ -33,4 +30,55 @@ public class Person {
     private Pet pet;
     private Country country;
     private City city;
+
+	public Person() {
+	}
+
+	public String getFirstName() {
+		return this.firstName;
+	}
+
+	public String getLastName() {
+		return this.lastName;
+	}
+
+	public String getNickname() {
+		return this.nickname;
+	}
+
+	public Pet getPet() {
+		return this.pet;
+	}
+
+	public Country getCountry() {
+		return this.country;
+	}
+
+	public City getCity() {
+		return this.city;
+	}
+
+	public void setFirstName(String firstName) {
+		this.firstName = firstName;
+	}
+
+	public void setLastName(String lastName) {
+		this.lastName = lastName;
+	}
+
+	public void setNickname(String nickname) {
+		this.nickname = nickname;
+	}
+
+	public void setPet(Pet pet) {
+		this.pet = pet;
+	}
+
+	public void setCountry(Country country) {
+		this.country = country;
+	}
+
+	public void setCity(City city) {
+		this.city = city;
+	}
 }

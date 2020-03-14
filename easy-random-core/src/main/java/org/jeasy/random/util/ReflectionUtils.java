@@ -27,7 +27,6 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import org.jeasy.random.annotation.RandomizerArgument;
 import org.jeasy.random.ObjectCreationException;
 import org.jeasy.random.api.Randomizer;
-import lombok.experimental.UtilityClass;
 import org.objenesis.ObjenesisStd;
 
 import java.beans.IntrospectionException;
@@ -51,13 +50,15 @@ import static java.util.stream.Collectors.toList;
  *
  * @author Mahmoud Ben Hassine (mahmoud.benhassine@icloud.com)
  */
-@UtilityClass
-public class ReflectionUtils {
+public final class ReflectionUtils {
 
     private static final ObjectMapper objectMapper = new ObjectMapper();
 
     static {
         objectMapper.setDateFormat(new SimpleDateFormat(DATE_FORMAT));
+    }
+
+    private ReflectionUtils() {
     }
 
     /**
@@ -182,7 +183,7 @@ public class ReflectionUtils {
      * @param primitiveType to get its wrapper type
      * @return the wrapper type of the given primitive type
      */
-    public Class<?> getWrapperType(Class<?> primitiveType) {
+    public static Class<?> getWrapperType(Class<?> primitiveType) {
         for(PrimitiveEnum p : PrimitiveEnum.values()) {
             if(p.getType().equals(primitiveType)) {
                 return p.getClazz();
@@ -517,7 +518,7 @@ public class ReflectionUtils {
         return map;
     }
 
-    private void rejectUnsupportedTypes(Class<?> type) {
+    private static void rejectUnsupportedTypes(Class<?> type) {
         if (type.equals(SynchronousQueue.class)) {
             // SynchronousQueue is not supported since it requires a consuming thread at insertion time
             throw new UnsupportedOperationException(SynchronousQueue.class.getName() + " type is not supported");

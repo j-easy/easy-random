@@ -23,10 +23,18 @@
  */
 package org.jeasy.random.beans;
 
-import lombok.Data;
-
-@Data
 public class Foo {
 
     private Bar bar;
+
+    public Foo() {
+    }
+
+    public Bar getBar() {
+        return this.bar;
+    }
+
+    public void setBar(Bar bar) {
+        this.bar = bar;
+    }
 }

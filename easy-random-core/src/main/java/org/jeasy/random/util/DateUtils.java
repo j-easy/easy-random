@@ -23,8 +23,6 @@
  */
 package org.jeasy.random.util;
 
-import lombok.experimental.UtilityClass;
-
 import java.time.ZonedDateTime;
 import java.util.Date;
 
@@ -35,8 +33,10 @@ import static java.util.Date.from;
  *
  * @author Mahmoud Ben Hassine (mahmoud.benhassine@icloud.com)
  */
-@UtilityClass
-public class DateUtils {
+public final class DateUtils {
+
+    private DateUtils() {
+    }
 
     public static final String DATE_FORMAT = "yyyy-MM-dd HH:mm:ss";
 

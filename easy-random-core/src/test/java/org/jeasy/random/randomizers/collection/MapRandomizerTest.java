@@ -66,11 +66,11 @@ class MapRandomizerTest {
 
     @Test
     void nullKeyRandomizer() {
-        assertThatThrownBy(() -> aNewMapRandomizer(null, valueRandomizer, 3)).isInstanceOf(NullPointerException.class);
+        assertThatThrownBy(() -> aNewMapRandomizer(null, valueRandomizer, 3)).isInstanceOf(IllegalArgumentException.class);
     }
 
     @Test
     void nullValueRandomizer() {
-        assertThatThrownBy(() -> aNewMapRandomizer(keyRandomizer, null, 3)).isInstanceOf(NullPointerException.class);
+        assertThatThrownBy(() -> aNewMapRandomizer(keyRandomizer, null, 3)).isInstanceOf(IllegalArgumentException.class);
     }
 }

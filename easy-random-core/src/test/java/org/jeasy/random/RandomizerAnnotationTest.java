@@ -28,7 +28,6 @@ import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 import org.jeasy.random.annotation.RandomizerArgument;
 import org.jeasy.random.randomizers.AbstractRandomizer;
-import lombok.Data;
 import org.junit.jupiter.api.Test;
 
 import org.jeasy.random.api.Randomizer;
@@ -75,7 +74,6 @@ class RandomizerAnnotationTest {
         assertThat(MyStringRandomizer.getNumConstructorCalled()).isEqualTo(1);
     }
 
-    @Data
     static class Person {
 
         @org.jeasy.random.annotation.Randomizer(value = MyStringRandomizer.class, args = {
@@ -88,7 +86,26 @@ class RandomizerAnnotationTest {
                 @RandomizerArgument(value = "1, 2, 3", type = Integer[].class)
         })
         private int age;
-    }
+
+		public Person() {
+		}
+
+		public String getName() {
+			return this.name;
+		}
+
+		public int getAge() {
+			return this.age;
+		}
+
+		public void setName(String name) {
+			this.name = name;
+		}
+
+		public void setAge(int age) {
+			this.age = age;
+		}
+	}
 
     public static class MyStringRandomizer extends AbstractRandomizer<String> {
 

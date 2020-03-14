@@ -51,7 +51,6 @@ import org.jeasy.random.beans.Person;
 import org.jeasy.random.beans.SynchronousQueueBean;
 import org.jeasy.random.beans.TypeVariableCollectionBean;
 import org.jeasy.random.beans.WildCardCollectionBean;
-import lombok.Data;
 
 @ExtendWith(MockitoExtension.class)
 @SuppressWarnings({"unchecked", "rawtypes"})
@@ -133,13 +132,47 @@ class CollectionPopulatorTest {
         assertThat(collection).containsExactly(STRING, STRING);
     }
 
-    @Data
     @SuppressWarnings("rawtypes")
     class Foo {
         private List rawInterfaceList;
         private List<String> typedInterfaceList;
         private ArrayList rawConcreteList;
         private ArrayList<String> typedConcreteList;
+
+        public Foo() {
+        }
+
+        public List getRawInterfaceList() {
+            return this.rawInterfaceList;
+        }
+
+        public List<String> getTypedInterfaceList() {
+            return this.typedInterfaceList;
+        }
+
+        public ArrayList getRawConcreteList() {
+            return this.rawConcreteList;
+        }
+
+        public ArrayList<String> getTypedConcreteList() {
+            return this.typedConcreteList;
+        }
+
+        public void setRawInterfaceList(List rawInterfaceList) {
+            this.rawInterfaceList = rawInterfaceList;
+        }
+
+        public void setTypedInterfaceList(List<String> typedInterfaceList) {
+            this.typedInterfaceList = typedInterfaceList;
+        }
+
+        public void setRawConcreteList(ArrayList rawConcreteList) {
+            this.rawConcreteList = rawConcreteList;
+        }
+
+        public void setTypedConcreteList(ArrayList<String> typedConcreteList) {
+            this.typedConcreteList = typedConcreteList;
+        }
     }
 
     /*

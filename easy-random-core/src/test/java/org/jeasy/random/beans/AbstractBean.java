@@ -23,14 +23,31 @@
  */
 package org.jeasy.random.beans;
 
-import lombok.Data;
-
 import java.util.Date;
 
 @SuppressWarnings("rawtypes")
-@Data
 public class AbstractBean {
 
     private Comparable c1;
     private Comparable<Date> c2;
+
+	public AbstractBean() {
+	}
+
+	public Comparable getC1() {
+		return this.c1;
+	}
+
+	public Comparable<Date> getC2() {
+		return this.c2;
+	}
+
+	public void setC1(Comparable c1) {
+		this.c1 = c1;
+	}
+
+	public void setC2(Comparable<Date> c2) {
+		this.c2 = c2;
+	}
+	
 }

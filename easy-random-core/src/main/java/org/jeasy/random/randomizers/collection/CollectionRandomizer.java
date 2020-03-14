@@ -24,7 +24,6 @@
 package org.jeasy.random.randomizers.collection;
 
 import org.jeasy.random.api.Randomizer;
-import lombok.NonNull;
 
 import java.util.Collection;
 
@@ -47,7 +46,10 @@ abstract class CollectionRandomizer<T> implements Randomizer<Collection<T>> {
         this(delegate, abs(aNewByteRandomizer().getRandomValue()));
     }
 
-    CollectionRandomizer(@NonNull final Randomizer<T> delegate, final int nbElements) {
+    CollectionRandomizer(final Randomizer<T> delegate, final int nbElements) {
+        if (delegate == null) {
+            throw new IllegalArgumentException("delegate must not be null");
+        }
         checkArguments(nbElements);
         this.nbElements = nbElements;
         this.delegate = delegate;

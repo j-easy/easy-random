@@ -23,9 +23,6 @@
  */
 package org.jeasy.random.beans;
 
-import lombok.Data;
-
-@Data
 public class BeanWithDefaultFieldValues {
     private String defaultNonNullValue = "default";
     private String defaultNonNullValueSetByConstructor;
@@ -33,4 +30,20 @@ public class BeanWithDefaultFieldValues {
     public BeanWithDefaultFieldValues() {
         defaultNonNullValueSetByConstructor = "defaultSetByConstructor";
     }
+
+	public String getDefaultNonNullValue() {
+		return this.defaultNonNullValue;
+	}
+
+	public String getDefaultNonNullValueSetByConstructor() {
+		return this.defaultNonNullValueSetByConstructor;
+	}
+
+	public void setDefaultNonNullValue(String defaultNonNullValue) {
+		this.defaultNonNullValue = defaultNonNullValue;
+	}
+
+	public void setDefaultNonNullValueSetByConstructor(String defaultNonNullValueSetByConstructor) {
+		this.defaultNonNullValueSetByConstructor = defaultNonNullValueSetByConstructor;
+	}
 }
