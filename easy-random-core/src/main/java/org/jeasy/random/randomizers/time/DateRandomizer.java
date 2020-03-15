@@ -27,9 +27,10 @@ import org.jeasy.random.EasyRandomParameters;
 import org.jeasy.random.api.Randomizer;
 import org.jeasy.random.randomizers.range.DateRangeRandomizer;
 
+import java.time.ZonedDateTime;
 import java.util.Date;
 
-import static org.jeasy.random.util.DateUtils.toDate;
+import static java.util.Date.from;
 
 /**
  * Generate a random {@link Date}.
@@ -82,5 +83,9 @@ public class DateRandomizer implements Randomizer<Date> {
     @Override
     public Date getRandomValue() {
         return delegate.getRandomValue();
+    }
+
+    private Date toDate(ZonedDateTime zonedDateTime) {
+        return from(zonedDateTime.toInstant());
     }
 }

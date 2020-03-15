@@ -30,11 +30,6 @@ import org.objenesis.ObjenesisStd;
 
 import java.lang.annotation.Annotation;
 import java.lang.reflect.*;
-import java.math.BigDecimal;
-import java.math.BigInteger;
-import java.time.LocalDate;
-import java.time.LocalDateTime;
-import java.time.LocalTime;
 import java.util.*;
 import java.util.concurrent.*;
 import java.util.function.Supplier;
@@ -44,6 +39,7 @@ import static java.lang.String.format;
 import static java.util.Arrays.asList;
 import static java.util.Locale.ENGLISH;
 import static java.util.stream.Collectors.toList;
+import static org.jeasy.random.util.ConversionUtils.convertArguments;
 
 /**
  * Reflection utility methods.
@@ -629,50 +625,7 @@ public final class ReflectionUtils {
         return true;
     }
 
-    private static Object[] convertArguments(final RandomizerArgument[] declaredArguments) {
-        int numberOfArguments = declaredArguments.length;
-        Object[] arguments = new Object[numberOfArguments];
-        for (int i = 0; i < numberOfArguments; i++) {
-            Class<?> type = declaredArguments[i].type();
-            String value = declaredArguments[i].value();
-            // issue 299: if argument type is array, split values before conversion
-            if (type.isArray()) {
-                Object[] values = Stream.of(value.split(",")).map(String::trim).toArray();
-                arguments[i] = convertArray(values, type);
-            } else {
-                arguments[i] = convertValue(value, type);
-            }
-        }
-        return arguments;
-    }
 
-    private static Object convertValue(String value, Class<?> targetType) {
-        if(Boolean.class.equals(targetType) || Boolean.TYPE.equals(targetType)) return Boolean.parseBoolean(value);
-        if(Byte.class.equals(targetType) || Byte.TYPE.equals(targetType)) return Byte.parseByte(value);
-        if(Short.class.equals(targetType) || Short.TYPE.equals(targetType)) return Short.parseShort(value);
-        if(Integer.class.equals(targetType) || Integer.TYPE.equals(targetType)) return Integer.parseInt(value);
-        if(Long.class.equals(targetType) || Long.TYPE.equals(targetType)) return Long.parseLong(value);
-        if(Float.class.equals(targetType) || Float.TYPE.equals(targetType)) return Float.parseFloat(value);
-        if(Double.class.equals(targetType) || Double.TYPE.equals(targetType)) return Double.parseDouble(value);
-        if(BigInteger.class.equals(targetType)) return new BigInteger(value);
-        if(BigDecimal.class.equals(targetType)) return new BigDecimal(value);
-        if(Date.class.equals(targetType)) return DateUtils.parse(value);
-        if(java.sql.Date.class.equals(targetType)) return java.sql.Date.valueOf(value);
-        if(java.sql.Time.class.equals(targetType)) return java.sql.Time.valueOf(value);
-        if(java.sql.Timestamp.class.equals(targetType)) return java.sql.Timestamp.valueOf(value);
-        if(LocalDate.class.equals(targetType)) return LocalDate.parse(value);
-        if(LocalTime.class.equals(targetType)) return LocalTime.parse(value);
-        if(LocalDateTime.class.equals(targetType)) return LocalDateTime.parse(value);
-        return value;
-    }
 
-    private static Object convertArray(Object array, Class<?> targetType) {
-        Object[] values = (Object[]) array;
-        Object convertedValuesArray = Array.newInstance(targetType.getComponentType(), values.length);
-        for (int i = 0; i < values.length; i++) {
-            Array.set(convertedValuesArray, i, convertValue((String) values[i], targetType.getComponentType()));
-        }
-        return convertedValuesArray;
-    }
 
 }
