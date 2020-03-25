@@ -97,6 +97,7 @@ public class EasyRandomParameters {
     private boolean scanClasspathForConcreteTypes;
     private boolean overrideDefaultInitialization;
     private boolean ignoreRandomizationErrors;
+    private boolean bypassSetters;
     private Range<Integer> collectionSizeRange;
     private Range<Integer> stringLengthRange;
     private Range<LocalDate> dateRange;
@@ -121,6 +122,7 @@ public class EasyRandomParameters {
         scanClasspathForConcreteTypes = false;
         overrideDefaultInitialization = false;
         ignoreRandomizationErrors = false;
+        bypassSetters = false;
         objectPoolSize = DEFAULT_OBJECT_POOL_SIZE;
         randomizationDepth = DEFAULT_RANDOMIZATION_DEPTH;
         dateRange = new Range<>(DEFAULT_DATES_RANGE.getMin().toLocalDate(), DEFAULT_DATES_RANGE.getMax().toLocalDate());
@@ -218,6 +220,14 @@ public class EasyRandomParameters {
     }
     public void setIgnoreRandomizationErrors(boolean ignoreRandomizationErrors) {
         this.ignoreRandomizationErrors = ignoreRandomizationErrors;
+    }
+
+    public boolean isBypassSetters() {
+        return bypassSetters;
+    }
+
+    public void setBypassSetters(boolean bypassSetters) {
+        this.bypassSetters = bypassSetters;
     }
 
     public ExclusionPolicy getExclusionPolicy() {
@@ -536,6 +546,17 @@ public class EasyRandomParameters {
      */
     public EasyRandomParameters overrideDefaultInitialization(boolean overrideDefaultInitialization) {
         setOverrideDefaultInitialization(overrideDefaultInitialization);
+        return this;
+    }
+
+    /**
+     * Flag to bypass setters if any and use reflection directly instead. False by default.
+     * 
+     * @param bypassSetters true if setters should be ignored
+     * @return the current {@link EasyRandomParameters} instance for method chaining
+     */
+    public EasyRandomParameters bypassSetters(boolean bypassSetters) {
+        setBypassSetters(bypassSetters);
         return this;
     }
 

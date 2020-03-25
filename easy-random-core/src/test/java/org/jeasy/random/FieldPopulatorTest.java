@@ -40,6 +40,7 @@ import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Mock;
+import org.mockito.Mockito;
 import org.mockito.junit.jupiter.MockitoExtension;
 
 import org.jeasy.random.api.Randomizer;
@@ -60,8 +61,6 @@ class FieldPopulatorTest {
     private EasyRandom easyRandom;
     @Mock
     private RegistriesRandomizerProvider randomizerProvider;
-    @Mock
-    private RandomizationContext context;
     @Mock
     private Randomizer randomizer;
     @Mock
@@ -84,6 +83,7 @@ class FieldPopulatorTest {
         Field name = Human.class.getDeclaredField("name");
         Human human = new Human();
         randomizer = new SkipRandomizer();
+        RandomizationContext context = new RandomizationContext(Human.class, new EasyRandomParameters());
         when(randomizerProvider.getRandomizerByField(name, context)).thenReturn(randomizer);
 
         // When
@@ -98,6 +98,7 @@ class FieldPopulatorTest {
         // Given
         Field name = Human.class.getDeclaredField("name");
         Human human = new Human();
+        RandomizationContext context = new RandomizationContext(Human.class, new EasyRandomParameters());
         when(randomizerProvider.getRandomizerByField(name, context)).thenReturn(randomizer);
         when(randomizer.getRandomValue()).thenReturn(NAME);
 
@@ -114,6 +115,7 @@ class FieldPopulatorTest {
         Field strings = ArrayBean.class.getDeclaredField("strings");
         ArrayBean arrayBean = new ArrayBean();
         String[] object = new String[0];
+        RandomizationContext context = new RandomizationContext(ArrayBean.class, new EasyRandomParameters());
         when(arrayPopulator.getRandomArray(strings.getType(), context)).thenReturn(object);
 
         // When
@@ -129,6 +131,7 @@ class FieldPopulatorTest {
         Field strings = CollectionBean.class.getDeclaredField("typedCollection");
         CollectionBean collectionBean = new CollectionBean();
         Collection<Person> persons = Collections.emptyList();
+        RandomizationContext context = new RandomizationContext(CollectionBean.class, new EasyRandomParameters());
 
         // When
         fieldPopulator.populateField(collectionBean, strings, context);
@@ -143,6 +146,7 @@ class FieldPopulatorTest {
         Field strings = MapBean.class.getDeclaredField("typedMap");
         MapBean mapBean = new MapBean();
         Map<Integer, Person> idToPerson = new HashMap<>();
+        RandomizationContext context = new RandomizationContext(MapBean.class, new EasyRandomParameters());
 
         // When
         fieldPopulator.populateField(mapBean, strings, context);
@@ -156,6 +160,7 @@ class FieldPopulatorTest {
         // Given
         Field name = Human.class.getDeclaredField("name");
         Human human = new Human();
+        RandomizationContext context = Mockito.mock(RandomizationContext.class);
         when(context.hasExceededRandomizationDepth()).thenReturn(true);
 
         // When
@@ -172,6 +177,7 @@ class FieldPopulatorTest {
       FieldPopulator fieldPopulator = new FieldPopulator(new EasyRandom(), randomizerProvider, arrayPopulator, collectionPopulator, mapPopulator);
       Field jaxbElementField = JaxbElementFieldBean.class.getDeclaredField("jaxbElementField");
       JaxbElementFieldBean jaxbElementFieldBean = new JaxbElementFieldBean();
+      RandomizationContext context = Mockito.mock(RandomizationContext.class);
 
       thenThrownBy(() -> { fieldPopulator.populateField(jaxbElementFieldBean, jaxbElementField, context); })
           .hasMessage("Unable to create type: javax.xml.bind.JAXBElement for field: jaxbElementField of class: org.jeasy.random.FieldPopulatorTest$JaxbElementFieldBean");

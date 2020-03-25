@@ -91,12 +91,16 @@ class FieldPopulator {
                     throw new ObjectCreationException(exceptionMessage, e);
                 }
             }
-            try {
-                setProperty(target, field, value);
-            } catch (InvocationTargetException e) {
-                String exceptionMessage = String.format("Unable to invoke setter for field %s of class %s",
-                        field.getName(), target.getClass().getName());
-                throw new ObjectCreationException(exceptionMessage,  e.getCause());
+            if (context.getParameters().isBypassSetters()) {
+                setFieldValue(target, field, value);
+            } else {
+                try {
+                    setProperty(target, field, value);
+                } catch (InvocationTargetException e) {
+                    String exceptionMessage = String.format("Unable to invoke setter for field %s of class %s",
+                            field.getName(), target.getClass().getName());
+                    throw new ObjectCreationException(exceptionMessage,  e.getCause());
+                }
             }
         }
         context.popStackItem();
