@@ -50,6 +50,10 @@ import static java.util.stream.Collectors.toList;
 /**
  * Reflection utility methods.
  *
+ *  <strong>This class is intended for internal use only. All public methods
+ *  (except {@link ReflectionUtils#asRandomizer(java.util.function.Supplier)}
+ *  might change between minor versions without notice.</strong>
+ *
  * @author Mahmoud Ben Hassine (mahmoud.benhassine@icloud.com)
  */
 public final class ReflectionUtils {

@@ -28,6 +28,8 @@ import java.util.Random;
 
 /**
  * Collection utility methods.
+ * 
+ * <strong>This class is intended for internal use only.</strong>
  *
  * @author Mahmoud Ben Hassine (mahmoud.benhassine@icloud.com)
  */

@@ -31,6 +31,8 @@ import static java.util.stream.Collectors.toList;
 
 /**
  * Character utility methods.
+ * 
+ * <strong>This class is intended for internal use only.</strong>
  *
  * @author Pascal Schumacher (https://github.com/PascalSchumacher)
  */

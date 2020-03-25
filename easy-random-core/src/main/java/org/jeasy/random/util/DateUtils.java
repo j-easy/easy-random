@@ -33,6 +33,8 @@ import static java.util.Date.from;
 
 /**
  * Date utilities class.
+ * 
+ * <strong>This class is intended for internal use only.</strong>
  *
  * @author Mahmoud Ben Hassine (mahmoud.benhassine@icloud.com)
  */
