@@ -67,6 +67,23 @@ class EasyRandomTest {
     }
 
     @Test
+    void shouldFailIfSetterInvocationFails() {
+        EasyRandom easyRandom = new EasyRandom();
+        Throwable thrown = catchThrowable(() -> easyRandom.nextObject(Salary.class));
+
+        assertThat(thrown).isInstanceOf(ObjectCreationException.class)
+                .hasMessageContaining("Unable to create a random instance of type class org.jeasy.random.beans.Salary");
+
+        Throwable cause = thrown.getCause();
+        assertThat(cause).isInstanceOf(ObjectCreationException.class)
+                .hasMessageContaining("Unable to invoke setter for field amount of class org.jeasy.random.beans.Salary");
+
+        Throwable rootCause = cause.getCause();
+        assertThat(rootCause).isInstanceOf(IllegalArgumentException.class)
+                .hasMessageContaining("Amount must be positive");
+    }
+
+    @Test
     void finalFieldsShouldBePopulated() {
         Person person = easyRandom.nextObject(Person.class);
 

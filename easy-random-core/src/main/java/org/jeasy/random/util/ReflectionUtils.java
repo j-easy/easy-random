@@ -128,7 +128,7 @@ public final class ReflectionUtils {
      * @param value  value to set
      * @throws IllegalAccessException if the property cannot be set
      */
-    public static void setProperty(final Object object, final Field field, final Object value) throws IllegalAccessException {
+    public static void setProperty(final Object object, final Field field, final Object value) throws IllegalAccessException, InvocationTargetException {
         try {
             PropertyDescriptor propertyDescriptor = new PropertyDescriptor(field.getName(), object.getClass());
             Method setter = propertyDescriptor.getWriteMethod();
@@ -137,7 +137,7 @@ public final class ReflectionUtils {
             } else {
                 setFieldValue(object, field, value);
             }
-        } catch (IntrospectionException | InvocationTargetException | IllegalAccessException e) {
+        } catch (IntrospectionException | IllegalAccessException e) {
             setFieldValue(object, field, value);
         }
     }

@@ -29,6 +29,7 @@ import org.jeasy.random.api.RandomizerProvider;
 import org.jeasy.random.randomizers.misc.SkipRandomizer;
 
 import java.lang.reflect.Field;
+import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Type;
 
 import static org.jeasy.random.util.CollectionUtils.randomElementOf;
@@ -90,7 +91,13 @@ class FieldPopulator {
                     throw new ObjectCreationException(exceptionMessage, e);
                 }
             }
-            setProperty(target, field, value);
+            try {
+                setProperty(target, field, value);
+            } catch (InvocationTargetException e) {
+                String exceptionMessage = String.format("Unable to invoke setter for field %s of class %s",
+                        field.getName(), target.getClass().getName());
+                throw new ObjectCreationException(exceptionMessage,  e.getCause());
+            }
         }
         context.popStackItem();
     }
