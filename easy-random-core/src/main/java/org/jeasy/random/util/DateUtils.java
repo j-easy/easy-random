@@ -37,7 +37,9 @@ import static java.util.Date.from;
  * <strong>This class is intended for internal use only.</strong>
  *
  * @author Mahmoud Ben Hassine (mahmoud.benhassine@icloud.com)
+ * @deprecated This class is deprecated since v4.3 and will be removed in v5.0
  */
+@Deprecated
 public final class DateUtils {
 
     public static final String DATE_FORMAT = "yyyy-MM-dd HH:mm:ss";
