@@ -34,6 +34,7 @@ import javax.validation.ConstraintViolation;
 import javax.validation.Validation;
 import javax.validation.Validator;
 import javax.validation.ValidatorFactory;
+import javax.validation.constraints.Digits;
 
 import org.jeasy.random.EasyRandom;
 import org.jeasy.random.EasyRandomParameters;
@@ -217,6 +218,26 @@ class BeanValidationTest {
         Set<ConstraintViolation<BeanValidationAnnotatedBean>> violations = validator.validate(bean);
 
         assertThat(violations).isEmpty();
+    }
+
+    @Test
+    void customRegistryTest() {
+        // given
+        class Salary {
+            @Digits(integer = 2, fraction = 2) // OSS developer salary.. :-)
+            private BigDecimal amount;
+        }
+        
+        EasyRandomParameters parameters = new EasyRandomParameters()
+                .randomizerRegistry(new MyCustomBeanValidationRandomizerRegistry());
+        EasyRandom easyRandom = new EasyRandom(parameters);
+        
+        // when
+        Salary salary = easyRandom.nextObject(Salary.class);
+        
+        // then
+        assertThat(salary).isNotNull();
+        assertThat(salary.amount).isLessThanOrEqualTo(new BigDecimal("99.99"));
     }
 
 }

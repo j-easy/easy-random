@@ -44,7 +44,7 @@ import java.util.Map;
 @Priority(-2)
 public class BeanValidationRandomizerRegistry implements RandomizerRegistry {
 
-    private Map<Class<? extends Annotation>, BeanValidationAnnotationHandler> annotationHandlers = new HashMap<>();
+    protected Map<Class<? extends Annotation>, BeanValidationAnnotationHandler> annotationHandlers = new HashMap<>();
 
     @Override
     public void init(EasyRandomParameters parameters) {
