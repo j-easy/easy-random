@@ -23,6 +23,7 @@
  */
 package org.jeasy.random;
 
+import org.assertj.core.api.Assertions;
 import org.jeasy.random.api.Randomizer;
 import org.jeasy.random.beans.*;
 import org.jeasy.random.util.ReflectionUtils;
@@ -64,6 +65,12 @@ class EasyRandomTest {
     void generatedBeansShouldBeCorrectlyPopulated() {
         Person person = easyRandom.nextObject(Person.class);
         validatePerson(person);
+    }
+
+    @Test
+    void generatedBeanWithFluentSetterShouldBeCorrectlyPopulated() {
+        FluentSetterBean fluentSetterBean = easyRandom.nextObject(FluentSetterBean.class);
+        Assertions.assertThat(fluentSetterBean.getName()).isNotEmpty();
     }
 
     @Test
