@@ -23,6 +23,8 @@
  */
 package org.jeasy.random.util;
 
+import org.apache.commons.beanutils.FluentPropertyBeanIntrospector;
+import org.apache.commons.beanutils.PropertyUtils;
 import org.jeasy.random.annotation.RandomizerArgument;
 import org.jeasy.random.ObjectCreationException;
 import org.jeasy.random.api.Randomizer;
@@ -135,7 +137,8 @@ public final class ReflectionUtils {
     public static void setProperty(final Object object, final Field field, final Object value) throws IllegalAccessException, InvocationTargetException {
         try {
             PropertyDescriptor propertyDescriptor = new PropertyDescriptor(field.getName(), object.getClass());
-            Method setter = propertyDescriptor.getWriteMethod();
+            PropertyUtils.addBeanIntrospector(new FluentPropertyBeanIntrospector());
+            Method setter = PropertyUtils.getWriteMethod(propertyDescriptor);
             if (setter != null) {
                 setter.invoke(object, value);
             } else {
