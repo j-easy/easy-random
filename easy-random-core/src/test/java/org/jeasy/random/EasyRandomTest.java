@@ -271,6 +271,25 @@ class EasyRandomTest {
         assertThat(foo.names.length).isNotEqualTo(foo.addresses.length);
     }
 
+    @Test
+    void sequencesOfDataShouldNotBeReusedBetweenRandomizers() {
+        //given
+        Set<Long> longs = new HashSet<>();
+        Set<Long> objects = new HashSet<>();
+        EasyRandom easyRandom = new EasyRandom();
+        int N = 100;
+
+        //when
+        for(int i = 0; i< N; i++) {
+            longs.add(easyRandom.nextLong());
+            objects.add(easyRandom.nextObject(ClassWithLong.class).number);
+        }
+
+        //then
+        objects.addAll(longs);
+        assertThat(longs).hasSize(2*N);
+    }
+
     private void validatePerson(final Person person) {
         assertThat(person).isNotNull();
         assertThat(person.getEmail()).isNotEmpty();
@@ -321,4 +340,8 @@ class EasyRandomTest {
         System.out.println("Failure: " + failure);
     }
 
+}
+
+class ClassWithLong {
+    long number;
 }
