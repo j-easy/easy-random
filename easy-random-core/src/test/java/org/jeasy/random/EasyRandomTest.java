@@ -281,13 +281,16 @@ class EasyRandomTest {
 
         //when
         for(int i = 0; i< N; i++) {
-            longs.add(easyRandom.nextLong());
-            objects.add(easyRandom.nextObject(ClassWithLong.class).number);
+            long nextLong = easyRandom.nextLong();
+            longs.add(nextLong);
+            long nextObject = easyRandom.nextObject(ClassWithLong.class).number;
+            objects.add(nextObject);
+            System.out.println("nextLong=" + nextLong + " nextObject="+nextObject);
         }
 
         //then
         objects.addAll(longs);
-        assertThat(longs).hasSize(2*N);
+        assertThat(objects).hasSize(2*N);
     }
 
     private void validatePerson(final Person person) {
