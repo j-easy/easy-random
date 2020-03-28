@@ -23,6 +23,7 @@
  */
 package org.jeasy.random.util;
 
+import org.apache.commons.beanutils.DefaultBeanIntrospector;
 import org.apache.commons.beanutils.FluentPropertyBeanIntrospector;
 import org.apache.commons.beanutils.PropertyUtils;
 import org.apache.commons.beanutils.PropertyUtilsBean;
@@ -139,11 +140,10 @@ public final class ReflectionUtils {
         try {
             final PropertyUtilsBean propertyUtilsBean = new PropertyUtilsBean();
             propertyUtilsBean.addBeanIntrospector(new FluentPropertyBeanIntrospector());
+            propertyUtilsBean.addBeanIntrospector(DefaultBeanIntrospector.INSTANCE);
             propertyUtilsBean.setProperty(object,field.getName(),value);
-        } catch ( IllegalAccessException e) {
+        } catch ( IllegalAccessException | NoSuchMethodException e) {
             setFieldValue(object, field, value);
-        }catch (NoSuchMethodException e){
-            throw  new RuntimeException("Cant set property",e);
         }
     }
 
