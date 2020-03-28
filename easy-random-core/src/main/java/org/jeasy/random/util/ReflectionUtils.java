@@ -25,6 +25,7 @@ package org.jeasy.random.util;
 
 import org.apache.commons.beanutils.FluentPropertyBeanIntrospector;
 import org.apache.commons.beanutils.PropertyUtils;
+import org.apache.commons.beanutils.PropertyUtilsBean;
 import org.jeasy.random.annotation.RandomizerArgument;
 import org.jeasy.random.ObjectCreationException;
 import org.jeasy.random.api.Randomizer;
@@ -136,16 +137,13 @@ public final class ReflectionUtils {
      */
     public static void setProperty(final Object object, final Field field, final Object value) throws IllegalAccessException, InvocationTargetException {
         try {
-            PropertyDescriptor propertyDescriptor = new PropertyDescriptor(field.getName(), object.getClass());
-            PropertyUtils.addBeanIntrospector(new FluentPropertyBeanIntrospector());
-            Method setter = PropertyUtils.getWriteMethod(propertyDescriptor);
-            if (setter != null) {
-                setter.invoke(object, value);
-            } else {
-                setFieldValue(object, field, value);
-            }
-        } catch (IntrospectionException | IllegalAccessException e) {
+            final PropertyUtilsBean propertyUtilsBean = new PropertyUtilsBean();
+            propertyUtilsBean.addBeanIntrospector(new FluentPropertyBeanIntrospector());
+            propertyUtilsBean.setProperty(object,field.getName(),value);
+        } catch ( IllegalAccessException e) {
             setFieldValue(object, field, value);
+        }catch (NoSuchMethodException e){
+            throw  new RuntimeException("Cant set property",e);
         }
     }
 

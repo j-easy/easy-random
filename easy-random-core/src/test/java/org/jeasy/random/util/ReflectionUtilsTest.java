@@ -26,6 +26,7 @@ package org.jeasy.random.util;
 import org.assertj.core.api.Assertions;
 import org.jeasy.random.beans.*;
 import org.junit.jupiter.api.Test;
+import org.mockito.Mockito;
 
 import java.lang.annotation.Documented;
 import java.lang.annotation.Retention;
@@ -227,10 +228,16 @@ class ReflectionUtilsTest {
 
     @Test
     void setPropertyFluentBean() throws NoSuchFieldException, InvocationTargetException, IllegalAccessException {
-        FluentSetterBean fluentSetterBean = new FluentSetterBean();
+        // given
+        FluentSetterBean fluentSetterBean = Mockito.spy(FluentSetterBean.class);
         Field nameField = FluentSetterBean.class.getField("name");
+
+        // when
         ReflectionUtils.setProperty(fluentSetterBean,nameField,"myName");
-        Assertions.assertThat(fluentSetterBean.getName()).isEqualTo("myName");
+
+        // then
+        Mockito.verify(fluentSetterBean).setName("myName");
+        assertThat(fluentSetterBean.getName()).isEqualTo("myName");
     }
 
     @SuppressWarnings("unused")
