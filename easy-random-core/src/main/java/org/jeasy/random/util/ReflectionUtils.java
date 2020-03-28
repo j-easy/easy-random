@@ -137,14 +137,20 @@ public final class ReflectionUtils {
      * @throws IllegalAccessException if the property cannot be set
      */
     public static void setProperty(final Object object, final Field field, final Object value) throws IllegalAccessException, InvocationTargetException {
-        try {
-            final PropertyUtilsBean propertyUtilsBean = new PropertyUtilsBean();
-            propertyUtilsBean.addBeanIntrospector(new FluentPropertyBeanIntrospector());
-            propertyUtilsBean.addBeanIntrospector(DefaultBeanIntrospector.INSTANCE);
-            propertyUtilsBean.setProperty(object,field.getName(),value);
-        } catch ( IllegalAccessException | NoSuchMethodException e) {
-            setFieldValue(object, field, value);
+        //TODO it seems that 'propertyUtilsBean.setProperty(..)' does not work for Maps
+        if(object instanceof java.util.Map){
+            setFieldValue(object,field,value);
+        }else{
+            try {
+                final PropertyUtilsBean propertyUtilsBean = new PropertyUtilsBean();
+                propertyUtilsBean.addBeanIntrospector(new FluentPropertyBeanIntrospector());
+                propertyUtilsBean.addBeanIntrospector(DefaultBeanIntrospector.INSTANCE);
+                propertyUtilsBean.setProperty(object,field.getName(),value);
+            } catch ( IllegalAccessException | NoSuchMethodException e) {
+                setFieldValue(object, field, value);
+            }
         }
+
     }
 
     /**
