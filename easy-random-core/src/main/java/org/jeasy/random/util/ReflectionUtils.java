@@ -139,7 +139,7 @@ public final class ReflectionUtils {
     public static void setProperty(final Object object, final Field field, final Object value) throws IllegalAccessException, InvocationTargetException {
         //TODO it seems that 'propertyUtilsBean.setProperty(..)' does not work for Maps
         if(object instanceof java.util.Map){
-            setFieldValue(object,field,value);
+            setPropertyForMap(object, field, value);
         }else{
             try {
                 final PropertyUtilsBean propertyUtilsBean = new PropertyUtilsBean();
@@ -151,6 +151,24 @@ public final class ReflectionUtils {
             }
         }
 
+    }
+
+    private static void setPropertyForMap
+            (final Object object,
+             final Field field,
+             final Object value)
+            throws IllegalAccessException, InvocationTargetException {
+        try {
+            PropertyDescriptor propertyDescriptor = new PropertyDescriptor(field.getName(), object.getClass());
+            Method setter = propertyDescriptor.getWriteMethod();
+            if (setter != null) {
+                setter.invoke(object, value);
+            } else {
+                setFieldValue(object, field, value);
+            }
+        } catch (IntrospectionException | IllegalAccessException e) {
+            setFieldValue(object, field, value);
+        }
     }
 
     /**
