@@ -34,7 +34,10 @@ import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
 import java.lang.reflect.Modifier;
-import java.util.*;
+import java.util.Collection;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
 import java.util.stream.Stream;
 
 import static java.sql.Timestamp.valueOf;
@@ -240,7 +243,7 @@ class EasyRandomTest {
             fail("Should skip fields of type Class");
         }
     }
-    
+
     @Test
     void differentCollectionsShouldBeRandomizedWithDifferentSizes() {
         // given
@@ -248,10 +251,10 @@ class EasyRandomTest {
             List<String> names;
             List<String> addresses;
         }
-        
+
         // when
         Foo foo = new EasyRandom().nextObject(Foo.class);
-        
+
         // then
         assertThat(foo.names.size()).isNotEqualTo(foo.addresses.size());
     }
@@ -280,17 +283,38 @@ class EasyRandomTest {
         int N = 100;
 
         //when
-        for(int i = 0; i< N; i++) {
+        for (int i = 0; i < N; i++) {
             long nextLong = easyRandom.nextLong();
             longs.add(nextLong);
             long nextObject = easyRandom.nextObject(ClassWithLong.class).number;
             objects.add(nextObject);
-            System.out.println("nextLong=" + nextLong + " nextObject="+nextObject);
         }
 
         //then
         objects.addAll(longs);
-        assertThat(objects).hasSize(2*N);
+        assertThat(objects).hasSize(2 * N);
+    }
+
+    @Test
+    void sequencesOfDataShouldNotBeReusedBetweenRandomizers2() {
+        //given
+        Set<Long> withLongs = new HashSet<>();
+        Set<Long> withObjectLongs = new HashSet<>();
+        EasyRandom easyRandom = new EasyRandom();
+        int N = 100;
+
+        //when
+        for (int i = 0; i < N; i++) {
+            long nextLong = easyRandom.nextObject(ClassWithLong.class).number;
+            withLongs.add(nextLong);
+            long nextObject = easyRandom.nextObject(ClassWithObjectLong.class).number;
+            withObjectLongs.add(nextObject);
+            System.out.println("nextLong=" + nextLong + " nextObject=" + nextObject);
+        }
+
+        //then
+        withObjectLongs.addAll(withLongs);
+        assertThat(withObjectLongs).hasSize(2 * N);
     }
 
     private void validatePerson(final Person person) {
@@ -322,7 +346,7 @@ class EasyRandomTest {
 
     @Disabled("Dummy test to see possible reasons of randomization failures")
     @Test
-    void tryToRandomizeAllPublicConcreteTypesInTheClasspath(){
+    void tryToRandomizeAllPublicConcreteTypesInTheClasspath() {
         int success = 0;
         int failure = 0;
         List<Class<?>> publicConcreteTypes = ReflectionUtils.getPublicConcreteSubTypesOf(Object.class);
@@ -347,4 +371,8 @@ class EasyRandomTest {
 
 class ClassWithLong {
     long number;
+}
+
+class ClassWithObjectLong {
+    Long number;
 }
