@@ -98,6 +98,7 @@ public class EasyRandomParameters {
     private boolean overrideDefaultInitialization;
     private boolean ignoreRandomizationErrors;
     private boolean bypassSetters;
+    private boolean avoidNullsOnDeepestRecursionLevel;
     private Range<Integer> collectionSizeRange;
     private Range<Integer> stringLengthRange;
     private Range<LocalDate> dateRange;
@@ -123,6 +124,7 @@ public class EasyRandomParameters {
         overrideDefaultInitialization = false;
         ignoreRandomizationErrors = false;
         bypassSetters = false;
+        avoidNullsOnDeepestRecursionLevel = true;
         objectPoolSize = DEFAULT_OBJECT_POOL_SIZE;
         randomizationDepth = DEFAULT_RANDOMIZATION_DEPTH;
         dateRange = new Range<>(DEFAULT_DATES_RANGE.getMin().toLocalDate(), DEFAULT_DATES_RANGE.getMax().toLocalDate());
@@ -228,6 +230,14 @@ public class EasyRandomParameters {
 
     public void setBypassSetters(boolean bypassSetters) {
         this.bypassSetters = bypassSetters;
+    }
+
+    public boolean isAvoidNullsOnDeepestRecursionLevel() {
+        return avoidNullsOnDeepestRecursionLevel;
+    }
+
+    public void setAvoidNullsOnDeepestRecursionLevel(boolean avoidNullsOnDeepestRecursionLevel) {
+        this.avoidNullsOnDeepestRecursionLevel = avoidNullsOnDeepestRecursionLevel;
     }
 
     public ExclusionPolicy getExclusionPolicy() {
@@ -557,6 +567,17 @@ public class EasyRandomParameters {
      */
     public EasyRandomParameters bypassSetters(boolean bypassSetters) {
         setBypassSetters(bypassSetters);
+        return this;
+    }
+
+    /**
+     * Flag to initialize fields with empty collections on the deepest level of recursive objects. True by default.
+     *
+     * @param avoidNullsOnDeepestRecursionLevel true if in place of nulls empty collections should be used
+     * @return the current {@link EasyRandomParameters} instance for method chaining
+     */
+    public EasyRandomParameters avoidNullsOnDeepestRecursionLevel(boolean avoidNullsOnDeepestRecursionLevel) {
+        setAvoidNullsOnDeepestRecursionLevel(avoidNullsOnDeepestRecursionLevel);
         return this;
     }
 

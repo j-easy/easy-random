@@ -34,7 +34,9 @@ import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
 import java.lang.reflect.Modifier;
-import java.util.*;
+import java.util.Collection;
+import java.util.HashSet;
+import java.util.List;
 import java.util.stream.Stream;
 
 import static java.sql.Timestamp.valueOf;
@@ -240,7 +242,7 @@ class EasyRandomTest {
             fail("Should skip fields of type Class");
         }
     }
-    
+
     @Test
     void differentCollectionsShouldBeRandomizedWithDifferentSizes() {
         // given
@@ -248,10 +250,10 @@ class EasyRandomTest {
             List<String> names;
             List<String> addresses;
         }
-        
+
         // when
         Foo foo = new EasyRandom().nextObject(Foo.class);
-        
+
         // then
         assertThat(foo.names.size()).isNotEqualTo(foo.addresses.size());
     }
@@ -300,7 +302,7 @@ class EasyRandomTest {
 
     @Disabled("Dummy test to see possible reasons of randomization failures")
     @Test
-    void tryToRandomizeAllPublicConcreteTypesInTheClasspath(){
+    void tryToRandomizeAllPublicConcreteTypesInTheClasspath() {
         int success = 0;
         int failure = 0;
         List<Class<?>> publicConcreteTypes = ReflectionUtils.getPublicConcreteSubTypesOf(Object.class);
@@ -321,4 +323,51 @@ class EasyRandomTest {
         System.out.println("Failure: " + failure);
     }
 
+    @Test
+    void avoidNullsInRecursiveObjectOnDeepestLevel() {
+        //given
+        EasyRandomParameters parameters = new EasyRandomParameters();
+        parameters.randomizationDepth(2);
+        parameters.objectPoolSize(200);
+        parameters.collectionSizeRange(1, 2);
+        parameters.avoidNullsOnDeepestRecursionLevel(true);
+        EasyRandom easyRandom = new EasyRandom(parameters);
+
+        //when
+        RecursiveObject actual = easyRandom.nextObject(RecursiveObject.class);
+
+        //then
+        assertThat(actual).isNotNull();
+        assertThat(actual.flatten())
+                .allMatch(it -> it.collection != null, "Collections should avoid nulls")
+                .allMatch(it -> it.array != null, "Arrays should avoid null")
+                .allMatch(it -> it.map != null, "Maps should avoid nulls")
+                .allMatch(it -> it.field != null, "Other fields should avoid nulls")
+                .anyMatch(it -> it.collection.isEmpty())
+                .anyMatch(it -> it.array.length == 0)
+                .anyMatch(it -> it.map.isEmpty());
+    }
+
+    @Test
+    void respectCollectionSizeWhenAvoidingNullsDisabled() {
+        //given
+        int minSize = 1;
+        int maxSize = 2;
+        EasyRandomParameters parameters = new EasyRandomParameters();
+        parameters.randomizationDepth(2);
+        parameters.objectPoolSize(200);
+        parameters.collectionSizeRange(minSize, maxSize);
+        parameters.avoidNullsOnDeepestRecursionLevel(false);
+        EasyRandom easyRandom = new EasyRandom(parameters);
+
+        //when
+        RecursiveObject actual = easyRandom.nextObject(RecursiveObject.class);
+
+        //then
+        assertThat(actual).isNotNull();
+        assertThat(actual.flatten())
+                .allMatch(it -> it.collection == null || it.collection.size() >= minSize && it.collection.size() < maxSize, "Collections should respect requested sizes")
+                .allMatch(it -> it.array == null || it.array.length >= minSize && it.array.length < maxSize, "Arrays should respect requested sizes")
+                .allMatch(it -> it.map == null || it.map.size() >= minSize && it.map.size() < maxSize, "Maps should respect requested sizes");
+    }
 }

@@ -58,7 +58,7 @@ class CollectionPopulator {
             collection = createEmptyCollectionForType(fieldType, randomSize);
         }
 
-        if (isParameterizedType(fieldGenericType)) { // populate only parametrized types, raw types will be empty
+        if (!context.useEmptyOnCurrentRandomizationDepth() && isParameterizedType(fieldGenericType)) { // populate only parametrized types, raw types will be empty
             ParameterizedType parameterizedType = (ParameterizedType) fieldGenericType;
             Type type = parameterizedType.getActualTypeArguments()[0];
             if (isPopulatable(type)) {

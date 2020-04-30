@@ -42,7 +42,7 @@ class ArrayPopulator {
 
     Object getRandomArray(final Class<?> fieldType, final RandomizationContext context) {
         Class<?> componentType = fieldType.getComponentType();
-        int randomSize = getRandomArraySize(context.getParameters());
+        int randomSize = getRandomArraySize(context.getParameters(), context.useEmptyOnCurrentRandomizationDepth());
         Object result = Array.newInstance(componentType, randomSize);
         for (int i = 0; i < randomSize; i++) {
             Object randomElement = easyRandom.doPopulateBean(componentType, context);
@@ -51,8 +51,11 @@ class ArrayPopulator {
         return result;
     }
 
-    private int getRandomArraySize(EasyRandomParameters parameters) {
+    private int getRandomArraySize(EasyRandomParameters parameters, boolean hasReachedRandomizationDepth) {
         EasyRandomParameters.Range<Integer> collectionSizeRange = parameters.getCollectionSizeRange();
+        if (hasReachedRandomizationDepth) {
+            return 0;
+        }
         return new IntegerRangeRandomizer(collectionSizeRange.getMin(), collectionSizeRange.getMax(), easyRandom.nextLong()).getRandomValue();
     }
 }

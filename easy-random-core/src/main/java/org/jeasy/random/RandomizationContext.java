@@ -96,6 +96,11 @@ class RandomizationContext implements RandomizerContext {
         return currentRandomizationDepth > parameters.getRandomizationDepth();
     }
 
+    boolean useEmptyOnCurrentRandomizationDepth() {
+        int currentRandomizationDepth = stack.size();
+        return parameters.isAvoidNullsOnDeepestRecursionLevel() && currentRandomizationDepth == parameters.getRandomizationDepth();
+    }
+
     private List<String> getStackedFieldNames() {
         return stack.stream().map(i -> i.getField().getName()).collect(toList());
     }

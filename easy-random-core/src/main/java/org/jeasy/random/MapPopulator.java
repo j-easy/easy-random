@@ -77,7 +77,7 @@ class MapPopulator {
             }
         }
 
-        if (isParameterizedType(fieldGenericType)) { // populate only parameterized types, raw types will be empty
+        if (!context.useEmptyOnCurrentRandomizationDepth() && isParameterizedType(fieldGenericType)) { // populate only parameterized types, raw types will be empty
             ParameterizedType parameterizedType = (ParameterizedType) fieldGenericType;
             Type keyType = parameterizedType.getActualTypeArguments()[0];
             Type valueType = parameterizedType.getActualTypeArguments()[1];
