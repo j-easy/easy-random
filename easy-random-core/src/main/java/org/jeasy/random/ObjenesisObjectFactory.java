@@ -30,7 +30,6 @@ import org.objenesis.ObjenesisStd;
 
 import java.lang.reflect.Constructor;
 
-import static org.jeasy.random.util.CollectionUtils.randomElementOf;
 import static org.jeasy.random.util.ReflectionUtils.getPublicConcreteSubTypesOf;
 import static org.jeasy.random.util.ReflectionUtils.isAbstract;
 
@@ -47,7 +46,7 @@ class ObjenesisObjectFactory implements ObjectFactory {
     @Override
     public <T> T createInstance(Class<T> type, RandomizerContext context) {
         if (context.getParameters().isScanClasspathForConcreteTypes() && isAbstract(type)) {
-            Class<?> randomConcreteSubType = randomElementOf(getPublicConcreteSubTypesOf((type)));
+            Class<?> randomConcreteSubType = context.randomElementOf(getPublicConcreteSubTypesOf((type)));
             if (randomConcreteSubType == null) {
                 throw new InstantiationError("Unable to find a matching concrete subtype of type: " + type + " in the classpath");
             } else {

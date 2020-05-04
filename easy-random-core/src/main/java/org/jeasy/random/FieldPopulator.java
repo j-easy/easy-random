@@ -32,7 +32,6 @@ import java.lang.reflect.Field;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Type;
 
-import static org.jeasy.random.util.CollectionUtils.randomElementOf;
 import static org.jeasy.random.util.ReflectionUtils.*;
 
 /**
@@ -128,7 +127,7 @@ class FieldPopulator {
             value = mapPopulator.getRandomMap(field, context);
         } else {
             if (context.getParameters().isScanClasspathForConcreteTypes() && isAbstract(fieldType) && !isEnumType(fieldType) /*enums can be abstract, but can not inherit*/) {
-                Class<?> randomConcreteSubType = randomElementOf(filterSameParameterizedTypes(getPublicConcreteSubTypesOf(fieldType), fieldGenericType));
+                Class<?> randomConcreteSubType = context.randomElementOf(filterSameParameterizedTypes(getPublicConcreteSubTypesOf(fieldType), fieldGenericType));
                 if (randomConcreteSubType == null) {
                     throw new ObjectCreationException("Unable to find a matching concrete subtype of type: " + fieldType);
                 } else {
