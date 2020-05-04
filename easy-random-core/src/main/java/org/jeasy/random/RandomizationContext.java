@@ -46,6 +46,8 @@ class RandomizationContext implements RandomizerContext {
 
     private final Class<?> type;
 
+    private final Random random;
+
     private Object rootObject;
 
     RandomizationContext(final Class<?> type, final EasyRandomParameters parameters) {
@@ -53,6 +55,7 @@ class RandomizationContext implements RandomizerContext {
         populatedBeans = new IdentityHashMap<>();
         stack = new Stack<>();
         this.parameters = parameters;
+        this.random = new Random(parameters.getSeed());
     }
 
     void addPopulatedBean(final Class<?> type, Object object) {
@@ -69,7 +72,7 @@ class RandomizationContext implements RandomizerContext {
 
     Object getPopulatedBean(final Class<?> type) {
         int actualPoolSize = populatedBeans.get(type).size();
-        int randomIndex = actualPoolSize > 1 ? nextInt(0, actualPoolSize) : 0;
+        int randomIndex = actualPoolSize > 1 ? random.nextInt(actualPoolSize) : 0;
         return populatedBeans.get(type).get(randomIndex);
     }
 
@@ -102,10 +105,6 @@ class RandomizationContext implements RandomizerContext {
 
     private List<String> toLowerCase(final List<String> strings) {
         return strings.stream().map(String::toLowerCase).collect(toList());
-    }
-
-    private int nextInt(int startInclusive, int endExclusive) {
-        return startInclusive + new Random().nextInt(endExclusive - startInclusive);
     }
 
     void setRandomizedObject(Object randomizedObject) {

@@ -32,7 +32,9 @@ import java.util.Random;
  * <strong>This class is intended for internal use only.</strong>
  *
  * @author Mahmoud Ben Hassine (mahmoud.benhassine@icloud.com)
+ * @deprecated This class is deprecated since v4.3 and will be removed in v5.0
  */
+@Deprecated
 public final class CollectionUtils {
 
     private CollectionUtils() {
