@@ -23,14 +23,9 @@
  */
 package org.jeasy.random.randomizers.range;
 
-import org.jeasy.random.EasyRandomParameters;
-
 import java.time.Instant;
 import java.time.LocalDateTime;
-import java.time.OffsetDateTime;
-import java.time.ZoneId;
 import java.time.ZoneOffset;
-import java.time.zone.ZoneRules;
 
 /**
  * Generate a random {@link LocalDateTime} in the given range.
@@ -106,10 +101,7 @@ public class LocalDateTimeRangeRandomizer extends AbstractRangeRandomizer<LocalD
         long minSeconds = min.toEpochSecond(ZoneOffset.UTC);
         long maxSeconds = max.toEpochSecond(ZoneOffset.UTC);
         long seconds = (long) nextDouble(minSeconds, maxSeconds);
-        int minNanoSeconds = min.getNano();
-        int maxNanoSeconds = max.getNano();
-        long nanoSeconds = (long) nextDouble(minNanoSeconds, maxNanoSeconds);
-        Instant instant = Instant.ofEpochSecond(seconds, nanoSeconds);
+        Instant instant = Instant.ofEpochSecond(seconds);
 
         return LocalDateTime.ofInstant(instant, ZoneOffset.UTC);
     }

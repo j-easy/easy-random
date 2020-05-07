@@ -23,10 +23,13 @@
  */
 package org.jeasy.random.randomizers.range;
 
+import org.jeasy.random.EasyRandomParameters;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.time.LocalTime;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
@@ -58,7 +61,7 @@ class LocalDateTimeRangeRandomizerTest extends AbstractRangeRandomizerTest<Local
 
         // Given
         randomizer = aNewLocalDateTimeRangeRandomizer(minDateTime, maxDateTime, SEED);
-        LocalDateTime expected = LocalDateTime.parse("+446348406-04-09T16:32:16.990898895");
+        LocalDateTime expected = LocalDateTime.parse("+446348406-04-09T16:32:16");
 
         // When
         LocalDateTime randomValue = randomizer.getRandomValue();
@@ -109,6 +112,21 @@ class LocalDateTimeRangeRandomizerTest extends AbstractRangeRandomizerTest<Local
 
         // Then
         assertThat(randomValue).isBetween(minDateTime, maxDateTime);
+    }
+
+    @Test
+    void generatedLocalDateTimeShouldHavePrecisionOfSeconds() {
+        EasyRandomParameters parameters = new EasyRandomParameters();
+        EasyRandomParameters.Range<LocalDate> dateRange = parameters.getDateRange();
+        LocalDate minDate = dateRange.getMin();
+        LocalDate maxDate = dateRange.getMax();
+        EasyRandomParameters.Range<LocalTime> timeRange = parameters.getTimeRange();
+        LocalTime minTime = timeRange.getMin();
+        LocalTime maxTime = timeRange.getMax();
+        LocalDateTimeRangeRandomizer randomizer = new LocalDateTimeRangeRandomizer(
+                LocalDateTime.of(minDate, minTime), LocalDateTime.of(maxDate, maxTime));
+        final LocalDateTime datetime = randomizer.getRandomValue();
+        assertThat(datetime.getNano()).isEqualTo(0);  // this will fail
     }
 
 }
