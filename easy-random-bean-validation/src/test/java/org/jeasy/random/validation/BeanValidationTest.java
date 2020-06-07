@@ -23,23 +23,22 @@
  */
 package org.jeasy.random.validation;
 
-import static org.assertj.core.api.Assertions.assertThat;
-
-import java.math.BigDecimal;
-import java.util.Date;
-import java.time.LocalDateTime;
-import java.util.Set;
+import org.jeasy.random.EasyRandom;
+import org.jeasy.random.EasyRandomParameters;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 
 import javax.validation.ConstraintViolation;
 import javax.validation.Validation;
 import javax.validation.Validator;
 import javax.validation.ValidatorFactory;
 import javax.validation.constraints.Digits;
+import java.math.BigDecimal;
+import java.time.LocalDateTime;
+import java.util.Date;
+import java.util.Set;
 
-import org.jeasy.random.EasyRandom;
-import org.jeasy.random.EasyRandomParameters;
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Test;
+import static org.assertj.core.api.Assertions.assertThat;
 
 class BeanValidationTest {
 
@@ -83,6 +82,14 @@ class BeanValidationTest {
         assertThat(bean.getNegative()).isLessThan(0);// @Negative int negative;
 
         assertThat(bean.getNegativeOrZero()).isLessThanOrEqualTo(0);// @NegativeOrZero int negativeOrZero;
+
+        assertThat(bean.getPositiveLong()).isGreaterThan(0);// @Positive Long positive;
+
+        assertThat(bean.getPositiveOrZeroLong()).isGreaterThanOrEqualTo(0);// @PositiveOrZero Long positiveOrZero;
+
+        assertThat(bean.getNegativeLong()).isLessThan(0);// @Negative Long negative;
+
+        assertThat(bean.getNegativeOrZeroLong()).isLessThanOrEqualTo(0);// @NegativeOrZero Long negativeOrZero;
 
         assertThat(bean.getNotBlank()).isNotBlank(); // @NotBlank String notBlank;
 
