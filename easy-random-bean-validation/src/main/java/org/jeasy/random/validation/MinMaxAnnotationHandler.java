@@ -44,16 +44,16 @@ class MinMaxAnnotationHandler extends AbstractNumberBaseAnnotationHandler {
                 .getAnnotation(field, Max.class);
         Min minAnnotation = ReflectionUtils
                 .getAnnotation(field, Min.class);
-        Long maxValue = null;
-        Long minValue = null;
+        BigDecimal maxValue = null;
+        BigDecimal minValue = null;
 
         if (maxAnnotation != null) {
-            maxValue = maxAnnotation.value();
+            maxValue = new BigDecimal(maxAnnotation.value());
         }
 
         if (minAnnotation != null) {
-            minValue = minAnnotation.value();
+            minValue = new BigDecimal(minAnnotation.value());
         }
-        return getRandomizer(fieldType, new BigDecimal(String.valueOf(minValue)), new BigDecimal(String.valueOf(maxValue)));
+        return getRandomizer(fieldType, maxValue, minValue);
     }
 }
