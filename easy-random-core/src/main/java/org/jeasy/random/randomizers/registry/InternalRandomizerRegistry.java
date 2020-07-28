@@ -23,22 +23,7 @@
  */
 package org.jeasy.random.randomizers.registry;
 
-import org.jeasy.random.annotation.Priority;
-import org.jeasy.random.EasyRandomParameters;
-import org.jeasy.random.api.Randomizer;
-import org.jeasy.random.api.RandomizerRegistry;
-import org.jeasy.random.randomizers.misc.BooleanRandomizer;
-import org.jeasy.random.randomizers.misc.LocaleRandomizer;
-import org.jeasy.random.randomizers.misc.SkipRandomizer;
-import org.jeasy.random.randomizers.misc.UUIDRandomizer;
-import org.jeasy.random.randomizers.net.UriRandomizer;
-import org.jeasy.random.randomizers.net.UrlRandomizer;
-import org.jeasy.random.randomizers.number.*;
-import org.jeasy.random.randomizers.range.DateRangeRandomizer;
-import org.jeasy.random.randomizers.range.SqlDateRangeRandomizer;
-import org.jeasy.random.randomizers.text.CharacterRandomizer;
-import org.jeasy.random.randomizers.text.StringRandomizer;
-import org.jeasy.random.randomizers.time.*;
+import static java.sql.Date.valueOf;
 
 import java.lang.reflect.Field;
 import java.math.BigDecimal;
@@ -55,7 +40,36 @@ import java.util.UUID;
 import java.util.concurrent.atomic.AtomicInteger;
 import java.util.concurrent.atomic.AtomicLong;
 
-import static java.sql.Date.valueOf;
+import javax.xml.datatype.XMLGregorianCalendar;
+
+import org.jeasy.random.EasyRandomParameters;
+import org.jeasy.random.annotation.Priority;
+import org.jeasy.random.api.Randomizer;
+import org.jeasy.random.api.RandomizerRegistry;
+import org.jeasy.random.randomizers.misc.BooleanRandomizer;
+import org.jeasy.random.randomizers.misc.LocaleRandomizer;
+import org.jeasy.random.randomizers.misc.SkipRandomizer;
+import org.jeasy.random.randomizers.misc.UUIDRandomizer;
+import org.jeasy.random.randomizers.net.UriRandomizer;
+import org.jeasy.random.randomizers.net.UrlRandomizer;
+import org.jeasy.random.randomizers.number.AtomicIntegerRandomizer;
+import org.jeasy.random.randomizers.number.AtomicLongRandomizer;
+import org.jeasy.random.randomizers.number.BigDecimalRandomizer;
+import org.jeasy.random.randomizers.number.BigIntegerRandomizer;
+import org.jeasy.random.randomizers.number.ByteRandomizer;
+import org.jeasy.random.randomizers.number.DoubleRandomizer;
+import org.jeasy.random.randomizers.number.FloatRandomizer;
+import org.jeasy.random.randomizers.number.IntegerRandomizer;
+import org.jeasy.random.randomizers.number.LongRandomizer;
+import org.jeasy.random.randomizers.number.ShortRandomizer;
+import org.jeasy.random.randomizers.range.DateRangeRandomizer;
+import org.jeasy.random.randomizers.range.SqlDateRangeRandomizer;
+import org.jeasy.random.randomizers.text.CharacterRandomizer;
+import org.jeasy.random.randomizers.text.StringRandomizer;
+import org.jeasy.random.randomizers.time.CalendarRandomizer;
+import org.jeasy.random.randomizers.time.SqlTimeRandomizer;
+import org.jeasy.random.randomizers.time.SqlTimestampRandomizer;
+import org.jeasy.random.randomizers.time.XmlGregorianCalendarRandomizer;
 
 /**
  * Registry for Java built-in types.
@@ -100,6 +114,7 @@ public class InternalRandomizerRegistry implements RandomizerRegistry {
         randomizers.put(java.sql.Time.class, new SqlTimeRandomizer(seed));
         randomizers.put(java.sql.Timestamp.class, new SqlTimestampRandomizer(seed));
         randomizers.put(Calendar.class, new CalendarRandomizer(seed));
+        randomizers.put(XMLGregorianCalendar.class, new XmlGregorianCalendarRandomizer(seed));
         randomizers.put(URL.class, new UrlRandomizer(seed));
         randomizers.put(URI.class, new UriRandomizer(seed));
         randomizers.put(Locale.class, new LocaleRandomizer(seed));

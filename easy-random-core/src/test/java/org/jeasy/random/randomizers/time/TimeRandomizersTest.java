@@ -23,7 +23,11 @@
  */
 package org.jeasy.random.randomizers.time;
 
+import static java.time.LocalDateTime.of;
+import static java.time.ZoneOffset.ofTotalSeconds;
+import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
+import static org.assertj.core.api.BDDAssertions.then;
 import static org.jeasy.random.randomizers.time.CalendarRandomizer.aNewCalendarRandomizer;
 import static org.jeasy.random.randomizers.time.DateRandomizer.aNewDateRandomizer;
 import static org.jeasy.random.randomizers.time.DurationRandomizer.aNewDurationRandomizer;
@@ -39,13 +43,10 @@ import static org.jeasy.random.randomizers.time.PeriodRandomizer.aNewPeriodRando
 import static org.jeasy.random.randomizers.time.SqlDateRandomizer.aNewSqlDateRandomizer;
 import static org.jeasy.random.randomizers.time.SqlTimeRandomizer.aNewSqlTimeRandomizer;
 import static org.jeasy.random.randomizers.time.SqlTimestampRandomizer.aNewSqlTimestampRandomizer;
+import static org.jeasy.random.randomizers.time.XmlGregorianCalendarRandomizer.aNewXmlGregorianCalendarRandomizer;
 import static org.jeasy.random.randomizers.time.YearMonthRandomizer.aNewYearMonthRandomizer;
 import static org.jeasy.random.randomizers.time.YearRandomizer.aNewYearRandomizer;
 import static org.jeasy.random.randomizers.time.ZoneOffsetRandomizer.aNewZoneOffsetRandomizer;
-import static java.time.LocalDateTime.of;
-import static java.time.ZoneOffset.ofTotalSeconds;
-import static org.assertj.core.api.Assertions.assertThat;
-import static org.assertj.core.api.BDDAssertions.then;
 
 import java.sql.Time;
 import java.sql.Timestamp;
@@ -67,12 +68,15 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.GregorianCalendar;
 
-import org.junit.jupiter.api.Test;
-import org.junit.jupiter.params.ParameterizedTest;
-import org.junit.jupiter.params.provider.MethodSource;
+import javax.xml.datatype.DatatypeConfigurationException;
+import javax.xml.datatype.DatatypeFactory;
+import javax.xml.datatype.XMLGregorianCalendar;
 
 import org.jeasy.random.api.Randomizer;
 import org.jeasy.random.randomizers.AbstractRandomizerTest;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.MethodSource;
 
 class TimeRandomizersTest extends AbstractRandomizerTest<Randomizer<?>> {
 
@@ -89,6 +93,7 @@ class TimeRandomizersTest extends AbstractRandomizerTest<Randomizer<?>> {
                 aNewCalendarRandomizer(),
                 aNewDateRandomizer(),
                 aNewGregorianCalendarRandomizer(),
+                aNewXmlGregorianCalendarRandomizer(),
                 aNewInstantRandomizer(),
                 aNewLocalDateTimeRandomizer(),
                 aNewOffsetDateTimeRandomizer(),
@@ -101,19 +106,28 @@ class TimeRandomizersTest extends AbstractRandomizerTest<Randomizer<?>> {
 
     @ParameterizedTest
     @MethodSource("generateRandomizers")
-    void generatedTimeShouldNotBeNull(Randomizer<?> randomizer) {
+    void generatedTimeShouldNotBeNull(final Randomizer<?> randomizer) {
         // when
-        Object randomNumber = randomizer.getRandomValue();
+        final Object randomNumber = randomizer.getRandomValue();
 
         then(randomNumber).isNotNull();
     }
 
     static Object[][] generateSeededRandomizersAndTheirExpectedValues() {
-        Calendar expectedCalendar = Calendar.getInstance();
+        final Calendar expectedCalendar = Calendar.getInstance();
         expectedCalendar.setTime(new Date(1718736844570L));
 
-        GregorianCalendar expectedGregorianCalendar = new GregorianCalendar();
+        final GregorianCalendar expectedGregorianCalendar = new GregorianCalendar();
         expectedGregorianCalendar.setTimeInMillis(5106534569952410475L);
+
+        XMLGregorianCalendar expectedXmlGregorianCalendar;
+
+        try {
+            expectedXmlGregorianCalendar = DatatypeFactory.newInstance()
+                .newXMLGregorianCalendar(expectedGregorianCalendar);
+        } catch (final DatatypeConfigurationException dce){
+            expectedXmlGregorianCalendar = null;
+        }
 
         return new Object[][] {
                 { aNewDurationRandomizer(SEED), Duration.of(72L, ChronoUnit.HOURS) },
@@ -129,6 +143,7 @@ class TimeRandomizersTest extends AbstractRandomizerTest<Randomizer<?>> {
                 { aNewCalendarRandomizer(SEED), expectedCalendar },
                 { aNewDateRandomizer(SEED), new Date(1718736844570L) },
                 { aNewGregorianCalendarRandomizer(SEED), expectedGregorianCalendar },
+                { aNewXmlGregorianCalendarRandomizer(SEED), expectedXmlGregorianCalendar },
                 { aNewInstantRandomizer(SEED), Instant.ofEpochSecond(1718736844L, 570000000) },
                 { aNewLocalDateTimeRandomizer(SEED), LocalDateTime.of(2024, Month.MARCH, 20, 16, 42, 58, 0) },
                 { aNewOffsetDateTimeRandomizer(SEED), OffsetDateTime.of(of(2024, Month.MARCH, 20, 16, 42, 58, 0), ofTotalSeconds(28923)) },
@@ -141,9 +156,9 @@ class TimeRandomizersTest extends AbstractRandomizerTest<Randomizer<?>> {
 
     @ParameterizedTest
     @MethodSource("generateSeededRandomizersAndTheirExpectedValues")
-    void shouldGenerateTheSameValueForTheSameSeed(Randomizer<?> randomizer, Object expected) {
+    void shouldGenerateTheSameValueForTheSameSeed(final Randomizer<?> randomizer, final Object expected) {
         //when
-        Object actual = randomizer.getRandomValue();
+        final Object actual = randomizer.getRandomValue();
 
         then(actual).isEqualTo(expected);
     }
