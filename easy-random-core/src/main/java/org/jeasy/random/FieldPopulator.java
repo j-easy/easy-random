@@ -27,6 +27,7 @@ import org.jeasy.random.api.ContextAwareRandomizer;
 import org.jeasy.random.api.Randomizer;
 import org.jeasy.random.api.RandomizerProvider;
 import org.jeasy.random.randomizers.misc.SkipRandomizer;
+import org.jeasy.random.util.GenericField;
 
 import java.lang.reflect.Field;
 import java.lang.reflect.InvocationTargetException;
@@ -68,7 +69,7 @@ class FieldPopulator {
         this.mapPopulator = mapPopulator;
     }
 
-    void populateField(final Object target, final Field field, final RandomizationContext context) throws IllegalAccessException {
+    void populateField(final Object target, final GenericField field, final RandomizationContext context) throws IllegalAccessException {
         Randomizer<?> randomizer = getRandomizer(field, context);
         if (randomizer instanceof SkipRandomizer) {
             return;
@@ -76,7 +77,7 @@ class FieldPopulator {
         if (randomizer instanceof ContextAwareRandomizer) {
             ((ContextAwareRandomizer<?>) randomizer).setRandomizerContext(context);
         }
-        context.pushStackItem(new RandomizationContextStackItem(target, field));
+        context.pushStackItem(new RandomizationContextStackItem(target, field.getField()));
         if(!context.hasExceededRandomizationDepth()) {
             Object value;
             if (randomizer != null) {
@@ -92,10 +93,10 @@ class FieldPopulator {
                 }
             }
             if (context.getParameters().isBypassSetters()) {
-                setFieldValue(target, field, value);
+                setFieldValue(target, field.getField(), value);
             } else {
                 try {
-                    setProperty(target, field, value);
+                    setProperty(target, field.getField(), value);
                 } catch (InvocationTargetException e) {
                     String exceptionMessage = String.format("Unable to invoke setter for field %s of class %s",
                             field.getName(), target.getClass().getName());
@@ -106,26 +107,26 @@ class FieldPopulator {
         context.popStackItem();
     }
 
-    private Randomizer<?> getRandomizer(Field field, RandomizationContext context) {
+    private Randomizer<?> getRandomizer(GenericField field, RandomizationContext context) {
         // issue 241: if there is no custom randomizer by field, then check by type
-        Randomizer<?> randomizer = randomizerProvider.getRandomizerByField(field, context);
+        Randomizer<?> randomizer = randomizerProvider.getRandomizerByField(field.getField(), context);
         if (randomizer == null) {
             randomizer = randomizerProvider.getRandomizerByType(field.getType(), context);
         }
         return randomizer;
     }
 
-    private Object generateRandomValue(final Field field, final RandomizationContext context) {
+    private Object generateRandomValue(final GenericField field, final RandomizationContext context) {
         Class<?> fieldType = field.getType();
-        Type fieldGenericType = field.getGenericType();
+        Type fieldGenericType = field.getField().getGenericType();
 
         Object value;
         if (isArrayType(fieldType)) {
             value = arrayPopulator.getRandomArray(fieldType, context);
         } else if (isCollectionType(fieldType)) {
-            value = collectionPopulator.getRandomCollection(field, context);
+            value = collectionPopulator.getRandomCollection(field.getField(), context);
         } else if (isMapType(fieldType)) {
-            value = mapPopulator.getRandomMap(field, context);
+            value = mapPopulator.getRandomMap(field.getField(), context);
         } else {
             if (context.getParameters().isScanClasspathForConcreteTypes() && isAbstract(fieldType) && !isEnumType(fieldType) /*enums can be abstract, but can not inherit*/) {
                 Class<?> randomConcreteSubType = randomElementOf(filterSameParameterizedTypes(getPublicConcreteSubTypesOf(fieldType), fieldGenericType));

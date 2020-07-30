@@ -35,6 +35,7 @@ import java.util.Map;
 
 import javax.xml.bind.JAXBElement;
 
+import org.jeasy.random.util.GenericField;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
@@ -87,7 +88,7 @@ class FieldPopulatorTest {
         when(randomizerProvider.getRandomizerByField(name, context)).thenReturn(randomizer);
 
         // When
-        fieldPopulator.populateField(human, name, context);
+        fieldPopulator.populateField(human, new GenericField(name), context);
 
         // Then
         assertThat(human.getName()).isNull();
@@ -103,7 +104,7 @@ class FieldPopulatorTest {
         when(randomizer.getRandomValue()).thenReturn(NAME);
 
         // When
-        fieldPopulator.populateField(human, name, context);
+        fieldPopulator.populateField(human, new GenericField(name), context);
 
         // Then
         assertThat(human.getName()).isEqualTo(NAME);
@@ -119,7 +120,7 @@ class FieldPopulatorTest {
         when(arrayPopulator.getRandomArray(strings.getType(), context)).thenReturn(object);
 
         // When
-        fieldPopulator.populateField(arrayBean, strings, context);
+        fieldPopulator.populateField(arrayBean, new GenericField(strings), context);
 
         // Then
         assertThat(arrayBean.getStrings()).isEqualTo(object);
@@ -134,7 +135,7 @@ class FieldPopulatorTest {
         RandomizationContext context = new RandomizationContext(CollectionBean.class, new EasyRandomParameters());
 
         // When
-        fieldPopulator.populateField(collectionBean, strings, context);
+        fieldPopulator.populateField(collectionBean, new GenericField(strings), context);
 
         // Then
         assertThat(collectionBean.getTypedCollection()).isEqualTo(persons);
@@ -149,7 +150,7 @@ class FieldPopulatorTest {
         RandomizationContext context = new RandomizationContext(MapBean.class, new EasyRandomParameters());
 
         // When
-        fieldPopulator.populateField(mapBean, strings, context);
+        fieldPopulator.populateField(mapBean, new GenericField(strings), context);
 
         // Then
         assertThat(mapBean.getTypedMap()).isEqualTo(idToPerson);
@@ -164,7 +165,7 @@ class FieldPopulatorTest {
         when(context.hasExceededRandomizationDepth()).thenReturn(true);
 
         // When
-        fieldPopulator.populateField(human, name, context);
+        fieldPopulator.populateField(human, new GenericField(name), context);
 
         // Then
         assertThat(human.getName()).isNull();
@@ -179,7 +180,7 @@ class FieldPopulatorTest {
       JaxbElementFieldBean jaxbElementFieldBean = new JaxbElementFieldBean();
       RandomizationContext context = Mockito.mock(RandomizationContext.class);
 
-      thenThrownBy(() -> { fieldPopulator.populateField(jaxbElementFieldBean, jaxbElementField, context); })
+      thenThrownBy(() -> { fieldPopulator.populateField(jaxbElementFieldBean, new GenericField(jaxbElementField), context); })
           .hasMessage("Unable to create type: javax.xml.bind.JAXBElement for field: jaxbElementField of class: org.jeasy.random.FieldPopulatorTest$JaxbElementFieldBean");
     }
 

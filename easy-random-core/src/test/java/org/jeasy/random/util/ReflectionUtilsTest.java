@@ -64,6 +64,44 @@ class ReflectionUtilsTest {
     }
 
     @Test
+    void testGetInheritedFieldsTypeVariable() throws NoSuchFieldException {
+        class Concrete extends GenericBaseClass<Boolean> {
+            public Concrete(Boolean x) {
+                super(x);
+            }
+        }
+        assertThat(ReflectionUtils.getInheritedFields(Concrete.class))
+                .containsExactlyInAnyOrder(new GenericField(GenericBaseClass.class.getDeclaredField("x"),
+                        Boolean.class));
+    }
+
+    @Test
+    void testGetInheritedFieldsMissingTypeVariable() throws NoSuchFieldException {
+        @SuppressWarnings({"unchecked", "rawtypes"})
+        class Concrete extends GenericBaseClass {
+            public Concrete(Object x) {
+                super(x);
+            }
+        }
+        assertThat(ReflectionUtils.getInheritedFields(Concrete.class))
+                .containsExactlyInAnyOrder(new GenericField(GenericBaseClass.class.getDeclaredField("x"),
+                        Object.class));
+    }
+
+    @Test
+    void testGetInheritedFieldsMultipleTypeVariables() throws NoSuchFieldException {
+        class Concrete extends GenericBaseClass2<String, Integer> {
+
+            public Concrete(String x, Integer y) {
+                super(x, y);
+            }
+        }
+        assertThat(ReflectionUtils.getInheritedFields(Concrete.class))
+                .containsExactlyInAnyOrder(new GenericField(GenericBaseClass2.class.getDeclaredField("x"), String.class),
+                        new GenericField(GenericBaseClass2.class.getDeclaredField("y"), Integer.class));
+    }
+
+    @Test
     void testIsStatic() throws Exception {
         assertThat(ReflectionUtils.isStatic(Human.class.getField("SERIAL_VERSION_UID"))).isTrue();
     }

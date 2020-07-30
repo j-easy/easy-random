@@ -25,6 +25,7 @@ package org.jeasy.random;
 
 import org.jeasy.random.api.*;
 import org.jeasy.random.randomizers.misc.EnumRandomizer;
+import org.jeasy.random.util.GenericField;
 import org.jeasy.random.util.ReflectionUtils;
 
 import java.lang.reflect.Field;
@@ -148,7 +149,7 @@ public class EasyRandom extends Random {
             context.addPopulatedBean(type, result);
 
             // retrieve declared and inherited fields
-            List<Field> fields = getDeclaredFields(result);
+            List<GenericField> fields = getDeclaredFields(result);
             // we can not use type here, because with classpath scanning enabled the result can be a subtype
             fields.addAll(getInheritedFields(result.getClass()));
 
@@ -190,17 +191,17 @@ public class EasyRandom extends Random {
         return null;
     }
 
-    private <T> void populateFields(final List<Field> fields, final T result, final RandomizationContext context) throws IllegalAccessException {
-        for (final Field field : fields) {
+    private <T> void populateFields(final List<GenericField> fields, final T result, final RandomizationContext context) throws IllegalAccessException {
+        for (final GenericField field : fields) {
             populateField(field, result, context);
         }
     }
 
-    private <T> void populateField(final Field field, final T result, final RandomizationContext context) throws IllegalAccessException {
-        if (exclusionPolicy.shouldBeExcluded(field, context)) {
+    private <T> void populateField(final GenericField field, final T result, final RandomizationContext context) throws IllegalAccessException {
+        if (exclusionPolicy.shouldBeExcluded(field.getField(), context)) {
             return;
         }
-        if (!parameters.isOverrideDefaultInitialization() && getFieldValue(result, field) != null && !isPrimitiveFieldWithDefaultValue(result, field)) {
+        if (!parameters.isOverrideDefaultInitialization() && getFieldValue(result, field.getField()) != null && !isPrimitiveFieldWithDefaultValue(result, field.getField())) {
           return;
         }
         fieldPopulator.populateField(result, field, context);

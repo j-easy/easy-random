@@ -40,10 +40,12 @@ import java.time.LocalTime;
 import java.util.*;
 import java.util.concurrent.*;
 import java.util.function.Supplier;
+import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 import static java.lang.String.format;
 import static java.util.Arrays.asList;
+import static java.util.Arrays.stream;
 import static java.util.Locale.ENGLISH;
 import static java.util.stream.Collectors.toList;
 
@@ -102,8 +104,10 @@ public final class ReflectionUtils {
      * @param <T>  the actual type to introspect
      * @return list of declared fields
      */
-    public static <T> List<Field> getDeclaredFields(T type) {
-        return new ArrayList<>(asList(type.getClass().getDeclaredFields()));
+    public static <T> List<GenericField> getDeclaredFields(T type) {
+        return stream(type.getClass().getDeclaredFields())
+                .map(field -> new GenericField(field, field.getType()))
+                .collect(Collectors.toCollection(ArrayList::new));
     }
 
     /**
@@ -112,11 +116,24 @@ public final class ReflectionUtils {
      * @param type the type to introspect
      * @return list of inherited fields
      */
-    public static List<Field> getInheritedFields(Class<?> type) {
-        List<Field> inheritedFields = new ArrayList<>();
+    public static List<GenericField> getInheritedFields(Class<?> type) {
+        List<GenericField> inheritedFields = new ArrayList<>();
         while (type.getSuperclass() != null) {
             Class<?> superclass = type.getSuperclass();
-            inheritedFields.addAll(asList(superclass.getDeclaredFields()));
+            Type genericSuperclass = type.getGenericSuperclass();
+            Map<Type, Class<?>> typeVariables = new HashMap<>();
+            if (genericSuperclass instanceof ParameterizedType) {
+                Type[] actualTypeArguments = ((ParameterizedType) genericSuperclass).getActualTypeArguments();
+                TypeVariable<? extends Class<?>>[] typeParameters = superclass.getTypeParameters();
+                for (int i = 0; i < actualTypeArguments.length; i++) {
+                    if (actualTypeArguments[i] instanceof Class) {
+                        typeVariables.put(typeParameters[i], (Class<?>) actualTypeArguments[i]);
+                    }
+                }
+            }
+            inheritedFields.addAll(stream(superclass.getDeclaredFields())
+                    .map(field -> new GenericField(field, typeVariables.getOrDefault(field.getGenericType(), field.getType())))
+                    .collect(Collectors.toList()));
             type = superclass;
         }
         return inheritedFields;

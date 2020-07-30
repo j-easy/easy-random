@@ -271,6 +271,66 @@ class EasyRandomTest {
         assertThat(foo.names.length).isNotEqualTo(foo.addresses.length);
     }
 
+    @Test
+    void genericBaseClass() {
+        class Concrete extends GenericBaseClass<Integer> {
+            private final String y;
+
+            public Concrete(int x, String y) {
+                super(x);
+                this.y = y;
+            }
+
+            public String getY() {
+                return y;
+            }
+        }
+
+        Concrete concrete = easyRandom.nextObject(Concrete.class);
+        assertThat(concrete.getX().getClass()).isEqualTo(Integer.class);
+        assertThat(concrete.getY().getClass()).isEqualTo(String.class);
+    }
+
+    @Test
+    void genericBaseClassWithBean() {
+        class Concrete extends GenericBaseClass<Street> {
+            private final String y;
+
+            public Concrete(Street x, String y) {
+                super(x);
+                this.y = y;
+            }
+
+            public String getY() {
+                return y;
+            }
+        }
+
+        Concrete concrete = easyRandom.nextObject(Concrete.class);
+        assertThat(concrete.getX().getClass()).isEqualTo(Street.class);
+        assertThat(concrete.getY().getClass()).isEqualTo(String.class);
+    }
+
+    @Test
+    void boundedBaseClass() {
+        class Concrete extends BoundedBaseClass<BoundedBaseClass.IntWrapper> {
+            private final String y;
+
+            public Concrete(BoundedBaseClass.IntWrapper x, String y) {
+                super(x);
+                this.y = y;
+            }
+
+            public String getY() {
+                return y;
+            }
+        }
+
+        Concrete concrete = easyRandom.nextObject(Concrete.class);
+        assertThat(concrete.getX().getClass()).isEqualTo(BoundedBaseClass.IntWrapper.class);
+        assertThat(concrete.getY().getClass()).isEqualTo(String.class);
+    }
+
     private void validatePerson(final Person person) {
         assertThat(person).isNotNull();
         assertThat(person.getEmail()).isNotEmpty();
