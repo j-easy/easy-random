@@ -202,9 +202,7 @@
                         <aggregate>true</aggregate>
                     </configuration>
                 </plugin>
-            </plugins>
-        </pluginManagement>
-        <plugins>
+
             <plugin>
                 <groupId>com.mycila</groupId>
                 <artifactId>license-maven-plugin</artifactId>
@@ -232,6 +230,7 @@
                 </executions>
             </plugin>
         </plugins>
+                </pluginManagement>
     </build>
 
     <profiles>
