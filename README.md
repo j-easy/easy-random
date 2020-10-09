@@ -8,7 +8,6 @@
 <div align="center">
 
 [![MIT license](http://img.shields.io/badge/license-MIT-brightgreen.svg?style=flat)](http://opensource.org/licenses/MIT)
-[![Coverage Status](https://coveralls.io/repos/j-easy/easy-random/badge.svg?branch=master&service=github)](https://coveralls.io/github/j-easy/easy-random?branch=master)
 [![Build Status](https://github.com/j-easy/easy-random/workflows/Java%20CI/badge.svg)](https://github.com/j-easy/easy-random/actions)
 [![Maven Central](https://maven-badges.herokuapp.com/maven-central/org.jeasy/easy-random-core/badge.svg?style=flat)](https://repo1.maven.org/maven2/org/jeasy/easy-random-core/4.2.0/)
 [![Javadocs](http://www.javadoc.io/badge/org.jeasy/easy-random-core.svg)](http://www.javadoc.io/doc/org.jeasy/easy-random-core)
