@@ -63,7 +63,9 @@ public class CreditCardNumberRandomizer extends FakerBasedRandomizer<String> {
      * Create a new {@link CreditCardNumberRandomizer}.
      *
      * @return a new {@link CreditCardNumberRandomizer}
+     * @deprecated in favor of the equivalent constructor
      */
+    @Deprecated
     public static CreditCardNumberRandomizer aNewCreditCardNumberRandomizer() {
         return new CreditCardNumberRandomizer();
     }
@@ -73,7 +75,9 @@ public class CreditCardNumberRandomizer extends FakerBasedRandomizer<String> {
      *
      * @param seed the initial seed
      * @return a new {@link CreditCardNumberRandomizer}
+     * @deprecated in favor of the equivalent constructor
      */
+    @Deprecated
     public static CreditCardNumberRandomizer aNewCreditCardNumberRandomizer(final long seed) {
         return new CreditCardNumberRandomizer(seed);
     }
@@ -84,7 +88,9 @@ public class CreditCardNumberRandomizer extends FakerBasedRandomizer<String> {
      * @param seed   the initial seed
      * @param locale the locale to use
      * @return a new {@link CreditCardNumberRandomizer}
+     * @deprecated in favor of the equivalent constructor
      */
+    @Deprecated
     public static CreditCardNumberRandomizer aNewCreditCardNumberRandomizer(final long seed, final Locale locale) {
         return new CreditCardNumberRandomizer(seed, locale);
     }

@@ -74,7 +74,9 @@ public class FloatRangeRandomizer extends AbstractRangeRandomizer<Float> {
      * @param min min value
      * @param max max value
      * @return a new {@link FloatRangeRandomizer}.
+     * @deprecated in favor of the equivalent constructor
      */
+    @Deprecated
     public static FloatRangeRandomizer aNewFloatRangeRandomizer(final Float min, final Float max) {
         return new FloatRangeRandomizer(min, max);
     }
@@ -86,7 +88,9 @@ public class FloatRangeRandomizer extends AbstractRangeRandomizer<Float> {
      * @param max  max value
      * @param seed initial seed
      * @return a new {@link FloatRangeRandomizer}.
+     * @deprecated in favor of the equivalent constructor
      */
+    @Deprecated
     public static FloatRangeRandomizer aNewFloatRangeRandomizer(final Float min, final Float max, final long seed) {
         return new FloatRangeRandomizer(min, max, seed);
     }

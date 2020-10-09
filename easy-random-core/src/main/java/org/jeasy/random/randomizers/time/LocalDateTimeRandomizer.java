@@ -61,7 +61,9 @@ public class LocalDateTimeRandomizer implements Randomizer<LocalDateTime> {
      * Create a new {@link LocalDateTimeRandomizer}.
      *
      * @return a new {@link LocalDateTimeRandomizer}.
+     * @deprecated in favor of the equivalent constructor
      */
+    @Deprecated
     public static LocalDateTimeRandomizer aNewLocalDateTimeRandomizer() {
         return new LocalDateTimeRandomizer();
     }
@@ -71,7 +73,9 @@ public class LocalDateTimeRandomizer implements Randomizer<LocalDateTime> {
      *
      * @param seed initial seed
      * @return a new {@link LocalDateTimeRandomizer}.
+     * @deprecated in favor of the equivalent constructor
      */
+    @Deprecated
     public static LocalDateTimeRandomizer aNewLocalDateTimeRandomizer(final long seed) {
         return new LocalDateTimeRandomizer(seed);
     }

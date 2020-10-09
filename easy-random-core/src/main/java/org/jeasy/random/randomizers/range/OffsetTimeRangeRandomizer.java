@@ -61,7 +61,9 @@ public class OffsetTimeRangeRandomizer extends AbstractRangeRandomizer<OffsetTim
      * @param min min value
      * @param max max value
      * @return a new {@link OffsetTimeRangeRandomizer}.
+     * @deprecated in favor of the equivalent constructor
      */
+    @Deprecated
     public static OffsetTimeRangeRandomizer aNewOffsetTimeRangeRandomizer(final OffsetTime min, final OffsetTime max) {
         return new OffsetTimeRangeRandomizer(min, max);
     }
@@ -73,7 +75,9 @@ public class OffsetTimeRangeRandomizer extends AbstractRangeRandomizer<OffsetTim
      * @param max  max value
      * @param seed initial seed
      * @return a new {@link OffsetTimeRangeRandomizer}.
+     * @deprecated in favor of the equivalent constructor
      */
+    @Deprecated
     public static OffsetTimeRangeRandomizer aNewOffsetTimeRangeRandomizer(final OffsetTime min, final OffsetTime max, final long seed) {
         return new OffsetTimeRangeRandomizer(min, max, seed);
     }

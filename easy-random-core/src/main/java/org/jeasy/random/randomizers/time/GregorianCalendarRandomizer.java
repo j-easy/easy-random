@@ -55,7 +55,9 @@ public class GregorianCalendarRandomizer implements Randomizer<GregorianCalendar
      * Create a new {@link GregorianCalendarRandomizer}.
      *
      * @return a new {@link GregorianCalendarRandomizer}.
+     * @deprecated in favor of the equivalent constructor
      */
+    @Deprecated
     public static GregorianCalendarRandomizer aNewGregorianCalendarRandomizer() {
         return new GregorianCalendarRandomizer();
     }
@@ -65,7 +67,9 @@ public class GregorianCalendarRandomizer implements Randomizer<GregorianCalendar
      *
      * @param seed initial seed
      * @return a new {@link GregorianCalendarRandomizer}.
+     * @deprecated in favor of the equivalent constructor
      */
+    @Deprecated
     public static GregorianCalendarRandomizer aNewGregorianCalendarRandomizer(final long seed) {
         return new GregorianCalendarRandomizer(seed);
     }

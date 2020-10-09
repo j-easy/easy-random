@@ -90,7 +90,9 @@ public class DurationRandomizer implements Randomizer<Duration> {
      * Generated {@link Duration} objects will use {@link ChronoUnit#HOURS}.
      *
      * @return a new {@link DurationRandomizer}.
+     * @deprecated in favor of the equivalent constructor
      */
+    @Deprecated
     public static DurationRandomizer aNewDurationRandomizer() {
         return new DurationRandomizer();
     }

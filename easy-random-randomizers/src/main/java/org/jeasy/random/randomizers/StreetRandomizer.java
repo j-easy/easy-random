@@ -63,7 +63,9 @@ public class StreetRandomizer extends FakerBasedRandomizer<String> {
      * Create a new {@link StreetRandomizer}.
      *
      * @return a new {@link StreetRandomizer}
+     * @deprecated in favor of the equivalent constructor
      */
+    @Deprecated
     public static StreetRandomizer aNewStreetRandomizer() {
         return new StreetRandomizer();
     }
@@ -73,7 +75,9 @@ public class StreetRandomizer extends FakerBasedRandomizer<String> {
      *
      * @param seed the initial seed
      * @return a new {@link StreetRandomizer}
+     * @deprecated in favor of the equivalent constructor
      */
+    @Deprecated
     public static StreetRandomizer aNewStreetRandomizer(final long seed) {
         return new StreetRandomizer(seed);
     }
@@ -84,7 +88,9 @@ public class StreetRandomizer extends FakerBasedRandomizer<String> {
      * @param seed   the initial seed
      * @param locale the locale to use
      * @return a new {@link StreetRandomizer}
+     * @deprecated in favor of the equivalent constructor
      */
+    @Deprecated
     public static StreetRandomizer aNewStreetRandomizer(final long seed, final Locale locale) {
         return new StreetRandomizer(seed, locale);
     }

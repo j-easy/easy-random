@@ -81,7 +81,9 @@ public class EnumRandomizer<E extends Enum<E>> extends AbstractRandomizer<E> {
      * @param enumeration the enumeration from which this randomizer will generate random values
      * @param <E>         the type of elements in the enumeration
      * @return a new {@link EnumRandomizer}.
+     * @deprecated in favor of the equivalent constructor
      */
+    @Deprecated
     public static <E extends Enum<E>> EnumRandomizer<E> aNewEnumRandomizer(final Class<E> enumeration) {
         return new EnumRandomizer<>(enumeration);
     }
@@ -93,7 +95,9 @@ public class EnumRandomizer<E extends Enum<E>> extends AbstractRandomizer<E> {
      * @param seed        the initial seed
      * @param <E>         the type of elements in the enumeration
      * @return a new {@link EnumRandomizer}.
+     * @deprecated in favor of the equivalent constructor
      */
+    @Deprecated
     public static <E extends Enum<E>> EnumRandomizer<E> aNewEnumRandomizer(final Class<E> enumeration, final long seed) {
         return new EnumRandomizer<>(enumeration, seed);
     }
@@ -105,7 +109,9 @@ public class EnumRandomizer<E extends Enum<E>> extends AbstractRandomizer<E> {
      * @param excludedValues the values to exclude from the subset in which the random value will be picked
      * @param <E>            the type of elements in the enumeration
      * @return a new {@link EnumRandomizer}.
+     * @deprecated in favor of the equivalent constructor
      */
+    @Deprecated
     public static <E extends Enum<E>> EnumRandomizer<E> aNewEnumRandomizer(final Class<E> enumeration, final E... excludedValues) {
         return new EnumRandomizer<>(enumeration, excludedValues);
     }

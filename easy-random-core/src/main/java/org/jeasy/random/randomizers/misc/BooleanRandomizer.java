@@ -51,7 +51,9 @@ public class BooleanRandomizer extends AbstractRandomizer<Boolean> {
      * Create a new {@link BooleanRandomizer}.
      *
      * @return a new {@link BooleanRandomizer}.
+     * @deprecated in favor of the equivalent constructor
      */
+    @Deprecated
     public static BooleanRandomizer aNewBooleanRandomizer() {
         return new BooleanRandomizer();
     }
@@ -61,7 +63,9 @@ public class BooleanRandomizer extends AbstractRandomizer<Boolean> {
      *
      * @param seed initial seed
      * @return a new {@link BooleanRandomizer}.
+     * @deprecated in favor of the equivalent constructor
      */
+    @Deprecated
     public static BooleanRandomizer aNewBooleanRandomizer(final long seed) {
         return new BooleanRandomizer(seed);
     }

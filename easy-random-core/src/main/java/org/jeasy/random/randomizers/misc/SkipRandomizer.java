@@ -37,7 +37,9 @@ public class SkipRandomizer implements Randomizer<Object> {
      * Create a new {@link SkipRandomizer}.
      *
      * @return a new {@link SkipRandomizer}.
+     * @deprecated in favor of the equivalent constructor
      */
+    @Deprecated
     public static SkipRandomizer aNewSkipRandomizer() {
         return new SkipRandomizer();
     }

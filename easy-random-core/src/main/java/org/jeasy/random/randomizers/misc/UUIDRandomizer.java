@@ -53,7 +53,9 @@ public class UUIDRandomizer extends AbstractRandomizer<UUID> {
      * Create a new {@link UUIDRandomizer}.
      *
      * @return a new {@link UUIDRandomizer}.
+     * @deprecated in favor of the equivalent constructor
      */
+    @Deprecated
     public static UUIDRandomizer aNewUUIDRandomizer() {
         return new UUIDRandomizer();
     }
@@ -63,7 +65,9 @@ public class UUIDRandomizer extends AbstractRandomizer<UUID> {
      *
      * @param seed initial seed
      * @return a new {@link UUIDRandomizer}.
+     * @deprecated in favor of the equivalent constructor
      */
+    @Deprecated
     public static UUIDRandomizer aNewUUIDRandomizer(final long seed) {
         return new UUIDRandomizer(seed);
     }

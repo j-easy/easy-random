@@ -56,7 +56,9 @@ public class CalendarRandomizer implements Randomizer<Calendar> {
      * Create a new {@link CalendarRandomizer}.
      *
      * @return a new {@link CalendarRandomizer}.
+     * @deprecated in favor of the equivalent constructor
      */
+    @Deprecated
     public static CalendarRandomizer aNewCalendarRandomizer() {
         return new CalendarRandomizer();
     }
@@ -66,7 +68,9 @@ public class CalendarRandomizer implements Randomizer<Calendar> {
      *
      * @param seed initial seed
      * @return a new {@link CalendarRandomizer}.
+     * @deprecated in favor of the equivalent constructor
      */
+    @Deprecated
     public static CalendarRandomizer aNewCalendarRandomizer(final long seed) {
         return new CalendarRandomizer(seed);
     }

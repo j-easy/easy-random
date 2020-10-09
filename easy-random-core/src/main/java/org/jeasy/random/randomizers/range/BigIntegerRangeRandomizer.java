@@ -63,7 +63,9 @@ public class BigIntegerRangeRandomizer implements Randomizer<BigInteger> {
      * @param min min value
      * @param max max value
      * @return a new {@link BigIntegerRangeRandomizer}.
+     * @deprecated in favor of the equivalent constructor
      */
+    @Deprecated
     public static BigIntegerRangeRandomizer aNewBigIntegerRangeRandomizer(final Integer min, final Integer max) {
         return new BigIntegerRangeRandomizer(min, max);
     }
@@ -75,7 +77,9 @@ public class BigIntegerRangeRandomizer implements Randomizer<BigInteger> {
      * @param max  max value
      * @param seed initial seed
      * @return a new {@link BigIntegerRangeRandomizer}.
+     * @deprecated in favor of the equivalent constructor
      */
+    @Deprecated
     public static BigIntegerRangeRandomizer aNewBigIntegerRangeRandomizer(final Integer min, final Integer max, final long seed) {
         return new BigIntegerRangeRandomizer(min, max, seed);
     }

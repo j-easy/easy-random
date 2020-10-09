@@ -54,7 +54,9 @@ public class ByteRandomizer implements Randomizer<Byte> {
      * Create a new {@link ByteRandomizer}.
      *
      * @return a new {@link ByteRandomizer}.
+     * @deprecated in favor of the equivalent constructor
      */
+    @Deprecated
     public static ByteRandomizer aNewByteRandomizer() {
         return new ByteRandomizer();
     }
@@ -64,7 +66,9 @@ public class ByteRandomizer implements Randomizer<Byte> {
      *
      * @param seed initial seed
      * @return a new {@link ByteRandomizer}.
+     * @deprecated in favor of the equivalent constructor
      */
+    @Deprecated
     public static ByteRandomizer aNewByteRandomizer(final long seed) {
         return new ByteRandomizer(seed);
     }

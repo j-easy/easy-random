@@ -49,7 +49,9 @@ public class ConstantRandomizer<T> implements Randomizer<T> {
      * @param value the constant value
      * @param <T>   the type of generated elements
      * @return a new {@link ConstantRandomizer}.
+     * @deprecated in favor of the equivalent constructor
      */
+    @Deprecated
     public static <T> ConstantRandomizer<T> aNewConstantRandomizer(final T value) {
         return new ConstantRandomizer<>(value);
     }

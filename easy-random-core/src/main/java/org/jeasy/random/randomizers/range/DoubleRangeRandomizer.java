@@ -74,7 +74,9 @@ public class DoubleRangeRandomizer extends AbstractRangeRandomizer<Double> {
      * @param min min value
      * @param max max value
      * @return a new {@link DoubleRangeRandomizer}.
+     * @deprecated in favor of the equivalent constructor
      */
+    @Deprecated
     public static DoubleRangeRandomizer aNewDoubleRangeRandomizer(final Double min, final Double max) {
         return new DoubleRangeRandomizer(min, max);
     }
@@ -86,7 +88,9 @@ public class DoubleRangeRandomizer extends AbstractRangeRandomizer<Double> {
      * @param max  max value
      * @param seed initial seed
      * @return a new {@link DoubleRangeRandomizer}.
+     * @deprecated in favor of the equivalent constructor
      */
+    @Deprecated
     public static DoubleRangeRandomizer aNewDoubleRangeRandomizer(final Double min, final Double max, final long seed) {
         return new DoubleRangeRandomizer(min, max, seed);
     }

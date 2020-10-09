@@ -59,7 +59,9 @@ public class DateRangeRandomizer extends AbstractRangeRandomizer<Date> {
      * @param min min value
      * @param max max value
      * @return a new {@link DateRangeRandomizer}.
+     * @deprecated in favor of the equivalent constructor
      */
+    @Deprecated
     public static DateRangeRandomizer aNewDateRangeRandomizer(final Date min, final Date max) {
         return new DateRangeRandomizer(min, max);
     }
@@ -72,7 +74,9 @@ public class DateRangeRandomizer extends AbstractRangeRandomizer<Date> {
      * @param max  max value
      * @param seed initial seed
      * @return a new {@link DateRangeRandomizer}.
+     * @deprecated in favor of the equivalent constructor
      */
+    @Deprecated
     public static DateRangeRandomizer aNewDateRangeRandomizer(final Date min, final Date max, final long seed) {
         return new DateRangeRandomizer(min, max, seed);
     }

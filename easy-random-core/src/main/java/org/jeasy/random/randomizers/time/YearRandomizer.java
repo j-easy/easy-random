@@ -58,7 +58,9 @@ public class YearRandomizer implements Randomizer<Year> {
      * Create a new {@link YearRandomizer}.
      *
      * @return a new {@link YearRandomizer}.
+     * @deprecated in favor of the equivalent constructor
      */
+    @Deprecated
     public static YearRandomizer aNewYearRandomizer() {
         return new YearRandomizer();
     }
@@ -68,7 +70,9 @@ public class YearRandomizer implements Randomizer<Year> {
      *
      * @param seed initial seed
      * @return a new {@link YearRandomizer}.
+     * @deprecated in favor of the equivalent constructor
      */
+    @Deprecated
     public static YearRandomizer aNewYearRandomizer(final long seed) {
         return new YearRandomizer(seed);
     }

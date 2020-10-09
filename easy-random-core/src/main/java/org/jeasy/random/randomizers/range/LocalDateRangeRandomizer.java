@@ -60,7 +60,9 @@ public class LocalDateRangeRandomizer extends AbstractRangeRandomizer<LocalDate>
      * @param min min value
      * @param max max value
      * @return a new {@link LocalDateRangeRandomizer}.
+     * @deprecated in favor of the equivalent constructor
      */
+    @Deprecated
     public static LocalDateRangeRandomizer aNewLocalDateRangeRandomizer(final LocalDate min, final LocalDate max) {
         return new LocalDateRangeRandomizer(min, max);
     }
@@ -72,7 +74,9 @@ public class LocalDateRangeRandomizer extends AbstractRangeRandomizer<LocalDate>
      * @param max  max value
      * @param seed initial seed
      * @return a new {@link LocalDateRangeRandomizer}.
+     * @deprecated in favor of the equivalent constructor
      */
+    @Deprecated
     public static LocalDateRangeRandomizer aNewLocalDateRangeRandomizer(final LocalDate min, final LocalDate max, final long seed) {
         return new LocalDateRangeRandomizer(min, max, seed);
     }

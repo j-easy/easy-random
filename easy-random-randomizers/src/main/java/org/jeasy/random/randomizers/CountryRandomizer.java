@@ -63,7 +63,9 @@ public class CountryRandomizer extends FakerBasedRandomizer<String> {
      * Create a new {@link CountryRandomizer}.
      *
      * @return a new {@link CountryRandomizer}
+     * @deprecated in favor of the equivalent constructor
      */
+    @Deprecated
     public static CountryRandomizer aNewCountryRandomizer() {
         return new CountryRandomizer();
     }
@@ -73,7 +75,9 @@ public class CountryRandomizer extends FakerBasedRandomizer<String> {
      *
      * @param seed the initial seed
      * @return a new {@link CountryRandomizer}
+     * @deprecated in favor of the equivalent constructor
      */
+    @Deprecated
     public static CountryRandomizer aNewCountryRandomizer(final long seed) {
         return new CountryRandomizer(seed);
     }
@@ -84,7 +88,9 @@ public class CountryRandomizer extends FakerBasedRandomizer<String> {
      * @param seed   the initial seed
      * @param locale the locale to use
      * @return a new {@link CountryRandomizer}
+     * @deprecated in favor of the equivalent constructor
      */
+    @Deprecated
     public static CountryRandomizer aNewCountryRandomizer(final long seed, final Locale locale) {
         return new CountryRandomizer(seed, locale);
     }
