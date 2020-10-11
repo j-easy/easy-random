@@ -23,7 +23,6 @@
  */
 package org.jeasy.random;
 
-import org.assertj.core.api.Assertions;
 import org.jeasy.random.api.Randomizer;
 import org.jeasy.random.beans.*;
 import org.jeasy.random.util.ReflectionUtils;
