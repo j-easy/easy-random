@@ -206,6 +206,7 @@ If you have any question, suggestion, or feedback, do not hesitate to use the [G
 * [Adriano Machado](https://github.com/ammachado)
 * [Alberto Lagna](https://github.com/alagna)
 * [Andrew Neal](https://github.com/aeneal)
+* [Arne Zelasko](https://github.com/arnzel)
 * [Dovid Kopel](https://github.com/dovidkopel)
 * [Eric Taix](https://github.com/eric-taix)
 * [euZebe](https://github.com/euzebe)
