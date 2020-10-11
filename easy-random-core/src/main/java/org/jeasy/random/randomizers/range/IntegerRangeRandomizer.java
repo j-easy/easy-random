@@ -57,7 +57,9 @@ public class IntegerRangeRandomizer extends AbstractRangeRandomizer<Integer> {
      * @param min min value
      * @param max max value
      * @return a new {@link IntegerRangeRandomizer}.
+     * @deprecated in favor of the equivalent constructor
      */
+    @Deprecated
     public static IntegerRangeRandomizer aNewIntegerRangeRandomizer(final Integer min, final Integer max) {
         return new IntegerRangeRandomizer(min, max);
     }
@@ -69,7 +71,9 @@ public class IntegerRangeRandomizer extends AbstractRangeRandomizer<Integer> {
      * @param max  max value
      * @param seed initial seed
      * @return a new {@link IntegerRangeRandomizer}.
+     * @deprecated in favor of the equivalent constructor
      */
+    @Deprecated
     public static IntegerRangeRandomizer aNewIntegerRangeRandomizer(final Integer min, final Integer max, final long seed) {
         return new IntegerRangeRandomizer(min, max, seed);
     }

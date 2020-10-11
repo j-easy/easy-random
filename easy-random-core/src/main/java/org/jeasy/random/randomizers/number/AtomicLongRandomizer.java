@@ -56,7 +56,9 @@ public class AtomicLongRandomizer implements Randomizer<AtomicLong> {
      * Create a new {@link AtomicLongRandomizer}.
      *
      * @return a new {@link AtomicLongRandomizer}.
+     * @deprecated in favor of the equivalent constructor
      */
+    @Deprecated
     public static AtomicLongRandomizer aNewAtomicLongRandomizer() {
         return new AtomicLongRandomizer();
     }
@@ -66,7 +68,9 @@ public class AtomicLongRandomizer implements Randomizer<AtomicLong> {
      *
      * @param seed initial seed
      * @return a new {@link AtomicLongRandomizer}.
+     * @deprecated in favor of the equivalent constructor
      */
+    @Deprecated
     public static AtomicLongRandomizer aNewAtomicLongRandomizer(final long seed) {
         return new AtomicLongRandomizer(seed);
     }

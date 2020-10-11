@@ -60,7 +60,9 @@ public class LocalTimeRangeRandomizer extends AbstractRangeRandomizer<LocalTime>
      * @param min min value
      * @param max max value
      * @return a new {@link LocalTimeRangeRandomizer}.
+     * @deprecated in favor of the equivalent constructor
      */
+    @Deprecated
     public static LocalTimeRangeRandomizer aNewLocalTimeRangeRandomizer(final LocalTime min, final LocalTime max) {
         return new LocalTimeRangeRandomizer(min, max);
     }
@@ -72,7 +74,9 @@ public class LocalTimeRangeRandomizer extends AbstractRangeRandomizer<LocalTime>
      * @param max  max value
      * @param seed initial seed
      * @return a new {@link LocalTimeRangeRandomizer}.
+     * @deprecated in favor of the equivalent constructor
      */
+    @Deprecated
     public static LocalTimeRangeRandomizer aNewLocalTimeRangeRandomizer(final LocalTime min, final LocalTime max, final long seed) {
         return new LocalTimeRangeRandomizer(min, max, seed);
     }

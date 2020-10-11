@@ -73,7 +73,9 @@ public class OffsetTimeRandomizer implements Randomizer<OffsetTime> {
      *
      * @param seed initial seed
      * @return a new {@link OffsetTimeRandomizer}.
+     * @deprecated in favor of the equivalent constructor
      */
+    @Deprecated
     public static OffsetTimeRandomizer aNewOffsetTimeRandomizer(final long seed) {
         return new OffsetTimeRandomizer(seed);
     }

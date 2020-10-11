@@ -56,7 +56,9 @@ public class SqlTimestampRandomizer implements Randomizer<Timestamp> {
      * Create a new {@link SqlTimestampRandomizer}.
      *
      * @return a new {@link SqlTimestampRandomizer}.
+     * @deprecated in favor of the equivalent constructor
      */
+    @Deprecated
     public static SqlTimestampRandomizer aNewSqlTimestampRandomizer() {
         return new SqlTimestampRandomizer();
     }
@@ -66,7 +68,9 @@ public class SqlTimestampRandomizer implements Randomizer<Timestamp> {
      *
      * @param seed initial seed
      * @return a new {@link SqlTimestampRandomizer}.
+     * @deprecated in favor of the equivalent constructor
      */
+    @Deprecated
     public static SqlTimestampRandomizer aNewSqlTimestampRandomizer(final long seed) {
         return new SqlTimestampRandomizer(seed);
     }

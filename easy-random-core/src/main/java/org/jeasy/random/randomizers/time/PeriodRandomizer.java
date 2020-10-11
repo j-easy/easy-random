@@ -65,7 +65,9 @@ public class PeriodRandomizer implements Randomizer<Period> {
      * Create a new {@link PeriodRandomizer}.
      *
      * @return a new {@link PeriodRandomizer}.
+     * @deprecated in favor of the equivalent constructor
      */
+    @Deprecated
     public static PeriodRandomizer aNewPeriodRandomizer() {
         return new PeriodRandomizer();
     }
@@ -75,7 +77,9 @@ public class PeriodRandomizer implements Randomizer<Period> {
      *
      * @param seed initial seed
      * @return a new {@link PeriodRandomizer}.
+     * @deprecated in favor of the equivalent constructor
      */
+    @Deprecated
     public static PeriodRandomizer aNewPeriodRandomizer(final long seed) {
         return new PeriodRandomizer(seed);
     }

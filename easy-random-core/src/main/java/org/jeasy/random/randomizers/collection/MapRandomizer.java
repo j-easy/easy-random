@@ -84,7 +84,9 @@ public class MapRandomizer<K, V> implements Randomizer<Map<K, V>> {
      * @param <K>             the type of key elements
      * @param <V>             the type of value elements
      * @return a new {@link MapRandomizer}
+     * @deprecated in favor of the equivalent constructor
      */
+    @Deprecated
     public static <K, V> MapRandomizer<K, V> aNewMapRandomizer(final Randomizer<K> keyRandomizer, final Randomizer<V> valueRandomizer) {
         return new MapRandomizer<>(keyRandomizer, valueRandomizer, getRandomSize());
     }
@@ -98,7 +100,9 @@ public class MapRandomizer<K, V> implements Randomizer<Map<K, V>> {
      * @param <K>             the type of key elements
      * @param <V>             the type of value elements
      * @return a new {@link MapRandomizer}
+     * @deprecated in favor of the equivalent constructor
      */
+    @Deprecated
     public static <K, V> MapRandomizer<K, V> aNewMapRandomizer(final Randomizer<K> keyRandomizer, final Randomizer<V> valueRandomizer, final int nbEntries) {
         return new MapRandomizer<>(keyRandomizer, valueRandomizer, nbEntries);
     }

@@ -51,7 +51,9 @@ public class FloatRandomizer extends AbstractRandomizer<Float> {
      * Create a new {@link FloatRandomizer}.
      *
      * @return a new {@link FloatRandomizer}.
+     * @deprecated in favor of the equivalent constructor
      */
+    @Deprecated
     public static FloatRandomizer aNewFloatRandomizer() {
         return new FloatRandomizer();
     }
@@ -61,7 +63,9 @@ public class FloatRandomizer extends AbstractRandomizer<Float> {
      *
      * @param seed initial seed
      * @return a new {@link FloatRandomizer}.
+     * @deprecated in favor of the equivalent constructor
      */
+    @Deprecated
     public static FloatRandomizer aNewFloatRandomizer(final long seed) {
         return new FloatRandomizer(seed);
     }

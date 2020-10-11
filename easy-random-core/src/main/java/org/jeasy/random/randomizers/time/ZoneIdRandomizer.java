@@ -57,7 +57,9 @@ public class ZoneIdRandomizer extends AbstractRandomizer<ZoneId> {
      * Create a new {@link ZoneIdRandomizer}.
      *
      * @return a new {@link ZoneIdRandomizer}.
+     * @deprecated in favor of the equivalent constructor
      */
+    @Deprecated
     public static ZoneIdRandomizer aNewZoneIdRandomizer() {
         return new ZoneIdRandomizer();
     }
@@ -67,7 +69,9 @@ public class ZoneIdRandomizer extends AbstractRandomizer<ZoneId> {
      *
      * @param seed initial seed
      * @return a new {@link ZoneIdRandomizer}.
+     * @deprecated in favor of the equivalent constructor
      */
+    @Deprecated
     public static ZoneIdRandomizer aNewZoneIdRandomizer(final long seed) {
         return new ZoneIdRandomizer(seed);
     }

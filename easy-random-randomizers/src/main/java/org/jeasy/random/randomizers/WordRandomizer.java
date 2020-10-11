@@ -63,7 +63,9 @@ public class WordRandomizer extends FakerBasedRandomizer<String> {
      * Create a new {@link WordRandomizer}.
      *
      * @return a new {@link WordRandomizer}
+     * @deprecated in favor of the equivalent constructor
      */
+    @Deprecated
     public static WordRandomizer aNewWordRandomizer() {
         return new WordRandomizer();
     }
@@ -73,7 +75,9 @@ public class WordRandomizer extends FakerBasedRandomizer<String> {
      *
      * @param seed the initial seed
      * @return a new {@link WordRandomizer}
+     * @deprecated in favor of the equivalent constructor
      */
+    @Deprecated
     public static WordRandomizer aNewWordRandomizer(final long seed) {
         return new WordRandomizer(seed);
     }
@@ -84,7 +88,9 @@ public class WordRandomizer extends FakerBasedRandomizer<String> {
      * @param seed   the initial seed
      * @param locale the locale to use
      * @return a new {@link WordRandomizer}
+     * @deprecated in favor of the equivalent constructor
      */
+    @Deprecated
     public static WordRandomizer aNewWordRandomizer(final long seed, final Locale locale) {
         return new WordRandomizer(seed, locale);
     }

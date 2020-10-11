@@ -64,7 +64,9 @@ public class ZoneOffsetRandomizer implements Randomizer<ZoneOffset> {
      * Create a new {@link ZoneOffsetRandomizer}.
      *
      * @return a new {@link ZoneOffsetRandomizer}.
+     * @deprecated in favor of the equivalent constructor
      */
+    @Deprecated
     public static ZoneOffsetRandomizer aNewZoneOffsetRandomizer() {
         return new ZoneOffsetRandomizer();
     }
@@ -74,7 +76,9 @@ public class ZoneOffsetRandomizer implements Randomizer<ZoneOffset> {
      *
      * @param seed initial seed
      * @return a new {@link ZoneOffsetRandomizer}.
+     * @deprecated in favor of the equivalent constructor
      */
+    @Deprecated
     public static ZoneOffsetRandomizer aNewZoneOffsetRandomizer(final long seed) {
         return new ZoneOffsetRandomizer(seed);
     }

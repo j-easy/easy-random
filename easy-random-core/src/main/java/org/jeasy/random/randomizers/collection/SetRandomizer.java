@@ -61,7 +61,9 @@ public class SetRandomizer<T> extends CollectionRandomizer<T> {
      * @param delegate the {@link Randomizer} to use to generate random elements
      * @param <T>      the type of elements
      * @return a new {@link SetRandomizer}
+     * @deprecated in favor of the equivalent constructor
      */
+    @Deprecated
     public static <T> SetRandomizer<T> aNewSetRandomizer(final Randomizer<T> delegate) {
         return new SetRandomizer<>(delegate);
     }
@@ -73,7 +75,9 @@ public class SetRandomizer<T> extends CollectionRandomizer<T> {
      * @param nbElements The number of elements to generate
      * @param <T>        the type of elements
      * @return a new {@link SetRandomizer}
+     * @deprecated in favor of the equivalent constructor
      */
+    @Deprecated
     public static <T> SetRandomizer<T> aNewSetRandomizer(final Randomizer<T> delegate, final int nbElements) {
         return new SetRandomizer<>(delegate, nbElements);
     }

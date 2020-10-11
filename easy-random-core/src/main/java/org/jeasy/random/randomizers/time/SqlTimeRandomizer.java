@@ -56,7 +56,9 @@ public class SqlTimeRandomizer implements Randomizer<Time> {
      * Create a new {@link SqlTimeRandomizer}.
      *
      * @return a new {@link SqlTimeRandomizer}.
+     * @deprecated in favor of the equivalent constructor
      */
+    @Deprecated
     public static SqlTimeRandomizer aNewSqlTimeRandomizer() {
         return new SqlTimeRandomizer();
     }
@@ -66,7 +68,9 @@ public class SqlTimeRandomizer implements Randomizer<Time> {
      *
      * @param seed initial seed
      * @return a new {@link SqlTimeRandomizer}.
+     * @deprecated in favor of the equivalent constructor
      */
+    @Deprecated
     public static SqlTimeRandomizer aNewSqlTimeRandomizer(final long seed) {
         return new SqlTimeRandomizer(seed);
     }

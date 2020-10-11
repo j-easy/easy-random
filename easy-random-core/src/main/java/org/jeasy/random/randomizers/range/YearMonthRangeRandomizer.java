@@ -61,7 +61,9 @@ public class YearMonthRangeRandomizer extends AbstractRangeRandomizer<YearMonth>
      * @param min min value
      * @param max max value
      * @return a new {@link YearMonthRangeRandomizer}.
+     * @deprecated in favor of the equivalent constructor
      */
+    @Deprecated
     public static YearMonthRangeRandomizer aNewYearMonthRangeRandomizer(final YearMonth min, final YearMonth max) {
         return new YearMonthRangeRandomizer(min, max);
     }
@@ -73,7 +75,9 @@ public class YearMonthRangeRandomizer extends AbstractRangeRandomizer<YearMonth>
      * @param max  max value
      * @param seed initial seed
      * @return a new {@link YearMonthRangeRandomizer}.
+     * @deprecated in favor of the equivalent constructor
      */
+    @Deprecated
     public static YearMonthRangeRandomizer aNewYearMonthRangeRandomizer(final YearMonth min, final YearMonth max, final long seed) {
         return new YearMonthRangeRandomizer(min, max, seed);
     }

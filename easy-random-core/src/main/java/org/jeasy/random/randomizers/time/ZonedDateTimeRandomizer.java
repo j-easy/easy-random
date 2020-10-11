@@ -64,7 +64,9 @@ public class ZonedDateTimeRandomizer extends AbstractRandomizer<ZonedDateTime> {
      * Create a new {@link ZonedDateTimeRandomizer}.
      *
      * @return a new {@link ZonedDateTimeRandomizer}.
+     * @deprecated in favor of the equivalent constructor
      */
+    @Deprecated
     public static ZonedDateTimeRandomizer aNewZonedDateTimeRandomizer() {
         return new ZonedDateTimeRandomizer();
     }
@@ -74,7 +76,9 @@ public class ZonedDateTimeRandomizer extends AbstractRandomizer<ZonedDateTime> {
      *
      * @param seed initial seed
      * @return a new {@link ZonedDateTimeRandomizer}.
+     * @deprecated in favor of the equivalent constructor
      */
+    @Deprecated
     public static ZonedDateTimeRandomizer aNewZonedDateTimeRandomizer(final long seed) {
         return new ZonedDateTimeRandomizer(seed);
     }

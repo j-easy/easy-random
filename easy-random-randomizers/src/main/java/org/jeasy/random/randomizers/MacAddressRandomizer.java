@@ -66,7 +66,9 @@ public class MacAddressRandomizer extends FakerBasedRandomizer<String> {
      * Create a new {@link MacAddressRandomizer}.
      *
      * @return a new {@link MacAddressRandomizer}
+     * @deprecated in favor of the equivalent constructor
      */
+    @Deprecated
     public static MacAddressRandomizer aNewMacAddressRandomizer() {
         return new MacAddressRandomizer();
     }
@@ -77,7 +79,9 @@ public class MacAddressRandomizer extends FakerBasedRandomizer<String> {
      * @param seed
      *          the initial seed
      * @return a new {@link MacAddressRandomizer}
+     * @deprecated in favor of the equivalent constructor
      */
+    @Deprecated
     public static MacAddressRandomizer aNewMacAddressRandomizer(final long seed) {
         return new MacAddressRandomizer(seed);
     }
@@ -90,7 +94,9 @@ public class MacAddressRandomizer extends FakerBasedRandomizer<String> {
      * @param locale
      *          the locale to use
      * @return a new {@link MacAddressRandomizer}
+     * @deprecated in favor of the equivalent constructor
      */
+    @Deprecated
     public static MacAddressRandomizer aNewMacAddressRandomizer(final long seed, final Locale locale) {
         return new MacAddressRandomizer(seed, locale);
     }

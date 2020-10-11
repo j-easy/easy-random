@@ -57,7 +57,9 @@ public class ByteRangeRandomizer extends AbstractRangeRandomizer<Byte> {
      * @param min min value
      * @param max max value
      * @return a new {@link ByteRangeRandomizer}.
+     * @deprecated in favor of the equivalent constructor
      */
+    @Deprecated
     public static ByteRangeRandomizer aNewByteRangeRandomizer(final Byte min, final Byte max) {
         return new ByteRangeRandomizer(min, max);
     }
@@ -69,7 +71,9 @@ public class ByteRangeRandomizer extends AbstractRangeRandomizer<Byte> {
      * @param max  max value
      * @param seed initial seed
      * @return a new {@link ByteRangeRandomizer}.
+     * @deprecated in favor of the equivalent constructor
      */
+    @Deprecated
     public static ByteRangeRandomizer aNewByteRangeRandomizer(final Byte min, final Byte max, final long seed) {
         return new ByteRangeRandomizer(min, max, seed);
     }

@@ -57,7 +57,9 @@ public class LongRangeRandomizer extends AbstractRangeRandomizer<Long> {
      * @param min min value
      * @param max max value
      * @return a new {@link LongRangeRandomizer}.
+     * @deprecated in favor of the equivalent constructor
      */
+    @Deprecated
     public static LongRangeRandomizer aNewLongRangeRandomizer(final Long min, final Long max) {
         return new LongRangeRandomizer(min, max);
     }
@@ -69,7 +71,9 @@ public class LongRangeRandomizer extends AbstractRangeRandomizer<Long> {
      * @param max  max value
      * @param seed initial seed
      * @return a new {@link LongRangeRandomizer}.
+     * @deprecated in favor of the equivalent constructor
      */
+    @Deprecated
     public static LongRangeRandomizer aNewLongRangeRandomizer(final Long min, final Long max, final long seed) {
         return new LongRangeRandomizer(min, max, seed);
     }

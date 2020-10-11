@@ -61,7 +61,9 @@ public class QueueRandomizer<T> extends CollectionRandomizer<T> {
      * @param delegate the delegate {@link Randomizer} used to generate elements
      * @param <T>      the type of elements
      * @return a new {@link QueueRandomizer}
+     * @deprecated in favor of the equivalent constructor
      */
+    @Deprecated
     public static <T> QueueRandomizer<T> aNewQueueRandomizer(final Randomizer<T> delegate) {
         return new QueueRandomizer<>(delegate);
     }
@@ -73,7 +75,9 @@ public class QueueRandomizer<T> extends CollectionRandomizer<T> {
      * @param nbElements The number of elements to generate
      * @param <T>        the type of elements
      * @return a new {@link QueueRandomizer}
+     * @deprecated in favor of the equivalent constructor
      */
+    @Deprecated
     public static <T> QueueRandomizer<T> aNewQueueRandomizer(final Randomizer<T> delegate, final int nbElements) {
         return new QueueRandomizer<>(delegate, nbElements);
     }

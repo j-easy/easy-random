@@ -60,7 +60,9 @@ public class DateRandomizer implements Randomizer<Date> {
      * Create a new {@link DateRandomizer}.
      *
      * @return a new {@link DateRandomizer}.
+     * @deprecated in favor of the equivalent constructor
      */
+    @Deprecated
     public static DateRandomizer aNewDateRandomizer() {
         return new DateRandomizer();
     }
@@ -70,7 +72,9 @@ public class DateRandomizer implements Randomizer<Date> {
      *
      * @param seed initial seed
      * @return a new {@link DateRandomizer}.
+     * @deprecated in favor of the equivalent constructor
      */
+    @Deprecated
     public static DateRandomizer aNewDateRandomizer(final long seed) {
         return new DateRandomizer(seed);
     }

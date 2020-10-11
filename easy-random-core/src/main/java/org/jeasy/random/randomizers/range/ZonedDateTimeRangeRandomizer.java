@@ -60,7 +60,9 @@ public class ZonedDateTimeRangeRandomizer extends AbstractRangeRandomizer<ZonedD
      * @param min min value
      * @param max max value
      * @return a new {@link ZonedDateTimeRangeRandomizer}.
+     * @deprecated in favor of the equivalent constructor
      */
+    @Deprecated
     public static ZonedDateTimeRangeRandomizer aNewZonedDateTimeRangeRandomizer(final ZonedDateTime min, final ZonedDateTime max) {
         return new ZonedDateTimeRangeRandomizer(min, max);
     }
@@ -72,7 +74,9 @@ public class ZonedDateTimeRangeRandomizer extends AbstractRangeRandomizer<ZonedD
      * @param max  max value
      * @param seed initial seed
      * @return a new {@link ZonedDateTimeRangeRandomizer}.
+     * @deprecated in favor of the equivalent constructor
      */
+    @Deprecated
     public static ZonedDateTimeRangeRandomizer aNewZonedDateTimeRangeRandomizer(final ZonedDateTime min, final ZonedDateTime max, final long seed) {
         return new ZonedDateTimeRangeRandomizer(min, max, seed);
     }
