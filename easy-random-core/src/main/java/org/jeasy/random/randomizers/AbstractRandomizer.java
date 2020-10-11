@@ -71,7 +71,7 @@ public abstract class AbstractRandomizer<T> implements Randomizer<T>  {
         } else {
             return value;
         }
-        // NB: ThreadLocalRandom.current().nextDouble(min, max)) cannot be use because the seed is not configurable
-        // and is created per thread (see Javadoc)
+        // NB: ThreadLocalRandom.current().nextDouble(min, max)) cannot be used
+        // because the seed is not configurable and is created per thread (see Javadoc)
     }
 }
