@@ -77,10 +77,10 @@ class FieldPopulator {
         if (randomizer instanceof SkipRandomizer) {
             return;
         }
+        context.pushStackItem(new RandomizationContextStackItem(target, field));
         if (randomizer instanceof ContextAwareRandomizer) {
             ((ContextAwareRandomizer<?>) randomizer).setRandomizerContext(context);
         }
-        context.pushStackItem(new RandomizationContextStackItem(target, field));
         if(!context.hasExceededRandomizationDepth()) {
             Object value;
             if (randomizer != null) {
