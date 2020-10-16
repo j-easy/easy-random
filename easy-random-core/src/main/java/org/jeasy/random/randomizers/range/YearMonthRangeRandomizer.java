@@ -37,8 +37,8 @@ public class YearMonthRangeRandomizer extends AbstractRangeRandomizer<YearMonth>
     /**
      * Create a new {@link YearMonthRangeRandomizer}.
      *
-     * @param min min value
-     * @param max max value
+     * @param min min value (inclusive)
+     * @param max max value (exclusive)
      */
     public YearMonthRangeRandomizer(final YearMonth min, final YearMonth max) {
         super(min, max);
@@ -47,8 +47,8 @@ public class YearMonthRangeRandomizer extends AbstractRangeRandomizer<YearMonth>
     /**
      * Create a new {@link YearMonthRangeRandomizer}.
      *
-     * @param min  min value
-     * @param max  max value
+     * @param min  min value (inclusive)
+     * @param max  max value (exclusive)
      * @param seed initial seed
      */
     public YearMonthRangeRandomizer(final YearMonth min, final YearMonth max, final long seed) {
@@ -58,8 +58,8 @@ public class YearMonthRangeRandomizer extends AbstractRangeRandomizer<YearMonth>
     /**
      * Create a new {@link YearMonthRangeRandomizer}.
      *
-     * @param min min value
-     * @param max max value
+     * @param min min value (inclusive)
+     * @param max max value (exclusive)
      * @return a new {@link YearMonthRangeRandomizer}.
      * @deprecated in favor of the equivalent constructor
      */
@@ -71,8 +71,8 @@ public class YearMonthRangeRandomizer extends AbstractRangeRandomizer<YearMonth>
     /**
      * Create a new {@link YearMonthRangeRandomizer}.
      *
-     * @param min  min value
-     * @param max  max value
+     * @param min  min value (inclusive)
+     * @param max  max value (exclusive)
      * @param seed initial seed
      * @return a new {@link YearMonthRangeRandomizer}.
      * @deprecated in favor of the equivalent constructor

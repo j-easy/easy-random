@@ -58,8 +58,8 @@ public abstract class AbstractRandomizer<T> implements Randomizer<T>  {
     /**
      * Return a random double in the given range.
      *
-     * @param min value
-     * @param max value
+     * @param min value (inclusive)
+     * @param max value (exclusive)
      * @return random double in the given range
      */
     protected double nextDouble(final double min, final double max) {

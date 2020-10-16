@@ -42,8 +42,8 @@ public class LocalDateTimeRangeRandomizer extends AbstractRangeRandomizer<LocalD
     /**
      * Create a new {@link LocalDateTimeRangeRandomizer}.
      *
-     * @param min min value
-     * @param max max value
+     * @param min min value (inclusive)
+     * @param max max value (exclusive)
      */
     public LocalDateTimeRangeRandomizer(final LocalDateTime min, final LocalDateTime max) {
         super(min, max);
@@ -52,8 +52,8 @@ public class LocalDateTimeRangeRandomizer extends AbstractRangeRandomizer<LocalD
     /**
      * Create a new {@link LocalDateTimeRangeRandomizer}.
      *
-     * @param min  min value
-     * @param max  max value
+     * @param min  min value (inclusive)
+     * @param max  max value (exclusive)
      * @param seed initial seed
      */
     public LocalDateTimeRangeRandomizer(final LocalDateTime min, final LocalDateTime max, final long seed) {
@@ -63,8 +63,8 @@ public class LocalDateTimeRangeRandomizer extends AbstractRangeRandomizer<LocalD
     /**
      * Create a new {@link LocalDateTimeRangeRandomizer}.
      *
-     * @param min min value
-     * @param max max value
+     * @param min min value (inclusive)
+     * @param max max value (exclusive)
      * @return a new {@link LocalDateTimeRangeRandomizer}.
      * @deprecated in favor of the equivalent constructor
      */
@@ -76,8 +76,8 @@ public class LocalDateTimeRangeRandomizer extends AbstractRangeRandomizer<LocalD
     /**
      * Create a new {@link LocalDateTimeRangeRandomizer}.
      *
-     * @param min  min value
-     * @param max  max value
+     * @param min  min value (inclusive)
+     * @param max  max value (exclusive)
      * @param seed initial seed
      * @return a new {@link LocalDateTimeRangeRandomizer}.
      * @deprecated in favor of the equivalent constructor

@@ -35,8 +35,8 @@ public class SqlDateRangeRandomizer extends AbstractRangeRandomizer<Date> {
     /**
      * Create a new {@link SqlDateRangeRandomizer}.
      *
-     * @param min min value
-     * @param max max value
+     * @param min min value (inclusive)
+     * @param max max value (exclusive)
      */
     public SqlDateRangeRandomizer(final Date min, final Date max) {
         super(min, max);
@@ -45,8 +45,8 @@ public class SqlDateRangeRandomizer extends AbstractRangeRandomizer<Date> {
     /**
      * Create a new {@link SqlDateRangeRandomizer}.
      *
-     * @param min  min value
-     * @param max  max value
+     * @param min  min value (inclusive)
+     * @param max  max value (exclusive)
      * @param seed initial seed
      */
     public SqlDateRangeRandomizer(final Date min, final Date max, final long seed) {
@@ -56,8 +56,8 @@ public class SqlDateRangeRandomizer extends AbstractRangeRandomizer<Date> {
     /**
      * Create a new {@link SqlDateRangeRandomizer}.
      *
-     * @param min min value
-     * @param max max value
+     * @param min min value (inclusive)
+     * @param max max value (exclusive)
      * @return a new {@link SqlDateRangeRandomizer}.
      * @deprecated in favor of the equivalent constructor
      */
@@ -69,8 +69,8 @@ public class SqlDateRangeRandomizer extends AbstractRangeRandomizer<Date> {
     /**
      * Create a new {@link SqlDateRangeRandomizer}.
      *
-     * @param min  min value
-     * @param max  max value
+     * @param min  min value (inclusive)
+     * @param max  max value (exclusive)
      * @param seed initial seed
      * @return a new {@link SqlDateRangeRandomizer}.
      * @deprecated in favor of the equivalent constructor

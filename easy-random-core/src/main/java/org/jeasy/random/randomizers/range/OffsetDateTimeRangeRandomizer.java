@@ -36,8 +36,8 @@ public class OffsetDateTimeRangeRandomizer extends AbstractRangeRandomizer<Offse
     /**
      * Create a new {@link OffsetDateTimeRangeRandomizer}.
      *
-     * @param min min value
-     * @param max max value
+     * @param min min value (inclusive)
+     * @param max max value (exclusive)
      */
     public OffsetDateTimeRangeRandomizer(final OffsetDateTime min, final OffsetDateTime max) {
         super(min, max);
@@ -46,8 +46,8 @@ public class OffsetDateTimeRangeRandomizer extends AbstractRangeRandomizer<Offse
     /**
      * Create a new {@link OffsetDateTimeRangeRandomizer}.
      *
-     * @param min  min value
-     * @param max  max value
+     * @param min  min value (inclusive)
+     * @param max  max value (exclusive)
      * @param seed initial seed
      */
     public OffsetDateTimeRangeRandomizer(final OffsetDateTime min, final OffsetDateTime max, final long seed) {
@@ -57,8 +57,8 @@ public class OffsetDateTimeRangeRandomizer extends AbstractRangeRandomizer<Offse
     /**
      * Create a new {@link OffsetDateTimeRangeRandomizer}.
      *
-     * @param min min value
-     * @param max max value
+     * @param min min value (inclusive)
+     * @param max max value (exclusive)
      * @return a new {@link OffsetDateTimeRangeRandomizer}.
      * @deprecated in favor of the equivalent constructor
      */
@@ -70,8 +70,8 @@ public class OffsetDateTimeRangeRandomizer extends AbstractRangeRandomizer<Offse
     /**
      * Create a new {@link OffsetDateTimeRangeRandomizer}.
      *
-     * @param min  min value
-     * @param max  max value
+     * @param min  min value (inclusive)
+     * @param max  max value (exclusive)
      * @param seed initial seed
      * @return a new {@link OffsetDateTimeRangeRandomizer}.
      * @deprecated in favor of the equivalent constructor
