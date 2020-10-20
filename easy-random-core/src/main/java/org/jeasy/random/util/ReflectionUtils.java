@@ -365,6 +365,16 @@ public final class ReflectionUtils {
     }
 
     /**
+     * Check if a type is {@link Optional}.
+     *
+     * @param type the type to check
+     * @return true if the type is {@link Optional}, false otherwise.
+     */
+    public static boolean isOptionalType(final Class<?> type) {
+        return Optional.class.isAssignableFrom(type);
+    }
+
+    /**
      * Check if a type is a JDK built-in collection/map.
      *
      * @param type the type to check

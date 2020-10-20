@@ -69,12 +69,14 @@ class FieldPopulatorTest {
     private CollectionPopulator collectionPopulator;
     @Mock
     private MapPopulator mapPopulator;
+    @Mock
+    private OptionalPopulator optionalPopulator;
 
     private FieldPopulator fieldPopulator;
 
     @BeforeEach
     void setUp() {
-        fieldPopulator = new FieldPopulator(easyRandom, randomizerProvider, arrayPopulator, collectionPopulator, mapPopulator);
+        fieldPopulator = new FieldPopulator(easyRandom, randomizerProvider, arrayPopulator, collectionPopulator, mapPopulator, optionalPopulator);
     }
 
     @Test
@@ -174,7 +176,7 @@ class FieldPopulatorTest {
     @Disabled("Objenesis is able to create an instance of JAXBElement type. Hence no error is thrown as expected in this test")
     void shouldFailWithNiceErrorMessageWhenUnableToCreateFieldValue() throws Exception {
       // Given
-      FieldPopulator fieldPopulator = new FieldPopulator(new EasyRandom(), randomizerProvider, arrayPopulator, collectionPopulator, mapPopulator);
+      FieldPopulator fieldPopulator = new FieldPopulator(new EasyRandom(), randomizerProvider, arrayPopulator, collectionPopulator, mapPopulator, optionalPopulator);
       Field jaxbElementField = JaxbElementFieldBean.class.getDeclaredField("jaxbElementField");
       JaxbElementFieldBean jaxbElementFieldBean = new JaxbElementFieldBean();
       RandomizationContext context = Mockito.mock(RandomizationContext.class);
