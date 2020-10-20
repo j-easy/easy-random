@@ -153,6 +153,14 @@ class BeanValidationTest {
 
         assertThat(bean.getNegativeOrZero()).isLessThanOrEqualTo(0);// @NegativeOrZero int negativeOrZero;
 
+        assertThat(bean.getPositiveLong()).isGreaterThan(0);// @Positive Long positive;
+
+        assertThat(bean.getPositiveOrZeroLong()).isGreaterThanOrEqualTo(0);// @PositiveOrZero Long positiveOrZero;
+
+        assertThat(bean.getNegativeLong()).isLessThan(0);// @Negative Long negative;
+
+        assertThat(bean.getNegativeOrZeroLong()).isLessThanOrEqualTo(0);// @NegativeOrZero Long negativeOrZero;
+
         assertThat(bean.getNotBlank()).isNotBlank(); // @NotBlank String notBlank;
 
         assertThat(bean.getEmail()).isNotBlank().contains(".", "@"); // @Email String email;

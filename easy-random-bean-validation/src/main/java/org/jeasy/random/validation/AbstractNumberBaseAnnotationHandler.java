@@ -33,7 +33,7 @@ import java.util.Random;
 
 /**
  * @author dadiyang
- * @since 2020/6/7
+ * @since 4.3
  */
 public abstract class AbstractNumberBaseAnnotationHandler implements BeanValidationAnnotationHandler {
     private final Random random;
@@ -42,7 +42,7 @@ public abstract class AbstractNumberBaseAnnotationHandler implements BeanValidat
         random = new Random(seed);
     }
 
-    protected Randomizer<?> getRandomizer(Class<?> fieldType, BigDecimal maxValue, BigDecimal minValue) {
+    protected Randomizer<?> getRandomizer(Class<?> fieldType, BigDecimal minValue, BigDecimal maxValue) {
         if (fieldType.equals(Byte.TYPE) || fieldType.equals(Byte.class)) {
             return new ByteRangeRandomizer(
                     minValue == null ? null : minValue.byteValue(),

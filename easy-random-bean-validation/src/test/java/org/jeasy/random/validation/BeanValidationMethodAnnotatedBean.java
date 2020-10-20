@@ -49,6 +49,15 @@ class BeanValidationMethodAnnotatedBean {
 
     private int negativeOrZero;
 
+
+    private Long positiveLong;
+    
+    private Long positiveOrZeroLong;
+    
+    private Long negativeLong;
+    
+    private Long negativeOrZeroLong;
+
     private String notBlank;
 
     private String email;
@@ -169,6 +178,42 @@ class BeanValidationMethodAnnotatedBean {
 
     public void setNegativeOrZero(int negativeOrZero) {
         this.negativeOrZero = negativeOrZero;
+    }
+
+    @Positive
+    public Long getPositiveLong() {
+        return positiveLong;
+    }
+
+    public void setPositiveLong(Long positiveLong) {
+        this.positiveLong = positiveLong;
+    }
+
+    @PositiveOrZero
+    public Long getPositiveOrZeroLong() {
+        return positiveOrZeroLong;
+    }
+
+    public void setPositiveOrZeroLong(Long positiveOrZeroLong) {
+        this.positiveOrZeroLong = positiveOrZeroLong;
+    }
+
+    @Negative
+    public Long getNegativeLong() {
+        return negativeLong;
+    }
+
+    public void setNegativeLong(Long negativeLong) {
+        this.negativeLong = negativeLong;
+    }
+
+    @NegativeOrZero
+    public Long getNegativeOrZeroLong() {
+        return negativeOrZeroLong;
+    }
+
+    public void setNegativeOrZeroLong(Long negativeOrZeroLong) {
+        this.negativeOrZeroLong = negativeOrZeroLong;
     }
 
     @Future

@@ -36,6 +36,6 @@ class PositiveAnnotationHandler extends AbstractNumberBaseAnnotationHandler {
 
     @Override
     public Randomizer<?> getRandomizer(Field field) {
-        return getRandomizer(field.getType(), null, BigDecimal.ONE);
+        return getRandomizer(field.getType(), BigDecimal.ONE, null);
     }
 }

@@ -54,6 +54,6 @@ class MinMaxAnnotationHandler extends AbstractNumberBaseAnnotationHandler {
         if (minAnnotation != null) {
             minValue = new BigDecimal(minAnnotation.value());
         }
-        return getRandomizer(fieldType, maxValue, minValue);
+        return getRandomizer(fieldType, minValue, maxValue);
     }
 }
