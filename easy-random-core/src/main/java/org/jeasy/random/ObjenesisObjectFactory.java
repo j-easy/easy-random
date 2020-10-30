@@ -40,7 +40,7 @@ import static org.jeasy.random.util.ReflectionUtils.isAbstract;
  * @author Mahmoud Ben Hassine (mahmoud.benhassine@icloud.com)
  */
 @SuppressWarnings({"unchecked"})
-class ObjenesisObjectFactory implements ObjectFactory {
+public class ObjenesisObjectFactory implements ObjectFactory {
 
     private final Objenesis objenesis = new ObjenesisStd();
 
