@@ -28,158 +28,88 @@ import org.jeasy.random.api.Randomizer;
 import java.util.Locale;
 
 /**
- * A {@link Randomizer} that generates random password.
- *
+ * A {@link Randomizer} that generates random passwords.
  * 
+ * @author https://github.com/JJ1216
  */
 public class PasswordRandomizer extends FakerBasedRandomizer<String> {
-	private boolean includeUppercase,includeSpecial;
-	private int min,max;
-	
 
+	private boolean includeUppercase, includeSpecial;
+	private int min, max;
 
-    /**
-     * Create a new {@link PasswordRandomizer}.
-     */
-    public PasswordRandomizer() {
-    }
+	/**
+	 * Create a new {@link PasswordRandomizer}.
+	 */
+	public PasswordRandomizer() {
+	}
 
-    /**
-     * Create a new {@link PasswordRandomizer}.
-     *
-     * @param seed the initial seed
-     */
-    public PasswordRandomizer(long seed) {
-        super(seed);
-    }
+	/**
+	 * Create a new {@link PasswordRandomizer}.
+	 *
+	 * @param seed the initial seed
+	 */
+	public PasswordRandomizer(long seed) {
+		super(seed);
+	}
 
-    /**
-     * Create a new {@link PasswordRandomizer}.
-     *
-     * @param seed   the initial seed
-     * @param locale the locale to use
-     */
-    public PasswordRandomizer(final long seed, final Locale locale) {
-        super(seed, locale);
-    }
+	/**
+	 * Create a new {@link PasswordRandomizer}.
+	 *
+	 * @param seed   the initial seed
+	 * @param locale the locale to use
+	 */
+	public PasswordRandomizer(final long seed, final Locale locale) {
+		super(seed, locale);
+	}
 
-    /**
-     * Create a new {@link PasswordRandomizer}.
-     *
-     * @param seed   the initial seed
-     * @param min	 the minimum character of password
-     * @param max	 the maximum character of password
-     */
-    public PasswordRandomizer(final long seed,  final int min,final int max) {
-        super(seed );
-        this.min = min;
-        this.max=max;
-    }
-    /**
-     * Create a new {@link PasswordRandomizer}.
-     *
-     * @param seed   the initial seed
-     * @param min	 the minimum character of password
-     * @param max	 the maximum character of password
-     * @param includeUppercase   true to generate password contains Uppercase Character , false otherwise
-     */
-    public PasswordRandomizer(final long seed,  final int min,final int max ,final boolean includeUppercase) {
-        super(seed );
-        this.min = min;
-        this.max=max;
-        this.includeUppercase=includeUppercase;
-    }
-    /**
-     * Create a new {@link PasswordRandomizer}.
-     *
-     * @param seed   the initial seed
-     * @param min	 the minimum character of password
-     * @param max	 the maximum character of password
-     * @param includeUppercase   true to generate password contains Uppercase Character , false otherwise
-     * @param includeSpecial   true to generate password contains Special Character{'!', '@', '#', '$', '%', '^', '&', '*'} , false otherwise
-     */
-    public PasswordRandomizer(final long seed,  final int min,final int max ,final boolean includeUppercase,final boolean includeSpecial) {
-        super(seed );
-        this.min = min;
-        this.max=max;
-        this.includeUppercase=includeUppercase;
-        this.includeSpecial=includeSpecial;
-    }
+	/**
+	 * Create a new {@link PasswordRandomizer}.
+	 *
+	 * @param seed the initial seed
+	 * @param min  the minimum number of characters of passwords
+	 * @param max  the maximum number of characters of passwords
+	 */
+	public PasswordRandomizer(final long seed, final int min, final int max) {
+		super(seed);
+		this.min = min;
+		this.max = max;
+	}
 
-    /**
-     * Create a new {@link PasswordRandomizer}.
-     *
-     * @return a new {@link PasswordRandomizer}
-     */
-    public static PasswordRandomizer aNewPasswordRandomizer() {
-        return new PasswordRandomizer();
-    }
+	/**
+	 * Create a new {@link PasswordRandomizer}.
+	 *
+	 * @param seed             the initial seed
+	 * @param min              the minimum number of characters of passwords
+	 * @param max              the maximum number of characters of passwords
+	 * @param includeUppercase true to generate passwords containing Uppercase Characters, false otherwise
+	 */
+	public PasswordRandomizer(final long seed, final int min, final int max, final boolean includeUppercase) {
+		super(seed);
+		this.min = min;
+		this.max = max;
+		this.includeUppercase = includeUppercase;
+	}
 
-    /**
-     * Create a new {@link PasswordRandomizer}.
-     *
-     * @param seed the initial seed
-     * @return a new {@link PasswordRandomizer}
-     */
-    public static PasswordRandomizer aNewPasswordRandomizer(final long seed) {
-        return new PasswordRandomizer(seed);
-    }
-
-    /**
-     * Create a new {@link PasswordRandomizer}.
-     *
-     * @param seed   the initial seed
-     * @param min	 the minimum character of password
-     * @param max	 the maximum character of password
-     * @return a new {@link PasswordRandomizer}
-     */
-    public static PasswordRandomizer aNewPasswordRandomizer(final long seed, final int min,final int max) {
-        return new PasswordRandomizer(seed, min, max);
-    }
-
-    /**
-     * Create a new {@link PasswordRandomizer}.
-     *
-     * @param seed   the initial seed
-     *@param min	 the minimum character of password
-     * @param max	 the maximum character of password
-     * @param includeUppercase   true to generate password contains Uppercase Character , false otherwise
-     * @return a new {@link PasswordRandomizer}
-     */
-    public static PasswordRandomizer aNewPasswordRandomizer(final long seed, final int min,final int max,final boolean includeUppercase) {
-        return new PasswordRandomizer(seed, min, max,includeUppercase);
-    }
-
-    /**
-     * Create a new {@link PasswordRandomizer}.
-     *
-     * @param seed   the initial seed
-     * @param min	 the minimum character of password
-     * @param max	 the maximum character of password
-     * @param includeUppercase   true to generate password contains Uppercase Character , false otherwise
-     * @param includeSpecial   true to generate password contains Special Character{'!', '@', '#', '$', '%', '^', '&', '*'} , false otherwise
-     * @return a new {@link PasswordRandomizer}
-     */
-    public static PasswordRandomizer aNewPasswordRandomizer(final long seed, final int min,final int max,final boolean includeUppercase,final boolean includeSpecial ) {
-        return new PasswordRandomizer(seed, min, max,includeUppercase,includeSpecial);
-    }
-
-    /**
-     * Create a new {@link PasswordRandomizer}.
-     *
-     * @param seed   the initial seed
-     * @param min	 the minimum character of password
-     * @param max	 the maximum character of password
-     * @param includeUppercase   true to generate password contains Uppercase Character , false otherwise
-     * @param includeSpecial   true to generate password contains Special Character{'!', '@', '#', '$', '%', '^', '&', '*'} , false otherwise
-     * @return a new {@link PasswordRandomizer}
-     */
-
+	/**
+	 * Create a new {@link PasswordRandomizer}.
+	 *
+	 * @param seed             the initial seed
+	 * @param min              the minimum number of characters of passwords
+	 * @param max              the maximum number of characters of passwords
+	 * @param includeUppercase true to generate passwords containing Uppercase Characters , false otherwise
+	 * @param includeSpecial   true to generate passwords containing Special Characters {'!', '@', '#', '$', '%', '^', '&', '*'} , false otherwise
+	 */
+	public PasswordRandomizer(final long seed, final int min, final int max, final boolean includeUppercase, final boolean includeSpecial) {
+		super(seed);
+		this.min = min;
+		this.max = max;
+		this.includeUppercase = includeUppercase;
+		this.includeSpecial = includeSpecial;
+	}
 
 	@Override
 	public String getRandomValue() {
-		// TODO Auto-generated method stub
-		return faker.internet().password(min,max,includeUppercase,includeSpecial);
+		return faker.internet().password(min, max, includeUppercase, includeSpecial);
 	}
 
 }
