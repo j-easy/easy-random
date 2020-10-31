@@ -36,7 +36,6 @@ import java.lang.reflect.Array;
 import java.lang.reflect.Field;
 import java.lang.reflect.ParameterizedType;
 import java.lang.reflect.Type;
-import java.nio.charset.Charset;
 import java.util.Collection;
 import java.util.EnumMap;
 import java.util.Map;
@@ -45,13 +44,11 @@ import static org.jeasy.random.util.ReflectionUtils.*;
 
 class SizeAnnotationHandler implements BeanValidationAnnotationHandler {
 
-    private long seed;
-    private Charset charset;
     private EasyRandom easyRandom;
+    private EasyRandomParameters parameters;
 
-    SizeAnnotationHandler(long seed, Charset charset) {
-        this.seed = seed;
-        this.charset = charset;
+    SizeAnnotationHandler(EasyRandomParameters parameters) {
+        this.parameters = parameters.copy();
     }
 
     @Override
@@ -64,23 +61,20 @@ class SizeAnnotationHandler implements BeanValidationAnnotationHandler {
         final int min = sizeAnnotation.min();
         final int max = sizeAnnotation.max() == Integer.MAX_VALUE ? 255 : sizeAnnotation.max();
         if (easyRandom == null) {
-            EasyRandomParameters parameters = new EasyRandomParameters()
-                    .seed(this.seed)
-                    .charset(this.charset)
-                    .collectionSizeRange(min, max)
-                    .stringLengthRange(min, max);
+            parameters.setCollectionSizeRange(new EasyRandomParameters.Range<>(min, max));
+            parameters.setStringLengthRange(new EasyRandomParameters.Range<>(min, max));
             easyRandom = new EasyRandom(parameters);
         }
 
         if (fieldType.equals(String.class)) {
-            return new StringRandomizer(charset, min, max, easyRandom.nextLong());
+            return new StringRandomizer(parameters.getCharset(), min, max, easyRandom.nextLong());
         }
 
         // FIXME: There should be away to reuse code from ArrayPopulator/CollectionPopulator/MapPopulator *without* making them public
 
         if (isArrayType(fieldType)) {
             return (Randomizer<Object>) () -> {
-                int randomSize = new IntegerRangeRandomizer(min, max, seed).getRandomValue();
+                int randomSize = new IntegerRangeRandomizer(min, max, parameters.getSeed()).getRandomValue();
                 Object result = Array.newInstance(field.getType().getComponentType(), randomSize);
                 for (int i = 0; i < randomSize; i++) {
                     Object randomElement = easyRandom.nextObject(fieldType.getComponentType());
@@ -92,7 +86,7 @@ class SizeAnnotationHandler implements BeanValidationAnnotationHandler {
 
         if (isCollectionType(fieldType)) {
             return (Randomizer<Object>) () -> {
-                int randomSize = new IntegerRangeRandomizer(min, max, seed).getRandomValue();
+                int randomSize = new IntegerRangeRandomizer(min, max, parameters.getSeed()).getRandomValue();
                 Type fieldGenericType = field.getGenericType();
                 Collection collection;
 
@@ -117,7 +111,7 @@ class SizeAnnotationHandler implements BeanValidationAnnotationHandler {
         }
         if (isMapType(fieldType)) {
             return (Randomizer<Object>) () -> {
-                int randomSize = new IntegerRangeRandomizer(min, max, seed).getRandomValue();
+                int randomSize = new IntegerRangeRandomizer(min, max, parameters.getSeed()).getRandomValue();
                 Type fieldGenericType = field.getGenericType();
                 Map<Object, Object> map;
 

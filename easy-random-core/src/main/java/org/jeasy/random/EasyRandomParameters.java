@@ -591,4 +591,33 @@ public class EasyRandomParameters {
             this.max = max;
         }
     }
+
+    /**
+     * Return a shallow copy of randomization parameters.
+     * @return a shallow copy of randomization parameters.
+     */
+    public EasyRandomParameters copy() {
+        EasyRandomParameters copy = new EasyRandomParameters();
+        copy.setSeed(this.getSeed());
+        copy.setObjectPoolSize(this.getObjectPoolSize());
+        copy.setRandomizationDepth(this.getRandomizationDepth());
+        copy.setCharset(this.getCharset());
+        copy.setScanClasspathForConcreteTypes(this.isScanClasspathForConcreteTypes());
+        copy.setOverrideDefaultInitialization(this.isOverrideDefaultInitialization());
+        copy.setIgnoreRandomizationErrors(this.isIgnoreRandomizationErrors());
+        copy.setBypassSetters(this.isBypassSetters());
+        copy.setCollectionSizeRange(this.getCollectionSizeRange());
+        copy.setStringLengthRange(this.getStringLengthRange());
+        copy.setDateRange(this.getDateRange());
+        copy.setTimeRange(this.getTimeRange());
+        copy.setExclusionPolicy(this.getExclusionPolicy());
+        copy.setObjectFactory(this.getObjectFactory());
+        copy.setRandomizerProvider(this.getRandomizerProvider());
+        copy.customRandomizerRegistry = this.getCustomRandomizerRegistry();
+        copy.exclusionRandomizerRegistry = this.getExclusionRandomizerRegistry();
+        copy.userRegistries = this.getUserRegistries();
+        copy.fieldExclusionPredicates = this.getFieldExclusionPredicates();
+        copy.typeExclusionPredicates = this.getTypeExclusionPredicates();
+        return copy;
+    }
 }

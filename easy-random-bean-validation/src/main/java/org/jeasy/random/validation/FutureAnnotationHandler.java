@@ -33,23 +33,21 @@ import org.jeasy.random.api.Randomizer;
 
 class FutureAnnotationHandler implements BeanValidationAnnotationHandler {
 
-    private final long seed;
     private EasyRandom easyRandom;
+    private EasyRandomParameters parameters;
 
-    FutureAnnotationHandler(long seed) {
-        this.seed = seed;
+    FutureAnnotationHandler(EasyRandomParameters parameters) {
+        this.parameters = parameters.copy();
     }
 
     @Override
     public Randomizer<?> getRandomizer(Field field) {
         if (easyRandom == null) {
             LocalDate now = LocalDate.now();
-            EasyRandomParameters parameters = new EasyRandomParameters()
-                    .seed(seed)
-                    .dateRange(
-                            now.plus(1, ChronoUnit.DAYS),
-                            now.plusYears(EasyRandomParameters.DEFAULT_DATE_RANGE)
-                    );
+            parameters.setDateRange(new EasyRandomParameters.Range<>(
+                    now.plus(1, ChronoUnit.DAYS),
+                    now.plusYears(EasyRandomParameters.DEFAULT_DATE_RANGE)
+            ));
             easyRandom = new EasyRandom(parameters);
         }
         return () -> easyRandom.nextObject(field.getType());

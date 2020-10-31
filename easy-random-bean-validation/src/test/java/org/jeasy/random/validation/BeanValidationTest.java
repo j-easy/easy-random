@@ -25,17 +25,27 @@ package org.jeasy.random.validation;
 
 import org.jeasy.random.EasyRandom;
 import org.jeasy.random.EasyRandomParameters;
+import org.jeasy.random.randomizers.range.BigDecimalRangeRandomizer;
+import org.jeasy.random.randomizers.range.IntegerRangeRandomizer;
+import org.jeasy.random.randomizers.registry.CustomRandomizerRegistry;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import javax.validation.ConstraintViolation;
+import javax.validation.Valid;
 import javax.validation.Validation;
 import javax.validation.Validator;
 import javax.validation.ValidatorFactory;
+import javax.validation.constraints.DecimalMax;
+import javax.validation.constraints.DecimalMin;
 import javax.validation.constraints.Digits;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
+
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.util.Date;
+import java.util.List;
 import java.util.Set;
 
 import static org.assertj.core.api.Assertions.assertThat;
@@ -236,7 +246,7 @@ class BeanValidationTest {
     }
 
     @Test
-    void customRegistryTest() {
+    void customBeanValidationRegistryTest() {
         // given
         class Salary {
             @Digits(integer = 2, fraction = 2) // OSS developer salary.. :-)
@@ -253,6 +263,54 @@ class BeanValidationTest {
         // then
         assertThat(salary).isNotNull();
         assertThat(salary.amount).isLessThanOrEqualTo(new BigDecimal("99.99"));
+    }
+
+    @Test
+    void customRegistryTest() {
+        // given
+        class Amount {
+            @NotNull
+            @Digits(integer = 12, fraction = 3)
+            protected BigDecimal amount;
+        }
+        class DiscountEffect {
+            @Digits(integer = 6, fraction = 4)
+            protected BigDecimal percentage;
+            protected Amount amount;
+            @Digits(integer = 12, fraction = 3)
+            protected BigDecimal quantity;
+            @NotNull
+            @DecimalMax("65535")
+            @DecimalMin("1")
+            protected Integer size;
+        }
+        class Discount {
+            @NotNull
+            @Size(min = 1)
+            @Valid
+            protected List<DiscountEffect> discountEffects;
+        }
+
+        CustomRandomizerRegistry registry = new CustomRandomizerRegistry();
+        registry.registerRandomizer(BigDecimal.class, new BigDecimalRangeRandomizer(new Double(5d), new Double(10d), Integer.valueOf(3)));
+        registry.registerRandomizer(Integer.class, new IntegerRangeRandomizer(5, 10));
+        EasyRandomParameters parameters = new EasyRandomParameters()
+                .randomizerRegistry(registry);
+        EasyRandom easyRandom = new EasyRandom(parameters);
+
+        // when
+        Discount discount = easyRandom.nextObject(Discount.class);
+
+        // then
+        assertThat(discount.discountEffects)
+                .isNotEmpty()
+                .allSatisfy(discountEffect -> {
+                    assertThat(discountEffect).isNotNull();
+                    assertThat(discountEffect.percentage).isBetween(new BigDecimal("5.000"), new BigDecimal("10.000"));
+                    assertThat(discountEffect.quantity).isBetween(new BigDecimal("5.000"), new BigDecimal("10.000"));
+                    assertThat(discountEffect.amount.amount).isBetween(new BigDecimal("5.000"), new BigDecimal("10.000"));
+                    assertThat(discountEffect.size).isBetween(5, 10);
+                });
     }
 
 }
