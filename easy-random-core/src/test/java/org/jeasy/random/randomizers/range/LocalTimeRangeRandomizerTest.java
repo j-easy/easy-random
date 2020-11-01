@@ -57,7 +57,7 @@ class LocalTimeRangeRandomizerTest extends AbstractRangeRandomizerTest<LocalTime
     void generatedLocalTimeShouldBeAlwaysTheSameForTheSameSeed() {
         // Given
         randomizer = aNewLocalTimeRangeRandomizer(minTime, maxTime, SEED);
-        LocalTime expected = LocalTime.ofSecondOfDay(62481);
+        LocalTime expected = LocalTime.of(14, 14, 58, 723174202);
 
         // When
         LocalTime randomValue = randomizer.getRandomValue();
