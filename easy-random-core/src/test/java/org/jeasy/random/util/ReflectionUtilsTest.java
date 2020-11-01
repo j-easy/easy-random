@@ -23,7 +23,6 @@
  */
 package org.jeasy.random.util;
 
-import org.assertj.core.api.Assertions;
 import org.jeasy.random.beans.*;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
