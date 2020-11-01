@@ -237,6 +237,7 @@ If you have any question, suggestion, or feedback, do not hesitate to use the [G
 * [Marian Jureczko](https://github.com/mjureczko)
 * [Unconditional One](https://github.com/unconditional)
 * [JJ1216](https://github.com/JJ1216)
+* [Sergey Chernov](https://github.com/seregamorph)
 
 Thank you all for your contributions!
 
