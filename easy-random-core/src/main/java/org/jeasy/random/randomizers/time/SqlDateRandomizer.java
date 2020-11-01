@@ -56,7 +56,9 @@ public class SqlDateRandomizer implements Randomizer<Date> {
      * Create a new {@link SqlDateRandomizer}.
      *
      * @return a new {@link SqlDateRandomizer}.
+     * @deprecated in favor of the equivalent constructor
      */
+    @Deprecated
     public static SqlDateRandomizer aNewSqlDateRandomizer() {
         return new SqlDateRandomizer();
     }
@@ -66,7 +68,9 @@ public class SqlDateRandomizer implements Randomizer<Date> {
      *
      * @param seed initial seed
      * @return a new {@link SqlDateRandomizer}.
+     * @deprecated in favor of the equivalent constructor
      */
+    @Deprecated
     public static SqlDateRandomizer aNewSqlDateRandomizer(final long seed) {
         return new SqlDateRandomizer(seed);
     }

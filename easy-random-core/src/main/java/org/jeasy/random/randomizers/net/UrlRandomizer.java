@@ -56,7 +56,9 @@ public class UrlRandomizer extends AbstractRandomizer<URL> {
      * Create a new {@link UrlRandomizer}.
      *
      * @return a new {@link UrlRandomizer}.
+     * @deprecated in favor of the equivalent constructor
      */
+    @Deprecated
     public static UrlRandomizer aNewUrlRandomizer() {
         return new UrlRandomizer();
     }
@@ -66,7 +68,9 @@ public class UrlRandomizer extends AbstractRandomizer<URL> {
      *
      * @param seed initial seed
      * @return a new {@link UrlRandomizer}.
+     * @deprecated in favor of the equivalent constructor
      */
+    @Deprecated
     public static UrlRandomizer aNewUrlRandomizer(final long seed) {
         return new UrlRandomizer(seed);
     }

@@ -42,8 +42,8 @@ public class BigDecimalRangeRandomizer implements Randomizer<BigDecimal> {
     /**
      * Create a new {@link BigDecimalRangeRandomizer}.
      *
-     * @param min min value
-     * @param max max value
+     * @param min min value (inclusive)
+     * @param max max value (exclusive)
      */
     public BigDecimalRangeRandomizer(final Double min, final Double max) {
         delegate = new DoubleRangeRandomizer(min, max);
@@ -52,8 +52,8 @@ public class BigDecimalRangeRandomizer implements Randomizer<BigDecimal> {
     /**
      * Create a new {@link BigDecimalRangeRandomizer}.
      *
-     * @param min  min value
-     * @param max  max value
+     * @param min  min value (inclusive)
+     * @param max  max value (exclusive)
      * @param seed initial seed
      */
     public BigDecimalRangeRandomizer(final Double min, final Double max, final long seed) {
@@ -63,8 +63,8 @@ public class BigDecimalRangeRandomizer implements Randomizer<BigDecimal> {
     /**
      * Create a new {@link BigDecimalRangeRandomizer}. The default rounding mode is {@link RoundingMode#HALF_UP}.
      *
-     * @param min   min value
-     * @param max   max value
+     * @param min   min value (inclusive)
+     * @param max   max value (exclusive)
      * @param scale of the {@code BigDecimal} value to be returned.
      */
     public BigDecimalRangeRandomizer(final Double min, final Double max, final Integer scale) {
@@ -75,8 +75,8 @@ public class BigDecimalRangeRandomizer implements Randomizer<BigDecimal> {
     /**
      * Create a new {@link BigDecimalRangeRandomizer}.
      *
-     * @param min   min value
-     * @param max   max value
+     * @param min   min value (inclusive)
+     * @param max   max value (exclusive)
      * @param scale of the {@code BigDecimal} value to be returned.
      * @param roundingMode of the {@code BigDecimal} value to be returned.
      */
@@ -88,8 +88,8 @@ public class BigDecimalRangeRandomizer implements Randomizer<BigDecimal> {
     /**
      * Create a new {@link BigDecimalRangeRandomizer}. The default rounding mode is {@link RoundingMode#HALF_UP}.
      *
-     * @param min   min value
-     * @param max   max value
+     * @param min   min value (inclusive)
+     * @param max   max value (exclusive)
      * @param seed initial seed
      * @param scale of the {@code BigDecimal} value to be returned.
      */
@@ -101,8 +101,8 @@ public class BigDecimalRangeRandomizer implements Randomizer<BigDecimal> {
     /**
      * Create a new {@link BigDecimalRangeRandomizer}.
      *
-     * @param min   min value
-     * @param max   max value
+     * @param min   min value (inclusive)
+     * @param max   max value (exclusive)
      * @param seed initial seed
      * @param scale of the {@code BigDecimal} value to be returned.
      * @param roundingMode of the {@code BigDecimal} value to be returned.
@@ -116,10 +116,12 @@ public class BigDecimalRangeRandomizer implements Randomizer<BigDecimal> {
     /**
      * Create a new {@link BigDecimalRangeRandomizer}.
      *
-     * @param min min value
-     * @param max max value
+     * @param min min value (inclusive)
+     * @param max max value (exclusive)
      * @return a new {@link BigDecimalRangeRandomizer}.
+     * @deprecated in favor of the equivalent constructor
      */
+    @Deprecated
     public static BigDecimalRangeRandomizer aNewBigDecimalRangeRandomizer(final Double min, final Double max) {
         return new BigDecimalRangeRandomizer(min, max);
     }
@@ -127,11 +129,13 @@ public class BigDecimalRangeRandomizer implements Randomizer<BigDecimal> {
     /**
      * Create a new {@link BigDecimalRangeRandomizer}.
      *
-     * @param min  min value
-     * @param max  max value
+     * @param min  min value (inclusive)
+     * @param max  max value (exclusive)
      * @param seed initial seed
      * @return a new {@link BigDecimalRangeRandomizer}.
+     * @deprecated in favor of the equivalent constructor
      */
+    @Deprecated
     public static BigDecimalRangeRandomizer aNewBigDecimalRangeRandomizer(final Double min, final Double max, final long seed) {
         return new BigDecimalRangeRandomizer(min, max, seed);
     }
@@ -139,11 +143,13 @@ public class BigDecimalRangeRandomizer implements Randomizer<BigDecimal> {
     /**
      * Create a new {@link BigDecimalRangeRandomizer}. The default rounding mode is {@link RoundingMode#HALF_UP}.
      *
-     * @param min   min value
-     * @param max   max value
+     * @param min   min value (inclusive)
+     * @param max   max value (exclusive)
      * @param scale of the {@code BigDecimal} value to be returned.
      * @return a new {@link BigDecimalRangeRandomizer}.
+     * @deprecated in favor of the equivalent constructor
      */
+    @Deprecated
     public static BigDecimalRangeRandomizer aNewBigDecimalRangeRandomizer(final Double min, final Double max, final Integer scale) {
         return new BigDecimalRangeRandomizer(min, max, scale);
     }
@@ -151,12 +157,14 @@ public class BigDecimalRangeRandomizer implements Randomizer<BigDecimal> {
     /**
      * Create a new {@link BigDecimalRangeRandomizer}.
      *
-     * @param min   min value
-     * @param max   max value
+     * @param min   min value (inclusive)
+     * @param max   max value (exclusive)
      * @param scale of the {@code BigDecimal} value to be returned.
      * @param roundingMode of the {@code BigDecimal} value to be returned.
      * @return a new {@link BigDecimalRangeRandomizer}.
+     * @deprecated in favor of the equivalent constructor
      */
+    @Deprecated
     public static BigDecimalRangeRandomizer aNewBigDecimalRangeRandomizer(final Double min, final Double max, final Integer scale, final RoundingMode roundingMode) {
         return new BigDecimalRangeRandomizer(min, max, scale, roundingMode);
     }
@@ -164,12 +172,14 @@ public class BigDecimalRangeRandomizer implements Randomizer<BigDecimal> {
     /**
      * Create a new {@link BigDecimalRangeRandomizer}. The default rounding mode is {@link RoundingMode#HALF_UP}.
      *
-     * @param min   min value
-     * @param max   max value
+     * @param min   min value (inclusive)
+     * @param max   max value (exclusive)
      * @param seed initial seed
      * @param scale of the {@code BigDecimal} value to be returned.
      * @return a new {@link BigDecimalRangeRandomizer}.
+     * @deprecated in favor of the equivalent constructor
      */
+    @Deprecated
     public static BigDecimalRangeRandomizer aNewBigDecimalRangeRandomizer(final Double min, final Double max, final long seed, final Integer scale) {
         return new BigDecimalRangeRandomizer(min, max, seed, scale);
     }
@@ -177,13 +187,15 @@ public class BigDecimalRangeRandomizer implements Randomizer<BigDecimal> {
     /**
      * Create a new {@link BigDecimalRangeRandomizer}.
      *
-     * @param min   min value
-     * @param max   max value
+     * @param min   min value (inclusive)
+     * @param max   max value (exclusive)
      * @param seed initial seed
      * @param scale of the {@code BigDecimal} value to be returned.
      * @param roundingMode of the {@code BigDecimal} value to be returned.
      * @return a new {@link BigDecimalRangeRandomizer}.
+     * @deprecated in favor of the equivalent constructor
      */
+    @Deprecated
     public static BigDecimalRangeRandomizer aNewBigDecimalRangeRandomizer(final Double min, final Double max, final long seed, final Integer scale, final RoundingMode roundingMode) {
         return new BigDecimalRangeRandomizer(min, max, seed, scale, roundingMode);
     }

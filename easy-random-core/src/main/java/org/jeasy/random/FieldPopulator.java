@@ -56,15 +56,19 @@ class FieldPopulator {
 
     private final MapPopulator mapPopulator;
 
+    private final OptionalPopulator optionalPopulator;
+
     private final RandomizerProvider randomizerProvider;
 
     FieldPopulator(final EasyRandom easyRandom, final RandomizerProvider randomizerProvider,
-                   final ArrayPopulator arrayPopulator, final CollectionPopulator collectionPopulator, final MapPopulator mapPopulator) {
+                   final ArrayPopulator arrayPopulator, final CollectionPopulator collectionPopulator,
+                   final MapPopulator mapPopulator, OptionalPopulator optionalPopulator) {
         this.easyRandom = easyRandom;
         this.randomizerProvider = randomizerProvider;
         this.arrayPopulator = arrayPopulator;
         this.collectionPopulator = collectionPopulator;
         this.mapPopulator = mapPopulator;
+        this.optionalPopulator = optionalPopulator;
     }
 
     void populateField(final Object target, final Field field, final RandomizationContext context) throws IllegalAccessException {
@@ -72,10 +76,10 @@ class FieldPopulator {
         if (randomizer instanceof SkipRandomizer) {
             return;
         }
+        context.pushStackItem(new RandomizationContextStackItem(target, field));
         if (randomizer instanceof ContextAwareRandomizer) {
             ((ContextAwareRandomizer<?>) randomizer).setRandomizerContext(context);
         }
-        context.pushStackItem(new RandomizationContextStackItem(target, field));
         if(!context.hasExceededRandomizationDepth()) {
             Object value;
             if (randomizer != null) {
@@ -125,6 +129,8 @@ class FieldPopulator {
             value = collectionPopulator.getRandomCollection(field, context);
         } else if (isMapType(fieldType)) {
             value = mapPopulator.getRandomMap(field, context);
+        } else if (isOptionalType(fieldType)) {
+            value = optionalPopulator.getRandomOptional(field, context);
         } else {
             if (context.getParameters().isScanClasspathForConcreteTypes() && isAbstract(fieldType) && !isEnumType(fieldType) /*enums can be abstract, but can not inherit*/) {
                 Class<?> randomConcreteSubType = context.randomElementOf(filterSameParameterizedTypes(getPublicConcreteSubTypesOf(fieldType), fieldGenericType));

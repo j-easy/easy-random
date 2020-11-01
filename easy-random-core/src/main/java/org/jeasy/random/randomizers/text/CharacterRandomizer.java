@@ -88,7 +88,9 @@ public class CharacterRandomizer extends AbstractRandomizer<Character> {
      * Create a new {@link CharacterRandomizer}.
      *
      * @return a new {@link CharacterRandomizer}.
+     * @deprecated in favor of the equivalent constructor
      */
+    @Deprecated
     public static CharacterRandomizer aNewCharacterRandomizer() {
         return new CharacterRandomizer();
     }
@@ -98,7 +100,9 @@ public class CharacterRandomizer extends AbstractRandomizer<Character> {
      *
      * @param charset to use
      * @return a new {@link CharacterRandomizer}.
+     * @deprecated in favor of the equivalent constructor
      */
+    @Deprecated
     public static CharacterRandomizer aNewCharacterRandomizer(final Charset charset) {
         return new CharacterRandomizer(charset);
     }
@@ -108,7 +112,9 @@ public class CharacterRandomizer extends AbstractRandomizer<Character> {
      *
      * @param seed initial seed
      * @return a new {@link CharacterRandomizer}.
+     * @deprecated in favor of the equivalent constructor
      */
+    @Deprecated
     public static CharacterRandomizer aNewCharacterRandomizer(final long seed) {
         return new CharacterRandomizer(seed);
     }
@@ -119,7 +125,9 @@ public class CharacterRandomizer extends AbstractRandomizer<Character> {
      * @param charset to use
      * @param seed    initial seed
      * @return a new {@link CharacterRandomizer}.
+     * @deprecated in favor of the equivalent constructor
      */
+    @Deprecated
     public static CharacterRandomizer aNewCharacterRandomizer(final Charset charset, final long seed) {
         return new CharacterRandomizer(charset, seed);
     }

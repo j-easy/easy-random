@@ -65,7 +65,9 @@ public class LocalDateRandomizer implements Randomizer<LocalDate> {
      * Create a new {@link LocalDateRandomizer}.
      *
      * @return a new {@link LocalDateRandomizer}.
+     * @deprecated in favor of the equivalent constructor
      */
+    @Deprecated
     public static LocalDateRandomizer aNewLocalDateRandomizer() {
         return new LocalDateRandomizer();
     }
@@ -75,7 +77,9 @@ public class LocalDateRandomizer implements Randomizer<LocalDate> {
      *
      * @param seed initial seed
      * @return a new {@link LocalDateRandomizer}.
+     * @deprecated in favor of the equivalent constructor
      */
+    @Deprecated
     public static LocalDateRandomizer aNewLocalDateRandomizer(final long seed) {
         return new LocalDateRandomizer(seed);
     }

@@ -23,13 +23,16 @@
  */
 package org.jeasy.random.util;
 
+import org.assertj.core.api.Assertions;
 import org.jeasy.random.beans.*;
 import org.junit.jupiter.api.Test;
+import org.mockito.Mockito;
 
 import java.lang.annotation.Documented;
 import java.lang.annotation.Retention;
 import java.lang.annotation.Target;
 import java.lang.reflect.Field;
+import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.math.BigDecimal;
 import java.util.*;
@@ -223,6 +226,20 @@ class ReflectionUtilsTest {
         assertThat(map).isInstanceOf(TreeMap.class).isEmpty();
     }
 
+    @Test
+    void setPropertyFluentBean() throws NoSuchFieldException, InvocationTargetException, IllegalAccessException {
+        // given
+        FluentSetterBean fluentSetterBean = Mockito.spy(FluentSetterBean.class);
+        Field nameField = FluentSetterBean.class.getField("name");
+
+        // when
+        ReflectionUtils.setProperty(fluentSetterBean,nameField,"myName");
+
+        // then
+        Mockito.verify(fluentSetterBean).setName("myName");
+        assertThat(fluentSetterBean.getName()).isEqualTo("myName");
+    }
+
     @SuppressWarnings("unused")
     private class PrimitiveFieldsWithDefaultValuesBean {
         public boolean bool;
@@ -287,4 +304,5 @@ class ReflectionUtilsTest {
     public @interface NotNull {
 
     }
+
 }

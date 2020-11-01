@@ -36,8 +36,8 @@ public class LocalTimeRangeRandomizer extends AbstractRangeRandomizer<LocalTime>
     /**
      * Create a new {@link LocalTimeRangeRandomizer}.
      *
-     * @param min min value
-     * @param max max value
+     * @param min min value (inclusive)
+     * @param max max value (exclusive)
      */
     public LocalTimeRangeRandomizer(final LocalTime min, final LocalTime max) {
         super(min, max);
@@ -46,8 +46,8 @@ public class LocalTimeRangeRandomizer extends AbstractRangeRandomizer<LocalTime>
     /**
      * Create a new {@link LocalTimeRangeRandomizer}.
      *
-     * @param min  min value
-     * @param max  max value
+     * @param min  min value (inclusive)
+     * @param max  max value (exclusive)
      * @param seed initial seed
      */
     public LocalTimeRangeRandomizer(final LocalTime min, final LocalTime max, final long seed) {
@@ -57,10 +57,12 @@ public class LocalTimeRangeRandomizer extends AbstractRangeRandomizer<LocalTime>
     /**
      * Create a new {@link LocalTimeRangeRandomizer}.
      *
-     * @param min min value
-     * @param max max value
+     * @param min min value (inclusive)
+     * @param max max value (exclusive)
      * @return a new {@link LocalTimeRangeRandomizer}.
+     * @deprecated in favor of the equivalent constructor
      */
+    @Deprecated
     public static LocalTimeRangeRandomizer aNewLocalTimeRangeRandomizer(final LocalTime min, final LocalTime max) {
         return new LocalTimeRangeRandomizer(min, max);
     }
@@ -68,11 +70,13 @@ public class LocalTimeRangeRandomizer extends AbstractRangeRandomizer<LocalTime>
     /**
      * Create a new {@link LocalTimeRangeRandomizer}.
      *
-     * @param min  min value
-     * @param max  max value
+     * @param min  min value (inclusive)
+     * @param max  max value (exclusive)
      * @param seed initial seed
      * @return a new {@link LocalTimeRangeRandomizer}.
+     * @deprecated in favor of the equivalent constructor
      */
+    @Deprecated
     public static LocalTimeRangeRandomizer aNewLocalTimeRangeRandomizer(final LocalTime min, final LocalTime max, final long seed) {
         return new LocalTimeRangeRandomizer(min, max, seed);
     }

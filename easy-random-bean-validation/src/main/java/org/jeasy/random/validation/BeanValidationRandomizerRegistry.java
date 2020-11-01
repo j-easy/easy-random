@@ -32,7 +32,6 @@ import org.jeasy.random.util.ReflectionUtils;
 import javax.validation.constraints.*;
 import java.lang.annotation.Annotation;
 import java.lang.reflect.Field;
-import java.nio.charset.Charset;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -49,20 +48,19 @@ public class BeanValidationRandomizerRegistry implements RandomizerRegistry {
     @Override
     public void init(EasyRandomParameters parameters) {
         long seed = parameters.getSeed();
-        Charset charset = parameters.getCharset();
         annotationHandlers.put(AssertFalse.class, new AssertFalseAnnotationHandler());
         annotationHandlers.put(AssertTrue.class, new AssertTrueAnnotationHandler());
         annotationHandlers.put(Null.class, new NullAnnotationHandler());
-        annotationHandlers.put(Future.class, new FutureAnnotationHandler(seed));
-        annotationHandlers.put(FutureOrPresent.class, new FutureOrPresentAnnotationHandler(seed));
-        annotationHandlers.put(Past.class, new PastAnnotationHandler(seed));
-        annotationHandlers.put(PastOrPresent.class, new PastOrPresentAnnotationHandler(seed));
+        annotationHandlers.put(Future.class, new FutureAnnotationHandler(parameters));
+        annotationHandlers.put(FutureOrPresent.class, new FutureOrPresentAnnotationHandler(parameters));
+        annotationHandlers.put(Past.class, new PastAnnotationHandler(parameters));
+        annotationHandlers.put(PastOrPresent.class, new PastOrPresentAnnotationHandler(parameters));
         annotationHandlers.put(Min.class, new MinMaxAnnotationHandler(seed));
         annotationHandlers.put(Max.class, new MinMaxAnnotationHandler(seed));
         annotationHandlers.put(DecimalMin.class, new DecimalMinMaxAnnotationHandler(seed));
         annotationHandlers.put(DecimalMax.class, new DecimalMinMaxAnnotationHandler(seed));
         annotationHandlers.put(Pattern.class, new PatternAnnotationHandler(seed));
-        annotationHandlers.put(Size.class, new SizeAnnotationHandler(seed, charset));
+        annotationHandlers.put(Size.class, new SizeAnnotationHandler(parameters));
         annotationHandlers.put(Positive.class, new PositiveAnnotationHandler(seed));
         annotationHandlers.put(PositiveOrZero.class, new PositiveOrZeroAnnotationHandler(seed));
         annotationHandlers.put(Negative.class, new NegativeAnnotationHandler(seed));

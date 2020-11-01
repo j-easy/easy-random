@@ -23,6 +23,8 @@
  */
 package org.jeasy.random.util;
 
+import org.apache.commons.beanutils.FluentPropertyBeanIntrospector;
+import org.apache.commons.beanutils.PropertyUtilsBean;
 import org.jeasy.random.annotation.RandomizerArgument;
 import org.jeasy.random.ObjectCreationException;
 import org.jeasy.random.api.Randomizer;
@@ -57,6 +59,11 @@ import static java.util.stream.Collectors.toList;
  * @author Mahmoud Ben Hassine (mahmoud.benhassine@icloud.com)
  */
 public final class ReflectionUtils {
+
+    private static final PropertyUtilsBean PROPERTY_UTILS_BEAN = new PropertyUtilsBean();
+    static {
+        PROPERTY_UTILS_BEAN.addBeanIntrospector(new FluentPropertyBeanIntrospector());
+    }
 
     private ReflectionUtils() {
     }
@@ -133,7 +140,7 @@ public final class ReflectionUtils {
      * @throws IllegalAccessException if the property cannot be set
      */
     public static void setProperty(final Object object, final Field field, final Object value) throws IllegalAccessException, InvocationTargetException {
-        try {
+        try { // to call regular setter
             PropertyDescriptor propertyDescriptor = new PropertyDescriptor(field.getName(), object.getClass());
             Method setter = propertyDescriptor.getWriteMethod();
             if (setter != null) {
@@ -142,7 +149,12 @@ public final class ReflectionUtils {
                 setFieldValue(object, field, value);
             }
         } catch (IntrospectionException | IllegalAccessException e) {
-            setFieldValue(object, field, value);
+            try { // to call fluent setter
+                PROPERTY_UTILS_BEAN.setProperty(object, field.getName(), value);
+            } catch (NoSuchMethodException noSuchMethodException) {
+                // otherwise, set field using reflection
+                setFieldValue(object, field, value);
+            }
         }
     }
 
@@ -350,6 +362,16 @@ public final class ReflectionUtils {
      */
     public static boolean isMapType(final Class<?> type) {
         return Map.class.isAssignableFrom(type);
+    }
+
+    /**
+     * Check if a type is {@link Optional}.
+     *
+     * @param type the type to check
+     * @return true if the type is {@link Optional}, false otherwise.
+     */
+    public static boolean isOptionalType(final Class<?> type) {
+        return Optional.class.isAssignableFrom(type);
     }
 
     /**

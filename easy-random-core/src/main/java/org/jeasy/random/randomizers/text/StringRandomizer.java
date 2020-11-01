@@ -150,7 +150,9 @@ public class StringRandomizer extends AbstractRandomizer<String> {
      * Create a new {@link StringRandomizer}.
      *
      * @return a new {@link StringRandomizer}.
+     * @deprecated in favor of the equivalent constructor
      */
+    @Deprecated
     public static StringRandomizer aNewStringRandomizer() {
         return new StringRandomizer();
     }
@@ -160,7 +162,9 @@ public class StringRandomizer extends AbstractRandomizer<String> {
      *
      * @param charset to use
      * @return a new {@link StringRandomizer}.
+     * @deprecated in favor of the equivalent constructor
      */
+    @Deprecated
     public static StringRandomizer aNewStringRandomizer(final Charset charset) {
         return new StringRandomizer(charset);
     }
@@ -170,7 +174,9 @@ public class StringRandomizer extends AbstractRandomizer<String> {
      *
      * @param maxLength of the String to generate
      * @return a new {@link StringRandomizer}.
+     * @deprecated in favor of the equivalent constructor
      */
+    @Deprecated
     public static StringRandomizer aNewStringRandomizer(final int maxLength) {
         return new StringRandomizer(maxLength);
     }
@@ -180,7 +186,9 @@ public class StringRandomizer extends AbstractRandomizer<String> {
      *
      * @param seed initial seed
      * @return a new {@link StringRandomizer}.
+     * @deprecated in favor of the equivalent constructor
      */
+    @Deprecated
     public static StringRandomizer aNewStringRandomizer(final long seed) {
         return new StringRandomizer(seed);
     }
@@ -191,7 +199,9 @@ public class StringRandomizer extends AbstractRandomizer<String> {
      * @param charset to use
      * @param seed    initial seed
      * @return a new {@link StringRandomizer}.
+     * @deprecated in favor of the equivalent constructor
      */
+    @Deprecated
     public static StringRandomizer aNewStringRandomizer(final Charset charset, final long seed) {
         return new StringRandomizer(charset, seed);
     }
@@ -202,7 +212,9 @@ public class StringRandomizer extends AbstractRandomizer<String> {
      * @param maxLength of the String to generate
      * @param seed      initial seed
      * @return a new {@link StringRandomizer}.
+     * @deprecated in favor of the equivalent constructor
      */
+    @Deprecated
     public static StringRandomizer aNewStringRandomizer(final int maxLength, final long seed) {
         return new StringRandomizer(maxLength, seed);
     }
@@ -214,7 +226,9 @@ public class StringRandomizer extends AbstractRandomizer<String> {
      * @param minLength of the String to generate
      * @param seed      initial seed
      * @return a new {@link StringRandomizer}.
+     * @deprecated in favor of the equivalent constructor
      */
+    @Deprecated
     public static StringRandomizer aNewStringRandomizer(final int minLength, final int maxLength, final long seed) {
         if (minLength > maxLength) {
             throw new IllegalArgumentException("minLength should be less than or equal to maxLength");
@@ -229,7 +243,9 @@ public class StringRandomizer extends AbstractRandomizer<String> {
      * @param maxLength of the String to generate
      * @param seed      initial seed
      * @return a new {@link StringRandomizer}.
+     * @deprecated in favor of the equivalent constructor
      */
+    @Deprecated
     public static StringRandomizer aNewStringRandomizer(final Charset charset, final int maxLength, final long seed) {
         return new StringRandomizer(charset, maxLength, seed);
     }
@@ -242,7 +258,9 @@ public class StringRandomizer extends AbstractRandomizer<String> {
      * @param minLength of the String to generate
      * @param seed      initial seed
      * @return a new {@link StringRandomizer}.
+     * @deprecated in favor of the equivalent constructor
      */
+    @Deprecated
     public static StringRandomizer aNewStringRandomizer(final Charset charset, final int minLength, final int maxLength, final long seed) {
         if (minLength > maxLength) {
             throw new IllegalArgumentException("minLength should be less than or equal to maxLength");

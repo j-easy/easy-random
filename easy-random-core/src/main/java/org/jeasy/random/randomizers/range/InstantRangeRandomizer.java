@@ -30,8 +30,8 @@ public class InstantRangeRandomizer extends AbstractRangeRandomizer<Instant> {
 	/**
 	 * Create a new {@link InstantRangeRandomizer}.
 	 *
-	 * @param min min value
-	 * @param max max value
+	 * @param min min value (inclusive)
+	 * @param max max value (exclusive)
 	 */
     public InstantRangeRandomizer(final Instant min, final Instant max) {
         super(min, max);
@@ -40,8 +40,8 @@ public class InstantRangeRandomizer extends AbstractRangeRandomizer<Instant> {
 	/**
 	 * Create a new {@link InstantRangeRandomizer}.
 	 *
-	 * @param min min value
-	 * @param max max value
+	 * @param min min value (inclusive)
+	 * @param max max value (exclusive)
 	 * @param seed initial seed
 	 */
     public InstantRangeRandomizer(final Instant min, final Instant max, long seed) {
@@ -51,10 +51,12 @@ public class InstantRangeRandomizer extends AbstractRangeRandomizer<Instant> {
 	/**
 	 * Create a new {@link InstantRangeRandomizer}.
 	 *
-	 * @param min min value
-	 * @param max max value
+	 * @param min min value (inclusive)
+	 * @param max max value (exclusive)
 	 * @return a new {@link InstantRangeRandomizer}.
+	 * @deprecated in favor of the equivalent constructor
 	 */
+	@Deprecated
     public static InstantRangeRandomizer aNewInstantRangeRandomizer(final Instant min, final Instant max) {
     	return new InstantRangeRandomizer(min, max);
 	}
@@ -62,11 +64,13 @@ public class InstantRangeRandomizer extends AbstractRangeRandomizer<Instant> {
 	/**
 	 * Create a new {@link InstantRangeRandomizer}.
 	 *
-	 * @param min  min value
-	 * @param max  max value
+	 * @param min  min value (inclusive)
+	 * @param max  max value (exclusive)
 	 * @param seed initial seed
 	 * @return a new {@link InstantRangeRandomizer}.
+	 * @deprecated in favor of the equivalent constructor
 	 */
+	@Deprecated
 	public static InstantRangeRandomizer aNewInstantRangeRandomizer(final Instant min, final Instant max, final long seed) {
 		return new InstantRangeRandomizer(min, max, seed);
 	}

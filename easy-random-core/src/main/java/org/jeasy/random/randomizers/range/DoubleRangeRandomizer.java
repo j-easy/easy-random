@@ -33,8 +33,8 @@ public class DoubleRangeRandomizer extends AbstractRangeRandomizer<Double> {
     /**
      * Create a new {@link DoubleRangeRandomizer}.
      *
-     * @param min min value
-     * @param max max value
+     * @param min min value (inclusive)
+     * @param max max value (exclusive)
      */
     public DoubleRangeRandomizer(final Double min, final Double max) {
         super(min, max);
@@ -43,8 +43,8 @@ public class DoubleRangeRandomizer extends AbstractRangeRandomizer<Double> {
     /**
      * Create a new {@link DoubleRangeRandomizer}.
      *
-     * @param min  min value
-     * @param max  max value
+     * @param min  min value (inclusive)
+     * @param max  max value (exclusive)
      * @param seed initial seed
      */
     public DoubleRangeRandomizer(final Double min, final Double max, final long seed) {
@@ -71,10 +71,12 @@ public class DoubleRangeRandomizer extends AbstractRangeRandomizer<Double> {
     /**
      * Create a new {@link DoubleRangeRandomizer}.
      *
-     * @param min min value
-     * @param max max value
+     * @param min min value (inclusive)
+     * @param max max value (exclusive)
      * @return a new {@link DoubleRangeRandomizer}.
+     * @deprecated in favor of the equivalent constructor
      */
+    @Deprecated
     public static DoubleRangeRandomizer aNewDoubleRangeRandomizer(final Double min, final Double max) {
         return new DoubleRangeRandomizer(min, max);
     }
@@ -82,11 +84,13 @@ public class DoubleRangeRandomizer extends AbstractRangeRandomizer<Double> {
     /**
      * Create a new {@link DoubleRangeRandomizer}.
      *
-     * @param min  min value
-     * @param max  max value
+     * @param min  min value (inclusive)
+     * @param max  max value (exclusive)
      * @param seed initial seed
      * @return a new {@link DoubleRangeRandomizer}.
+     * @deprecated in favor of the equivalent constructor
      */
+    @Deprecated
     public static DoubleRangeRandomizer aNewDoubleRangeRandomizer(final Double min, final Double max, final long seed) {
         return new DoubleRangeRandomizer(min, max, seed);
     }

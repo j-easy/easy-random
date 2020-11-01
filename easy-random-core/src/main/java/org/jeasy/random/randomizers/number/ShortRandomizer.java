@@ -51,7 +51,9 @@ public class ShortRandomizer extends AbstractRandomizer<Short> {
      * Create a new {@link ShortRandomizer}.
      *
      * @return a new {@link ShortRandomizer}.
+     * @deprecated in favor of the equivalent constructor
      */
+    @Deprecated
     public static ShortRandomizer aNewShortRandomizer() {
         return new ShortRandomizer();
     }
@@ -61,7 +63,9 @@ public class ShortRandomizer extends AbstractRandomizer<Short> {
      *
      * @param seed initial seed
      * @return a new {@link ShortRandomizer}.
+     * @deprecated in favor of the equivalent constructor
      */
+    @Deprecated
     public static ShortRandomizer aNewShortRandomizer(final long seed) {
         return new ShortRandomizer(seed);
     }

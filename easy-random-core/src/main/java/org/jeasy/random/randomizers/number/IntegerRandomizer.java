@@ -51,7 +51,9 @@ public class IntegerRandomizer extends AbstractRandomizer<Integer> {
      * Create a new {@link IntegerRandomizer}.
      *
      * @return a new {@link IntegerRandomizer}.
+     * @deprecated in favor of the equivalent constructor
      */
+    @Deprecated
     public static IntegerRandomizer aNewIntegerRandomizer() {
         return new IntegerRandomizer();
     }
@@ -61,7 +63,9 @@ public class IntegerRandomizer extends AbstractRandomizer<Integer> {
      *
      * @param seed initial seed
      * @return a new {@link IntegerRandomizer}.
+     * @deprecated in favor of the equivalent constructor
      */
+    @Deprecated
     public static IntegerRandomizer aNewIntegerRandomizer(final long seed) {
         return new IntegerRandomizer(seed);
     }

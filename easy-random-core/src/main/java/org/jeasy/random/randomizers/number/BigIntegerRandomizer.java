@@ -56,7 +56,9 @@ public class BigIntegerRandomizer extends AbstractRandomizer<BigInteger> {
      * Create a new {@link BigIntegerRandomizer}.
      *
      * @return a new {@link BigIntegerRandomizer}.
+     * @deprecated in favor of the equivalent constructor
      */
+    @Deprecated
     public static BigIntegerRandomizer aNewBigIntegerRandomizer() {
         return new BigIntegerRandomizer();
     }
@@ -66,7 +68,9 @@ public class BigIntegerRandomizer extends AbstractRandomizer<BigInteger> {
      *
      * @param seed initial seed
      * @return a new {@link BigIntegerRandomizer}.
+     * @deprecated in favor of the equivalent constructor
      */
+    @Deprecated
     public static BigIntegerRandomizer aNewBigIntegerRandomizer(final long seed) {
         return new BigIntegerRandomizer(seed);
     }

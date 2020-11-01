@@ -63,7 +63,9 @@ public class ParagraphRandomizer extends FakerBasedRandomizer<String> {
      * Create a new {@link ParagraphRandomizer}.
      *
      * @return a new {@link ParagraphRandomizer}
+     * @deprecated in favor of the equivalent constructor
      */
+    @Deprecated
     public static ParagraphRandomizer aNewParagraphRandomizer() {
         return new ParagraphRandomizer();
     }
@@ -73,7 +75,9 @@ public class ParagraphRandomizer extends FakerBasedRandomizer<String> {
      *
      * @param seed the initial seed
      * @return a new {@link ParagraphRandomizer}
+     * @deprecated in favor of the equivalent constructor
      */
+    @Deprecated
     public static ParagraphRandomizer aNewParagraphRandomizer(final long seed) {
         return new ParagraphRandomizer(seed);
     }
@@ -84,7 +88,9 @@ public class ParagraphRandomizer extends FakerBasedRandomizer<String> {
      * @param seed   the initial seed
      * @param locale the locale to use
      * @return a new {@link ParagraphRandomizer}
+     * @deprecated in favor of the equivalent constructor
      */
+    @Deprecated
     public static ParagraphRandomizer aNewParagraphRandomizer(final long seed, final Locale locale) {
         return new ParagraphRandomizer(seed, locale);
     }

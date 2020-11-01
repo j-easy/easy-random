@@ -61,7 +61,9 @@ public class MonthDayRandomizer implements Randomizer<MonthDay> {
      * Create a new {@link MonthDayRandomizer}.
      *
      * @return a new {@link MonthDayRandomizer}.
+     * @deprecated in favor of the equivalent constructor
      */
+    @Deprecated
     public static MonthDayRandomizer aNewMonthDayRandomizer() {
         return new MonthDayRandomizer();
     }
@@ -71,7 +73,9 @@ public class MonthDayRandomizer implements Randomizer<MonthDay> {
      *
      * @param seed initial seed
      * @return a new {@link MonthDayRandomizer}.
+     * @deprecated in favor of the equivalent constructor
      */
+    @Deprecated
     public static MonthDayRandomizer aNewMonthDayRandomizer(final long seed) {
         return new MonthDayRandomizer(seed);
     }

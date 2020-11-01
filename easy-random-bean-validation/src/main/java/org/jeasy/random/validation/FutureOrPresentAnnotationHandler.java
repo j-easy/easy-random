@@ -32,20 +32,20 @@ import java.time.LocalDate;
 
 class FutureOrPresentAnnotationHandler implements BeanValidationAnnotationHandler {
 
-    private final long seed;
     private EasyRandom easyRandom;
+    private EasyRandomParameters parameters;
 
-    FutureOrPresentAnnotationHandler(long seed) {
-        this.seed = seed;
+    FutureOrPresentAnnotationHandler(EasyRandomParameters parameters) {
+        this.parameters = parameters.copy();
     }
 
     @Override
     public Randomizer<?> getRandomizer(Field field) {
         if (easyRandom == null) {
             LocalDate now = LocalDate.now();
-            EasyRandomParameters parameters = new EasyRandomParameters()
-                    .seed(seed)
-                    .dateRange(now, now.plusYears(EasyRandomParameters.DEFAULT_DATE_RANGE));
+            parameters.setDateRange(new EasyRandomParameters.Range<>(
+                    now, now.plusYears(EasyRandomParameters.DEFAULT_DATE_RANGE))
+            );
             easyRandom = new EasyRandom(parameters);
         }
         return () -> easyRandom.nextObject(field.getType());

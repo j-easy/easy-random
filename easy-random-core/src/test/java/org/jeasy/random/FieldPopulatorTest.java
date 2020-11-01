@@ -25,6 +25,7 @@ package org.jeasy.random;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.BDDAssertions.thenThrownBy;
+import static org.mockito.Mockito.doAnswer;
 import static org.mockito.Mockito.when;
 
 import java.lang.reflect.Field;
@@ -35,6 +36,7 @@ import java.util.Map;
 
 import javax.xml.bind.JAXBElement;
 
+import org.jeasy.random.api.ContextAwareRandomizer;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
@@ -64,17 +66,21 @@ class FieldPopulatorTest {
     @Mock
     private Randomizer randomizer;
     @Mock
+    private ContextAwareRandomizer contextAwareRandomizer;
+    @Mock
     private ArrayPopulator arrayPopulator;
     @Mock
     private CollectionPopulator collectionPopulator;
     @Mock
     private MapPopulator mapPopulator;
+    @Mock
+    private OptionalPopulator optionalPopulator;
 
     private FieldPopulator fieldPopulator;
 
     @BeforeEach
     void setUp() {
-        fieldPopulator = new FieldPopulator(easyRandom, randomizerProvider, arrayPopulator, collectionPopulator, mapPopulator);
+        fieldPopulator = new FieldPopulator(easyRandom, randomizerProvider, arrayPopulator, collectionPopulator, mapPopulator, optionalPopulator);
     }
 
     @Test
@@ -107,6 +113,27 @@ class FieldPopulatorTest {
 
         // Then
         assertThat(human.getName()).isEqualTo(NAME);
+    }
+
+    @Test
+    void whenContextAwareRandomizerIsRegisteredForTheField_thenTheFieldShouldBeOnTopOfTheSuppliedContextStack() throws Exception {
+        // Given
+        Field name = Human.class.getDeclaredField("name");
+        Human human = new Human();
+        RandomizationContext context = new RandomizationContext(Human.class, new EasyRandomParameters());
+        final Human[] currentObjectFromContext = new Human[1];
+        when(randomizerProvider.getRandomizerByField(name, context)).thenReturn(contextAwareRandomizer);
+        when(contextAwareRandomizer.getRandomValue()).thenReturn(NAME);
+        doAnswer(invocationOnMock -> {
+            currentObjectFromContext[0] = (Human)invocationOnMock.getArgument(0, RandomizationContext.class).getCurrentObject();
+            return null;
+        }).when(contextAwareRandomizer).setRandomizerContext(context);
+
+        // When
+        fieldPopulator.populateField(human, name, context);
+
+        // Then
+        assertThat(currentObjectFromContext[0]).isEqualTo(human);
     }
 
     @Test
@@ -174,7 +201,7 @@ class FieldPopulatorTest {
     @Disabled("Objenesis is able to create an instance of JAXBElement type. Hence no error is thrown as expected in this test")
     void shouldFailWithNiceErrorMessageWhenUnableToCreateFieldValue() throws Exception {
       // Given
-      FieldPopulator fieldPopulator = new FieldPopulator(new EasyRandom(), randomizerProvider, arrayPopulator, collectionPopulator, mapPopulator);
+      FieldPopulator fieldPopulator = new FieldPopulator(new EasyRandom(), randomizerProvider, arrayPopulator, collectionPopulator, mapPopulator, optionalPopulator);
       Field jaxbElementField = JaxbElementFieldBean.class.getDeclaredField("jaxbElementField");
       JaxbElementFieldBean jaxbElementFieldBean = new JaxbElementFieldBean();
       RandomizationContext context = Mockito.mock(RandomizationContext.class);

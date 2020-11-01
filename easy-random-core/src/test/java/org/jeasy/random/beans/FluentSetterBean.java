@@ -21,35 +21,18 @@
  *   OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  *   THE SOFTWARE.
  */
-package org.jeasy.random.validation;
+package org.jeasy.random.beans;
 
-import java.lang.reflect.Field;
-import java.time.LocalDate;
-import java.time.temporal.ChronoUnit;
+public class FluentSetterBean {
 
-import org.jeasy.random.EasyRandom;
-import org.jeasy.random.EasyRandomParameters;
-import org.jeasy.random.api.Randomizer;
+    public String name;
 
-class FutureAnnotationHandler implements BeanValidationAnnotationHandler {
-
-    private EasyRandom easyRandom;
-    private EasyRandomParameters parameters;
-
-    FutureAnnotationHandler(EasyRandomParameters parameters) {
-        this.parameters = parameters.copy();
+    public FluentSetterBean setName(String name) {
+        this.name = name;
+        return this;
     }
 
-    @Override
-    public Randomizer<?> getRandomizer(Field field) {
-        if (easyRandom == null) {
-            LocalDate now = LocalDate.now();
-            parameters.setDateRange(new EasyRandomParameters.Range<>(
-                    now.plus(1, ChronoUnit.DAYS),
-                    now.plusYears(EasyRandomParameters.DEFAULT_DATE_RANGE)
-            ));
-            easyRandom = new EasyRandom(parameters);
-        }
-        return () -> easyRandom.nextObject(field.getType());
+    public String getName() {
+        return name;
     }
 }

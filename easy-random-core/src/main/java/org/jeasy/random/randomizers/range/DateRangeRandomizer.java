@@ -35,8 +35,8 @@ public class DateRangeRandomizer extends AbstractRangeRandomizer<Date> {
     /**
      * Create a new {@link DateRangeRandomizer}.
      *
-     * @param min min value
-     * @param max max value
+     * @param min min value (inclusive)
+     * @param max max value (exclusive)
      */
     public DateRangeRandomizer(final Date min, final Date max) {
         super(min, max);
@@ -45,8 +45,8 @@ public class DateRangeRandomizer extends AbstractRangeRandomizer<Date> {
     /**
      * Create a new {@link DateRangeRandomizer}.
      *
-     * @param min  min value
-     * @param max  max value
+     * @param min  min value (inclusive)
+     * @param max  max value (exclusive)
      * @param seed initial seed
      */
     public DateRangeRandomizer(final Date min, final Date max, final long seed) {
@@ -56,10 +56,12 @@ public class DateRangeRandomizer extends AbstractRangeRandomizer<Date> {
     /**
      * Create a new {@link DateRangeRandomizer}.
      *
-     * @param min min value
-     * @param max max value
+     * @param min min value (inclusive)
+     * @param max max value (exclusive)
      * @return a new {@link DateRangeRandomizer}.
+     * @deprecated in favor of the equivalent constructor
      */
+    @Deprecated
     public static DateRangeRandomizer aNewDateRangeRandomizer(final Date min, final Date max) {
         return new DateRangeRandomizer(min, max);
     }
@@ -68,11 +70,13 @@ public class DateRangeRandomizer extends AbstractRangeRandomizer<Date> {
     /**
      * Create a new {@link DateRangeRandomizer}.
      *
-     * @param min  min value
-     * @param max  max value
+     * @param min  min value (inclusive)
+     * @param max  max value (exclusive)
      * @param seed initial seed
      * @return a new {@link DateRangeRandomizer}.
+     * @deprecated in favor of the equivalent constructor
      */
+    @Deprecated
     public static DateRangeRandomizer aNewDateRangeRandomizer(final Date min, final Date max, final long seed) {
         return new DateRangeRandomizer(min, max, seed);
     }

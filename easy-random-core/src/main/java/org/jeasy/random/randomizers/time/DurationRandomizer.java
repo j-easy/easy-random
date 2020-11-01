@@ -90,7 +90,9 @@ public class DurationRandomizer implements Randomizer<Duration> {
      * Generated {@link Duration} objects will use {@link ChronoUnit#HOURS}.
      *
      * @return a new {@link DurationRandomizer}.
+     * @deprecated in favor of the equivalent constructor
      */
+    @Deprecated
     public static DurationRandomizer aNewDurationRandomizer() {
         return new DurationRandomizer();
     }
@@ -100,7 +102,9 @@ public class DurationRandomizer implements Randomizer<Duration> {
      *
      * @param unit the temporal unit for created durations
      * @return a new {@link DurationRandomizer}.
+     * @deprecated in favor of the equivalent constructor
      */
+    @Deprecated
     public static DurationRandomizer aNewDurationRandomizer(TemporalUnit unit) {
         return new DurationRandomizer(unit);
     }
@@ -111,7 +115,9 @@ public class DurationRandomizer implements Randomizer<Duration> {
      *
      * @param seed initial seed
      * @return a new {@link DurationRandomizer}.
+     * @deprecated in favor of the equivalent constructor
      */
+    @Deprecated
     public static DurationRandomizer aNewDurationRandomizer(final long seed) {
         return new DurationRandomizer(seed);
     }
@@ -122,7 +128,9 @@ public class DurationRandomizer implements Randomizer<Duration> {
      * @param seed initial seed
      * @param unit the temporal unit for created durations
      * @return a new {@link DurationRandomizer}.
+     * @deprecated in favor of the equivalent constructor
      */
+    @Deprecated
     public static DurationRandomizer aNewDurationRandomizer(final long seed, final TemporalUnit unit) {
         return new DurationRandomizer(seed, unit);
     }

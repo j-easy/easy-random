@@ -36,7 +36,9 @@ public class NullRandomizer implements Randomizer<Void> {
      * Create a new {@link NullRandomizer}.
      *
      * @return a new {@link NullRandomizer}.
+     * @deprecated in favor of the equivalent constructor
      */
+    @Deprecated
     public static NullRandomizer aNewNullRandomizer() {
         return new NullRandomizer();
     }

@@ -21,35 +21,41 @@
  *   OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  *   THE SOFTWARE.
  */
-package org.jeasy.random.validation;
+package org.jeasy.random;
 
 import java.lang.reflect.Field;
-import java.time.LocalDate;
-import java.time.temporal.ChronoUnit;
+import java.lang.reflect.ParameterizedType;
+import java.lang.reflect.Type;
+import java.util.Optional;
 
-import org.jeasy.random.EasyRandom;
-import org.jeasy.random.EasyRandomParameters;
-import org.jeasy.random.api.Randomizer;
+import static org.jeasy.random.util.ReflectionUtils.isParameterizedType;
+import static org.jeasy.random.util.ReflectionUtils.isPopulatable;
 
-class FutureAnnotationHandler implements BeanValidationAnnotationHandler {
+/**
+ * Populator for {@link Optional} type.
+ * 
+ * @author Mahmoud Ben Hassine (mahmoud.benhassine@icloud.com)
+ */
+class OptionalPopulator {
 
-    private EasyRandom easyRandom;
-    private EasyRandomParameters parameters;
+	private final EasyRandom easyRandom;
 
-    FutureAnnotationHandler(EasyRandomParameters parameters) {
-        this.parameters = parameters.copy();
-    }
+	OptionalPopulator(EasyRandom easyRandom) {
+		this.easyRandom = easyRandom;
+	}
 
-    @Override
-    public Randomizer<?> getRandomizer(Field field) {
-        if (easyRandom == null) {
-            LocalDate now = LocalDate.now();
-            parameters.setDateRange(new EasyRandomParameters.Range<>(
-                    now.plus(1, ChronoUnit.DAYS),
-                    now.plusYears(EasyRandomParameters.DEFAULT_DATE_RANGE)
-            ));
-            easyRandom = new EasyRandom(parameters);
-        }
-        return () -> easyRandom.nextObject(field.getType());
-    }
+	Optional<?> getRandomOptional(final Field field, final RandomizationContext context) {
+		Type fieldGenericType = field.getGenericType();
+		if (isParameterizedType(fieldGenericType)) { // populate only parameterized types, raw types will be empty
+			ParameterizedType parameterizedType = (ParameterizedType) fieldGenericType;
+			Type genericType = parameterizedType.getActualTypeArguments()[0];
+			if (isPopulatable(genericType)) {
+				return Optional.of(easyRandom.doPopulateBean((Class<?>) genericType, context));
+			} else {
+				return Optional.empty();
+			}
+		} else {
+			return Optional.empty();
+		}
+	}
 }

@@ -77,7 +77,9 @@ public class EmailRandomizer extends FakerBasedRandomizer<String> {
      * Create a new {@link EmailRandomizer}.
      *
      * @return a new {@link EmailRandomizer}
+     * @deprecated in favor of the equivalent constructor
      */
+    @Deprecated
     public static EmailRandomizer aNewEmailRandomizer() {
         return new EmailRandomizer();
     }
@@ -87,7 +89,9 @@ public class EmailRandomizer extends FakerBasedRandomizer<String> {
      *
      * @param seed the initial seed
      * @return a new {@link EmailRandomizer}
+     * @deprecated in favor of the equivalent constructor
      */
+    @Deprecated
     public static EmailRandomizer aNewEmailRandomizer(final long seed) {
         return new EmailRandomizer(seed);
     }
@@ -98,7 +102,9 @@ public class EmailRandomizer extends FakerBasedRandomizer<String> {
      * @param seed   the initial seed
      * @param locale the locale to use
      * @return a new {@link EmailRandomizer}
+     * @deprecated in favor of the equivalent constructor
      */
+    @Deprecated
     public static EmailRandomizer aNewEmailRandomizer(final long seed, final Locale locale) {
         return new EmailRandomizer(seed, locale);
     }
@@ -110,7 +116,9 @@ public class EmailRandomizer extends FakerBasedRandomizer<String> {
      * @param locale the locale to use
      * @param safe   true to generate safe emails (invalid domains), false otherwise
      * @return a new {@link EmailRandomizer}
+     * @deprecated in favor of the equivalent constructor
      */
+    @Deprecated
     public static EmailRandomizer aNewEmailRandomizer(final long seed, final Locale locale, final boolean safe) {
         return new EmailRandomizer(seed, locale, safe);
     }

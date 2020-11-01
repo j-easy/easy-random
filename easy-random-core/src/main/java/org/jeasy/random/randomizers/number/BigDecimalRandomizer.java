@@ -92,7 +92,9 @@ public class BigDecimalRandomizer implements Randomizer<BigDecimal> {
      * Create a new {@link BigDecimalRandomizer}.
      *
      * @return a new {@link BigDecimalRandomizer}.
+     * @deprecated in favor of the equivalent constructor
      */
+    @Deprecated
     public static BigDecimalRandomizer aNewBigDecimalRandomizer() {
         return new BigDecimalRandomizer();
     }
@@ -102,7 +104,9 @@ public class BigDecimalRandomizer implements Randomizer<BigDecimal> {
      *
      * @param seed initial seed
      * @return a new {@link BigDecimalRandomizer}.
+     * @deprecated in favor of the equivalent constructor
      */
+    @Deprecated
     public static BigDecimalRandomizer aNewBigDecimalRandomizer(final long seed) {
         return new BigDecimalRandomizer(seed);
     }
@@ -112,7 +116,9 @@ public class BigDecimalRandomizer implements Randomizer<BigDecimal> {
      *
      * @param scale of the {@code BigDecimal} value to be returned.
      * @return a new {@link BigDecimalRandomizer}.
+     * @deprecated in favor of the equivalent constructor
      */
+    @Deprecated
     public static BigDecimalRandomizer aNewBigDecimalRandomizer(final Integer scale) {
         return new BigDecimalRandomizer(scale);
     }
@@ -123,7 +129,9 @@ public class BigDecimalRandomizer implements Randomizer<BigDecimal> {
      * @param scale of the {@code BigDecimal} value to be returned.
      * @param roundingMode of the {@code BigDecimal} value to be returned.
      * @return a new {@link BigDecimalRandomizer}.
+     * @deprecated in favor of the equivalent constructor
      */
+    @Deprecated
     public static BigDecimalRandomizer aNewBigDecimalRandomizer(final Integer scale, final RoundingMode roundingMode) {
         return new BigDecimalRandomizer(scale, roundingMode);
     }
@@ -135,7 +143,9 @@ public class BigDecimalRandomizer implements Randomizer<BigDecimal> {
      * @param scale of the {@code BigDecimal} value to be returned.
      * @param roundingMode of the {@code BigDecimal} value to be returned.
      * @return a new {@link BigDecimalRandomizer}.
+     * @deprecated in favor of the equivalent constructor
      */
+    @Deprecated
     public static BigDecimalRandomizer aNewBigDecimalRandomizer(final long seed, final Integer scale, final RoundingMode roundingMode) {
         return new BigDecimalRandomizer(seed, scale, roundingMode);
     }

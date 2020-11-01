@@ -66,7 +66,9 @@ public class Ipv4AddressRandomizer extends FakerBasedRandomizer<String> {
      * Create a new {@link Ipv4AddressRandomizer}.
      *
      * @return a new {@link Ipv4AddressRandomizer}
+     * @deprecated in favor of the equivalent constructor
      */
+    @Deprecated
     public static Ipv4AddressRandomizer aNewIpv4AddressRandomizer() {
         return new Ipv4AddressRandomizer();
     }
@@ -77,7 +79,9 @@ public class Ipv4AddressRandomizer extends FakerBasedRandomizer<String> {
      * @param seed
      *          the initial seed
      * @return a new {@link Ipv4AddressRandomizer}
+     * @deprecated in favor of the equivalent constructor
      */
+    @Deprecated
     public static Ipv4AddressRandomizer aNewIpv4AddressRandomizer(final long seed) {
         return new Ipv4AddressRandomizer(seed);
     }
@@ -90,7 +94,9 @@ public class Ipv4AddressRandomizer extends FakerBasedRandomizer<String> {
      * @param locale
      *          the locale to use
      * @return a new {@link Ipv4AddressRandomizer}
+     * @deprecated in favor of the equivalent constructor
      */
+    @Deprecated
     public static Ipv4AddressRandomizer aNewIpv4AddressRandomizer(final long seed, final Locale locale) {
         return new Ipv4AddressRandomizer(seed, locale);
     }

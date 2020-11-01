@@ -24,21 +24,18 @@
 package org.jeasy.random.validation;
 
 import org.jeasy.random.api.Randomizer;
-import org.jeasy.random.randomizers.range.IntegerRangeRandomizer;
 
 import java.lang.reflect.Field;
-import java.util.Random;
+import java.math.BigDecimal;
 
-class PositiveAnnotationHandler implements BeanValidationAnnotationHandler {
-
-    private final Random random;
+class PositiveAnnotationHandler extends AbstractNumberBaseAnnotationHandler {
 
     PositiveAnnotationHandler(final long seed) {
-        random = new Random(seed);
+        super(seed);
     }
 
     @Override
     public Randomizer<?> getRandomizer(Field field) {
-        return new IntegerRangeRandomizer(1, Integer.MAX_VALUE, random.nextLong());
+        return getRandomizer(field.getType(), BigDecimal.ONE, null);
     }
 }

@@ -65,7 +65,9 @@ public class OffsetDateTimeRandomizer implements Randomizer<OffsetDateTime> {
      * Create a new {@link OffsetDateTimeRandomizer}.
      *
      * @return a new {@link OffsetDateTimeRandomizer}.
+     * @deprecated in favor of the equivalent constructor
      */
+    @Deprecated
     public static OffsetDateTimeRandomizer aNewOffsetDateTimeRandomizer() {
         return new OffsetDateTimeRandomizer();
     }
@@ -75,7 +77,9 @@ public class OffsetDateTimeRandomizer implements Randomizer<OffsetDateTime> {
      *
      * @param seed initial seed
      * @return a new {@link OffsetDateTimeRandomizer}.
+     * @deprecated in favor of the equivalent constructor
      */
+    @Deprecated
     public static OffsetDateTimeRandomizer aNewOffsetDateTimeRandomizer(final long seed) {
         return new OffsetDateTimeRandomizer(seed);
     }

@@ -86,6 +86,18 @@ class BeanValidationAnnotatedBean {
     @NegativeOrZero
     private int negativeOrZero;
 
+    @Positive
+    private Long positiveLong;
+
+    @PositiveOrZero
+    private Long positiveOrZeroLong;
+
+    @Negative
+    private Long negativeLong;
+
+    @NegativeOrZero
+    private Long negativeOrZeroLong;
+
     @NotBlank
     private String notBlank;
 
@@ -98,28 +110,28 @@ class BeanValidationAnnotatedBean {
     @Null
     private String unusedString;
 
-    @Size(min=2, max=10)
+    @Size(min = 2, max = 10)
     private String briefMessage;
 
-    @Size(min=2, max=10)
+    @Size(min = 2, max = 10)
     private Collection<String> sizedCollection;
 
-    @Size(min=2, max=10)
+    @Size(min = 2, max = 10)
     private List<String> sizedList;
 
-    @Size(min=2, max=10)
+    @Size(min = 2, max = 10)
     private Set<String> sizedSet;
 
-    @Size(min=2, max=10)
+    @Size(min = 2, max = 10)
     private Map<String, Integer> sizedMap;
 
-    @Size(min=2, max=10)
+    @Size(min = 2, max = 10)
     private String[] sizedArray;
 
-    @Size(min=2)
+    @Size(min = 2)
     private String sizedString;
 
-    @Pattern(regexp="[a-z]{4}")
+    @Pattern(regexp = "[a-z]{4}")
     private String regexString;
 
     public BeanValidationAnnotatedBean() {
@@ -195,6 +207,22 @@ class BeanValidationAnnotatedBean {
 
     public int getNegativeOrZero() {
         return this.negativeOrZero;
+    }
+
+    public Long getPositiveLong() {
+        return positiveLong;
+    }
+
+    public Long getPositiveOrZeroLong() {
+        return positiveOrZeroLong;
+    }
+
+    public Long getNegativeLong() {
+        return negativeLong;
+    }
+
+    public Long getNegativeOrZeroLong() {
+        return negativeOrZeroLong;
     }
 
     public String getNotBlank() {
@@ -315,6 +343,22 @@ class BeanValidationAnnotatedBean {
 
     public void setNegativeOrZero(int negativeOrZero) {
         this.negativeOrZero = negativeOrZero;
+    }
+
+    public void setPositiveLong(Long positiveLong) {
+        this.positiveLong = positiveLong;
+    }
+
+    public void setPositiveOrZeroLong(Long positiveOrZeroLong) {
+        this.positiveOrZeroLong = positiveOrZeroLong;
+    }
+
+    public void setNegativeLong(Long negativeLong) {
+        this.negativeLong = negativeLong;
+    }
+
+    public void setNegativeOrZeroLong(Long negativeOrZeroLong) {
+        this.negativeOrZeroLong = negativeOrZeroLong;
     }
 
     public void setNotBlank(String notBlank) {

@@ -63,7 +63,9 @@ public class SentenceRandomizer extends FakerBasedRandomizer<String> {
      * Create a new {@link SentenceRandomizer}.
      *
      * @return a new {@link SentenceRandomizer}
+     * @deprecated in favor of the equivalent constructor
      */
+    @Deprecated
     public static SentenceRandomizer aNewSentenceRandomizer() {
         return new SentenceRandomizer();
     }
@@ -73,7 +75,9 @@ public class SentenceRandomizer extends FakerBasedRandomizer<String> {
      *
      * @param seed the initial seed
      * @return a new {@link SentenceRandomizer}
+     * @deprecated in favor of the equivalent constructor
      */
+    @Deprecated
     public static SentenceRandomizer aNewSentenceRandomizer(final long seed) {
         return new SentenceRandomizer(seed);
     }
@@ -84,7 +88,9 @@ public class SentenceRandomizer extends FakerBasedRandomizer<String> {
      * @param seed   the initial seed
      * @param locale the locale to use
      * @return a new {@link SentenceRandomizer}
+     * @deprecated in favor of the equivalent constructor
      */
+    @Deprecated
     public static SentenceRandomizer aNewSentenceRandomizer(final long seed, final Locale locale) {
         return new SentenceRandomizer(seed, locale);
     }
