@@ -23,6 +23,8 @@
  */
 package org.jeasy.random;
 
+import java.util.List;
+import java.util.Random;
 import org.jeasy.random.api.ObjectFactory;
 import org.jeasy.random.api.RandomizerContext;
 import org.objenesis.Objenesis;
@@ -43,13 +45,19 @@ public class ObjenesisObjectFactory implements ObjectFactory {
 
     private final Objenesis objenesis = new ObjenesisStd();
 
+    private Random random;
+
     @Override
     public <T> T createInstance(Class<T> type, RandomizerContext context) {
+        if (random == null) {
+            random = new Random(context.getParameters().getSeed());
+        }
         if (context.getParameters().isScanClasspathForConcreteTypes() && isAbstract(type)) {
-            Class<?> randomConcreteSubType = context.randomElementOf(getPublicConcreteSubTypesOf((type)));
-            if (randomConcreteSubType == null) {
+            List<Class<?>> publicConcreteSubTypes = getPublicConcreteSubTypesOf(type);
+            if (publicConcreteSubTypes.isEmpty()) {
                 throw new InstantiationError("Unable to find a matching concrete subtype of type: " + type + " in the classpath");
             } else {
+                Class<?> randomConcreteSubType = publicConcreteSubTypes.get(random.nextInt(publicConcreteSubTypes.size()));
                 return (T) createNewInstance(randomConcreteSubType);
             }
         } else {

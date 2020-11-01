@@ -25,7 +25,6 @@ package org.jeasy.random;
 
 import static java.lang.annotation.ElementType.FIELD;
 import static java.lang.annotation.RetentionPolicy.RUNTIME;
-import static java.util.Arrays.asList;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.jeasy.random.FieldPredicates.named;
 import static org.mockito.Mockito.when;
@@ -186,19 +185,6 @@ public class RandomizationContextTest {
         assertThat(a.b.c.d).isNotNull();
         assertThat(a.b.c.d.name).isEqualTo("foo");
         assertThat(a.b.e.name).isEqualTo("bar");
-    }
-
-    @Test
-    void testRandomElementOf() {
-        // Given
-        String[] elements = {"foo", "bar"};
-
-        // When
-        RandomizationContext context = new RandomizationContext(Object.class, parameters);
-        String element = context.randomElementOf(asList(elements));
-
-        // Then
-        assertThat(element).isIn(elements);
     }
 
     static class MyRandomizer implements ContextAwareRandomizer<D> {

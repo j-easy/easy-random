@@ -23,6 +23,7 @@
  */
 package org.jeasy.random;
 
+import java.util.List;
 import org.jeasy.random.api.ContextAwareRandomizer;
 import org.jeasy.random.api.Randomizer;
 import org.jeasy.random.api.RandomizerProvider;
@@ -122,27 +123,26 @@ class FieldPopulator {
         Class<?> fieldType = field.getType();
         Type fieldGenericType = field.getGenericType();
 
-        Object value;
         if (isArrayType(fieldType)) {
-            value = arrayPopulator.getRandomArray(fieldType, context);
+            return arrayPopulator.getRandomArray(fieldType, context);
         } else if (isCollectionType(fieldType)) {
-            value = collectionPopulator.getRandomCollection(field, context);
+            return collectionPopulator.getRandomCollection(field, context);
         } else if (isMapType(fieldType)) {
-            value = mapPopulator.getRandomMap(field, context);
+            return mapPopulator.getRandomMap(field, context);
         } else if (isOptionalType(fieldType)) {
-            value = optionalPopulator.getRandomOptional(field, context);
+            return optionalPopulator.getRandomOptional(field, context);
         } else {
             if (context.getParameters().isScanClasspathForConcreteTypes() && isAbstract(fieldType) && !isEnumType(fieldType) /*enums can be abstract, but can not inherit*/) {
-                Class<?> randomConcreteSubType = context.randomElementOf(filterSameParameterizedTypes(getPublicConcreteSubTypesOf(fieldType), fieldGenericType));
-                if (randomConcreteSubType == null) {
+                List<Class<?>> parameterizedTypes = filterSameParameterizedTypes(getPublicConcreteSubTypesOf(fieldType), fieldGenericType);
+                if (parameterizedTypes.isEmpty()) {
                     throw new ObjectCreationException("Unable to find a matching concrete subtype of type: " + fieldType);
                 } else {
-                    value = easyRandom.doPopulateBean(randomConcreteSubType, context);
+                    Class<?> randomConcreteSubType = parameterizedTypes.get(easyRandom.nextInt(parameterizedTypes.size()));
+                    return easyRandom.doPopulateBean(randomConcreteSubType, context);
                 }
             } else {
-                value = easyRandom.doPopulateBean(fieldType, context);
+                return easyRandom.doPopulateBean(fieldType, context);
             }
         }
-        return value;
     }
 }

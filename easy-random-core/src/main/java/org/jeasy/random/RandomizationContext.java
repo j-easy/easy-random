@@ -72,7 +72,7 @@ class RandomizationContext implements RandomizerContext {
 
     Object getPopulatedBean(final Class<?> type) {
         int actualPoolSize = populatedBeans.get(type).size();
-        int randomIndex = actualPoolSize > 1 ? nextInt(0, actualPoolSize) : 0;
+        int randomIndex = actualPoolSize > 1 ? random.nextInt(actualPoolSize) : 0;
         return populatedBeans.get(type).get(randomIndex);
     }
 
@@ -105,10 +105,6 @@ class RandomizationContext implements RandomizerContext {
 
     private List<String> toLowerCase(final List<String> strings) {
         return strings.stream().map(String::toLowerCase).collect(toList());
-    }
-
-    private int nextInt(int startInclusive, int endExclusive) {
-        return startInclusive + random.nextInt(endExclusive - startInclusive);
     }
 
     void setRandomizedObject(Object randomizedObject) {
@@ -150,13 +146,5 @@ class RandomizationContext implements RandomizerContext {
     @Override
     public EasyRandomParameters getParameters() {
         return parameters;
-    }
-
-    @Override
-    public <T> T randomElementOf(List<T> list) {
-        if (list.isEmpty()) {
-            return null;
-        }
-        return list.get(nextInt(0, list.size()));
     }
 }

@@ -23,7 +23,6 @@
  */
 package org.jeasy.random.api;
 
-import java.util.List;
 import org.jeasy.random.EasyRandom;
 import org.jeasy.random.EasyRandomParameters;
 
@@ -71,12 +70,4 @@ public interface RandomizerContext {
      */
     EasyRandomParameters getParameters();
 
-    /**
-     * Get a random element from the list.
-     *
-     * @param list the input list
-     * @param <T>  the type of elements in the list
-     * @return a random element from the list or null if the list is empty
-     */
-    <T> T randomElementOf(List<T> list);
 }
