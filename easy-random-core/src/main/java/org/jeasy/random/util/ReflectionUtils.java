@@ -23,15 +23,11 @@
  */
 package org.jeasy.random.util;
 
-import org.apache.commons.beanutils.FluentPropertyBeanIntrospector;
-import org.apache.commons.beanutils.PropertyUtilsBean;
 import org.jeasy.random.annotation.RandomizerArgument;
 import org.jeasy.random.ObjectCreationException;
 import org.jeasy.random.api.Randomizer;
 import org.objenesis.ObjenesisStd;
 
-import java.beans.IntrospectionException;
-import java.beans.PropertyDescriptor;
 import java.lang.annotation.Annotation;
 import java.lang.reflect.*;
 import java.math.BigDecimal;
@@ -59,11 +55,6 @@ import static java.util.stream.Collectors.toList;
  * @author Mahmoud Ben Hassine (mahmoud.benhassine@icloud.com)
  */
 public final class ReflectionUtils {
-
-    private static final PropertyUtilsBean PROPERTY_UTILS_BEAN = new PropertyUtilsBean();
-    static {
-        PROPERTY_UTILS_BEAN.addBeanIntrospector(new FluentPropertyBeanIntrospector());
-    }
 
     private ReflectionUtils() {
     }
@@ -140,21 +131,16 @@ public final class ReflectionUtils {
      * @throws IllegalAccessException if the property cannot be set
      */
     public static void setProperty(final Object object, final Field field, final Object value) throws IllegalAccessException, InvocationTargetException {
-        try { // to call regular setter
-            PropertyDescriptor propertyDescriptor = new PropertyDescriptor(field.getName(), object.getClass());
-            Method setter = propertyDescriptor.getWriteMethod();
+        try {
+            Method setter = getSetter(object.getClass(), field.getName(), field.getType());
             if (setter != null) {
                 setter.invoke(object, value);
             } else {
                 setFieldValue(object, field, value);
             }
-        } catch (IntrospectionException | IllegalAccessException e) {
-            try { // to call fluent setter
-                PROPERTY_UTILS_BEAN.setProperty(object, field.getName(), value);
-            } catch (NoSuchMethodException noSuchMethodException) {
-                // otherwise, set field using reflection
-                setFieldValue(object, field, value);
-            }
+        } catch (IllegalAccessException e) {
+            // otherwise, set field using reflection
+            setFieldValue(object, field, value);
         }
     }
 
@@ -607,6 +593,27 @@ public final class ReflectionUtils {
             return (Randomizer<T>) type.newInstance();
         } catch (IllegalAccessException | InvocationTargetException | InstantiationException e) {
             throw new ObjectCreationException(format("Could not create Randomizer of type: %s with constructor arguments: %s", type, Arrays.toString(randomizerArguments)), e);
+        }
+    }
+
+    private static Method getSetter(Class<?> beanType, String propertyName, Class<?> propertyType) {
+        String setterName = "set" + propertyName.substring(0, 1).toUpperCase(ENGLISH) + propertyName.substring(1);
+        // implementation note: we go from subclass to super-class order - hence getDeclaredMethods
+        for (Method method : beanType.getDeclaredMethods()) {
+            // note: the return type void requirement is relaxed (allow chained setters)
+            if (setterName.equals(method.getName())
+                    && Modifier.isPublic(method.getModifiers())
+                    && !method.isBridge()
+                    && method.getParameterCount() == 1
+                    && method.getParameterTypes()[0] == propertyType) {
+                return method;
+            }
+        }
+        Class<?> superClass = beanType.getSuperclass();
+        if (superClass == null || superClass == Object.class) {
+            return null;
+        } else {
+            return getSetter(superClass, propertyName, propertyType);
         }
     }
 
