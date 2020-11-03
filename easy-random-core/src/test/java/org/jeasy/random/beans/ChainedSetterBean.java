@@ -23,16 +23,27 @@
  */
 package org.jeasy.random.beans;
 
-public class FluentSetterBean {
+public class ChainedSetterBean {
 
-    public String name;
+    private String name;
+    private int index;
 
-    public FluentSetterBean setName(String name) {
+    public ChainedSetterBean setName(String name) {
         this.name = name;
+        return this;
+    }
+
+    public ChainedSetterBean setIndex(int index) {
+        this.index = index;
         return this;
     }
 
     public String getName() {
         return name;
     }
+
+    public int getIndex() {
+        return index;
+    }
+
 }

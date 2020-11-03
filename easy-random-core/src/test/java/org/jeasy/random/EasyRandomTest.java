@@ -69,10 +69,10 @@ class EasyRandomTest {
     @Test
     void generatedBeanWithFluentSetterShouldBeCorrectlyPopulated() {
         // when
-        FluentSetterBean fluentSetterBean = easyRandom.nextObject(FluentSetterBean.class);
+        ChainedSetterBean chainedSetterBean = easyRandom.nextObject(ChainedSetterBean.class);
 
         // then
-        assertThat(fluentSetterBean.getName()).isNotEmpty();
+        assertThat(chainedSetterBean.getName()).isNotEmpty();
     }
 
     @Test

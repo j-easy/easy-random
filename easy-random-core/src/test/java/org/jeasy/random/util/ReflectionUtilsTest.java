@@ -25,13 +25,11 @@ package org.jeasy.random.util;
 
 import org.jeasy.random.beans.*;
 import org.junit.jupiter.api.Test;
-import org.mockito.Mockito;
 
 import java.lang.annotation.Documented;
 import java.lang.annotation.Retention;
 import java.lang.annotation.Target;
 import java.lang.reflect.Field;
-import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.math.BigDecimal;
 import java.util.*;
@@ -43,6 +41,8 @@ import static java.lang.annotation.ElementType.*;
 import static java.lang.annotation.RetentionPolicy.RUNTIME;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
+import static org.mockito.Mockito.spy;
+import static org.mockito.Mockito.verify;
 
 class ReflectionUtilsTest {
 
@@ -226,17 +226,31 @@ class ReflectionUtilsTest {
     }
 
     @Test
-    void setPropertyFluentBean() throws NoSuchFieldException, InvocationTargetException, IllegalAccessException {
+    void setPropertyFluentBean() throws Exception {
         // given
-        FluentSetterBean fluentSetterBean = Mockito.spy(FluentSetterBean.class);
-        Field nameField = FluentSetterBean.class.getField("name");
+        ChainedSetterBean chainedSetterBean = spy(ChainedSetterBean.class);
+        Field nameField = ChainedSetterBean.class.getDeclaredField("name");
 
         // when
-        ReflectionUtils.setProperty(fluentSetterBean,nameField,"myName");
+        ReflectionUtils.setProperty(chainedSetterBean, nameField, "myName");
 
         // then
-        Mockito.verify(fluentSetterBean).setName("myName");
-        assertThat(fluentSetterBean.getName()).isEqualTo("myName");
+        verify(chainedSetterBean).setName("myName");
+        assertThat(chainedSetterBean.getName()).isEqualTo("myName");
+    }
+
+    @Test
+    void setPropertyFluentBeanPrimitiveType() throws Exception {
+        // given
+        ChainedSetterBean chainedSetterBean = spy(ChainedSetterBean.class);
+        Field indexField = ChainedSetterBean.class.getDeclaredField("index");
+
+        // when
+        ReflectionUtils.setProperty(chainedSetterBean, indexField, 100);
+
+        // then
+        verify(chainedSetterBean).setIndex(100);
+        assertThat(chainedSetterBean.getIndex()).isEqualTo(100);
     }
 
     @SuppressWarnings("unused")
