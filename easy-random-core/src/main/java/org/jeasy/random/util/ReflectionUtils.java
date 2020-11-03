@@ -543,7 +543,7 @@ public final class ReflectionUtils {
      * @param field field to get the write method for
      * @return Optional of write method or empty if field has no write method
      */
-    private static Optional<Method> getWriteMethod(Field field) {
+    public static Optional<Method> getWriteMethod(Field field) {
         return getPublicMethod("set" + capitalize(field.getName()), field.getDeclaringClass(), field.getType());
     }
 

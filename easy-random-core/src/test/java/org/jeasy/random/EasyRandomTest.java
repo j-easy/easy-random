@@ -67,15 +67,6 @@ class EasyRandomTest {
     }
 
     @Test
-    void generatedBeanWithFluentSetterShouldBeCorrectlyPopulated() {
-        // when
-        ChainedSetterBean chainedSetterBean = easyRandom.nextObject(ChainedSetterBean.class);
-
-        // then
-        assertThat(chainedSetterBean.getName()).isNotEmpty();
-    }
-
-    @Test
     void shouldFailIfSetterInvocationFails() {
         EasyRandom easyRandom = new EasyRandom();
         Throwable thrown = catchThrowable(() -> easyRandom.nextObject(Salary.class));
