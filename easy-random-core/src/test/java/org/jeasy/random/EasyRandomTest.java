@@ -271,6 +271,151 @@ class EasyRandomTest {
         assertThat(foo.names.length).isNotEqualTo(foo.addresses.length);
     }
 
+    @Test
+    void testGenericTypeRandomization() {
+        // given
+        class Base<T> {
+            T t;
+        }
+        class Concrete extends Base<String> {}
+        
+        // when
+        Concrete concrete = easyRandom.nextObject(Concrete.class);
+        
+        // then
+        assertThat(concrete.t).isInstanceOf(String.class);
+        assertThat(concrete.t).isNotEmpty();
+    }
+
+    @Test
+    void testMultipleGenericTypeRandomization() {
+        // given
+        class Base<T, S> {
+            T t;
+            S s;
+        }
+        class Concrete extends Base<String, Long> {}
+        
+        // when
+        Concrete concrete = easyRandom.nextObject(Concrete.class);
+        
+        // then
+        assertThat(concrete.t).isInstanceOf(String.class);
+        assertThat(concrete.s).isInstanceOf(Long.class);
+        assertThat(concrete.t).isNotEmpty();
+        assertThat(concrete.s).isNotNull();
+    }
+
+    @Test
+    void genericBaseClass() {
+        // given
+        class Concrete extends GenericBaseClass<Integer> {
+            private final String y;
+
+            public Concrete(int x, String y) {
+                super(x);
+                this.y = y;
+            }
+
+            public String getY() {
+                return y;
+            }
+        }
+
+        // when
+        Concrete concrete = easyRandom.nextObject(Concrete.class);
+        
+        // then
+        assertThat(concrete.getX().getClass()).isEqualTo(Integer.class);
+        assertThat(concrete.getY().getClass()).isEqualTo(String.class);
+    }
+
+    @Test
+    void genericBaseClassWithBean() {
+        // given
+        class Concrete extends GenericBaseClass<Street> {
+            private final String y;
+
+            public Concrete(Street x, String y) {
+                super(x);
+                this.y = y;
+            }
+
+            public String getY() {
+                return y;
+            }
+        }
+
+        // when
+        Concrete concrete = easyRandom.nextObject(Concrete.class);
+        
+        // then
+        assertThat(concrete.getX().getClass()).isEqualTo(Street.class);
+        assertThat(concrete.getY().getClass()).isEqualTo(String.class);
+    }
+
+    @Test
+    void boundedBaseClass() {
+        // given
+        class Concrete extends BoundedBaseClass<BoundedBaseClass.IntWrapper> {
+            private final String y;
+
+            public Concrete(BoundedBaseClass.IntWrapper x, String y) {
+                super(x);
+                this.y = y;
+            }
+
+            public String getY() {
+                return y;
+            }
+        }
+
+        // when
+        Concrete concrete = easyRandom.nextObject(Concrete.class);
+        
+        // then
+        assertThat(concrete.getX().getClass()).isEqualTo(BoundedBaseClass.IntWrapper.class);
+        assertThat(concrete.getY().getClass()).isEqualTo(String.class);
+    }
+
+    @Test
+    void testMultipleGenericLevels() {
+        // given
+        abstract class BaseClass<T> {
+            protected T x;
+            BaseClass(T x) {
+                this.x = x;
+            }
+            public T getX() {
+                return x;
+            }
+        }
+
+        abstract class GenericBaseClass<T, P> extends BaseClass<T> {
+            protected P y;
+            GenericBaseClass(T x, P y) {
+                super(x);
+                this.y = y;
+            }
+            public P getY() {
+                return y;
+            }
+        }
+
+        class Concrete extends GenericBaseClass<String, Long> {
+            Concrete(String x, Long y) {
+                super(x, y);
+            }
+        }
+
+        // when
+        Concrete concrete = easyRandom.nextObject(Concrete.class);
+        
+        // then
+        assertThat(concrete.getX()).isInstanceOf(String.class);
+        assertThat(concrete.getY()).isInstanceOf(Long.class);
+    }
+
     private void validatePerson(final Person person) {
         assertThat(person).isNotNull();
         assertThat(person.getEmail()).isNotEmpty();

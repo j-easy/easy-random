@@ -23,7 +23,10 @@
  */
 package org.jeasy.random;
 
+import java.lang.reflect.ParameterizedType;
+import java.lang.reflect.TypeVariable;
 import java.util.List;
+
 import org.jeasy.random.api.ContextAwareRandomizer;
 import org.jeasy.random.api.Randomizer;
 import org.jeasy.random.api.RandomizerProvider;
@@ -114,7 +117,14 @@ class FieldPopulator {
         // issue 241: if there is no custom randomizer by field, then check by type
         Randomizer<?> randomizer = randomizerProvider.getRandomizerByField(field, context);
         if (randomizer == null) {
-            randomizer = randomizerProvider.getRandomizerByType(field.getType(), context);
+            Type genericType = field.getGenericType();
+            if (isTypeVariable(genericType)) {
+                // if generic type, retrieve actual type from declaring class
+                Class<?> type = getParametrizedType(field, context);
+                randomizer = randomizerProvider.getRandomizerByType(type, context);
+            } else {
+                randomizer = randomizerProvider.getRandomizerByType(field.getType(), context);
+            }
         }
         return randomizer;
     }
@@ -141,8 +151,34 @@ class FieldPopulator {
                     return easyRandom.doPopulateBean(randomConcreteSubType, context);
                 }
             } else {
+                Type genericType = field.getGenericType();
+                if (isTypeVariable(genericType)) {
+                    // if generic type, retrieve actual type from declaring class
+                    Class<?> type = getParametrizedType(field, context);
+                    return easyRandom.doPopulateBean(type, context);
+                }
                 return easyRandom.doPopulateBean(fieldType, context);
             }
         }
+    }
+
+    private Class<?> getParametrizedType(Field field, RandomizationContext context) {
+        Class<?> declaringClass = field.getDeclaringClass();
+        TypeVariable<? extends Class<?>>[] typeParameters = declaringClass.getTypeParameters();
+        ParameterizedType genericSuperclass = (ParameterizedType) context.getTargetType().getGenericSuperclass();
+        Type[] actualTypeArguments = genericSuperclass.getActualTypeArguments();
+        Type actualTypeArgument = null;
+        for (int i = 0; i < typeParameters.length; i++) {
+            if (field.getGenericType().equals(typeParameters[i])) {
+                actualTypeArgument = actualTypeArguments[i];
+            }
+        }
+        Class<?> aClass;
+        try {
+            aClass = Class.forName(actualTypeArgument.getTypeName());
+        } catch (ClassNotFoundException e) {
+            throw new RuntimeException(e);// the class should have been already loaded without any problem at this point
+        }
+        return aClass;
     }
 }
