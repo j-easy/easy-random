@@ -23,7 +23,10 @@
  */
 package org.jeasy.random;
 
+import java.lang.reflect.ParameterizedType;
+import java.lang.reflect.TypeVariable;
 import java.util.List;
+
 import org.jeasy.random.api.ContextAwareRandomizer;
 import org.jeasy.random.api.Randomizer;
 import org.jeasy.random.api.RandomizerProvider;
@@ -114,7 +117,14 @@ class FieldPopulator {
         // issue 241: if there is no custom randomizer by field, then check by type
         Randomizer<?> randomizer = randomizerProvider.getRandomizerByField(field, context);
         if (randomizer == null) {
-            randomizer = randomizerProvider.getRandomizerByType(field.getType(), context);
+            Type genericType = field.getGenericType();
+            if (isTypeVariable(genericType)) {
+                // if generic type, retrieve actual type from declaring class
+                Class<?> type = getParametrizedType(field, context);
+                randomizer = randomizerProvider.getRandomizerByType(type, context);
+            } else {
+                randomizer = randomizerProvider.getRandomizerByType(field.getType(), context);
+            }
         }
         return randomizer;
     }
@@ -141,8 +151,56 @@ class FieldPopulator {
                     return easyRandom.doPopulateBean(randomConcreteSubType, context);
                 }
             } else {
+                Type genericType = field.getGenericType();
+                if (isTypeVariable(genericType)) {
+                    // if generic type, try to retrieve actual type from hierarchy
+                    Class<?> type = getParametrizedType(field, context);
+                    return easyRandom.doPopulateBean(type, context);
+                }
                 return easyRandom.doPopulateBean(fieldType, context);
             }
         }
+    }
+
+    private Class<?> getParametrizedType(Field field, RandomizationContext context) {
+        Class<?> declaringClass = field.getDeclaringClass();
+        TypeVariable<? extends Class<?>>[] typeParameters = declaringClass.getTypeParameters();
+        Type genericSuperclass = getGenericSuperClass(context);
+        ParameterizedType parameterizedGenericSuperType = (ParameterizedType) genericSuperclass;
+        Type[] actualTypeArguments = parameterizedGenericSuperType.getActualTypeArguments();
+        Type actualTypeArgument = null;
+        for (int i = 0; i < typeParameters.length; i++) {
+            if (field.getGenericType().equals(typeParameters[i])) {
+                actualTypeArgument = actualTypeArguments[i];
+            }
+        }
+        if (actualTypeArgument == null) {
+            return field.getClass();
+        }
+        Class<?> aClass;
+        String typeName = null;
+        try {
+            typeName = actualTypeArgument.getTypeName();
+            aClass = Class.forName(typeName);
+        } catch (ClassNotFoundException e) {
+            String message = String.format("Unable to load class %s of generic field %s in class %s. " +
+                            "Please refer to the documentation as this generic type may not be supported for randomization.",
+                    typeName, field.getName(), field.getDeclaringClass().getName());
+            throw new ObjectCreationException(message, e);
+        }
+        return aClass;
+    }
+
+    // find the generic base class in the hierarchy (which might not be the first super type)
+    private Type getGenericSuperClass(RandomizationContext context) {
+        Class<?> targetType = context.getTargetType();
+        Type genericSuperclass = targetType.getGenericSuperclass();
+        while (targetType != null && !(genericSuperclass instanceof ParameterizedType)) {
+            targetType = targetType.getSuperclass();
+            if (targetType != null) {
+                genericSuperclass = targetType.getGenericSuperclass();
+            }
+        }
+        return genericSuperclass;
     }
 }
