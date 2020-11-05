@@ -165,8 +165,9 @@ class FieldPopulator {
     private Class<?> getParametrizedType(Field field, RandomizationContext context) {
         Class<?> declaringClass = field.getDeclaringClass();
         TypeVariable<? extends Class<?>>[] typeParameters = declaringClass.getTypeParameters();
-        ParameterizedType genericSuperclass = (ParameterizedType) context.getTargetType().getGenericSuperclass();
-        Type[] actualTypeArguments = genericSuperclass.getActualTypeArguments();
+        Type genericSuperclass = getGenericSuperClass(context);
+        ParameterizedType parameterizedGenericSuperType = (ParameterizedType) genericSuperclass;
+        Type[] actualTypeArguments = parameterizedGenericSuperType.getActualTypeArguments();
         Type actualTypeArgument = null;
         for (int i = 0; i < typeParameters.length; i++) {
             if (field.getGenericType().equals(typeParameters[i])) {
@@ -188,5 +189,18 @@ class FieldPopulator {
             throw new ObjectCreationException(message, e);
         }
         return aClass;
+    }
+
+    // find the generic base class in the hierarchy (which might not be the first super type)
+    private Type getGenericSuperClass(RandomizationContext context) {
+        Class<?> targetType = context.getTargetType();
+        Type genericSuperclass = targetType.getGenericSuperclass();
+        while (targetType != null && !(genericSuperclass instanceof ParameterizedType)) {
+            targetType = targetType.getSuperclass();
+            if (targetType != null) {
+                genericSuperclass = targetType.getGenericSuperclass();
+            }
+        }
+        return genericSuperclass;
     }
 }

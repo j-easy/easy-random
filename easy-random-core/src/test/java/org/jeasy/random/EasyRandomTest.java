@@ -432,6 +432,36 @@ class EasyRandomTest {
                 .hasMessage("Unable to create a random instance of type class org.jeasy.random.EasyRandomTest$7Concrete");
     }
 
+    @Test
+    void testRootGenericType() { // intermediate type in the hierarchy is not generic
+        // given
+        abstract class BaseClass<T> {
+            protected T x;
+            BaseClass(T x) {
+                this.x = x;
+            }
+            public T getX() {
+                return x;
+            }
+        }
+        abstract class GenericBaseClass extends BaseClass<String> {
+            GenericBaseClass(String x) {
+                super(x);
+            }
+        }
+        class Concrete extends GenericBaseClass {
+            Concrete(String x) {
+                super(x);
+            }
+        }
+
+        // when
+        Concrete concrete = easyRandom.nextObject(Concrete.class);
+
+        // then
+        assertThat(concrete.getX()).isInstanceOf(String.class);
+    }
+
     private void validatePerson(final Person person) {
         assertThat(person).isNotNull();
         assertThat(person.getEmail()).isNotEmpty();
