@@ -416,6 +416,22 @@ class EasyRandomTest {
         assertThat(concrete.getY()).isInstanceOf(Long.class);
     }
 
+    @Test
+    void testComplexGenericTypeRandomization() { // not supported
+        // given
+        class Base<T> {
+            T t;
+        }
+        class Concrete extends Base<List<String>> {}
+
+        assertThatThrownBy(
+                // when
+                () -> easyRandom.nextObject(Concrete.class))
+                // then
+                .isInstanceOf(ObjectCreationException.class)
+                .hasMessage("Unable to create a random instance of type class org.jeasy.random.EasyRandomTest$7Concrete");
+    }
+
     private void validatePerson(final Person person) {
         assertThat(person).isNotNull();
         assertThat(person.getEmail()).isNotEmpty();

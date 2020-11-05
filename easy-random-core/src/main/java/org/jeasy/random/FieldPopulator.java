@@ -173,11 +173,19 @@ class FieldPopulator {
                 actualTypeArgument = actualTypeArguments[i];
             }
         }
+        if (actualTypeArgument == null) {
+            return field.getClass();
+        }
         Class<?> aClass;
+        String typeName = null;
         try {
-            aClass = Class.forName(actualTypeArgument.getTypeName());
+            typeName = actualTypeArgument.getTypeName();
+            aClass = Class.forName(typeName);
         } catch (ClassNotFoundException e) {
-            throw new RuntimeException(e);// the class should have been already loaded without any problem at this point
+            String message = String.format("Unable to load class %s of generic field %s in class %s. " +
+                            "Please refer to the documentation as this generic type may not be supported for randomization.",
+                    typeName, field.getName(), field.getDeclaringClass().getName());
+            throw new ObjectCreationException(message, e);
         }
         return aClass;
     }
