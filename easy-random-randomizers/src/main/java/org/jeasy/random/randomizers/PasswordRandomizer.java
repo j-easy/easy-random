@@ -97,7 +97,7 @@ public class PasswordRandomizer extends FakerBasedRandomizer<String> {
 	 * @param min              the minimum number of characters of passwords
 	 * @param max              the maximum number of characters of passwords
 	 * @param includeUppercase true to generate passwords containing Uppercase Characters , false otherwise
-	 * @param includeSpecial   true to generate passwords containing Special Characters {'!', '@', '#', '$', '%', '^', '&', '*'} , false otherwise
+	 * @param includeSpecial   true to generate passwords containing Special Characters, false otherwise
 	 */
 	public PasswordRandomizer(final long seed, final int min, final int max, final boolean includeUppercase, final boolean includeSpecial) {
 		super(seed);
