@@ -24,7 +24,6 @@
 package org.jeasy.random;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.assertj.core.api.BDDAssertions.thenThrownBy;
 import static org.mockito.Mockito.doAnswer;
 import static org.mockito.Mockito.when;
 
@@ -34,11 +33,8 @@ import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
 
-import javax.xml.bind.JAXBElement;
-
 import org.jeasy.random.api.ContextAwareRandomizer;
 import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Mock;
@@ -197,20 +193,4 @@ class FieldPopulatorTest {
         assertThat(human.getName()).isNull();
     }
 
-    @Test //https://github.com/j-easy/easy-random/issues/221
-    @Disabled("Objenesis is able to create an instance of JAXBElement type. Hence no error is thrown as expected in this test")
-    void shouldFailWithNiceErrorMessageWhenUnableToCreateFieldValue() throws Exception {
-      // Given
-      FieldPopulator fieldPopulator = new FieldPopulator(new EasyRandom(), randomizerProvider, arrayPopulator, collectionPopulator, mapPopulator, optionalPopulator);
-      Field jaxbElementField = JaxbElementFieldBean.class.getDeclaredField("jaxbElementField");
-      JaxbElementFieldBean jaxbElementFieldBean = new JaxbElementFieldBean();
-      RandomizationContext context = Mockito.mock(RandomizationContext.class);
-
-      thenThrownBy(() -> { fieldPopulator.populateField(jaxbElementFieldBean, jaxbElementField, context); })
-          .hasMessage("Unable to create type: javax.xml.bind.JAXBElement for field: jaxbElementField of class: org.jeasy.random.FieldPopulatorTest$JaxbElementFieldBean");
-    }
-
-    public class JaxbElementFieldBean {
-      JAXBElement<String> jaxbElementField;
-    }
 }
