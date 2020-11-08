@@ -484,11 +484,6 @@ class EasyRandomTest {
         assertThat(street.getType()).isNotNull();
     }
 
-    void validatePersons(final Collection<Person> persons, final int expectedSize) {
-        assertThat(persons).hasSize(expectedSize);
-        persons.forEach(this::validatePerson);
-    }
-
     @Disabled("Dummy test to see possible reasons of randomization failures")
     @Test
     void tryToRandomizeAllPublicConcreteTypesInTheClasspath(){
