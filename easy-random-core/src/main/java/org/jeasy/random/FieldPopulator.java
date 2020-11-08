@@ -39,7 +39,7 @@ import java.lang.reflect.Type;
 import static org.jeasy.random.util.ReflectionUtils.*;
 
 /**
- * Component that encapsulate the logic of generating a random value for a given field.
+ * Component that encapsulates the logic of generating a random value for a given field.
  * It collaborates with a:
  * <ul>
  *     <li>{@link EasyRandom} whenever the field is a user defined type.</li>
@@ -142,7 +142,7 @@ class FieldPopulator {
         } else if (isOptionalType(fieldType)) {
             return optionalPopulator.getRandomOptional(field, context);
         } else {
-            if (context.getParameters().isScanClasspathForConcreteTypes() && isAbstract(fieldType) && !isEnumType(fieldType) /*enums can be abstract, but can not inherit*/) {
+            if (context.getParameters().isScanClasspathForConcreteTypes() && isAbstract(fieldType) && !isEnumType(fieldType) /*enums can be abstract, but cannot inherit*/) {
                 List<Class<?>> parameterizedTypes = filterSameParameterizedTypes(getPublicConcreteSubTypesOf(fieldType), fieldGenericType);
                 if (parameterizedTypes.isEmpty()) {
                     throw new ObjectCreationException("Unable to find a matching concrete subtype of type: " + fieldType);

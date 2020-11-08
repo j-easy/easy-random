@@ -46,7 +46,7 @@ class TimeZoneRandomizerTest extends AbstractRandomizerTest<TimeZone> {
 
     @Test
     void shouldGenerateTheSameValueForTheSameSeed() {
-        // we can not use a canned value, because the available TimeZones differ between locales/jdks
+        // we cannot use a canned value, because the available TimeZones differ between locales/jdks
         TimeZone firstTimeZone = new TimeZoneRandomizer(SEED).getRandomValue();
         TimeZone secondTimeZone = new TimeZoneRandomizer(SEED).getRandomValue();
         

@@ -161,7 +161,7 @@ public final class ReflectionUtils {
      * @param object instance to get the field of
      * @param field  field to get the value of
      * @return the value of the field
-     * @throws IllegalAccessException if field can not be accessed
+     * @throws IllegalAccessException if field cannot be accessed
      */
     public static Object getFieldValue(final Object object, final Field field) throws IllegalAccessException {
         boolean access = field.isAccessible();

@@ -141,11 +141,11 @@ public class TypePredicates {
     }
 
     /**
-     * Create a predicate to check if a type is is assignable from another type.
+     * Create a predicate to check if a type is assignable from another type.
      *
      * @param type to check
      *
-     * @return a predicate to check if a type is is assignable from another type.
+     * @return a predicate to check if a type is assignable from another type.
      */
     public static Predicate<Class<?>> isAssignableFrom(Class<?> type) {
         return clazz -> clazz.isAssignableFrom(type);

@@ -51,7 +51,7 @@ class ZonedDateTimeRandomizerTest extends AbstractRandomizerTest<ZonedDateTime> 
         ZonedDateTimeRandomizer secondSeededZonedDateTimeRandomizer = new ZonedDateTimeRandomizer(SEED);
 
         // when
-        // we can not use a canned value, because the available TimeZones differ between locales/jdks
+        // we cannot use a canned value, because the available TimeZones differ between locales/jdks
         ZonedDateTime firstZonedTimeDate = firstSeededZonedDateTimeRandomizer.getRandomValue();
         ZonedDateTime secondZonedTimeDate = secondSeededZonedDateTimeRandomizer.getRandomValue();
 

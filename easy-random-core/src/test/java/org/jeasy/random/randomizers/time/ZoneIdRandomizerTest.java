@@ -46,7 +46,7 @@ class ZoneIdRandomizerTest extends AbstractRandomizerTest<ZoneId> {
 
     @Test
     void shouldGenerateTheSameValueForTheSameSeed() {
-        // we can not use a canned value, because values returned by the randomizer differ between locales/jdks
+        // we cannot use a canned value, because values returned by the randomizer differ between locales/jdks
         ZoneId firstZoneId = new ZoneIdRandomizer(SEED).getRandomValue();
         ZoneId secondZoneId = new ZoneIdRandomizer(SEED).getRandomValue();
         
