@@ -34,6 +34,7 @@ import org.objenesis.ObjenesisStd;
 import javax.validation.constraints.Size;
 import java.lang.reflect.Array;
 import java.lang.reflect.Field;
+import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.ParameterizedType;
 import java.lang.reflect.Type;
 import java.util.Collection;
@@ -119,8 +120,8 @@ class SizeAnnotationHandler implements BeanValidationAnnotationHandler {
                     map = (Map<Object, Object>) getEmptyImplementationForMapInterface(fieldType);
                 } else {
                     try {
-                        map = (Map<Object, Object>) fieldType.newInstance();
-                    } catch (InstantiationException | IllegalAccessException e) {
+                        map = (Map<Object, Object>) fieldType.getDeclaredConstructor().newInstance();
+                    } catch (InstantiationException | IllegalAccessException | NoSuchMethodException | InvocationTargetException e) {
                         if (fieldType.isAssignableFrom(EnumMap.class)) {
                             if (isParameterizedType(fieldGenericType)) {
                                 Type type = ((ParameterizedType) fieldGenericType).getActualTypeArguments()[0];

@@ -79,7 +79,7 @@ class SqlDateRangeRandomizerTest extends AbstractRangeRandomizerTest<Date> {
         Date randomDate = randomizer.getRandomValue();
 
         // Then
-        assertThat(randomDate).isBeforeOrEqualsTo(maxDate);
+        assertThat(randomDate).isBeforeOrEqualTo(maxDate);
     }
 
     @Test
@@ -91,7 +91,7 @@ class SqlDateRangeRandomizerTest extends AbstractRangeRandomizerTest<Date> {
         Date randomDate = randomizer.getRandomValue();
 
         // Then
-        assertThat(randomDate).isAfterOrEqualsTo(minDate);
+        assertThat(randomDate).isAfterOrEqualTo(minDate);
     }
 
 }

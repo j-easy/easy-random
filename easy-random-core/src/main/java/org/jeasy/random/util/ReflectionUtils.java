@@ -149,8 +149,7 @@ public final class ReflectionUtils {
      * @throws IllegalAccessException if the property cannot be set
      */
     public static void setFieldValue(final Object object, final Field field, final Object value) throws IllegalAccessException {
-        boolean access = field.isAccessible();
-        field.setAccessible(true);
+        boolean access = field.trySetAccessible();
         field.set(object, value);
         field.setAccessible(access);
     }
@@ -164,8 +163,7 @@ public final class ReflectionUtils {
      * @throws IllegalAccessException if field cannot be accessed
      */
     public static Object getFieldValue(final Object object, final Field field) throws IllegalAccessException {
-        boolean access = field.isAccessible();
-        field.setAccessible(true);
+        boolean access = field.trySetAccessible();
         Object value = field.get(object);
         field.setAccessible(access);
         return value;
@@ -492,8 +490,8 @@ public final class ReflectionUtils {
         rejectUnsupportedTypes(fieldType);
         Collection<?> collection;
         try {
-            collection = (Collection<?>) fieldType.newInstance();
-        } catch (InstantiationException | IllegalAccessException e) {
+            collection = (Collection<?>) fieldType.getDeclaredConstructor().newInstance();
+        } catch (InstantiationException | IllegalAccessException | NoSuchMethodException | InvocationTargetException e) {
             if (fieldType.equals(ArrayBlockingQueue.class)) {
                 collection = new ArrayBlockingQueue<>(initialSize);
             } else {
@@ -600,8 +598,8 @@ public final class ReflectionUtils {
                     return (Randomizer<T>) matchingConstructor.get().newInstance(convertArguments(randomizerArguments));
                 }
             }
-            return (Randomizer<T>) type.newInstance();
-        } catch (IllegalAccessException | InvocationTargetException | InstantiationException e) {
+            return (Randomizer<T>) type.getDeclaredConstructor().newInstance();
+        } catch (IllegalAccessException | InvocationTargetException | InstantiationException | NoSuchMethodException e) {
             throw new ObjectCreationException(format("Could not create Randomizer of type: %s with constructor arguments: %s", type, Arrays.toString(randomizerArguments)), e);
         }
     }

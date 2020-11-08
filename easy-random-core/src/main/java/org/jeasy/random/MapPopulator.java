@@ -27,6 +27,7 @@ import org.jeasy.random.api.ObjectFactory;
 import org.jeasy.random.randomizers.range.IntegerRangeRandomizer;
 
 import java.lang.reflect.Field;
+import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.ParameterizedType;
 import java.lang.reflect.Type;
 import java.util.EnumMap;
@@ -61,8 +62,8 @@ class MapPopulator {
             map = (Map<Object, Object>) getEmptyImplementationForMapInterface(fieldType);
         } else {
             try {
-                map = (Map<Object, Object>) fieldType.newInstance();
-            } catch (InstantiationException | IllegalAccessException e) {
+                map = (Map<Object, Object>) fieldType.getDeclaredConstructor().newInstance();
+            } catch (InstantiationException | IllegalAccessException | NoSuchMethodException | InvocationTargetException e) {
                 // Creating EnumMap with objenesis by-passes the constructor with keyType which leads to CCE at insertion time
                 if (fieldType.isAssignableFrom(EnumMap.class)) {
                     if (isParameterizedType(fieldGenericType)) {

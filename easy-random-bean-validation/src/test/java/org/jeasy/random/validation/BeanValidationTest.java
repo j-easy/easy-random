@@ -77,13 +77,13 @@ class BeanValidationTest {
 
         assertThat(bean.getBirthdayLocalDateTime()).isBefore(LocalDateTime.now());// @Past LocalDateTime birthdayLocalDateTime;
 
-        assertThat(bean.getPastOrPresent()).isBeforeOrEqualsTo(new Date());// @PastOrPresent Date pastOrPresent;
+        assertThat(bean.getPastOrPresent()).isBeforeOrEqualTo(new Date());// @PastOrPresent Date pastOrPresent;
 
         assertThat(bean.getEventDate()).isInTheFuture();// @Future Date eventDate;
 
         assertThat(bean.getEventLocalDateTime()).isAfter(LocalDateTime.now());// @Future LocalDateTime eventLocalDateTime;
 
-        assertThat(bean.getFutureOrPresent()).isAfterOrEqualsTo(new Date());// @FutureOrPresent Date eventDate;
+        assertThat(bean.getFutureOrPresent()).isAfterOrEqualTo(new Date());// @FutureOrPresent Date eventDate;
 
         assertThat(bean.getPositive()).isGreaterThan(0);// @Positive int positive;
 
@@ -147,13 +147,13 @@ class BeanValidationTest {
 
         assertThat(bean.getBirthdayLocalDateTime()).isBefore(LocalDateTime.now());// @Past LocalDateTime birthdayLocalDateTime;
 
-        assertThat(bean.getPastOrPresent()).isBeforeOrEqualsTo(new Date());// @PastOrPresent Date pastOrPresent;
+        assertThat(bean.getPastOrPresent()).isBeforeOrEqualTo(new Date());// @PastOrPresent Date pastOrPresent;
 
         assertThat(bean.getEventDate()).isInTheFuture();// @Future Date eventDate;
 
         assertThat(bean.getEventLocalDateTime()).isAfter(LocalDateTime.now());// @Future LocalDateTime eventLocalDateTime;
 
-        assertThat(bean.getFutureOrPresent()).isAfterOrEqualsTo(new Date());// @FutureOrPresent Date eventDate;
+        assertThat(bean.getFutureOrPresent()).isAfterOrEqualTo(new Date());// @FutureOrPresent Date eventDate;
 
         assertThat(bean.getPositive()).isGreaterThan(0);// @Positive int positive;
 
@@ -292,7 +292,7 @@ class BeanValidationTest {
         }
 
         CustomRandomizerRegistry registry = new CustomRandomizerRegistry();
-        registry.registerRandomizer(BigDecimal.class, new BigDecimalRangeRandomizer(new Double(5d), new Double(10d), Integer.valueOf(3)));
+        registry.registerRandomizer(BigDecimal.class, new BigDecimalRangeRandomizer(Double.valueOf(5d), Double.valueOf(10d), Integer.valueOf(3)));
         registry.registerRandomizer(Integer.class, new IntegerRangeRandomizer(5, 10));
         EasyRandomParameters parameters = new EasyRandomParameters()
                 .randomizerRegistry(registry);

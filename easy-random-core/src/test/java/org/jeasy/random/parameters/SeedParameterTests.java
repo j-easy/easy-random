@@ -54,7 +54,7 @@ class SeedParameterTests {
 
         // Then
         assertThat(actualString).isEqualTo(expectedString);
-        assertThat(actualPerson).isEqualToIgnoringNullFields(expectedPerson);
+        assertThat(actualPerson).isEqualByComparingTo(expectedPerson);
         assertThat(actualInts).isEqualTo(expectedInts);
     }
 
