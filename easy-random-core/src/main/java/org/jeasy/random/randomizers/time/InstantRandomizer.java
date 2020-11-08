@@ -53,29 +53,6 @@ public class InstantRandomizer implements Randomizer<Instant> {
         dateRandomizer = new DateRandomizer(seed);
     }
 
-    /**
-     * Create a new {@link InstantRandomizer}.
-     *
-     * @return a new {@link InstantRandomizer}.
-     * @deprecated in favor of the equivalent constructor
-     */
-    @Deprecated
-    public static InstantRandomizer aNewInstantRandomizer() {
-        return new InstantRandomizer();
-    }
-
-    /**
-     * Create a new {@link InstantRandomizer}.
-     *
-     * @param seed initial seed
-     * @return a new {@link InstantRandomizer}.
-     * @deprecated in favor of the equivalent constructor
-     */
-    @Deprecated
-    public static InstantRandomizer aNewInstantRandomizer(final long seed) {
-        return new InstantRandomizer(seed);
-    }
-
     @Override
     public Instant getRandomValue() {
         Date randomDate = dateRandomizer.getRandomValue();

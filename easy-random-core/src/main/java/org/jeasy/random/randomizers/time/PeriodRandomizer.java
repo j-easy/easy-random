@@ -61,29 +61,6 @@ public class PeriodRandomizer implements Randomizer<Period> {
         dayRandomizer = new DayRandomizer(seed);
     }
 
-    /**
-     * Create a new {@link PeriodRandomizer}.
-     *
-     * @return a new {@link PeriodRandomizer}.
-     * @deprecated in favor of the equivalent constructor
-     */
-    @Deprecated
-    public static PeriodRandomizer aNewPeriodRandomizer() {
-        return new PeriodRandomizer();
-    }
-
-    /**
-     * Create a new {@link PeriodRandomizer}.
-     *
-     * @param seed initial seed
-     * @return a new {@link PeriodRandomizer}.
-     * @deprecated in favor of the equivalent constructor
-     */
-    @Deprecated
-    public static PeriodRandomizer aNewPeriodRandomizer(final long seed) {
-        return new PeriodRandomizer(seed);
-    }
-
     @Override
     public Period getRandomValue() {
         Year randomYear = yearRandomizer.getRandomValue();

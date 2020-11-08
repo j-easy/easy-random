@@ -59,42 +59,6 @@ public class ParagraphRandomizer extends FakerBasedRandomizer<String> {
         super(seed, locale);
     }
 
-    /**
-     * Create a new {@link ParagraphRandomizer}.
-     *
-     * @return a new {@link ParagraphRandomizer}
-     * @deprecated in favor of the equivalent constructor
-     */
-    @Deprecated
-    public static ParagraphRandomizer aNewParagraphRandomizer() {
-        return new ParagraphRandomizer();
-    }
-
-    /**
-     * Create a new {@link ParagraphRandomizer}.
-     *
-     * @param seed the initial seed
-     * @return a new {@link ParagraphRandomizer}
-     * @deprecated in favor of the equivalent constructor
-     */
-    @Deprecated
-    public static ParagraphRandomizer aNewParagraphRandomizer(final long seed) {
-        return new ParagraphRandomizer(seed);
-    }
-
-    /**
-     * Create a new {@link ParagraphRandomizer}.
-     *
-     * @param seed   the initial seed
-     * @param locale the locale to use
-     * @return a new {@link ParagraphRandomizer}
-     * @deprecated in favor of the equivalent constructor
-     */
-    @Deprecated
-    public static ParagraphRandomizer aNewParagraphRandomizer(final long seed, final Locale locale) {
-        return new ParagraphRandomizer(seed, locale);
-    }
-
     @Override
     public String getRandomValue() {
         return faker.lorem().paragraph();

@@ -23,7 +23,6 @@
  */
 package org.jeasy.random.randomizers.range;
 
-import static org.jeasy.random.randomizers.range.OffsetDateTimeRangeRandomizer.aNewOffsetDateTimeRangeRandomizer;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
@@ -41,7 +40,7 @@ class OffsetDateTimeRangeRandomizerTest extends AbstractRangeRandomizerTest<Offs
     void setUp() {
         minOffsetDateTime = EasyRandomParameters.DEFAULT_DATES_RANGE.getMin().toOffsetDateTime().minusYears(50);
         maxOffsetDateTime = EasyRandomParameters.DEFAULT_DATES_RANGE.getMax().toOffsetDateTime().plusYears(50);
-        randomizer = aNewOffsetDateTimeRangeRandomizer(minOffsetDateTime, maxOffsetDateTime);
+        randomizer = new OffsetDateTimeRangeRandomizer(minOffsetDateTime, maxOffsetDateTime);
     }
 
     @Test
@@ -57,7 +56,7 @@ class OffsetDateTimeRangeRandomizerTest extends AbstractRangeRandomizerTest<Offs
     @Test
     void generatedOffsetDateTimeShouldBeAlwaysTheSameForTheSameSeed() {
         // Given
-        randomizer = aNewOffsetDateTimeRangeRandomizer(minOffsetDateTime, maxOffsetDateTime, SEED);
+        randomizer = new OffsetDateTimeRangeRandomizer(minOffsetDateTime, maxOffsetDateTime, SEED);
         OffsetDateTime expected = OffsetDateTime.parse("2046-10-12T17:24:27Z");
 
         // When
@@ -69,13 +68,13 @@ class OffsetDateTimeRangeRandomizerTest extends AbstractRangeRandomizerTest<Offs
 
     @Test
     void whenSpecifiedMinOffsetDateTimeIsAfterMaxOffsetDateTime_thenShouldThrowIllegalArgumentException() {
-        assertThatThrownBy(() -> aNewOffsetDateTimeRangeRandomizer(maxOffsetDateTime, minOffsetDateTime)).isInstanceOf(IllegalArgumentException.class);
+        assertThatThrownBy(() -> new OffsetDateTimeRangeRandomizer(maxOffsetDateTime, minOffsetDateTime)).isInstanceOf(IllegalArgumentException.class);
     }
 
     @Test
     void whenSpecifiedMinOffsetDateTimeIsNull_thenShouldUseDefaultMinValue() {
         // Given
-        randomizer = aNewOffsetDateTimeRangeRandomizer(null, maxOffsetDateTime);
+        randomizer = new OffsetDateTimeRangeRandomizer(null, maxOffsetDateTime);
 
         // When
         OffsetDateTime randomValue = randomizer.getRandomValue();
@@ -87,7 +86,7 @@ class OffsetDateTimeRangeRandomizerTest extends AbstractRangeRandomizerTest<Offs
     @Test
     void whenSpecifiedMaxOffsetDateTimeIsNull_thenShouldUseDefaultMaxValue() {
         // Given
-        randomizer = aNewOffsetDateTimeRangeRandomizer(minOffsetDateTime, null);
+        randomizer = new OffsetDateTimeRangeRandomizer(minOffsetDateTime, null);
 
         // when
         OffsetDateTime randomValue = randomizer.getRandomValue();

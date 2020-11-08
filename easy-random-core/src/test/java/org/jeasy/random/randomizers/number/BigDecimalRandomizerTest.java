@@ -23,7 +23,6 @@
  */
 package org.jeasy.random.randomizers.number;
 
-import static org.jeasy.random.randomizers.number.BigDecimalRandomizer.aNewBigDecimalRandomizer;
 import static org.assertj.core.api.BDDAssertions.then;
 
 import java.math.BigDecimal;
@@ -39,7 +38,7 @@ class BigDecimalRandomizerTest extends AbstractRandomizerTest<BigDecimal> {
     void generatedValueShouldHaveProvidedPositiveScale() {
         // given
         Integer scale = 1;
-        BigDecimalRandomizer bigDecimalRandomizer = aNewBigDecimalRandomizer(scale);
+        BigDecimalRandomizer bigDecimalRandomizer = new BigDecimalRandomizer(scale);
 
         // when
         BigDecimal bigDecimal = bigDecimalRandomizer.getRandomValue();
@@ -51,7 +50,7 @@ class BigDecimalRandomizerTest extends AbstractRandomizerTest<BigDecimal> {
     void generatedValueShouldHaveProvidedNegativeScale() {
         // given
         Integer scale = -1;
-        BigDecimalRandomizer bigDecimalRangeRandomizer = aNewBigDecimalRandomizer(scale);
+        BigDecimalRandomizer bigDecimalRangeRandomizer = new BigDecimalRandomizer(scale);
 
         // when
         BigDecimal bigDecimal = bigDecimalRangeRandomizer.getRandomValue();
@@ -65,7 +64,7 @@ class BigDecimalRandomizerTest extends AbstractRandomizerTest<BigDecimal> {
         long initialSeed = 123;
         Integer scale = 1;
         RoundingMode roundingMode = RoundingMode.DOWN;
-        BigDecimalRandomizer bigDecimalRandomizer = aNewBigDecimalRandomizer(initialSeed, scale, roundingMode);
+        BigDecimalRandomizer bigDecimalRandomizer = new BigDecimalRandomizer(initialSeed, scale, roundingMode);
 
         // when
         BigDecimal bigDecimal = bigDecimalRandomizer.getRandomValue();

@@ -23,7 +23,6 @@
  */
 package org.jeasy.random.randomizers.range;
 
-import static org.jeasy.random.randomizers.range.ShortRangeRandomizer.aNewShortRangeRandomizer;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.assertj.core.api.BDDAssertions.then;
@@ -37,7 +36,7 @@ class ShortRangeRandomizerTest extends AbstractRangeRandomizerTest<Short> {
     void setUp() {
         min = (short) 1;
         max = (short) 10;
-        randomizer = aNewShortRangeRandomizer(min, max);
+        randomizer = new ShortRangeRandomizer(min, max);
     }
 
     @Test
@@ -48,19 +47,19 @@ class ShortRangeRandomizerTest extends AbstractRangeRandomizerTest<Short> {
 
     @Test
     void whenSpecifiedMinValueIsAfterMaxValueThenThrowIllegalArgumentException() {
-        assertThatThrownBy(() -> aNewShortRangeRandomizer(max, min)).isInstanceOf(IllegalArgumentException.class);
+        assertThatThrownBy(() -> new ShortRangeRandomizer(max, min)).isInstanceOf(IllegalArgumentException.class);
     }
 
     @Test
     void whenSpecifiedMinValueIsNullThenShouldUseDefaultMinValue() {
-        randomizer = aNewShortRangeRandomizer(null, max);
+        randomizer = new ShortRangeRandomizer(null, max);
         Short randomShort = randomizer.getRandomValue();
         assertThat(randomShort).isLessThanOrEqualTo(max);
     }
 
     @Test
     void whenSpecifiedMaxvalueIsNullThenShouldUseDefaultMaxValue() {
-        randomizer = aNewShortRangeRandomizer(min, null);
+        randomizer = new ShortRangeRandomizer(min, null);
         Short randomShort = randomizer.getRandomValue();
         assertThat(randomShort).isGreaterThanOrEqualTo(min);
     }
@@ -68,7 +67,7 @@ class ShortRangeRandomizerTest extends AbstractRangeRandomizerTest<Short> {
     @Test
     void shouldAlwaysGenerateTheSameValueForTheSameSeed() {
         // given
-        ShortRangeRandomizer shortRangeRandomizer = aNewShortRangeRandomizer(min, max, SEED);
+        ShortRangeRandomizer shortRangeRandomizer = new ShortRangeRandomizer(min, max, SEED);
         
         // when
         Short s = shortRangeRandomizer.getRandomValue();

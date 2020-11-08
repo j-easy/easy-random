@@ -62,45 +62,6 @@ public class Ipv6AddressRandomizer extends FakerBasedRandomizer<String> {
         super(seed, locale);
     }
 
-    /**
-     * Create a new {@link Ipv6AddressRandomizer}.
-     *
-     * @return a new {@link Ipv6AddressRandomizer}
-     * @deprecated in favor of the equivalent constructor
-     */
-    @Deprecated
-    public static Ipv6AddressRandomizer aNewIpv6AddressRandomizer() {
-        return new Ipv6AddressRandomizer();
-    }
-
-    /**
-     * Create a new {@link Ipv6AddressRandomizer}.
-     *
-     * @param seed
-     *          the initial seed
-     * @return a new {@link Ipv6AddressRandomizer}
-     * @deprecated in favor of the equivalent constructor
-     */
-    @Deprecated
-    public static Ipv6AddressRandomizer aNewIpv6AddressRandomizer(final long seed) {
-        return new Ipv6AddressRandomizer(seed);
-    }
-
-    /**
-     * Create a new {@link Ipv6AddressRandomizer}.
-     *
-     * @param seed
-     *          the initial seed
-     * @param locale
-     *          the locale to use
-     * @return a new {@link Ipv6AddressRandomizer}
-     * @deprecated in favor of the equivalent constructor
-     */
-    @Deprecated
-    public static Ipv6AddressRandomizer aNewIpv6AddressRandomizer(final long seed, final Locale locale) {
-        return new Ipv6AddressRandomizer(seed, locale);
-    }
-
     @Override
     public String getRandomValue() {
         return faker.internet().ipV6Address();

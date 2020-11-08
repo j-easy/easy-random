@@ -23,15 +23,6 @@
  */
 package org.jeasy.random.randomizers.number;
 
-import static org.jeasy.random.randomizers.number.BigDecimalRandomizer.aNewBigDecimalRandomizer;
-import static org.jeasy.random.randomizers.number.BigIntegerRandomizer.aNewBigIntegerRandomizer;
-import static org.jeasy.random.randomizers.number.ByteRandomizer.aNewByteRandomizer;
-import static org.jeasy.random.randomizers.number.DoubleRandomizer.aNewDoubleRandomizer;
-import static org.jeasy.random.randomizers.number.FloatRandomizer.aNewFloatRandomizer;
-import static org.jeasy.random.randomizers.number.IntegerRandomizer.aNewIntegerRandomizer;
-import static org.jeasy.random.randomizers.number.LongRandomizer.aNewLongRandomizer;
-import static org.jeasy.random.randomizers.number.NumberRandomizer.aNewNumberRandomizer;
-import static org.jeasy.random.randomizers.number.ShortRandomizer.aNewShortRandomizer;
 import static org.assertj.core.api.BDDAssertions.then;
 
 import java.math.BigDecimal;
@@ -47,15 +38,15 @@ class NumberRandomizersTest extends AbstractRandomizerTest<Object> {
 
     static Object[] generateRandomizers() {
         return new Object[] { 
-                aNewByteRandomizer(),
-                aNewShortRandomizer(),
-                aNewIntegerRandomizer(),
-                aNewNumberRandomizer(),
-                aNewLongRandomizer(),
-                aNewFloatRandomizer(),
-                aNewDoubleRandomizer(),
-                aNewBigDecimalRandomizer(),
-                aNewBigIntegerRandomizer(),
+                new ByteRandomizer(),
+                new ShortRandomizer(),
+                new IntegerRandomizer(),
+                new NumberRandomizer(),
+                new LongRandomizer(),
+                new FloatRandomizer(),
+                new DoubleRandomizer(),
+                new BigDecimalRandomizer(),
+                new BigIntegerRandomizer(),
         };
     }
 
@@ -70,15 +61,15 @@ class NumberRandomizersTest extends AbstractRandomizerTest<Object> {
 
     static Object[][] generateSeededRandomizersAndTheirExpectedValues() {
         return new Object[][] { 
-                { aNewByteRandomizer(SEED), (byte) -35 },
-                { aNewShortRandomizer(SEED), (short) -3619 },
-                { aNewIntegerRandomizer(SEED), -1188957731 },
-                { aNewNumberRandomizer(SEED), -1188957731 },
-                { aNewLongRandomizer(SEED), -5106534569952410475L },
-                { aNewFloatRandomizer(SEED), 0.72317415F },
-                { aNewDoubleRandomizer(SEED), 0.7231742029971469 },
-                { aNewBigDecimalRandomizer(SEED), new BigDecimal(0.723174202997146853277854461339302361011505126953125) },
-                { aNewBigIntegerRandomizer(SEED), new BigInteger("295011414634219278107705585431435293517") },
+                { new ByteRandomizer(SEED), (byte) -35 },
+                { new ShortRandomizer(SEED), (short) -3619 },
+                { new IntegerRandomizer(SEED), -1188957731 },
+                { new NumberRandomizer(SEED), -1188957731 },
+                { new LongRandomizer(SEED), -5106534569952410475L },
+                { new FloatRandomizer(SEED), 0.72317415F },
+                { new DoubleRandomizer(SEED), 0.7231742029971469 },
+                { new BigDecimalRandomizer(SEED), new BigDecimal(0.723174202997146853277854461339302361011505126953125) },
+                { new BigIntegerRandomizer(SEED), new BigInteger("295011414634219278107705585431435293517") },
         };
     }
 

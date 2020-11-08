@@ -59,42 +59,6 @@ public class SentenceRandomizer extends FakerBasedRandomizer<String> {
         super(seed, locale);
     }
 
-    /**
-     * Create a new {@link SentenceRandomizer}.
-     *
-     * @return a new {@link SentenceRandomizer}
-     * @deprecated in favor of the equivalent constructor
-     */
-    @Deprecated
-    public static SentenceRandomizer aNewSentenceRandomizer() {
-        return new SentenceRandomizer();
-    }
-
-    /**
-     * Create a new {@link SentenceRandomizer}.
-     *
-     * @param seed the initial seed
-     * @return a new {@link SentenceRandomizer}
-     * @deprecated in favor of the equivalent constructor
-     */
-    @Deprecated
-    public static SentenceRandomizer aNewSentenceRandomizer(final long seed) {
-        return new SentenceRandomizer(seed);
-    }
-
-    /**
-     * Create a new {@link SentenceRandomizer}.
-     *
-     * @param seed   the initial seed
-     * @param locale the locale to use
-     * @return a new {@link SentenceRandomizer}
-     * @deprecated in favor of the equivalent constructor
-     */
-    @Deprecated
-    public static SentenceRandomizer aNewSentenceRandomizer(final long seed, final Locale locale) {
-        return new SentenceRandomizer(seed, locale);
-    }
-
     @Override
     public String getRandomValue() {
         return faker.lorem().sentence();

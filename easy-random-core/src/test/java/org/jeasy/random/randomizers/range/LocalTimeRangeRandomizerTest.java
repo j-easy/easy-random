@@ -23,7 +23,6 @@
  */
 package org.jeasy.random.randomizers.range;
 
-import static org.jeasy.random.randomizers.range.LocalTimeRangeRandomizer.aNewLocalTimeRangeRandomizer;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
@@ -40,7 +39,7 @@ class LocalTimeRangeRandomizerTest extends AbstractRangeRandomizerTest<LocalTime
     void setUp() {
         minTime = LocalTime.MIN;
         maxTime = LocalTime.MAX;
-        randomizer = aNewLocalTimeRangeRandomizer(minTime, maxTime);
+        randomizer = new LocalTimeRangeRandomizer(minTime, maxTime);
     }
 
     @Test
@@ -56,7 +55,7 @@ class LocalTimeRangeRandomizerTest extends AbstractRangeRandomizerTest<LocalTime
     @Test
     void generatedLocalTimeShouldBeAlwaysTheSameForTheSameSeed() {
         // Given
-        randomizer = aNewLocalTimeRangeRandomizer(minTime, maxTime, SEED);
+        randomizer = new LocalTimeRangeRandomizer(minTime, maxTime, SEED);
         LocalTime expected = LocalTime.of(14, 14, 58, 723174202);
 
         // When
@@ -68,13 +67,13 @@ class LocalTimeRangeRandomizerTest extends AbstractRangeRandomizerTest<LocalTime
 
     @Test
     void whenSpecifiedMinTimeIsAfterMaxDate_thenShouldThrowIllegalArgumentException() {
-        assertThatThrownBy(() -> aNewLocalTimeRangeRandomizer(maxTime, minTime)).isInstanceOf(IllegalArgumentException.class);
+        assertThatThrownBy(() -> new LocalTimeRangeRandomizer(maxTime, minTime)).isInstanceOf(IllegalArgumentException.class);
     }
 
     @Test
     void whenSpecifiedMinTimeIsNull_thenShouldUseDefaultMinValue() {
         // Given
-        randomizer = aNewLocalTimeRangeRandomizer(null, maxTime);
+        randomizer = new LocalTimeRangeRandomizer(null, maxTime);
 
         // When
         LocalTime randomValue = randomizer.getRandomValue();
@@ -86,7 +85,7 @@ class LocalTimeRangeRandomizerTest extends AbstractRangeRandomizerTest<LocalTime
     @Test
     void whenSpecifiedMaxTimeIsNull_thenShouldUseDefaultMaxValue() {
         // Given
-        randomizer = aNewLocalTimeRangeRandomizer(minTime, null);
+        randomizer = new LocalTimeRangeRandomizer(minTime, null);
 
         // when
         LocalTime randomValue = randomizer.getRandomValue();

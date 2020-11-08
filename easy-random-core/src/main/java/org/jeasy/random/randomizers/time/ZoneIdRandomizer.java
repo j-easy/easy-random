@@ -53,29 +53,6 @@ public class ZoneIdRandomizer extends AbstractRandomizer<ZoneId> {
         super(seed);
     }
 
-    /**
-     * Create a new {@link ZoneIdRandomizer}.
-     *
-     * @return a new {@link ZoneIdRandomizer}.
-     * @deprecated in favor of the equivalent constructor
-     */
-    @Deprecated
-    public static ZoneIdRandomizer aNewZoneIdRandomizer() {
-        return new ZoneIdRandomizer();
-    }
-
-    /**
-     * Create a new {@link ZoneIdRandomizer}.
-     *
-     * @param seed initial seed
-     * @return a new {@link ZoneIdRandomizer}.
-     * @deprecated in favor of the equivalent constructor
-     */
-    @Deprecated
-    public static ZoneIdRandomizer aNewZoneIdRandomizer(final long seed) {
-        return new ZoneIdRandomizer(seed);
-    }
-
     @Override
     public ZoneId getRandomValue() {
         List<Map.Entry<String, String>> zoneIds = new ArrayList<>(ZoneId.SHORT_IDS.entrySet());

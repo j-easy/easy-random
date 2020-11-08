@@ -49,29 +49,6 @@ public class UUIDRandomizer extends AbstractRandomizer<UUID> {
         super(seed);
     }
 
-    /**
-     * Create a new {@link UUIDRandomizer}.
-     *
-     * @return a new {@link UUIDRandomizer}.
-     * @deprecated in favor of the equivalent constructor
-     */
-    @Deprecated
-    public static UUIDRandomizer aNewUUIDRandomizer() {
-        return new UUIDRandomizer();
-    }
-
-    /**
-     * Create a new {@link UUIDRandomizer}.
-     *
-     * @param seed initial seed
-     * @return a new {@link UUIDRandomizer}.
-     * @deprecated in favor of the equivalent constructor
-     */
-    @Deprecated
-    public static UUIDRandomizer aNewUUIDRandomizer(final long seed) {
-        return new UUIDRandomizer(seed);
-    }
-
     @Override
     public UUID getRandomValue() {
         return new UUID(random.nextLong(), random.nextLong());

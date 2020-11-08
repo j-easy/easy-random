@@ -52,29 +52,6 @@ public class UriRandomizer extends AbstractRandomizer<URI> {
         super(seed);
     }
 
-    /**
-     * Create a new {@link UriRandomizer}.
-     *
-     * @return a new {@link UriRandomizer}.
-     * @deprecated in favor of the equivalent constructor
-     */
-    @Deprecated
-    public static UriRandomizer aNewUriRandomizer() {
-        return new UriRandomizer();
-    }
-
-    /**
-     * Create a new {@link UriRandomizer}.
-     *
-     * @param seed initial seed
-     * @return a new {@link UriRandomizer}.
-     * @deprecated in favor of the equivalent constructor
-     */
-    @Deprecated
-    public static UriRandomizer aNewUriRandomizer(final long seed) {
-        return new UriRandomizer(seed);
-    }
-
     @Override
     public URI getRandomValue() {
         try {

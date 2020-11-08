@@ -85,56 +85,6 @@ public class DurationRandomizer implements Randomizer<Duration> {
         this.unit = requireValid(unit);
     }
 
-    /**
-     * Create a new {@link DurationRandomizer}.
-     * Generated {@link Duration} objects will use {@link ChronoUnit#HOURS}.
-     *
-     * @return a new {@link DurationRandomizer}.
-     * @deprecated in favor of the equivalent constructor
-     */
-    @Deprecated
-    public static DurationRandomizer aNewDurationRandomizer() {
-        return new DurationRandomizer();
-    }
-
-    /**
-     * Create a new {@link DurationRandomizer}.
-     *
-     * @param unit the temporal unit for created durations
-     * @return a new {@link DurationRandomizer}.
-     * @deprecated in favor of the equivalent constructor
-     */
-    @Deprecated
-    public static DurationRandomizer aNewDurationRandomizer(TemporalUnit unit) {
-        return new DurationRandomizer(unit);
-    }
-
-    /**
-     * Create a new {@link DurationRandomizer}.
-     * Generated {@link Duration} objects will use {@link ChronoUnit#HOURS}.
-     *
-     * @param seed initial seed
-     * @return a new {@link DurationRandomizer}.
-     * @deprecated in favor of the equivalent constructor
-     */
-    @Deprecated
-    public static DurationRandomizer aNewDurationRandomizer(final long seed) {
-        return new DurationRandomizer(seed);
-    }
-
-    /**
-     * Create a new {@link DurationRandomizer}.
-     *
-     * @param seed initial seed
-     * @param unit the temporal unit for created durations
-     * @return a new {@link DurationRandomizer}.
-     * @deprecated in favor of the equivalent constructor
-     */
-    @Deprecated
-    public static DurationRandomizer aNewDurationRandomizer(final long seed, final TemporalUnit unit) {
-        return new DurationRandomizer(seed, unit);
-    }
-
     @Override
     public Duration getRandomValue() {
         int randomAmount = amountRandomizer.getRandomValue();

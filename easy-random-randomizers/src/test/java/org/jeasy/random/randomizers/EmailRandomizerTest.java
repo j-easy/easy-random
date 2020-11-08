@@ -36,7 +36,7 @@ class EmailRandomizerTest {
     @Test
     void whenSafeModeIsEnabled_thenDomainNameShouldBeInvalid() {
         // given
-        EmailRandomizer emailRandomizer = EmailRandomizer.aNewEmailRandomizer(123L, Locale.ENGLISH, true);
+        EmailRandomizer emailRandomizer = new EmailRandomizer(123L, Locale.ENGLISH, true);
 
         // when
         String randomValue = emailRandomizer.getRandomValue();
@@ -49,7 +49,7 @@ class EmailRandomizerTest {
     void whenSafeModeIsDisabled_thenDomainNameShouldBeValid() {
         // given
         List<String> expectedDomains = Arrays.asList("gmail.com", "yahoo.com", "hotmail.com"); // see en:faker:internet:free_email: in faker's en.yml
-        EmailRandomizer emailRandomizer = EmailRandomizer.aNewEmailRandomizer(123L, Locale.ENGLISH, false);
+        EmailRandomizer emailRandomizer = new EmailRandomizer(123L, Locale.ENGLISH, false);
 
         // when
         String randomValue = emailRandomizer.getRandomValue();

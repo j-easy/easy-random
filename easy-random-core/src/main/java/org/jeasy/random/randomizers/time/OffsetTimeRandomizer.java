@@ -57,29 +57,6 @@ public class OffsetTimeRandomizer implements Randomizer<OffsetTime> {
         zoneOffsetRandomizer = new ZoneOffsetRandomizer(seed);
     }
 
-    /**
-     * Create a new {@link OffsetTimeRandomizer}.
-     *
-     * @return a new {@link OffsetTimeRandomizer}.
-     * @deprecated in favor of the equivalent constructor
-     */
-    @Deprecated
-    public static OffsetTimeRandomizer aNewOffsetTimeRandomizer() {
-        return new OffsetTimeRandomizer();
-    }
-
-    /**
-     * Create a new {@link OffsetTimeRandomizer}.
-     *
-     * @param seed initial seed
-     * @return a new {@link OffsetTimeRandomizer}.
-     * @deprecated in favor of the equivalent constructor
-     */
-    @Deprecated
-    public static OffsetTimeRandomizer aNewOffsetTimeRandomizer(final long seed) {
-        return new OffsetTimeRandomizer(seed);
-    }
-
     @Override
     public OffsetTime getRandomValue() {
         LocalTime randomLocalTime = localTimeRandomizer.getRandomValue();

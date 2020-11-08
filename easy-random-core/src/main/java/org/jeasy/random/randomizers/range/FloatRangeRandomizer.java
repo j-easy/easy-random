@@ -68,33 +68,6 @@ public class FloatRangeRandomizer extends AbstractRangeRandomizer<Float> {
         return Float.MAX_VALUE;
     }
 
-    /**
-     * Create a new {@link FloatRangeRandomizer}.
-     *
-     * @param min min value (inclusive)
-     * @param max max value (exclusive)
-     * @return a new {@link FloatRangeRandomizer}.
-     * @deprecated in favor of the equivalent constructor
-     */
-    @Deprecated
-    public static FloatRangeRandomizer aNewFloatRangeRandomizer(final Float min, final Float max) {
-        return new FloatRangeRandomizer(min, max);
-    }
-
-    /**
-     * Create a new {@link FloatRangeRandomizer}.
-     *
-     * @param min  min value (inclusive)
-     * @param max  max value (exclusive)
-     * @param seed initial seed
-     * @return a new {@link FloatRangeRandomizer}.
-     * @deprecated in favor of the equivalent constructor
-     */
-    @Deprecated
-    public static FloatRangeRandomizer aNewFloatRangeRandomizer(final Float min, final Float max, final long seed) {
-        return new FloatRangeRandomizer(min, max, seed);
-    }
-
     @Override
     public Float getRandomValue() {
         return (float) nextDouble(min, max);

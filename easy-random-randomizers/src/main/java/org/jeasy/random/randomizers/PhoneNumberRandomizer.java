@@ -59,42 +59,6 @@ public class PhoneNumberRandomizer extends FakerBasedRandomizer<String> {
         super(seed, locale);
     }
 
-    /**
-     * Create a new {@link PhoneNumberRandomizer}.
-     *
-     * @return a new {@link PhoneNumberRandomizer}
-     * @deprecated in favor of the equivalent constructor
-     */
-    @Deprecated
-    public static PhoneNumberRandomizer aNewPhoneNumberRandomizer() {
-        return new PhoneNumberRandomizer();
-    }
-
-    /**
-     * Create a new {@link PhoneNumberRandomizer}.
-     *
-     * @param seed the initial seed
-     * @return a new {@link PhoneNumberRandomizer}
-     * @deprecated in favor of the equivalent constructor
-     */
-    @Deprecated
-    public static PhoneNumberRandomizer aNewPhoneNumberRandomizer(final long seed) {
-        return new PhoneNumberRandomizer(seed);
-    }
-
-    /**
-     * Create a new {@link PhoneNumberRandomizer}.
-     *
-     * @param seed   the initial seed
-     * @param locale the locale to use
-     * @return a new {@link PhoneNumberRandomizer}
-     * @deprecated in favor of the equivalent constructor
-     */
-    @Deprecated
-    public static PhoneNumberRandomizer aNewPhoneNumberRandomizer(final long seed, final Locale locale) {
-        return new PhoneNumberRandomizer(seed, locale);
-    }
-
     @Override
     public String getRandomValue() {
         return faker.phoneNumber().phoneNumber();

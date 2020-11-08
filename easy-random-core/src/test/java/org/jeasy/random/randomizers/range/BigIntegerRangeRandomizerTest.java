@@ -23,7 +23,6 @@
  */
 package org.jeasy.random.randomizers.range;
 
-import static org.jeasy.random.randomizers.range.BigIntegerRangeRandomizer.aNewBigIntegerRangeRandomizer;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.assertj.core.api.BDDAssertions.then;
@@ -41,7 +40,7 @@ class BigIntegerRangeRandomizerTest extends AbstractRangeRandomizerTest<BigInteg
     void setUp() {
         min = 1;
         max = 10;
-        randomizer = aNewBigIntegerRangeRandomizer(min, max);
+        randomizer = new BigIntegerRangeRandomizer(min, max);
     }
 
     @Test
@@ -52,19 +51,19 @@ class BigIntegerRangeRandomizerTest extends AbstractRangeRandomizerTest<BigInteg
 
     @Test
     void whenSpecifiedMinValueIsAfterMaxValueThenThrowIllegalArgumentException() {
-        assertThatThrownBy(() -> aNewBigIntegerRangeRandomizer(max, min)).isInstanceOf(IllegalArgumentException.class);
+        assertThatThrownBy(() -> new BigIntegerRangeRandomizer(max, min)).isInstanceOf(IllegalArgumentException.class);
     }
 
     @Test
     void whenSpecifiedMinValueIsNullThenShouldUseDefaultMinValue() {
-        randomizer = aNewBigIntegerRangeRandomizer(null, max);
+        randomizer = new BigIntegerRangeRandomizer(null, max);
         BigInteger radomBigInteger = randomizer.getRandomValue();
         assertThat(radomBigInteger.intValue()).isLessThanOrEqualTo(max);
     }
 
     @Test
     void whenSpecifiedMaxvalueIsNullThenShouldUseDefaultMaxValue() {
-        randomizer = aNewBigIntegerRangeRandomizer(min, null);
+        randomizer = new BigIntegerRangeRandomizer(min, null);
         BigInteger radomBigInteger = randomizer.getRandomValue();
         assertThat(radomBigInteger.intValue()).isGreaterThanOrEqualTo(min);
     }
@@ -72,7 +71,7 @@ class BigIntegerRangeRandomizerTest extends AbstractRangeRandomizerTest<BigInteg
     @Test
     void shouldAlwaysGenerateTheSameValueForTheSameSeed() {
         // given
-        BigIntegerRangeRandomizer bigIntegerRangeRandomizer = aNewBigIntegerRangeRandomizer(min, max, SEED);
+        BigIntegerRangeRandomizer bigIntegerRangeRandomizer = new BigIntegerRangeRandomizer(min, max, SEED);
         
         // when
         BigInteger bigInteger = bigIntegerRangeRandomizer.getRandomValue();

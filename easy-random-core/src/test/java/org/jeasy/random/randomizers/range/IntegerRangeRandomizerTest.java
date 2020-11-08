@@ -23,7 +23,6 @@
  */
 package org.jeasy.random.randomizers.range;
 
-import static org.jeasy.random.randomizers.range.IntegerRangeRandomizer.aNewIntegerRangeRandomizer;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.assertj.core.api.BDDAssertions.then;
@@ -41,7 +40,7 @@ class IntegerRangeRandomizerTest extends AbstractRangeRandomizerTest<Integer> {
     void setUp() {
         min = 1;
         max = 10;
-        randomizer = aNewIntegerRangeRandomizer(min, max);
+        randomizer = new IntegerRangeRandomizer(min, max);
     }
 
     @Test
@@ -52,19 +51,19 @@ class IntegerRangeRandomizerTest extends AbstractRangeRandomizerTest<Integer> {
 
     @Test
     void whenSpecifiedMinValueIsAfterMaxValueThenThrowIllegalArgumentException() {
-        assertThatThrownBy(() -> aNewIntegerRangeRandomizer(max, min)).isInstanceOf(IllegalArgumentException.class);
+        assertThatThrownBy(() -> new IntegerRangeRandomizer(max, min)).isInstanceOf(IllegalArgumentException.class);
     }
 
     @Test
     void whenSpecifiedMinValueIsNullThenShouldUseDefaultMinValue() {
-        randomizer = aNewIntegerRangeRandomizer(null, max);
+        randomizer = new IntegerRangeRandomizer(null, max);
         Integer randomInteger = randomizer.getRandomValue();
         assertThat(randomInteger).isLessThanOrEqualTo(max);
     }
 
     @Test
     void whenSpecifiedMaxvalueIsNullThenShouldUseDefaultMaxValue() {
-        randomizer = aNewIntegerRangeRandomizer(min, null);
+        randomizer = new IntegerRangeRandomizer(min, null);
         Integer randomInteger = randomizer.getRandomValue();
         assertThat(randomInteger).isGreaterThanOrEqualTo(min);
     }
@@ -72,7 +71,7 @@ class IntegerRangeRandomizerTest extends AbstractRangeRandomizerTest<Integer> {
     @Test
     void shouldAlwaysGenerateTheSameValueForTheSameSeed() {
         // given
-        IntegerRangeRandomizer integerRangeRandomizer = aNewIntegerRangeRandomizer(min, max, SEED);
+        IntegerRangeRandomizer integerRangeRandomizer = new IntegerRangeRandomizer(min, max, SEED);
         
         // when
         Integer i = integerRangeRandomizer.getRandomValue();

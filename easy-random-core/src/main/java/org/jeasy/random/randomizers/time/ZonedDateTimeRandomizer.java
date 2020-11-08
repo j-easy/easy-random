@@ -60,29 +60,6 @@ public class ZonedDateTimeRandomizer extends AbstractRandomizer<ZonedDateTime> {
         localDateTimeRandomizer = new LocalDateTimeRandomizer(seed);
     }
 
-    /**
-     * Create a new {@link ZonedDateTimeRandomizer}.
-     *
-     * @return a new {@link ZonedDateTimeRandomizer}.
-     * @deprecated in favor of the equivalent constructor
-     */
-    @Deprecated
-    public static ZonedDateTimeRandomizer aNewZonedDateTimeRandomizer() {
-        return new ZonedDateTimeRandomizer();
-    }
-
-    /**
-     * Create a new {@link ZonedDateTimeRandomizer}.
-     *
-     * @param seed initial seed
-     * @return a new {@link ZonedDateTimeRandomizer}.
-     * @deprecated in favor of the equivalent constructor
-     */
-    @Deprecated
-    public static ZonedDateTimeRandomizer aNewZonedDateTimeRandomizer(final long seed) {
-        return new ZonedDateTimeRandomizer(seed);
-    }
-
     @Override
     public ZonedDateTime getRandomValue() {
         LocalDateTime randomLocalDateTime = localDateTimeRandomizer.getRandomValue();

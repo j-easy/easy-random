@@ -57,29 +57,6 @@ public class DateRandomizer implements Randomizer<Date> {
         delegate = new DateRangeRandomizer(toDate(EasyRandomParameters.DEFAULT_DATES_RANGE.getMin()), toDate(EasyRandomParameters.DEFAULT_DATES_RANGE.getMax()), seed);
     }
 
-    /**
-     * Create a new {@link DateRandomizer}.
-     *
-     * @return a new {@link DateRandomizer}.
-     * @deprecated in favor of the equivalent constructor
-     */
-    @Deprecated
-    public static DateRandomizer aNewDateRandomizer() {
-        return new DateRandomizer();
-    }
-
-    /**
-     * Create a new {@link DateRandomizer}.
-     *
-     * @param seed initial seed
-     * @return a new {@link DateRandomizer}.
-     * @deprecated in favor of the equivalent constructor
-     */
-    @Deprecated
-    public static DateRandomizer aNewDateRandomizer(final long seed) {
-        return new DateRandomizer(seed);
-    }
-
     @Override
     public Date getRandomValue() {
         return delegate.getRandomValue();

@@ -48,33 +48,6 @@ public class InstantRangeRandomizer extends AbstractRangeRandomizer<Instant> {
         super(min, max, seed);
     }
 
-	/**
-	 * Create a new {@link InstantRangeRandomizer}.
-	 *
-	 * @param min min value (inclusive)
-	 * @param max max value (exclusive)
-	 * @return a new {@link InstantRangeRandomizer}.
-	 * @deprecated in favor of the equivalent constructor
-	 */
-	@Deprecated
-    public static InstantRangeRandomizer aNewInstantRangeRandomizer(final Instant min, final Instant max) {
-    	return new InstantRangeRandomizer(min, max);
-	}
-
-	/**
-	 * Create a new {@link InstantRangeRandomizer}.
-	 *
-	 * @param min  min value (inclusive)
-	 * @param max  max value (exclusive)
-	 * @param seed initial seed
-	 * @return a new {@link InstantRangeRandomizer}.
-	 * @deprecated in favor of the equivalent constructor
-	 */
-	@Deprecated
-	public static InstantRangeRandomizer aNewInstantRangeRandomizer(final Instant min, final Instant max, final long seed) {
-		return new InstantRangeRandomizer(min, max, seed);
-	}
-
     @Override
     protected void checkValues() {
 		if (min.isAfter(max)) {

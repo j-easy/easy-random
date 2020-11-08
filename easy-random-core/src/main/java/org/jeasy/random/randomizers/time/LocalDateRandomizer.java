@@ -61,29 +61,6 @@ public class LocalDateRandomizer implements Randomizer<LocalDate> {
         dayRandomizer = new DayRandomizer(seed);
     }
 
-    /**
-     * Create a new {@link LocalDateRandomizer}.
-     *
-     * @return a new {@link LocalDateRandomizer}.
-     * @deprecated in favor of the equivalent constructor
-     */
-    @Deprecated
-    public static LocalDateRandomizer aNewLocalDateRandomizer() {
-        return new LocalDateRandomizer();
-    }
-
-    /**
-     * Create a new {@link LocalDateRandomizer}.
-     *
-     * @param seed initial seed
-     * @return a new {@link LocalDateRandomizer}.
-     * @deprecated in favor of the equivalent constructor
-     */
-    @Deprecated
-    public static LocalDateRandomizer aNewLocalDateRandomizer(final long seed) {
-        return new LocalDateRandomizer(seed);
-    }
-
     @Override
     public LocalDate getRandomValue() {
         Year randomYear = yearRandomizer.getRandomValue();

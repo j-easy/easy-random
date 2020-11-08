@@ -23,7 +23,6 @@
  */
 package org.jeasy.random.randomizers.range;
 
-import static org.jeasy.random.randomizers.range.LocalDateRangeRandomizer.aNewLocalDateRangeRandomizer;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
@@ -40,7 +39,7 @@ class LocalDateRangeRandomizerTest extends AbstractRangeRandomizerTest<LocalDate
     void setUp() {
         minDate = LocalDate.MIN;
         maxDate = LocalDate.MAX;
-        randomizer = aNewLocalDateRangeRandomizer(minDate, maxDate);
+        randomizer = new LocalDateRangeRandomizer(minDate, maxDate);
     }
 
     @Test
@@ -56,7 +55,7 @@ class LocalDateRangeRandomizerTest extends AbstractRangeRandomizerTest<LocalDate
     @Test
     void generatedLocalDateShouldBeAlwaysTheSameForTheSameSeed() {
         // Given
-        randomizer = aNewLocalDateRangeRandomizer(minDate, maxDate, SEED);
+        randomizer = new LocalDateRangeRandomizer(minDate, maxDate, SEED);
         LocalDate expected = LocalDate.ofEpochDay(163024688248L);
 
         // When
@@ -68,13 +67,13 @@ class LocalDateRangeRandomizerTest extends AbstractRangeRandomizerTest<LocalDate
 
     @Test
     void whenSpecifiedMinDateIsAfterMaxDate_thenShouldThrowIllegalArgumentException() {
-        assertThatThrownBy(() -> aNewLocalDateRangeRandomizer(maxDate, minDate)).isInstanceOf(IllegalArgumentException.class);
+        assertThatThrownBy(() -> new LocalDateRangeRandomizer(maxDate, minDate)).isInstanceOf(IllegalArgumentException.class);
     }
 
     @Test
     void whenSpecifiedMinDateIsNull_thenShouldUseDefaultMinValue() {
         // Given
-        randomizer = aNewLocalDateRangeRandomizer(null, maxDate);
+        randomizer = new LocalDateRangeRandomizer(null, maxDate);
 
         // When
         LocalDate randomValue = randomizer.getRandomValue();
@@ -86,7 +85,7 @@ class LocalDateRangeRandomizerTest extends AbstractRangeRandomizerTest<LocalDate
     @Test
     void whenSpecifiedMaxDateIsNull_thenShouldUseDefaultMaxValue() {
         // Given
-        randomizer = aNewLocalDateRangeRandomizer(minDate, null);
+        randomizer = new LocalDateRangeRandomizer(minDate, null);
 
         // when
         LocalDate randomValue = randomizer.getRandomValue();

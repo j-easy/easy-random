@@ -23,7 +23,6 @@
  */
 package org.jeasy.random.randomizers.range;
 
-import static org.jeasy.random.randomizers.range.FloatRangeRandomizer.aNewFloatRangeRandomizer;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.assertj.core.api.BDDAssertions.then;
@@ -37,7 +36,7 @@ class FloatRangeRandomizerTest extends AbstractRangeRandomizerTest<Float> {
     void setUp() {
         min = 0.001f;
         max = 0.002f;
-        randomizer = aNewFloatRangeRandomizer(min, max);
+        randomizer = new FloatRangeRandomizer(min, max);
     }
 
     @Test
@@ -48,19 +47,19 @@ class FloatRangeRandomizerTest extends AbstractRangeRandomizerTest<Float> {
 
     @Test
     void whenSpecifiedMinValueIsAfterMaxValueThenThrowIllegalArgumentException() {
-        assertThatThrownBy(() -> aNewFloatRangeRandomizer(max, min)).isInstanceOf(IllegalArgumentException.class);
+        assertThatThrownBy(() -> new FloatRangeRandomizer(max, min)).isInstanceOf(IllegalArgumentException.class);
     }
 
     @Test
     void whenSpecifiedMinValueIsNullThenShouldUseDefaultMinValue() {
-        randomizer = aNewFloatRangeRandomizer(null, max);
+        randomizer = new FloatRangeRandomizer(null, max);
         Float randomFloat = randomizer.getRandomValue();
         assertThat(randomFloat).isLessThanOrEqualTo(max);
     }
 
     @Test
     void whenSpecifiedMaxvalueIsNullThenShouldUseDefaultMaxValue() {
-        randomizer = aNewFloatRangeRandomizer(min, null);
+        randomizer = new FloatRangeRandomizer(min, null);
         Float randomFloat = randomizer.getRandomValue();
         assertThat(randomFloat).isGreaterThanOrEqualTo(min);
     }
@@ -68,7 +67,7 @@ class FloatRangeRandomizerTest extends AbstractRangeRandomizerTest<Float> {
     @Test
     void shouldAlwaysGenerateTheSameValueForTheSameSeed() {
         // given
-        FloatRangeRandomizer floatRangeRandomizer = aNewFloatRangeRandomizer(min, max, SEED);
+        FloatRangeRandomizer floatRangeRandomizer = new FloatRangeRandomizer(min, max, SEED);
         
         // when
         Float f = floatRangeRandomizer.getRandomValue();

@@ -59,42 +59,6 @@ public class CityRandomizer extends FakerBasedRandomizer<String> {
         super(seed, locale);
     }
 
-    /**
-     * Create a new {@link CityRandomizer}.
-     *
-     * @return a new {@link CityRandomizer}
-     * @deprecated in favor of the equivalent constructor
-     */
-    @Deprecated
-    public static CityRandomizer aNewCityRandomizer() {
-        return new CityRandomizer();
-    }
-
-    /**
-     * Create a new {@link CityRandomizer}.
-     *
-     * @param seed the initial seed
-     * @return a new {@link CityRandomizer}
-     * @deprecated in favor of the equivalent constructor
-     */
-    @Deprecated
-    public static CityRandomizer aNewCityRandomizer(final long seed) {
-        return new CityRandomizer(seed);
-    }
-
-    /**
-     * Create a new {@link CityRandomizer}.
-     *
-     * @param seed   the initial seed
-     * @param locale the locale to use
-     * @return a new {@link CityRandomizer}
-     * @deprecated in favor of the equivalent constructor
-     */
-    @Deprecated
-    public static CityRandomizer aNewCityRandomizer(final long seed, final Locale locale) {
-        return new CityRandomizer(seed, locale);
-    }
-
     @Override
     public String getRandomValue() {
         return faker.address().city();

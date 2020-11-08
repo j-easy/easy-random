@@ -23,7 +23,6 @@
  */
 package org.jeasy.random.randomizers.range;
 
-import static org.jeasy.random.randomizers.range.OffsetTimeRangeRandomizer.aNewOffsetTimeRangeRandomizer;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
@@ -41,7 +40,7 @@ class OffsetTimeRangeRandomizerTest extends AbstractRangeRandomizerTest<OffsetTi
     void setUp() {
         minTime = OffsetTime.MIN;
         maxTime = OffsetTime.MAX;
-        randomizer = aNewOffsetTimeRangeRandomizer(minTime, maxTime);
+        randomizer = new OffsetTimeRangeRandomizer(minTime, maxTime);
     }
 
     @Test
@@ -57,7 +56,7 @@ class OffsetTimeRangeRandomizerTest extends AbstractRangeRandomizerTest<OffsetTi
     @Test
     void generatedOffsetTimeShouldBeAlwaysTheSameForTheSameSeed() {
         // Given
-        randomizer = aNewOffsetTimeRangeRandomizer(minTime, maxTime, SEED);
+        randomizer = new OffsetTimeRangeRandomizer(minTime, maxTime, SEED);
         OffsetTime expected = OffsetTime.of(17, 21, 21, 0, ZoneOffset.UTC);
 
         // When
@@ -69,13 +68,13 @@ class OffsetTimeRangeRandomizerTest extends AbstractRangeRandomizerTest<OffsetTi
 
     @Test
     void whenSpecifiedMinTimeIsAfterMaxDate_thenShouldThrowIllegalArgumentException() {
-        assertThatThrownBy(() -> aNewOffsetTimeRangeRandomizer(maxTime, minTime)).isInstanceOf(IllegalArgumentException.class);
+        assertThatThrownBy(() -> new OffsetTimeRangeRandomizer(maxTime, minTime)).isInstanceOf(IllegalArgumentException.class);
     }
 
     @Test
     void whenSpecifiedMinTimeIsNull_thenShouldUseDefaultMinValue() {
         // Given
-        randomizer = aNewOffsetTimeRangeRandomizer(null, maxTime);
+        randomizer = new OffsetTimeRangeRandomizer(null, maxTime);
 
         // When
         OffsetTime randomValue = randomizer.getRandomValue();
@@ -87,7 +86,7 @@ class OffsetTimeRangeRandomizerTest extends AbstractRangeRandomizerTest<OffsetTi
     @Test
     void whenSpecifiedMaxTimeIsNull_thenShouldUseDefaultMaxValue() {
         // Given
-        randomizer = aNewOffsetTimeRangeRandomizer(minTime, null);
+        randomizer = new OffsetTimeRangeRandomizer(minTime, null);
 
         // when
         OffsetTime randomValue = randomizer.getRandomValue();

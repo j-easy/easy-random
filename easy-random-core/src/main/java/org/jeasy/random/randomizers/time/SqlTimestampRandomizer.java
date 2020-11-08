@@ -52,29 +52,6 @@ public class SqlTimestampRandomizer implements Randomizer<Timestamp> {
         delegate = new DateRandomizer(seed);
     }
 
-    /**
-     * Create a new {@link SqlTimestampRandomizer}.
-     *
-     * @return a new {@link SqlTimestampRandomizer}.
-     * @deprecated in favor of the equivalent constructor
-     */
-    @Deprecated
-    public static SqlTimestampRandomizer aNewSqlTimestampRandomizer() {
-        return new SqlTimestampRandomizer();
-    }
-
-    /**
-     * Create a new {@link SqlTimestampRandomizer}.
-     *
-     * @param seed initial seed
-     * @return a new {@link SqlTimestampRandomizer}.
-     * @deprecated in favor of the equivalent constructor
-     */
-    @Deprecated
-    public static SqlTimestampRandomizer aNewSqlTimestampRandomizer(final long seed) {
-        return new SqlTimestampRandomizer(seed);
-    }
-
     @Override
     public Timestamp getRandomValue() {
         return new Timestamp(delegate.getRandomValue().getTime());

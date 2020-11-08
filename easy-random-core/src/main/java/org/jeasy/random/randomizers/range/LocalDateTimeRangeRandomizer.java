@@ -55,33 +55,6 @@ public class LocalDateTimeRangeRandomizer extends AbstractRangeRandomizer<LocalD
         super(min, max, seed);
     }
 
-    /**
-     * Create a new {@link LocalDateTimeRangeRandomizer}.
-     *
-     * @param min min value (inclusive)
-     * @param max max value (exclusive)
-     * @return a new {@link LocalDateTimeRangeRandomizer}.
-     * @deprecated in favor of the equivalent constructor
-     */
-    @Deprecated
-    public static LocalDateTimeRangeRandomizer aNewLocalDateTimeRangeRandomizer(final LocalDateTime min, final LocalDateTime max) {
-        return new LocalDateTimeRangeRandomizer(min, max);
-    }
-
-    /**
-     * Create a new {@link LocalDateTimeRangeRandomizer}.
-     *
-     * @param min  min value (inclusive)
-     * @param max  max value (exclusive)
-     * @param seed initial seed
-     * @return a new {@link LocalDateTimeRangeRandomizer}.
-     * @deprecated in favor of the equivalent constructor
-     */
-    @Deprecated
-    public static LocalDateTimeRangeRandomizer aNewLocalDateTimeRangeRandomizer(final LocalDateTime min, final LocalDateTime max, final long seed) {
-        return new LocalDateTimeRangeRandomizer(min, max, seed);
-    }
-
     @Override
     protected void checkValues() {
         if (min.isAfter(max)) {

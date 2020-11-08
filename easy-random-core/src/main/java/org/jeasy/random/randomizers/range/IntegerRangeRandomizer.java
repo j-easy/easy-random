@@ -51,33 +51,6 @@ public class IntegerRangeRandomizer extends AbstractRangeRandomizer<Integer> {
         super(min, max, seed);
     }
 
-    /**
-     * Create a new {@link IntegerRangeRandomizer}.
-     *
-     * @param min min value (inclusive)
-     * @param max max value (exclusive)
-     * @return a new {@link IntegerRangeRandomizer}.
-     * @deprecated in favor of the equivalent constructor
-     */
-    @Deprecated
-    public static IntegerRangeRandomizer aNewIntegerRangeRandomizer(final Integer min, final Integer max) {
-        return new IntegerRangeRandomizer(min, max);
-    }
-
-    /**
-     * Create a new {@link IntegerRangeRandomizer}.
-     *
-     * @param min  min value (inclusive)
-     * @param max  max value (exclusive)
-     * @param seed initial seed
-     * @return a new {@link IntegerRangeRandomizer}.
-     * @deprecated in favor of the equivalent constructor
-     */
-    @Deprecated
-    public static IntegerRangeRandomizer aNewIntegerRangeRandomizer(final Integer min, final Integer max, final long seed) {
-        return new IntegerRangeRandomizer(min, max, seed);
-    }
-
     @Override
     protected void checkValues() {
         if (min > max) {

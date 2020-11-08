@@ -23,7 +23,6 @@
  */
 package org.jeasy.random.randomizers.range;
 
-import static org.jeasy.random.randomizers.range.YearRangeRandomizer.aNewYearRangeRandomizer;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
@@ -40,7 +39,7 @@ class YearRangeRandomizerTest extends AbstractRangeRandomizerTest<Year> {
     void setUp() {
         minYear = Year.of(1000);
         maxYear = Year.of(3000);
-        randomizer = aNewYearRangeRandomizer(minYear, maxYear);
+        randomizer = new YearRangeRandomizer(minYear, maxYear);
     }
 
     @Test
@@ -56,7 +55,7 @@ class YearRangeRandomizerTest extends AbstractRangeRandomizerTest<Year> {
     @Test
     void generatedYearShouldBeAlwaysTheSameForTheSameSeed() {
         // Given
-        randomizer = aNewYearRangeRandomizer(minYear, maxYear, SEED);
+        randomizer = new YearRangeRandomizer(minYear, maxYear, SEED);
         Year expected = Year.of(2446);
 
         // When
@@ -68,13 +67,13 @@ class YearRangeRandomizerTest extends AbstractRangeRandomizerTest<Year> {
 
     @Test
     void whenSpecifiedMinYearIsAfterMaxYear_thenShouldThrowIllegalArgumentException() {
-        assertThatThrownBy(() -> aNewYearRangeRandomizer(maxYear, minYear)).isInstanceOf(IllegalArgumentException.class);
+        assertThatThrownBy(() -> new YearRangeRandomizer(maxYear, minYear)).isInstanceOf(IllegalArgumentException.class);
     }
 
     @Test
     void whenSpecifiedMinYearIsNull_thenShouldUseDefaultMinValue() {
         // Given
-        randomizer = aNewYearRangeRandomizer(null, maxYear);
+        randomizer = new YearRangeRandomizer(null, maxYear);
 
         // When
         Year randomValue = randomizer.getRandomValue();
@@ -86,7 +85,7 @@ class YearRangeRandomizerTest extends AbstractRangeRandomizerTest<Year> {
     @Test
     void whenSpecifiedMaxYearIsNull_thenShouldUseDefaultMaxValue() {
         // Given
-        randomizer = aNewYearRangeRandomizer(minYear, null);
+        randomizer = new YearRangeRandomizer(minYear, null);
 
         // when
         Year randomValue = randomizer.getRandomValue();

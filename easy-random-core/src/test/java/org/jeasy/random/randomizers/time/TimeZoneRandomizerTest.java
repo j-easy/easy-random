@@ -23,7 +23,6 @@
  */
 package org.jeasy.random.randomizers.time;
 
-import static org.jeasy.random.randomizers.time.TimeZoneRandomizer.aNewTimeZoneRandomizer;
 import static org.assertj.core.api.Assertions.assertThat;
 
 import java.util.TimeZone;
@@ -37,7 +36,7 @@ class TimeZoneRandomizerTest extends AbstractRandomizerTest<TimeZone> {
 
     @BeforeEach
     void setUp() {
-        randomizer = aNewTimeZoneRandomizer(SEED);
+        randomizer = new TimeZoneRandomizer(SEED);
     }
 
     @Test
@@ -48,8 +47,8 @@ class TimeZoneRandomizerTest extends AbstractRandomizerTest<TimeZone> {
     @Test
     void shouldGenerateTheSameValueForTheSameSeed() {
         // we can not use a canned value, because the available TimeZones differ between locales/jdks
-        TimeZone firstTimeZone = aNewTimeZoneRandomizer(SEED).getRandomValue();
-        TimeZone secondTimeZone = aNewTimeZoneRandomizer(SEED).getRandomValue();
+        TimeZone firstTimeZone = new TimeZoneRandomizer(SEED).getRandomValue();
+        TimeZone secondTimeZone = new TimeZoneRandomizer(SEED).getRandomValue();
         
         assertThat(firstTimeZone).isNotNull();
         assertThat(secondTimeZone).isNotNull();

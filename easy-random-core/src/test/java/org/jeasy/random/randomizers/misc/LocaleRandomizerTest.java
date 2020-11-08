@@ -23,7 +23,6 @@
  */
 package org.jeasy.random.randomizers.misc;
 
-import static org.jeasy.random.randomizers.misc.LocaleRandomizer.aNewLocaleRandomizer;
 import static org.assertj.core.api.Assertions.assertThat;
 
 import java.math.BigDecimal;
@@ -37,22 +36,22 @@ class LocaleRandomizerTest extends AbstractRandomizerTest<Locale> {
 
     @Test
     void shouldGenerateRandomLocale() {
-        assertThat(aNewLocaleRandomizer().getRandomValue()).isIn(Locale.getAvailableLocales());
+        assertThat(new LocaleRandomizer().getRandomValue()).isIn(Locale.getAvailableLocales());
     }
 
     @Test
     void shouldGenerateTheSameValueForTheSameSeed() {
         BigDecimal javaVersion = new BigDecimal(System.getProperty("java.specification.version"));
         if (javaVersion.compareTo(new BigDecimal("14")) >= 0) {
-            assertThat(aNewLocaleRandomizer(SEED).getRandomValue()).isEqualTo(new Locale("rn", "BI"));
+            assertThat(new LocaleRandomizer(SEED).getRandomValue()).isEqualTo(new Locale("rn", "BI"));
         } else if (javaVersion.compareTo(new BigDecimal("13")) >= 0) {
-            assertThat(aNewLocaleRandomizer(SEED).getRandomValue()).isEqualTo(new Locale("zh", "CN"));
+            assertThat(new LocaleRandomizer(SEED).getRandomValue()).isEqualTo(new Locale("zh", "CN"));
         } else if (javaVersion.compareTo(new BigDecimal("11")) >= 0) {
-            assertThat(aNewLocaleRandomizer(SEED).getRandomValue()).isEqualTo(new Locale("en", "CK"));
+            assertThat(new LocaleRandomizer(SEED).getRandomValue()).isEqualTo(new Locale("en", "CK"));
         } else if (javaVersion.compareTo(new BigDecimal("9")) >= 0) {
-            assertThat(aNewLocaleRandomizer(SEED).getRandomValue()).isEqualTo(new Locale("sw", "ke"));
+            assertThat(new LocaleRandomizer(SEED).getRandomValue()).isEqualTo(new Locale("sw", "ke"));
         } else {
-            assertThat(aNewLocaleRandomizer(SEED).getRandomValue()).isEqualTo(new Locale("nl", "be"));
+            assertThat(new LocaleRandomizer(SEED).getRandomValue()).isEqualTo(new Locale("nl", "be"));
         }
     }
 }

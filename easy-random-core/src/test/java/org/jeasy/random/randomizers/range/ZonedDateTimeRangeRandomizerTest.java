@@ -23,7 +23,6 @@
  */
 package org.jeasy.random.randomizers.range;
 
-import static org.jeasy.random.randomizers.range.ZonedDateTimeRangeRandomizer.aNewZonedDateTimeRangeRandomizer;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
@@ -41,7 +40,7 @@ class ZonedDateTimeRangeRandomizerTest extends AbstractRangeRandomizerTest<Zoned
     void setUp() {
         minZonedDateTime = EasyRandomParameters.DEFAULT_DATES_RANGE.getMin().minusYears(50);
         maxZonedDateTime = EasyRandomParameters.DEFAULT_DATES_RANGE.getMax().plusYears(50);
-        randomizer = aNewZonedDateTimeRangeRandomizer(minZonedDateTime, maxZonedDateTime);
+        randomizer = new ZonedDateTimeRangeRandomizer(minZonedDateTime, maxZonedDateTime);
     }
 
     @Test
@@ -57,7 +56,7 @@ class ZonedDateTimeRangeRandomizerTest extends AbstractRangeRandomizerTest<Zoned
     @Test
     void generatedZonedDateTimeShouldBeAlwaysTheSameForTheSameSeed() {
         // Given
-        randomizer = aNewZonedDateTimeRangeRandomizer(minZonedDateTime, maxZonedDateTime, SEED);
+        randomizer = new ZonedDateTimeRangeRandomizer(minZonedDateTime, maxZonedDateTime, SEED);
         ZonedDateTime expected = ZonedDateTime.parse("2046-10-12T17:24:27Z");
 
         // When
@@ -69,13 +68,13 @@ class ZonedDateTimeRangeRandomizerTest extends AbstractRangeRandomizerTest<Zoned
 
     @Test
     void whenSpecifiedMinZonedDateTimeIsAfterMaxZonedDateTime_thenShouldThrowIllegalArgumentException() {
-        assertThatThrownBy(() -> aNewZonedDateTimeRangeRandomizer(maxZonedDateTime, minZonedDateTime)).isInstanceOf(IllegalArgumentException.class);
+        assertThatThrownBy(() -> new ZonedDateTimeRangeRandomizer(maxZonedDateTime, minZonedDateTime)).isInstanceOf(IllegalArgumentException.class);
     }
 
     @Test
     void whenSpecifiedMinZonedDateTimeIsNull_thenShouldUseDefaultMinValue() {
         // Given
-        randomizer = aNewZonedDateTimeRangeRandomizer(null, maxZonedDateTime);
+        randomizer = new ZonedDateTimeRangeRandomizer(null, maxZonedDateTime);
 
         // When
         ZonedDateTime randomValue = randomizer.getRandomValue();
@@ -87,7 +86,7 @@ class ZonedDateTimeRangeRandomizerTest extends AbstractRangeRandomizerTest<Zoned
     @Test
     void whenSpecifiedMaxZonedDateTimeIsNull_thenShouldUseDefaultMaxValue() {
         // Given
-        randomizer = aNewZonedDateTimeRangeRandomizer(minZonedDateTime, null);
+        randomizer = new ZonedDateTimeRangeRandomizer(minZonedDateTime, null);
 
         // when
         ZonedDateTime randomValue = randomizer.getRandomValue();

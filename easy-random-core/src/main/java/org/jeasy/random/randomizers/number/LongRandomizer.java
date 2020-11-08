@@ -47,29 +47,6 @@ public class LongRandomizer extends AbstractRandomizer<Long> {
         super(seed);
     }
 
-    /**
-     * Create a new {@link LongRandomizer}.
-     *
-     * @return a new {@link LongRandomizer}.
-     * @deprecated in favor of the equivalent constructor
-     */
-    @Deprecated
-    public static LongRandomizer aNewLongRandomizer() {
-        return new LongRandomizer();
-    }
-
-    /**
-     * Create a new {@link LongRandomizer}.
-     *
-     * @param seed initial seed
-     * @return a new {@link LongRandomizer}.
-     * @deprecated in favor of the equivalent constructor
-     */
-    @Deprecated
-    public static LongRandomizer aNewLongRandomizer(final long seed) {
-        return new LongRandomizer(seed);
-    }
-    
     @Override
     public Long getRandomValue() {
         return random.nextLong();

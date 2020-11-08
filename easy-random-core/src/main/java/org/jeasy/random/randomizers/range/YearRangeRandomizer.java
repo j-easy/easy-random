@@ -54,33 +54,6 @@ public class YearRangeRandomizer extends AbstractRangeRandomizer<Year> {
         super(min, max, seed);
     }
 
-    /**
-     * Create a new {@link YearRangeRandomizer}.
-     *
-     * @param min min value (inclusive)
-     * @param max max value (exclusive)
-     * @return a new {@link YearRangeRandomizer}.
-     * @deprecated in favor of the equivalent constructor
-     */
-    @Deprecated
-    public static YearRangeRandomizer aNewYearRangeRandomizer(final Year min, final Year max) {
-        return new YearRangeRandomizer(min, max);
-    }
-
-    /**
-     * Create a new {@link YearRangeRandomizer}.
-     *
-     * @param min  min value (inclusive)
-     * @param max  max value (exclusive)
-     * @param seed initial seed
-     * @return a new {@link YearRangeRandomizer}.
-     * @deprecated in favor of the equivalent constructor
-     */
-    @Deprecated
-    public static YearRangeRandomizer aNewYearRangeRandomizer(final Year min, final Year max, final long seed) {
-        return new YearRangeRandomizer(min, max, seed);
-    }
-
     @Override
     protected void checkValues() {
         if (min.isAfter(max)) {

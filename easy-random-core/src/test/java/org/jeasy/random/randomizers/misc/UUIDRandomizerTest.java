@@ -23,7 +23,6 @@
  */
 package org.jeasy.random.randomizers.misc;
 
-import static org.jeasy.random.randomizers.misc.UUIDRandomizer.aNewUUIDRandomizer;
 import static org.assertj.core.api.Assertions.assertThat;
 
 import java.util.Locale;
@@ -37,11 +36,11 @@ class UUIDRandomizerTest extends AbstractRandomizerTest<Locale> {
 
     @Test
     void shouldGenerateRandomUUID() {
-        assertThat(aNewUUIDRandomizer().getRandomValue()).isNotNull();
+        assertThat(new UUIDRandomizer().getRandomValue()).isNotNull();
     }
 
     @Test
     void shouldGenerateTheSameValueForTheSameSeed() {
-        assertThat(aNewUUIDRandomizer(SEED).getRandomValue()).isEqualTo(new UUID(-5106534569952410475L, -167885730524958550L));
+        assertThat(new UUIDRandomizer(SEED).getRandomValue()).isEqualTo(new UUID(-5106534569952410475L, -167885730524958550L));
     }
 }

@@ -23,8 +23,6 @@
  */
 package org.jeasy.random.randomizers.net;
 
-import static org.jeasy.random.randomizers.net.UriRandomizer.aNewUriRandomizer;
-import static org.jeasy.random.randomizers.net.UrlRandomizer.aNewUrlRandomizer;
 import static org.assertj.core.api.BDDAssertions.then;
 
 import java.net.URI;
@@ -43,8 +41,8 @@ class NetRandomizersTest extends AbstractRandomizerTest<Randomizer<?>> {
 
     static Object[] generateRandomizers() {
         return new Object[] { 
-                aNewUriRandomizer(),
-                aNewUrlRandomizer()
+                new UriRandomizer(),
+                new UrlRandomizer()
         };
     }
 
@@ -59,8 +57,8 @@ class NetRandomizersTest extends AbstractRandomizerTest<Randomizer<?>> {
 
     static Object[][] generateSeededRandomizersAndTheirExpectedValues() throws Exception {
         return new Object[][] { 
-                { aNewUriRandomizer(SEED), new URI("telnet://192.0.2.16:80/") },
-                { aNewUrlRandomizer(SEED), new URL("http://www.google.com") }
+                { new UriRandomizer(SEED), new URI("telnet://192.0.2.16:80/") },
+                { new UrlRandomizer(SEED), new URL("http://www.google.com") }
         };
     }
 

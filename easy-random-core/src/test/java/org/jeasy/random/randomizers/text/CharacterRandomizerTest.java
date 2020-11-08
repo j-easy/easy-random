@@ -23,7 +23,6 @@
  */
 package org.jeasy.random.randomizers.text;
 
-import static org.jeasy.random.randomizers.text.CharacterRandomizer.aNewCharacterRandomizer;
 import static org.assertj.core.api.Assertions.assertThat;
 
 import org.junit.jupiter.api.BeforeEach;
@@ -35,7 +34,7 @@ class CharacterRandomizerTest extends AbstractRandomizerTest<Character> {
 
     @BeforeEach
     void setUp() {
-        randomizer = aNewCharacterRandomizer();
+        randomizer = new CharacterRandomizer();
     }
 
     @Test
@@ -46,7 +45,7 @@ class CharacterRandomizerTest extends AbstractRandomizerTest<Character> {
     @Test
     void shouldGenerateTheSameValueForTheSameSeed() {
         // Given
-        randomizer = aNewCharacterRandomizer(SEED);
+        randomizer = new CharacterRandomizer(SEED);
         char expected = 'e';
 
         // When

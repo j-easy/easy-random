@@ -73,56 +73,6 @@ public class EmailRandomizer extends FakerBasedRandomizer<String> {
         this.safe = safe;
     }
 
-    /**
-     * Create a new {@link EmailRandomizer}.
-     *
-     * @return a new {@link EmailRandomizer}
-     * @deprecated in favor of the equivalent constructor
-     */
-    @Deprecated
-    public static EmailRandomizer aNewEmailRandomizer() {
-        return new EmailRandomizer();
-    }
-
-    /**
-     * Create a new {@link EmailRandomizer}.
-     *
-     * @param seed the initial seed
-     * @return a new {@link EmailRandomizer}
-     * @deprecated in favor of the equivalent constructor
-     */
-    @Deprecated
-    public static EmailRandomizer aNewEmailRandomizer(final long seed) {
-        return new EmailRandomizer(seed);
-    }
-
-    /**
-     * Create a new {@link EmailRandomizer}.
-     *
-     * @param seed   the initial seed
-     * @param locale the locale to use
-     * @return a new {@link EmailRandomizer}
-     * @deprecated in favor of the equivalent constructor
-     */
-    @Deprecated
-    public static EmailRandomizer aNewEmailRandomizer(final long seed, final Locale locale) {
-        return new EmailRandomizer(seed, locale);
-    }
-
-    /**
-     * Create a new {@link EmailRandomizer}.
-     *
-     * @param seed   the initial seed
-     * @param locale the locale to use
-     * @param safe   true to generate safe emails (invalid domains), false otherwise
-     * @return a new {@link EmailRandomizer}
-     * @deprecated in favor of the equivalent constructor
-     */
-    @Deprecated
-    public static EmailRandomizer aNewEmailRandomizer(final long seed, final Locale locale, final boolean safe) {
-        return new EmailRandomizer(seed, locale, safe);
-    }
-
     @Override
     public String getRandomValue() {
         return safe ? faker.internet().safeEmailAddress() : faker.internet().emailAddress();

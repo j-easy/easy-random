@@ -52,29 +52,6 @@ public class SqlDateRandomizer implements Randomizer<Date> {
         delegate = new DateRandomizer(seed);
     }
 
-    /**
-     * Create a new {@link SqlDateRandomizer}.
-     *
-     * @return a new {@link SqlDateRandomizer}.
-     * @deprecated in favor of the equivalent constructor
-     */
-    @Deprecated
-    public static SqlDateRandomizer aNewSqlDateRandomizer() {
-        return new SqlDateRandomizer();
-    }
-
-    /**
-     * Create a new {@link SqlDateRandomizer}.
-     *
-     * @param seed initial seed
-     * @return a new {@link SqlDateRandomizer}.
-     * @deprecated in favor of the equivalent constructor
-     */
-    @Deprecated
-    public static SqlDateRandomizer aNewSqlDateRandomizer(final long seed) {
-        return new SqlDateRandomizer(seed);
-    }
-
     @Override
     public Date getRandomValue() {
         return new Date(delegate.getRandomValue().getTime());

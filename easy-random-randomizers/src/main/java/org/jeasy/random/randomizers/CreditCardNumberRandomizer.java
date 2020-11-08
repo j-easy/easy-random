@@ -59,42 +59,6 @@ public class CreditCardNumberRandomizer extends FakerBasedRandomizer<String> {
         super(seed, locale);
     }
 
-    /**
-     * Create a new {@link CreditCardNumberRandomizer}.
-     *
-     * @return a new {@link CreditCardNumberRandomizer}
-     * @deprecated in favor of the equivalent constructor
-     */
-    @Deprecated
-    public static CreditCardNumberRandomizer aNewCreditCardNumberRandomizer() {
-        return new CreditCardNumberRandomizer();
-    }
-
-    /**
-     * Create a new {@link CreditCardNumberRandomizer}.
-     *
-     * @param seed the initial seed
-     * @return a new {@link CreditCardNumberRandomizer}
-     * @deprecated in favor of the equivalent constructor
-     */
-    @Deprecated
-    public static CreditCardNumberRandomizer aNewCreditCardNumberRandomizer(final long seed) {
-        return new CreditCardNumberRandomizer(seed);
-    }
-
-    /**
-     * Create a new {@link CreditCardNumberRandomizer}.
-     *
-     * @param seed   the initial seed
-     * @param locale the locale to use
-     * @return a new {@link CreditCardNumberRandomizer}
-     * @deprecated in favor of the equivalent constructor
-     */
-    @Deprecated
-    public static CreditCardNumberRandomizer aNewCreditCardNumberRandomizer(final long seed, final Locale locale) {
-        return new CreditCardNumberRandomizer(seed, locale);
-    }
-
     @Override
     public String getRandomValue() {
         return faker.business().creditCardNumber();

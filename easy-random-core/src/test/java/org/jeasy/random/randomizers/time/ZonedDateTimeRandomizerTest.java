@@ -23,7 +23,6 @@
  */
 package org.jeasy.random.randomizers.time;
 
-import static org.jeasy.random.randomizers.time.ZonedDateTimeRandomizer.aNewZonedDateTimeRandomizer;
 import static org.assertj.core.api.BDDAssertions.then;
 
 import java.time.ZonedDateTime;
@@ -37,7 +36,7 @@ class ZonedDateTimeRandomizerTest extends AbstractRandomizerTest<ZonedDateTime> 
     @Test
     void generatedValueShouldNotBeNull() {
         // given
-        ZonedDateTimeRandomizer zonedDateTimeRandomizer = aNewZonedDateTimeRandomizer();
+        ZonedDateTimeRandomizer zonedDateTimeRandomizer = new ZonedDateTimeRandomizer();
 
         // when
         ZonedDateTime zonedDateTime = zonedDateTimeRandomizer.getRandomValue();
@@ -48,8 +47,8 @@ class ZonedDateTimeRandomizerTest extends AbstractRandomizerTest<ZonedDateTime> 
     @Test
     void shouldGenerateTheSameValueForTheSameSeed() {
         // given
-        ZonedDateTimeRandomizer firstSeededZonedDateTimeRandomizer = aNewZonedDateTimeRandomizer(SEED);
-        ZonedDateTimeRandomizer secondSeededZonedDateTimeRandomizer = aNewZonedDateTimeRandomizer(SEED);
+        ZonedDateTimeRandomizer firstSeededZonedDateTimeRandomizer = new ZonedDateTimeRandomizer(SEED);
+        ZonedDateTimeRandomizer secondSeededZonedDateTimeRandomizer = new ZonedDateTimeRandomizer(SEED);
 
         // when
         // we can not use a canned value, because the available TimeZones differ between locales/jdks

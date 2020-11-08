@@ -54,33 +54,6 @@ public class ZonedDateTimeRangeRandomizer extends AbstractRangeRandomizer<ZonedD
         super(min, max, seed);
     }
 
-    /**
-     * Create a new {@link ZonedDateTimeRangeRandomizer}.
-     *
-     * @param min min value (inclusive)
-     * @param max max value (exclusive)
-     * @return a new {@link ZonedDateTimeRangeRandomizer}.
-     * @deprecated in favor of the equivalent constructor
-     */
-    @Deprecated
-    public static ZonedDateTimeRangeRandomizer aNewZonedDateTimeRangeRandomizer(final ZonedDateTime min, final ZonedDateTime max) {
-        return new ZonedDateTimeRangeRandomizer(min, max);
-    }
-
-    /**
-     * Create a new {@link ZonedDateTimeRangeRandomizer}.
-     *
-     * @param min  min value (inclusive)
-     * @param max  max value (exclusive)
-     * @param seed initial seed
-     * @return a new {@link ZonedDateTimeRangeRandomizer}.
-     * @deprecated in favor of the equivalent constructor
-     */
-    @Deprecated
-    public static ZonedDateTimeRangeRandomizer aNewZonedDateTimeRangeRandomizer(final ZonedDateTime min, final ZonedDateTime max, final long seed) {
-        return new ZonedDateTimeRangeRandomizer(min, max, seed);
-    }
-
     @Override
     protected void checkValues() {
         if (min.isAfter(max)) {

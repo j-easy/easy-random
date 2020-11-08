@@ -49,29 +49,6 @@ public class LocaleRandomizer extends AbstractRandomizer<Locale> {
         super(seed);
     }
 
-    /**
-     * Create a new {@link LocaleRandomizer}.
-     *
-     * @return a new {@link LocaleRandomizer}.
-     * @deprecated in favor of the equivalent constructor
-     */
-    @Deprecated
-    public static LocaleRandomizer aNewLocaleRandomizer() {
-        return new LocaleRandomizer();
-    }
-
-    /**
-     * Create a new {@link LocaleRandomizer}.
-     *
-     * @param seed initial seed
-     * @return a new {@link LocaleRandomizer}.
-     * @deprecated in favor of the equivalent constructor
-     */
-    @Deprecated
-    public static LocaleRandomizer aNewLocaleRandomizer(final long seed) {
-        return new LocaleRandomizer(seed);
-    }
-
     @Override
     public Locale getRandomValue() {
         Locale[] availableLocales = Locale.getAvailableLocales();

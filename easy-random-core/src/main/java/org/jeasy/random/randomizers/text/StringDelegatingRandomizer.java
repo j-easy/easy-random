@@ -45,18 +45,6 @@ public class StringDelegatingRandomizer implements Randomizer<String> {
         this.delegate = delegate;
     }
 
-    /**
-     * Create a new {@link StringDelegatingRandomizer}.
-     *
-     * @param delegate the delegate {@link Randomizer}
-     * @return a new {@link StringDelegatingRandomizer}.
-     * @deprecated in favor of the equivalent constructor
-     */
-    @Deprecated
-    public static StringDelegatingRandomizer aNewStringDelegatingRandomizer(final Randomizer<?> delegate) {
-        return new StringDelegatingRandomizer(delegate);
-    }
-
     @Override
     public String getRandomValue() {
         return valueOf(delegate.getRandomValue());

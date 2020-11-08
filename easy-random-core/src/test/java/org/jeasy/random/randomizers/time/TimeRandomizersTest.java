@@ -24,24 +24,6 @@
 package org.jeasy.random.randomizers.time;
 
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
-import static org.jeasy.random.randomizers.time.CalendarRandomizer.aNewCalendarRandomizer;
-import static org.jeasy.random.randomizers.time.DateRandomizer.aNewDateRandomizer;
-import static org.jeasy.random.randomizers.time.DurationRandomizer.aNewDurationRandomizer;
-import static org.jeasy.random.randomizers.time.GregorianCalendarRandomizer.aNewGregorianCalendarRandomizer;
-import static org.jeasy.random.randomizers.time.InstantRandomizer.aNewInstantRandomizer;
-import static org.jeasy.random.randomizers.time.LocalDateRandomizer.aNewLocalDateRandomizer;
-import static org.jeasy.random.randomizers.time.LocalDateTimeRandomizer.aNewLocalDateTimeRandomizer;
-import static org.jeasy.random.randomizers.time.LocalTimeRandomizer.aNewLocalTimeRandomizer;
-import static org.jeasy.random.randomizers.time.MonthDayRandomizer.aNewMonthDayRandomizer;
-import static org.jeasy.random.randomizers.time.OffsetDateTimeRandomizer.aNewOffsetDateTimeRandomizer;
-import static org.jeasy.random.randomizers.time.OffsetTimeRandomizer.aNewOffsetTimeRandomizer;
-import static org.jeasy.random.randomizers.time.PeriodRandomizer.aNewPeriodRandomizer;
-import static org.jeasy.random.randomizers.time.SqlDateRandomizer.aNewSqlDateRandomizer;
-import static org.jeasy.random.randomizers.time.SqlTimeRandomizer.aNewSqlTimeRandomizer;
-import static org.jeasy.random.randomizers.time.SqlTimestampRandomizer.aNewSqlTimestampRandomizer;
-import static org.jeasy.random.randomizers.time.YearMonthRandomizer.aNewYearMonthRandomizer;
-import static org.jeasy.random.randomizers.time.YearRandomizer.aNewYearRandomizer;
-import static org.jeasy.random.randomizers.time.ZoneOffsetRandomizer.aNewZoneOffsetRandomizer;
 import static java.time.LocalDateTime.of;
 import static java.time.ZoneOffset.ofTotalSeconds;
 import static org.assertj.core.api.Assertions.assertThat;
@@ -78,24 +60,24 @@ class TimeRandomizersTest extends AbstractRandomizerTest<Randomizer<?>> {
 
     static Object[] generateRandomizers() {
         return new Object[] {
-                aNewDurationRandomizer(),
-                aNewLocalDateRandomizer(),
-                aNewMonthDayRandomizer(),
-                aNewLocalTimeRandomizer(),
-                aNewPeriodRandomizer(),
-                aNewYearRandomizer(),
-                aNewYearMonthRandomizer(),
-                aNewZoneOffsetRandomizer(),
-                aNewCalendarRandomizer(),
-                aNewDateRandomizer(),
-                aNewGregorianCalendarRandomizer(),
-                aNewInstantRandomizer(),
-                aNewLocalDateTimeRandomizer(),
-                aNewOffsetDateTimeRandomizer(),
-                aNewOffsetTimeRandomizer(),
-                aNewSqlDateRandomizer(),
-                aNewSqlTimeRandomizer(),
-                aNewSqlTimestampRandomizer()
+                new DurationRandomizer(),
+                new LocalDateRandomizer(),
+                new MonthDayRandomizer(),
+                new LocalTimeRandomizer(),
+                new PeriodRandomizer(),
+                new YearRandomizer(),
+                new YearMonthRandomizer(),
+                new ZoneOffsetRandomizer(),
+                new CalendarRandomizer(),
+                new DateRandomizer(),
+                new GregorianCalendarRandomizer(),
+                new InstantRandomizer(),
+                new LocalDateTimeRandomizer(),
+                new OffsetDateTimeRandomizer(),
+                new OffsetTimeRandomizer(),
+                new SqlDateRandomizer(),
+                new SqlTimeRandomizer(),
+                new SqlTimestampRandomizer()
         };
     }
 
@@ -116,26 +98,26 @@ class TimeRandomizersTest extends AbstractRandomizerTest<Randomizer<?>> {
         expectedGregorianCalendar.setTimeInMillis(5106534569952410475L);
 
         return new Object[][] {
-                { aNewDurationRandomizer(SEED), Duration.of(72L, ChronoUnit.HOURS) },
-                { aNewDurationRandomizer(SEED, ChronoUnit.MINUTES), Duration.of(72L, ChronoUnit.MINUTES) },
-                { aNewDurationRandomizer(SEED, ChronoUnit.MILLIS), Duration.of(72L, ChronoUnit.MILLIS) },
-                { aNewLocalDateRandomizer(SEED), LocalDate.of(2024, Month.MARCH, 20) },
-                { aNewMonthDayRandomizer(SEED), MonthDay.of(Month.MARCH, 20) },
-                { aNewLocalTimeRandomizer(SEED), LocalTime.of(16, 42, 58, 723174202) },
-                { aNewPeriodRandomizer(SEED), Period.of(2024, 3, 20) },
-                { aNewYearRandomizer(SEED), Year.of(2024) },
-                { aNewYearMonthRandomizer(SEED), YearMonth.of(2024, Month.MARCH) },
-                { aNewZoneOffsetRandomizer(SEED), ZoneOffset.ofTotalSeconds(28923) },
-                { aNewCalendarRandomizer(SEED), expectedCalendar },
-                { aNewDateRandomizer(SEED), new Date(1718736844570L) },
-                { aNewGregorianCalendarRandomizer(SEED), expectedGregorianCalendar },
-                { aNewInstantRandomizer(SEED), Instant.ofEpochSecond(1718736844L, 570000000) },
-                { aNewLocalDateTimeRandomizer(SEED), LocalDateTime.of(2024, Month.MARCH, 20, 16, 42, 58, 723174202) },
-                { aNewOffsetDateTimeRandomizer(SEED), OffsetDateTime.of(of(2024, Month.MARCH, 20, 16, 42, 58, 723174202), ofTotalSeconds(28923)) },
-                { aNewOffsetTimeRandomizer(SEED), OffsetTime.of(LocalTime.of(16, 42, 58, 723174202), ofTotalSeconds(28923)) },
-                { aNewSqlDateRandomizer(SEED), new java.sql.Date(1718736844570L) },
-                { aNewSqlTimeRandomizer(SEED), new Time(1718736844570L) },
-                { aNewSqlTimestampRandomizer(SEED), new Timestamp(1718736844570L) }
+                { new DurationRandomizer(SEED), Duration.of(72L, ChronoUnit.HOURS) },
+                { new DurationRandomizer(SEED, ChronoUnit.MINUTES), Duration.of(72L, ChronoUnit.MINUTES) },
+                { new DurationRandomizer(SEED, ChronoUnit.MILLIS), Duration.of(72L, ChronoUnit.MILLIS) },
+                { new LocalDateRandomizer(SEED), LocalDate.of(2024, Month.MARCH, 20) },
+                { new MonthDayRandomizer(SEED), MonthDay.of(Month.MARCH, 20) },
+                { new LocalTimeRandomizer(SEED), LocalTime.of(16, 42, 58, 723174202) },
+                { new PeriodRandomizer(SEED), Period.of(2024, 3, 20) },
+                { new YearRandomizer(SEED), Year.of(2024) },
+                { new YearMonthRandomizer(SEED), YearMonth.of(2024, Month.MARCH) },
+                { new ZoneOffsetRandomizer(SEED), ZoneOffset.ofTotalSeconds(28923) },
+                { new CalendarRandomizer(SEED), expectedCalendar },
+                { new DateRandomizer(SEED), new Date(1718736844570L) },
+                { new GregorianCalendarRandomizer(SEED), expectedGregorianCalendar },
+                { new InstantRandomizer(SEED), Instant.ofEpochSecond(1718736844L, 570000000) },
+                { new LocalDateTimeRandomizer(SEED), LocalDateTime.of(2024, Month.MARCH, 20, 16, 42, 58, 723174202) },
+                { new OffsetDateTimeRandomizer(SEED), OffsetDateTime.of(of(2024, Month.MARCH, 20, 16, 42, 58, 723174202), ofTotalSeconds(28923)) },
+                { new OffsetTimeRandomizer(SEED), OffsetTime.of(LocalTime.of(16, 42, 58, 723174202), ofTotalSeconds(28923)) },
+                { new SqlDateRandomizer(SEED), new java.sql.Date(1718736844570L) },
+                { new SqlTimeRandomizer(SEED), new Time(1718736844570L) },
+                { new SqlTimestampRandomizer(SEED), new Timestamp(1718736844570L) }
         };
     }
 
@@ -150,25 +132,25 @@ class TimeRandomizersTest extends AbstractRandomizerTest<Randomizer<?>> {
 
     @Test
     void shouldAllowToCreateDurationRandomizerWithSuitableTemporalUnits() {
-        assertThat(aNewDurationRandomizer(ChronoUnit.NANOS).getRandomValue()).isGreaterThanOrEqualTo(Duration.ZERO);
-        assertThat(aNewDurationRandomizer(ChronoUnit.MICROS).getRandomValue()).isGreaterThanOrEqualTo(Duration.ZERO);
-        assertThat(aNewDurationRandomizer(ChronoUnit.MILLIS).getRandomValue()).isGreaterThanOrEqualTo(Duration.ZERO);
-        assertThat(aNewDurationRandomizer(ChronoUnit.SECONDS).getRandomValue()).isGreaterThanOrEqualTo(Duration.ZERO);
-        assertThat(aNewDurationRandomizer(ChronoUnit.MINUTES).getRandomValue()).isGreaterThanOrEqualTo(Duration.ZERO);
-        assertThat(aNewDurationRandomizer(ChronoUnit.HOURS).getRandomValue()).isGreaterThanOrEqualTo(Duration.ZERO);
-        assertThat(aNewDurationRandomizer(ChronoUnit.HALF_DAYS).getRandomValue()).isGreaterThanOrEqualTo(Duration.ZERO);
-        assertThat(aNewDurationRandomizer(ChronoUnit.DAYS).getRandomValue()).isGreaterThanOrEqualTo(Duration.ZERO);
+        assertThat(new DurationRandomizer(ChronoUnit.NANOS).getRandomValue()).isGreaterThanOrEqualTo(Duration.ZERO);
+        assertThat(new DurationRandomizer(ChronoUnit.MICROS).getRandomValue()).isGreaterThanOrEqualTo(Duration.ZERO);
+        assertThat(new DurationRandomizer(ChronoUnit.MILLIS).getRandomValue()).isGreaterThanOrEqualTo(Duration.ZERO);
+        assertThat(new DurationRandomizer(ChronoUnit.SECONDS).getRandomValue()).isGreaterThanOrEqualTo(Duration.ZERO);
+        assertThat(new DurationRandomizer(ChronoUnit.MINUTES).getRandomValue()).isGreaterThanOrEqualTo(Duration.ZERO);
+        assertThat(new DurationRandomizer(ChronoUnit.HOURS).getRandomValue()).isGreaterThanOrEqualTo(Duration.ZERO);
+        assertThat(new DurationRandomizer(ChronoUnit.HALF_DAYS).getRandomValue()).isGreaterThanOrEqualTo(Duration.ZERO);
+        assertThat(new DurationRandomizer(ChronoUnit.DAYS).getRandomValue()).isGreaterThanOrEqualTo(Duration.ZERO);
     }
 
     @Test
     void shouldDisallowToCreateDurationRandomizerWithEstimatedTemporalUnits() {
-        assertThatThrownBy(() -> aNewDurationRandomizer(ChronoUnit.WEEKS)).isInstanceOf(IllegalArgumentException.class);
-        assertThatThrownBy(() -> aNewDurationRandomizer(ChronoUnit.MONTHS)).isInstanceOf(IllegalArgumentException.class);
-        assertThatThrownBy(() -> aNewDurationRandomizer(ChronoUnit.YEARS)).isInstanceOf(IllegalArgumentException.class);
-        assertThatThrownBy(() -> aNewDurationRandomizer(ChronoUnit.DECADES)).isInstanceOf(IllegalArgumentException.class);
-        assertThatThrownBy(() -> aNewDurationRandomizer(ChronoUnit.CENTURIES)).isInstanceOf(IllegalArgumentException.class);
-        assertThatThrownBy(() -> aNewDurationRandomizer(ChronoUnit.MILLENNIA)).isInstanceOf(IllegalArgumentException.class);
-        assertThatThrownBy(() -> aNewDurationRandomizer(ChronoUnit.ERAS)).isInstanceOf(IllegalArgumentException.class);
-        assertThatThrownBy(() -> aNewDurationRandomizer(ChronoUnit.FOREVER)).isInstanceOf(IllegalArgumentException.class);
+        assertThatThrownBy(() -> new DurationRandomizer(ChronoUnit.WEEKS)).isInstanceOf(IllegalArgumentException.class);
+        assertThatThrownBy(() -> new DurationRandomizer(ChronoUnit.MONTHS)).isInstanceOf(IllegalArgumentException.class);
+        assertThatThrownBy(() -> new DurationRandomizer(ChronoUnit.YEARS)).isInstanceOf(IllegalArgumentException.class);
+        assertThatThrownBy(() -> new DurationRandomizer(ChronoUnit.DECADES)).isInstanceOf(IllegalArgumentException.class);
+        assertThatThrownBy(() -> new DurationRandomizer(ChronoUnit.CENTURIES)).isInstanceOf(IllegalArgumentException.class);
+        assertThatThrownBy(() -> new DurationRandomizer(ChronoUnit.MILLENNIA)).isInstanceOf(IllegalArgumentException.class);
+        assertThatThrownBy(() -> new DurationRandomizer(ChronoUnit.ERAS)).isInstanceOf(IllegalArgumentException.class);
+        assertThatThrownBy(() -> new DurationRandomizer(ChronoUnit.FOREVER)).isInstanceOf(IllegalArgumentException.class);
     }
 }

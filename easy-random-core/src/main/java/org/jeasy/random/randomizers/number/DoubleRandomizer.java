@@ -47,29 +47,6 @@ public class DoubleRandomizer extends AbstractRandomizer<Double> {
         super(seed);
     }
 
-    /**
-     * Create a new {@link DoubleRandomizer}.
-     *
-     * @return a new {@link DoubleRandomizer}.
-     * @deprecated in favor of the equivalent constructor
-     */
-    @Deprecated
-    public static DoubleRandomizer aNewDoubleRandomizer() {
-        return new DoubleRandomizer();
-    }
-
-    /**
-     * Create a new {@link DoubleRandomizer}.
-     *
-     * @param seed initial seed
-     * @return a new {@link DoubleRandomizer}.
-     * @deprecated in favor of the equivalent constructor
-     */
-    @Deprecated
-    public static DoubleRandomizer aNewDoubleRandomizer(final long seed) {
-        return new DoubleRandomizer(seed);
-    }
-    
     @Override
     public Double getRandomValue() {
         return random.nextDouble();

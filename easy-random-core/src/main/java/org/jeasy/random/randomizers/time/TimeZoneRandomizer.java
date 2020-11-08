@@ -49,29 +49,6 @@ public class TimeZoneRandomizer extends AbstractRandomizer<TimeZone> {
         super(seed);
     }
 
-    /**
-     * Create a new {@link TimeZoneRandomizer}.
-     *
-     * @return a new {@link TimeZoneRandomizer}.
-     * @deprecated in favor of the equivalent constructor
-     */
-    @Deprecated
-    public static TimeZoneRandomizer aNewTimeZoneRandomizer() {
-        return new TimeZoneRandomizer();
-    }
-
-    /**
-     * Create a new {@link TimeZoneRandomizer}.
-     *
-     * @param seed initial seed
-     * @return a new {@link TimeZoneRandomizer}.
-     * @deprecated in favor of the equivalent constructor
-     */
-    @Deprecated
-    public static TimeZoneRandomizer aNewTimeZoneRandomizer(final long seed) {
-        return new TimeZoneRandomizer(seed);
-    }
-
     @Override
     public TimeZone getRandomValue() {
         String[] timeZoneIds = TimeZone.getAvailableIDs();

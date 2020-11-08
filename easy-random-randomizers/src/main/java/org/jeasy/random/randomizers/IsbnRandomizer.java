@@ -59,42 +59,6 @@ public class IsbnRandomizer extends FakerBasedRandomizer<String> {
         super(seed, locale);
     }
 
-    /**
-     * Create a new {@link IsbnRandomizer}.
-     *
-     * @return a new {@link IsbnRandomizer}
-     * @deprecated in favor of the equivalent constructor
-     */
-    @Deprecated
-    public static IsbnRandomizer aNewIsbnRandomizer() {
-        return new IsbnRandomizer();
-    }
-
-    /**
-     * Create a new {@link IsbnRandomizer}.
-     *
-     * @param seed the initial seed
-     * @return a new {@link IsbnRandomizer}
-     * @deprecated in favor of the equivalent constructor
-     */
-    @Deprecated
-    public static IsbnRandomizer aNewIsbnRandomizer(final long seed) {
-        return new IsbnRandomizer(seed);
-    }
-
-    /**
-     * Create a new {@link IsbnRandomizer}.
-     *
-     * @param seed   the initial seed
-     * @param locale the locale to use
-     * @return a new {@link IsbnRandomizer}
-     * @deprecated in favor of the equivalent constructor
-     */
-    @Deprecated
-    public static IsbnRandomizer aNewIsbnRandomizer(final long seed, final Locale locale) {
-        return new IsbnRandomizer(seed, locale);
-    }
-
     @Override
     public String getRandomValue() {
         return faker.code().isbn13();

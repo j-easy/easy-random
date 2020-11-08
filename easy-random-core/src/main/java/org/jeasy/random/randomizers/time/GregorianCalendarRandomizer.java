@@ -51,29 +51,6 @@ public class GregorianCalendarRandomizer implements Randomizer<GregorianCalendar
         delegate = new LongRandomizer(seed);
     }
 
-    /**
-     * Create a new {@link GregorianCalendarRandomizer}.
-     *
-     * @return a new {@link GregorianCalendarRandomizer}.
-     * @deprecated in favor of the equivalent constructor
-     */
-    @Deprecated
-    public static GregorianCalendarRandomizer aNewGregorianCalendarRandomizer() {
-        return new GregorianCalendarRandomizer();
-    }
-
-    /**
-     * Create a new {@link GregorianCalendarRandomizer}.
-     *
-     * @param seed initial seed
-     * @return a new {@link GregorianCalendarRandomizer}.
-     * @deprecated in favor of the equivalent constructor
-     */
-    @Deprecated
-    public static GregorianCalendarRandomizer aNewGregorianCalendarRandomizer(final long seed) {
-        return new GregorianCalendarRandomizer(seed);
-    }
-
     @Override
     public GregorianCalendar getRandomValue() {
         GregorianCalendar gregorianCalendar = new GregorianCalendar();

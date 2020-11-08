@@ -30,7 +30,6 @@ import java.time.Instant;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
-import static org.jeasy.random.randomizers.range.InstantRangeRandomizer.aNewInstantRangeRandomizer;
 
 public class InstantRangeRandomizerTest extends AbstractRangeRandomizerTest<Instant> {
 
@@ -40,7 +39,7 @@ public class InstantRangeRandomizerTest extends AbstractRangeRandomizerTest<Inst
     void setUp() {
         minInstant = Instant.ofEpochMilli(Long.MIN_VALUE);
         maxInstant = Instant.ofEpochMilli(Long.MAX_VALUE);
-        randomizer = aNewInstantRangeRandomizer(minInstant, maxInstant);
+        randomizer = new InstantRangeRandomizer(minInstant, maxInstant);
     }
 
     @Test
@@ -57,7 +56,7 @@ public class InstantRangeRandomizerTest extends AbstractRangeRandomizerTest<Inst
     void generatedInstantShouldBeAlwaysTheSameForTheSameSeed() {
 
         // Given
-        randomizer = aNewInstantRangeRandomizer(minInstant, maxInstant, SEED);
+        randomizer = new InstantRangeRandomizer(minInstant, maxInstant, SEED);
         Instant expected = Instant.parse("+130459354-01-19T05:47:51.168Z");
 
         // When
@@ -69,13 +68,13 @@ public class InstantRangeRandomizerTest extends AbstractRangeRandomizerTest<Inst
 
     @Test
     void whenSpecifiedMinInstantIsAfterMaxInstant_thenShouldThrowIllegalArgumentException() {
-        assertThatThrownBy(() -> aNewInstantRangeRandomizer(maxInstant, minInstant)).isInstanceOf(IllegalArgumentException.class);
+        assertThatThrownBy(() -> new InstantRangeRandomizer(maxInstant, minInstant)).isInstanceOf(IllegalArgumentException.class);
     }
 
     @Test
     void whenSpecifiedMinInstantIsNull_thenShouldUseDefaultMinValue() {
         // Given
-        randomizer = aNewInstantRangeRandomizer(null, maxInstant);
+        randomizer = new InstantRangeRandomizer(null, maxInstant);
 
         // When
         Instant randomValue = randomizer.getRandomValue();
@@ -87,7 +86,7 @@ public class InstantRangeRandomizerTest extends AbstractRangeRandomizerTest<Inst
     @Test
     void whenSpecifiedMaxInstantIsNull_thenShouldUseDefaultMaxValue() {
         // Given
-        randomizer = aNewInstantRangeRandomizer(minInstant, null);
+        randomizer = new InstantRangeRandomizer(minInstant, null);
 
         // when
         Instant randomValue = randomizer.getRandomValue();
@@ -102,7 +101,7 @@ public class InstantRangeRandomizerTest extends AbstractRangeRandomizerTest<Inst
         minInstant = Instant.parse("2019-10-22T00:33:22.00Z");
 
         // Given
-        randomizer = aNewInstantRangeRandomizer(minInstant, maxInstant);
+        randomizer = new InstantRangeRandomizer(minInstant, maxInstant);
 
         // when
         Instant randomValue = randomizer.getRandomValue();

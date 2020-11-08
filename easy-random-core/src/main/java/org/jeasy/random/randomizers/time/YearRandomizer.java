@@ -54,29 +54,6 @@ public class YearRandomizer implements Randomizer<Year> {
         yearRandomizer = new IntegerRangeRandomizer(EasyRandomParameters.DEFAULT_DATES_RANGE.getMin().getYear(), EasyRandomParameters.DEFAULT_DATES_RANGE.getMax().getYear(), seed);
     }
 
-    /**
-     * Create a new {@link YearRandomizer}.
-     *
-     * @return a new {@link YearRandomizer}.
-     * @deprecated in favor of the equivalent constructor
-     */
-    @Deprecated
-    public static YearRandomizer aNewYearRandomizer() {
-        return new YearRandomizer();
-    }
-
-    /**
-     * Create a new {@link YearRandomizer}.
-     *
-     * @param seed initial seed
-     * @return a new {@link YearRandomizer}.
-     * @deprecated in favor of the equivalent constructor
-     */
-    @Deprecated
-    public static YearRandomizer aNewYearRandomizer(final long seed) {
-        return new YearRandomizer(seed);
-    }
-
     @Override
     public Year getRandomValue() {
         int randomYear = yearRandomizer.getRandomValue();

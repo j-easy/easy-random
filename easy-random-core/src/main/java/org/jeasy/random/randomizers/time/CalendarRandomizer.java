@@ -52,28 +52,6 @@ public class CalendarRandomizer implements Randomizer<Calendar> {
         delegate = new DateRandomizer(seed);
     }
 
-    /**
-     * Create a new {@link CalendarRandomizer}.
-     *
-     * @return a new {@link CalendarRandomizer}.
-     * @deprecated in favor of the equivalent constructor
-     */
-    @Deprecated
-    public static CalendarRandomizer aNewCalendarRandomizer() {
-        return new CalendarRandomizer();
-    }
-
-    /**
-     * Create a new {@link CalendarRandomizer}.
-     *
-     * @param seed initial seed
-     * @return a new {@link CalendarRandomizer}.
-     * @deprecated in favor of the equivalent constructor
-     */
-    @Deprecated
-    public static CalendarRandomizer aNewCalendarRandomizer(final long seed) {
-        return new CalendarRandomizer(seed);
-    }
     @Override
     public Calendar getRandomValue() {
         Calendar calendar = Calendar.getInstance();

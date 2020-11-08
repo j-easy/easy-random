@@ -59,42 +59,6 @@ public class CompanyRandomizer extends FakerBasedRandomizer<String> {
         super(seed, locale);
     }
 
-    /**
-     * Create a new {@link CompanyRandomizer}.
-     *
-     * @return a new {@link CompanyRandomizer}
-     * @deprecated in favor of the equivalent constructor
-     */
-    @Deprecated
-    public static CompanyRandomizer aNewCompanyRandomizer() {
-        return new CompanyRandomizer();
-    }
-
-    /**
-     * Create a new {@link CompanyRandomizer}.
-     *
-     * @param seed the initial seed
-     * @return a new {@link CompanyRandomizer}
-     * @deprecated in favor of the equivalent constructor
-     */
-    @Deprecated
-    public static CompanyRandomizer aNewCompanyRandomizer(final long seed) {
-        return new CompanyRandomizer(seed);
-    }
-
-    /**
-     * Create a new {@link CompanyRandomizer}.
-     *
-     * @param seed   the initial seed
-     * @param locale the locale to use
-     * @return a new {@link CompanyRandomizer}
-     * @deprecated in favor of the equivalent constructor
-     */
-    @Deprecated
-    public static CompanyRandomizer aNewCompanyRandomizer(final long seed, final Locale locale) {
-        return new CompanyRandomizer(seed, locale);
-    }
-
     @Override
     public String getRandomValue() {
         return faker.company().name();

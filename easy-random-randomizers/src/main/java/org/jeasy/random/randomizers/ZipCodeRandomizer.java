@@ -59,42 +59,6 @@ public class ZipCodeRandomizer extends FakerBasedRandomizer<String> {
         super(seed, locale);
     }
 
-    /**
-     * Create a new {@link ZipCodeRandomizer}.
-     *
-     * @return a new {@link ZipCodeRandomizer}
-     * @deprecated in favor of the equivalent constructor
-     */
-    @Deprecated
-    public static ZipCodeRandomizer aNewZipCodeRandomizer() {
-        return new ZipCodeRandomizer();
-    }
-
-    /**
-     * Create a new {@link ZipCodeRandomizer}.
-     *
-     * @param seed the initial seed
-     * @return a new {@link ZipCodeRandomizer}
-     * @deprecated in favor of the equivalent constructor
-     */
-    @Deprecated
-    public static ZipCodeRandomizer aNewZipCodeRandomizer(final long seed) {
-        return new ZipCodeRandomizer(seed);
-    }
-
-    /**
-     * Create a new {@link ZipCodeRandomizer}.
-     *
-     * @param seed   the initial seed
-     * @param locale the locale to use
-     * @return a new {@link ZipCodeRandomizer}
-     * @deprecated in favor of the equivalent constructor
-     */
-    @Deprecated
-    public static ZipCodeRandomizer aNewZipCodeRandomizer(final long seed, final Locale locale) {
-        return new ZipCodeRandomizer(seed, locale);
-    }
-
     @Override
     public String getRandomValue() {
         return faker.address().zipCode();

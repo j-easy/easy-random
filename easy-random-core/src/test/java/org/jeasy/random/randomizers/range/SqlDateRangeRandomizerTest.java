@@ -23,8 +23,6 @@
  */
 package org.jeasy.random.randomizers.range;
 
-import static org.jeasy.random.randomizers.range.DateRangeRandomizer.aNewDateRangeRandomizer;
-import static org.jeasy.random.randomizers.range.SqlDateRangeRandomizer.aNewSqlDateRangeRandomizer;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
@@ -41,7 +39,7 @@ class SqlDateRangeRandomizerTest extends AbstractRangeRandomizerTest<Date> {
     void setUp() {
         minDate = new Date(1460448795091L);
         maxDate = new Date(1460448795179L);
-        randomizer = aNewSqlDateRangeRandomizer(minDate, maxDate);
+        randomizer = new SqlDateRangeRandomizer(minDate, maxDate);
     }
 
     @Test
@@ -57,7 +55,7 @@ class SqlDateRangeRandomizerTest extends AbstractRangeRandomizerTest<Date> {
     @Test
     void generatedDateShouldBeAlwaysTheSameForTheSameSeed() {
         // Given
-        randomizer = aNewSqlDateRangeRandomizer(minDate, maxDate, SEED);
+        randomizer = new SqlDateRangeRandomizer(minDate, maxDate, SEED);
         Date expected = new Date(1460448795154L);
 
         // When
@@ -69,13 +67,13 @@ class SqlDateRangeRandomizerTest extends AbstractRangeRandomizerTest<Date> {
 
     @Test
     void whenSpecifiedMinDateIsAfterMaxDate_thenShouldThrowIllegalArgumentException() {
-        assertThatThrownBy(() -> aNewDateRangeRandomizer(maxDate, minDate)).isInstanceOf(IllegalArgumentException.class);
+        assertThatThrownBy(() -> new DateRangeRandomizer(maxDate, minDate)).isInstanceOf(IllegalArgumentException.class);
     }
 
     @Test
     void whenSpecifiedMinDateIsNull_thenShouldUseDefaultMinValue() {
         // Given
-        randomizer = aNewSqlDateRangeRandomizer(null, maxDate);
+        randomizer = new SqlDateRangeRandomizer(null, maxDate);
 
         // When
         Date randomDate = randomizer.getRandomValue();
@@ -87,7 +85,7 @@ class SqlDateRangeRandomizerTest extends AbstractRangeRandomizerTest<Date> {
     @Test
     void whenSpecifiedMaxDateIsNull_thenShouldUseDefaultMaxValue() {
         // Given
-        randomizer = aNewSqlDateRangeRandomizer(minDate, null);
+        randomizer = new SqlDateRangeRandomizer(minDate, null);
 
         // when
         Date randomDate = randomizer.getRandomValue();

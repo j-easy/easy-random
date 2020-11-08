@@ -55,31 +55,6 @@ public class GenericStringRandomizer extends FakerBasedRandomizer<String> {
         this.words = words;
     }
 
-    /**
-     * Create a new {@link GenericStringRandomizer}.
-     *
-     * @param words the list of words from which this randomizer will generate random values.
-     * @return a new {@link GenericStringRandomizer}
-     * @deprecated in favor of the equivalent constructor
-     */
-    @Deprecated
-    public static GenericStringRandomizer aNewGenericStringRandomizer(final String[] words) {
-        return new GenericStringRandomizer(words);
-    }
-
-    /**
-     * Create a new {@link GenericStringRandomizer}.
-     *
-     * @param words the list of words from which this randomizer will generate random values.
-     * @param seed  the initial seed
-     * @return a new {@link GenericStringRandomizer}
-     * @deprecated in favor of the equivalent constructor
-     */
-    @Deprecated
-    public static GenericStringRandomizer aNewGenericStringRandomizer(final String[] words, final long seed) {
-        return new GenericStringRandomizer(words, seed);
-    }
-
     @Override
     public String getRandomValue() {
         return faker.options().option(words);

@@ -47,29 +47,6 @@ public class NumberRandomizer extends AbstractRandomizer<Number> {
         super(seed);
     }
 
-    /**
-     * Create a new {@link NumberRandomizer}.
-     *
-     * @return a new {@link NumberRandomizer}.
-     * @deprecated in favor of the equivalent constructor
-     */
-    @Deprecated
-    public static NumberRandomizer aNewNumberRandomizer() {
-        return new NumberRandomizer();
-    }
-
-    /**
-     * Create a new {@link NumberRandomizer}.
-     *
-     * @param seed initial seed
-     * @return a new {@link NumberRandomizer}.
-     * @deprecated in favor of the equivalent constructor
-     */
-    @Deprecated
-    public static NumberRandomizer aNewNumberRandomizer(final long seed) {
-        return new NumberRandomizer(seed);
-    }
-
     @Override
     public Integer getRandomValue() {
         return random.nextInt();

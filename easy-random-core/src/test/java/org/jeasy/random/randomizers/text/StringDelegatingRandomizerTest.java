@@ -23,7 +23,6 @@
  */
 package org.jeasy.random.randomizers.text;
 
-import static org.jeasy.random.randomizers.text.StringDelegatingRandomizer.aNewStringDelegatingRandomizer;
 import static java.lang.String.valueOf;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.Mockito.when;
@@ -48,7 +47,7 @@ class StringDelegatingRandomizerTest {
 
     @BeforeEach
     void setUp() {
-        stringDelegatingRandomizer = aNewStringDelegatingRandomizer(delegate);
+        stringDelegatingRandomizer = new StringDelegatingRandomizer(delegate);
         when(delegate.getRandomValue()).thenReturn(object);
     }
 

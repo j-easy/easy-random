@@ -57,29 +57,6 @@ public class MonthDayRandomizer implements Randomizer<MonthDay> {
         dayRandomizer = new DayRandomizer(seed);
     }
 
-    /**
-     * Create a new {@link MonthDayRandomizer}.
-     *
-     * @return a new {@link MonthDayRandomizer}.
-     * @deprecated in favor of the equivalent constructor
-     */
-    @Deprecated
-    public static MonthDayRandomizer aNewMonthDayRandomizer() {
-        return new MonthDayRandomizer();
-    }
-
-    /**
-     * Create a new {@link MonthDayRandomizer}.
-     *
-     * @param seed initial seed
-     * @return a new {@link MonthDayRandomizer}.
-     * @deprecated in favor of the equivalent constructor
-     */
-    @Deprecated
-    public static MonthDayRandomizer aNewMonthDayRandomizer(final long seed) {
-        return new MonthDayRandomizer(seed);
-    }
-
     @Override
     public MonthDay getRandomValue() {
         Month randomMonth = monthRandomizer.getRandomValue();

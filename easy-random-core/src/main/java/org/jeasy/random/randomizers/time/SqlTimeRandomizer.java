@@ -52,30 +52,6 @@ public class SqlTimeRandomizer implements Randomizer<Time> {
         delegate = new DateRandomizer(seed);
     }
 
-    /**
-     * Create a new {@link SqlTimeRandomizer}.
-     *
-     * @return a new {@link SqlTimeRandomizer}.
-     * @deprecated in favor of the equivalent constructor
-     */
-    @Deprecated
-    public static SqlTimeRandomizer aNewSqlTimeRandomizer() {
-        return new SqlTimeRandomizer();
-    }
-
-    /**
-     * Create a new {@link SqlTimeRandomizer}.
-     *
-     * @param seed initial seed
-     * @return a new {@link SqlTimeRandomizer}.
-     * @deprecated in favor of the equivalent constructor
-     */
-    @Deprecated
-    public static SqlTimeRandomizer aNewSqlTimeRandomizer(final long seed) {
-        return new SqlTimeRandomizer(seed);
-    }
-
-
     @Override
     public Time getRandomValue() {
         return new Time(delegate.getRandomValue().getTime());

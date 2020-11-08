@@ -23,7 +23,6 @@
  */
 package org.jeasy.random.randomizers.range;
 
-import static org.jeasy.random.randomizers.range.YearMonthRangeRandomizer.aNewYearMonthRangeRandomizer;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
@@ -40,7 +39,7 @@ class YearMonthRangeRandomizerTest extends AbstractRangeRandomizerTest<YearMonth
     void setUp() {
         minYearMonth = YearMonth.of(1000, 1);
         maxYearMonth = YearMonth.of(3000, 12);
-        randomizer = aNewYearMonthRangeRandomizer(minYearMonth, maxYearMonth);
+        randomizer = new YearMonthRangeRandomizer(minYearMonth, maxYearMonth);
     }
 
     @Test
@@ -56,7 +55,7 @@ class YearMonthRangeRandomizerTest extends AbstractRangeRandomizerTest<YearMonth
     @Test
     void generatedYearMonthShouldBeAlwaysTheSameForTheSameSeed() {
         // Given
-        randomizer = aNewYearMonthRangeRandomizer(minYearMonth, maxYearMonth, SEED);
+        randomizer = new YearMonthRangeRandomizer(minYearMonth, maxYearMonth, SEED);
         YearMonth expected = YearMonth.of(2446, 11);
 
         // When
@@ -68,13 +67,13 @@ class YearMonthRangeRandomizerTest extends AbstractRangeRandomizerTest<YearMonth
 
     @Test
     void whenSpecifiedMinYearMonthIsAfterMaxYearMonth_thenShouldThrowIllegalArgumentException() {
-        assertThatThrownBy(() -> aNewYearMonthRangeRandomizer(maxYearMonth, minYearMonth)).isInstanceOf(IllegalArgumentException.class);
+        assertThatThrownBy(() -> new YearMonthRangeRandomizer(maxYearMonth, minYearMonth)).isInstanceOf(IllegalArgumentException.class);
     }
 
     @Test
     void whenSpecifiedMinYearMonthIsNull_thenShouldUseDefaultMinValue() {
         // Given
-        randomizer = aNewYearMonthRangeRandomizer(null, maxYearMonth);
+        randomizer = new YearMonthRangeRandomizer(null, maxYearMonth);
 
         // When
         YearMonth randomValue = randomizer.getRandomValue();
@@ -86,7 +85,7 @@ class YearMonthRangeRandomizerTest extends AbstractRangeRandomizerTest<YearMonth
     @Test
     void whenSpecifiedMaxYearMonthIsNull_thenShouldUseDefaultMaxValue() {
         // Given
-        randomizer = aNewYearMonthRangeRandomizer(minYearMonth, null);
+        randomizer = new YearMonthRangeRandomizer(minYearMonth, null);
 
         // when
         YearMonth randomValue = randomizer.getRandomValue();

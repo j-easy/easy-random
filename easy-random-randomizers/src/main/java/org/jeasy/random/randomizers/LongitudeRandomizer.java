@@ -59,42 +59,6 @@ public class LongitudeRandomizer extends FakerBasedRandomizer<String> {
         super(seed, locale);
     }
 
-    /**
-     * Create a new {@link LongitudeRandomizer}.
-     *
-     * @return a new {@link LongitudeRandomizer}
-     * @deprecated in favor of the equivalent constructor
-     */
-    @Deprecated
-    public static LongitudeRandomizer aNewLongitudeRandomizer() {
-        return new LongitudeRandomizer();
-    }
-
-    /**
-     * Create a new {@link LongitudeRandomizer}.
-     *
-     * @param seed the initial seed
-     * @return a new {@link LongitudeRandomizer}
-     * @deprecated in favor of the equivalent constructor
-     */
-    @Deprecated
-    public static LongitudeRandomizer aNewLongitudeRandomizer(final long seed) {
-        return new LongitudeRandomizer(seed);
-    }
-
-    /**
-     * Create a new {@link LongitudeRandomizer}.
-     *
-     * @param seed   the initial seed
-     * @param locale the locale to use
-     * @return a new {@link LongitudeRandomizer}
-     * @deprecated in favor of the equivalent constructor
-     */
-    @Deprecated
-    public static LongitudeRandomizer aNewLongitudeRandomizer(final long seed, final Locale locale) {
-        return new LongitudeRandomizer(seed, locale);
-    }
-
     @Override
     public String getRandomValue() {
         return faker.address().longitude();

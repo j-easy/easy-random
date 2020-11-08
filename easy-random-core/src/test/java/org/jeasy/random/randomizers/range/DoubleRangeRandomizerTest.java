@@ -23,7 +23,6 @@
  */
 package org.jeasy.random.randomizers.range;
 
-import static org.jeasy.random.randomizers.range.DoubleRangeRandomizer.aNewDoubleRangeRandomizer;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.assertj.core.api.BDDAssertions.then;
@@ -37,7 +36,7 @@ class DoubleRangeRandomizerTest extends AbstractRangeRandomizerTest<Double> {
     void setUp() {
         min = 1d;
         max = 10d;
-        randomizer = aNewDoubleRangeRandomizer(min, max);
+        randomizer = new DoubleRangeRandomizer(min, max);
     }
 
     @Test
@@ -48,19 +47,19 @@ class DoubleRangeRandomizerTest extends AbstractRangeRandomizerTest<Double> {
 
     @Test
     void whenSpecifiedMinValueIsAfterMaxValueThenThrowIllegalArgumentException() {
-        assertThatThrownBy(() -> aNewDoubleRangeRandomizer(max, min)).isInstanceOf(IllegalArgumentException.class);
+        assertThatThrownBy(() -> new DoubleRangeRandomizer(max, min)).isInstanceOf(IllegalArgumentException.class);
     }
 
     @Test
     void whenSpecifiedMinValueIsNullThenShouldUseDefaultMinValue() {
-        randomizer = aNewDoubleRangeRandomizer(null, max);
+        randomizer = new DoubleRangeRandomizer(null, max);
         Double randomDouble = randomizer.getRandomValue();
         assertThat(randomDouble).isLessThanOrEqualTo(max);
     }
 
     @Test
     void whenSpecifiedMaxvalueIsNullThenShouldUseDefaultMaxValue() {
-        randomizer = aNewDoubleRangeRandomizer(min, null);
+        randomizer = new DoubleRangeRandomizer(min, null);
         Double randomDouble = randomizer.getRandomValue();
         assertThat(randomDouble).isGreaterThanOrEqualTo(min);
     }
@@ -68,7 +67,7 @@ class DoubleRangeRandomizerTest extends AbstractRangeRandomizerTest<Double> {
     @Test
     void shouldAlwaysGenerateTheSameValueForTheSameSeed() {
         // given
-        DoubleRangeRandomizer doubleRangeRandomizer = aNewDoubleRangeRandomizer(min, max, SEED);
+        DoubleRangeRandomizer doubleRangeRandomizer = new DoubleRangeRandomizer(min, max, SEED);
         
         // when
         Double d = doubleRangeRandomizer.getRandomValue();
@@ -82,7 +81,7 @@ class DoubleRangeRandomizerTest extends AbstractRangeRandomizerTest<Double> {
     @Test
     void testInfinity() {
         // given
-        DoubleRangeRandomizer doubleRangeRandomizer = aNewDoubleRangeRandomizer(-Double.MAX_VALUE, Double.MAX_VALUE);
+        DoubleRangeRandomizer doubleRangeRandomizer = new DoubleRangeRandomizer(-Double.MAX_VALUE, Double.MAX_VALUE);
 
         // when
         Double d = doubleRangeRandomizer.getRandomValue();

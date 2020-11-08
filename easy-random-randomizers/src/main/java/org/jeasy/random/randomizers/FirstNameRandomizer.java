@@ -59,42 +59,6 @@ public class FirstNameRandomizer extends FakerBasedRandomizer<String> {
         super(seed, locale);
     }
 
-    /**
-     * Create a new {@link FirstNameRandomizer}.
-     *
-     * @return a new {@link FirstNameRandomizer}
-     * @deprecated in favor of the equivalent constructor
-     */
-    @Deprecated
-    public static FirstNameRandomizer aNewFirstNameRandomizer() {
-        return new FirstNameRandomizer();
-    }
-
-    /**
-     * Create a new {@link FirstNameRandomizer}.
-     *
-     * @param seed the initial seed
-     * @return a new {@link FirstNameRandomizer}
-     * @deprecated in favor of the equivalent constructor
-     */
-    @Deprecated
-    public static FirstNameRandomizer aNewFirstNameRandomizer(final long seed) {
-        return new FirstNameRandomizer(seed);
-    }
-
-    /**
-     * Create a new {@link FirstNameRandomizer}.
-     *
-     * @param seed   the initial seed
-     * @param locale the locale to use
-     * @return a new {@link FirstNameRandomizer}
-     * @deprecated in favor of the equivalent constructor
-     */
-    @Deprecated
-    public static FirstNameRandomizer aNewFirstNameRandomizer(final long seed, final Locale locale) {
-        return new FirstNameRandomizer(seed, locale);
-    }
-
     @Override
     public String getRandomValue() {
         return faker.name().firstName();

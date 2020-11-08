@@ -24,11 +24,11 @@
 package org.jeasy.random.randomizers.collection;
 
 import org.jeasy.random.api.Randomizer;
+import org.jeasy.random.randomizers.number.ByteRandomizer;
 
 import java.util.HashMap;
 import java.util.Map;
 
-import static org.jeasy.random.randomizers.number.ByteRandomizer.aNewByteRandomizer;
 import static java.lang.Math.abs;
 
 /**
@@ -76,37 +76,6 @@ public class MapRandomizer<K, V> implements Randomizer<Map<K, V>> {
         this.nbElements = nbEntries;
     }
 
-    /**
-     * Create a new {@link MapRandomizer} with a random number of entries.
-     *
-     * @param keyRandomizer   the randomizer for keys
-     * @param valueRandomizer the randomizer for values
-     * @param <K>             the type of key elements
-     * @param <V>             the type of value elements
-     * @return a new {@link MapRandomizer}
-     * @deprecated in favor of the equivalent constructor
-     */
-    @Deprecated
-    public static <K, V> MapRandomizer<K, V> aNewMapRandomizer(final Randomizer<K> keyRandomizer, final Randomizer<V> valueRandomizer) {
-        return new MapRandomizer<>(keyRandomizer, valueRandomizer, getRandomSize());
-    }
-
-    /**
-     * Create a new {@link MapRandomizer} with a fixed number of entries.
-     *
-     * @param keyRandomizer   the randomizer for keys
-     * @param valueRandomizer the randomizer for values
-     * @param nbEntries       the number of entries to generate
-     * @param <K>             the type of key elements
-     * @param <V>             the type of value elements
-     * @return a new {@link MapRandomizer}
-     * @deprecated in favor of the equivalent constructor
-     */
-    @Deprecated
-    public static <K, V> MapRandomizer<K, V> aNewMapRandomizer(final Randomizer<K> keyRandomizer, final Randomizer<V> valueRandomizer, final int nbEntries) {
-        return new MapRandomizer<>(keyRandomizer, valueRandomizer, nbEntries);
-    }
-
     @Override
     public Map<K, V> getRandomValue() {
         Map<K, V> result = new HashMap<>();
@@ -123,6 +92,6 @@ public class MapRandomizer<K, V> implements Randomizer<Map<K, V>> {
     }
 
     private static int getRandomSize() {
-        return abs(aNewByteRandomizer().getRandomValue()) + 1;
+        return abs(new ByteRandomizer().getRandomValue()) + 1;
     }
 }

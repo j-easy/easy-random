@@ -59,42 +59,6 @@ public class CountryRandomizer extends FakerBasedRandomizer<String> {
         super(seed, locale);
     }
 
-    /**
-     * Create a new {@link CountryRandomizer}.
-     *
-     * @return a new {@link CountryRandomizer}
-     * @deprecated in favor of the equivalent constructor
-     */
-    @Deprecated
-    public static CountryRandomizer aNewCountryRandomizer() {
-        return new CountryRandomizer();
-    }
-
-    /**
-     * Create a new {@link CountryRandomizer}.
-     *
-     * @param seed the initial seed
-     * @return a new {@link CountryRandomizer}
-     * @deprecated in favor of the equivalent constructor
-     */
-    @Deprecated
-    public static CountryRandomizer aNewCountryRandomizer(final long seed) {
-        return new CountryRandomizer(seed);
-    }
-
-    /**
-     * Create a new {@link CountryRandomizer}.
-     *
-     * @param seed   the initial seed
-     * @param locale the locale to use
-     * @return a new {@link CountryRandomizer}
-     * @deprecated in favor of the equivalent constructor
-     */
-    @Deprecated
-    public static CountryRandomizer aNewCountryRandomizer(final long seed, final Locale locale) {
-        return new CountryRandomizer(seed, locale);
-    }
-
     @Override
     public String getRandomValue() {
         return faker.address().country();

@@ -88,68 +88,6 @@ public class BigDecimalRandomizer implements Randomizer<BigDecimal> {
         this.roundingMode = roundingMode;
     }
 
-    /**
-     * Create a new {@link BigDecimalRandomizer}.
-     *
-     * @return a new {@link BigDecimalRandomizer}.
-     * @deprecated in favor of the equivalent constructor
-     */
-    @Deprecated
-    public static BigDecimalRandomizer aNewBigDecimalRandomizer() {
-        return new BigDecimalRandomizer();
-    }
-
-    /**
-     * Create a new {@link BigDecimalRandomizer}.
-     *
-     * @param seed initial seed
-     * @return a new {@link BigDecimalRandomizer}.
-     * @deprecated in favor of the equivalent constructor
-     */
-    @Deprecated
-    public static BigDecimalRandomizer aNewBigDecimalRandomizer(final long seed) {
-        return new BigDecimalRandomizer(seed);
-    }
-
-    /**
-     * Create a new {@link BigDecimalRandomizer}.The default rounding mode is {@link RoundingMode#HALF_UP}.
-     *
-     * @param scale of the {@code BigDecimal} value to be returned.
-     * @return a new {@link BigDecimalRandomizer}.
-     * @deprecated in favor of the equivalent constructor
-     */
-    @Deprecated
-    public static BigDecimalRandomizer aNewBigDecimalRandomizer(final Integer scale) {
-        return new BigDecimalRandomizer(scale);
-    }
-
-    /**
-     * Create a new {@link BigDecimalRandomizer}.
-     *
-     * @param scale of the {@code BigDecimal} value to be returned.
-     * @param roundingMode of the {@code BigDecimal} value to be returned.
-     * @return a new {@link BigDecimalRandomizer}.
-     * @deprecated in favor of the equivalent constructor
-     */
-    @Deprecated
-    public static BigDecimalRandomizer aNewBigDecimalRandomizer(final Integer scale, final RoundingMode roundingMode) {
-        return new BigDecimalRandomizer(scale, roundingMode);
-    }
-
-    /**
-     * Create a new {@link BigDecimalRandomizer}.
-     *
-     * @param seed initial seed
-     * @param scale of the {@code BigDecimal} value to be returned.
-     * @param roundingMode of the {@code BigDecimal} value to be returned.
-     * @return a new {@link BigDecimalRandomizer}.
-     * @deprecated in favor of the equivalent constructor
-     */
-    @Deprecated
-    public static BigDecimalRandomizer aNewBigDecimalRandomizer(final long seed, final Integer scale, final RoundingMode roundingMode) {
-        return new BigDecimalRandomizer(seed, scale, roundingMode);
-    }
-
     @Override
     public BigDecimal getRandomValue() {
         BigDecimal randomValue = new BigDecimal(delegate.getRandomValue());

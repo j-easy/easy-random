@@ -23,7 +23,6 @@
  */
 package org.jeasy.random.randomizers.misc;
 
-import static org.jeasy.random.randomizers.misc.NullRandomizer.aNewNullRandomizer;
 import static org.assertj.core.api.Assertions.assertThat;
 
 import org.junit.jupiter.api.Test;
@@ -32,7 +31,7 @@ class NullRandomizerTest {
 
     @Test
     void generatedValueShouldBeNull() {
-        assertThat(aNewNullRandomizer().getRandomValue()).isNull();
+        assertThat(new NullRandomizer().getRandomValue()).isNull();
     }
 
 }

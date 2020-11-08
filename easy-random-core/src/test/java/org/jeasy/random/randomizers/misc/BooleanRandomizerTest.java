@@ -23,7 +23,6 @@
  */
 package org.jeasy.random.randomizers.misc;
 
-import static org.jeasy.random.randomizers.misc.BooleanRandomizer.aNewBooleanRandomizer;
 import static org.assertj.core.api.Assertions.assertThat;
 
 import org.junit.jupiter.api.Test;
@@ -34,11 +33,11 @@ class BooleanRandomizerTest extends AbstractRandomizerTest<Boolean> {
 
     @Test
     void generatedBooleanShouldNotBeNull() {
-        assertThat(aNewBooleanRandomizer().getRandomValue()).isNotNull();
+        assertThat(new BooleanRandomizer().getRandomValue()).isNotNull();
     }
 
     @Test
     void shouldGenerateTheSameValueForTheSameSeed() {
-        assertThat(aNewBooleanRandomizer(SEED).getRandomValue()).isTrue();
+        assertThat(new BooleanRandomizer(SEED).getRandomValue()).isTrue();
     }
 }

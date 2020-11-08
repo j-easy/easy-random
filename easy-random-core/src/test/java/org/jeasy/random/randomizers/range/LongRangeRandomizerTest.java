@@ -23,7 +23,6 @@
  */
 package org.jeasy.random.randomizers.range;
 
-import static org.jeasy.random.randomizers.range.LongRangeRandomizer.aNewLongRangeRandomizer;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.assertj.core.api.BDDAssertions.then;
@@ -37,7 +36,7 @@ class LongRangeRandomizerTest extends AbstractRangeRandomizerTest<Long> {
     void setUp() {
         min = 1L;
         max = 10L;
-        randomizer = aNewLongRangeRandomizer(min, max);
+        randomizer = new LongRangeRandomizer(min, max);
     }
 
     @Test
@@ -48,19 +47,19 @@ class LongRangeRandomizerTest extends AbstractRangeRandomizerTest<Long> {
 
     @Test
     void whenSpecifiedMinValueIsAfterMaxValueThenThrowIllegalArgumentException() {
-        assertThatThrownBy(() -> aNewLongRangeRandomizer(max, min)).isInstanceOf(IllegalArgumentException.class);
+        assertThatThrownBy(() -> new LongRangeRandomizer(max, min)).isInstanceOf(IllegalArgumentException.class);
     }
 
     @Test
     void whenSpecifiedMinValueIsNullThenShouldUseDefaultMinValue() {
-        randomizer = aNewLongRangeRandomizer(null, max);
+        randomizer = new LongRangeRandomizer(null, max);
         Long randomLong = randomizer.getRandomValue();
         assertThat(randomLong).isLessThanOrEqualTo(max);
     }
 
     @Test
     void whenSpecifiedMaxvalueIsNullThenShouldUseDefaultMaxValue() {
-        randomizer = aNewLongRangeRandomizer(min, null);
+        randomizer = new LongRangeRandomizer(min, null);
         Long randomLong = randomizer.getRandomValue();
         assertThat(randomLong).isGreaterThanOrEqualTo(min);
     }
@@ -68,7 +67,7 @@ class LongRangeRandomizerTest extends AbstractRangeRandomizerTest<Long> {
     @Test
     void shouldAlwaysGenerateTheSameValueForTheSameSeed() {
         // given
-        LongRangeRandomizer longRangeRandomizer = aNewLongRangeRandomizer(min, max, SEED);
+        LongRangeRandomizer longRangeRandomizer = new LongRangeRandomizer(min, max, SEED);
         
         // when
         Long l = longRangeRandomizer.getRandomValue();

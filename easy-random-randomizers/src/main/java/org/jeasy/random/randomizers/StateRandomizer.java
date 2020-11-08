@@ -59,42 +59,6 @@ public class StateRandomizer extends FakerBasedRandomizer<String> {
         super(seed, locale);
     }
 
-    /**
-     * Create a new {@link StateRandomizer}.
-     *
-     * @return a new {@link StateRandomizer}
-     * @deprecated in favor of the equivalent constructor
-     */
-    @Deprecated
-    public static StateRandomizer aNewStateRandomizer() {
-        return new StateRandomizer();
-    }
-
-    /**
-     * Create a new {@link StateRandomizer}.
-     *
-     * @param seed the initial seed
-     * @return a new {@link StateRandomizer}
-     * @deprecated in favor of the equivalent constructor
-     */
-    @Deprecated
-    public static StateRandomizer aNewStateRandomizer(final long seed) {
-        return new StateRandomizer(seed);
-    }
-
-    /**
-     * Create a new {@link StateRandomizer}.
-     *
-     * @param seed   the initial seed
-     * @param locale the locale to use
-     * @return a new {@link StateRandomizer}
-     * @deprecated in favor of the equivalent constructor
-     */
-    @Deprecated
-    public static StateRandomizer aNewStateRandomizer(final long seed, final Locale locale) {
-        return new StateRandomizer(seed, locale);
-    }
-
     @Override
     public String getRandomValue() {
         return faker.address().state();

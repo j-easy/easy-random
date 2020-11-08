@@ -23,7 +23,6 @@
  */
 package org.jeasy.random.randomizers.range;
 
-import static org.jeasy.random.randomizers.range.ByteRangeRandomizer.aNewByteRangeRandomizer;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.assertj.core.api.BDDAssertions.then;
@@ -37,7 +36,7 @@ class ByteRangeRandomizerTest extends AbstractRangeRandomizerTest<Byte> {
     void setUp() {
         min = (byte) 1;
         max = (byte) 10;
-        randomizer = aNewByteRangeRandomizer(min, max);
+        randomizer = new ByteRangeRandomizer(min, max);
     }
 
     @Test
@@ -48,19 +47,19 @@ class ByteRangeRandomizerTest extends AbstractRangeRandomizerTest<Byte> {
 
     @Test
     void whenSpecifiedMinValueIsAfterMaxValueThenThrowIllegalArgumentException() {
-        assertThatThrownBy(() -> aNewByteRangeRandomizer(max, min)).isInstanceOf(IllegalArgumentException.class);
+        assertThatThrownBy(() -> new ByteRangeRandomizer(max, min)).isInstanceOf(IllegalArgumentException.class);
     }
 
     @Test
     void whenSpecifiedMinValueIsNullThenShouldUseDefaultMinValue() {
-        randomizer = aNewByteRangeRandomizer(null, max);
+        randomizer = new ByteRangeRandomizer(null, max);
         Byte randomByte = randomizer.getRandomValue();
         assertThat(randomByte).isLessThanOrEqualTo(max);
     }
 
     @Test
     void whenSpecifiedMaxvalueIsNullThenShouldUseDefaultMaxValue() {
-        randomizer = aNewByteRangeRandomizer(min, null);
+        randomizer = new ByteRangeRandomizer(min, null);
         Byte randomByte = randomizer.getRandomValue();
         assertThat(randomByte).isGreaterThanOrEqualTo(min);
     }
@@ -68,7 +67,7 @@ class ByteRangeRandomizerTest extends AbstractRangeRandomizerTest<Byte> {
     @Test
     void shouldAlwaysGenerateTheSameValueForTheSameSeed() {
         // given
-        ByteRangeRandomizer byteRangeRandomizer = aNewByteRangeRandomizer(min, max, SEED);
+        ByteRangeRandomizer byteRangeRandomizer = new ByteRangeRandomizer(min, max, SEED);
         
         // when
         Byte b = byteRangeRandomizer.getRandomValue();

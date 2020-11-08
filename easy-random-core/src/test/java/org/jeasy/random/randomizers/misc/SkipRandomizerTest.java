@@ -23,7 +23,6 @@
  */
 package org.jeasy.random.randomizers.misc;
 
-import static org.jeasy.random.randomizers.misc.SkipRandomizer.aNewSkipRandomizer;
 import static org.assertj.core.api.Assertions.assertThat;
 
 import org.junit.jupiter.api.Test;
@@ -32,6 +31,6 @@ class SkipRandomizerTest {
 
     @Test
     void generatedValueShouldBeNull() {
-        assertThat(aNewSkipRandomizer().getRandomValue()).isNull();
+        assertThat(new SkipRandomizer().getRandomValue()).isNull();
     }
 }

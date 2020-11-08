@@ -23,7 +23,6 @@
  */
 package org.jeasy.random.randomizers.text;
 
-import static org.jeasy.random.randomizers.text.StringRandomizer.aNewStringRandomizer;
 import static org.assertj.core.api.Assertions.assertThat;
 
 import org.junit.jupiter.api.BeforeEach;
@@ -35,7 +34,7 @@ class StringRandomizerTest extends AbstractRandomizerTest<String> {
 
     @BeforeEach
     void setUp() {
-        randomizer = aNewStringRandomizer();
+        randomizer = new StringRandomizer();
     }
 
     @Test
@@ -46,7 +45,7 @@ class StringRandomizerTest extends AbstractRandomizerTest<String> {
     @Test
     void shouldGenerateTheSameValueForTheSameSeed() {
         // Given
-        randomizer = aNewStringRandomizer(SEED);
+        randomizer = new StringRandomizer(SEED);
         String expected = "eOMtThyhVNLWUZNRcBaQKxI";
 
         // When
@@ -60,7 +59,7 @@ class StringRandomizerTest extends AbstractRandomizerTest<String> {
     void theLengthOfTheGeneratedValueShouldBeLowerThanTheSpecifiedMaxLength() {
         // Given
         final int maxLength = 10;
-        randomizer = aNewStringRandomizer(maxLength, SEED);
+        randomizer = new StringRandomizer(maxLength, SEED);
         String expectedValue = "eOMtThy";
 
         // When
@@ -76,7 +75,7 @@ class StringRandomizerTest extends AbstractRandomizerTest<String> {
         // Given
         final int minLength = 3;
         final int maxLength = 10;
-        randomizer = aNewStringRandomizer(minLength, maxLength, SEED);
+        randomizer = new StringRandomizer(minLength, maxLength, SEED);
         String expectedValue = "eOMtThyh";
 
         // When

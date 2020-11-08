@@ -23,7 +23,6 @@
  */
 package org.jeasy.random.randomizers.misc;
 
-import static org.jeasy.random.randomizers.misc.ConstantRandomizer.aNewConstantRandomizer;
 import static org.assertj.core.api.Assertions.assertThat;
 
 import org.junit.jupiter.api.Test;
@@ -32,6 +31,6 @@ class ConstantRandomizerTest {
 
     @Test
     void shouldAlwaysGenerateTheSameValue() {
-        assertThat(aNewConstantRandomizer("a").getRandomValue()).isEqualTo("a");
+        assertThat(new ConstantRandomizer("a").getRandomValue()).isEqualTo("a");
     }
 }

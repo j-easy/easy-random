@@ -55,33 +55,6 @@ public class SetRandomizer<T> extends CollectionRandomizer<T> {
         super(delegate, nbElements);
     }
 
-    /**
-     * Create a new {@link SetRandomizer} that will generate a {@link Set} with a random number of elements.
-     *
-     * @param delegate the {@link Randomizer} to use to generate random elements
-     * @param <T>      the type of elements
-     * @return a new {@link SetRandomizer}
-     * @deprecated in favor of the equivalent constructor
-     */
-    @Deprecated
-    public static <T> SetRandomizer<T> aNewSetRandomizer(final Randomizer<T> delegate) {
-        return new SetRandomizer<>(delegate);
-    }
-
-    /**
-     * Create a new {@link SetRandomizer} that will generate a {@link Set} with a fixed number of elements.
-     *
-     * @param delegate   The {@link Randomizer} used to generate each element
-     * @param nbElements The number of elements to generate
-     * @param <T>        the type of elements
-     * @return a new {@link SetRandomizer}
-     * @deprecated in favor of the equivalent constructor
-     */
-    @Deprecated
-    public static <T> SetRandomizer<T> aNewSetRandomizer(final Randomizer<T> delegate, final int nbElements) {
-        return new SetRandomizer<>(delegate, nbElements);
-    }
-
     @Override
     public Set<T> getRandomValue() {
         Set<T> result = new HashSet<>();

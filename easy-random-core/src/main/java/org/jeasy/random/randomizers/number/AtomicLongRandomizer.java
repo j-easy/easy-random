@@ -52,29 +52,6 @@ public class AtomicLongRandomizer implements Randomizer<AtomicLong> {
         delegate = new LongRandomizer(seed);
     }
 
-    /**
-     * Create a new {@link AtomicLongRandomizer}.
-     *
-     * @return a new {@link AtomicLongRandomizer}.
-     * @deprecated in favor of the equivalent constructor
-     */
-    @Deprecated
-    public static AtomicLongRandomizer aNewAtomicLongRandomizer() {
-        return new AtomicLongRandomizer();
-    }
-
-    /**
-     * Create a new {@link AtomicLongRandomizer}.
-     *
-     * @param seed initial seed
-     * @return a new {@link AtomicLongRandomizer}.
-     * @deprecated in favor of the equivalent constructor
-     */
-    @Deprecated
-    public static AtomicLongRandomizer aNewAtomicLongRandomizer(final long seed) {
-        return new AtomicLongRandomizer(seed);
-    }
-
     @Override
     public AtomicLong getRandomValue() {
         return new AtomicLong(delegate.getRandomValue());

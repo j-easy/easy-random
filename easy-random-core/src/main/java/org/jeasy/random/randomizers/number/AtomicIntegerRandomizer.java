@@ -52,29 +52,6 @@ public class AtomicIntegerRandomizer implements Randomizer<AtomicInteger> {
         delegate = new IntegerRandomizer(seed);
     }
 
-    /**
-     * Create a new {@link AtomicIntegerRandomizer}.
-     *
-     * @return a new {@link AtomicIntegerRandomizer}.
-     * @deprecated in favor of the equivalent constructor
-     */
-    @Deprecated
-    public static AtomicIntegerRandomizer aNewAtomicIntegerRandomizer() {
-        return new AtomicIntegerRandomizer();
-    }
-
-    /**
-     * Create a new {@link AtomicIntegerRandomizer}.
-     *
-     * @param seed initial seed
-     * @return a new {@link AtomicIntegerRandomizer}.
-     * @deprecated in favor of the equivalent constructor
-     */
-    @Deprecated
-    public static AtomicIntegerRandomizer aNewAtomicIntegerRandomizer(final long seed) {
-        return new AtomicIntegerRandomizer(seed);
-    }
-
     @Override
     public AtomicInteger getRandomValue() {
         return new AtomicInteger(delegate.getRandomValue());

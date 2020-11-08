@@ -23,7 +23,6 @@
  */
 package org.jeasy.random.randomizers;
 
-import static org.jeasy.random.randomizers.GenericStringRandomizer.aNewGenericStringRandomizer;
 import static java.util.Arrays.asList;
 import static org.assertj.core.api.BDDAssertions.then;
 
@@ -42,7 +41,7 @@ class GenericStringRandomizerTest extends AbstractRandomizerTest<String> {
     @Test
     void randomValueShouldBeGeneratedFromTheGivenWords() {
         // given
-        randomizer = aNewGenericStringRandomizer(words);
+        randomizer = new GenericStringRandomizer(words);
 
         // when
         String randomWord = randomizer.getRandomValue();
@@ -53,7 +52,7 @@ class GenericStringRandomizerTest extends AbstractRandomizerTest<String> {
     @Test
     void randomValueShouldBeAlwaysTheSameForTheSameSeed() {
         // given
-        randomizer = aNewGenericStringRandomizer(words, SEED);
+        randomizer = new GenericStringRandomizer(words, SEED);
 
         // when
         String randomWord = randomizer.getRandomValue();

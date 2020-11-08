@@ -23,7 +23,6 @@
  */
 package org.jeasy.random.randomizers.range;
 
-import static org.jeasy.random.randomizers.range.BigDecimalRangeRandomizer.aNewBigDecimalRangeRandomizer;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.assertj.core.api.BDDAssertions.then;
@@ -53,19 +52,19 @@ class BigDecimalRangeRandomizerTest extends AbstractRangeRandomizerTest<BigDecim
 
     @Test
     void whenSpecifiedMinValueIsAfterMaxValueThenThrowIllegalArgumentException() {
-        assertThatThrownBy(() -> aNewBigDecimalRangeRandomizer(max, min)).isInstanceOf(IllegalArgumentException.class);
+        assertThatThrownBy(() -> new BigDecimalRangeRandomizer(max, min)).isInstanceOf(IllegalArgumentException.class);
     }
 
     @Test
     void whenSpecifiedMinValueIsNullThenShouldUseDefaultMinValue() {
-        randomizer = aNewBigDecimalRangeRandomizer(null, max);
+        randomizer = new BigDecimalRangeRandomizer(null, max);
         BigDecimal randomBigDecimal = randomizer.getRandomValue();
         assertThat(randomBigDecimal.doubleValue()).isLessThanOrEqualTo(max);
     }
 
     @Test
     void whenSpecifiedMaxvalueIsNullThenShouldUseDefaultMaxValue() {
-        randomizer = aNewBigDecimalRangeRandomizer(min, null);
+        randomizer = new BigDecimalRangeRandomizer(min, null);
         BigDecimal randomBigDecimal = randomizer.getRandomValue();
         assertThat(randomBigDecimal.doubleValue()).isGreaterThanOrEqualTo(min);
     }
@@ -73,7 +72,7 @@ class BigDecimalRangeRandomizerTest extends AbstractRangeRandomizerTest<BigDecim
     @Test
     void shouldAlwaysGenerateTheSameValueForTheSameSeed() {
         // given
-        BigDecimalRangeRandomizer bigDecimalRangeRandomizer = aNewBigDecimalRangeRandomizer(min, max, SEED);
+        BigDecimalRangeRandomizer bigDecimalRangeRandomizer = new BigDecimalRangeRandomizer(min, max, SEED);
 
         // when
         BigDecimal bigDecimal = bigDecimalRangeRandomizer.getRandomValue();
@@ -85,7 +84,7 @@ class BigDecimalRangeRandomizerTest extends AbstractRangeRandomizerTest<BigDecim
     void generatedValueShouldHaveProvidedPositiveScale() {
         // given
         Integer scale = 2;
-        BigDecimalRangeRandomizer bigDecimalRangeRandomizer = aNewBigDecimalRangeRandomizer(min, max, scale);
+        BigDecimalRangeRandomizer bigDecimalRangeRandomizer = new BigDecimalRangeRandomizer(min, max, scale);
 
         // when
         BigDecimal bigDecimal = bigDecimalRangeRandomizer.getRandomValue();
@@ -97,7 +96,7 @@ class BigDecimalRangeRandomizerTest extends AbstractRangeRandomizerTest<BigDecim
     void generatedValueShouldHaveProvidedNegativeScale() {
         // given
         Integer scale = -2;
-        BigDecimalRangeRandomizer bigDecimalRangeRandomizer = aNewBigDecimalRangeRandomizer(min, max, scale);
+        BigDecimalRangeRandomizer bigDecimalRangeRandomizer = new BigDecimalRangeRandomizer(min, max, scale);
 
         // when
         BigDecimal bigDecimal = bigDecimalRangeRandomizer.getRandomValue();
@@ -111,7 +110,7 @@ class BigDecimalRangeRandomizerTest extends AbstractRangeRandomizerTest<BigDecim
         Integer scale = 2;
         int seed = 123;
         RoundingMode roundingMode = RoundingMode.DOWN;
-        BigDecimalRangeRandomizer bigDecimalRangeRandomizer = aNewBigDecimalRangeRandomizer(min, max, seed, scale, roundingMode);
+        BigDecimalRangeRandomizer bigDecimalRangeRandomizer = new BigDecimalRangeRandomizer(min, max, seed, scale, roundingMode);
 
         // when
         BigDecimal bigDecimal = bigDecimalRangeRandomizer.getRandomValue();

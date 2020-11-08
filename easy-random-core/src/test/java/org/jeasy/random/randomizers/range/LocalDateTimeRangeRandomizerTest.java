@@ -30,7 +30,6 @@ import java.time.LocalDateTime;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
-import static org.jeasy.random.randomizers.range.LocalDateTimeRangeRandomizer.aNewLocalDateTimeRangeRandomizer;
 
 class LocalDateTimeRangeRandomizerTest extends AbstractRangeRandomizerTest<LocalDateTime> {
 
@@ -40,7 +39,7 @@ class LocalDateTimeRangeRandomizerTest extends AbstractRangeRandomizerTest<Local
     void setUp() {
         minDateTime = LocalDateTime.MIN;
         maxDateTime = LocalDateTime.MAX;
-        randomizer = aNewLocalDateTimeRangeRandomizer(minDateTime, maxDateTime);
+        randomizer = new LocalDateTimeRangeRandomizer(minDateTime, maxDateTime);
     }
 
     @Test
@@ -57,7 +56,7 @@ class LocalDateTimeRangeRandomizerTest extends AbstractRangeRandomizerTest<Local
     void generatedLocalDateTimeShouldBeAlwaysTheSameForTheSameSeed() {
 
         // Given
-        randomizer = aNewLocalDateTimeRangeRandomizer(minDateTime, maxDateTime, SEED);
+        randomizer = new LocalDateTimeRangeRandomizer(minDateTime, maxDateTime, SEED);
         LocalDateTime expected = LocalDateTime.parse("+446348406-04-09T16:32:16.990898895");
 
         // When
@@ -69,13 +68,13 @@ class LocalDateTimeRangeRandomizerTest extends AbstractRangeRandomizerTest<Local
 
     @Test
     void whenSpecifiedMinDateTimeIsAfterMaxDateTime_thenShouldThrowIllegalArgumentException() {
-        assertThatThrownBy(() -> aNewLocalDateTimeRangeRandomizer(maxDateTime, minDateTime)).isInstanceOf(IllegalArgumentException.class);
+        assertThatThrownBy(() -> new LocalDateTimeRangeRandomizer(maxDateTime, minDateTime)).isInstanceOf(IllegalArgumentException.class);
     }
 
     @Test
     void whenSpecifiedMinDateTimeIsNull_thenShouldUseDefaultMinValue() {
         // Given
-        randomizer = aNewLocalDateTimeRangeRandomizer(null, maxDateTime);
+        randomizer = new LocalDateTimeRangeRandomizer(null, maxDateTime);
 
         // When
         LocalDateTime randomValue = randomizer.getRandomValue();
@@ -87,7 +86,7 @@ class LocalDateTimeRangeRandomizerTest extends AbstractRangeRandomizerTest<Local
     @Test
     void whenSpecifiedMaxDateTimeIsNull_thenShouldUseDefaultMaxValue() {
         // Given
-        randomizer = aNewLocalDateTimeRangeRandomizer(minDateTime, null);
+        randomizer = new LocalDateTimeRangeRandomizer(minDateTime, null);
 
         // when
         LocalDateTime randomValue = randomizer.getRandomValue();
@@ -102,7 +101,7 @@ class LocalDateTimeRangeRandomizerTest extends AbstractRangeRandomizerTest<Local
         maxDateTime = LocalDateTime.parse("2019-10-22T00:33:22");
 
         // Given
-        randomizer = aNewLocalDateTimeRangeRandomizer(minDateTime, maxDateTime);
+        randomizer = new LocalDateTimeRangeRandomizer(minDateTime, maxDateTime);
 
         // when
         LocalDateTime randomValue = randomizer.getRandomValue();

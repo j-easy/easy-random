@@ -24,10 +24,10 @@
 package org.jeasy.random.randomizers.collection;
 
 import org.jeasy.random.api.Randomizer;
+import org.jeasy.random.randomizers.number.ByteRandomizer;
 
 import java.util.Collection;
 
-import static org.jeasy.random.randomizers.number.ByteRandomizer.aNewByteRandomizer;
 import static java.lang.Math.abs;
 
 /**
@@ -43,7 +43,7 @@ abstract class CollectionRandomizer<T> implements Randomizer<Collection<T>> {
     final Randomizer<T> delegate;
 
     CollectionRandomizer(final Randomizer<T> delegate) {
-        this(delegate, abs(aNewByteRandomizer().getRandomValue()));
+        this(delegate, abs(new ByteRandomizer().getRandomValue()));
     }
 
     CollectionRandomizer(final Randomizer<T> delegate, final int nbElements) {

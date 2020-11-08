@@ -54,33 +54,6 @@ public class OffsetDateTimeRangeRandomizer extends AbstractRangeRandomizer<Offse
         super(min, max, seed);
     }
 
-    /**
-     * Create a new {@link OffsetDateTimeRangeRandomizer}.
-     *
-     * @param min min value (inclusive)
-     * @param max max value (exclusive)
-     * @return a new {@link OffsetDateTimeRangeRandomizer}.
-     * @deprecated in favor of the equivalent constructor
-     */
-    @Deprecated
-    public static OffsetDateTimeRangeRandomizer aNewOffsetDateTimeRangeRandomizer(final OffsetDateTime min, final OffsetDateTime max) {
-        return new OffsetDateTimeRangeRandomizer(min, max);
-    }
-
-    /**
-     * Create a new {@link OffsetDateTimeRangeRandomizer}.
-     *
-     * @param min  min value (inclusive)
-     * @param max  max value (exclusive)
-     * @param seed initial seed
-     * @return a new {@link OffsetDateTimeRangeRandomizer}.
-     * @deprecated in favor of the equivalent constructor
-     */
-    @Deprecated
-    public static OffsetDateTimeRangeRandomizer aNewOffsetDateTimeRangeRandomizer(final OffsetDateTime min, final OffsetDateTime max, final long seed) {
-        return new OffsetDateTimeRangeRandomizer(min, max, seed);
-    }
-
     @Override
     protected void checkValues() {
         if (min.isAfter(max)) {

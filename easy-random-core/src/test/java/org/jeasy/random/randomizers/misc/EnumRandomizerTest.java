@@ -23,7 +23,6 @@
  */
 package org.jeasy.random.randomizers.misc;
 
-import static org.jeasy.random.randomizers.misc.EnumRandomizer.aNewEnumRandomizer;
 import static org.jeasy.random.randomizers.misc.EnumRandomizerTest.Gender.FEMALE;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
@@ -36,12 +35,12 @@ class EnumRandomizerTest extends AbstractRandomizerTest<EnumRandomizerTest.Gende
 
     @Test
     void generatedValueShouldBeOfTheSpecifiedEnum() {
-        assertThat(aNewEnumRandomizer(Gender.class).getRandomValue()).isIn(Gender.values());
+        assertThat(new EnumRandomizer(Gender.class).getRandomValue()).isIn(Gender.values());
     }
 
     @Test
     void shouldAlwaysGenerateTheSameValueForTheSameSeed() {
-        assertThat(aNewEnumRandomizer(Gender.class, SEED).getRandomValue()).isEqualTo(FEMALE);
+        assertThat(new EnumRandomizer(Gender.class, SEED).getRandomValue()).isEqualTo(FEMALE);
     }
 
     public enum Gender {
@@ -51,21 +50,21 @@ class EnumRandomizerTest extends AbstractRandomizerTest<EnumRandomizerTest.Gende
     @Test
     void should_return_a_value_different_from_the_excluded_one() {
         Gender valueToExclude = Gender.MALE;
-        Gender randomElement = aNewEnumRandomizer(Gender.class, valueToExclude).getRandomValue();
+        Gender randomElement = new EnumRandomizer<>(Gender.class, valueToExclude).getRandomValue();
         assertThat(randomElement).isNotNull();
         assertThat(randomElement).isNotEqualTo(valueToExclude);
     }
 
     @Test
     void should_throw_an_exception_when_all_values_are_excluded() {
-        assertThatThrownBy(() -> aNewEnumRandomizer(Gender.class, Gender.values())).isInstanceOf(IllegalArgumentException.class);
+        assertThatThrownBy(() -> new EnumRandomizer<>(Gender.class, Gender.values())).isInstanceOf(IllegalArgumentException.class);
     }
 
     public enum Empty {}
 
     @Test
     public void should_return_null_for_empty_enum() {
-        Empty randomElement = aNewEnumRandomizer(Empty.class).getRandomValue();
+        Empty randomElement = new EnumRandomizer<>(Empty.class).getRandomValue();
         assertThat(randomElement).isNull();
     }
 }

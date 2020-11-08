@@ -23,7 +23,6 @@
  */
 package org.jeasy.random.randomizers.number;
 
-import static org.jeasy.random.randomizers.number.AtomicIntegerRandomizer.aNewAtomicIntegerRandomizer;
 import static org.assertj.core.api.BDDAssertions.then;
 
 import java.util.concurrent.atomic.AtomicInteger;
@@ -37,7 +36,7 @@ class AtomicIntegerRandomizerTest extends AbstractRandomizerTest<AtomicInteger> 
     @Test
     void generateValueShouldNotBeNull() {
         // given
-        AtomicIntegerRandomizer atomicIntegerRandomizer = aNewAtomicIntegerRandomizer();
+        AtomicIntegerRandomizer atomicIntegerRandomizer = new AtomicIntegerRandomizer();
         
         // when
         AtomicInteger atomicInteger = atomicIntegerRandomizer.getRandomValue();
@@ -48,7 +47,7 @@ class AtomicIntegerRandomizerTest extends AbstractRandomizerTest<AtomicInteger> 
     @Test
     void shouldGenerateTheSameValueForTheSameSeed() {
         // given
-        AtomicIntegerRandomizer atomicIntegerRandomizer = aNewAtomicIntegerRandomizer(SEED);
+        AtomicIntegerRandomizer atomicIntegerRandomizer = new AtomicIntegerRandomizer(SEED);
         
         // when
         AtomicInteger atomicInteger = atomicIntegerRandomizer.getRandomValue();

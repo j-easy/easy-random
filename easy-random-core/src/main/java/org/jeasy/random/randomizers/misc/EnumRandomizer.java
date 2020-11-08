@@ -76,47 +76,6 @@ public class EnumRandomizer<E extends Enum<E>> extends AbstractRandomizer<E> {
     }
 
     /**
-     * Create a new {@link EnumRandomizer}.
-     *
-     * @param enumeration the enumeration from which this randomizer will generate random values
-     * @param <E>         the type of elements in the enumeration
-     * @return a new {@link EnumRandomizer}.
-     * @deprecated in favor of the equivalent constructor
-     */
-    @Deprecated
-    public static <E extends Enum<E>> EnumRandomizer<E> aNewEnumRandomizer(final Class<E> enumeration) {
-        return new EnumRandomizer<>(enumeration);
-    }
-
-    /**
-     * Create a new {@link EnumRandomizer}.
-     *
-     * @param enumeration the enumeration from which this randomizer will generate random values
-     * @param seed        the initial seed
-     * @param <E>         the type of elements in the enumeration
-     * @return a new {@link EnumRandomizer}.
-     * @deprecated in favor of the equivalent constructor
-     */
-    @Deprecated
-    public static <E extends Enum<E>> EnumRandomizer<E> aNewEnumRandomizer(final Class<E> enumeration, final long seed) {
-        return new EnumRandomizer<>(enumeration, seed);
-    }
-
-    /**
-     * Create a new {@link EnumRandomizer}.
-     *
-     * @param enumeration    the enumeration from which this randomizer will generate random values
-     * @param excludedValues the values to exclude from the subset in which the random value will be picked
-     * @param <E>            the type of elements in the enumeration
-     * @return a new {@link EnumRandomizer}.
-     * @deprecated in favor of the equivalent constructor
-     */
-    @Deprecated
-    public static <E extends Enum<E>> EnumRandomizer<E> aNewEnumRandomizer(final Class<E> enumeration, final E... excludedValues) {
-        return new EnumRandomizer<>(enumeration, excludedValues);
-    }
-
-    /**
      * Get a random value within an enumeration or an enumeration subset (when values are excluded)
      *
      * @return a random value within the enumeration

@@ -23,7 +23,6 @@
  */
 package org.jeasy.random.randomizers.collection;
 
-import static org.jeasy.random.randomizers.collection.MapRandomizer.aNewMapRandomizer;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.mockito.Mockito.when;
@@ -45,32 +44,32 @@ class MapRandomizerTest {
 
     @Test
     void generatedMapShouldNotBeEmpty() {
-        assertThat(aNewMapRandomizer(keyRandomizer, valueRandomizer).getRandomValue()).isNotEmpty();
+        assertThat(new MapRandomizer(keyRandomizer, valueRandomizer).getRandomValue()).isNotEmpty();
     }
 
     @Test
     void generatedMapSizeShouldBeEqualToTheSpecifiedSize() {
         when(keyRandomizer.getRandomValue()).thenReturn(1, 2, 3);
-        assertThat(aNewMapRandomizer(keyRandomizer, valueRandomizer, 3).getRandomValue()).hasSize(3);
+        assertThat(new MapRandomizer(keyRandomizer, valueRandomizer, 3).getRandomValue()).hasSize(3);
     }
 
     @Test
     void specifiedSizeCanBeZero() {
-        assertThat(aNewMapRandomizer(keyRandomizer, valueRandomizer, 0).getRandomValue()).isEmpty();
+        assertThat(new MapRandomizer(keyRandomizer, valueRandomizer, 0).getRandomValue()).isEmpty();
     }
 
     @Test
     void specifiedSizeShouldBePositive() {
-        assertThatThrownBy(() -> aNewMapRandomizer(keyRandomizer, valueRandomizer, -3)).isInstanceOf(IllegalArgumentException.class);
+        assertThatThrownBy(() -> new MapRandomizer(keyRandomizer, valueRandomizer, -3)).isInstanceOf(IllegalArgumentException.class);
     }
 
     @Test
     void nullKeyRandomizer() {
-        assertThatThrownBy(() -> aNewMapRandomizer(null, valueRandomizer, 3)).isInstanceOf(IllegalArgumentException.class);
+        assertThatThrownBy(() -> new MapRandomizer(null, valueRandomizer, 3)).isInstanceOf(IllegalArgumentException.class);
     }
 
     @Test
     void nullValueRandomizer() {
-        assertThatThrownBy(() -> aNewMapRandomizer(keyRandomizer, null, 3)).isInstanceOf(IllegalArgumentException.class);
+        assertThatThrownBy(() -> new MapRandomizer(keyRandomizer, null, 3)).isInstanceOf(IllegalArgumentException.class);
     }
 }
