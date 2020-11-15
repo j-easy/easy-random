@@ -11,11 +11,17 @@
 [![Build Status](https://github.com/j-easy/easy-random/workflows/Java%20CI/badge.svg)](https://github.com/j-easy/easy-random/actions)
 [![Maven Central](https://maven-badges.herokuapp.com/maven-central/org.jeasy/easy-random-core/badge.svg?style=flat)](https://repo1.maven.org/maven2/org/jeasy/easy-random-core/5.0.0/)
 [![Javadocs](http://www.javadoc.io/badge/org.jeasy/easy-random-core.svg)](http://www.javadoc.io/doc/org.jeasy/easy-random-core)
-[![Gitter](https://badges.gitter.im/Join%20Chat.svg)](https://gitter.im/j-easy/easy-random)
+[![Project status](https://img.shields.io/badge/Project%20status-Maintenance-orange.svg)](https://img.shields.io/badge/Project%20status-Maintenance-orange.svg)
 
 </div>
 
 ***
+
+## Project status
+
+As of November 15, 2020, Easy Random is in maintenance mode. This means only bug fixes will be addressed from now on.
+Version 5.0.x (based on Java 11) and version 4.3.x (based on Java 8) are the only supported versions
+for now. Please consider upgrading to one of these versions at your earliest convenience.
 
 ## Latest news
 
@@ -190,10 +196,10 @@ There are many other uses cases where Easy Random can be useful, you can find a 
 ## Contribution
 
 You are welcome to contribute to the project with pull requests on GitHub.
+Please note that Easy Random is in [maintenance mode](https://github.com/j-easy/easy-random#project-status),
+which means only pull requests for bug fixes will be considered.
 
-If you believe you found a bug, please use the [issue tracker](https://github.com/j-easy/easy-random/issues).
-
-If you have any question, suggestion, or feedback, do not hesitate to use the [Gitter channel](https://gitter.im/j-easy/easy-random) of the project.
+If you believe you found a bug or have any question, please use the [issue tracker](https://github.com/j-easy/easy-random/issues).
 
 ## Core team and contributors
 
