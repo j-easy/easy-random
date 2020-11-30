@@ -23,62 +23,52 @@
  */
 package org.jeasy.random.randomizers;
 
-import static org.junit.jupiter.api.Assertions.assertFalse;
-import static org.junit.jupiter.api.Assertions.assertTrue;
+import org.junit.jupiter.api.Test;
 
 import java.util.regex.Pattern;
-import java.util.regex.Matcher;
 
-import org.junit.jupiter.api.Test;
+import static org.assertj.core.api.Assertions.assertThat;
+
 
 class PasswordRandomizerTest {
 
 	Pattern SpecialChar = Pattern.compile("[^A-Za-z0-9]");
+
 	Pattern UpperChar = Pattern.compile("[A-Z]");
+
+	PasswordRandomizer sut;
 
 	@Test
 	void testPassword_NotContainsUppercaseSpecial() {
 		// given
-		PasswordRandomizer passwordRandomizer = new PasswordRandomizer(123L, 8, 20);
-
+		sut = new PasswordRandomizer(123L, 8, 20);
 		// when
-		String randomValue = passwordRandomizer.getRandomValue();
-		Matcher m1 = UpperChar.matcher(randomValue);
-		Matcher m2 = SpecialChar.matcher(randomValue);
-
+		String randomValue = sut.getRandomValue();
 		// then
-		assertFalse(m1.find());
-		assertFalse(m2.find());
+		assertThat(UpperChar.matcher(randomValue).find()).isFalse();
+		assertThat(SpecialChar.matcher(randomValue).find()).isFalse();
 	}
 
 	@Test
 	void testPassword_ContainsUppercase() {
-		// given 
-		PasswordRandomizer passwordRandomizer = new PasswordRandomizer(123L, 8, 20, true);
-
+		// given
+		sut = new PasswordRandomizer(123L, 8, 20, true);
 		// when
-		String randomValue = passwordRandomizer.getRandomValue();
-		Matcher m1 = UpperChar.matcher(randomValue);
-		Matcher m2 = SpecialChar.matcher(randomValue);
-
+		String randomValue = sut.getRandomValue();
 		// then
-		assertTrue(m1.find());
-		assertFalse(m2.find());
+		assertThat(UpperChar.matcher(randomValue).find()).isTrue();
+		assertThat(SpecialChar.matcher(randomValue).find()).isFalse();
 	}
 
 	@Test
 	void testPassword_ContainsUppercaseSpecial() {
 		// given
-		PasswordRandomizer passwordRandomizer = new PasswordRandomizer(123L, 8, 20, true, true);
-
+		sut = new PasswordRandomizer(123L, 8, 20, true, true);
 		// when
-		String randomValue = passwordRandomizer.getRandomValue();
-		Matcher m1 = UpperChar.matcher(randomValue);
-		Matcher m2 = SpecialChar.matcher(randomValue);
-
+		String randomValue = sut.getRandomValue();
 		// then
-		assertTrue(m1.find());
-		assertTrue(m2.find());
+		assertThat(UpperChar.matcher(randomValue).find()).isTrue();
+		assertThat(SpecialChar.matcher(randomValue).find()).isTrue();
 	}
 
 }
