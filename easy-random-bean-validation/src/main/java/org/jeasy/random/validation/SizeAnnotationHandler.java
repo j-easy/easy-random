@@ -62,8 +62,6 @@ class SizeAnnotationHandler implements BeanValidationAnnotationHandler {
         final int min = sizeAnnotation.min();
         final int max = sizeAnnotation.max() == Integer.MAX_VALUE ? 255 : sizeAnnotation.max();
         if (easyRandom == null) {
-            parameters.setCollectionSizeRange(new EasyRandomParameters.Range<>(min, max));
-            parameters.setStringLengthRange(new EasyRandomParameters.Range<>(min, max));
             easyRandom = new EasyRandom(parameters);
         }
 

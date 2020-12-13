@@ -120,6 +120,9 @@ class BeanValidationAnnotatedBean {
     private List<String> sizedList;
 
     @Size(min = 2, max = 10)
+    private List<EmbeddedBean> sizedListEmbeddedBean;
+
+    @Size(min = 2, max = 10)
     private Set<String> sizedSet;
 
     @Size(min = 2, max = 10)
@@ -269,6 +272,10 @@ class BeanValidationAnnotatedBean {
         return this.sizedString;
     }
 
+    public List<EmbeddedBean> getSizedListEmbeddedBean() {
+        return sizedListEmbeddedBean;
+    }
+
     public String getRegexString() {
         return this.regexString;
     }
@@ -403,6 +410,10 @@ class BeanValidationAnnotatedBean {
 
     public void setSizedString(String sizedString) {
         this.sizedString = sizedString;
+    }
+
+    public void setSizedListEmbeddedBean(List<EmbeddedBean> sizedListEmbeddedBean) {
+        this.sizedListEmbeddedBean = sizedListEmbeddedBean;
     }
 
     public void setRegexString(String regexString) {
