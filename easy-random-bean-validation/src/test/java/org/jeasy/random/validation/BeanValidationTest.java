@@ -41,7 +41,6 @@ import javax.validation.constraints.DecimalMin;
 import javax.validation.constraints.Digits;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
-
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.util.Date;
@@ -57,6 +56,22 @@ class BeanValidationTest {
     @BeforeEach
     void setUp() {
         easyRandom = new EasyRandom();
+    }
+
+    @Test
+    void sizeConstraintShouldNotBePropagatedToEmbeddedBeans() {
+
+        EasyRandomParameters parameters = new EasyRandomParameters()
+                .collectionSizeRange(11, 15)
+                .stringLengthRange(16, 20);
+        easyRandom = new EasyRandom(parameters);
+        BeanValidationAnnotatedBean bean = easyRandom.nextObject(BeanValidationAnnotatedBean.class);
+
+        assertThat(bean.getSizedListEmbeddedBean().size()).isBetween(2, 10); // @Size constraint
+        assertThat(bean.getSizedListEmbeddedBean()).allSatisfy(embeddedBean -> {
+            assertThat(embeddedBean.getItems().size()).isBetween(11, 15);
+            assertThat(embeddedBean.getItems()).allSatisfy(stringItem -> assertThat(stringItem.length()).isBetween(16, 20));
+        });
     }
 
     @Test
@@ -202,7 +217,7 @@ class BeanValidationTest {
     @Test
     void generatedValuesForBeanWithoutReadMethod() {
         BeanValidationWithoutReadMethodBean bean = easyRandom.nextObject(BeanValidationWithoutReadMethodBean.class);
- 
+
         assertThat(bean).hasNoNullFieldsOrProperties();
     }
 
@@ -210,7 +225,7 @@ class BeanValidationTest {
     void shouldGenerateTheSameValueForTheSameSeed() {
         EasyRandomParameters parameters = new EasyRandomParameters().seed(123L);
         EasyRandom random = new EasyRandom(parameters);
- 
+
         BeanValidationAnnotatedBean bean = random.nextObject(BeanValidationAnnotatedBean.class);
 
         assertThat(bean.getUsername()).isEqualTo("eOMtThyhVNLWUZNRcBaQKxI");
@@ -252,14 +267,14 @@ class BeanValidationTest {
             @Digits(integer = 2, fraction = 2) // OSS developer salary.. :-)
             private BigDecimal amount;
         }
-        
+
         EasyRandomParameters parameters = new EasyRandomParameters()
                 .randomizerRegistry(new MyCustomBeanValidationRandomizerRegistry());
         EasyRandom easyRandom = new EasyRandom(parameters);
-        
+
         // when
         Salary salary = easyRandom.nextObject(Salary.class);
-        
+
         // then
         assertThat(salary).isNotNull();
         assertThat(salary.amount).isLessThanOrEqualTo(new BigDecimal("99.99"));
