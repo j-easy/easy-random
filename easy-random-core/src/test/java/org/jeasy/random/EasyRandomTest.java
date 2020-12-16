@@ -484,6 +484,23 @@ class EasyRandomTest {
         assertThat(street.getType()).isNotNull();
     }
 
+    @Test
+    void testGenericFieldRandomization() {
+        // given
+        class Base<T> {
+            T t;
+        }
+        class Concrete {
+            Base<String> f;
+        }
+
+        // when
+        Concrete concrete = easyRandom.nextObject(Concrete.class);
+
+        // then
+        assertThat(concrete.f).isInstanceOf(Base.class);
+    }
+
     @Disabled("Dummy test to see possible reasons of randomization failures")
     @Test
     void tryToRandomizeAllPublicConcreteTypesInTheClasspath(){
