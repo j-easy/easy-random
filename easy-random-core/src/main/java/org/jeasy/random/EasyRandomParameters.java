@@ -177,8 +177,8 @@ public class EasyRandomParameters {
         return objectPoolSize;
     }
     public void setObjectPoolSize(int objectPoolSize) {
-        if (objectPoolSize < 1) {
-            throw new IllegalArgumentException("objectPoolSize must be >= 1");
+        if (objectPoolSize < 0) {
+            throw new IllegalArgumentException("objectPoolSize must be >= 0");
         }
         this.objectPoolSize = objectPoolSize;
     }

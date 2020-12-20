@@ -245,6 +245,7 @@ If you believe you found a bug or have any question, please use the [issue track
 * [Unconditional One](https://github.com/unconditional)
 * [JJ1216](https://github.com/JJ1216)
 * [Sergey Chernov](https://github.com/seregamorph)
+* [Johannes Bergé](https://github.com/JohannesBe)
 
 Thank you all for your contributions!
 

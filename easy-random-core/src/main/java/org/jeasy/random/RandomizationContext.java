@@ -60,14 +60,17 @@ class RandomizationContext implements RandomizerContext {
 
     void addPopulatedBean(final Class<?> type, Object object) {
         int objectPoolSize = parameters.getObjectPoolSize();
-        List<Object> objects = populatedBeans.get(type);
-        if (objects == null) {
-            objects = new ArrayList<>(objectPoolSize);
+
+        if (objectPoolSize > 0) {
+            List<Object> objects = populatedBeans.get(type);
+            if (objects == null) {
+                objects = new ArrayList<>(objectPoolSize);
+            }
+            if (objects.size() < objectPoolSize) {
+                objects.add(object);
+            }
+            populatedBeans.put(type, objects);
         }
-        if (objects.size() < objectPoolSize) {
-            objects.add(object);
-        }
-        populatedBeans.put(type, objects);
     }
 
     Object getPopulatedBean(final Class<?> type) {
