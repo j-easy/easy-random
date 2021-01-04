@@ -19,7 +19,8 @@
 
 ## Project status
 
-As of November 15, 2020, Easy Random is in maintenance mode. This means only bug fixes will be addressed from now on.
+As of November 15, 2020, Easy Random is in maintenance mode. This means only bug fixes will be addressed from now on (except
+for [records support](https://github.com/j-easy/easy-random/issues/397) which will be released when Java 16 is out).
 Version 5.0.x (based on Java 11) and version 4.3.x (based on Java 8) are the only supported versions
 for now. Please consider upgrading to one of these versions at your earliest convenience.
 
