@@ -179,6 +179,9 @@ public class EasyRandomParameters {
     public void setObjectPoolSize(int objectPoolSize) {
         if (objectPoolSize < 0) {
             throw new IllegalArgumentException("objectPoolSize must be >= 0");
+        } else if (objectPoolSize == 0 && getRandomizationDepth() == DEFAULT_RANDOMIZATION_DEPTH) {
+            throw new IllegalArgumentException("objectPoolSize cannot be 0 with a maximized randomization depth. " +
+                                               "Consider setting randomizationDepth *before* disabling the cache.");
         }
         this.objectPoolSize = objectPoolSize;
     }
@@ -422,6 +425,12 @@ public class EasyRandomParameters {
 
     /**
      * Set the number of different objects to generate for a type.
+     *
+     * Set to 0 to disable the object cache. IMPORTANT: disabling the cache might reduce performance
+     * and can result in StackOverFlowException's when a combination is present of:
+     * - a high randomizationDepth
+     * - a cyclical object graph (e.g. back-referencing relations)
+     * Disabling the cache thus *requires* a randomizationDepth to be set.
      *
      * @param objectPoolSize the number of objects to generate in the pool
      * @return the current {@link EasyRandomParameters} instance for method chaining

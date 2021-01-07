@@ -24,6 +24,8 @@
 package org.jeasy.random.parameters;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatIllegalArgumentException;
+import static org.assertj.core.api.Assertions.assertThatNoException;
 
 import org.jeasy.random.EasyRandom;
 import org.jeasy.random.EasyRandomParameters;
@@ -45,5 +47,49 @@ class MaxObjectPoolSizeTests {
         // Then
         assertThat(persons.left).isSameAs(persons.right);
     }
+
+    @Test
+    void disabledCacheRecursionTest() {
+        // Given
+        EasyRandomParameters parameters = new EasyRandomParameters().randomizationDepth(10).objectPoolSize(0);
+        EasyRandom easyRandom = new EasyRandom(parameters);
+
+        // Then
+        assertThatNoException().isThrownBy(() -> easyRandom.nextObject(A.class));
+    }
+
+    @Test
+    void disabledCacheRecursionOverflowConfigurationTest() {
+        // Given
+        EasyRandomParameters parameters = new EasyRandomParameters();
+
+        // Then
+        assertThatIllegalArgumentException().isThrownBy(() -> parameters.objectPoolSize(0));
+    }
+
+    private static class A {
+        private B b;
+
+        public B getB() {
+            return b;
+        }
+
+        public void setB(B b) {
+            this.b = b;
+        }
+    }
+
+    private static class B {
+        private A a;
+
+        public A getA() {
+            return a;
+        }
+
+        public void setA(A a) {
+            this.a = a;
+        }
+    }
+
 
 }
