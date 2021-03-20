@@ -87,6 +87,8 @@ class BeanValidationMethodAnnotatedBean {
 
     private List<String> sizedList;
 
+    private List<EmbeddedBean> sizedListEmbeddedBean;
+
     private Set<String> sizedSet;
 
     private Map<String, Integer> sizedMap;
@@ -367,6 +369,15 @@ class BeanValidationMethodAnnotatedBean {
 
     public void setSizedList(List<String> sizedList) {
         this.sizedList = sizedList;
+    }
+
+    @Size(min = 2, max = 10)
+    public List<EmbeddedBean> getSizedListEmbeddedBean() {
+        return sizedListEmbeddedBean;
+    }
+
+    public void setSizedListEmbeddedBean(List<EmbeddedBean> sizedListEmbeddedBean) {
+        this.sizedListEmbeddedBean = sizedListEmbeddedBean;
     }
 
     @Size(min=2, max=10)

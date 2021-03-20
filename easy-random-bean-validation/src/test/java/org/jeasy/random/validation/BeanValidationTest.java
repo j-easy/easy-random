@@ -75,6 +75,23 @@ class BeanValidationTest {
     }
 
     @Test
+    void sizeConstraintShouldTakePrecedenceOverCollectionSizeRangeInEmbeddedBeans() {
+        EasyRandomParameters parameters = new EasyRandomParameters()
+                .collectionSizeRange(11, 15)
+                .stringLengthRange(16, 20);
+        easyRandom = new EasyRandom(parameters);
+        BeanValidationAnnotatedBean bean = easyRandom.nextObject(BeanValidationAnnotatedBean.class);
+
+        assertThat(bean.getSizedListEmbeddedBean().size()).isBetween(2, 10); // @Size constraint
+        assertThat(bean.getSizedListEmbeddedBean()).allSatisfy(embeddedBean -> {
+            assertThat(embeddedBean.getItems().size()).isBetween(11, 15);
+            assertThat(embeddedBean.getOtherItems().size()).isBetween(3, 5); // @Size(min = 3, max = 5) constraint should take precedence over collectionSizeRange(11, 15)
+            assertThat(embeddedBean.getItems()).allSatisfy(stringItem -> assertThat(stringItem.length()).isBetween(16, 20));
+            assertThat(embeddedBean.getOtherItems()).allSatisfy(stringItem -> assertThat(stringItem.length()).isBetween(16, 20));
+        });
+    }
+
+    @Test
     void generatedValuesShouldBeValidAccordingToValidationConstraints() {
         BeanValidationAnnotatedBean bean = easyRandom.nextObject(BeanValidationAnnotatedBean.class);
 
@@ -136,6 +153,7 @@ class BeanValidationTest {
         assertThat(bean.getBriefMessage().length()).isBetween(2, 10);// @Size(min=2, max=10) String briefMessage;
         assertThat(bean.getSizedCollection().size()).isBetween(2, 10);// @Size(min=2, max=10) String sizedCollection;
         assertThat(bean.getSizedList().size()).isBetween(2, 10);// @Size(min=2, max=10) String sizedList;
+        assertThat(bean.getSizedListEmbeddedBean().size()).isBetween(2, 10);// @Size(min=2, max=10) String sizedListEmbeddedBean;
         assertThat(bean.getSizedSet().size()).isBetween(2, 10);// @Size(min=2, max=10) String sizedSet;
         assertThat(bean.getSizedMap().size()).isBetween(2, 10);// @Size(min=2, max=10) String sizedMap;
         assertThat(bean.getSizedArray().length).isBetween(2, 10);// @Size(min=2, max=10) String sizedArray;
@@ -206,6 +224,7 @@ class BeanValidationTest {
         assertThat(bean.getBriefMessage().length()).isBetween(2, 10);// @Size(min=2, max=10) String briefMessage;
         assertThat(bean.getSizedCollection().size()).isBetween(2, 10);// @Size(min=2, max=10) String sizedCollection;
         assertThat(bean.getSizedList().size()).isBetween(2, 10);// @Size(min=2, max=10) String sizedList;
+        assertThat(bean.getSizedListEmbeddedBean().size()).isBetween(2, 10);// @Size(min=2, max=10) String sizedListEmbeddedBean;
         assertThat(bean.getSizedSet().size()).isBetween(2, 10);// @Size(min=2, max=10) String sizedSet;
         assertThat(bean.getSizedMap().size()).isBetween(2, 10);// @Size(min=2, max=10) String sizedMap;
         assertThat(bean.getSizedArray().length).isBetween(2, 10);// @Size(min=2, max=10) String sizedArray;

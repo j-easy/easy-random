@@ -215,6 +215,7 @@ If you believe you found a bug or have any question, please use the [issue track
 * [Adriano Machado](https://github.com/ammachado)
 * [Alberto Lagna](https://github.com/alagna)
 * [Andrew Neal](https://github.com/aeneal)
+* [Aurélien Mino](https://github.com/murdos)
 * [Arne Zelasko](https://github.com/arnzel)
 * [dadiyang](https://github.com/dadiyang)
 * [Dovid Kopel](https://github.com/dovidkopel)
