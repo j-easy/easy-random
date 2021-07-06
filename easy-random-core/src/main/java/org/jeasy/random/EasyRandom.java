@@ -203,10 +203,21 @@ public class EasyRandom extends Random {
         if (exclusionPolicy.shouldBeExcluded(field, context)) {
             return;
         }
-        if (!parameters.isOverrideDefaultInitialization() && getFieldValue(result, field) != null && !isPrimitiveFieldWithDefaultValue(result, field)) {
+        if (!parameters.isOverrideDefaultInitialization() && !fieldValueIsNullOrEmpty(result, field) && !isPrimitiveFieldWithDefaultValue(result, field)) {
           return;
         }
         fieldPopulator.populateField(result, field, context);
+    }
+
+    private <T> boolean fieldValueIsNullOrEmpty(T result, Field field) throws IllegalAccessException {
+        T value = (T) getFieldValue(result, field);
+        if (null == value) {
+            return true;
+        }
+        if (value instanceof Collection) {
+            return ((Collection) value).isEmpty();
+        }
+        return false;
     }
 
     private LinkedHashSet<RandomizerRegistry> setupRandomizerRegistries(EasyRandomParameters parameters) {

@@ -46,7 +46,9 @@ public class CollectionBean {
     private NavigableSet<Person> typedNavigableSet;
 
     private List list;
+	private List preInitedList = new ArrayList();
     private List<Person> typedList;
+    private List<Person> preInitedTypedList = new ArrayList<>();
 
     private Queue queue;
     private Queue<Person> typedQueue;
@@ -160,6 +162,14 @@ public class CollectionBean {
 
 	public List<Person> getTypedList() {
 		return this.typedList;
+	}
+
+	public List getPreInitedList() {
+		return preInitedList;
+	}
+
+	public List<Person> getPreInitedTypedList() {
+		return preInitedTypedList;
 	}
 
 	public Queue getQueue() {
@@ -374,8 +384,16 @@ public class CollectionBean {
 		this.list = list;
 	}
 
+	public void setPreInitedList(List preInitedList) {
+		this.preInitedList = preInitedList;
+	}
+
 	public void setTypedList(List<Person> typedList) {
 		this.typedList = typedList;
+	}
+
+	public void setPreInitedTypedList(List<Person> preInitedTypedList) {
+		this.preInitedTypedList = preInitedTypedList;
 	}
 
 	public void setQueue(Queue queue) {

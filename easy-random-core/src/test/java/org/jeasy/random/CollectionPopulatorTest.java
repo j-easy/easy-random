@@ -452,4 +452,51 @@ class CollectionPopulatorTest {
             assertThat(Person.getName()).isNotEmpty();
         }
     }
+
+    @Test
+    void typedCollectionsShouldNotBeEmpty() {
+        EasyRandom easyRandom = new EasyRandom(
+                new EasyRandomParameters()
+                .collectionSizeRange(1, 1)
+        );
+
+        final CollectionBean collectionsBean = easyRandom.nextObject(CollectionBean.class);
+
+        assertThat(collectionsBean).isNotNull();
+
+        assertThat(collectionsBean.getTypedCollection()).isNotEmpty();
+        assertThat(collectionsBean.getTypedSet()).isNotEmpty();
+        assertThat(collectionsBean.getTypedSortedSet()).isNotEmpty();
+        assertThat(collectionsBean.getTypedNavigableSet()).isNotEmpty();
+        assertThat(collectionsBean.getTypedList()).isNotEmpty();
+        assertThat(collectionsBean.getTypedQueue()).isNotEmpty();
+        assertThat(collectionsBean.getPreInitedTypedList()).isNotEmpty();
+        assertThat(collectionsBean.getTypedBlockingQueue()).isNotEmpty();
+        assertThat(collectionsBean.getTypedTransferQueue()).isNotEmpty();
+        assertThat(collectionsBean.getTypedDeque()).isNotEmpty();
+        assertThat(collectionsBean.getTypedBlockingDeque()).isNotEmpty();
+    }
+
+    @Test
+    void untypedCollectionsShouldBeEmpty() {
+        EasyRandom easyRandom = new EasyRandom(
+                new EasyRandomParameters()
+                        .collectionSizeRange(1, 1)
+        );
+
+        final CollectionBean collectionsBean = easyRandom.nextObject(CollectionBean.class);
+
+        assertThat(collectionsBean).isNotNull();
+        assertThat(collectionsBean.getCollection()).isEmpty();
+        assertThat(collectionsBean.getSet()).isEmpty();
+        assertThat(collectionsBean.getSortedSet()).isEmpty();
+        assertThat(collectionsBean.getNavigableSet()).isEmpty();
+        assertThat(collectionsBean.getList()).isEmpty();
+        assertThat(collectionsBean.getQueue()).isEmpty();
+        assertThat(collectionsBean.getPreInitedList()).isEmpty();
+        assertThat(collectionsBean.getBlockingQueue()).isEmpty();
+        assertThat(collectionsBean.getTransferQueue()).isEmpty();
+        assertThat(collectionsBean.getDeque()).isEmpty();
+        assertThat(collectionsBean.getBlockingDeque()).isEmpty();
+    }
 }
