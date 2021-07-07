@@ -46,7 +46,9 @@ public class CollectionBean {
     private NavigableSet<Person> typedNavigableSet;
 
     private List list;
+	private List preInitedList = new ArrayList();
     private List<Person> typedList;
+    private List<Person> preInitedTypedList = new ArrayList<>();
 
     private Queue queue;
     private Queue<Person> typedQueue;
