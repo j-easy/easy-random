@@ -183,7 +183,9 @@ class FieldPopulatorTest {
         // Given
         Field name = Human.class.getDeclaredField("name");
         Human human = new Human();
+        EasyRandomParameters parameters = new EasyRandomParameters().randomizationDepth(5);
         RandomizationContext context = Mockito.mock(RandomizationContext.class);
+        when(context.getParameters()).thenReturn(parameters);
         when(context.hasExceededRandomizationDepth()).thenReturn(true);
 
         // When

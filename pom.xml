@@ -24,6 +24,7 @@
         <objenesis.version>3.3</objenesis.version>
         <datafaker.version>2.0.1</datafaker.version>
         <classgraph.version>4.8.160</classgraph.version>
+        <slf4j.version>2.0.7</slf4j.version>
 
         <!-- test dependencies -->
         <junit.version>5.9.3</junit.version>
@@ -98,6 +99,11 @@
             <version>${datafaker.version}</version>
         </dependency>
         <dependency>
+            <groupId>org.slf4j</groupId>
+            <artifactId>slf4j-api</artifactId>
+            <version>${slf4j.version}</version>
+        </dependency>
+        <dependency>
             <groupId>org.junit.jupiter</groupId>
             <artifactId>junit-jupiter</artifactId>
             <version>${junit.version}</version>
@@ -121,7 +127,13 @@
             <version>${mockito.version}</version>
             <scope>test</scope>
         </dependency>
-    </dependencies>
+        <dependency>
+            <groupId>org.slf4j</groupId>
+            <artifactId>slf4j-simple</artifactId>
+            <version>${slf4j.version}</version>
+            <scope>test</scope>
+        </dependency>
+        </dependencies>
 
     <build>
         <plugins>
