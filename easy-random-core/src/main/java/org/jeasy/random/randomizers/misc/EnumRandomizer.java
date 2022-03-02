@@ -76,6 +76,21 @@ public class EnumRandomizer<E extends Enum<E>> extends AbstractRandomizer<E> {
     }
 
     /**
+     * Create a new {@link EnumRandomizer}.
+     *
+     * @param enumeration    the enumeration from which this randomizer will generate random values
+     * @param seed           the initial seed
+     * @param excludedValues the values to exclude from random picking
+     * @throws IllegalArgumentException when excludedValues contains all enumeration values,
+     *                                  ie all elements from the enumeration are excluded
+     */
+    public EnumRandomizer(final Class<E> enumeration, final long seed, final E... excludedValues) throws IllegalArgumentException {
+        super(seed);
+        checkExcludedValues(enumeration, excludedValues);
+        this.enumConstants = getFilteredList(enumeration, excludedValues);
+    }
+
+    /**
      * Get a random value within an enumeration or an enumeration subset (when values are excluded)
      *
      * @return a random value within the enumeration
