@@ -43,6 +43,13 @@ class EnumRandomizerTest extends AbstractRandomizerTest<EnumRandomizerTest.Gende
         assertThat(new EnumRandomizer(Gender.class, SEED).getRandomValue()).isEqualTo(FEMALE);
     }
 
+    @Test
+    void shouldAlwaysGenerateTheSameValueForTheSameSeedWithExcludedValues() {
+        assertThat(
+            new EnumRandomizer<>(TriState.class, SEED, TriState.Maybe).getRandomValue()).isEqualTo(
+            TriState.False);
+    }
+
     public enum Gender {
         MALE, FEMALE
     }
@@ -66,5 +73,12 @@ class EnumRandomizerTest extends AbstractRandomizerTest<EnumRandomizerTest.Gende
     public void should_return_null_for_empty_enum() {
         Empty randomElement = new EnumRandomizer<>(Empty.class).getRandomValue();
         assertThat(randomElement).isNull();
+    }
+
+    // always keep three options here, as we want to exclude one and still select the same one
+    // deterministically
+    @SuppressWarnings("unused")
+    private enum TriState {
+        True, False, Maybe
     }
 }
