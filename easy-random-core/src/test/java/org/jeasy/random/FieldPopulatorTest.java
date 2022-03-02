@@ -33,7 +33,7 @@ import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
 
-import org.jeasy.random.api.ConcreteTypeResolver;
+import org.jeasy.random.api.TypeResolver;
 import org.jeasy.random.api.ContextAwareRandomizer;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -78,7 +78,7 @@ class FieldPopulatorTest {
     @BeforeEach
     void setUp() {
         fieldPopulator = new FieldPopulator(easyRandom, randomizerProvider, arrayPopulator, collectionPopulator, mapPopulator, optionalPopulator,
-            ConcreteTypeResolver.defaultConcreteTypeResolver());
+            TypeResolver.defaultConcreteTypeResolver());
     }
 
     @Test
