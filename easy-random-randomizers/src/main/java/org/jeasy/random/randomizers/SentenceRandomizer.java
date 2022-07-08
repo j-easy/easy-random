@@ -68,6 +68,7 @@ public class SentenceRandomizer extends FakerBasedRandomizer<String> {
             sb.append(word());
             sb.append(" ");
         }
+        sb.append(word());
         sb.append(".");
         return sb.toString();
     }

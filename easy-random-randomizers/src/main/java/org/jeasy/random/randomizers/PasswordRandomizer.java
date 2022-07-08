@@ -23,6 +23,7 @@
  */
 package org.jeasy.random.randomizers;
 
+import io.github.serpro69.kfaker.Faker;
 import org.jeasy.random.api.Randomizer;
 
 import java.util.List;
@@ -115,6 +116,7 @@ public class PasswordRandomizer extends FakerBasedRandomizer<String> {
 			max,
 			locale,
 			includeUppercase,
+			includeSpecial,
 			includeSpecial,
 			includeSpecial
 		);

@@ -55,7 +55,11 @@ public abstract class FakerBasedRandomizer<T> extends AbstractRandomizer<T> {
     protected FakerBasedRandomizer(final long seed, final Locale locale) {
         super(seed);
         this.locale = locale;
-        configBuilder.withLocale(locale.toString());
+        if (locale == Locale.FRANCE || locale == Locale.JAPAN) {
+            configBuilder.withLocale(locale.getLanguage());
+        } else {
+            configBuilder.withLocale(locale.toString());
+        }
         configBuilder.withRandomSeed(seed);
         faker = new Faker(configBuilder.build());
     }

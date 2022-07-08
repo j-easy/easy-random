@@ -42,7 +42,7 @@ class EmailRandomizerTest {
         String randomValue = emailRandomizer.getRandomValue();
 
         // then
-        assertThat(randomValue).contains("@example.com"); // example.com is the only domain in faker's data file with 'en' locale (see en:faker:internet:safe_email: in en.yml)
+        assertThat(randomValue).endsWith(".test"); // example.com is the only domain in faker's data file with 'en' locale (see en:faker:internet:safe_email: in en.yml)
     }
 
     @Test

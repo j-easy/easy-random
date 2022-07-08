@@ -71,6 +71,7 @@ public class ParagraphRandomizer extends FakerBasedRandomizer<String> {
             }
             sb.append(" ");
         }
+        sb.append(word());
         sb.append(".");
         return sb.toString();
     }
