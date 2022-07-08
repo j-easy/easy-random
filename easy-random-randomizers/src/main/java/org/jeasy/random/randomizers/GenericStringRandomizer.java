@@ -57,7 +57,7 @@ public class GenericStringRandomizer extends FakerBasedRandomizer<String> {
 
     @Override
     public String getRandomValue() {
-        return faker.options().option(words);
+        return faker.getRandom().randomValue(words);
     }
 
 }

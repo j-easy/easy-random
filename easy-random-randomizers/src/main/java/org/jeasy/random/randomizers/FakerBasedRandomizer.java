@@ -23,7 +23,9 @@
  */
 package org.jeasy.random.randomizers;
 
-import com.github.javafaker.Faker;
+import io.github.serpro69.kfaker.Faker;
+import io.github.serpro69.kfaker.FakerConfig;
+import io.github.serpro69.kfaker.FakerConfigBuilder;
 import org.jeasy.random.api.Randomizer;
 
 import java.util.Locale;
@@ -36,10 +38,14 @@ import java.util.Locale;
  */
 public abstract class FakerBasedRandomizer<T> extends AbstractRandomizer<T> {
 
+    protected final Locale locale;
     protected final Faker faker;
+    private FakerConfig.Builder configBuilder = FakerConfig.builder();
 
     protected FakerBasedRandomizer() {
-        faker = new Faker(Locale.ENGLISH);
+        this.locale = Locale.ENGLISH;
+        configBuilder.withLocale(locale.toString());
+        faker = new Faker(configBuilder.build());
     }
 
     protected FakerBasedRandomizer(final long seed) {
@@ -48,6 +54,9 @@ public abstract class FakerBasedRandomizer<T> extends AbstractRandomizer<T> {
 
     protected FakerBasedRandomizer(final long seed, final Locale locale) {
         super(seed);
-        faker = new Faker(locale, random);
+        this.locale = locale;
+        configBuilder.withLocale(locale.toString());
+        configBuilder.withRandomSeed(seed);
+        faker = new Faker(configBuilder.build());
     }
 }

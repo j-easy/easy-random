@@ -75,7 +75,7 @@ public class EmailRandomizer extends FakerBasedRandomizer<String> {
 
     @Override
     public String getRandomValue() {
-        return safe ? faker.internet().safeEmailAddress() : faker.internet().emailAddress();
+        return safe ? faker.getInternet().safeEmail() : faker.getInternet().email();
     }
 
 }

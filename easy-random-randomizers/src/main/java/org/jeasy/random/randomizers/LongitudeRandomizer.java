@@ -61,6 +61,15 @@ public class LongitudeRandomizer extends FakerBasedRandomizer<String> {
 
     @Override
     public String getRandomValue() {
-        return faker.address().longitude();
+        StringBuilder sb = new StringBuilder();
+        int longitude = faker.getRandom().nextInt(-180, 180);
+        sb.append(longitude);
+        sb.append(".");
+        if (longitude != -180 && longitude != 180) {
+            sb.append(faker.getString().numerify("######"));
+        } else {
+            sb.append("000000");
+        }
+        return sb.toString();
     }
 }

@@ -61,6 +61,6 @@ public class ZipCodeRandomizer extends FakerBasedRandomizer<String> {
 
     @Override
     public String getRandomValue() {
-        return faker.address().zipCode();
+        return faker.getAddress().postcode();
     }
 }

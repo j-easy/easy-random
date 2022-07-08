@@ -61,6 +61,6 @@ public class IsbnRandomizer extends FakerBasedRandomizer<String> {
 
     @Override
     public String getRandomValue() {
-        return faker.code().isbn13();
+        return faker.getBarcode().isbn();
     }
 }

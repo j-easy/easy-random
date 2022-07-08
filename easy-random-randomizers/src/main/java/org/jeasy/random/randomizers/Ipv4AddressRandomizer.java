@@ -64,7 +64,20 @@ public class Ipv4AddressRandomizer extends FakerBasedRandomizer<String> {
 
     @Override
     public String getRandomValue() {
-        return faker.internet().ipV4Address();
+        StringBuilder sb = new StringBuilder();
+        for (int i = 0; i < 3; i++) {
+            sb.append(addr());
+            sb.append(".");
+        }
+        sb.append(addr());
+        return sb.toString();
     }
 
+    private Integer addr() {
+        return faker.getRandom().nextInt(0, 255);
+    }
+
+    public static void main(String[] args) {
+        System.out.println(new Ipv4AddressRandomizer().getRandomValue());
+    }
 }

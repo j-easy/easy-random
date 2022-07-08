@@ -25,6 +25,7 @@ package org.jeasy.random.randomizers;
 
 import org.jeasy.random.api.Randomizer;
 
+import java.util.List;
 import java.util.Locale;
 
 /**
@@ -33,6 +34,8 @@ import java.util.Locale;
  * @author Michael Düsterhus
  */
 public class MacAddressRandomizer extends FakerBasedRandomizer<String> {
+
+    private List<String> chars = List.of("a", "b", "c", "d", "e", "f");
 
     /**
      * Create a new {@link MacAddressRandomizer}.
@@ -43,8 +46,7 @@ public class MacAddressRandomizer extends FakerBasedRandomizer<String> {
     /**
      * Create a new {@link MacAddressRandomizer}.
      *
-     * @param seed
-     *          the initial seed
+     * @param seed the initial seed
      */
     public MacAddressRandomizer(long seed) {
         super(seed);
@@ -53,10 +55,8 @@ public class MacAddressRandomizer extends FakerBasedRandomizer<String> {
     /**
      * Create a new {@link MacAddressRandomizer}.
      *
-     * @param seed
-     *          the initial seed
-     * @param locale
-     *          the locale to use
+     * @param seed   the initial seed
+     * @param locale the locale to use
      */
     public MacAddressRandomizer(final long seed, final Locale locale) {
         super(seed, locale);
@@ -64,7 +64,26 @@ public class MacAddressRandomizer extends FakerBasedRandomizer<String> {
 
     @Override
     public String getRandomValue() {
-        return faker.internet().macAddress();
+        StringBuilder sb = new StringBuilder();
+        for (int i = 0; i < 5; i++) {
+            sb.append(randomChar());
+            sb.append(randomChar());
+            sb.append(":");
+        }
+        sb.append(randomChar());
+        sb.append(randomChar());
+        return sb.toString();
     }
 
+    private String randomChar() {
+        if (number()) {
+            return String.valueOf(faker.getRandom().nextInt(0, 9));
+        } else {
+            return faker.getRandom().randomValue(chars);
+        }
+    }
+
+    private Boolean number() {
+        return faker.getRandom().nextBoolean();
+    }
 }

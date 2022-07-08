@@ -61,7 +61,7 @@ public class CountryRandomizer extends FakerBasedRandomizer<String> {
 
     @Override
     public String getRandomValue() {
-        return faker.address().country();
+        return faker.getAddress().country();
     }
 
 }

@@ -25,6 +25,7 @@ package org.jeasy.random.randomizers;
 
 import org.jeasy.random.api.Randomizer;
 
+import java.util.List;
 import java.util.Locale;
 
 /**
@@ -61,6 +62,20 @@ public class ParagraphRandomizer extends FakerBasedRandomizer<String> {
 
     @Override
     public String getRandomValue() {
-        return faker.lorem().paragraph();
+        int length = faker.getRandom().nextInt(50, 500);
+        StringBuilder sb = new StringBuilder();
+        for (int i = 0; i <= length; i++) {
+            sb.append(word());
+            if (i % faker.getRandom().nextInt(6, 12) == faker.getRandom().nextInt(3, 6)) {
+                sb.append(".");
+            }
+            sb.append(" ");
+        }
+        sb.append(".");
+        return sb.toString();
+    }
+
+    private String word() {
+        return faker.getRandom().randomValue(List.of(faker.getLorem().words(), faker.getLorem().supplemental()));
     }
 }

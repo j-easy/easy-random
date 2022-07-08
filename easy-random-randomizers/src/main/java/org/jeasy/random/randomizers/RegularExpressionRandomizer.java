@@ -55,7 +55,7 @@ public class RegularExpressionRandomizer extends FakerBasedRandomizer<String> {
 
     @Override
     public String getRandomValue() {
-        return faker.regexify(removeLeadingAndTailingBoundaryMatchers(regularExpression));
+        return faker.getString().regexify(removeLeadingAndTailingBoundaryMatchers(regularExpression));
     }
 
     private static String removeLeadingAndTailingBoundaryMatchers(String regularExpression) {

@@ -61,6 +61,6 @@ public class WordRandomizer extends FakerBasedRandomizer<String> {
 
     @Override
     public String getRandomValue() {
-        return faker.lorem().word();
+        return faker.getLorem().words();
     }
 }

@@ -61,6 +61,6 @@ public class CityRandomizer extends FakerBasedRandomizer<String> {
 
     @Override
     public String getRandomValue() {
-        return faker.address().city();
+        return faker.getAddress().city();
     }
 }

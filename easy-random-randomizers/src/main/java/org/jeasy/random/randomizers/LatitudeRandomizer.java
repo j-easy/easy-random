@@ -61,6 +61,19 @@ public class LatitudeRandomizer extends FakerBasedRandomizer<String> {
 
     @Override
     public String getRandomValue() {
-        return faker.address().latitude();
+        StringBuilder sb = new StringBuilder();
+        int latitude = faker.getRandom().nextInt(-90, 90);
+        sb.append(latitude);
+        sb.append(".");
+        if (latitude != -90 && latitude != 90) {
+            sb.append(faker.getString().numerify("######"));
+        } else {
+            sb.append("000000");
+        }
+        return sb.toString();
+    }
+
+    public static void main(String[] args) {
+        System.out.println(new LatitudeRandomizer().getRandomValue());
     }
 }

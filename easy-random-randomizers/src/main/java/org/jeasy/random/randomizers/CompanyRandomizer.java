@@ -61,6 +61,6 @@ public class CompanyRandomizer extends FakerBasedRandomizer<String> {
 
     @Override
     public String getRandomValue() {
-        return faker.company().name();
+        return faker.getCompany().name();
     }
 }

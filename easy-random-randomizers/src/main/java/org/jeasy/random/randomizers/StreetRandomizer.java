@@ -61,7 +61,7 @@ public class StreetRandomizer extends FakerBasedRandomizer<String> {
 
     @Override
     public String getRandomValue() {
-        return faker.address().streetName();
+        return faker.getAddress().streetName();
     }
 
 }

@@ -61,6 +61,6 @@ public class PhoneNumberRandomizer extends FakerBasedRandomizer<String> {
 
     @Override
     public String getRandomValue() {
-        return faker.phoneNumber().phoneNumber();
+        return faker.getPhoneNumber().phoneNumber();
     }
 }

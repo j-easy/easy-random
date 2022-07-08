@@ -61,6 +61,6 @@ public class LastNameRandomizer extends FakerBasedRandomizer<String> {
 
     @Override
     public String getRandomValue() {
-        return faker.name().lastName();
+        return faker.getName().lastName();
     }
 }

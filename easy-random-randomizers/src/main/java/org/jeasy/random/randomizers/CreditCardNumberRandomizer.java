@@ -61,6 +61,6 @@ public class CreditCardNumberRandomizer extends FakerBasedRandomizer<String> {
 
     @Override
     public String getRandomValue() {
-        return faker.business().creditCardNumber();
+        return faker.getBusiness().creditCardNumbers();
     }
 }
