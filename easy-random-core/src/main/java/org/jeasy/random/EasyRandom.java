@@ -101,7 +101,7 @@ public class EasyRandom extends Random {
         if (type.isRecord()) {
             return createRandomRecord(type);
         } else {
-            return doPopulateBean(type, new RandomizationContext(type, parameters));
+            return doPopulateBean(type, new RandomizationContext(type, parameters, randomizerProvider));
         }
     }
 

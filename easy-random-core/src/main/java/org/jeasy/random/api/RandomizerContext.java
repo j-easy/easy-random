@@ -70,4 +70,10 @@ public interface RandomizerContext {
      */
     EasyRandomParameters getParameters();
 
+    /**
+     * Return the currently used {@link RandomizerProvider} by the enclosing {@link EasyRandom}.
+     * @return currently build and used randomizer provider
+     */
+    RandomizerProvider getRandomizerProvider();
+
 }

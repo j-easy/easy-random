@@ -57,7 +57,7 @@ public class RandomizationContextTest {
 
     @BeforeEach
     void setUp() {
-        randomizationContext = new RandomizationContext(Object.class, parameters);
+        randomizationContext = new RandomizationContext(Object.class, parameters, null);
     }
 
     @Test
@@ -120,7 +120,7 @@ public class RandomizationContextTest {
     void whenCurrentStackSizeOverMaxRandomizationDepth_thenShouldExceedRandomizationDepth() throws NoSuchFieldException {
         // Given
         when(parameters.getRandomizationDepth()).thenReturn(1);
-        RandomizationContext customRandomizationContext = new RandomizationContext(Object.class, parameters);
+        RandomizationContext customRandomizationContext = new RandomizationContext(Object.class, parameters, null);
         Field address = Person.class.getDeclaredField("address");
         customRandomizationContext.pushStackItem(new RandomizationContextStackItem(bean1, address));
         customRandomizationContext.pushStackItem(new RandomizationContextStackItem(bean2, address));
@@ -136,7 +136,7 @@ public class RandomizationContextTest {
     void whenCurrentStackSizeLessMaxRandomizationDepth_thenShouldNotExceedRandomizationDepth() throws NoSuchFieldException {
         // Given
         when(parameters.getRandomizationDepth()).thenReturn(2);
-        RandomizationContext customRandomizationContext = new RandomizationContext(Object.class, parameters);
+        RandomizationContext customRandomizationContext = new RandomizationContext(Object.class, parameters, null);
         Field address = Person.class.getDeclaredField("address");
         customRandomizationContext.pushStackItem(new RandomizationContextStackItem(bean1, address));
 
@@ -151,7 +151,7 @@ public class RandomizationContextTest {
     void whenCurrentStackSizeEqualMaxRandomizationDepth_thenShouldNotExceedRandomizationDepth() throws NoSuchFieldException {
         // Given
         when(parameters.getRandomizationDepth()).thenReturn(2);
-        RandomizationContext customRandomizationContext = new RandomizationContext(Object.class, parameters);
+        RandomizationContext customRandomizationContext = new RandomizationContext(Object.class, parameters, null);
         Field address = Person.class.getDeclaredField("address");
         customRandomizationContext.pushStackItem(new RandomizationContextStackItem(bean1, address));
         customRandomizationContext.pushStackItem(new RandomizationContextStackItem(bean2, address));

@@ -238,7 +238,7 @@ class EasyRandomTest {
             assertThat(testBean.getException()).isNotNull();
             assertThat(testBean.getClazz()).isNull();
         } catch (Exception e) {
-            fail("Should skip fields of type Class");
+            fail("Should skip fields of type Class", e);
         }
     }
 

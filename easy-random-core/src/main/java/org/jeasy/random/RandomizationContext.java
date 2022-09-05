@@ -24,6 +24,7 @@
 package org.jeasy.random;
 
 import org.jeasy.random.api.RandomizerContext;
+import org.jeasy.random.api.RandomizerProvider;
 
 import java.lang.reflect.Field;
 import java.util.*;
@@ -38,6 +39,8 @@ import static java.util.stream.Collectors.toList;
  */
 class RandomizationContext implements RandomizerContext {
 
+    private final RandomizerProvider randomizerProvider;
+
     private final EasyRandomParameters parameters;
 
     private final Map<Class<?>, List<Object>> populatedBeans;
@@ -50,12 +53,13 @@ class RandomizationContext implements RandomizerContext {
 
     private Object rootObject;
 
-    RandomizationContext(final Class<?> type, final EasyRandomParameters parameters) {
+    RandomizationContext(final Class<?> type, final EasyRandomParameters parameters, RandomizerProvider randomizerProvider) {
         this.type = type;
         populatedBeans = new IdentityHashMap<>();
         stack = new Stack<>();
         this.parameters = parameters;
         this.random = new Random(parameters.getSeed());
+        this.randomizerProvider = randomizerProvider;
     }
 
     void addPopulatedBean(final Class<?> type, Object object) {
@@ -146,5 +150,10 @@ class RandomizationContext implements RandomizerContext {
     @Override
     public EasyRandomParameters getParameters() {
         return parameters;
+    }
+
+    @Override
+    public RandomizerProvider getRandomizerProvider() {
+        return randomizerProvider;
     }
 }

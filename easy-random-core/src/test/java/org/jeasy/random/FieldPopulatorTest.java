@@ -85,7 +85,7 @@ class FieldPopulatorTest {
         Field name = Human.class.getDeclaredField("name");
         Human human = new Human();
         randomizer = new SkipRandomizer();
-        RandomizationContext context = new RandomizationContext(Human.class, new EasyRandomParameters());
+        RandomizationContext context = new RandomizationContext(Human.class, new EasyRandomParameters(), null);
         when(randomizerProvider.getRandomizerByField(name, context)).thenReturn(randomizer);
 
         // When
@@ -100,7 +100,7 @@ class FieldPopulatorTest {
         // Given
         Field name = Human.class.getDeclaredField("name");
         Human human = new Human();
-        RandomizationContext context = new RandomizationContext(Human.class, new EasyRandomParameters());
+        RandomizationContext context = new RandomizationContext(Human.class, new EasyRandomParameters(), null);
         when(randomizerProvider.getRandomizerByField(name, context)).thenReturn(randomizer);
         when(randomizer.getRandomValue()).thenReturn(NAME);
 
@@ -116,7 +116,7 @@ class FieldPopulatorTest {
         // Given
         Field name = Human.class.getDeclaredField("name");
         Human human = new Human();
-        RandomizationContext context = new RandomizationContext(Human.class, new EasyRandomParameters());
+        RandomizationContext context = new RandomizationContext(Human.class, new EasyRandomParameters(), null);
         final Human[] currentObjectFromContext = new Human[1];
         when(randomizerProvider.getRandomizerByField(name, context)).thenReturn(contextAwareRandomizer);
         when(contextAwareRandomizer.getRandomValue()).thenReturn(NAME);
@@ -138,7 +138,7 @@ class FieldPopulatorTest {
         Field strings = ArrayBean.class.getDeclaredField("strings");
         ArrayBean arrayBean = new ArrayBean();
         String[] object = new String[0];
-        RandomizationContext context = new RandomizationContext(ArrayBean.class, new EasyRandomParameters());
+        RandomizationContext context = new RandomizationContext(ArrayBean.class, new EasyRandomParameters(), null);
         when(arrayPopulator.getRandomArray(strings.getType(), context)).thenReturn(object);
 
         // When
@@ -154,7 +154,7 @@ class FieldPopulatorTest {
         Field strings = CollectionBean.class.getDeclaredField("typedCollection");
         CollectionBean collectionBean = new CollectionBean();
         Collection<Person> persons = Collections.emptyList();
-        RandomizationContext context = new RandomizationContext(CollectionBean.class, new EasyRandomParameters());
+        RandomizationContext context = new RandomizationContext(CollectionBean.class, new EasyRandomParameters(), null);
 
         // When
         fieldPopulator.populateField(collectionBean, strings, context);
@@ -169,7 +169,7 @@ class FieldPopulatorTest {
         Field strings = MapBean.class.getDeclaredField("typedMap");
         MapBean mapBean = new MapBean();
         Map<Integer, Person> idToPerson = new HashMap<>();
-        RandomizationContext context = new RandomizationContext(MapBean.class, new EasyRandomParameters());
+        RandomizationContext context = new RandomizationContext(MapBean.class, new EasyRandomParameters(), null);
 
         // When
         fieldPopulator.populateField(mapBean, strings, context);
