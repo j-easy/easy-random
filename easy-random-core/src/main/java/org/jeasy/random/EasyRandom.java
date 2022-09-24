@@ -83,7 +83,8 @@ public class EasyRandom extends Random {
         enumRandomizersByType = new ConcurrentHashMap<>();
         fieldPopulator = new FieldPopulator(this,
                 this.randomizerProvider, arrayPopulator,
-                collectionPopulator, mapPopulator, optionalPopulator);
+                collectionPopulator, mapPopulator, optionalPopulator,
+                easyRandomParameters.getTypeResolver());
         exclusionPolicy = easyRandomParameters.getExclusionPolicy();
         parameters = easyRandomParameters;
     }

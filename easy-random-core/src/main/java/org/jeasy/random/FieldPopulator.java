@@ -27,6 +27,7 @@ import java.lang.reflect.ParameterizedType;
 import java.lang.reflect.TypeVariable;
 import java.util.List;
 
+import org.jeasy.random.api.TypeResolver;
 import org.jeasy.random.api.ContextAwareRandomizer;
 import org.jeasy.random.api.Randomizer;
 import org.jeasy.random.api.RandomizerProvider;
@@ -64,15 +65,19 @@ class FieldPopulator {
 
     private final RandomizerProvider randomizerProvider;
 
+    private final TypeResolver typeResolver;
+
     FieldPopulator(final EasyRandom easyRandom, final RandomizerProvider randomizerProvider,
                    final ArrayPopulator arrayPopulator, final CollectionPopulator collectionPopulator,
-                   final MapPopulator mapPopulator, OptionalPopulator optionalPopulator) {
+                   final MapPopulator mapPopulator, OptionalPopulator optionalPopulator,
+                   final TypeResolver typeResolver) {
         this.easyRandom = easyRandom;
         this.randomizerProvider = randomizerProvider;
         this.arrayPopulator = arrayPopulator;
         this.collectionPopulator = collectionPopulator;
         this.mapPopulator = mapPopulator;
         this.optionalPopulator = optionalPopulator;
+        this.typeResolver = typeResolver;
     }
 
     void populateField(final Object target, final Field field, final RandomizationContext context) throws IllegalAccessException {
@@ -143,7 +148,7 @@ class FieldPopulator {
             return optionalPopulator.getRandomOptional(field, context);
         } else {
             if (context.getParameters().isScanClasspathForConcreteTypes() && isAbstract(fieldType) && !isEnumType(fieldType) /*enums can be abstract, but cannot inherit*/) {
-                List<Class<?>> parameterizedTypes = filterSameParameterizedTypes(getPublicConcreteSubTypesOf(fieldType), fieldGenericType);
+                List<Class<?>> parameterizedTypes = filterSameParameterizedTypes(typeResolver.getPublicConcreteSubTypesOf(fieldType), fieldGenericType);
                 if (parameterizedTypes.isEmpty()) {
                     throw new ObjectCreationException("Unable to find a matching concrete subtype of type: " + fieldType);
                 } else {
