@@ -26,10 +26,7 @@ package org.jeasy.random.util;
 import java.lang.reflect.Array;
 import java.math.BigDecimal;
 import java.math.BigInteger;
-import java.time.LocalDate;
-import java.time.LocalDateTime;
-import java.time.LocalTime;
-import java.time.ZoneOffset;
+import java.time.*;
 import java.time.format.DateTimeFormatter;
 import java.util.Date;
 import java.util.stream.Stream;
@@ -65,6 +62,10 @@ public class ConversionUtils {
 			}
 		}
 		return arguments;
+	}
+
+	public static LocalDate convertDateToLocalDate(Date date) {
+		return date.toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
 	}
 
 	private static Object convertArray(Object array, Class<?> targetType) {
