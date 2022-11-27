@@ -56,6 +56,7 @@ import java.util.concurrent.atomic.AtomicInteger;
 import java.util.concurrent.atomic.AtomicLong;
 
 import static java.sql.Date.valueOf;
+import static org.jeasy.random.util.ConversionUtils.convertDateToLocalDate;
 
 /**
  * Registry for Java built-in types.
@@ -93,8 +94,10 @@ public class InternalRandomizerRegistry implements RandomizerRegistry {
         randomizers.put(BigDecimal.class, new BigDecimalRandomizer(seed));
         randomizers.put(AtomicLong.class, new AtomicLongRandomizer(seed));
         randomizers.put(AtomicInteger.class, new AtomicIntegerRandomizer(seed));
-        Date minDate = valueOf(parameters.getDateRange().getMin());
-        Date maxDate = valueOf(parameters.getDateRange().getMax());
+        Date minDate = new Date(Long.MIN_VALUE);
+        Date maxDate = new Date(Long.MAX_VALUE);
+        minDate = convertDateToLocalDate(minDate).isAfter(parameters.getDateRange().getMin())  ? minDate : valueOf(parameters.getDateRange().getMin());
+        maxDate = convertDateToLocalDate(maxDate).isBefore(parameters.getDateRange().getMax()) ? maxDate : valueOf(parameters.getDateRange().getMax());
         randomizers.put(Date.class, new DateRangeRandomizer(minDate, maxDate, seed));
         randomizers.put(java.sql.Date.class, new SqlDateRangeRandomizer(new java.sql.Date(minDate.getTime()), new java.sql.Date(maxDate.getTime()), seed));
         randomizers.put(java.sql.Time.class, new SqlTimeRandomizer(seed));

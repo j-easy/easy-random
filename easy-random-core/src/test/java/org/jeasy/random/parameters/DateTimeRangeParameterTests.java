@@ -51,6 +51,20 @@ class DateTimeRangeParameterTests {
     }
 
     @Test
+    void testDateMaxRange() {
+        // Given
+        LocalDate minDate = LocalDate.MIN;
+        LocalDate maxDate = LocalDate.MAX;
+        EasyRandomParameters parameters = new EasyRandomParameters().dateRange(minDate, maxDate);
+
+        // When
+        TimeBean timeBean = new EasyRandom(parameters).nextObject(TimeBean.class);
+
+        // Then
+        assertThat(timeBean.getLocalDate()).isAfterOrEqualTo(minDate).isBeforeOrEqualTo(maxDate);
+    }
+
+    @Test
     void testTimeRange() {
         // Given
         LocalTime minTime = LocalTime.of(15, 0, 0);

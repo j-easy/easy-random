@@ -65,12 +65,24 @@ public class InstantRangeRandomizer extends AbstractRangeRandomizer<Instant> {
 		return Instant.ofEpochMilli(Long.MAX_VALUE);
     }
 
-    @Override
-    public Instant getRandomValue() {
-		long minEpochMillis = min.toEpochMilli();
-		long maxEpochMillis = max.toEpochMilli();
+	@Override
+	public Instant getRandomValue() {
+		long minEpochMillis;
+		long maxEpochMillis;
+		try {
+			minEpochMillis = min.toEpochMilli();
+		} catch (ArithmeticException ex) {
+			minEpochMillis = Long.MIN_VALUE;
+		}
+
+		try {
+			maxEpochMillis = max.toEpochMilli();
+		} catch (ArithmeticException ex) {
+			maxEpochMillis = Long.MAX_VALUE;
+		}
+
 		long randomEpochMillis = (long) nextDouble(minEpochMillis, maxEpochMillis);
 		return Instant.ofEpochMilli(randomEpochMillis);
-    }
+	}
 
 }
