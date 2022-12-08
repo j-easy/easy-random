@@ -81,7 +81,8 @@ public class BigDecimalRangeRandomizer implements Randomizer<BigDecimal> {
      * @param roundingMode of the {@code BigDecimal} value to be returned.
      */
     public BigDecimalRangeRandomizer(final Double min, final Double max, final Integer scale, final RoundingMode roundingMode) {
-        delegate = new DoubleRangeRandomizer(min, max, scale);
+        delegate = new DoubleRangeRandomizer(min, max);
+        this.scale = scale;
         this.roundingMode = roundingMode;
     }
 
