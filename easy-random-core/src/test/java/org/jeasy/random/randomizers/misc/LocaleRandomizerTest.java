@@ -27,10 +27,8 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 import java.math.BigDecimal;
 import java.util.Locale;
-
-import org.junit.jupiter.api.Test;
-
 import org.jeasy.random.randomizers.AbstractRandomizerTest;
+import org.junit.jupiter.api.Test;
 
 class LocaleRandomizerTest extends AbstractRandomizerTest<Locale> {
 
@@ -42,8 +40,16 @@ class LocaleRandomizerTest extends AbstractRandomizerTest<Locale> {
     @Test
     void shouldGenerateTheSameValueForTheSameSeed() {
         BigDecimal javaVersion = new BigDecimal(System.getProperty("java.specification.version"));
-        if (javaVersion.compareTo(new BigDecimal("14")) >= 0) {
-            assertThat(new LocaleRandomizer(SEED).getRandomValue()).isEqualTo(new Locale("rn", "BI"));
+        if (javaVersion.compareTo(new BigDecimal("18")) >= 0) {
+            assertThat(new LocaleRandomizer(SEED).getRandomValue()).isEqualTo(new Locale("mni", ""));
+        } else if (javaVersion.compareTo(new BigDecimal("17")) >= 0) {
+            assertThat(new LocaleRandomizer(SEED).getRandomValue()).isEqualTo(new Locale("en", "CA"));
+        } else if (javaVersion.compareTo(new BigDecimal("16")) >= 0) {
+            assertThat(new LocaleRandomizer(SEED).getRandomValue()).isEqualTo(new Locale("en", "CA"));
+        } else if (javaVersion.compareTo(new BigDecimal("15")) >= 0) {
+            assertThat(new LocaleRandomizer(SEED).getRandomValue()).isEqualTo(new Locale("en", "CA"));
+        } else if (javaVersion.compareTo(new BigDecimal("14")) >= 0) {
+            assertThat(new LocaleRandomizer(SEED).getRandomValue()).isEqualTo(new Locale("en", "CA"));
         } else if (javaVersion.compareTo(new BigDecimal("13")) >= 0) {
             assertThat(new LocaleRandomizer(SEED).getRandomValue()).isEqualTo(new Locale("zh", "CN"));
         } else if (javaVersion.compareTo(new BigDecimal("11")) >= 0) {

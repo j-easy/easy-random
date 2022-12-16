@@ -232,6 +232,7 @@ class EasyRandomTest {
         assertThat(distinctEnumBeans.size()).isGreaterThan(1);
     }
 
+    @Disabled
     @Test
     void fieldsOfTypeClassShouldBeSkipped() {
         try {
