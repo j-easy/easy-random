@@ -83,7 +83,8 @@ public class EasyRandom extends Random {
         enumRandomizersByType = new ConcurrentHashMap<>();
         fieldPopulator = new FieldPopulator(this,
                 this.randomizerProvider, arrayPopulator,
-                collectionPopulator, mapPopulator, optionalPopulator);
+                collectionPopulator, mapPopulator, optionalPopulator,
+                easyRandomParameters.getTypeResolver());
         exclusionPolicy = easyRandomParameters.getExclusionPolicy();
         parameters = easyRandomParameters;
     }
@@ -97,7 +98,7 @@ public class EasyRandom extends Random {
      * @throws ObjectCreationException when unable to create a new instance of the given type
      */
     public <T> T nextObject(final Class<T> type) {
-        return doPopulateBean(type, new RandomizationContext(type, parameters));
+        return doPopulateBean(type, new RandomizationContext(type, parameters, randomizerProvider));
     }
 
     /**

@@ -33,6 +33,7 @@ import java.nio.charset.StandardCharsets;
 import java.time.*;
 import java.util.*;
 import java.util.function.Predicate;
+import org.jeasy.random.util.TypeResolverProxy;
 
 import static java.lang.String.format;
 import static java.time.ZonedDateTime.of;
@@ -107,6 +108,7 @@ public class EasyRandomParameters {
     private RandomizerProvider randomizerProvider;
 
     // internal params
+    private final TypeResolverProxy typeResolverProxy;
     private CustomRandomizerRegistry customRandomizerRegistry;
     private ExclusionRandomizerRegistry exclusionRandomizerRegistry;
     private Set<RandomizerRegistry> userRegistries;
@@ -135,7 +137,8 @@ public class EasyRandomParameters {
         fieldExclusionPredicates = new HashSet<>();
         typeExclusionPredicates = new HashSet<>();
         exclusionPolicy = new DefaultExclusionPolicy();
-        objectFactory = new ObjenesisObjectFactory();
+        typeResolverProxy = new TypeResolverProxy();
+        objectFactory = new ObjenesisObjectFactory(typeResolverProxy);
     }
 
     public Range<Integer> getCollectionSizeRange() {
@@ -272,6 +275,13 @@ public class EasyRandomParameters {
 
     Set<RandomizerRegistry> getUserRegistries() {
         return userRegistries;
+    }
+
+    TypeResolver getTypeResolver() {
+        return typeResolverProxy.getTypeResolver();
+    }
+    public void setTypeResolver(final TypeResolver typeResolver) {
+        this.typeResolverProxy.setTypeResolver(typeResolver);
     }
 
     /**
@@ -551,12 +561,25 @@ public class EasyRandomParameters {
 
     /**
      * Flag to bypass setters if any and use reflection directly instead. False by default.
-     * 
+     *
      * @param bypassSetters true if setters should be ignored
      * @return the current {@link EasyRandomParameters} instance for method chaining
      */
     public EasyRandomParameters bypassSetters(boolean bypassSetters) {
         setBypassSetters(bypassSetters);
+        return this;
+    }
+
+    /**
+     * Defines how concrete types will be resolved. Setting this will also set
+     * {@link #scanClasspathForConcreteTypes(boolean)} to true.
+     *
+     * @param typeResolver the concrete type resolver
+     * @return the current {@link EasyRandomParameters} instance for method chaining
+     */
+    public EasyRandomParameters typeResolver(final TypeResolver typeResolver) {
+        setTypeResolver(typeResolver);
+        scanClasspathForConcreteTypes(true);
         return this;
     }
 
@@ -618,6 +641,7 @@ public class EasyRandomParameters {
         copy.userRegistries = this.getUserRegistries();
         copy.fieldExclusionPredicates = this.getFieldExclusionPredicates();
         copy.typeExclusionPredicates = this.getTypeExclusionPredicates();
+        copy.setTypeResolver(this.getTypeResolver());
         return copy;
     }
 }
