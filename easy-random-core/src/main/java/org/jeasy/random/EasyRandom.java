@@ -27,11 +27,14 @@ import org.jeasy.random.api.*;
 import org.jeasy.random.randomizers.misc.EnumRandomizer;
 import org.jeasy.random.util.ReflectionUtils;
 
+import java.lang.reflect.Constructor;
 import java.lang.reflect.Field;
+import java.lang.reflect.RecordComponent;
 import java.util.*;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.stream.Stream;
 
+import static java.util.Arrays.asList;
 import static org.jeasy.random.util.ReflectionUtils.*;
 
 /**
@@ -82,7 +85,7 @@ public class EasyRandom extends Random {
         OptionalPopulator optionalPopulator = new OptionalPopulator(this);
         enumRandomizersByType = new ConcurrentHashMap<>();
         fieldPopulator = new FieldPopulator(this,
-                this.randomizerProvider, arrayPopulator,
+            this.randomizerProvider, arrayPopulator,
                 collectionPopulator, mapPopulator, optionalPopulator,
                 easyRandomParameters.getTypeResolver());
         exclusionPolicy = easyRandomParameters.getExclusionPolicy();
@@ -125,7 +128,6 @@ public class EasyRandom extends Random {
 
         T result;
         try {
-
             Randomizer<?> randomizer = randomizerProvider.getRandomizerByType(type, context);
             if (randomizer != null) {
                 if (randomizer instanceof ContextAwareRandomizer) {
@@ -143,35 +145,62 @@ public class EasyRandom extends Random {
             if (context.hasAlreadyRandomizedType(type)) {
                 return (T) context.getPopulatedBean(type);
             }
-
-            // create a new instance of the target type
-            result = objectFactory.createInstance(type, context);
-            context.setRandomizedObject(result);
-
-            // cache instance in the population context
-            context.addPopulatedBean(type, result);
-
-            // retrieve declared and inherited fields
-            List<Field> fields = getDeclaredFields(result);
-            // we cannot use type here, because with classpath scanning enabled the result can be a subtype
-            fields.addAll(getInheritedFields(result.getClass()));
-
-            // inner classes (and static nested classes) have a field named "this$0" that references the enclosing class.
-            // This field should be excluded
-            if (type.getEnclosingClass() != null) {
-                fields.removeIf(field -> field.getName().equals("this$0"));
-            }
-
-            // populate fields with random data
-            populateFields(fields, result, context);
-
-            return result;
+            return this.isRecord(type)
+                ? this.randomizeRecord(type, context)
+                : this.randomizeClass(type, context);
         } catch (Throwable e) {
             if (parameters.isIgnoreRandomizationErrors()) {
                 return null;
             } else {
                 throw new ObjectCreationException("Unable to create a random instance of type " + type, e);
             }
+        }
+    }
+
+    /**
+     * Generates a new object of a class of type T with random values generated according to the defined EasyRandomParameters
+     * @param type type of the class an object is created for
+     * @param context the current randomizationContext to use for data creation
+     * @return created object with random data
+     * @param <T> type of the object to create
+     * @throws IllegalAccessException
+     */
+    private <T> T randomizeClass(Class<T> type, RandomizationContext context) throws IllegalAccessException {
+        T result;
+        // create a new instance of the target type
+        result = objectFactory.createInstance(type, context);
+        context.setRandomizedObject(result);
+
+        // cache instance in the population context
+        context.addPopulatedBean(type, result);
+
+        // retrieve declared and inherited fields
+        List<Field> fields = getDeclaredFields(result);
+        // we cannot use type here, because with classpath scanning enabled the result can be a subtype
+        fields.addAll(getInheritedFields(result.getClass()));
+
+        // inner classes (and static nested classes) have a field named "this$0" that references the enclosing class.
+        // This field should be excluded
+        if (type.getEnclosingClass() != null) {
+            fields.removeIf(field -> field.getName().equals("this$0"));
+        }
+
+        // populate fields with random data
+        populateFields(fields, result, context);
+        return result;
+    }
+
+    private <T> T randomizeRecord(Class<T> recordType, RandomizationContext context) {
+        // create random values for all defined fields 
+        var randomFieldValues = getDeclaredFieldsForClazz(recordType).stream()
+            .map(field -> fieldPopulator.populateField(field.getType(), field, context))
+            .toArray();
+
+        // create a random instance with the previously created random values
+        try {
+            return this.getCanonicalConstructor(recordType).newInstance(randomFieldValues);
+        } catch (Exception e) {
+            throw new ObjectCreationException("Unable to create a random instance of recordType " + recordType, e);
         }
     }
 
@@ -205,7 +234,7 @@ public class EasyRandom extends Random {
             return;
         }
         if (!parameters.isOverrideDefaultInitialization() && getFieldValue(result, field) != null && !isPrimitiveFieldWithDefaultValue(result, field)) {
-          return;
+            return;
         }
         fieldPopulator.populateField(result, field, context);
     }
@@ -225,5 +254,32 @@ public class EasyRandom extends Random {
         ServiceLoader.load(RandomizerRegistry.class).forEach(registries::add);
         return registries;
     }
+    
+    private <T> Constructor<T> getCanonicalConstructor(Class<T> recordType) {
+        RecordComponent[] recordComponents = recordType.getRecordComponents();
+        Class<?>[] componentTypes = new Class<?>[recordComponents.length];
+        for (int i = 0; i < recordComponents.length; i++) {
+            // recordComponents are ordered, see javadoc:
+            // "The components are returned in the same order that they are declared
+            // in the record header"
+            componentTypes[i] = recordComponents[i].getType();
+        }
+        try {
+            return recordType.getDeclaredConstructor(componentTypes);
+        } catch (NoSuchMethodException e) {
+            // should not happen, from Record javadoc:
+            // "A record class has the following mandated members: a public canonical
+            // constructor ,
+            // whose descriptor is the same as the record descriptor;"
+            throw new RuntimeException("Invalid record definition", e);
+        }
+    }
 
+    private <T> boolean isRecord(final Class<T> type) {
+        return type.isRecord();
+    }
+
+    private static <T> List<Field> getDeclaredFieldsForClazz(Class<T> type) {
+        return new ArrayList<>(asList(type.getDeclaredFields()));
+    }
 }

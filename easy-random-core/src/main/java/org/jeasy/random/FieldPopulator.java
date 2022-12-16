@@ -68,7 +68,7 @@ class FieldPopulator {
     private final TypeResolver typeResolver;
 
     FieldPopulator(final EasyRandom easyRandom, final RandomizerProvider randomizerProvider,
-                   final ArrayPopulator arrayPopulator, final CollectionPopulator collectionPopulator,
+        final ArrayPopulator arrayPopulator, final CollectionPopulator collectionPopulator,
                    final MapPopulator mapPopulator, OptionalPopulator optionalPopulator,
                    final TypeResolver typeResolver) {
         this.easyRandom = easyRandom;
@@ -78,6 +78,43 @@ class FieldPopulator {
         this.mapPopulator = mapPopulator;
         this.optionalPopulator = optionalPopulator;
         this.typeResolver = typeResolver;
+    }
+
+    /**
+     * Generates a random value based on the passed arguments and returns this generated value of type T
+     * @param target class type of the return value
+     * @param field field information of the value to create
+     * @param context randomizationContext to use for the random value creation
+     * @return generated random value
+     * @param <T> type of return value
+     */
+    <T> T populateField(final Class<T> target, final Field field, final RandomizationContext context) {
+        Randomizer<?> randomizer = getRandomizer(field, context);
+        if (randomizer instanceof SkipRandomizer) {
+            return null;
+        }
+        context.pushStackItem(new RandomizationContextStackItem(target, field));
+        if (randomizer instanceof ContextAwareRandomizer) {
+            ((ContextAwareRandomizer<?>) randomizer).setRandomizerContext(context);
+        }
+        T value= null;
+        if(!context.hasExceededRandomizationDepth()) {
+
+            if (randomizer != null) {
+                value = (T) randomizer.getRandomValue();
+            } else {
+                try {
+                    value = (T) generateRandomValue(field, context);
+                } catch (ObjectCreationException e) {
+                    String exceptionMessage = String.format("Unable to create type: %s for field: %s of class: %s",
+                        field.getType().getName(), field.getName(), target.getClass().getName());
+                    // FIXME catch ObjectCreationException and throw ObjectCreationException ?
+                    throw new ObjectCreationException(exceptionMessage, e);
+                }
+            }
+        }
+        context.popStackItem();
+        return value;
     }
 
     void populateField(final Object target, final Field field, final RandomizationContext context) throws IllegalAccessException {
@@ -98,7 +135,7 @@ class FieldPopulator {
                     value = generateRandomValue(field, context);
                 } catch (ObjectCreationException e) {
                     String exceptionMessage = String.format("Unable to create type: %s for field: %s of class: %s",
-                          field.getType().getName(), field.getName(), target.getClass().getName());
+                        field.getType().getName(), field.getName(), target.getClass().getName());
                     // FIXME catch ObjectCreationException and throw ObjectCreationException ?
                     throw new ObjectCreationException(exceptionMessage, e);
                 }
@@ -110,7 +147,7 @@ class FieldPopulator {
                     setProperty(target, field, value);
                 } catch (InvocationTargetException e) {
                     String exceptionMessage = String.format("Unable to invoke setter for field %s of class %s",
-                            field.getName(), target.getClass().getName());
+                        field.getName(), target.getClass().getName());
                     throw new ObjectCreationException(exceptionMessage,  e.getCause());
                 }
             }
@@ -189,8 +226,8 @@ class FieldPopulator {
             aClass = Class.forName(typeName);
         } catch (ClassNotFoundException e) {
             String message = String.format("Unable to load class %s of generic field %s in class %s. " +
-                            "Please refer to the documentation as this generic type may not be supported for randomization.",
-                    typeName, field.getName(), field.getDeclaringClass().getName());
+                    "Please refer to the documentation as this generic type may not be supported for randomization.",
+                typeName, field.getName(), field.getDeclaringClass().getName());
             throw new ObjectCreationException(message, e);
         }
         return aClass;
