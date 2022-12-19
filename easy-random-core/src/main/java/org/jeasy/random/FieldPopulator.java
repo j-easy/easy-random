@@ -87,8 +87,12 @@ class FieldPopulator {
      * @param context randomizationContext to use for the random value creation
      * @return generated random value
      * @param <T> type of return value
+     *           
+     * Code reused from method {@link #populateField(Object, Field, RandomizationContext) populateField},
+     * but generated value will be returned instead applying to the passed arguments. So in case the implementation of 
+     * the method below changes, check if this method should be also adapted            
      */
-    <T> T populateField(final Class<T> target, final Field field, final RandomizationContext context) {
+    <T> T generateRandomValue(final Class<T> target, final Field field, final RandomizationContext context) {
         Randomizer<?> randomizer = getRandomizer(field, context);
         if (randomizer instanceof SkipRandomizer) {
             return null;
@@ -99,7 +103,6 @@ class FieldPopulator {
         }
         T value= null;
         if(!context.hasExceededRandomizationDepth()) {
-
             if (randomizer != null) {
                 value = (T) randomizer.getRandomValue();
             } else {

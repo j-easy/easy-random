@@ -193,7 +193,7 @@ public class EasyRandom extends Random {
     private <T> T randomizeRecord(Class<T> recordType, RandomizationContext context) {
         // create random values for all defined fields 
         var randomFieldValues = getDeclaredFieldsForClazz(recordType).stream()
-            .map(field -> fieldPopulator.populateField(field.getType(), field, context))
+            .map(field -> fieldPopulator.generateRandomValue(field.getType(), field, context))
             .toArray();
 
         // create a random instance with the previously created random values
@@ -269,8 +269,7 @@ public class EasyRandom extends Random {
         } catch (NoSuchMethodException e) {
             // should not happen, from Record javadoc:
             // "A record class has the following mandated members: a public canonical
-            // constructor ,
-            // whose descriptor is the same as the record descriptor;"
+            // constructor, whose descriptor is the same as the record descriptor;"
             throw new RuntimeException("Invalid record definition", e);
         }
     }
@@ -280,6 +279,6 @@ public class EasyRandom extends Random {
     }
 
     private static <T> List<Field> getDeclaredFieldsForClazz(Class<T> type) {
-        return new ArrayList<>(asList(type.getDeclaredFields()));
+        return asList(type.getDeclaredFields());
     }
 }
