@@ -21,7 +21,7 @@
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <java.version>17</java.version>
         <junit.version>5.9.3</junit.version>
-        <faker.version>1.0.2</faker.version>
+        <datafaker.version>2.0.1</datafaker.version>
         <assertj.version>3.24.2</assertj.version>
         <validation-api.version>3.0.2</validation-api.version>
         <objenesis.version>3.3</objenesis.version>
@@ -124,9 +124,9 @@
                 <version>${jakarta.el.version}</version>
             </dependency>
             <dependency>
-                <groupId>com.github.javafaker</groupId>
-                <artifactId>javafaker</artifactId>
-                <version>${faker.version}</version>
+                <groupId>net.datafaker</groupId>
+                <artifactId>datafaker</artifactId>
+                <version>${datafaker.version}</version>
             </dependency>
             <dependency>
                 <groupId>org.junit.jupiter</groupId>
