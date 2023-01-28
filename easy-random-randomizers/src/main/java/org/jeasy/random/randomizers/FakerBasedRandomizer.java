@@ -23,13 +23,13 @@
  */
 package org.jeasy.random.randomizers;
 
-import com.github.javafaker.Faker;
+import net.datafaker.Faker;
 import org.jeasy.random.api.Randomizer;
 
 import java.util.Locale;
 
 /**
- * Abstract {@link Randomizer} based on <a href="https://github.com/DiUS/java-faker">Faker</a>.
+ * Abstract {@link Randomizer} based on <a href="https://github.com/datafaker-net/datafaker">Data Faker</a>.
  *
  * @param <T> the element type
  * @author Mahmoud Ben Hassine (mahmoud.benhassine@icloud.com)
