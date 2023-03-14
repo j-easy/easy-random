@@ -32,6 +32,7 @@ import java.lang.annotation.Annotation;
 import java.lang.reflect.*;
 import java.util.*;
 import java.util.concurrent.*;
+import java.util.function.Function;
 import java.util.function.Supplier;
 import java.util.stream.Stream;
 
@@ -51,6 +52,11 @@ import static org.jeasy.random.util.ConversionUtils.convertArguments;
  * @author Mahmoud Ben Hassine (mahmoud.benhassine@icloud.com)
  */
 public final class ReflectionUtils {
+
+    private static final ConcurrentHashMap<Class<?>, List<Class<?>>> typeToConcreteSubTypes = new ConcurrentHashMap<>();
+
+    // NOTE: indirection to avoid loading ClassGraphFacade class too early
+    private static volatile Function<Class<?>, List<Class<?>>> typeToConcreteSubTypesProvider = ReflectionUtils::defaultTypeToConcreteSubTypesProvider;
 
     private ReflectionUtils() {
     }
@@ -402,7 +408,25 @@ public final class ReflectionUtils {
      * @return a list of all concrete subtypes found
      */
     public static <T> List<Class<?>> getPublicConcreteSubTypesOf(final Class<T> type) {
-        return ClassGraphFacade.getPublicConcreteSubTypesOf(type);
+        return typeToConcreteSubTypes.computeIfAbsent(type, typeToConcreteSubTypesProvider);
+    }
+
+    /**
+     * Override the default implementation of ClassGraphFacade for searching the
+     * classpath for any concrete subtype of given interface or abstract class.
+     * 
+     * @param typeToConcreteSubTypesProvider custom implementation
+     */
+    public static void setPublicConcreteSubTypeProvider(
+            final Function<Class<?>, List<Class<?>>> typeToConcreteSubTypesProvider) {
+        if (typeToConcreteSubTypesProvider == null) {
+            throw new IllegalArgumentException();
+        }
+        ReflectionUtils.typeToConcreteSubTypesProvider = typeToConcreteSubTypesProvider;
+    }
+
+    private static List<Class<?>> defaultTypeToConcreteSubTypesProvider(final Class<?> cls) {
+        return ClassGraphFacade.searchForPublicConcreteSubTypesOf(cls);
     }
 
     /**
