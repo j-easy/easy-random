@@ -23,11 +23,11 @@
         <junit.version>5.7.0</junit.version>
         <faker.version>1.0.2</faker.version>
         <assertj.version>3.18.0</assertj.version>
-        <validation-api.version>2.0.1.Final</validation-api.version>
+        <validation-api.version>3.0.2</validation-api.version>
         <objenesis.version>3.1</objenesis.version>
         <classgraph.version>4.8.90</classgraph.version>
-        <hibernate-validator.version>6.1.6.Final</hibernate-validator.version>
-        <javax.el.version>3.0.0</javax.el.version>
+        <hibernate-validator.version>7.0.5.Final</hibernate-validator.version>
+        <jakarta.el.version>5.0.0-M1</jakarta.el.version>
         <mockito.version>3.6.0</mockito.version>
         <maven-surefire-plugin.version>2.22.2</maven-surefire-plugin.version>
         <maven-compiler-plugin.version>3.8.1</maven-compiler-plugin.version>
@@ -98,8 +98,8 @@
                 <version>${project.version}</version>
             </dependency>
             <dependency>
-                <groupId>javax.validation</groupId>
-                <artifactId>validation-api</artifactId>
+                <groupId>jakarta.validation</groupId>
+                <artifactId>jakarta.validation-api</artifactId>
                 <version>${validation-api.version}</version>
             </dependency>
             <dependency>
@@ -114,14 +114,14 @@
                 <optional>true</optional>
             </dependency>
             <dependency>
-                <groupId>org.hibernate</groupId>
+                <groupId>org.hibernate.validator</groupId>
                 <artifactId>hibernate-validator</artifactId>
                 <version>${hibernate-validator.version}</version>
             </dependency>
             <dependency>
                 <groupId>org.glassfish</groupId>
-                <artifactId>javax.el</artifactId>
-                <version>${javax.el.version}</version>
+                <artifactId>jakarta.el</artifactId>
+                <version>${jakarta.el.version}</version>
             </dependency>
             <dependency>
                 <groupId>com.github.javafaker</groupId>

@@ -23,7 +23,7 @@
  */
 package org.jeasy.random.validation;
 
-import javax.validation.constraints.*;
+import jakarta.validation.constraints.*;
 import java.math.BigDecimal;
 import java.time.Instant;
 import java.time.LocalDateTime;

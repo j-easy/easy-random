@@ -231,6 +231,7 @@ class EasyRandomTest {
     }
 
     @Test
+    // this test fails on jdk17
     void fieldsOfTypeClassShouldBeSkipped() {
         try {
             TestBean testBean = easyRandom.nextObject(TestBean.class);
@@ -240,7 +241,7 @@ class EasyRandomTest {
             fail("Should skip fields of type Class");
         }
     }
-    
+
     @Test
     void differentCollectionsShouldBeRandomizedWithDifferentSizes() {
         // given
@@ -248,10 +249,10 @@ class EasyRandomTest {
             List<String> names;
             List<String> addresses;
         }
-        
+
         // when
         Foo foo = new EasyRandom().nextObject(Foo.class);
-        
+
         // then
         assertThat(foo.names.size()).isNotEqualTo(foo.addresses.size());
     }
@@ -278,10 +279,10 @@ class EasyRandomTest {
             T t;
         }
         class Concrete extends Base<String> {}
-        
+
         // when
         Concrete concrete = easyRandom.nextObject(Concrete.class);
-        
+
         // then
         assertThat(concrete.t).isInstanceOf(String.class);
         assertThat(concrete.t).isNotEmpty();
@@ -295,10 +296,10 @@ class EasyRandomTest {
             S s;
         }
         class Concrete extends Base<String, Long> {}
-        
+
         // when
         Concrete concrete = easyRandom.nextObject(Concrete.class);
-        
+
         // then
         assertThat(concrete.t).isInstanceOf(String.class);
         assertThat(concrete.s).isInstanceOf(Long.class);
@@ -324,7 +325,7 @@ class EasyRandomTest {
 
         // when
         Concrete concrete = easyRandom.nextObject(Concrete.class);
-        
+
         // then
         assertThat(concrete.getX().getClass()).isEqualTo(Integer.class);
         assertThat(concrete.getY().getClass()).isEqualTo(String.class);
@@ -348,7 +349,7 @@ class EasyRandomTest {
 
         // when
         Concrete concrete = easyRandom.nextObject(Concrete.class);
-        
+
         // then
         assertThat(concrete.getX().getClass()).isEqualTo(Street.class);
         assertThat(concrete.getY().getClass()).isEqualTo(String.class);
@@ -372,7 +373,7 @@ class EasyRandomTest {
 
         // when
         Concrete concrete = easyRandom.nextObject(Concrete.class);
-        
+
         // then
         assertThat(concrete.getX().getClass()).isEqualTo(BoundedBaseClass.IntWrapper.class);
         assertThat(concrete.getY().getClass()).isEqualTo(String.class);
@@ -410,7 +411,7 @@ class EasyRandomTest {
 
         // when
         Concrete concrete = easyRandom.nextObject(Concrete.class);
-        
+
         // then
         assertThat(concrete.getX()).isInstanceOf(String.class);
         assertThat(concrete.getY()).isInstanceOf(Long.class);

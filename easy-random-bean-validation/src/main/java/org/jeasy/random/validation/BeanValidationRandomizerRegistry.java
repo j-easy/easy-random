@@ -29,7 +29,7 @@ import org.jeasy.random.api.Randomizer;
 import org.jeasy.random.api.RandomizerRegistry;
 import org.jeasy.random.util.ReflectionUtils;
 
-import javax.validation.constraints.*;
+import jakarta.validation.constraints.*;
 import java.lang.annotation.Annotation;
 import java.lang.reflect.Field;
 import java.util.HashMap;
