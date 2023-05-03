@@ -23,7 +23,7 @@
  */
 package org.jeasy.random.validation;
 
-import javax.validation.constraints.Digits;
+import jakarta.validation.constraints.Digits;
 
 import org.jeasy.random.EasyRandomParameters;
 

@@ -31,7 +31,7 @@ import org.jeasy.random.randomizers.text.StringRandomizer;
 import org.jeasy.random.util.ReflectionUtils;
 import org.objenesis.ObjenesisStd;
 
-import javax.validation.constraints.Size;
+import jakarta.validation.constraints.Size;
 import java.lang.reflect.Array;
 import java.lang.reflect.Field;
 import java.lang.reflect.InvocationTargetException;
