@@ -559,6 +559,30 @@ public final class ReflectionUtils {
         return getPublicMethod("is" + capitalizedFieldName, fieldClass);
     }
 
+    /**
+     * Get the canonical constructor of a record
+     * @param recordType the type of the record
+     * @return the canonical constructor of the record
+     * @param <T> the generic type of the record
+     */
+    public static <T> Constructor<T> getCanonicalConstructor(Class<T> recordType) {
+        RecordComponent[] recordComponents = recordType.getRecordComponents();
+        Class<?>[] componentTypes = new Class<?>[recordComponents.length];
+        for (int i = 0; i < recordComponents.length; i++) {
+            // recordComponents are ordered, see javadoc:
+            // "The components are returned in the same order that they are declared in the record header"
+            componentTypes[i] = recordComponents[i].getType();
+        }
+        try {
+            return recordType.getDeclaredConstructor(componentTypes);
+        } catch (NoSuchMethodException e) {
+            // should not happen, from Record javadoc:
+            // "A record class has the following mandated members: a public canonical constructor ,
+            // whose descriptor is the same as the record descriptor;"
+            throw new RuntimeException("Invalid record definition", e);
+        }
+    }
+
     private static String capitalize(String propertyName) {
         return propertyName.substring(0, 1).toUpperCase(ENGLISH) + propertyName.substring(1);
     }

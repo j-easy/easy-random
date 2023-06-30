@@ -28,6 +28,7 @@ import org.jeasy.random.randomizers.misc.EnumRandomizer;
 import org.jeasy.random.util.ReflectionUtils;
 
 import java.lang.reflect.Field;
+import java.lang.reflect.RecordComponent;
 import java.util.*;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.stream.Stream;
@@ -97,7 +98,11 @@ public class EasyRandom extends Random {
      * @throws ObjectCreationException when unable to create a new instance of the given type
      */
     public <T> T nextObject(final Class<T> type) {
-        return doPopulateBean(type, new RandomizationContext(type, parameters));
+        if (type.isRecord()) {
+            return createRandomRecord(type);
+        } else {
+            return doPopulateBean(type, new RandomizationContext(type, parameters));
+        }
     }
 
     /**
@@ -115,6 +120,21 @@ public class EasyRandom extends Random {
         }
 
         return Stream.generate(() -> nextObject(type)).limit(streamSize);
+    }
+
+    private <T> T createRandomRecord(Class<T> recordType) {
+        // generate random values for record components
+        RecordComponent[] recordComponents = recordType.getRecordComponents();
+        Object[] randomValues = new Object[recordComponents.length];
+        for (int i = 0; i < recordComponents.length; i++) {
+            randomValues[i] = this.nextObject(recordComponents[i].getType());
+        }
+        // create a random instance with random values
+        try {
+            return getCanonicalConstructor(recordType).newInstance(randomValues);
+        } catch (Exception e) {
+            throw new ObjectCreationException("Unable to create a random instance of recordType " + recordType, e);
+        }
     }
 
     <T> T doPopulateBean(final Class<T> type, final RandomizationContext context) {
