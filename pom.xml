@@ -14,7 +14,7 @@
     <packaging>pom</packaging>
 
     <name>Easy Random</name>
-    <description>Easy Random is a library to generate random Java beans</description>
+    <description>Easy Random is a library to generate random Java objects</description>
     <url>https://github.com/j-easy/easy-random</url>
 
     <properties>
