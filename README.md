@@ -2,7 +2,7 @@
 
 <div align="center">
     <b><em>Easy Random</em></b><br>
-    The simple, stupid random Java&trade; beans generator
+    The simple, stupid random Java&trade; objects generator
 </div>
 
 <div align="center">
@@ -31,7 +31,7 @@ for now. Please consider upgrading to one of these versions at your earliest con
 
 # What is Easy Random ?
 
-Easy Random is a library that generates random Java beans. You can think of it as an [ObjectMother](https://martinfowler.com/bliki/ObjectMother.html) for the JVM. Let's say you have a class `Person` and you want to generate a random instance of it, here we go:
+Easy Random is a library that generates random Java objects. You can think of it as an [ObjectMother](https://martinfowler.com/bliki/ObjectMother.html) for the JVM. Let's say you have a class `Person` and you want to generate a random instance of it, here we go:
 
 ```java
 EasyRandom easyRandom = new EasyRandom();
@@ -108,7 +108,7 @@ Address address = new Address(street, "123456", "London", "United Kingdom");
 Person person = new Person("Foo", "Bar", "foo.bar@gmail.com", Gender.MALE, address);
 ```
 
-And if these classes do not provide constructors with parameters (may be some legacy beans you can't change), you would write:
+And if these classes do not provide constructors with parameters (may be some legacy types you can't change), you would write:
 
 ```java
 Street street = new Street();
