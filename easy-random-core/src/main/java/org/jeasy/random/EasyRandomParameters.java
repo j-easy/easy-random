@@ -250,7 +250,7 @@ public class EasyRandomParameters {
         return randomizerProvider;
     }
     public void setRandomizerProvider(RandomizerProvider randomizerProvider) {
-        Objects.requireNonNull(objectFactory, "Randomizer provider must not be null");
+        Objects.requireNonNull(randomizerProvider, "Randomizer provider must not be null");
         this.randomizerProvider = randomizerProvider;
     }
 
