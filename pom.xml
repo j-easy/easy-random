@@ -194,7 +194,7 @@
                 <configuration>
                     <header>licence-header-template.txt</header>
                     <properties>
-                        <currentYear>2020</currentYear>
+                        <currentYear>2023</currentYear>
                     </properties>
                     <strictCheck>true</strictCheck>
                     <includes>
