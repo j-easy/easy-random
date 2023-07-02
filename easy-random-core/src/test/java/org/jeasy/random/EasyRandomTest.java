@@ -23,6 +23,7 @@
  */
 package org.jeasy.random;
 
+import org.jeasy.random.api.TypeResolver;
 import org.jeasy.random.api.Randomizer;
 import org.jeasy.random.beans.*;
 import org.jeasy.random.util.ReflectionUtils;
@@ -43,6 +44,7 @@ import static java.util.Arrays.asList;
 import static org.assertj.core.api.Assertions.*;
 import static org.assertj.core.api.BDDAssertions.then;
 import static org.jeasy.random.FieldPredicates.*;
+import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
 @ExtendWith(MockitoExtension.class)
@@ -508,4 +510,25 @@ class EasyRandomTest {
         System.out.println("Failure: " + failure);
     }
 
+    @Test
+    void shouldUseCustomConcreteTypeResolver() {
+        // given
+        final TypeResolver typeResolver = new TypeResolver() {
+            @Override
+            public <T> List<Class<?>> getPublicConcreteSubTypesOf(final Class<T> type) {
+                return Collections.singletonList(MyAbstractType.MyConcreteType.class);
+            }
+        };
+        final EasyRandom sutRandom = new EasyRandom(new EasyRandomParameters().typeResolver(typeResolver));
+
+        // when
+        final MyAbstractType instance = sutRandom.nextObject(MyAbstractType.class);
+
+        // then
+        assertThat(instance).isInstanceOf(MyAbstractType.MyConcreteType.class);
+    }
+
+    private interface MyAbstractType {
+        final class MyConcreteType implements MyAbstractType {}
+    }
 }
