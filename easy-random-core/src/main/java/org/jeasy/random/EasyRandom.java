@@ -73,8 +73,7 @@ public class EasyRandom extends Random {
         Objects.requireNonNull(easyRandomParameters, "Parameters must not be null");
         super.setSeed(easyRandomParameters.getSeed());
         LinkedHashSet<RandomizerRegistry> registries = setupRandomizerRegistries(easyRandomParameters);
-        RandomizerProvider customRandomizerProvider = easyRandomParameters.getRandomizerProvider();
-        randomizerProvider = customRandomizerProvider == null ? new RegistriesRandomizerProvider() : customRandomizerProvider;
+        randomizerProvider = easyRandomParameters.getRandomizerProvider();
         randomizerProvider.setRandomizerRegistries(registries);
         objectFactory = easyRandomParameters.getObjectFactory();
         arrayPopulator = new ArrayPopulator(this);
