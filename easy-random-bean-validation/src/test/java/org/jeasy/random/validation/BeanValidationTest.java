@@ -42,6 +42,7 @@ import jakarta.validation.constraints.Digits;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
 import java.math.BigDecimal;
+import java.time.Instant;
 import java.time.LocalDateTime;
 import java.util.Date;
 import java.util.List;
@@ -108,6 +109,8 @@ class BeanValidationTest {
         assertThat(bean.getBirthday()).isInThePast();// @Past Date birthday;
 
         assertThat(bean.getBirthdayLocalDateTime()).isBefore(LocalDateTime.now());// @Past LocalDateTime birthdayLocalDateTime;
+
+        assertThat(bean.getPastInstant()).isBefore(Instant.now());// @Past Instant pastInstant;
 
         assertThat(bean.getPastOrPresent()).isBeforeOrEqualTo(new Date());// @PastOrPresent Date pastOrPresent;
 
@@ -179,6 +182,8 @@ class BeanValidationTest {
         assertThat(bean.getBirthday()).isInThePast();// @Past Date birthday;
 
         assertThat(bean.getBirthdayLocalDateTime()).isBefore(LocalDateTime.now());// @Past LocalDateTime birthdayLocalDateTime;
+
+        assertThat(bean.getPastInstant()).isBefore(Instant.now());// @Past Instant pastInstant;
 
         assertThat(bean.getPastOrPresent()).isBeforeOrEqualTo(new Date());// @PastOrPresent Date pastOrPresent;
 
