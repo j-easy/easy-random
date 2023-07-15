@@ -76,7 +76,7 @@ class FieldPopulator {
     }
 
     void populateField(final Object target, final Field field, final RandomizationContext context) throws IllegalAccessException {
-        Randomizer<?> randomizer = getRandomizer(field, context);
+        Randomizer<?> randomizer = getRandomizer(field, context, target.getClass());
         if (randomizer instanceof SkipRandomizer) {
             return;
         }
@@ -113,14 +113,14 @@ class FieldPopulator {
         context.popStackItem();
     }
 
-    private Randomizer<?> getRandomizer(Field field, RandomizationContext context) {
+    private Randomizer<?> getRandomizer(Field field, RandomizationContext context, Class<?> fieldTargetType) {
         // issue 241: if there is no custom randomizer by field, then check by type
         Randomizer<?> randomizer = randomizerProvider.getRandomizerByField(field, context);
         if (randomizer == null) {
             Type genericType = field.getGenericType();
             if (isTypeVariable(genericType)) {
                 // if generic type, retrieve actual type from declaring class
-                Class<?> type = getParametrizedType(field, context);
+                Class<?> type = getParametrizedType(field, fieldTargetType);
                 randomizer = randomizerProvider.getRandomizerByType(type, context);
             } else {
                 randomizer = randomizerProvider.getRandomizerByType(field.getType(), context);
@@ -154,7 +154,7 @@ class FieldPopulator {
                 Type genericType = field.getGenericType();
                 if (isTypeVariable(genericType)) {
                     // if generic type, try to retrieve actual type from hierarchy
-                    Class<?> type = getParametrizedType(field, context);
+                    Class<?> type = getParametrizedType(field, context.getTargetType());
                     return easyRandom.doPopulateBean(type, context);
                 }
                 return easyRandom.doPopulateBean(fieldType, context);
@@ -162,10 +162,10 @@ class FieldPopulator {
         }
     }
 
-    private Class<?> getParametrizedType(Field field, RandomizationContext context) {
+    private Class<?> getParametrizedType(Field field, Class<?> fieldTargetType) {
         Class<?> declaringClass = field.getDeclaringClass();
         TypeVariable<? extends Class<?>>[] typeParameters = declaringClass.getTypeParameters();
-        Type genericSuperclass = getGenericSuperClass(context);
+        Type genericSuperclass = getGenericSuperClass(fieldTargetType);
         ParameterizedType parameterizedGenericSuperType = (ParameterizedType) genericSuperclass;
         Type[] actualTypeArguments = parameterizedGenericSuperType.getActualTypeArguments();
         Type actualTypeArgument = null;
@@ -192,8 +192,7 @@ class FieldPopulator {
     }
 
     // find the generic base class in the hierarchy (which might not be the first super type)
-    private Type getGenericSuperClass(RandomizationContext context) {
-        Class<?> targetType = context.getTargetType();
+    private Type getGenericSuperClass(Class<?> targetType) {
         Type genericSuperclass = targetType.getGenericSuperclass();
         while (targetType != null && !(genericSuperclass instanceof ParameterizedType)) {
             targetType = targetType.getSuperclass();
