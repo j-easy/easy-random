@@ -30,11 +30,13 @@ import static org.assertj.core.api.BDDAssertions.then;
 import java.math.BigDecimal;
 import java.math.RoundingMode;
 
-import nonapi.io.github.classgraph.utils.ReflectionUtils;
+import nonapi.io.github.classgraph.reflection.ReflectionUtils;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 class BigDecimalRangeRandomizerTest extends AbstractRangeRandomizerTest<BigDecimal> {
+
+    private static final ReflectionUtils REFLECTION_UTILS = new ReflectionUtils();
 
     private Double min, max;
 
@@ -105,7 +107,7 @@ class BigDecimalRangeRandomizerTest extends AbstractRangeRandomizerTest<BigDecim
 
         then(bigDecimal.scale()).isEqualTo(scale);
 
-        var actualRoundingMode = ReflectionUtils.getFieldVal(bigDecimalRangeRandomizer, "roundingMode", false);
+        var actualRoundingMode = REFLECTION_UTILS.getFieldVal(false, bigDecimalRangeRandomizer, "roundingMode");
         then(actualRoundingMode).isEqualTo(RoundingMode.DOWN);
     }
 
