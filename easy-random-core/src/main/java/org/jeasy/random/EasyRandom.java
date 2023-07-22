@@ -234,7 +234,10 @@ public class EasyRandom extends Random {
         registries.add(parameters.getExclusionRandomizerRegistry());
         registries.addAll(parameters.getUserRegistries());
         registries.addAll(loadRegistries());
-        registries.forEach(registry -> registry.init(parameters));
+        registries.forEach(registry -> {
+            registry.init(parameters);
+            registry.setEasyRandom(this);
+        });
         return registries;
     }
 

@@ -43,6 +43,17 @@ public interface RandomizerRegistry {
     void init(EasyRandomParameters parameters);
 
     /**
+     * Set EasyRandom. Makes it easy to reuse existing EasyRandom instance
+     * instead of creating a new EasyRandom instance in each registry which
+     * may introduce a few concurrency issues.
+     *
+     * @param easyRandom the easyRandom that should be set.
+     */
+    default void setEasyRandom(EasyRandom easyRandom) {
+
+    }
+
+    /**
      * Retrieves a randomizer for the given field.
      *
      * @param field the field for which a randomizer was registered
