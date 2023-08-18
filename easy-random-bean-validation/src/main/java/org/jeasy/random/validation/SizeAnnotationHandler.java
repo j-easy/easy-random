@@ -43,7 +43,7 @@ import java.util.Map;
 
 import static org.jeasy.random.util.ReflectionUtils.*;
 
-class SizeAnnotationHandler implements BeanValidationAnnotationHandler {
+public class SizeAnnotationHandler implements BeanValidationAnnotationHandler {
 
     private EasyRandom easyRandom;
     private EasyRandomParameters parameters;

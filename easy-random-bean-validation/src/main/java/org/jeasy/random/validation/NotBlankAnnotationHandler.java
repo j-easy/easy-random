@@ -29,7 +29,7 @@ import org.jeasy.random.randomizers.text.StringRandomizer;
 import java.lang.reflect.Field;
 import java.util.Random;
 
-class NotBlankAnnotationHandler implements BeanValidationAnnotationHandler {
+public class NotBlankAnnotationHandler implements BeanValidationAnnotationHandler {
 
     private final Random random;
 

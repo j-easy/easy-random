@@ -31,7 +31,7 @@ import jakarta.validation.constraints.Min;
 import java.lang.reflect.Field;
 import java.math.BigDecimal;
 
-class MinMaxAnnotationHandler extends AbstractNumberBaseAnnotationHandler {
+public class MinMaxAnnotationHandler extends AbstractNumberBaseAnnotationHandler {
 
     MinMaxAnnotationHandler(long seed) {
         super(seed);

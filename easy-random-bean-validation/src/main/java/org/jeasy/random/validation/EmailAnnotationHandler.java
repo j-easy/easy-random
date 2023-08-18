@@ -29,7 +29,7 @@ import org.jeasy.random.randomizers.EmailRandomizer;
 import java.lang.reflect.Field;
 import java.util.Random;
 
-class EmailAnnotationHandler implements BeanValidationAnnotationHandler {
+public class EmailAnnotationHandler implements BeanValidationAnnotationHandler {
 
     private final Random random;
 

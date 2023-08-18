@@ -31,7 +31,7 @@ import jakarta.validation.constraints.Pattern;
 import java.lang.reflect.Field;
 import java.util.Random;
 
-class PatternAnnotationHandler implements BeanValidationAnnotationHandler {
+public class PatternAnnotationHandler implements BeanValidationAnnotationHandler {
 
     private final Random random;
 

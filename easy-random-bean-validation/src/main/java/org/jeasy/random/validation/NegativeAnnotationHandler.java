@@ -28,7 +28,7 @@ import org.jeasy.random.api.Randomizer;
 import java.lang.reflect.Field;
 import java.math.BigDecimal;
 
-class NegativeAnnotationHandler extends AbstractNumberBaseAnnotationHandler {
+public class NegativeAnnotationHandler extends AbstractNumberBaseAnnotationHandler {
 
     NegativeAnnotationHandler(final long seed) {
         super(seed);

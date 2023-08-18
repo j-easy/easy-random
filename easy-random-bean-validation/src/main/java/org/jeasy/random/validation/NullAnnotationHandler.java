@@ -28,7 +28,7 @@ import org.jeasy.random.randomizers.misc.NullRandomizer;
 
 import java.lang.reflect.Field;
 
-class NullAnnotationHandler implements BeanValidationAnnotationHandler {
+public class NullAnnotationHandler implements BeanValidationAnnotationHandler {
 
     @Override
     public Randomizer<?> getRandomizer(Field field) {

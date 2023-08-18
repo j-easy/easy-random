@@ -31,7 +31,7 @@ import org.jeasy.random.EasyRandom;
 import org.jeasy.random.EasyRandomParameters;
 import org.jeasy.random.api.Randomizer;
 
-class FutureAnnotationHandler implements BeanValidationAnnotationHandler {
+public class FutureAnnotationHandler implements BeanValidationAnnotationHandler {
 
     private EasyRandom easyRandom;
     private EasyRandomParameters parameters;

@@ -30,7 +30,7 @@ import org.jeasy.random.api.Randomizer;
 import java.lang.reflect.Field;
 import java.time.LocalDate;
 
-class PastOrPresentAnnotationHandler implements BeanValidationAnnotationHandler {
+public class PastOrPresentAnnotationHandler implements BeanValidationAnnotationHandler {
 
     private EasyRandom easyRandom;
     private EasyRandomParameters parameters;

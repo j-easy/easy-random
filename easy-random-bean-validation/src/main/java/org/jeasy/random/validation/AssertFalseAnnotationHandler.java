@@ -28,7 +28,7 @@ import org.jeasy.random.randomizers.misc.ConstantRandomizer;
 
 import java.lang.reflect.Field;
 
-class AssertFalseAnnotationHandler implements BeanValidationAnnotationHandler {
+public class AssertFalseAnnotationHandler implements BeanValidationAnnotationHandler {
 
     public Randomizer<?> getRandomizer(Field field) {
         return new ConstantRandomizer<>(false);
