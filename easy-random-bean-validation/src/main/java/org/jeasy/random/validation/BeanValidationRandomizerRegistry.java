@@ -34,6 +34,7 @@ import java.lang.annotation.Annotation;
 import java.lang.reflect.Field;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.concurrent.ConcurrentHashMap;
 
 /**
  * A registry of randomizers to support fields annotated with the <a href="http://beanvalidation.org/">JSR 349</a> annotations.
@@ -43,7 +44,8 @@ import java.util.Map;
 @Priority(-2)
 public class BeanValidationRandomizerRegistry implements RandomizerRegistry {
 
-    protected Map<Class<? extends Annotation>, BeanValidationAnnotationHandler> annotationHandlers = new HashMap<>();
+    protected ConcurrentHashMap<Class<? extends Annotation>, BeanValidationAnnotationHandler> annotationHandlers =
+            new ConcurrentHashMap<>();
 
     @Override
     public void init(EasyRandomParameters parameters) {
