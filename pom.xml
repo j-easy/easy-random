@@ -34,7 +34,6 @@
 
     <modules>
         <module>easy-random-core</module>
-        <module>easy-random-randomizers</module>
     </modules>
 
     <scm>

@@ -25,9 +25,13 @@ package org.jeasy.random.randomizers;
 
 import org.jeasy.random.api.Randomizer;
 
+import java.util.Locale;
+
 public abstract class AbstractRandomizerTest<T> {
 
     protected static final long SEED = 123L;
+
+    protected static  final Locale LOCALE = Locale.FRANCE;
 
     protected Randomizer<T> randomizer;
 
