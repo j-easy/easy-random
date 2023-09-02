@@ -30,7 +30,7 @@ import static org.assertj.core.api.BDDAssertions.then;
 import java.math.BigDecimal;
 import java.math.RoundingMode;
 
-import nonapi.io.github.classgraph.utils.ReflectionUtils;
+import org.jeasy.random.util.ReflectionUtils;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -94,7 +94,7 @@ class BigDecimalRangeRandomizerTest extends AbstractRangeRandomizerTest<BigDecim
     }
 
     @Test
-    void generatedValueShouldHaveProvidedPositiveScaleAndRoundingMode() {
+    void generatedValueShouldHaveProvidedPositiveScaleAndRoundingMode() throws NoSuchFieldException, IllegalAccessException {
         // given
         Integer scale = 2;
         RoundingMode roundingMode = RoundingMode.DOWN;
@@ -105,7 +105,8 @@ class BigDecimalRangeRandomizerTest extends AbstractRangeRandomizerTest<BigDecim
 
         then(bigDecimal.scale()).isEqualTo(scale);
 
-        var actualRoundingMode = ReflectionUtils.getFieldVal(bigDecimalRangeRandomizer, "roundingMode", false);
+        var field = bigDecimalRangeRandomizer.getClass().getDeclaredField("roundingMode");
+        var actualRoundingMode = ReflectionUtils.getFieldValue(bigDecimalRangeRandomizer, field);
         then(actualRoundingMode).isEqualTo(RoundingMode.DOWN);
     }
 
