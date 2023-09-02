@@ -23,11 +23,8 @@
         <junit.version>5.9.3</junit.version>
         <datafaker.version>2.0.1</datafaker.version>
         <assertj.version>3.24.2</assertj.version>
-        <validation-api.version>3.0.2</validation-api.version>
         <objenesis.version>3.3</objenesis.version>
         <classgraph.version>4.8.160</classgraph.version>
-        <hibernate-validator.version>8.0.1.Final</hibernate-validator.version>
-        <jakarta.el.version>4.0.2</jakarta.el.version>
         <mockito.version>5.4.0</mockito.version>
         <maven-surefire-plugin.version>3.1.2</maven-surefire-plugin.version>
         <maven-compiler-plugin.version>3.11.0</maven-compiler-plugin.version>
@@ -37,7 +34,6 @@
 
     <modules>
         <module>easy-random-core</module>
-        <module>easy-random-bean-validation</module>
         <module>easy-random-randomizers</module>
     </modules>
 
@@ -98,11 +94,6 @@
                 <version>${project.version}</version>
             </dependency>
             <dependency>
-                <groupId>jakarta.validation</groupId>
-                <artifactId>jakarta.validation-api</artifactId>
-                <version>${validation-api.version}</version>
-            </dependency>
-            <dependency>
                 <groupId>org.objenesis</groupId>
                 <artifactId>objenesis</artifactId>
                 <version>${objenesis.version}</version>
@@ -112,16 +103,6 @@
                 <artifactId>classgraph</artifactId>
                 <version>${classgraph.version}</version>
                 <optional>true</optional>
-            </dependency>
-            <dependency>
-                <groupId>org.hibernate.validator</groupId>
-                <artifactId>hibernate-validator</artifactId>
-                <version>${hibernate-validator.version}</version>
-            </dependency>
-            <dependency>
-                <groupId>org.glassfish</groupId>
-                <artifactId>jakarta.el</artifactId>
-                <version>${jakarta.el.version}</version>
             </dependency>
             <dependency>
                 <groupId>net.datafaker</groupId>
