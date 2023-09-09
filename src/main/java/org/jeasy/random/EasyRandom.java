@@ -222,7 +222,7 @@ public class EasyRandom extends Random {
         if (exclusionPolicy.shouldBeExcluded(field, context)) {
             return;
         }
-        if (!parameters.isOverrideDefaultInitialization() && getFieldValue(result, field) != null && !isPrimitiveFieldWithDefaultValue(result, field)) {
+        if (!parameters.isOverrideDefaultInitialization() && getProperty(result, field) != null && !isPrimitiveFieldWithDefaultValue(result, field)) {
           return;
         }
         fieldPopulator.populateField(result, field, context);
