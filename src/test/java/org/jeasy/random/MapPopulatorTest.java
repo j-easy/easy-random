@@ -66,7 +66,8 @@ class MapPopulatorTest {
     void setUp() {
         parameters = new EasyRandomParameters().collectionSizeRange(SIZE, SIZE);
         ObjectFactory objectFactory = new ObjenesisObjectFactory();
-        mapPopulator = new MapPopulator(easyRandom, objectFactory);
+        GenericResolver genericResolver = new GenericResolver();
+        mapPopulator = new MapPopulator(easyRandom, objectFactory, genericResolver);
     }
 
     /*

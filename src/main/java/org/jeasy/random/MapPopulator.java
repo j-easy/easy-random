@@ -46,16 +46,19 @@ class MapPopulator {
 
     private final ObjectFactory objectFactory;
 
-    MapPopulator(final EasyRandom easyRandom, final ObjectFactory objectFactory) {
+    private final GenericResolver genericResolver;
+
+    MapPopulator(final EasyRandom easyRandom, final ObjectFactory objectFactory, final GenericResolver genericResolver) {
         this.easyRandom = easyRandom;
         this.objectFactory = objectFactory;
+        this.genericResolver = genericResolver;
     }
 
     @SuppressWarnings("unchecked")
     Map<?, ?> getRandomMap(final Field field, final RandomizationContext context) {
         int randomSize = getRandomMapSize(context.getParameters());
-        Class<?> fieldType = field.getType();
-        Type fieldGenericType = field.getGenericType();
+        Class<?> fieldType = genericResolver.resolveRawFieldType(field, context);
+        Type fieldGenericType = genericResolver.resolveFieldType(field, context);
         Map<Object, Object> map;
 
         if (isInterface(fieldType)) {

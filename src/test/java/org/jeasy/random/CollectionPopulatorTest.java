@@ -67,7 +67,8 @@ class CollectionPopulatorTest {
     @BeforeEach
     void setUp() {
         parameters = new EasyRandomParameters().collectionSizeRange(SIZE, SIZE);
-        collectionPopulator = new CollectionPopulator(easyRandom);
+        GenericResolver genericResolver = new GenericResolver();
+        collectionPopulator = new CollectionPopulator(easyRandom, genericResolver);
     }
 
     /*

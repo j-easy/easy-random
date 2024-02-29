@@ -98,6 +98,7 @@ public class EasyRandomParameters {
     private boolean overrideDefaultInitialization;
     private boolean ignoreRandomizationErrors;
     private boolean bypassSetters;
+    private boolean advancedGenericParseMechanism;
     private Range<Integer> collectionSizeRange;
     private Range<Integer> stringLengthRange;
     private Range<LocalDate> dateRange;
@@ -123,6 +124,7 @@ public class EasyRandomParameters {
         overrideDefaultInitialization = false;
         ignoreRandomizationErrors = false;
         bypassSetters = false;
+        advancedGenericParseMechanism = false;
         objectPoolSize = DEFAULT_OBJECT_POOL_SIZE;
         randomizationDepth = DEFAULT_RANDOMIZATION_DEPTH;
         dateRange = new Range<>(DEFAULT_DATES_RANGE.getMin().toLocalDate(), DEFAULT_DATES_RANGE.getMax().toLocalDate());
@@ -229,6 +231,14 @@ public class EasyRandomParameters {
 
     public void setBypassSetters(boolean bypassSetters) {
         this.bypassSetters = bypassSetters;
+    }
+
+    public boolean isAdvancedGenericParseMechanism() {
+        return advancedGenericParseMechanism;
+    }
+
+    public void setAdvancedGenericParseMechanism(boolean advancedGenericParseMechanism) {
+        this.advancedGenericParseMechanism = advancedGenericParseMechanism;
     }
 
     public ExclusionPolicy getExclusionPolicy() {
@@ -558,6 +568,17 @@ public class EasyRandomParameters {
      */
     public EasyRandomParameters bypassSetters(boolean bypassSetters) {
         setBypassSetters(bypassSetters);
+        return this;
+    }
+
+    /**
+     * Flag to use advanced generic parse mechanism allowed resolve any TypeVariable, WildCards, etc.
+     *
+     * @param advancedGenericParseMechanism true if parse mechanism enabled
+     * @return the current {@link EasyRandomParameters} instance for method chaining
+     */
+    public EasyRandomParameters advancedGenericParseMechanism(boolean advancedGenericParseMechanism) {
+        setAdvancedGenericParseMechanism(advancedGenericParseMechanism);
         return this;
     }
 
