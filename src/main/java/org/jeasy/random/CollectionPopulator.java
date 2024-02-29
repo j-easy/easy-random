@@ -41,15 +41,18 @@ class CollectionPopulator {
 
     private final EasyRandom easyRandom;
 
-    CollectionPopulator(final EasyRandom easyRandom) {
+    private final GenericResolver genericResolver;
+
+    CollectionPopulator(final EasyRandom easyRandom, final GenericResolver genericResolver) {
         this.easyRandom = easyRandom;
+        this.genericResolver = genericResolver;
     }
 
     @SuppressWarnings({"unchecked", "rawtypes"})
     Collection<?> getRandomCollection(final Field field, final RandomizationContext context) {
         int randomSize = getRandomCollectionSize(context.getParameters());
-        Class<?> fieldType = field.getType();
-        Type fieldGenericType = field.getGenericType();
+        Class<?> fieldType = genericResolver.resolveRawFieldType(field, context);
+        Type fieldGenericType = genericResolver.resolveFieldType(field, context);
         Collection collection;
 
         if (isInterface(fieldType)) {

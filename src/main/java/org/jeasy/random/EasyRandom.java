@@ -57,6 +57,8 @@ public class EasyRandom extends Random {
 
     private final ExclusionPolicy exclusionPolicy;
 
+    private final GenericResolver genericResolver;
+
     /**
      * Create a new {@link EasyRandom} instance with default parameters.
      */
@@ -77,13 +79,14 @@ public class EasyRandom extends Random {
         randomizerProvider.setRandomizerRegistries(registries);
         objectFactory = easyRandomParameters.getObjectFactory();
         arrayPopulator = new ArrayPopulator(this);
-        CollectionPopulator collectionPopulator = new CollectionPopulator(this);
-        MapPopulator mapPopulator = new MapPopulator(this, objectFactory);
+        genericResolver = new GenericResolver();
+        CollectionPopulator collectionPopulator = new CollectionPopulator(this, genericResolver);
+        MapPopulator mapPopulator = new MapPopulator(this, objectFactory, genericResolver);
         OptionalPopulator optionalPopulator = new OptionalPopulator(this);
         enumRandomizersByType = new ConcurrentHashMap<>();
         fieldPopulator = new FieldPopulator(this,
                 this.randomizerProvider, arrayPopulator,
-                collectionPopulator, mapPopulator, optionalPopulator);
+                collectionPopulator, mapPopulator, optionalPopulator, this.genericResolver);
         exclusionPolicy = easyRandomParameters.getExclusionPolicy();
         parameters = easyRandomParameters;
     }
@@ -143,6 +146,7 @@ public class EasyRandom extends Random {
 
         T result;
         try {
+            genericResolver.resolveInheritanceGenerics(type, context);
 
             Randomizer<?> randomizer = randomizerProvider.getRandomizerByType(type, context);
             if (randomizer != null) {
@@ -190,6 +194,8 @@ public class EasyRandom extends Random {
             } else {
                 throw new ObjectCreationException("Unable to create a random instance of type " + type, e);
             }
+        } finally {
+            context.popGenericsContext();
         }
     }
 

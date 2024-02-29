@@ -26,6 +26,8 @@ package org.jeasy.random;
 import org.jeasy.random.api.RandomizerContext;
 
 import java.lang.reflect.Field;
+import java.lang.reflect.Type;
+import java.lang.reflect.TypeVariable;
 import java.util.*;
 
 import static java.util.stream.Collectors.toList;
@@ -44,6 +46,10 @@ class RandomizationContext implements RandomizerContext {
 
     private final Stack<RandomizationContextStackItem> stack;
 
+    private final Stack<Map<Class<?>, Map<String, Type>>> classTypeVariableMapStack;
+
+    private final Map<Field, Map<String, Type>> fieldsTypeVariableMap;
+
     private final Class<?> type;
 
     private final Random random;
@@ -56,6 +62,8 @@ class RandomizationContext implements RandomizerContext {
         stack = new Stack<>();
         this.parameters = parameters;
         this.random = new Random(parameters.getSeed());
+        this.classTypeVariableMapStack = new Stack<>();
+        this.fieldsTypeVariableMap = new HashMap<>();
     }
 
     void addPopulatedBean(final Class<?> type, Object object) {
@@ -86,6 +94,42 @@ class RandomizationContext implements RandomizerContext {
 
     void popStackItem() {
         stack.pop();
+    }
+
+    void pushGenericsContext() {
+        classTypeVariableMapStack.push(new HashMap<>());
+    }
+
+    void popGenericsContext() {
+        classTypeVariableMapStack.pop();
+    }
+
+    void addTypeVariableMapping(final Class<?> carrierClass, final TypeVariable<?> typeVariable, final Type realType) {
+        Map<Class<?>, Map<String, Type>> genericClassContext = classTypeVariableMapStack.peek();
+        Map<String, Type> typeVariableMap = genericClassContext.computeIfAbsent(carrierClass, key -> new HashMap<>());
+        typeVariableMap.put(typeVariable.getName(), realType);
+    }
+
+    void addFieldTypeVariableMapping(final Field field, final TypeVariable<?> typeVariable, final Type realType) {
+        Map<String, Type> typeVariableMap = fieldsTypeVariableMap.computeIfAbsent(field, key -> new HashMap<>());
+        typeVariableMap.put(typeVariable.getName(), realType);
+    }
+
+    Type resolveFieldTypeVariable(final TypeVariable<?> typeVariable) {
+        Field field = stack.peek().getField();
+        Map<String, Type> typeVariableMap = fieldsTypeVariableMap.computeIfAbsent(field, key -> new HashMap<>());
+
+        return typeVariableMap.get(typeVariable.getName());
+    }
+
+    Type resolveTypeVariable(final Class<?> genericCarrierClass, final TypeVariable<?> typeVariable) {
+        Map<Class<?>, Map<String, Type>> typeVariablesMap = classTypeVariableMapStack.peek();
+        Map<String, Type> genericsMappingByCarrierClass = typeVariablesMap.getOrDefault(
+                genericCarrierClass,
+                Collections.emptyMap()
+        );
+
+        return genericsMappingByCarrierClass.get(typeVariable.getName());
     }
 
     String getFieldFullName(final Field field) {

@@ -72,11 +72,14 @@ class FieldPopulatorTest {
     @Mock
     private OptionalPopulator optionalPopulator;
 
+    @Mock
+    private GenericResolver genericResolver;
+
     private FieldPopulator fieldPopulator;
 
     @BeforeEach
     void setUp() {
-        fieldPopulator = new FieldPopulator(easyRandom, randomizerProvider, arrayPopulator, collectionPopulator, mapPopulator, optionalPopulator);
+        fieldPopulator = new FieldPopulator(easyRandom, randomizerProvider, arrayPopulator, collectionPopulator, mapPopulator, optionalPopulator, genericResolver);
     }
 
     @Test

@@ -35,6 +35,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.lang.reflect.Field;
+import java.lang.reflect.GenericArrayType;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Type;
 
@@ -68,15 +69,19 @@ class FieldPopulator {
 
     private final RandomizerProvider randomizerProvider;
 
+    private final GenericResolver genericResolver;
+
     FieldPopulator(final EasyRandom easyRandom, final RandomizerProvider randomizerProvider,
                    final ArrayPopulator arrayPopulator, final CollectionPopulator collectionPopulator,
-                   final MapPopulator mapPopulator, OptionalPopulator optionalPopulator) {
+                   final MapPopulator mapPopulator, OptionalPopulator optionalPopulator,
+                   final GenericResolver genericResolver) {
         this.easyRandom = easyRandom;
         this.randomizerProvider = randomizerProvider;
         this.arrayPopulator = arrayPopulator;
         this.collectionPopulator = collectionPopulator;
         this.mapPopulator = mapPopulator;
         this.optionalPopulator = optionalPopulator;
+        this.genericResolver = genericResolver;
     }
 
     void populateField(final Object target, final Field field, final RandomizationContext context) throws IllegalAccessException {
@@ -127,7 +132,7 @@ class FieldPopulator {
             Type genericType = field.getGenericType();
             if (isTypeVariable(genericType)) {
                 // if generic type, retrieve actual type from declaring class
-                Class<?> type = getParametrizedType(field, context);
+                Class<?> type = getFieldType(field, context);
                 randomizer = randomizerProvider.getRandomizerByType(type, context);
             } else {
                 randomizer = randomizerProvider.getRandomizerByType(field.getType(), context);
@@ -137,8 +142,8 @@ class FieldPopulator {
     }
 
     private Object generateRandomValue(final Field field, final RandomizationContext context) {
-        Class<?> fieldType = field.getType();
-        Type fieldGenericType = field.getGenericType();
+        Class<?> fieldType = genericResolver.resolveRawFieldType(field, context);
+        Type fieldGenericType = genericResolver.resolveFieldType(field, context);
 
         if (isArrayType(fieldType)) {
             return arrayPopulator.getRandomArray(fieldType, context);
@@ -158,10 +163,10 @@ class FieldPopulator {
                     return easyRandom.doPopulateBean(randomConcreteSubType, context);
                 }
             } else {
-                Type genericType = field.getGenericType();
+                Type genericType = genericResolver.resolveFieldType(field, context);
                 if (isTypeVariable(genericType)) {
                     // if generic type, try to retrieve actual type from hierarchy
-                    Class<?> type = getParametrizedType(field, context);
+                    Class<?> type = getFieldType(field, context);
                     return easyRandom.doPopulateBean(type, context);
                 }
                 return easyRandom.doPopulateBean(fieldType, context);
@@ -209,5 +214,13 @@ class FieldPopulator {
             }
         }
         return genericSuperclass;
+    }
+
+    private Class<?> getFieldType(Field field, RandomizationContext context) {
+        if (context.getParameters().isAdvancedGenericParseMechanism()) {
+            return genericResolver.resolveRawFieldType(field, context);
+        } else {
+            return getParametrizedType(field, context);
+        }
     }
 }
