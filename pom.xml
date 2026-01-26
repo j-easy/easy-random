@@ -28,7 +28,7 @@
 
         <!-- test dependencies -->
         <junit.version>5.9.3</junit.version>
-        <assertj.version>3.24.2</assertj.version>
+        <assertj.version>3.27.7</assertj.version>
         <mockito.version>5.4.0</mockito.version>
 
         <!-- plugins dependencies -->
