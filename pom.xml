@@ -21,21 +21,21 @@
         <java.version>17</java.version>
 
         <!-- production dependencies -->
-        <objenesis.version>3.3</objenesis.version>
-        <datafaker.version>2.0.1</datafaker.version>
-        <classgraph.version>4.8.160</classgraph.version>
-        <slf4j.version>2.0.7</slf4j.version>
+        <objenesis.version>3.5</objenesis.version>
+        <datafaker.version>2.5.4</datafaker.version>
+        <classgraph.version>4.8.184</classgraph.version>
+        <slf4j.version>2.0.17</slf4j.version>
 
         <!-- test dependencies -->
-        <junit.version>5.9.3</junit.version>
-        <assertj.version>3.24.2</assertj.version>
-        <mockito.version>5.4.0</mockito.version>
+        <junit.version>6.0.3</junit.version>
+        <assertj.version>3.27.7</assertj.version>
+        <mockito.version>5.23.0</mockito.version>
 
         <!-- plugins dependencies -->
-        <maven-surefire-plugin.version>3.1.2</maven-surefire-plugin.version>
-        <maven-compiler-plugin.version>3.11.0</maven-compiler-plugin.version>
-        <maven-release-plugin.version>3.0.1</maven-release-plugin.version>
-        <maven-license-plugin.version>4.2</maven-license-plugin.version>
+        <maven-surefire-plugin.version>3.5.5</maven-surefire-plugin.version>
+        <maven-compiler-plugin.version>3.15.0</maven-compiler-plugin.version>
+        <maven-release-plugin.version>3.3.1</maven-release-plugin.version>
+        <maven-license-plugin.version>5.0.0</maven-license-plugin.version>
     </properties>
 
     <scm>

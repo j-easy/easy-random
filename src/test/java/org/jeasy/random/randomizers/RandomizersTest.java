@@ -25,8 +25,6 @@ package org.jeasy.random.randomizers;
 
 import static org.assertj.core.api.BDDAssertions.then;
 
-import java.text.DecimalFormatSymbols;
-
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.MethodSource;
 
@@ -72,28 +70,28 @@ class RandomizersTest extends AbstractRandomizerTest<FakerBasedRandomizer<?>>{
 
     static Object[][] generateSeededRandomizersAndTheirExpectedValues() {
         return new Object[][] {
-                { new CityRandomizer(SEED), "Breannaberg" },
+                { new CityRandomizer(SEED), "Breannashire" },
                 { new CompanyRandomizer(SEED), "Hegmann, Hansen and Mills" },
-                { new CountryRandomizer(SEED), "Peru" },
-                { new CreditCardNumberRandomizer(SEED), "6762-0695-7475-3962" },
+                { new CountryRandomizer(SEED), "Christmas Island" },
+                { new CreditCardNumberRandomizer(SEED), "5038-0547-6719-9874" },
                 { new EmailRandomizer(SEED), "jacob.hansen@hotmail.com" }, 
                 { new FirstNameRandomizer(SEED), "Jacob" },
                 { new FullNameRandomizer(SEED), "Breanna Mills" },
                 { new Ipv4AddressRandomizer(SEED), "16.188.76.229" },
-                { new Ipv6AddressRandomizer(SEED), "b3f4:4994:c9e8:b21a:c493:e923:f711:1115" },
-                { new IsbnRandomizer(SEED), "9790865070867" },
+                { new Ipv6AddressRandomizer(SEED), "d119:54cc:1cbd:a03d:6170:26a2:57ab:af62" },
+                { new IsbnRandomizer(SEED), "9790893392719" },
                 { new LastNameRandomizer(SEED), "Durgan" },
                 { new LatitudeRandomizer(SEED), "40.17135654" },
                 { new LongitudeRandomizer(SEED), "80.34271308" },
                 { new MacAddressRandomizer(SEED), "b3:f4:49:94:c9:e8" },
-                { new ParagraphRandomizer(SEED), "Totam assumenda eius autem similique. Aut voluptatem enim praesentium. Suscipit cupiditate doloribus debitis dolor. Cumque sapiente occaecati. Quos maiores quae." },
-                { new PhoneNumberRandomizer(SEED), "(352) 773-9574 x7539" },
-                { new RegularExpressionRandomizer("\\d+[A-Z]{5}", SEED), "8UYSMT" },
-                { new SentenceRandomizer(SEED), "Dolor totam assumenda eius autem." },
+                { new ParagraphRandomizer(SEED), "Ducimus delectus dolorum eligendi aspernatur. Voluptatibus itaque neque sunt. Excepturi itaque est reprehenderit occaecati. Maxime impedit explicabo. Aspernatur quaerat aliquam." },
+                { new PhoneNumberRandomizer(SEED), "(386) 474-7539" },
+                { new RegularExpressionRandomizer("\\d+[A-Z]{5}", SEED), "06957475396257905462760838214120325345682304630806404312817939078870089456356705559PFQGT" },
+                { new SentenceRandomizer(SEED), "Mollitia ducimus delectus dolorum eligendi." },
                 { new StateRandomizer(SEED), "North Carolina" },
-                { new StreetRandomizer(SEED), "Hegmann Locks" },
-                { new WordRandomizer(SEED), "repellat" },
-                { new ZipCodeRandomizer(SEED), "20695" }
+                { new StreetRandomizer(SEED), "Hegmann Park" },
+                { new WordRandomizer(SEED), "quaerat" },
+                { new ZipCodeRandomizer(SEED), "28740" }
         };
     }
 
@@ -108,27 +106,27 @@ class RandomizersTest extends AbstractRandomizerTest<FakerBasedRandomizer<?>>{
 
     static Object[][] generateSeededRandomizersWithLocaleAndTheirExpectedValues() {
         return new Object[][] {
-                { new CityRandomizer(SEED, LOCALE), "Neuilly-sur-Seine" },
+                { new CityRandomizer(SEED, LOCALE), "Cholet" },
                 { new CompanyRandomizer(SEED, LOCALE), "Masson et Lambert" },
-                { new CountryRandomizer(SEED, LOCALE), "Peru" },
-                { new CreditCardNumberRandomizer(SEED, LOCALE), "6762-0695-7475-3962" },
+                { new CountryRandomizer(SEED, LOCALE), "Christmas Island" },
+                { new CreditCardNumberRandomizer(SEED, LOCALE), "5038-0547-6719-9874" },
                 { new EmailRandomizer(SEED, LOCALE), "alice.masson@hotmail.fr" }, 
                 { new FirstNameRandomizer(SEED, LOCALE), "Alice" },
                 { new FullNameRandomizer(SEED, LOCALE), "Masson Emilie" },
                 { new Ipv4AddressRandomizer(SEED, LOCALE), "16.188.76.229" },
-                { new Ipv6AddressRandomizer(SEED, LOCALE), "b3f4:4994:c9e8:b21a:c493:e923:f711:1115" },
-                { new IsbnRandomizer(SEED, LOCALE), "9790865070867" },
+                { new Ipv6AddressRandomizer(SEED, LOCALE), "d119:54cc:1cbd:a03d:6170:26a2:57ab:af62" },
+                { new IsbnRandomizer(SEED, LOCALE), "9790893392719" },
                 { new LastNameRandomizer(SEED, LOCALE), "Faure" },
                 { new LatitudeRandomizer(SEED, LOCALE), "40,17135654" },
                 { new LongitudeRandomizer(SEED, LOCALE), "80,34271308" },
                 { new MacAddressRandomizer(SEED, LOCALE), "b3:f4:49:94:c9:e8" },
-                { new ParagraphRandomizer(SEED, LOCALE), "Totam assumenda eius autem similique. Aut voluptatem enim praesentium. Suscipit cupiditate doloribus debitis dolor. Cumque sapiente occaecati. Quos maiores quae." },
-                { new PhoneNumberRandomizer(SEED, LOCALE), "03 06 95 74 75" },
-                { new SentenceRandomizer(SEED, LOCALE), "Dolor totam assumenda eius autem." },
+                { new ParagraphRandomizer(SEED, LOCALE), "Ducimus delectus dolorum eligendi aspernatur. Voluptatibus itaque neque sunt. Excepturi itaque est reprehenderit occaecati. Maxime impedit explicabo. Aspernatur quaerat aliquam." },
+                { new PhoneNumberRandomizer(SEED, LOCALE), "03 95 74 75 39" },
+                { new SentenceRandomizer(SEED, LOCALE), "Mollitia ducimus delectus dolorum eligendi." },
                 { new StateRandomizer(SEED, LOCALE), "Lorraine" },
                 { new StreetRandomizer(SEED, LOCALE), "Passage des Francs-Bourgeois" },
-                { new WordRandomizer(SEED, LOCALE), "repellat" },
-                { new ZipCodeRandomizer(SEED, LOCALE), "20695" }
+                { new WordRandomizer(SEED, LOCALE), "quaerat" },
+                { new ZipCodeRandomizer(SEED, LOCALE), "28740" }
         };
     }
 
