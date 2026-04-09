@@ -31,7 +31,6 @@ import java.lang.annotation.Retention;
 import java.lang.annotation.Target;
 import java.lang.reflect.Field;
 import java.lang.reflect.Method;
-import java.math.BigDecimal;
 import java.util.*;
 import java.util.concurrent.ArrayBlockingQueue;
 import java.util.concurrent.DelayQueue;
@@ -50,14 +49,7 @@ class ReflectionUtilsTest {
 
     @Test
     void testGetDeclaredFields() {
-        BigDecimal javaVersion = new BigDecimal(System.getProperty("java.specification.version"));
-        if (javaVersion.compareTo(new BigDecimal("12")) >= 0) {
-            assertThat(ReflectionUtils.getDeclaredFields(Street.class)).hasSize(21);
-        } else if (javaVersion.compareTo(new BigDecimal("9")) >= 0) {
-            assertThat(ReflectionUtils.getDeclaredFields(Street.class)).hasSize(22);
-        } else {
-            assertThat(ReflectionUtils.getDeclaredFields(Street.class)).hasSize(20);
-        }
+        assertThat(ReflectionUtils.getDeclaredFields(Street.class)).hasSize(3);
     }
 
     @Test

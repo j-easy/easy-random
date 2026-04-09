@@ -96,8 +96,8 @@ public final class ReflectionUtils {
      * @param <T>  the actual type to introspect
      * @return list of declared fields
      */
-    public static <T> List<Field> getDeclaredFields(T type) {
-        return new ArrayList<>(asList(type.getClass().getDeclaredFields()));
+    public static <T> List<Field> getDeclaredFields(Class<T> type) {
+        return new ArrayList<>(asList(type.getDeclaredFields()));
     }
 
     /**

@@ -170,7 +170,7 @@ public class EasyRandom extends Random {
             context.addPopulatedBean(type, result);
 
             // retrieve declared and inherited fields
-            List<Field> fields = getDeclaredFields(result);
+            List<Field> fields = getDeclaredFields(result.getClass());
             // we cannot use type here, because with classpath scanning enabled the result can be a subtype
             fields.addAll(getInheritedFields(result.getClass()));
 
