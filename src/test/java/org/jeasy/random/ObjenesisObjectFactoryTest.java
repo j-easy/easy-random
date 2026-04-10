@@ -38,9 +38,6 @@ import static org.assertj.core.api.Assertions.assertThatThrownBy;
 @ExtendWith(MockitoExtension.class)
 class ObjenesisObjectFactoryTest {
 
-    @Mock(answer = Answers.RETURNS_DEEP_STUBS)
-    private RandomizerContext context;
-
     private ObjenesisObjectFactory objenesisObjectFactory;
 
     @BeforeEach
@@ -50,6 +47,7 @@ class ObjenesisObjectFactoryTest {
 
     @Test
     void concreteClassesShouldBeCreatedAsExpected() {
+        RandomizerContext context = new RandomizationContext(String.class, new EasyRandomParameters());
         String string = objenesisObjectFactory.createInstance(String.class, context);
 
         assertThat(string).isNotNull();
@@ -57,7 +55,8 @@ class ObjenesisObjectFactoryTest {
 
     @Test
     void whenNoConcreteTypeIsFound_thenShouldThrowAnInstantiationError() {
-        Mockito.when(context.getParameters().isScanClasspathForConcreteTypes()).thenReturn(true);
+        EasyRandomParameters parameters = new EasyRandomParameters().scanClasspathForConcreteTypes(true);
+        RandomizerContext context = new RandomizationContext(AbstractFoo.class, parameters);
         assertThatThrownBy(() -> objenesisObjectFactory.createInstance(AbstractFoo.class, context)).isInstanceOf(InstantiationError.class);
     }
 

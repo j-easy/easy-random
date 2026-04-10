@@ -98,7 +98,7 @@ public class EasyRandom extends Random {
      */
     public <T> T nextObject(final Class<T> type) {
         if (type.isRecord()) {
-            return createRandomRecord(type);
+            return createRandomRecord(type, new RandomizationContext(type, parameters));
         } else {
             return doPopulateBean(type, new RandomizationContext(type, parameters));
         }
@@ -121,12 +121,17 @@ public class EasyRandom extends Random {
         return Stream.generate(() -> nextObject(type)).limit(streamSize);
     }
 
-    private <T> T createRandomRecord(Class<T> recordType) {
+    private <T> T createRandomRecord(Class<T> recordType, final RandomizationContext context) {
         // generate random values for record components
         RecordComponent[] recordComponents = recordType.getRecordComponents();
         Object[] randomValues = new Object[recordComponents.length];
         for (int i = 0; i < recordComponents.length; i++) {
-            randomValues[i] = this.nextObject(recordComponents[i].getType());
+            Class<?> recordComponentType = recordComponents[i].getType();
+            if (recordComponentType.isRecord()) {
+                randomValues[i] = this.createRandomRecord(recordComponentType, context);
+            } else {
+                randomValues[i] = this.nextObject(recordComponentType);
+            }
         }
         // create a random instance with random values
         try {
@@ -160,6 +165,11 @@ public class EasyRandom extends Random {
             // If the type has been already randomized, return one cached instance to avoid recursion.
             if (context.hasAlreadyRandomizedType(type)) {
                 return (T) context.getPopulatedBean(type);
+            }
+
+            // Records are populated differently since they are immutable and their state is defined by their record components
+            if (type.isRecord()) {
+                return createRandomRecord(type, context);
             }
 
             // create a new instance of the target type
