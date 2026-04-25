@@ -39,11 +39,11 @@ public class HourRandomizer implements Randomizer<Integer> {
     private final IntegerRangeRandomizer hourRandomizer;
 
     public HourRandomizer() {
-        hourRandomizer = new IntegerRangeRandomizer(MIN_HOUR, MAX_HOUR);
+        hourRandomizer = new IntegerRangeRandomizer(MIN_HOUR, MAX_HOUR + 1);
     }
 
     public HourRandomizer(final long seed) {
-        hourRandomizer = new IntegerRangeRandomizer(MIN_HOUR, MAX_HOUR, seed);
+        hourRandomizer = new IntegerRangeRandomizer(MIN_HOUR, MAX_HOUR + 1, seed);
     }
 
     @Override

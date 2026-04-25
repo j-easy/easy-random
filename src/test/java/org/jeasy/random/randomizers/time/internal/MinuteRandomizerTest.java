@@ -54,7 +54,7 @@ class MinuteRandomizerTest extends AbstractRandomizerTest<Integer> {
     void shouldGenerateTheSameValueForTheSameSeed() {
         // Given
         randomizer = new MinuteRandomizer(SEED);
-        Integer expected = 42;
+        Integer expected = 43;
 
         // When
         Integer actual = randomizer.getRandomValue();

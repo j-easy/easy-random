@@ -39,11 +39,11 @@ public class MinuteRandomizer implements Randomizer<Integer> {
     private final IntegerRangeRandomizer minuteRandomizer;
 
     public MinuteRandomizer() {
-        minuteRandomizer = new IntegerRangeRandomizer(MIN_MINUTE, MAX_MINUTE);
+        minuteRandomizer = new IntegerRangeRandomizer(MIN_MINUTE, MAX_MINUTE + 1);
     }
 
     public MinuteRandomizer(final long seed) {
-        minuteRandomizer = new IntegerRangeRandomizer(MIN_MINUTE, MAX_MINUTE, seed);
+        minuteRandomizer = new IntegerRangeRandomizer(MIN_MINUTE, MAX_MINUTE + 1, seed);
     }
 
     @Override

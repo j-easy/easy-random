@@ -74,4 +74,34 @@ public abstract class AbstractRandomizer<T> implements Randomizer<T>  {
         // NB: ThreadLocalRandom.current().nextDouble(min, max)) cannot be used
         // because the seed is not configurable and is created per thread (see Javadoc)
     }
+
+    /**
+     * Return a random int in the given range.
+     *
+     * @param min value (inclusive)
+     * @param max value (inclusive)
+     * @return random int in the given range
+     */
+    protected int nextInt(final int min, final int max) {
+        return random.nextInt((max - min) + 1) + min;
+    }
+
+    /**
+     * Return a random long in the given range.
+     *
+     * @param min value (inclusive)
+     * @param max value (inclusive)
+     * @return random long in the given range
+     */
+    protected long nextLong(final long min, final long max) {
+        long bound = max - min + 1;
+        if (bound > 0) {
+            return min + (long) (random.nextDouble() * bound);
+        }
+        long value;
+        do {
+            value = random.nextLong();
+        } while (value < min || value > max);
+        return value;
+    }
 }

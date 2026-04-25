@@ -77,10 +77,10 @@ public class LocalDateTimeRangeRandomizer extends AbstractRangeRandomizer<LocalD
 
         long minSeconds = min.toEpochSecond(ZoneOffset.UTC);
         long maxSeconds = max.toEpochSecond(ZoneOffset.UTC);
-        long seconds = (long) nextDouble(minSeconds, maxSeconds);
+        long seconds = nextLong(minSeconds, maxSeconds);
         int minNanoSeconds = min.getNano();
         int maxNanoSeconds = max.getNano();
-        long nanoSeconds = (long) nextDouble(minNanoSeconds, maxNanoSeconds);
+        long nanoSeconds = nextInt(minNanoSeconds, maxNanoSeconds);
         Instant instant = Instant.ofEpochSecond(seconds, nanoSeconds);
 
         return LocalDateTime.ofInstant(instant, ZoneOffset.UTC);

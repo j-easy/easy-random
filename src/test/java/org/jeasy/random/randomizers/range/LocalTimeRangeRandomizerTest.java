@@ -27,6 +27,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 import java.time.LocalTime;
+import java.util.stream.Stream;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -53,10 +54,27 @@ class LocalTimeRangeRandomizerTest extends AbstractRangeRandomizerTest<LocalTime
     }
 
     @Test
+    void generatedLocalTimeShouldReachSpecifiedUpperBound() {
+        // Given
+        minTime = LocalTime.MAX.minusNanos(1);
+        maxTime = LocalTime.MAX;
+        randomizer = new LocalTimeRangeRandomizer(minTime, maxTime);
+
+        // When
+        LocalTime maxObserved = Stream.generate(() -> randomizer.getRandomValue())
+                .limit(10_000)
+                .max(LocalTime::compareTo)
+                .orElseThrow();
+
+        // Then
+        assertThat(maxObserved).isEqualTo(maxTime);
+    }
+
+    @Test
     void generatedLocalTimeShouldBeAlwaysTheSameForTheSameSeed() {
         // Given
         randomizer = new LocalTimeRangeRandomizer(minTime, maxTime, SEED);
-        LocalTime expected = LocalTime.of(14, 14, 58, 723174202);
+        LocalTime expected = LocalTime.of(5, 56, 50, 553004782);
 
         // When
         LocalTime randomValue = randomizer.getRandomValue();

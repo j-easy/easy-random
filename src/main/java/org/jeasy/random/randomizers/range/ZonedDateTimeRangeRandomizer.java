@@ -75,10 +75,10 @@ public class ZonedDateTimeRangeRandomizer extends AbstractRangeRandomizer<ZonedD
     public ZonedDateTime getRandomValue() {
         long minSeconds = min.toEpochSecond();
         long maxSeconds = max.toEpochSecond();
-        long seconds = (long) nextDouble(minSeconds, maxSeconds);
+        long seconds = nextLong(minSeconds, maxSeconds);
         int minNanoSeconds = min.getNano();
         int maxNanoSeconds = max.getNano();
-        long nanoSeconds = (long) nextDouble(minNanoSeconds, maxNanoSeconds);
+        long nanoSeconds = nextInt(minNanoSeconds, maxNanoSeconds);
         return ZonedDateTime.ofInstant(Instant.ofEpochSecond(seconds, nanoSeconds), min.getZone());
     }
 

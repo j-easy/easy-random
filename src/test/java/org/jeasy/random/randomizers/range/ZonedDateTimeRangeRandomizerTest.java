@@ -57,7 +57,7 @@ class ZonedDateTimeRangeRandomizerTest extends AbstractRangeRandomizerTest<Zoned
     void generatedZonedDateTimeShouldBeAlwaysTheSameForTheSameSeed() {
         // Given
         randomizer = new ZonedDateTimeRangeRandomizer(minZonedDateTime, maxZonedDateTime, SEED);
-        ZonedDateTime expected = ZonedDateTime.parse("2046-10-12T17:24:27Z");
+        ZonedDateTime expected = ZonedDateTime.parse("2046-10-12T17:24:28Z[UTC]");
 
         // When
         ZonedDateTime randomValue = randomizer.getRandomValue();

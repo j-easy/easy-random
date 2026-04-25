@@ -76,7 +76,7 @@ public class OffsetTimeRangeRandomizer extends AbstractRangeRandomizer<OffsetTim
     public OffsetTime getRandomValue() {
         long minSecondOfDay = min.getLong(ChronoField.SECOND_OF_DAY);
         long maxSecondOfDay = max.getLong(ChronoField.SECOND_OF_DAY);
-        long randomSecondOfDay = (long) nextDouble(minSecondOfDay, maxSecondOfDay);
+        long randomSecondOfDay = nextLong(minSecondOfDay, maxSecondOfDay);
         return OffsetTime.of(LocalTime.ofSecondOfDay(randomSecondOfDay), EasyRandomParameters.DEFAULT_DATES_RANGE.getMin().getOffset());
     }
 

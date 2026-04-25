@@ -57,7 +57,7 @@ class OffsetDateTimeRangeRandomizerTest extends AbstractRangeRandomizerTest<Offs
     void generatedOffsetDateTimeShouldBeAlwaysTheSameForTheSameSeed() {
         // Given
         randomizer = new OffsetDateTimeRangeRandomizer(minOffsetDateTime, maxOffsetDateTime, SEED);
-        OffsetDateTime expected = OffsetDateTime.parse("2046-10-12T17:24:27Z");
+        OffsetDateTime expected = OffsetDateTime.parse("2046-10-12T17:24:28Z");
 
         // When
         OffsetDateTime randomValue = randomizer.getRandomValue();

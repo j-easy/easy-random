@@ -57,7 +57,7 @@ class LocalDateTimeRangeRandomizerTest extends AbstractRangeRandomizerTest<Local
 
         // Given
         randomizer = new LocalDateTimeRangeRandomizer(minDateTime, maxDateTime, SEED);
-        LocalDateTime expected = LocalDateTime.parse("+446348406-04-09T16:32:16.990898895");
+        LocalDateTime expected = LocalDateTime.parse("+446348406-04-09T16:32:16.647624789");
 
         // When
         LocalDateTime randomValue = randomizer.getRandomValue();

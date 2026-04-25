@@ -40,11 +40,11 @@ public class NanoSecondRandomizer implements Randomizer<Integer> {
     private final IntegerRangeRandomizer nanoSecondRandomizer;
 
     public NanoSecondRandomizer() {
-        nanoSecondRandomizer = new IntegerRangeRandomizer(MIN_NANO_SECOND, MAX_NANO_SECOND);
+        nanoSecondRandomizer = new IntegerRangeRandomizer(MIN_NANO_SECOND, MAX_NANO_SECOND + 1);
     }
 
     public NanoSecondRandomizer(final long seed) {
-        nanoSecondRandomizer = new IntegerRangeRandomizer(MIN_NANO_SECOND, MAX_NANO_SECOND, seed);
+        nanoSecondRandomizer = new IntegerRangeRandomizer(MIN_NANO_SECOND, MAX_NANO_SECOND + 1, seed);
     }
 
     @Override

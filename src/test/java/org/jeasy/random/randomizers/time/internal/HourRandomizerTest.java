@@ -27,6 +27,8 @@ import static org.jeasy.random.randomizers.time.HourRandomizer.MAX_HOUR;
 import static org.jeasy.random.randomizers.time.HourRandomizer.MIN_HOUR;
 import static org.assertj.core.api.Assertions.assertThat;
 
+import java.util.stream.IntStream;
+
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -51,10 +53,20 @@ class HourRandomizerTest extends AbstractRandomizerTest<Integer> {
     }
 
     @Test
+    void generatedValuesShouldReachUpperBound() {
+        int maxHour = IntStream.range(0, 100_000)
+                .map(i -> randomizer.getRandomValue())
+                .max()
+                .orElseThrow();
+
+        assertThat(maxHour).isEqualTo(MAX_HOUR);
+    }
+
+    @Test
     void shouldGenerateTheSameValueForTheSameSeed() {
         // Given
         randomizer = new HourRandomizer(SEED);
-        Integer expected = 16;
+        Integer expected = 17;
 
         // When
         Integer actual = randomizer.getRandomValue();
