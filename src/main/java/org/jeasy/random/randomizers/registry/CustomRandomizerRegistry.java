@@ -30,7 +30,7 @@ import org.jeasy.random.api.RandomizerRegistry;
 import org.jeasy.random.util.ReflectionUtils;
 
 import java.lang.reflect.Field;
-import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.Map;
 import java.util.function.Predicate;
 
@@ -42,8 +42,8 @@ import java.util.function.Predicate;
 @Priority(-1)
 public class CustomRandomizerRegistry implements RandomizerRegistry {
 
-    private final Map<Predicate<Field>, Randomizer<?>> customFieldRandomizersRegistry = new HashMap<>();
-    private final Map<Class<?>, Randomizer<?>> customTypeRandomizersRegistry = new HashMap<>();
+    private final Map<Predicate<Field>, Randomizer<?>> customFieldRandomizersRegistry = new LinkedHashMap<>();
+    private final Map<Class<?>, Randomizer<?>> customTypeRandomizersRegistry = new LinkedHashMap<>();
 
     @Override
     public void init(EasyRandomParameters parameters) {
