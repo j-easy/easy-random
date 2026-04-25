@@ -25,7 +25,9 @@ package org.jeasy.random;
 
 import java.lang.reflect.ParameterizedType;
 import java.lang.reflect.TypeVariable;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.jeasy.random.api.ContextAwareRandomizer;
 import org.jeasy.random.api.Randomizer;
@@ -170,44 +172,56 @@ class FieldPopulator {
     }
 
     private Class<?> getParametrizedType(Field field, RandomizationContext context) {
-        Class<?> declaringClass = field.getDeclaringClass();
-        TypeVariable<? extends Class<?>>[] typeParameters = declaringClass.getTypeParameters();
-        Type genericSuperclass = getGenericSuperClass(context);
-        ParameterizedType parameterizedGenericSuperType = (ParameterizedType) genericSuperclass;
-        Type[] actualTypeArguments = parameterizedGenericSuperType.getActualTypeArguments();
-        Type actualTypeArgument = null;
-        for (int i = 0; i < typeParameters.length; i++) {
-            if (field.getGenericType().equals(typeParameters[i])) {
-                actualTypeArgument = actualTypeArguments[i];
-            }
-        }
+        Type actualTypeArgument = resolveTypeVariable(field, context.getTargetType());
         if (actualTypeArgument == null) {
-            return field.getClass();
+            return field.getType();
         }
-        Class<?> aClass;
-        String typeName = null;
-        try {
-            typeName = actualTypeArgument.getTypeName();
-            aClass = Class.forName(typeName);
-        } catch (ClassNotFoundException e) {
-            String message = String.format("Unable to load class %s of generic field %s in class %s. " +
-                            "Please refer to the documentation as this generic type may not be supported for randomization.",
-                    typeName, field.getName(), field.getDeclaringClass().getName());
-            throw new ObjectCreationException(message, e);
-        }
-        return aClass;
+        return toClass(actualTypeArgument, field);
     }
 
-    // find the generic base class in the hierarchy (which might not be the first super type)
-    private Type getGenericSuperClass(RandomizationContext context) {
-        Class<?> targetType = context.getTargetType();
-        Type genericSuperclass = targetType.getGenericSuperclass();
-        while (targetType != null && !(genericSuperclass instanceof ParameterizedType)) {
-            targetType = targetType.getSuperclass();
-            if (targetType != null) {
-                genericSuperclass = targetType.getGenericSuperclass();
+    private Type resolveTypeVariable(Field field, Class<?> targetType) {
+        Map<TypeVariable<?>, Type> typeMapping = new HashMap<>();
+        Class<?> currentType = targetType;
+
+        while (currentType != null) {
+            Type genericSuperclass = currentType.getGenericSuperclass();
+            if (genericSuperclass instanceof ParameterizedType parameterizedType) {
+                Class<?> rawType = (Class<?>) parameterizedType.getRawType();
+                TypeVariable<? extends Class<?>>[] typeParameters = rawType.getTypeParameters();
+                Type[] actualTypeArguments = parameterizedType.getActualTypeArguments();
+
+                for (int i = 0; i < typeParameters.length; i++) {
+                    typeMapping.put(typeParameters[i], resolveType(actualTypeArguments[i], typeMapping));
+                }
+
+                if (rawType.equals(field.getDeclaringClass())) {
+                    return resolveType(field.getGenericType(), typeMapping);
+                }
+                currentType = rawType;
+            } else if (genericSuperclass instanceof Class<?>) {
+                currentType = (Class<?>) genericSuperclass;
+            } else {
+                currentType = null;
             }
         }
-        return genericSuperclass;
+        return null;
+    }
+
+    private Type resolveType(Type type, Map<TypeVariable<?>, Type> typeMapping) {
+        Type resolvedType = type;
+        while (resolvedType instanceof TypeVariable<?> && typeMapping.containsKey(resolvedType)) {
+            resolvedType = typeMapping.get(resolvedType);
+        }
+        return resolvedType;
+    }
+
+    private Class<?> toClass(Type type, Field field) {
+        if (type instanceof Class<?>) {
+            return (Class<?>) type;
+        }
+        String message = String.format("Unable to resolve generic field %s in class %s to a concrete class. " +
+                        "Please refer to the documentation as this generic type may not be supported for randomization.",
+                field.getName(), field.getDeclaringClass().getName());
+        throw new ObjectCreationException(message);
     }
 }

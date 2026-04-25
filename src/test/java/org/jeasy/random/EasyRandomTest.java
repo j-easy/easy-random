@@ -463,6 +463,27 @@ class EasyRandomTest {
         assertThat(concrete.getX()).isInstanceOf(String.class);
     }
 
+    //https://github.com/j-easy/easy-random/issues/443
+    @Test
+    void shouldRandomizeMultipleGenericIntermediateTypes() {
+        // given
+        class Base<T, S> {
+            T t;
+            S s;
+        }
+
+        class Intermediate<S> extends Base<String, S> { }
+
+        class Concrete extends Intermediate<Long> { }
+
+        // when
+        Concrete actual = easyRandom.nextObject(Concrete.class);
+
+        // then
+        assertThat(actual.t).isInstanceOf(String.class);
+        assertThat(actual.s).isInstanceOf(Long.class);
+    }
+
     private void validatePerson(final Person person) {
         assertThat(person).isNotNull();
         assertThat(person.getEmail()).isNotEmpty();
