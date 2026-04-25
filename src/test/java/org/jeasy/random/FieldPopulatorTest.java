@@ -71,12 +71,14 @@ class FieldPopulatorTest {
     private MapPopulator mapPopulator;
     @Mock
     private OptionalPopulator optionalPopulator;
+    @Mock
+    private ClassPathScanner classPathScanner;
 
     private FieldPopulator fieldPopulator;
 
     @BeforeEach
     void setUp() {
-        fieldPopulator = new FieldPopulator(easyRandom, randomizerProvider, arrayPopulator, collectionPopulator, mapPopulator, optionalPopulator);
+        fieldPopulator = new FieldPopulator(easyRandom, randomizerProvider, arrayPopulator, collectionPopulator, mapPopulator, optionalPopulator, classPathScanner);
     }
 
     @Test

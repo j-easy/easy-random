@@ -485,27 +485,4 @@ class EasyRandomTest {
         assertThat(street.getType()).isNotNull();
     }
 
-    @Disabled("Dummy test to see possible reasons of randomization failures")
-    @Test
-    void tryToRandomizeAllPublicConcreteTypesInTheClasspath(){
-        int success = 0;
-        int failure = 0;
-        List<Class<?>> publicConcreteTypes = ReflectionUtils.getPublicConcreteSubTypesOf(Object.class);
-        System.out.println("Found " + publicConcreteTypes.size() + " public concrete types in the classpath");
-        for (Class<?> aClass : publicConcreteTypes) {
-            try {
-                easyRandom.nextObject(aClass);
-                System.out.println(aClass.getName() + " has been successfully randomized");
-                success++;
-            } catch (Throwable e) {
-                System.err.println("Unable to populate a random instance of type: " + aClass.getName());
-                e.printStackTrace();
-                System.err.println("----------------------------------------------");
-                failure++;
-            }
-        }
-        System.out.println("Success: " + success);
-        System.out.println("Failure: " + failure);
-    }
-
 }

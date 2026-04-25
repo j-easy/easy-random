@@ -95,6 +95,7 @@ public class EasyRandomParameters {
     private int randomizationDepth;
     private Charset charset;
     private boolean scanClasspathForConcreteTypes;
+    private String[] packagesToScanForConcreteTypes;
     private boolean overrideDefaultInitialization;
     private boolean ignoreRandomizationErrors;
     private boolean bypassSetters;
@@ -120,6 +121,7 @@ public class EasyRandomParameters {
         seed = DEFAULT_SEED;
         charset = DEFAULT_CHARSET;
         scanClasspathForConcreteTypes = false;
+        packagesToScanForConcreteTypes = new String[0];
         overrideDefaultInitialization = false;
         ignoreRandomizationErrors = false;
         bypassSetters = false;
@@ -207,6 +209,14 @@ public class EasyRandomParameters {
     }
     public void setScanClasspathForConcreteTypes(boolean scanClasspathForConcreteTypes) {
         this.scanClasspathForConcreteTypes = scanClasspathForConcreteTypes;
+    }
+
+    public String[] getPackagesToScanForConcreteTypes() {
+        return this.packagesToScanForConcreteTypes;
+    }
+
+    public void setPackagesToScanForConcreteTypes(String[] packagesToScanForConcreteTypes) {
+        this.packagesToScanForConcreteTypes = packagesToScanForConcreteTypes;
     }
 
     public boolean isOverrideDefaultInitialization() {
@@ -503,10 +513,12 @@ public class EasyRandomParameters {
      * Deactivated by default.
      *
      * @param scanClasspathForConcreteTypes whether to scan the classpath or not
+     * @param packagesToScan optional list of packages to restrict the classpath scanning to. If not specified, the whole classpath will be scanned.
      * @return the current {@link EasyRandomParameters} instance for method chaining
      */
-    public EasyRandomParameters scanClasspathForConcreteTypes(boolean scanClasspathForConcreteTypes) {
+    public EasyRandomParameters scanClasspathForConcreteTypes(boolean scanClasspathForConcreteTypes, String... packagesToScan) {
         setScanClasspathForConcreteTypes(scanClasspathForConcreteTypes);
+        setPackagesToScanForConcreteTypes(packagesToScan);
         return this;
     }
 

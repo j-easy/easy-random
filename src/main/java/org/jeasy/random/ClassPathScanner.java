@@ -21,38 +21,47 @@
  *   OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  *   THE SOFTWARE.
  */
-package org.jeasy.random.util;
-
-import java.util.Collections;
-import java.util.List;
-import java.util.concurrent.ConcurrentHashMap;
+package org.jeasy.random;
 
 import io.github.classgraph.ClassGraph;
 import io.github.classgraph.ClassInfoList;
 import io.github.classgraph.ScanResult;
 
-/**
- * Facade for {@link io.github.classgraph.ClassGraph}. It is a separate class from {@link ReflectionUtils},
- * so that the classpath scanning - which can take a few seconds - is only done when necessary.
- *
- * @author Pascal Schumacher (https://github.com/PascalSchumacher)
- */
-abstract class ClassGraphFacade {
+import java.util.Collections;
+import java.util.List;
+import java.util.concurrent.ConcurrentHashMap;
 
-    private static final ConcurrentHashMap<Class<?>, List<Class<?>>> typeToConcreteSubTypes = new ConcurrentHashMap<>();
-    private static final ScanResult scanResult = new ClassGraph().enableSystemJarsAndModules().enableClassInfo().scan();
+/**
+ * Classpath scanner that uses ClassGraph to search for public concrete subtypes of a given type.
+ *
+ * @author Pascal Schumacher (Initial ClassGraph contribution)
+ * @author Mahmoud Ben Hassine
+ * @since 6.0.0
+ */
+public class ClassPathScanner {
+
+    private final ConcurrentHashMap<Class<?>, List<Class<?>>> typeToConcreteSubTypes = new ConcurrentHashMap<>();
+    private final ScanResult scanResult;
 
     /**
-     * Searches the classpath for all public concrete subtypes of the given interface or abstract class.
+     * Create a new classpath scanner that scans the given packages for classes.
+     * @param packagesToScan the packages to scan for classes
+     */
+    public ClassPathScanner(String... packagesToScan) {
+        this.scanResult = new ClassGraph().enableSystemJarsAndModules().enableClassInfo().acceptPackages(packagesToScan).scan();
+    }
+
+    /**
+     * Search the classpath for all public concrete subtypes of the given interface or abstract class.
      *
      * @param type to search concrete subtypes of
      * @return a list of all concrete subtypes found
      */
-    public static <T> List<Class<?>> getPublicConcreteSubTypesOf(final Class<T> type) {
-        return typeToConcreteSubTypes.computeIfAbsent(type, ClassGraphFacade::searchForPublicConcreteSubTypesOf);
+    public <T> List<Class<?>> getPublicConcreteSubTypesOf(final Class<T> type) {
+        return typeToConcreteSubTypes.computeIfAbsent(type, this::searchForPublicConcreteSubTypesOf);
     }
 
-    private static <T> List<Class<?>> searchForPublicConcreteSubTypesOf(final Class<T> type) {
+    private <T> List<Class<?>> searchForPublicConcreteSubTypesOf(final Class<T> type) {
         String typeName = type.getName();
         ClassInfoList subTypes = type.isInterface() ? scanResult.getClassesImplementing(typeName) : scanResult.getSubclasses(typeName);
         List<Class<?>> loadedSubTypes = subTypes.filter(subType -> subType.isPublic() && !subType.isAbstract()).loadClasses(true);

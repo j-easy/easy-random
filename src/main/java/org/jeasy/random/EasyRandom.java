@@ -57,6 +57,8 @@ public class EasyRandom extends Random {
 
     private final ExclusionPolicy exclusionPolicy;
 
+    private final ClassPathScanner classPathScanner;
+
     /**
      * Create a new {@link EasyRandom} instance with default parameters.
      */
@@ -81,9 +83,10 @@ public class EasyRandom extends Random {
         MapPopulator mapPopulator = new MapPopulator(this, objectFactory);
         OptionalPopulator optionalPopulator = new OptionalPopulator(this);
         enumRandomizersByType = new ConcurrentHashMap<>();
+        classPathScanner = new ClassPathScanner(easyRandomParameters.getPackagesToScanForConcreteTypes());
         fieldPopulator = new FieldPopulator(this,
                 this.randomizerProvider, arrayPopulator,
-                collectionPopulator, mapPopulator, optionalPopulator);
+                collectionPopulator, mapPopulator, optionalPopulator, classPathScanner);
         exclusionPolicy = easyRandomParameters.getExclusionPolicy();
         parameters = easyRandomParameters;
     }
@@ -98,7 +101,7 @@ public class EasyRandom extends Random {
      */
     public <T> T nextObject(final Class<T> type) {
         if (type.isRecord()) {
-            return createRandomRecord(type, new RandomizationContext(type, parameters));
+            return createRandomRecord(type);
         } else {
             return doPopulateBean(type, new RandomizationContext(type, parameters));
         }
@@ -121,14 +124,14 @@ public class EasyRandom extends Random {
         return Stream.generate(() -> nextObject(type)).limit(streamSize);
     }
 
-    private <T> T createRandomRecord(Class<T> recordType, final RandomizationContext context) {
+    private <T> T createRandomRecord(Class<T> recordType) {
         // generate random values for record components
         RecordComponent[] recordComponents = recordType.getRecordComponents();
         Object[] randomValues = new Object[recordComponents.length];
         for (int i = 0; i < recordComponents.length; i++) {
             Class<?> recordComponentType = recordComponents[i].getType();
             if (recordComponentType.isRecord()) {
-                randomValues[i] = this.createRandomRecord(recordComponentType, context);
+                randomValues[i] = this.createRandomRecord(recordComponentType);
             } else {
                 randomValues[i] = this.nextObject(recordComponentType);
             }
@@ -169,7 +172,7 @@ public class EasyRandom extends Random {
 
             // Records are populated differently since they are immutable and their state is defined by their record components
             if (type.isRecord()) {
-                return createRandomRecord(type, context);
+                return createRandomRecord(type);
             }
 
             // create a new instance of the target type

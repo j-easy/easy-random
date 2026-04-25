@@ -47,7 +47,9 @@ import static org.jeasy.random.util.ReflectionUtils.*;
  *     <li>{@link EasyRandom} whenever the field is a user defined type.</li>
  *     <li>{@link ArrayPopulator} whenever the field is an array type.</li>
  *     <li>{@link CollectionPopulator} whenever the field is a collection type.</li>
- *     <li>{@link CollectionPopulator}whenever the field is a map type.</li>
+ *     <li>{@link MapPopulator} whenever the field is a map type.</li>
+ *     <li>{@link OptionalPopulator} whenever the field is an {@link java.util.Optional} type.</li>
+ *     <li>{@link ClassPathScanner} whenever the field is an abstract type and classpath scanning is enabled to find a concrete subtype.</li>
  * </ul>
  *
  * @author Mahmoud Ben Hassine (mahmoud.benhassine@icloud.com)
@@ -68,15 +70,18 @@ class FieldPopulator {
 
     private final RandomizerProvider randomizerProvider;
 
+    private final ClassPathScanner classPathScanner;
+
     FieldPopulator(final EasyRandom easyRandom, final RandomizerProvider randomizerProvider,
                    final ArrayPopulator arrayPopulator, final CollectionPopulator collectionPopulator,
-                   final MapPopulator mapPopulator, OptionalPopulator optionalPopulator) {
+                   final MapPopulator mapPopulator, OptionalPopulator optionalPopulator, ClassPathScanner classPathScanner) {
         this.easyRandom = easyRandom;
         this.randomizerProvider = randomizerProvider;
         this.arrayPopulator = arrayPopulator;
         this.collectionPopulator = collectionPopulator;
         this.mapPopulator = mapPopulator;
         this.optionalPopulator = optionalPopulator;
+        this.classPathScanner = classPathScanner;
     }
 
     void populateField(final Object target, final Field field, final RandomizationContext context) throws IllegalAccessException {
@@ -150,7 +155,8 @@ class FieldPopulator {
             return optionalPopulator.getRandomOptional(field, context);
         } else {
             if (context.getParameters().isScanClasspathForConcreteTypes() && isAbstract(fieldType) && !isEnumType(fieldType) /*enums can be abstract, but cannot inherit*/) {
-                List<Class<?>> parameterizedTypes = filterSameParameterizedTypes(getPublicConcreteSubTypesOf(fieldType), fieldGenericType);
+                List<Class<?>> publicConcreteSubTypes = this.classPathScanner.getPublicConcreteSubTypesOf(fieldType);
+                List<Class<?>> parameterizedTypes = filterSameParameterizedTypes(publicConcreteSubTypes, fieldGenericType);
                 if (parameterizedTypes.isEmpty()) {
                     throw new ObjectCreationException("Unable to find a matching concrete subtype of type: " + fieldType);
                 } else {

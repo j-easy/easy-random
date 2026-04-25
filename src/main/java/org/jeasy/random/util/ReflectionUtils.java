@@ -418,17 +418,6 @@ public final class ReflectionUtils {
     }
 
     /**
-     * Searches the classpath for all public concrete subtypes of the given interface or abstract class.
-     *
-     * @param type to search concrete subtypes of
-     * @param <T>  the actual type to introspect
-     * @return a list of all concrete subtypes found
-     */
-    public static <T> List<Class<?>> getPublicConcreteSubTypesOf(final Class<T> type) {
-        return ClassGraphFacade.getPublicConcreteSubTypesOf(type);
-    }
-
-    /**
      * Filters a list of types to keep only elements having the same parameterized types as the given type.
      *
      * @param type  the type to use for the search
