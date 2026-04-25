@@ -33,6 +33,7 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
+import java.io.Serializable;
 import java.lang.reflect.Modifier;
 import java.util.*;
 import java.util.stream.Stream;
@@ -482,6 +483,58 @@ class EasyRandomTest {
         // then
         assertThat(actual.t).isInstanceOf(String.class);
         assertThat(actual.s).isInstanceOf(Long.class);
+    }
+
+    // https://github.com/j-easy/easy-random/issues/441
+    @Test
+    void genericComposedShouldBeCorrectlyPopulated() {
+        // given
+        abstract class IdResource<K extends Serializable, T extends IdResource<K, ?>> {
+
+            private K id;
+
+            @SuppressWarnings("unchecked")
+            public T setId(K id) {
+                this.id = id;
+                return (T) this;
+            }
+
+            public K getId() {
+                return id;
+            }
+        }
+
+        class LongResource extends IdResource<Long, LongResource> {
+        }
+
+        class CompositeResource {
+            private LongResource longResource;
+        }
+        EasyRandom easyRandom = new EasyRandom();
+
+        // when
+        CompositeResource composite = easyRandom.nextObject(CompositeResource.class);
+
+        // then
+        assertThat(composite.longResource.getId())
+                .isInstanceOf(Long.class);
+    }
+
+    @Test
+    void testGenericFieldRandomization() {
+        // given
+        class Base<T> {
+            T t;
+        }
+        class Concrete {
+            Base<String> f;
+        }
+
+        // when
+        Concrete concrete = easyRandom.nextObject(Concrete.class);
+
+        // then
+        assertThat(concrete.f).isInstanceOf(Base.class);
     }
 
     private void validatePerson(final Person person) {

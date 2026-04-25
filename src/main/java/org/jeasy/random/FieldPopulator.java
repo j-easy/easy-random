@@ -82,7 +82,7 @@ class FieldPopulator {
     }
 
     void populateField(final Object target, final Field field, final RandomizationContext context) throws IllegalAccessException {
-        Randomizer<?> randomizer = getRandomizer(field, context);
+        Randomizer<?> randomizer = getRandomizer(field, target.getClass(), context);
         if (randomizer instanceof SkipRandomizer) {
             return;
         }
@@ -96,7 +96,7 @@ class FieldPopulator {
                 value = randomizer.getRandomValue();
             } else {
                 try {
-                    value = generateRandomValue(field, context);
+                    value = generateRandomValue(field, target.getClass(), context);
                 } catch (ObjectCreationException e) {
                     String exceptionMessage = String.format("Unable to create type: %s for field: %s of class: %s",
                           field.getType().getName(), field.getName(), target.getClass().getName());
@@ -122,14 +122,14 @@ class FieldPopulator {
         context.popStackItem();
     }
 
-    private Randomizer<?> getRandomizer(Field field, RandomizationContext context) {
+    private Randomizer<?> getRandomizer(Field field, Class<?> owningType, RandomizationContext context) {
         // issue 241: if there is no custom randomizer by field, then check by type
         Randomizer<?> randomizer = randomizerProvider.getRandomizerByField(field, context);
         if (randomizer == null) {
             Type genericType = field.getGenericType();
             if (isTypeVariable(genericType)) {
                 // if generic type, retrieve actual type from declaring class
-                Class<?> type = getParametrizedType(field, context);
+                Class<?> type = getParametrizedType(field, owningType);
                 randomizer = randomizerProvider.getRandomizerByType(type, context);
             } else {
                 randomizer = randomizerProvider.getRandomizerByType(field.getType(), context);
@@ -138,7 +138,7 @@ class FieldPopulator {
         return randomizer;
     }
 
-    private Object generateRandomValue(final Field field, final RandomizationContext context) {
+    private Object generateRandomValue(final Field field, final Class<?> owningType, final RandomizationContext context) {
         Class<?> fieldType = field.getType();
         Type fieldGenericType = field.getGenericType();
 
@@ -150,6 +150,10 @@ class FieldPopulator {
             return mapPopulator.getRandomMap(field, context);
         } else if (isOptionalType(fieldType)) {
             return optionalPopulator.getRandomOptional(field, context);
+        } else if (isTypeVariable(fieldGenericType)) {
+            // Resolve generic type variables before falling back to the erased field type.
+            Class<?> type = getParametrizedType(field, owningType);
+            return easyRandom.doPopulateBean(type, context);
         } else {
             if (context.getParameters().isScanClasspathForConcreteTypes() && isAbstract(fieldType) && !isEnumType(fieldType) /*enums can be abstract, but cannot inherit*/) {
                 List<Class<?>> parameterizedTypes = filterSameParameterizedTypes(getPublicConcreteSubTypesOf(fieldType), fieldGenericType);
@@ -160,19 +164,13 @@ class FieldPopulator {
                     return easyRandom.doPopulateBean(randomConcreteSubType, context);
                 }
             } else {
-                Type genericType = field.getGenericType();
-                if (isTypeVariable(genericType)) {
-                    // if generic type, try to retrieve actual type from hierarchy
-                    Class<?> type = getParametrizedType(field, context);
-                    return easyRandom.doPopulateBean(type, context);
-                }
                 return easyRandom.doPopulateBean(fieldType, context);
             }
         }
     }
 
-    private Class<?> getParametrizedType(Field field, RandomizationContext context) {
-        Type actualTypeArgument = resolveTypeVariable(field, context.getTargetType());
+    private Class<?> getParametrizedType(Field field, Class<?> owningType) {
+        Type actualTypeArgument = resolveTypeVariable(field, owningType);
         if (actualTypeArgument == null) {
             return field.getType();
         }
