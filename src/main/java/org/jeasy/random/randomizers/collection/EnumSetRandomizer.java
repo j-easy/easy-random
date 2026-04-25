@@ -62,8 +62,9 @@ public class EnumSetRandomizer<E extends Enum<E>> extends CollectionRandomizer<E
 
     @Override
     public EnumSet<E> getRandomValue() {
+        int size = Math.max(1, nbElements);
         List<E> elements = new ArrayList<>();
-        for (int i = 0; i < nbElements; i++) {
+        for (int i = 0; i < size; i++) {
             elements.add(getRandomElement());
         }
         return EnumSet.copyOf(elements);

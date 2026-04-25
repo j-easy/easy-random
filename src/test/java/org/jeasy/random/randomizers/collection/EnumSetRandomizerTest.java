@@ -47,4 +47,19 @@ class EnumSetRandomizerTest {
 		assertThat(randomEnumSet).containsAnyElementsOf(asList(Month.values()));
 	}
 
+	@Test
+	void testEnumSetGenerationWithZeroRequestedElements() {
+		// given
+		EnumRandomizer<Month> delegate = new EnumRandomizer<>(Month.class);
+		EnumSetRandomizer<Month> randomizer = new EnumSetRandomizer<>(delegate, 0);
+
+		// when
+		EnumSet<Month> randomEnumSet = randomizer.getRandomValue();
+
+		// then
+		assertThat(randomEnumSet)
+				.hasSize(1)
+				.containsAnyElementsOf(asList(Month.values()));
+	}
+
 }
