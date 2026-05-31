@@ -29,7 +29,11 @@ import org.jeasy.random.api.RandomizerProvider;
 import org.jeasy.random.api.RandomizerRegistry;
 
 import java.lang.reflect.Field;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Comparator;
+import java.util.List;
+import java.util.Objects;
+import java.util.Set;
 
 /**
  * Central class to get registered randomizers by Field or by Type.
@@ -62,8 +66,8 @@ class RegistriesRandomizerProvider implements RandomizerProvider {
         return registries.stream()
                 .map(provider::getRandomizer)
                 .filter(Objects::nonNull)
-                .sorted(priorityComparator)
-                .findFirst().orElse(null);
+                .min(priorityComparator)
+                .orElse(null);
     }
 
     @FunctionalInterface
