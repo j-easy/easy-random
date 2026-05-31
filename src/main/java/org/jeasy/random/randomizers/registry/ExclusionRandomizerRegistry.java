@@ -45,8 +45,8 @@ import java.util.function.Predicate;
 @Priority(0)
 public class ExclusionRandomizerRegistry implements RandomizerRegistry {
 
-    private Set<Predicate<Field>> fieldPredicates = new HashSet<>();
-    private Set<Predicate<Class<?>>> typePredicates = new HashSet<>();
+    private final Set<Predicate<Field>> fieldPredicates = new HashSet<>();
+    private final Set<Predicate<Class<?>>> typePredicates = new HashSet<>();
 
     /**
      * {@inheritDoc}
