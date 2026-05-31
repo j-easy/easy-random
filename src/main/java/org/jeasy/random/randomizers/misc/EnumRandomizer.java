@@ -70,6 +70,7 @@ public class EnumRandomizer<E extends Enum<E>> extends AbstractRandomizer<E> {
      * @throws IllegalArgumentException when excludedValues contains all enumeration values,
      *                                  ie all elements from the enumeration are excluded
      */
+    @SafeVarargs
     public EnumRandomizer(final Class<E> enumeration, final E... excludedValues) throws IllegalArgumentException {
         checkExcludedValues(enumeration, excludedValues);
         this.enumConstants = getFilteredList(enumeration, excludedValues);
@@ -84,6 +85,7 @@ public class EnumRandomizer<E extends Enum<E>> extends AbstractRandomizer<E> {
      * @throws IllegalArgumentException when excludedValues contains all enumeration values,
      *                                  ie all elements from the enumeration are excluded
      */
+    @SafeVarargs
     public EnumRandomizer(final Class<E> enumeration, final long seed, final E... excludedValues) throws IllegalArgumentException {
         super(seed);
         checkExcludedValues(enumeration, excludedValues);
@@ -116,6 +118,7 @@ public class EnumRandomizer<E extends Enum<E>> extends AbstractRandomizer<E> {
      *
      * @return the enumeration values minus those excluded.
      */
+    @SafeVarargs
     private List<E> getFilteredList(Class<E> enumeration, E... excludedValues) {
         List<E> filteredValues = new ArrayList<>();
         Collections.addAll(filteredValues, enumeration.getEnumConstants());

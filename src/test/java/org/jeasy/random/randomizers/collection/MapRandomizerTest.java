@@ -44,32 +44,35 @@ class MapRandomizerTest {
 
     @Test
     void generatedMapShouldNotBeEmpty() {
-        assertThat(new MapRandomizer(keyRandomizer, valueRandomizer).getRandomValue()).isNotEmpty();
+        MapRandomizer<Integer, String> mapRandomizer = new MapRandomizer<>(keyRandomizer, valueRandomizer);
+        assertThat(mapRandomizer.getRandomValue()).isNotEmpty();
     }
 
     @Test
     void generatedMapSizeShouldBeEqualToTheSpecifiedSize() {
+        MapRandomizer<Integer, String> mapRandomizer = new MapRandomizer<>(keyRandomizer, valueRandomizer, 3);
         when(keyRandomizer.getRandomValue()).thenReturn(1, 2, 3);
-        assertThat(new MapRandomizer(keyRandomizer, valueRandomizer, 3).getRandomValue()).hasSize(3);
+        assertThat(mapRandomizer.getRandomValue()).hasSize(3);
     }
 
     @Test
     void specifiedSizeCanBeZero() {
-        assertThat(new MapRandomizer(keyRandomizer, valueRandomizer, 0).getRandomValue()).isEmpty();
+        MapRandomizer<Integer, String> mapRandomizer = new MapRandomizer<>(keyRandomizer, valueRandomizer, 0);
+        assertThat(mapRandomizer.getRandomValue()).isEmpty();
     }
 
     @Test
     void specifiedSizeShouldBePositive() {
-        assertThatThrownBy(() -> new MapRandomizer(keyRandomizer, valueRandomizer, -3)).isInstanceOf(IllegalArgumentException.class);
+        assertThatThrownBy(() -> new MapRandomizer<>(keyRandomizer, valueRandomizer, -3)).isInstanceOf(IllegalArgumentException.class);
     }
 
     @Test
     void nullKeyRandomizer() {
-        assertThatThrownBy(() -> new MapRandomizer(null, valueRandomizer, 3)).isInstanceOf(IllegalArgumentException.class);
+        assertThatThrownBy(() -> new MapRandomizer<>(null, valueRandomizer, 3)).isInstanceOf(IllegalArgumentException.class);
     }
 
     @Test
     void nullValueRandomizer() {
-        assertThatThrownBy(() -> new MapRandomizer(keyRandomizer, null, 3)).isInstanceOf(IllegalArgumentException.class);
+        assertThatThrownBy(() -> new MapRandomizer<>(keyRandomizer, null, 3)).isInstanceOf(IllegalArgumentException.class);
     }
 }

@@ -65,6 +65,7 @@ class RandomizerProviderTests {
                     }
 
                     @Override
+                    @SuppressWarnings("unchecked")
                     public <T> Randomizer<T> getRandomizerByType(Class<T> type, RandomizerContext context) {
                         for (RandomizerRegistry randomizerRegistry : randomizerRegistries) {
                             Randomizer<?> randomizer = randomizerRegistry.getRandomizer(type);

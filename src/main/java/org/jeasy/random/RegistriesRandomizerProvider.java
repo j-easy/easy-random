@@ -52,6 +52,7 @@ class RegistriesRandomizerProvider implements RandomizerProvider {
     }
 
     @Override
+    @SuppressWarnings("unchecked")
     public <T> Randomizer<T> getRandomizerByType(Class<T> type, RandomizerContext context) {
         return (Randomizer<T>) getRandomizer(new ByTypeProvider(type));
     }

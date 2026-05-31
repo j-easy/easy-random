@@ -27,6 +27,8 @@ import org.jeasy.random.EasyRandom;
 import org.jeasy.random.EasyRandomParameters;
 import org.junit.jupiter.api.Test;
 
+import java.util.Arrays;
+
 import static org.jeasy.random.FieldPredicates.*;
 import static org.assertj.core.api.Assertions.assertThat;
 
@@ -48,7 +50,7 @@ class ContextAwareRandomizationTests {
         // then
         String firstName = person.getFirstName();
         String lastName = person.getLastName();
-        assertThat(firstName).isIn(names);
+        assertThat(firstName).isIn(Arrays.stream(names).toList());
         assertThat(lastName).isNotNull();
         if (firstName.equalsIgnoreCase("james")) {
             assertThat(lastName.equalsIgnoreCase("bond"));

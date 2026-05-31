@@ -25,6 +25,8 @@ package org.jeasy.random.randomizers.misc;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
+import java.util.Arrays;
+import java.util.List;
 import java.util.Locale;
 
 import org.junit.jupiter.api.Test;
@@ -35,7 +37,8 @@ class LocaleRandomizerTest extends AbstractRandomizerTest<Locale> {
 
     @Test
     void shouldGenerateRandomLocale() {
-        assertThat(new LocaleRandomizer().getRandomValue()).isIn(Locale.getAvailableLocales());
+        List<Locale> availableLocales = Arrays.stream(Locale.getAvailableLocales()).toList();
+        assertThat(new LocaleRandomizer().getRandomValue()).isIn(availableLocales);
     }
 
     @Test
@@ -44,7 +47,7 @@ class LocaleRandomizerTest extends AbstractRandomizerTest<Locale> {
         Locale second = new LocaleRandomizer(SEED).getRandomValue();
 
         assertThat(first).isEqualTo(second);
-        Locale[] availableLocales = Locale.getAvailableLocales();
+        List<Locale> availableLocales = Arrays.stream(Locale.getAvailableLocales()).toList();
         assertThat(first).isIn(availableLocales);
         assertThat(second).isIn(availableLocales);
     }

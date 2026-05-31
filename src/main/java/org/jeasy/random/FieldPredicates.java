@@ -77,6 +77,7 @@ public class FieldPredicates {
      * @param annotations present on the field
      * @return Predicate to check that a field is annotated with one of the given annotations.
      */
+    @SafeVarargs
     public static Predicate<Field> isAnnotatedWith(Class<? extends Annotation>... annotations) {
         return field -> {
             for (Class<? extends Annotation> annotation : annotations) {

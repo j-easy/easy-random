@@ -31,6 +31,6 @@ class ConstantRandomizerTest {
 
     @Test
     void shouldAlwaysGenerateTheSameValue() {
-        assertThat(new ConstantRandomizer("a").getRandomValue()).isEqualTo("a");
+        assertThat(new ConstantRandomizer<>("a").getRandomValue()).isEqualTo("a");
     }
 }

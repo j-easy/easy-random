@@ -38,6 +38,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 class ObjectFactoryTests {
 
     @Test
+    @SuppressWarnings("unchecked")
     void testCustomObjectFactory() {
         // given
         EasyRandomParameters parameters = new EasyRandomParameters()

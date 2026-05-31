@@ -31,16 +31,20 @@ import org.junit.jupiter.api.Test;
 
 import org.jeasy.random.randomizers.AbstractRandomizerTest;
 
+import java.util.Arrays;
+import java.util.List;
+
 class EnumRandomizerTest extends AbstractRandomizerTest<EnumRandomizerTest.Gender> {
 
     @Test
     void generatedValueShouldBeOfTheSpecifiedEnum() {
-        assertThat(new EnumRandomizer(Gender.class).getRandomValue()).isIn(Gender.values());
+        List<Gender> values = Arrays.stream(Gender.values()).toList();
+        assertThat(new EnumRandomizer<>(Gender.class).getRandomValue()).isIn(values);
     }
 
     @Test
     void shouldAlwaysGenerateTheSameValueForTheSameSeed() {
-        assertThat(new EnumRandomizer(Gender.class, SEED).getRandomValue()).isEqualTo(FEMALE);
+        assertThat(new EnumRandomizer<>(Gender.class, SEED).getRandomValue()).isEqualTo(FEMALE);
     }
 
     @Test

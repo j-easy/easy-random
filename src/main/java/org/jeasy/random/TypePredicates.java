@@ -74,6 +74,7 @@ public class TypePredicates {
      * @param annotations present on the type
      * @return Predicate to check that a type is annotated with one of the given annotations.
      */
+    @SafeVarargs
     public static Predicate<Class<?>> isAnnotatedWith(Class<? extends Annotation>... annotations) {
         return clazz -> {
             for (Class<? extends Annotation> annotation : annotations) {
