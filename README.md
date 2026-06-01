@@ -17,15 +17,11 @@
 
 ## Project status
 
-As of November 15, 2020, Easy Random is in maintenance mode. This means only bug fixes will be addressed from now on (except
-for [records support](https://github.com/j-easy/easy-random/issues/397) which will be released when Java 16 is out).
-Version 5.0.x (based on Java 11) and version 4.3.x (based on Java 8) are the only supported versions
-for now. Please consider upgrading to one of these versions at your earliest convenience.
+As of November 15, 2020, Easy Random is in maintenance mode. This means only bug fixes will be addressed from now on.
 
 ## Latest news
 
-* 15/11/2020: Easy Random v5.0.0 is out and is now based on Java 11. Feature wise, this release is the same as v4.3.0. Please check the [release notes](https://github.com/j-easy/easy-random/releases/tag/easy-random-5.0.0) for more details.
-* 07/11/2020: Easy Random v4.3.0 is now released with support for generic types and fluent setters! You can find all details in the [change log](https://github.com/j-easy/easy-random/releases/tag/easy-random-4.3.0).
+* June 1st, 2026: Easy Random v6.0.0 is out and is now based on Java 17. The major addition in this release is the support to generate random Java records. Please check the [release notes](https://github.com/j-easy/easy-random/releases/tag/easy-random-6.0.0) for more details.
 
 # What is Easy Random ?
 
@@ -69,7 +65,7 @@ For more details about these parameters, please refer to the [configuration para
 
 In most cases, default options are enough and you can use the default constructor of `EasyRandom`.
 
-Easy Random allows you to control how to generate random data through the [`org.jeasy.random.api.Randomizer`](https://github.com/j-easy/easy-random/blob/master/easy-random-core/src/main/java/org/jeasy/random/api/Randomizer.java) interface and makes it easy to exclude some fields from the object graph using a `java.util.function.Predicate`:
+Easy Random allows you to control how to generate random data through the [`org.jeasy.random.api.Randomizer`](https://github.com/j-easy/easy-random/blob/main/easy-random/src/main/java/org/jeasy/random/api/Randomizer.java) interface and makes it easy to exclude some fields from the object graph using a `java.util.function.Predicate`:
 
 ```java
 EasyRandomParameters parameters = new EasyRandomParameters()
@@ -85,9 +81,9 @@ In the previous example, Easy Random will:
 * Set all fields of type `String` to `foo` (using the `Randomizer` defined as a lambda expression)
 * Exclude the field named `age` of type `Integer` in class `Person`.
 
-The static methods `named`, `ofType` and `inClass` are defined in [`org.jeasy.random.FieldPredicates`](https://github.com/j-easy/easy-random/blob/master/easy-random-core/src/main/java/org/jeasy/random/FieldPredicates.java) 
+The static methods `named`, `ofType` and `inClass` are defined in [`org.jeasy.random.FieldPredicates`](https://github.com/j-easy/easy-random/blob/main/src/main/java/org/jeasy/random/FieldPredicates.java) 
 which provides common predicates you can use in combination to define exactly which fields to exclude.
-A similar class called [`TypePredicates`](https://github.com/j-easy/easy-random/blob/master/easy-random-core/src/main/java/org/jeasy/random/TypePredicates.java) can be used to define which types to exclude from the object graph.
+A similar class called [`TypePredicates`](https://github.com/j-easy/easy-random/blob/main/src/main/java/org/jeasy/random/TypePredicates.java) can be used to define which types to exclude from the object graph.
 You can of course use your own `java.util.function.Predicate` in combination with those predefined predicates. 
 
 # Why Easy Random ?
@@ -205,7 +201,7 @@ If you believe you found a bug or have any question, please use the [issue track
 
 #### Core team
 
-* [Mahmoud Ben Hassine](https://github.com/benas)
+* [Mahmoud Ben Hassine](https://github.com/fmbenhassine)
 * [Pascal Schumacher](https://github.com/PascalSchumacher)
 
 #### Awesome contributors
@@ -246,9 +242,18 @@ If you believe you found a bug or have any question, please use the [issue track
 * [Unconditional One](https://github.com/unconditional)
 * [JJ1216](https://github.com/JJ1216)
 * [Sergey Chernov](https://github.com/seregamorph)
+* [Pankraz76](https://github.com/Pankraz76)
+* [lowcasz](https://github.com/lowcasz)
+* [astubbs](https://github.com/astubbs)
+* [shalak](https://github.com/shalak)
+* [lewocki](https://github.com/lewocki)
+* [lexakimov](https://github.com/lexakimov)
+* [OguzhanKazak](https://github.com/OguzhanKazak)
+* [npepinp](https://github.com/npepinp)
+* [alexey-ivanov-official](https://github.com/alexey-ivanov-official)
 
 Thank you all for your contributions!
 
 ## License
 
-The [MIT License](http://opensource.org/licenses/MIT). See [LICENSE.txt](https://github.com/j-easy/easy-random/blob/master/LICENSE.txt).
+The [MIT License](http://opensource.org/licenses/MIT). See [LICENSE.txt](https://github.com/j-easy/easy-random/blob/main/LICENSE.txt).
