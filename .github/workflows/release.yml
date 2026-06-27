@@ -28,4 +28,4 @@ jobs:
         env:
           MAVEN_CENTRAL_USERNAME: ${{ secrets.MAVEN_CENTRAL_USERNAME }}
           MAVEN_CENTRAL_PASSWORD: ${{ secrets.MAVEN_CENTRAL_PASSWORD }}
-        run: ./mvnw -s settings.xml -Prelease -Dgpg.keyname={{ secrets.GPG_KEY_ID }} -Dmaven.test.skip=true deploy
+        run: ./mvnw -Dgpg.keyname={{ secrets.GPG_KEY_ID }} --batch-mode --no-transfer-progress -s settings.xml -Prelease -Dmaven.test.skip=true deploy
