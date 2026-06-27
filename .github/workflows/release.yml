@@ -23,9 +23,10 @@ jobs:
         with:
           gpg_private_key: ${{ secrets.GPG_KEY }}
       - name: Update release version
-        run: ./mvnw versions:set -DgenerateBackupPoms=false -DnewVersion=${{ github.event.inputs.releaseVersion }}
+        run: ./mvnw --batch-mode --no-transfer-progress versions:set -DgenerateBackupPoms=false -DnewVersion=${{ github.event.inputs.releaseVersion }}
       - name: Release to Maven Central
         env:
           MAVEN_CENTRAL_USERNAME: ${{ secrets.MAVEN_CENTRAL_USERNAME }}
           MAVEN_CENTRAL_PASSWORD: ${{ secrets.MAVEN_CENTRAL_PASSWORD }}
-        run: ./mvnw -Dgpg.keyname={{ secrets.GPG_KEY_ID }} --batch-mode --no-transfer-progress -s settings.xml -Prelease -Dmaven.test.skip=true deploy
+          MAVEN_GPG_KEY: ${{ secrets.GPG_KEY_ID }}
+        run: ./mvnw --batch-mode --no-transfer-progress -s settings.xml -Prelease -Dmaven.test.skip=true deploy
