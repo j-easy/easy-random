@@ -232,7 +232,6 @@ class EasyRandomTest {
     }
 
     @Test
-    @Disabled("https://github.com/j-easy/easy-random/issues/494")
     void fieldsOfTypeClassShouldBeSkipped() {
         try {
             TestBean testBean = easyRandom.nextObject(TestBean.class);

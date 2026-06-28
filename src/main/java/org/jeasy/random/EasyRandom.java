@@ -26,6 +26,8 @@ package org.jeasy.random;
 import org.jeasy.random.api.*;
 import org.jeasy.random.randomizers.misc.EnumRandomizer;
 import org.jeasy.random.util.ReflectionUtils;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.lang.reflect.Field;
 import java.lang.reflect.RecordComponent;
@@ -42,6 +44,8 @@ import static org.jeasy.random.util.ReflectionUtils.*;
  */
 @SuppressWarnings({ "rawtypes", "unchecked" })
 public class EasyRandom extends Random {
+
+    private static final Logger logger = LoggerFactory.getLogger(EasyRandom.class);
 
     private final EasyRandomParameters parameters;
 
@@ -232,10 +236,35 @@ public class EasyRandom extends Random {
         if (exclusionPolicy.shouldBeExcluded(field, context)) {
             return;
         }
-        if (!parameters.isOverrideDefaultInitialization() && getProperty(result, field) != null && !isPrimitiveFieldWithDefaultValue(result, field)) {
-          return;
+        if (!parameters.isOverrideDefaultInitialization()) {
+            try {
+                if (getProperty(result, field) != null && !isPrimitiveFieldWithDefaultValue(result, field)) {
+                    return;
+                }
+            } catch (IllegalAccessException e) {
+                return;
+            }
+        }
+        if (!canPopulateField(result, field)) {
+            logger.warn("Skipping populating field {}#{} of type {} as it cannot be accessed reflectively and no setter is available",
+                    field.getDeclaringClass().getSimpleName(), field.getName(), field.getType().getName());
+            return;
         }
         fieldPopulator.populateField(result, field, context);
+    }
+
+    private boolean canPopulateField(Object target, Field field) {
+        if (!parameters.isBypassSetters() && getWriteMethod(field).isPresent()) {
+            return true;
+        }
+        if (field.canAccess(target)) {
+            return true;
+        }
+        boolean accessible = field.trySetAccessible();
+        if (accessible) {
+            field.setAccessible(false);
+        }
+        return accessible;
     }
 
     private LinkedHashSet<RandomizerRegistry> setupRandomizerRegistries(EasyRandomParameters parameters) {
