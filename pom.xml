@@ -209,14 +209,18 @@
                 <artifactId>license-maven-plugin</artifactId>
                 <version>${maven-license-plugin.version}</version>
                 <configuration>
-                    <header>licence-header-template.txt</header>
+                    <licenseSets>
+                        <licenseSet>
+                            <header>licence-header-template.txt</header>
+                            <includes>
+                                <include>src/**/*.java</include>
+                            </includes>
+                        </licenseSet>
+                    </licenseSets>
                     <properties>
                         <currentYear>2026</currentYear>
                     </properties>
                     <strictCheck>true</strictCheck>
-                    <includes>
-                        <include>src/**/*.java</include>
-                    </includes>
                     <mapping>
                         <java>SLASHSTAR_STYLE</java>
                     </mapping>
