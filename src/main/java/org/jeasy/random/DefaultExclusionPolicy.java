@@ -23,6 +23,7 @@
  */
 package org.jeasy.random;
 
+import org.jeasy.random.api.ContextAwareFieldPredicate;
 import org.jeasy.random.api.ExclusionPolicy;
 import org.jeasy.random.api.RandomizerContext;
 
@@ -53,7 +54,7 @@ public class DefaultExclusionPolicy implements ExclusionPolicy {
         }
         Set<Predicate<Field>> fieldExclusionPredicates = context.getParameters().getFieldExclusionPredicates();
         for (Predicate<Field> fieldExclusionPredicate : fieldExclusionPredicates) {
-            if (fieldExclusionPredicate.test(field)) {
+            if (matches(fieldExclusionPredicate, field, context)) {
                 return true;
             }
         }
@@ -75,5 +76,12 @@ public class DefaultExclusionPolicy implements ExclusionPolicy {
             }
         }
         return false;
+    }
+
+    private boolean matches(Predicate<Field> predicate, Field field, RandomizerContext context) {
+        if (predicate instanceof ContextAwareFieldPredicate contextAwarePredicate) {
+            return contextAwarePredicate.test(field, context);
+        }
+        return predicate.test(field);
     }
 }

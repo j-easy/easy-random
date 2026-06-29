@@ -31,6 +31,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.jeasy.random.api.ContextAwareRandomizer;
+import org.jeasy.random.api.ContextAwareFieldPredicate;
 import org.jeasy.random.api.RandomizerContext;
 import org.jeasy.random.beans.*;
 import org.jeasy.random.beans.exclusion.A;
@@ -113,6 +114,62 @@ class FieldExclusionTest {
 
         // then
         assertThat(person).isNotNull();
+        assertThat(person.getAddress()).isNotNull();
+        assertThat(person.getAddress().getStreet()).isNotNull();
+        assertThat(person.getAddress().getStreet().getName()).isNull();
+    }
+
+    @Test
+    void excludedFieldPathShouldNotBePopulated() {
+        // given
+        EasyRandomParameters parameters = new EasyRandomParameters()
+                .excludeField(path("address.street.name"));
+        easyRandom = new EasyRandom(parameters);
+
+        // when
+        Person person = easyRandom.nextObject(Person.class);
+
+        // then
+        assertThat(person).isNotNull();
+        assertThat(person.getName()).isNotNull();
+        assertThat(person.getAddress()).isNotNull();
+        assertThat(person.getAddress().getStreet()).isNotNull();
+        assertThat(person.getAddress().getStreet().getName()).isNull();
+    }
+
+    @Test
+    void excludedFieldUsingContextAwareFieldPredicateShouldNotBePopulated() {
+        // given
+        ContextAwareFieldPredicate fieldPredicate = (field, context) ->
+                context != null && field.getName().equals("name") && context.getCurrentField().equals("address.street");
+        EasyRandomParameters parameters = new EasyRandomParameters()
+                .excludeField(fieldPredicate);
+        easyRandom = new EasyRandom(parameters);
+
+        // when
+        Person person = easyRandom.nextObject(Person.class);
+
+        // then
+        assertThat(person).isNotNull();
+        assertThat(person.getName()).isNotNull();
+        assertThat(person.getAddress()).isNotNull();
+        assertThat(person.getAddress().getStreet()).isNotNull();
+        assertThat(person.getAddress().getStreet().getName()).isNull();
+    }
+
+    @Test
+    void excludedFieldPathShouldBeComposableWithOtherFieldPredicates() {
+        // given
+        EasyRandomParameters parameters = new EasyRandomParameters()
+                .excludeField(ofType(String.class).and(path("address.street.name")).and(inClass(Street.class)));
+        easyRandom = new EasyRandom(parameters);
+
+        // when
+        Person person = easyRandom.nextObject(Person.class);
+
+        // then
+        assertThat(person).isNotNull();
+        assertThat(person.getName()).isNotNull();
         assertThat(person.getAddress()).isNotNull();
         assertThat(person.getAddress().getStreet()).isNotNull();
         assertThat(person.getAddress().getStreet().getName()).isNull();

@@ -23,6 +23,9 @@
  */
 package org.jeasy.random;
 
+import org.jeasy.random.api.ContextAwareFieldPredicate;
+import org.jeasy.random.api.RandomizerContext;
+
 import java.lang.annotation.Annotation;
 import java.lang.reflect.Field;
 import java.util.function.Predicate;
@@ -48,7 +51,19 @@ public class FieldPredicates {
      */
     public static Predicate<Field> named(final String name) {
         final Pattern pattern = Pattern.compile(name);
-        return field -> pattern.matcher(field.getName()).matches();
+        return (ContextAwareFieldPredicate) (field, context) -> pattern.matcher(field.getName()).matches();
+    }
+
+    /**
+     * Create a predicate to check that a field has a certain path from the root object.
+     *
+     * @param path dot-separated path of the field to check
+     * @return Predicate to check that a field has a certain path from the root object
+     * @since 6.0.1
+     */
+    public static Predicate<Field> path(final String path) {
+        final String expectedPath = path.toLowerCase();
+        return (ContextAwareFieldPredicate) (field, context) -> expectedPath.equals(getFieldPath(field, context));
     }
 
     /**
@@ -58,7 +73,7 @@ public class FieldPredicates {
      * @return Predicate to check that a field has a certain type
      */
     public static Predicate<Field> ofType(Class<?> type) {
-        return field -> field.getType().equals(type);
+        return (ContextAwareFieldPredicate) (field, context) -> field.getType().equals(type);
     }
 
     /**
@@ -68,7 +83,7 @@ public class FieldPredicates {
      * @return Predicate to check that a field is defined in a given class.
      */
     public static Predicate<Field> inClass(Class<?> clazz) {
-        return field -> field.getDeclaringClass().equals(clazz);
+        return (ContextAwareFieldPredicate) (field, context) -> field.getDeclaringClass().equals(clazz);
     }
 
     /**
@@ -79,7 +94,7 @@ public class FieldPredicates {
      */
     @SafeVarargs
     public static Predicate<Field> isAnnotatedWith(Class<? extends Annotation>... annotations) {
-        return field -> {
+        return (ContextAwareFieldPredicate) (field, context) -> {
             for (Class<? extends Annotation> annotation : annotations) {
                 if (field.isAnnotationPresent(annotation)) {
                     return true;
@@ -96,7 +111,15 @@ public class FieldPredicates {
      * @return Predicate to check that a field has a given set of modifiers
      */
     public static Predicate<Field> hasModifiers(final Integer modifiers) {
-        return field -> (modifiers & field.getModifiers()) == modifiers;
+        return (ContextAwareFieldPredicate) (field, context) -> (modifiers & field.getModifiers()) == modifiers;
+    }
+
+    private static String getFieldPath(Field field, RandomizerContext context) {
+        String fieldName = field.getName().toLowerCase();
+        if (context == null || context.getCurrentField().isEmpty()) {
+            return fieldName;
+        }
+        return context.getCurrentField().toLowerCase() + "." + fieldName;
     }
 
 }
