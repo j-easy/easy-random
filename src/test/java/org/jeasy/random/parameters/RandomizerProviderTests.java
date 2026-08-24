@@ -89,6 +89,31 @@ class RandomizerProviderTests {
         assertThat(foo.getBestFriend().getBestFriend().getName()).isNull();
     }
 
+    @Test
+    void customRandomizerProviderShouldFallBackToDefaultRandomizersWhenNoFieldRandomizerIsProvided() {
+        // given
+        EasyRandomParameters parameters = new EasyRandomParameters()
+                .randomizerProvider(new RandomizerProvider() {
+                    @Override
+                    public Randomizer<?> getRandomizerByField(Field field, RandomizerContext context) {
+                        if (field.getName().equals("code")) {
+                            return () -> "123";
+                        }
+                        return null;
+                    }
+                });
+        EasyRandom easyRandom = new EasyRandom(parameters);
+
+        // when
+        Message message = easyRandom.nextObject(Message.class);
+
+        // then
+        assertThat(message).isNotNull();
+        assertThat(message.getCode()).isEqualTo("123");
+        assertThat(message.getPrice()).isNotZero();
+        assertThat(message.getSomeField()).isNotNull();
+    }
+
     static class Foo {
         private String name;
         private Foo bestFriend;
@@ -112,4 +137,27 @@ class RandomizerProviderTests {
 			this.bestFriend = bestFriend;
 		}
 	}
+
+    enum SomeEnum {
+        value1,
+        value2
+    }
+
+    static class Message {
+        private String code;
+        private int price;
+        private SomeEnum someField;
+
+        public String getCode() {
+            return code;
+        }
+
+        public int getPrice() {
+            return price;
+        }
+
+        public SomeEnum getSomeField() {
+            return someField;
+        }
+    }
 }
