@@ -565,6 +565,27 @@ public final class ReflectionUtils {
     }
 
     /**
+     * Get the write method for a given field by name, regardless of the setter parameter type.
+     *
+     * @param field field to get the write method for
+     * @return Optional of write method or empty if field has no unambiguous write method
+     */
+    public static Optional<Method> getWriteMethodByName(Field field) {
+        Optional<Method> writeMethod = getWriteMethod(field);
+        if (writeMethod.isPresent()) {
+            return writeMethod;
+        }
+        List<Method> writeMethods = Stream.of(field.getDeclaringClass().getMethods())
+                .filter(method -> method.getName().equals("set" + capitalize(field.getName())))
+                .filter(method -> method.getParameterCount() == 1)
+                .toList();
+        if (writeMethods.size() == 1) {
+            return Optional.of(writeMethods.get(0));
+        }
+        return Optional.empty();
+    }
+
+    /**
      * Get the read method for given field.
      * @param field field to get the read method for.
      * @return Optional of read method or empty if field has no read method

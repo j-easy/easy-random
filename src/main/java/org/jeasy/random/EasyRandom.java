@@ -254,7 +254,7 @@ public class EasyRandom extends Random {
     }
 
     private boolean canPopulateField(Object target, Field field) {
-        if (!parameters.isBypassSetters() && getWriteMethod(field).isPresent()) {
+        if (!parameters.isBypassSetters() && getWriteMethodByName(field).isPresent()) {
             return true;
         }
         if (field.canAccess(target)) {

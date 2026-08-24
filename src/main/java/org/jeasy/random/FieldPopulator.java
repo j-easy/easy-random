@@ -38,7 +38,9 @@ import org.slf4j.LoggerFactory;
 
 import java.lang.reflect.Field;
 import java.lang.reflect.InvocationTargetException;
+import java.lang.reflect.Method;
 import java.lang.reflect.Type;
+import java.util.Optional;
 
 import static org.jeasy.random.util.ReflectionUtils.*;
 
@@ -82,7 +84,9 @@ class FieldPopulator {
     }
 
     void populateField(final Object target, final Field field, final RandomizationContext context) throws IllegalAccessException {
-        Randomizer<?> randomizer = getRandomizer(field, target.getClass(), context);
+        Optional<Method> writeMethod = getWriteMethod(field, context);
+        Randomizer<?> randomizerByField = randomizerProvider.getRandomizerByField(field, context);
+        Randomizer<?> randomizer = getRandomizer(field, target.getClass(), context, writeMethod, randomizerByField);
         if (randomizer instanceof SkipRandomizer) {
             return;
         }
@@ -96,7 +100,7 @@ class FieldPopulator {
                 value = randomizer.getRandomValue();
             } else {
                 try {
-                    value = generateRandomValue(field, target.getClass(), context);
+                    value = generateRandomValue(field, target.getClass(), context, writeMethod, randomizerByField);
                 } catch (ObjectCreationException e) {
                     String exceptionMessage = String.format("Unable to create type: %s for field: %s of class: %s",
                           field.getType().getName(), field.getName(), target.getClass().getName());
@@ -108,7 +112,7 @@ class FieldPopulator {
                 setFieldValue(target, field, value);
             } else {
                 try {
-                    setProperty(target, field, value);
+                    setProperty(target, field, value, writeMethod, randomizerByField);
                 } catch (InvocationTargetException e) {
                     String exceptionMessage = String.format("Unable to invoke setter for field %s of class %s",
                             field.getName(), target.getClass().getName());
@@ -122,27 +126,29 @@ class FieldPopulator {
         context.popStackItem();
     }
 
-    private Randomizer<?> getRandomizer(Field field, Class<?> owningType, RandomizationContext context) {
-        // issue 241: if there is no custom randomizer by field, then check by type
-        Randomizer<?> randomizer = randomizerProvider.getRandomizerByField(field, context);
+    private Optional<Method> getWriteMethod(Field field, RandomizationContext context) {
+        if (context.getParameters().isBypassSetters()) {
+            return Optional.empty();
+        }
+        return getWriteMethodByName(field);
+    }
+
+    private Randomizer<?> getRandomizer(Field field, Class<?> owningType, RandomizationContext context,
+                                        Optional<Method> writeMethod, Randomizer<?> randomizer) {
         if (randomizer == null) {
-            Type genericType = field.getGenericType();
-            if (isTypeVariable(genericType)) {
-                // if generic type, retrieve actual type from declaring class
-                Class<?> type = getParametrizedType(field, owningType);
-                randomizer = randomizerProvider.getRandomizerByType(type, context);
-            } else {
-                randomizer = randomizerProvider.getRandomizerByType(field.getType(), context);
-            }
+            randomizer = randomizerProvider.getRandomizerByType(getRandomizationType(field, owningType, writeMethod), context);
         }
         return randomizer;
     }
 
-    private Object generateRandomValue(final Field field, final Class<?> owningType, final RandomizationContext context) {
+    private Object generateRandomValue(final Field field, final Class<?> owningType, final RandomizationContext context,
+                                       Optional<Method> writeMethod, Randomizer<?> randomizerByField) {
         Class<?> fieldType = field.getType();
         Type fieldGenericType = field.getGenericType();
 
-        if (isArrayType(fieldType)) {
+        if (randomizerByField == null && writeMethod.isPresent() && !writeMethod.get().getParameterTypes()[0].equals(fieldType)) {
+            return easyRandom.doPopulateBean(writeMethod.get().getParameterTypes()[0], context);
+        } else if (isArrayType(fieldType)) {
             return arrayPopulator.getRandomArray(fieldType, context);
         } else if (isCollectionType(fieldType)) {
             return collectionPopulator.getRandomCollection(field, context);
@@ -167,6 +173,32 @@ class FieldPopulator {
                 return easyRandom.doPopulateBean(fieldType, context);
             }
         }
+    }
+
+    private Class<?> getRandomizationType(Field field, Class<?> owningType, Optional<Method> writeMethod) {
+        if (writeMethod.isPresent() && !writeMethod.get().getParameterTypes()[0].equals(field.getType())) {
+            return writeMethod.get().getParameterTypes()[0];
+        }
+        Type genericType = field.getGenericType();
+        if (isTypeVariable(genericType)) {
+            return getParametrizedType(field, owningType);
+        }
+        return field.getType();
+    }
+
+    private void setProperty(final Object target, final Field field, final Object value,
+                             Optional<Method> writeMethod, Randomizer<?> randomizerByField)
+            throws IllegalAccessException, InvocationTargetException {
+        if (randomizerByField == null && writeMethod.isPresent()) {
+            try {
+                writeMethod.get().invoke(target, value);
+                return;
+            } catch (IllegalAccessException e) {
+                setFieldValue(target, field, value);
+                return;
+            }
+        }
+        org.jeasy.random.util.ReflectionUtils.setProperty(target, field, value);
     }
 
     private Class<?> getParametrizedType(Field field, Class<?> owningType) {
