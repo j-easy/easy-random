@@ -239,7 +239,7 @@ public class EasyRandom extends Random {
         if (exclusionPolicy.shouldBeExcluded(field, context)) {
             return;
         }
-        if (!parameters.isOverrideDefaultInitialization()) {
+        if (!shouldOverrideDefaultInitialization(field, context)) {
             try {
                 if (getProperty(result, field) != null && !isPrimitiveFieldWithDefaultValue(result, field)) {
                     return;
@@ -254,6 +254,16 @@ public class EasyRandom extends Random {
             return;
         }
         fieldPopulator.populateField(result, field, context);
+    }
+
+    private boolean shouldOverrideDefaultInitialization(Field field, RandomizationContext context) {
+        if (parameters.isOverrideDefaultInitialization()) {
+            return true;
+        }
+        if (parameters.getOverrideDefaultInitializationPredicate() instanceof ContextAwareFieldPredicate contextAwarePredicate) {
+            return contextAwarePredicate.test(field, context);
+        }
+        return parameters.getOverrideDefaultInitializationPredicate().test(field);
     }
 
     private boolean canPopulateField(Object target, Field field) {

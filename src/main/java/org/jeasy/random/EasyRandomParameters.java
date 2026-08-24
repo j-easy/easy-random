@@ -96,6 +96,7 @@ public class EasyRandomParameters {
     private Charset charset;
     private boolean scanClasspathForConcreteTypes;
     private boolean overrideDefaultInitialization;
+    private Predicate<Field> overrideDefaultInitializationPredicate;
     private boolean ignoreRandomizationErrors;
     private boolean bypassSetters;
     private Range<Integer> collectionSizeRange;
@@ -121,6 +122,7 @@ public class EasyRandomParameters {
         charset = DEFAULT_CHARSET;
         scanClasspathForConcreteTypes = false;
         overrideDefaultInitialization = false;
+        overrideDefaultInitializationPredicate = field -> false;
         ignoreRandomizationErrors = false;
         bypassSetters = false;
         objectPoolSize = DEFAULT_OBJECT_POOL_SIZE;
@@ -214,6 +216,13 @@ public class EasyRandomParameters {
     }
     public void setOverrideDefaultInitialization(boolean overrideDefaultInitialization) {
         this.overrideDefaultInitialization = overrideDefaultInitialization;
+    }
+    public Predicate<Field> getOverrideDefaultInitializationPredicate() {
+        return overrideDefaultInitializationPredicate;
+    }
+    public void setOverrideDefaultInitializationPredicate(Predicate<Field> overrideDefaultInitializationPredicate) {
+        Objects.requireNonNull(overrideDefaultInitializationPredicate, "Override default initialization predicate must not be null");
+        this.overrideDefaultInitializationPredicate = overrideDefaultInitializationPredicate;
     }
 
     public boolean isIgnoreRandomizationErrors() {
@@ -551,6 +560,18 @@ public class EasyRandomParameters {
     }
 
     /**
+     * Should default initialization of field values be overridden for fields matching the given predicate?
+     *
+     * @param predicate to select fields for which default initialization should be overridden
+     * @return the current {@link EasyRandomParameters} instance for method chaining
+     * @since 6.0.1
+     */
+    public EasyRandomParameters overrideDefaultInitialization(Predicate<Field> predicate) {
+        setOverrideDefaultInitializationPredicate(predicate);
+        return this;
+    }
+
+    /**
      * Flag to bypass setters if any and use reflection directly instead. False by default.
      * 
      * @param bypassSetters true if setters should be ignored
@@ -605,6 +626,7 @@ public class EasyRandomParameters {
         copy.setCharset(this.getCharset());
         copy.setScanClasspathForConcreteTypes(this.isScanClasspathForConcreteTypes());
         copy.setOverrideDefaultInitialization(this.isOverrideDefaultInitialization());
+        copy.setOverrideDefaultInitializationPredicate(this.getOverrideDefaultInitializationPredicate());
         copy.setIgnoreRandomizationErrors(this.isIgnoreRandomizationErrors());
         copy.setBypassSetters(this.isBypassSetters());
         copy.setCollectionSizeRange(this.getCollectionSizeRange());

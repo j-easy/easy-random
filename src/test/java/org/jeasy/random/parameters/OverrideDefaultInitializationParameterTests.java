@@ -31,6 +31,10 @@ import org.junit.jupiter.api.Test;
 
 import org.jeasy.random.beans.BeanWithDefaultFieldValues;
 
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.List;
+
 class OverrideDefaultInitializationParameterTests {
 
     @Test
@@ -69,5 +73,33 @@ class OverrideDefaultInitializationParameterTests {
         // Then
         assertThat(bean.getDefaultNonNullValue()).isEqualTo("default");
         assertThat(bean.getDefaultNonNullValueSetByConstructor()).isEqualTo("defaultSetByConstructor");
+    }
+
+    @Test
+    void shouldOverrideDefaultFieldValuesSelectedByPredicate() {
+        // Given
+        EasyRandomParameters parameters = new EasyRandomParameters()
+                .overrideDefaultInitialization(field -> Collection.class.isAssignableFrom(field.getType()));
+        EasyRandom easyRandom = new EasyRandom(parameters);
+
+        // When
+        GeneratedBean bean = easyRandom.nextObject(GeneratedBean.class);
+
+        // Then
+        assertThat(bean.getItems()).isNotEmpty();
+        assertThat(bean.getObjectType()).isEqualTo("generated");
+    }
+
+    static class GeneratedBean {
+        private List<String> items = new ArrayList<>();
+        private String objectType = "generated";
+
+        public List<String> getItems() {
+            return items;
+        }
+
+        public String getObjectType() {
+            return objectType;
+        }
     }
 }
