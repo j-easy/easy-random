@@ -21,6 +21,7 @@ As of November 15, 2020, Easy Random is in maintenance mode. This means only bug
 
 ## Latest news
 
+* August 25th, 2026: Easy Random v6.0.1 is released with a number of bug fixes and improvements. Please check the [release notes](https://github.com/j-easy/easy-random/releases/tag/easy-random-6.0.1) for more details about the changes.
 * June 1st, 2026: Easy Random v6.0.0 is out and is now based on Java 17. The major addition in this release is the support to generate random Java records. Please check the [release notes](https://github.com/j-easy/easy-random/releases/tag/easy-random-6.0.0) for more details.
 
 # What is Easy Random ?
@@ -249,8 +250,12 @@ If you believe you found a bug or have any question, please use the [issue track
 * [lewocki](https://github.com/lewocki)
 * [lexakimov](https://github.com/lexakimov)
 * [OguzhanKazak](https://github.com/OguzhanKazak)
-* [npepinp](https://github.com/npepinp)
+* [Nicolas Pepin-Perreault](https://github.com/npepinpe)
 * [alexey-ivanov-official](https://github.com/alexey-ivanov-official)
+* [neibarbosa](https://github.com/neibarbosa)
+* [tomas0svk](https://github.com/tomas0svk)
+* [Diego Lima](https://github.com/diego-lima)
+* [Kevin](https://github.com/kevits)
 
 Thank you all for your contributions!
 
