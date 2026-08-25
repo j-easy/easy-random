@@ -26,7 +26,7 @@ As of November 15, 2020, Easy Random is in maintenance mode. This means only bug
 
 # What is Easy Random ?
 
-Easy Random is a library that generates random Java objects. You can think of it as an [ObjectMother](https://martinfowler.com/bliki/ObjectMother.html) for the JVM. Let's say you have a class `Person` and you want to generate a random instance of it, here we go:
+Easy Random is a library that generates random Java objects, including Java records. You can think of it as an [ObjectMother](https://martinfowler.com/bliki/ObjectMother.html) for the JVM. Let's say you have a class `Person` and you want to generate a random instance of it, here we go:
 
 ```java
 EasyRandom easyRandom = new EasyRandom();
@@ -40,7 +40,7 @@ The method `EasyRandom#nextObject` is able to generate random instances of any g
 The `java.util.Random` API provides 7 methods to generate random data: `nextInt()`, `nextLong()`, `nextDouble()`, `nextFloat()`, `nextBytes()`, `nextBoolean()` and `nextGaussian()`.
 What if you need to generate a random `String`? Or say a random instance of your domain object?
 Easy Random provides the `EasyRandom` API that extends `java.util.Random` with a method called `nextObject(Class type)`.
-This method is able to generate a random instance of any arbitrary Java bean.
+This method is able to generate a random instance of an arbitrary Java object or record.
 
 The `EasyRandomParameters` class is the main entry point to configure `EasyRandom` instances. It allows you to set all
 parameters to control how random data is generated:
@@ -66,7 +66,7 @@ For more details about these parameters, please refer to the [configuration para
 
 In most cases, default options are enough and you can use the default constructor of `EasyRandom`.
 
-Easy Random allows you to control how to generate random data through the [`org.jeasy.random.api.Randomizer`](https://github.com/j-easy/easy-random/blob/main/easy-random/src/main/java/org/jeasy/random/api/Randomizer.java) interface and makes it easy to exclude some fields from the object graph using a `java.util.function.Predicate`:
+Easy Random allows you to control how to generate random data through the [`org.jeasy.random.api.Randomizer`](https://github.com/j-easy/easy-random/blob/main/src/main/java/org/jeasy/random/api/Randomizer.java) interface and makes it easy to exclude some fields from the object graph using a `java.util.function.Predicate`:
 
 ```java
 EasyRandomParameters parameters = new EasyRandomParameters()
@@ -82,10 +82,19 @@ In the previous example, Easy Random will:
 * Set all fields of type `String` to `foo` (using the `Randomizer` defined as a lambda expression)
 * Exclude the field named `age` of type `Integer` in class `Person`.
 
-The static methods `named`, `ofType` and `inClass` are defined in [`org.jeasy.random.FieldPredicates`](https://github.com/j-easy/easy-random/blob/main/src/main/java/org/jeasy/random/FieldPredicates.java) 
+The static methods `named`, `ofType` and `inClass` are defined in [`org.jeasy.random.FieldPredicates`](https://github.com/j-easy/easy-random/blob/main/src/main/java/org/jeasy/random/FieldPredicates.java)
 which provides common predicates you can use in combination to define exactly which fields to exclude.
 A similar class called [`TypePredicates`](https://github.com/j-easy/easy-random/blob/main/src/main/java/org/jeasy/random/TypePredicates.java) can be used to define which types to exclude from the object graph.
 You can of course use your own `java.util.function.Predicate` in combination with those predefined predicates. 
+
+To exclude a nested field at a specific location in the object graph, use `FieldPredicates.path`:
+
+```java
+EasyRandomParameters parameters = new EasyRandomParameters()
+   .excludeField(FieldPredicates.path("address.street.name"));
+```
+
+See the wiki for [all configuration parameters](https://github.com/j-easy/easy-random/wiki/Randomization-parameters) and [field exclusion options](https://github.com/j-easy/easy-random/wiki/excluding-fields).
 
 # Why Easy Random ?
 
