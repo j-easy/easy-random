@@ -39,7 +39,7 @@ jobs:
       - name: Tag release
         run: |
           git add .
-          git commit -a -m "Release version {{ github.event.inputs.releaseVersion }}"
-          git tag -a easy-random-{{ github.event.inputs.releaseVersion }} -m "Release version {{ github.event.inputs.releaseVersion }}"
-          git push origin easy-random-{{ github.event.inputs.releaseVersion }}
+          git commit -a -m "Release version ${{ github.event.inputs.releaseVersion }}"
+          git tag -a "easy-random-${{ github.event.inputs.releaseVersion }}" -m "Release version ${{ github.event.inputs.releaseVersion }}"
+          git push origin "easy-random-${{ github.event.inputs.releaseVersion }}"
           git push origin main
